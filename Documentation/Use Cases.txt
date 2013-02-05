@@ -1,0 +1,11 @@
+1. Create User
+2. Delete User
+3. Listen to channel
+4. Subscribe to channel
+5. Unsubscribe channel
+6. Comment channel
+
+7. Create channel
+8. Delete channel
+9. Upload song
+10. Delete song
