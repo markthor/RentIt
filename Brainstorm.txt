@@ -1,0 +1,23 @@
+SINGAPORE COOPORATION PROJECT
+
+BRAINSTORM:
+Users can make radio channel
+Users can rate the tracks played on the channel
+Primarily remixes and user created tracks
+Channel has a genre, tags, popularity
+Channel relate to other channels
+Users can recommend channels
+Different types of users: USER, HOST, ADMIN
+
+INITIAL TECHNOLGIES (NOT FINAL):
+UI: Silverlight/WPF
+WEB-SERVICE: Windows Communication Foundation
+DATABASE: Entity framework/SQL
+
+TO-DO-LIST:
+Make requirements
+Use cases
+Discuss best streaming technologies
+Make Git repository
+
+Streaming tech? : http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c-sharp
