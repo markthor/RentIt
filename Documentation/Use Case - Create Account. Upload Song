@@ -1,0 +1,27 @@
+Use Case: Create Account.
+
+1. Client navigates to the "create account"/"register" page.
+2. Client is presented with the privileges of having an account, together with:
+3. Fields for entering contact information (e-mail, username...)
+4. Client specifies a password associated with the account.
+5. Client signs eula.
+6. Client finishes account creation, possibly by validating clients e-mail.
+
+
+Extension
+
+3-5a. At any point the connection to the service is lost.
+	3-5a.1. The client persists the already entered information. Possibly in encrypted binary file (though outside of project scope).
+	3-5a.2. On reconnect, the persisted information is displayed, and the user is required to fill in any missing information. 
+	
+	
+	
+Use Case: Upload Song.
+
+Precondition: 	client c1 is logged in.
+Postcondition: 	song s1 is uploaded to server
+				s1 is associated with c1.
+
+1. c1 navigates to the "upload song" page.
+2. c1 specifies the local path to c2. (perhaps an url could work too?)
+3. c1 confirms the upload request (I.e. pressing "upload now"/"accept" or something similar).
