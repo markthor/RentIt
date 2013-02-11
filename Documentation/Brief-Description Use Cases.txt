@@ -1,0 +1,2 @@
+4. The user has selected a channel and selects subsribe to channel. The subscription status changes accordingly.
+5. The user has selected a channel and selects unsubsribe to channel, if he/she is already subscribed. The subscription status changes accordingly.
