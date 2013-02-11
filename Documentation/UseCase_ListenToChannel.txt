@@ -1,0 +1,13 @@
+USE CASE - Listen to radio channel
+
+Primary actor: User
+
+Pre-condition: User has a working account and is logged into the radio service
+Post-condition: User is listening to the radio channel that he intended to listen to.
+
+1. User enters the name of a radio-channel in the search field
+2. User selects selects the desired radio-channel from a list of channel, that corrosponds to the name he has searched on
+3. User clicks and the channel starts to broadcast 
+
+Extensions:
+1a. User selects a radiochannel from a list of favorites assosiated with his account
