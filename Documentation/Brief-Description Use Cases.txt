@@ -1,2 +1,11 @@
+1. Done
+2. The user does not want to use the service any longer, he has chosen to delete his account. All data about the user is deleted accordingly
+3. 
 4. The user has selected a channel and selects subsribe to channel. The subscription status changes accordingly.
 5. The user has selected a channel and selects unsubsribe to channel, if he/she is already subscribed. The subscription status changes accordingly.
+6. The user is on a channel and want to comment on it. He writes his message and submits the comment. The comment is saved and the page is refreshed
+
+7. Done
+8. The creater of the channel does not want the channel anymore and he decides to delete it. All subscriptions to the channel is deleted, subscribers gets notified, the songs on the channel is removed from the server and the channel itself is removed (maybe inactive for some days for users to check out the song list, maybe kee the channel for some history)
+9. 
+10. 
