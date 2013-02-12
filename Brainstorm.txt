@@ -21,6 +21,3 @@ Discuss best streaming technologies
 Make Git repository
 
 Streaming tech? : http://stackoverflow.com/questions/184683/play-audio-from-a-stream-using-c-sharp
-
-
-tjest - kan slettest
