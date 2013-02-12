@@ -20,8 +20,8 @@ Use Case: Upload Song.
 
 Precondition: 	client c1 is logged in.
 Postcondition: 	song s1 is uploaded to server
-				s1 is associated with c1.
+				s1 is associated with a channel cn1.
 
 1. c1 navigates to the "upload song" page.
-2. c1 specifies the local path to c2. (perhaps an url could work too?)
+2. c1 specifies the local path to s1. (perhaps an url could work too?)
 3. c1 confirms the upload request (I.e. pressing "upload now"/"accept" or something similar).
