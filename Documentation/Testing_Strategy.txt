@@ -1,0 +1,49 @@
+There is implemented automatic unit tests that cover the following:
+	- A single test with expected input.
+	- A test for each extrema possible(ex. one test with int.MaxInt as parameter and one test with int.MinInt as parameter)
+	- All valid/invalid parameter combinations (typically between 2^n and 3^n combinations)
+	
+In order to easily identify the source of an error, it is required for each test case to have its own test method.
+
+One test class per class.
+
+All test methods will follow the signature convention:
+
+	<name of class this method tests>_<name of method this unit is testing>_ParameterTest_<parameter values seperated by underscore>
+or
+	<name of class this method tests>_<name of method this unit is testing>_BehaviorTest_<the behavior this method is testing>	
+
+example:
+
+	public void MergeAlgorithm_Merge_ParameterTest_Null_Null()
+	{
+            MergeAlgorithm m = new MergeAlgorithm();
+            String[] original = null;
+            String[] latest = null;
+
+            try
+            {
+                m.Merge(original, latest);
+                Assert.Fail();
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+
+	public void MergeAlgorithm_Merge_BehaviorTest_RemoveTextFromMiddle()
+        {
+            MergeAlgorithm m = new MergeAlgorithm();
+            String[] original = new String[] { "Orig", "ina", "l Text" };
+            String[] latest = new String[] { "Orig", "l Text" };
+
+            String[] merged = m.Merge(original, latest);
+
+            Assert.AreEqual(latest.Length, merged.Length);
+            for (int i = 0; i < merged.Length; i++)
+            {
+                Assert.AreEqual(latest[i], merged[i]);
+            }
+            // This is good
+        }
