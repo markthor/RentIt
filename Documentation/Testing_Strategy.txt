@@ -1,36 +1,14 @@
-There is implemented automatic unit tests that cover the following:
-	- A single test with expected input.
-	- A test for each extrema possible(ex. one test with int.MaxInt as parameter and one test with int.MinInt as parameter)
-	- All valid/invalid parameter combinations (typically between 2^n and 3^n combinations)
-	
-In order to easily identify the source of an error, it is required for each test case to have its own test method.
+Validation: 
+	All public methods handle their own parameter validation.
+	We do not test argument combinations for methods.
+	We only test method behaviour.
 
-One test class per class.
 
-All test methods will follow the signature convention:
+All test method will follow the following naming convention:
 
-	<name of class this method tests>_<name of method this unit is testing>_ParameterTest_<parameter values seperated by underscore>
-or
 	<name of class this method tests>_<name of method this unit is testing>_BehaviorTest_<the behavior this method is testing>	
 
 example:
-
-	public void MergeAlgorithm_Merge_ParameterTest_Null_Null()
-	{
-            MergeAlgorithm m = new MergeAlgorithm();
-            String[] original = null;
-            String[] latest = null;
-
-            try
-            {
-                m.Merge(original, latest);
-                Assert.Fail();
-            }
-            catch
-            {
-                // This is good
-            }
-        }
 
 	public void MergeAlgorithm_Merge_BehaviorTest_RemoveTextFromMiddle()
         {
