@@ -1,0 +1,10 @@
+Requirement: Track rating.
+-	Priority = 1
+	o	The user must be able to rate a track associated with a channel.
+-	Priority = 2
+	o	The rating of a track must affect the frequency with which it is played within its associated channel. A higher rating giving a proportionally higher chance of being played.
+-	Priority = 3
+	o	The user must be able to change his/her rating of a track associated with a channel.
+	o	The user must be able to clear his/her rating of a track associated with a channel.
+-	Priority = 4
+	o	The channel must recalculate the priority of its associated tracks every 24hours at the most. A tracks priority is calculated from its associated rating, # of ratings for the track. Possibly include a "decay" timer?.

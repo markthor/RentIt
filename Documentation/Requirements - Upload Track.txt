@@ -1,0 +1,8 @@
+It should be possible for users with a channel to upload a track to it.
+
+
+The requirement is beyond essential because it's the foundation of our program.
+
+This requirement somewhat interacts with the requirement of being able to create a channel, since the user must have a channel to upload the track to.
+
+Only the user who owns the channel must be able to upload tracks to it.

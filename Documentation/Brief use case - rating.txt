@@ -1,0 +1,3 @@
+Use Case: Track rating
+
+- The user listens to a song the user likes and rates it. The user changes his/her mind and modifies the rating on the song. In the end the user decides to remove his/her rating of the song entirely.

@@ -1,0 +1,27 @@
+Validation: 
+	All public methods handle their own parameter validation.
+	We do not test argument combinations for methods.
+	We only test method behaviour.
+
+
+All test method will follow the following naming convention:
+
+	<name of class this method tests>_<name of method this unit is testing>_BehaviorTest_<the behavior this method is testing>	
+
+example:
+
+	public void MergeAlgorithm_Merge_BehaviorTest_RemoveTextFromMiddle()
+        {
+            MergeAlgorithm m = new MergeAlgorithm();
+            String[] original = new String[] { "Orig", "ina", "l Text" };
+            String[] latest = new String[] { "Orig", "l Text" };
+
+            String[] merged = m.Merge(original, latest);
+
+            Assert.AreEqual(latest.Length, merged.Length);
+            for (int i = 0; i < merged.Length; i++)
+            {
+                Assert.AreEqual(latest[i], merged[i]);
+            }
+            // This is good
+        }
