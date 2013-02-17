@@ -1,0 +1,13 @@
+REQUIREMENT:
+The system must allow users to listen to a radio-channel that streams audio. 
+
+IMPORTANCE:
+Essential 
+
+DESIGN IMPLEMENTATION ISSUES:
+1. The system must be able to stream audio in a smooth and clutter-free manner.
+ 
+2. A radio-channel must be able to stream an endless stream of audio without pauses between audio tracks.
+
+3. The streaming must be implemented as a webservice(Windows Communication Foundation) and it must be
+   easy to write a new clients for the service.

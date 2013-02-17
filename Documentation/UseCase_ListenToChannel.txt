@@ -10,4 +10,4 @@ Post-condition: User is listening to the radio channel that he intended to liste
 3. User clicks and the channel starts to broadcast 
 
 Extensions:
-1a. User selects a radiochannel from a list of favorites assosiated with his account
+1a. User selects a radiochannel from a list of subscriptions assosiated with his account
