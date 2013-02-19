@@ -1,0 +1,2 @@
+Track: A fixed length audio file that the users can listen to via channels.
+Channel: A collection of tracks that is played infinitly, and can be listen to by users. Managed by a channel host.

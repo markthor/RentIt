@@ -1,0 +1,19 @@
+SQL SCHEMA RentIt
+
+* = primary key
+** = foreign key
+
+Channel(id*, name, rating, plays, user**)
+
+Comment(channelId*, UserId*, content)
+
+Genre(name*)
+
+GenreTag(channelId**/trackId**?, genreName**)
+
+Subscription(userId**, channelId**)
+
+Track(id*, channelId**, trackPath, name, artist)
+
+User(id*, userName, password)
+

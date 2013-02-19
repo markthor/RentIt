@@ -1,0 +1,5 @@
+The system shall allow all users to create a channel. The channel shall have its own collection of tracks that it plays and this collection is created and maintained by the channel host(the creator of the channel).
+The channel must be visible to other users with prober search parameters.
+
+The requirement is nessecary for upload track and listen to channel because a track is associated with a channel. Therefore it is of essential importance, as the requirements depending on it is.
+The creator of the channel shall be able to change data about the channel, such as name genre and tracks. This is of lower priority as it is not required for the essential requirements.
