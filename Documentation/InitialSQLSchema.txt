@@ -7,9 +7,9 @@ Channel(id*, name, rating, plays, user**)
 
 Comment(channelId*, UserId*, content)
 
-Genre(name*)
+Genre(id*, name)
 
-GenreTag(channelId**/trackId**?, genreName**)
+GenreTag(channelId**, genreName**)
 
 Subscription(userId**, channelId**)
 
