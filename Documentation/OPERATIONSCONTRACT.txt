@@ -1,0 +1,27 @@
+OPERATIONS CONTRACT
+
+int CreateChannel(string name, int uId, string description, int[] genres)
+int[] GetChannelIds(String name, SearchArgs args)
+Channel GetChannel(int cId)
+Channel ModifyChannel(int cId)
+void DeleteChannel(int cId)
+
+int Login(string username, string password)
+int CreateUser(string username, string password)
+
+void UploadTrack(Track t, int cId)
+void RemoveTrack(int tId)
+void VoteTrack(int rating, int uId, int tId)
+int[] GetTrackIds(int cId)
+TrackInfo GetTrackInfo(int tId)
+
+void Comment(string comment, int uId, int cId)
+int[] GetCommentIds(int cId)
+Comment GetComment(int comId)
+
+void Subscribe(int uId, int cId)
+void UnSubscribe(int uId, int cId)
+
+LISTEN TO CHANNEL!
+
+ 
