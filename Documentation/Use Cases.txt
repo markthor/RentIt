@@ -4,8 +4,10 @@
 4. Subscribe to channel
 5. Unsubscribe channel
 6. Comment channel
+11. Uptoke/downtoke songs in a channel
 
 7. Create channel
 8. Delete channel
 9. Upload song
 10. Delete song
+12. Edit channel tags
