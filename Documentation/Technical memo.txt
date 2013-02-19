@@ -1,0 +1,3 @@
+ASP.NET over Silverflight, for further compatability and Silverlight is a dying species
+Uptoke/downtoke - Only rate the last x songs that the user have heard on the channel
+The algorithm used to create the playlist for a channel should not play the same song 2 times in a row, and the most played song should not be played more than 50% times the least played song
