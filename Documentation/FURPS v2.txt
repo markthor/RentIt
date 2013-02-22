@@ -59,7 +59,7 @@ The server must not be affected by any errors clientside
 -Performance
 Users must be able to browse the site without too long response time (time for processing a user operation on server must not exceed 1000ms)
 
--------------------------------------> hvad skal der stå her? ------> Regarding listening to a channel, no buffering should be, meaning the channel should stream smoothly without any kind of lag from the server and website(we cannot guarntee no lag if the client have a bad webconnection)
+*Listening to a channel must be possible without lag from the server and website(we cannot guarntee no lag if the client have a bad webconnection)
 
 *The server must be able to stream serveral channels at the same time to serveral users
 *A single user must only be able to listen to one channel at a time
