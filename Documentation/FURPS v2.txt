@@ -5,7 +5,7 @@ Version		Date			Description				Author
 2			22/02-2013		Added measurability.	Morten Therkildsen
 
 Introduction
-This document is the repository of all the RentIt requirements not captured in the use cases
+This document is the repository of all the RentIt requirements not captured in the functional requirements.
 
 -Functionality
 Channels
@@ -25,7 +25,7 @@ Security:
 *All usage requires authentication. (usage meaning the use of any services related to the program)
 
 -Usability
-The website should be intuitive to use for the average computer user with regard to the following:
+The website should be intuitive to use for 90% of persons above 12 with regard to the following:
 	~ listening to a channel
 	~ maintaining one. 
 	~ uploading songs
@@ -40,7 +40,7 @@ The website should be intuitive to use for the average computer user with regard
 *Users must be able to upvote and downvote the last 5 songs that have been played on the channel while they were listening
 *Users must not be required to download or install any third party software in order to listen to a channel
 
-*No operation, other than uploading a track, must not exceed 1000ms
+*No operation, other than uploading a track, must exceed 1000ms
 
 -Reliability
 The server must not be affected by any errors clientside

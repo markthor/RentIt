@@ -4,6 +4,7 @@ The system shall allow all users to create a channel, add attributes and edit it
 Domain concepts:
 The channel shall have its own collection of tracks that it plays and it is created and maintained by the channel host(the creator of the channel).
 The channel shall have genres and a description.
+The channel shall have comments.
 The channel must be visible to other users with prober search parameters.
 
 Dependencies:
