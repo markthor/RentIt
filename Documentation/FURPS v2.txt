@@ -2,7 +2,7 @@ Supplementary Specification
 
 Revision History
 Version		Date			Description				Author
-2			18/02-2013		Added measurability.	Morten Therkildsen
+2			22/02-2013		Added measurability.	Morten Therkildsen
 
 Introduction
 This document is the repository of all the RentIt requirements not captured in the use cases
