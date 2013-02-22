@@ -9,11 +9,11 @@ namespace RentItServer
     {
         //Singleton instance of the class
         public static Controller _instance;
-        //Data access object for database IO
+        //Data access object for database I/O
         public static DAO _dao = DAO.GetInstance();
         //Responsible for choosing the next track
         public static TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
-        //Data access object for file system IO
+        //Data access object for file system I/O
         public static FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
 
         /// <summary>
