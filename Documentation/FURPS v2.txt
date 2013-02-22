@@ -2,7 +2,9 @@ Supplementary Specification
 
 Revision History
 Version		Date			Description				Author
+1			18/02-2013		First draft.			Mikkel Funch
 2			22/02-2013		Added measurability.	Morten Therkildsen
+
 
 Introduction
 This document is the repository of all the RentIt requirements not captured in the functional requirements.
@@ -57,17 +59,17 @@ The server must not be affected by any errors clientside
 *If upload of a track for fails, everything about the track must be removed from the server and the user must be notified
 
 -Performance
-Users must be able to browse the site without too long response time (time for processing a user operation on server must not exceed 1000ms)
+Users must be able to browse the site without to long response time (time for processing a user operation on server must not exceed 1000ms)
 
-*Listening to a channel must be possible without lag from the server and website(we cannot guarntee no lag if the client have a bad webconnection)
+*Listening to a channel must be possible without lag from the server and website (assuming there is no interference from atmospheric conditions)
 
 *The server must be able to stream serveral channels at the same time to serveral users
 *A single user must only be able to listen to one channel at a time
 
 -Supportability
-The server and website must be easy to maintain and extend.
+The server and website must be easy to maintain (no more than a workday each month for a certified profesional)
+The server and website must be implemented modular so as to ease extendibility.
 This means that extensions such as video streaming or downloading of media must not requrie extensive changes in the system architecture.
-Extensions such as facebook or twitter integration must be easy to implement on the website
 
 *The server will be running on Windows 7 OS with support of .NET 4.0 Framework.
 *Clients should be able to use whatever popular browser they wish(less know browsers might work, but we won't make sure of it)
