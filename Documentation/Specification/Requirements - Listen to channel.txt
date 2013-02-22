@@ -1,0 +1,15 @@
+Requirement:
+The system must allow users to listen to online radio-channel that streams audio. 
+
+Domain concepts:
+A channel has a collection of tracks that can be listened to.
+
+Priority:
+Higest as this is the primary service that the system provides.
+
+Implementation notes:
+The system must be able to stream audio in a smooth and clutter-free manner.
+A radio-channel must be able to stream an endless stream of audio without pauses between audio tracks.
+The streaming must be implemented as a webservice(Windows Communication Foundation) and it must be
+easy to write a new clients for the service.
+The interface for listening to audio must be as user friendly as possible.

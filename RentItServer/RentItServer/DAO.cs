@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 
 namespace RentItServer
 {
-    class DAO
+    public class DAO
     {
         //Singleton instance of the class
         public static DAO _instance;

@@ -1,8 +1,11 @@
+Requirement:
 It should be possible for users with a channel to upload a track to it.
 
+Domain concept:
+A channel has tracks that the creator manages.
 
-The requirement is beyond essential because it's the foundation of our program.
+Dependencies:
+The listen to channel requirement are depended on this requirement because the track to be played is determined by the rating.
 
-This requirement somewhat interacts with the requirement of being able to create a channel, since the user must have a channel to upload the track to.
-
-Only the user who owns the channel must be able to upload tracks to it.
+Priority:
+It is of essential importance, as the requirements depending on it is.

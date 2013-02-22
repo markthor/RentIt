@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 
 namespace RentItServer
 {
-    class FileSystemHandler
+    public class FileSystemHandler
     {
         //Singleton instance of the class
         public static FileSystemHandler _instance;

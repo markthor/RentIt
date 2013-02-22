@@ -1,0 +1,2 @@
+RentIt is a radio hosting service, that enables users to host online radio stations and for other users to listen to them.
+It is a system intended to be used by the common user, without any special knowledge or traning.

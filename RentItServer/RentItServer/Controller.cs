@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 
 namespace RentItServer
 {
-    class Controller
+    public class Controller
     {
         //Singleton instance of the class
         public static Controller _instance;
-        //Data access object for database I/O
+        //Data access object for database IO
         public static DAO _dao = DAO.GetInstance();
         //Responsible for choosing the next track
         public static TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
-        //Data access object for file system I/O
+        //Data access object for file system IO
         public static FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
 
         /// <summary>
