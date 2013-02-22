@@ -1,0 +1,12 @@
+Requirement:
+The user must be able to rate a track associated with a channel.
+
+Domain concepts:
+The rating of a track must affect the frequency with which it is played within its associated channel.
+A higher rating giving a proportionally higher chance of being played.
+
+Dependencies:
+The listen to channel requirement are depended on this requirement because the track to be played is determined by the rating.
+
+Priority:
+It is of essential importance, as the requirements depending on it is.
