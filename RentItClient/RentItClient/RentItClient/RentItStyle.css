@@ -1,7 +1,45 @@
 ﻿body {
+    width: 1200px;
 }
 
-.login {
-    margin: 4px;
+#loginTitle{
+    text-align: center;
+    font-family: Arial;
+}
+
+.loginTitle{
+    font-family: Arial;
+    text-align: center;
+    font-size: large;
+    padding-right: 3px;
+    border-bottom: 1px solid black;
+    margin: 5px;
+}
+
+.loginLabel {
+    Width: 100px;
+    margin-right: 6px;
+    margin-left: 6px;
+    font-family: Arial;
+    font-size: medium;   
+}
+
+.loginTextbox {
+    clear: left;
+    margin-right: 6px;
+    margin-left: px;
+    font-family: Arial;
+    font-size: medium;
+}
+
+.labelTextMargin {
+    margin-bottom: 4px;
+    margin-right: 50px;
+    border: 1px solid black;
     float: left;
+    width: 293px;
+}
+
+.clear {
+    margin-bottom: 5px;
 }
