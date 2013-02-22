@@ -1,69 +1,81 @@
 Supplementary Specification
 
 Revision History
-Version	Date		Description	Author
-1	18/02-2013	First draft.	Mikkel Funch
+Version		Date			Description				Author
+2			18/02-2013		Added measurability.	Morten Therkildsen
 
 Introduction
 This document is the repository of all the RentIt requirements not captured in the use cases
 
 -Functionality
 Channels
-*Channel owners should be able to assign Tags to the channels they control
-*Two users listening to the same channel at the same time should hear the same song, in other words, a channel is playing to all users, not single users.
-*A function for searching for channels should be implemented
-*A list of the most popular channels should be available to all users
+*Channel owners must be able to assign genre tags to the channels they control/own
+*Two users listening to the same channel at the same time must hear the same song with same amount of elapsed time (+- 1s), in other words, a channel is "playing" the same for all listeners.
+*A function for searching for channels must be implemented
+*A list of the most popular channels should be available to all users. Popularity must be based on an algorithm and it must be explained in the documentation.
 
 Tracks
-*All tracks being uploaded should be in .mp3(?) format
+*The service must support tracks in .mp3 format.
 
 Logging and Error Handling:
-*Log all errors?
+*All exceptional states must be logged.
+*All state changes must be logged.
 
 Security:
-*All usage requires authentication
+*All usage requires authentication. (usage meaning the use of any services related to the program)
 
 -Usability
-The website should be easy to use, both regarding listening to a channel and maintaining one. Uploading songs, voting, subscribeing and the essentials of the channel should not take much practice for a first time user.
-(There should be breif help notes on the website to help users)
+The website should be intuitive to use for the average computer user with regard to the following:
+	~ listening to a channel
+	~ maintaining one. 
+	~ uploading songs
+	~ voting
+	~ subscribing
+	
+*There must be help available for all functions in the form of text. This help must be accessible from within the client
+*Users must not be required to subscribe to a channel in order to listen to it. 
+*Users must be required to be subscribed to a channel in order to vote on the channel. 
+*If a user unsubscribes from a channel, all votes made by that user must be removed so as to not affect track ordering
+*Users must be able to see all the songs contained in a channel
+*Users must be able to upvote and downvote the last 5 songs that have been played on the channel while they were listening
+*Users must not be required to download or install any third party software in order to listen to a channel
 
-
-*Users are not required to subscribe to a channel in order to listen to it. They are required to be subscribed in order to vote on the channel. If a user unsubscribes from a channel, all votes made by that user should be removed appropriately
-*Users should be able to easily see all the songs in a channel
-*Users should be able to uptoke and downtoke the last 5 songs that have been played on the channel while they were listening
-*Users should not need to download or install any third party software in order to listen to a channel
-
-*No task, other than uploading track, may take more than x minutes
+*No operation, other than uploading a track, must not exceed 1000ms
 
 -Reliability
-The website should be reliable to the point where the server is not affected by an eventual error for a single client
-The server should be reliable to an extent which does not compromise security
+The server must not be affected by any errors clientside
 
-*All tasks requires internet connection
-*No failure should defect a track in the persistence storage
-*If a channel on the server crashes, all clients should, if possible, recieve a message about the failure and the website should be able to avoid the crash and refresh the website with possiblity to listen to the channel greyed out until the channel have been fully recovered on the server side. On the server side, the channel stream should shut down, and some sort of error should be logged and reported automatically. The channel is safe to use again when all songs identity have been confirmed(via hashing), and none of them are in use
-*If upload of a track for some reason fails, everything about the track should be removed from the server and the user should be notified
+*All operations requires internet connection
+*No system failure of any kind should affect any track in the persistence storage
+*If a channel on the server crashes:
+	~ all clients must be notified about the failure.
+	~ the website must not be affected by the crash 
+	~ the website must refresh the website with possiblity to listen to the channel greyed out until the channel have been fully recovered on the server side. 
+	~ on the server side, the channel stream must shut down
+	~ the error must be logged and reported automatically. 
+	~ The channel must be safe to use again when all songs identity have been confirmed(via hashing), and none of them are in use
+*If upload of a track for fails, everything about the track must be removed from the server and the user must be notified
 
 -Performance
-The perfomance of the website should be very effective. Users should be able to easily browse the site without too long response time
-Regarding listening to a channel, no buffering should be, meaning the channel should stream smoothly without any kind of lag from the server and website(we cannot guarntee no lag if the client have a bad webconnection)
+Users must be able to browse the site without too long response time (time for processing a user operation on server must not exceed 1000ms)
 
-*The server should be able to stream serveral channels at the same time to serveral users
-*A single user can only listen to one channel at a time
+-------------------------------------> hvad skal der stå her? ------> Regarding listening to a channel, no buffering should be, meaning the channel should stream smoothly without any kind of lag from the server and website(we cannot guarntee no lag if the client have a bad webconnection)
+
+*The server must be able to stream serveral channels at the same time to serveral users
+*A single user must only be able to listen to one channel at a time
 
 -Supportability
-The server and website should be easy to maintain and extend.
-This means that extensions such as video streaming or downloading of media should not requrie extensive changes in the system architecture.
-Extensions such as facebook or twitter integration should also be easy to implement on the website
+The server and website must be easy to maintain and extend.
+This means that extensions such as video streaming or downloading of media must not requrie extensive changes in the system architecture.
+Extensions such as facebook or twitter integration must be easy to implement on the website
 
-*The server shall only be running on Windows 7 OS with support of .NET 4.0 Framework.
+*The server will be running on Windows 7 OS with support of .NET 4.0 Framework.
 *Clients should be able to use whatever popular browser they wish(less know browsers might work, but we won't make sure of it)
-
 
 
 -Implementaion
 The server will be written in C# with the .NET 4.0 Framework and Windows Communication Foundtaion
-The website will be written in Silverlight or ASP.NET and should work in all popular browsers
+The website will be written in ASP.NET and must work in all popular browsers
 
 -Legal
 (This section should be written by a pro dude!)
