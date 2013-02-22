@@ -12,7 +12,7 @@
         <div class="login">
             <asp:Label ID="LBL_Username" runat="server" Text="Username"></asp:Label>
         </div>
-        <div class="login">
+        <div>
             <asp:TextBox ID="TextBox1" runat="server" Height="16px" style="margin-bottom: 0px"></asp:TextBox>           
         </div>  
         
