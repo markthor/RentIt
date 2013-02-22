@@ -1,7 +1,47 @@
 ﻿body {
+    width: 1200px;
+    height: auto;
 }
 
 .login {
-    margin: 4px;
+    margin: 3px 3px 3px 3px;
     float: left;
+}
+
+.logo {
+    width: 25%;
+    height: 50px;
+    float: left;
+}
+
+.search {
+    width: 50%;
+    height: 50px;
+    float: left;
+}
+
+.element {
+    margin-top: 8px;
+    margin-left: 3px;
+}
+
+.userInfo {
+    width: 25%;
+    height: 50px;
+    float: left;
+}
+
+.streamPlayer {
+    width: 25%;
+    float: left;
+}
+
+.homeScreen {
+    width: 50%;
+    float: left;
+}
+
+.subscriptions {
+    width: 25%;
+    float:left;
 }

@@ -22,21 +22,21 @@ namespace RentItClient {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// LBL_Username control.
+        /// lbl_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LBL_Username;
+        protected global::System.Web.UI.WebControls.Label lbl_username;
         
         /// <summary>
-        /// TextBox1 control.
+        /// tbx_username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox tbx_username;
     }
 }
