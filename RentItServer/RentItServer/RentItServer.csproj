@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB83F389-291F-4F2C-8424-7133D9D293AA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{4611A5C8-7FFB-410D-8808-02BEC041C3EF}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RentItServer</RootNamespace>
     <AssemblyName>RentItServer</AssemblyName>
@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -68,11 +71,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channel.cs" />
+    <Compile Include="Comment.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="FileSystemHandler.cs" />
     <Compile Include="IRentItService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchArgs.cs" />
+    <Compile Include="TrackInfo.cs" />
     <Compile Include="TrackPrioritizer.cs" />
   </ItemGroup>
   <ItemGroup>
