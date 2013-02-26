@@ -57,6 +57,7 @@
     <Compile Include="Comment.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DAO.cs" />
+    <Compile Include="Deleteme.cs" />
     <Compile Include="FileSystemHandler.cs" />
     <Compile Include="IRentItService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
