@@ -3,13 +3,20 @@
     height: auto;
 }
 
+.createBody{
+    text-align: center;
+    width: 100%;
+}
+
 .login {
     margin: 3px 3px 3px 3px;
 }
 
-#loginTitle{
-    text-align: center;
-    font-family: Arial;
+.genreBox {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+    float: left;
 }
 
 .loginTitle{
@@ -22,7 +29,6 @@
 }
 
 .loginLabel {
-    Width: 100px;
     margin-right: 6px;
     margin-left: 6px;
     font-family: Arial;
@@ -42,11 +48,22 @@
     margin-right: 50px;
     border: 1px solid black;
     float: left;
-    width: 293px;
+    width: 335px;
+}
+
+.channelTextMargin {
+    margin: 0 auto;
+    border: 1px solid black;
+    float: left;
+    width: 460px;
+    text-align: left;   
+    display:inline-block;
 }
 
 .clear {
     margin-bottom: 5px;
+    text-align: left;
+    margin-right: 0px;
 }
 
 .logo {

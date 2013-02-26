@@ -13,5 +13,11 @@ namespace RentItClient
         {
 
         }
+
+        protected void btn_createChannel_Click(object sender, EventArgs e)
+        {
+            string channelName = tbx_channelName.Text;
+            Response.Redirect("EditChannel.aspx?name=" + channelName);
+        }
     }
 }

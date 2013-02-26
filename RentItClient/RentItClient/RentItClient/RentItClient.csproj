@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateChannel.aspx" />
+    <Content Include="EditChannel.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Images\Logo-300x100.jpg" />
     <Content Include="Images\Logo-300x50.jpg" />
@@ -65,6 +67,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateChannel.aspx.cs">
+      <DependentUpon>CreateChannel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateChannel.aspx.designer.cs">
+      <DependentUpon>CreateChannel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditChannel.aspx.cs">
+      <DependentUpon>EditChannel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditChannel.aspx.designer.cs">
+      <DependentUpon>EditChannel.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
