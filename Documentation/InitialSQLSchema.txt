@@ -3,9 +3,9 @@ SQL SCHEMA RentIt
 * = primary key
 ** = foreign key
 
-Channel(id*, name, rating, plays, user**)
+Channel(id*, name, rating, plays, description, user**)
 
-Comment(channelId*, UserId*, content)
+Comment(channelId*, UserId*, content, date)
 
 Genre(id*, name)
 
@@ -13,11 +13,11 @@ GenreTag(channelId**, genreName**)
 
 Subscription(userId**, channelId**)
 
-Track(id*, channelId**, trackPath, name, artist, upvotes, downvotes)
+Track(id*, channelId**, trackPath, name, artist, length, upvotes, downvotes)
 
 User(id*, userName, password)
 
-Vote(trackId**, userId**, vote)
-
 TrackPlay(trackId**, date)
+
+Vote(trackId**, userId**, value, date)
 
