@@ -10,7 +10,7 @@
 namespace RentItClient {
     
     
-    public partial class CreateChannel {
+    public partial class EditChannel {
         
         /// <summary>
         /// form1 control.
@@ -20,15 +20,6 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// lbl_loginTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginTitle;
         
         /// <summary>
         /// lbl_channelName control.
@@ -49,12 +40,30 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_channelName;
         
         /// <summary>
-        /// btn_createChannel control.
+        /// lb_genrelist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_createChannel;
+        protected global::System.Web.UI.WebControls.ListBox lb_genrelist;
+        
+        /// <summary>
+        /// lb_genres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lb_genres;
+        
+        /// <summary>
+        /// btn_addGenre control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_addGenre;
     }
 }

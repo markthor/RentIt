@@ -7,17 +7,16 @@ using System.Web.UI.WebControls;
 
 namespace RentItClient
 {
-    public partial class CreateChannel : System.Web.UI.Page
+    public partial class Logo : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void btn_createChannel_Click(object sender, EventArgs e)
+        protected void img_Logo_Click(object sender, ImageClickEventArgs e)
         {
-            string channelName = tbx_channelName.Text;
-            Response.Redirect("EditChannel.aspx?name=" + channelName);
+            Response.Write("<script language='javascript'>alert('Logo Clicked');</script>");
         }
     }
 }
