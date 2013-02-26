@@ -10,69 +10,96 @@
 namespace RentItClient {
     
     
-    public partial class Home {
+    public partial class ChannelDescription {
         
         /// <summary>
-        /// form1 control.
+        /// tbl_main control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Table tbl_main;
         
         /// <summary>
-        /// logo control.
+        /// tbc_description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.Logo logo;
+        protected global::System.Web.UI.WebControls.TableCell tbc_description;
         
         /// <summary>
-        /// searchBar control.
+        /// tbl_playsUptokesDowntokes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.SearchBar searchBar;
+        protected global::System.Web.UI.WebControls.Table tbl_playsUptokesDowntokes;
         
         /// <summary>
-        /// userInfo control.
+        /// lbl_numberOfPlays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.UserInfo userInfo;
+        protected global::System.Web.UI.WebControls.Label lbl_numberOfPlays;
         
         /// <summary>
-        /// div_homeScreen control.
+        /// lbl_numberOfUptokes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_homeScreen;
+        protected global::System.Web.UI.WebControls.Label lbl_numberOfUptokes;
         
         /// <summary>
-        /// searchResult control.
+        /// lbl_numberOfDowntokes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.SearchResult searchResult;
+        protected global::System.Web.UI.WebControls.Label lbl_numberOfDowntokes;
         
         /// <summary>
-        /// channelDescription control.
+        /// lbx_tracklist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.ChannelDescription channelDescription;
+        protected global::System.Web.UI.WebControls.ListBox lbx_tracklist;
+        
+        /// <summary>
+        /// lbx_genrelist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbx_genrelist;
+        
+        /// <summary>
+        /// btn_play control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_play;
+        
+        /// <summary>
+        /// btn_subscribe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_subscribe;
     }
 }
