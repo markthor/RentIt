@@ -13,10 +13,11 @@ GenreTag(channelId**, genreName**)
 
 Subscription(userId**, channelId**)
 
-Track(id*, channelId**, trackPath, name, artist, length)
+Track(id*, channelId**, trackPath, name, artist, length, upvotes, downvotes)
 
 User(id*, userName, password)
 
-TrackPlay(channelId**, trackId**, date)
+TrackPlay(trackId**, date)
 
 Vote(trackId**, userId**, value, date)
+
