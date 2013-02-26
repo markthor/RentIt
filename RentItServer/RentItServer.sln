@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItServer", "RentItServer\RentItServer.csproj", "{BB83F389-291F-4F2C-8424-7133D9D293AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItServer", "RentItServer\RentItServer.csproj", "{4611A5C8-7FFB-410D-8808-02BEC041C3EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
