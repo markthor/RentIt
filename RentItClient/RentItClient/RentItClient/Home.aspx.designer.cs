@@ -31,31 +31,13 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.ImageButton img_Logo;
         
         /// <summary>
-        /// tbx_searchBar control.
+        /// searchBar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbx_searchBar;
-        
-        /// <summary>
-        /// btn_search control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_search;
-        
-        /// <summary>
-        /// btn_advancedSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_advancedSearch;
+        protected global::RentItClient.SearchBar searchBar;
         
         /// <summary>
         /// btn_createChannel control.

@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="RentItClient.Home" %>
+<%@ Register TagPrefix="userControl" TagName="searchBar" Src="~/SearchBar.ascx"%>
 
 <!DOCTYPE html>
 
@@ -13,9 +14,7 @@
             <asp:ImageButton ID="img_Logo" runat="server" ImageUrl="~/Images/Logo-300x50.jpg" OnClick="img_Logo_Click"/>
         </div>
         <div id="search" class="search">
-            <asp:TextBox ID="tbx_searchBar" runat="server" width="63%" CssClass="element"/>
-            <asp:Button ID="btn_search" runat="server" Text="Search" CssClass="element"/>    
-            <asp:Button ID="btn_advancedSearch" runat="server" Text="Adv. search" CssClass="element"/>
+            <userControl:searchBar id="searchBar" runat="server" />    
         </div>
         <div id="userInfo" class="userInfo">
             <asp:Button ID="btn_createChannel" runat="server" Text="Create Channel" />
