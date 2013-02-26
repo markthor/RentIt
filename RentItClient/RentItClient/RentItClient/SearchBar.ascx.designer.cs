@@ -10,51 +10,33 @@
 namespace RentItClient {
     
     
-    public partial class CreateChannel {
+    public partial class SearchBar {
         
         /// <summary>
-        /// form1 control.
+        /// tbx_searchField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox tbx_searchField;
         
         /// <summary>
-        /// lbl_loginTitle control.
+        /// btn_search control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginTitle;
+        protected global::System.Web.UI.WebControls.Button btn_search;
         
         /// <summary>
-        /// lbl_channelName control.
+        /// bth_searchAdvanced control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_channelName;
-        
-        /// <summary>
-        /// tbx_channelName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbx_channelName;
-        
-        /// <summary>
-        /// btn_createChannel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_createChannel;
+        protected global::System.Web.UI.WebControls.Button bth_searchAdvanced;
     }
 }

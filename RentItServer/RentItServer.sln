@@ -3,14 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItServer", "RentItServer\RentItServer.csproj", "{BB83F389-291F-4F2C-8424-7133D9D293AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItServer UnitTests", "RentItServer UnitTests\RentItServer UnitTests.csproj", "{1B680BE5-0EEE-4453-9485-81DEDF120F59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{BB83F389-291F-4F2C-8424-7133D9D293AA}.Release|Any CPU.ActiveCfg = Release|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Release|Any CPU.ActiveCfg = Release|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4611A5C8-7FFB-410D-8808-02BEC041C3EF}.Release|Mixed Platforms.Build.0 = Release|x86
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1B680BE5-0EEE-4453-9485-81DEDF120F59}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

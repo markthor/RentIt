@@ -10,51 +10,42 @@
 namespace RentItClient {
     
     
-    public partial class CreateChannel {
+    public partial class SearchResult {
         
         /// <summary>
-        /// form1 control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// lbl_loginTitle control.
+        /// lbl_numberOfPlays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_loginTitle;
+        protected global::System.Web.UI.WebControls.Label lbl_numberOfPlays;
         
         /// <summary>
-        /// lbl_channelName control.
+        /// lbl_numberOfSubscribers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_channelName;
+        protected global::System.Web.UI.WebControls.Label lbl_numberOfSubscribers;
         
         /// <summary>
-        /// tbx_channelName control.
+        /// lbl_genres control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbx_channelName;
-        
-        /// <summary>
-        /// btn_createChannel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_createChannel;
+        protected global::System.Web.UI.WebControls.Label lbl_genres;
     }
 }

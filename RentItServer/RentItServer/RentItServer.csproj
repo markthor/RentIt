@@ -80,6 +80,7 @@
     <Compile Include="Comment.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DAO.cs" />
+<<<<<<< HEAD
     <Compile Include="DatabaseModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,6 +99,9 @@
     <Compile Include="Entity1.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+=======
+    <Compile Include="Deleteme.cs" />
+>>>>>>> 25ca79f12710428549c2dfdc57b2d63a77891527
     <Compile Include="FileSystemHandler.cs" />
     <Compile Include="IRentItService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
