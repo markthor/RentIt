@@ -25,7 +25,7 @@ namespace RentItClient
             string passwordConfirm = tbx_confirmPassword.Text;
 
             if (password != passwordConfirm)
-                Response.Write("<script language='javascript'>alert('Password not confirmed');</script>");
+                Response.Write("<script language='javascript'>alert('Password is');</script>");
 
 
         }
