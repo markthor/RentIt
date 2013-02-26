@@ -59,14 +59,21 @@
   <ItemGroup>
     <Content Include="CreateChannel.aspx" />
     <Content Include="EditChannel.aspx" />
+
+    <Content Include="ChannelDescription.ascx" />
     <Content Include="Home.aspx" />
     <Content Include="Images\Logo-300x100.jpg" />
     <Content Include="Images\Logo-300x50.jpg" />
     <Content Include="Login.aspx" />
+    <Content Include="Logo.ascx" />
     <Content Include="RentItStyle.css" />
+    <Content Include="SearchBar.ascx" />
+    <Content Include="SearchResult.ascx" />
+    <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+
     <Compile Include="CreateChannel.aspx.cs">
       <DependentUpon>CreateChannel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -80,6 +87,14 @@
     </Compile>
     <Compile Include="EditChannel.aspx.designer.cs">
       <DependentUpon>EditChannel.aspx</DependentUpon>
+
+    <Compile Include="ChannelDescription.ascx.cs">
+      <DependentUpon>ChannelDescription.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChannelDescription.ascx.designer.cs">
+      <DependentUpon>ChannelDescription.ascx</DependentUpon>
+
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
@@ -95,7 +110,35 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Logo.ascx.cs">
+      <DependentUpon>Logo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logo.ascx.designer.cs">
+      <DependentUpon>Logo.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchBar.ascx.cs">
+      <DependentUpon>SearchBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchBar.ascx.designer.cs">
+      <DependentUpon>SearchBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchResult.ascx.cs">
+      <DependentUpon>SearchResult.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchResult.ascx.designer.cs">
+      <DependentUpon>SearchResult.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfo.ascx.cs">
+      <DependentUpon>UserInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserInfo.ascx.designer.cs">
+      <DependentUpon>UserInfo.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">

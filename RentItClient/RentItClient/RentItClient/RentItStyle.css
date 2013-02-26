@@ -38,7 +38,6 @@
 .loginTextbox {
     clear: left;
     margin-right: 6px;
-    margin-left: px;
     font-family: Arial;
     font-size: medium;
 }
@@ -73,9 +72,12 @@
 }
 
 .search {
+    margin: 0px 0px;
+    text-align: center;
     width: 50%;
     height: 50px;
     float: left;
+    background-color: aqua;
 }
 
 .element {
@@ -87,6 +89,8 @@
     width: 25%;
     height: 50px;
     float: left;
+    text-align: center;
+    background-color: red;
 }
 
 .streamPlayer {
@@ -102,4 +106,10 @@
 .subscriptions {
     width: 25%;
     float:left;
+}
+
+.centered {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
 }
