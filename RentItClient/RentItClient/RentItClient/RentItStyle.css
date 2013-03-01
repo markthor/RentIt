@@ -1,6 +1,7 @@
 ﻿body {
     width: 1200px;
     height: auto;
+    margin: 0 auto;
 }
 
 .createBody{
@@ -110,6 +111,4 @@
 
 .centered {
     text-align: center;
-    display: table-cell;
-    vertical-align: middle;
 }

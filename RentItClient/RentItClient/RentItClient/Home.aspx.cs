@@ -14,13 +14,13 @@ namespace RentItClient
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            tracks.Add("asds645756tdgsdfhse");
-            tracks.Add("asdsdg123454768sfasfsdfhse");
+            tracks.Add("Arctic Monkeys - You Probably Couldn't See for the Lights but You Were Looking Straight at Me");
+            tracks.Add("Bal Sagoth - The Dark Liege of Chaos is unleashed at the Ensorcelled Shrine of A'Zura Kai (The Splendour of a Thousand Swords Gleaming Beneath the Blazon of the Hyperborean Empire Part II)");
             tracks.Add("asdsdfgrg4352324gsdfhse");
             tracks.Add("asdsdgasdasdasfesdfhse");
             tracks.Add("asdsd2342354gsdfhse");
 
-            ListBox tracklist = (ListBox) channelDescription.FindControl("lbx_tracklist");
+            ListBox tracklist = (ListBox)channelDescription.FindControl("lbx_tracklist");
             tracklist.DataSource = tracks;
             tracklist.DataBind();
         }
