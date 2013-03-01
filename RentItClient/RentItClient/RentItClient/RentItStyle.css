@@ -14,22 +14,14 @@
 }
 
 .genreBox {
-    margin-top: 5px;
-    margin-bottom: 15px;
-    margin-right: 10px;
-    margin-left: 5px;
+   
     float: left;
     }
-
-.genreBtn {
-    margin: 5px;
-}
 
 .loginTitle{
     font-family: Arial;
     text-align: center;
     font-size: large;
-    padding-right: 3px;
     border-bottom: 1px solid black;
     margin: 5px;
 }
@@ -49,8 +41,6 @@
 }
 
 textarea
-
-
 {
 
 
@@ -69,11 +59,7 @@ resize: none;
 
 .channelTextMargin {
     margin: 0 auto;
-    border: 1px solid black;
-    float: left;
-    width: 460px;
-    text-align: left;   
-    display:inline-block;
+    width: 600px;
 }
 
 .clear {
@@ -126,5 +112,7 @@ resize: none;
 }
 
 .centered {
+    margin: 0 auto;
     text-align: center;
+    clear:both;
 }

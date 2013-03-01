@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditChannel.aspx.cs" Inherits="RentItClient.EditChannel" %>
-
+<%@ Register TagPrefix="userControl" TagName="topBar" Src="~/TopBar.ascx" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,32 +9,41 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <h1 id="loginTitle">Edit Channel</h1>
-        <div style="margin-bottom: 8px;">
-            <asp:Label ID="lbl_channelName" runat="server" Text="Channel name" CssClass ="loginLabel"></asp:Label>
-            <asp:TextBox ID="tbx_channelName" runat="server" CssClass="loginTextbox"></asp:TextBox>
+        <div>
+            <userControl:topBar ID="topBar" runat="server" />
         </div>
-    <div class="channelTextMargin">
-        <div class="genreBox">
-            <div class="genreBox">
-                <asp:Label ID="Label1" runat="server" Text="Available genres" CssClass="loginLabel"></asp:Label>
-                <asp:ListBox ID="lb_genrelist" runat="server" Width="200px" CssClass="genreBox" ViewStateMode="Enabled"></asp:ListBox>
-            </div>
-
-            <div class="genreBox">
-                <asp:Label ID="Label2" runat="server" Text="Genres" CssClass="loginLabel"></asp:Label>
-                <asp:ListBox ID="lb_genres" runat="server" Width="193px" CssClass="genreBox" ViewStateMode="Enabled"></asp:ListBox>
-            </div>
-        </div> 
-            <asp:Button ID="btn_addGenre" runat="server" Text="Add" CssClass="genreBtn" OnClick="btn_addGenre_Click"/>
-            <asp:Button ID="btn_deleteGenre" runat="server" Text="Remove" CssClass="genreBtn" OnClick="btn_deleteGenre_Click" />
-    </div>
-    <div class="channelTextMargin">
-        <asp:Label ID="lbl_channelDescription" runat="server" Text="Description" CssClass="loginLabel"></asp:Label>
-        <div class="genreBox">
-            <asp:TextBox ID="TextBox1" runat="server" Rows="5" TextMode="MultiLine" Width="405px" Height="201px" MaxLength="150" Style="margin:10px;"></asp:TextBox>
+        <div class="centered">
+            <h1>Edit Channel</h1>
+            <asp:Label runat="server" Text="Channel name:" CssClass="loginLabel"></asp:Label>
+            <asp:Label ID="lbl_channelName" runat="server" CssClass="loginLabel" Text=""></asp:Label>
         </div>
-    </div>
+        <br />
+        <div class="channelTextMargin">
+            <div style="float:left; width:50%">
+                <asp:Label ID="Label3" runat="server" Text="Available genres" CssClass="loginLabel"></asp:Label>
+                <asp:ListBox ID="lbx_availableGenres" runat="server" Width="95%" CssClass="genreBox" ViewStateMode="Enabled"></asp:ListBox>
+            </div>
+            <div style="float:left; width:50%">
+                <asp:Label ID="Label4" runat="server" Text="Chosen genres" CssClass="loginLabel"></asp:Label>
+                <asp:ListBox ID="lbx_chosenGenres" runat="server" Width="95%" style="float:right" CssClass="genreBox" ViewStateMode="Enabled"></asp:ListBox>
+            </div>
+            <div style="float:left; width:50%">
+                <asp:Button ID="btn_addGenre" runat="server" Text="Add" style="float:right;margin-right:15px" CssClass="genreBtn" OnClick="btn_addGenre_Click"/>
+            </div>
+            <div style="float:left; width:50%">
+                <asp:Button ID="btn_deleteGenre" runat="server" Text="Remove" style="float:left;margin-left:15px" CssClass="genreBtn" OnClick="btn_deleteGenre_Click" />
+            </div>
+            
+        </div>
+        <div class="channelTextMargin">
+            <h3>Description</h3>
+            <asp:TextBox ID="tbx_description" runat="server" Text="" Rows="8" TextMode="MultiLine" Width="100%"/>
+        </div>
+        <div class="channelTextMargin">
+            <asp:Button ID="btn_saveChanges" runat="server" Text="Save Changes" OnClick="btn_saveChanges_Click" />
+            <asp:Button ID="btn_discardChanges" runat="server" Text="Discard Changes" OnClick="btn_discardChanges_Click" />
+        </div>
+        
     </form>
 </body>
 </html>

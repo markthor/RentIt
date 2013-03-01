@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
 
-<div id="div_channelName" style="text-align:center">
+<div id="div_channelName" class="centered">
     <h1>Channel Name</h1>
 </div>
 <div style="float:left; text-align:right; width:50%;">

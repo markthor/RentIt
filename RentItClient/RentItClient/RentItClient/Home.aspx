@@ -7,12 +7,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
     <title></title>
+    <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
 </head>
 <body>
-    <form id="form1" runat="server">
-        <userControl:topBar ID="topBar" runat="server" />
+    <form runat="server">
+        <div>
+            <userControl:topBar ID="topBar" runat="server" />
+        </div>
         <div id="div_streamPlayer" class="streamPlayer">
             <p>StreamPlayer</p>
         </div>
@@ -26,4 +28,3 @@
     </form>
 </body>
 </html>
-<%--  --%>
