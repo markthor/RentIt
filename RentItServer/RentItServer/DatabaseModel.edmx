@@ -19,22 +19,186 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" >
         <EntityContainer Name="DatabaseModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Entity1Set" EntityType="DatabaseModel.Entity1" />
+          <EntitySet Name="ChannelSet" EntityType="DatabaseModel.Channel" />
+          <EntitySet Name="CommentSet" EntityType="DatabaseModel.Comment" />
+          <EntitySet Name="GenreSet" EntityType="DatabaseModel.Genre" />
+          <EntitySet Name="ChannelGenreSet" EntityType="DatabaseModel.ChannelGenre" />
+          <EntitySet Name="SubscriptionSet" EntityType="DatabaseModel.Subscription" />
+          <EntitySet Name="TrackSet" EntityType="DatabaseModel.Track" />
+          <EntitySet Name="UserSet" EntityType="DatabaseModel.User" />
+          <EntitySet Name="TrackPlaySet" EntityType="DatabaseModel.TrackPlay" />
+          <EntitySet Name="VoteSet" EntityType="DatabaseModel.Vote" />
+          <AssociationSet Name="UserChannel" Association="DatabaseModel.UserChannel">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Channel" EntitySet="ChannelSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChannelComment" Association="DatabaseModel.ChannelComment">
+            <End Role="Channel" EntitySet="ChannelSet" />
+            <End Role="Comment" EntitySet="CommentSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserComment" Association="DatabaseModel.UserComment">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Comment" EntitySet="CommentSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChannelGenreTag" Association="DatabaseModel.ChannelGenreTag">
+            <End Role="Channel" EntitySet="ChannelSet" />
+            <End Role="GenreTag" EntitySet="ChannelGenreSet" />
+          </AssociationSet>
+          <AssociationSet Name="GenreGenreTag" Association="DatabaseModel.GenreGenreTag">
+            <End Role="Genre" EntitySet="GenreSet" />
+            <End Role="GenreTag" EntitySet="ChannelGenreSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChannelSubscription" Association="DatabaseModel.ChannelSubscription">
+            <End Role="Channel" EntitySet="ChannelSet" />
+            <End Role="Subscription" EntitySet="SubscriptionSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserSubscription" Association="DatabaseModel.UserSubscription">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Subscription" EntitySet="SubscriptionSet" />
+          </AssociationSet>
+          <AssociationSet Name="ChannelTrack" Association="DatabaseModel.ChannelTrack">
+            <End Role="Channel" EntitySet="ChannelSet" />
+            <End Role="Track" EntitySet="TrackSet" />
+          </AssociationSet>
+          <AssociationSet Name="TrackTrackPlay" Association="DatabaseModel.TrackTrackPlay">
+            <End Role="Track" EntitySet="TrackSet" />
+            <End Role="TrackPlay" EntitySet="TrackPlaySet" />
+          </AssociationSet>
+          <AssociationSet Name="TrackVote" Association="DatabaseModel.TrackVote">
+            <End Role="Track" EntitySet="TrackSet" />
+            <End Role="Vote" EntitySet="VoteSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserVote" Association="DatabaseModel.UserVote">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Vote" EntitySet="VoteSet" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Entity1">
+        <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+          <Property Type="Int32" Name="Plays" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.UserChannel" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Comment" Relationship="DatabaseModel.ChannelComment" FromRole="Channel" ToRole="Comment" />
+          <NavigationProperty Name="GenreTag" Relationship="DatabaseModel.ChannelGenreTag" FromRole="Channel" ToRole="GenreTag" />
+          <NavigationProperty Name="Subscription" Relationship="DatabaseModel.ChannelSubscription" FromRole="Channel" ToRole="Subscription" />
+          <NavigationProperty Name="Track" Relationship="DatabaseModel.ChannelTrack" FromRole="Channel" ToRole="Track" />
         </EntityType>
+        <EntityType Name="Comment">
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="DatabaseModel.ChannelComment" FromRole="Comment" ToRole="Channel" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.UserComment" FromRole="Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="GenreTag" Relationship="DatabaseModel.GenreGenreTag" FromRole="Genre" ToRole="GenreTag" />
+        </EntityType>
+        <EntityType Name="ChannelGenre">
+          <NavigationProperty Name="Channel" Relationship="DatabaseModel.ChannelGenreTag" FromRole="GenreTag" ToRole="Channel" />
+          <NavigationProperty Name="Genre" Relationship="DatabaseModel.GenreGenreTag" FromRole="GenreTag" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <NavigationProperty Name="Channel" Relationship="DatabaseModel.ChannelSubscription" FromRole="Subscription" ToRole="Channel" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.UserSubscription" FromRole="Subscription" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Track">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TrackPath" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Artist" Nullable="false" />
+          <Property Type="String" Name="Length" Nullable="false" />
+          <Property Type="Int32" Name="Upvotes" Nullable="false" />
+          <Property Type="Int32" Name="Downvotes" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="DatabaseModel.ChannelTrack" FromRole="Track" ToRole="Channel" />
+          <NavigationProperty Name="TrackPlay" Relationship="DatabaseModel.TrackTrackPlay" FromRole="Track" ToRole="TrackPlay" />
+          <NavigationProperty Name="Vote" Relationship="DatabaseModel.TrackVote" FromRole="Track" ToRole="Vote" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Username" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" />
+          <NavigationProperty Name="Channel" Relationship="DatabaseModel.UserChannel" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="Comment" Relationship="DatabaseModel.UserComment" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Subscription" Relationship="DatabaseModel.UserSubscription" FromRole="User" ToRole="Subscription" />
+          <NavigationProperty Name="Vote" Relationship="DatabaseModel.UserVote" FromRole="User" ToRole="Vote" />
+        </EntityType>
+        <EntityType Name="TrackPlay">
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="Track" Relationship="DatabaseModel.TrackTrackPlay" FromRole="TrackPlay" ToRole="Track" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Property Type="Int16" Name="Value" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="Track" Relationship="DatabaseModel.TrackVote" FromRole="Vote" ToRole="Track" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.UserVote" FromRole="Vote" ToRole="User" />
+        </EntityType>
+        <Association Name="UserChannel">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Channel" Role="Channel" Multiplicity="*" />
+        </Association>
+        <Association Name="ChannelComment">
+          <End Type="DatabaseModel.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="DatabaseModel.Comment" Role="Comment" Multiplicity="*" />
+        </Association>
+        <Association Name="UserComment">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Comment" Role="Comment" Multiplicity="*" />
+        </Association>
+        <Association Name="ChannelGenreTag">
+          <End Type="DatabaseModel.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="DatabaseModel.ChannelGenre" Role="GenreTag" Multiplicity="*" />
+        </Association>
+        <Association Name="GenreGenreTag">
+          <End Type="DatabaseModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="DatabaseModel.ChannelGenre" Role="GenreTag" Multiplicity="*" />
+        </Association>
+        <Association Name="ChannelSubscription">
+          <End Type="DatabaseModel.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="DatabaseModel.Subscription" Role="Subscription" Multiplicity="*" />
+        </Association>
+        <Association Name="UserSubscription">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Subscription" Role="Subscription" Multiplicity="*" />
+        </Association>
+        <Association Name="ChannelTrack">
+          <End Type="DatabaseModel.Channel" Role="Channel" Multiplicity="1" />
+          <End Type="DatabaseModel.Track" Role="Track" Multiplicity="*" />
+        </Association>
+        <Association Name="TrackTrackPlay">
+          <End Type="DatabaseModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="DatabaseModel.TrackPlay" Role="TrackPlay" Multiplicity="*" />
+        </Association>
+        <Association Name="TrackVote">
+          <End Type="DatabaseModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="DatabaseModel.Vote" Role="Vote" Multiplicity="*" />
+        </Association>
+        <Association Name="UserVote">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Vote" Role="Vote" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseModelContainer">
-    <EntitySetMapping Name="Entity1Set">
-      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.Entity1)">
+    <EntitySetMapping Name="ChannelSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DatabaseModel.Channel)">
         <MappingFragment StoreEntitySet="Entity1Set">
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
