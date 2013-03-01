@@ -13,10 +13,15 @@
 }
 
 .genreBox {
-    margin-top: 15px;
+    margin-top: 5px;
     margin-bottom: 15px;
     margin-right: 10px;
+    margin-left: 5px;
     float: left;
+    }
+
+.genreBtn {
+    margin: 5px;
 }
 
 .loginTitle{
@@ -40,6 +45,17 @@
     margin-right: 6px;
     font-family: Arial;
     font-size: medium;
+}
+
+textarea
+
+
+{
+
+
+resize: none;
+
+
 }
 
 .labelTextMargin {
