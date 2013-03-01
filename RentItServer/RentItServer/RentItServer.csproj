@@ -95,9 +95,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entity1.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="FileSystemHandler.cs" />
     <Compile Include="IRentItService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
