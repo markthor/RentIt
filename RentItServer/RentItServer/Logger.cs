@@ -8,28 +8,42 @@ namespace RentItServer
 {
     public class Logger
     {
-        private readonly string _fullPath;
+        /// <summary>
+        /// The absolute path to the log file
+        /// </summary>
+        private readonly string _absolutePath;
 
-        public Logger(string fullPath)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Logger"/> class.
+        /// </summary>
+        /// <param name="absolutePath">The absolute path to the log file. If a file does not exist at the specified location it will be created.</param>
+        /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
+        public Logger(string absolutePath)
         {
-            fullPath = fullPath.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            fullPath = fullPath.Replace("/", Path.DirectorySeparatorChar.ToString());
-            if (fullPath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Full must not target a directory. fullPath = " + fullPath);
+            absolutePath = absolutePath.Replace("\\", Path.DirectorySeparatorChar.ToString());
+            absolutePath = absolutePath.Replace("/", Path.DirectorySeparatorChar.ToString());
+            if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Full must not target a directory. absolutePath = " + absolutePath);
             
-            _fullPath = fullPath;
+            _absolutePath = absolutePath;
 
-            if (File.Exists(_fullPath) == false)
+            if (File.Exists(_absolutePath) == false)
             {
-                File.Create(_fullPath);
+                File.Create(_absolutePath);
             }
         }
 
-        public void AddEntry(string log)
+        /// <summary>
+        /// Adds an entry to the log.
+        /// </summary>
+        /// <param name="entry">The entry to be appended to the log file.</param>
+        /// <exception cref="System.ArgumentNullException">Log argument was null</exception>
+        /// <exception cref="System.ArgumentException">Log argument was empty</exception>
+        public void AddEntry(string entry)
         {
-            if (log == null) throw new ArgumentNullException("Log argument was null");
-            if (log.Equals("")) throw new ArgumentException("Log argument was empty");
+            if (entry == null) throw new ArgumentNullException("Log argument was null");
+            if (entry.Equals("")) throw new ArgumentException("Log argument was empty");
             string timeStamp = "["+DateTime.Now.ToString()+"] ";
-            File.AppendAllText(_fullPath, timeStamp + log);
+            File.AppendAllText(_absolutePath, timeStamp + entry);
         }
     }
 }
