@@ -10,42 +10,33 @@
 namespace RentItClient {
     
     
-    public partial class Home {
+    public partial class TopBar {
         
         /// <summary>
-        /// topBar control.
+        /// logo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.TopBar topBar;
+        protected global::RentItClient.Logo logo;
         
         /// <summary>
-        /// div_homeScreen control.
+        /// searchBar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_homeScreen;
+        protected global::RentItClient.SearchBar searchBar;
         
         /// <summary>
-        /// searchResult control.
+        /// userInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.SearchResult searchResult;
-        
-        /// <summary>
-        /// channelDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::RentItClient.ChannelDescription channelDescription;
+        protected global::RentItClient.UserInfo userInfo;
     }
 }
