@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="FileSystemHandler.cs" />
     <Compile Include="IRentItService.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RentItService.cs" />
     <Compile Include="SearchArgs.cs" />

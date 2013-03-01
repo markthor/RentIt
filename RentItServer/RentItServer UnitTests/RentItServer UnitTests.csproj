@@ -59,6 +59,12 @@
     <Compile Include="FileSystemHandler_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RentItServer\RentItServer.csproj">
+      <Project>{bb83f389-291f-4f2c-8424-7133d9d293aa}</Project>
+      <Name>RentItServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

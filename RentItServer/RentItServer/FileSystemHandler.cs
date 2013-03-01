@@ -16,6 +16,9 @@ namespace RentItServer
                                 + "Folder1" + Path.DirectorySeparatorChar
                                 + "Folder2" + Path.DirectorySeparatorChar;
 
+        /// <summary>
+        /// The log
+        /// </summary>
         private readonly Logger _log = new Logger("ABSOLUTE PATH TO LOG FILE");
 
         /// <summary>
@@ -39,6 +42,16 @@ namespace RentItServer
             return _instance;
         }
 
+        /// <summary>
+        /// Writes the specified trackStream to a file at the path relative to the root directory.
+        /// </summary>
+        /// <param name="relativePath">The relative path.</param>
+        /// <param name="trackStream">The track stream.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Relative path was null
+        /// or
+        /// MemoryStream argument was null
+        /// </exception>
         public void Write(string relativePath, MemoryStream trackStream)
         {
             if (relativePath == null) throw new ArgumentNullException("Relative path was null");
@@ -62,6 +75,17 @@ namespace RentItServer
             }
         }
 
+        /// <summary>
+        /// Reads the file at the specified path relative to the root directory.
+        /// </summary>
+        /// <param name="relativePath">The relative path.</param>
+        /// <returns> <see cref="MemoryStream"/> containing the contents of the file</returns>
+        /// <exception cref="System.ArgumentNullException">Relative path was null</exception>
+        /// <exception cref="System.ArgumentException">
+        /// Relative path must target a file
+        /// or
+        /// Relative path must target a file. Relative path =  + relativePath
+        /// </exception>
         public MemoryStream Read(string relativePath)
         {
             if (relativePath == null) throw new ArgumentNullException("Relative path was null");
@@ -88,6 +112,11 @@ namespace RentItServer
             }
         }
 
+        /// <summary>
+        /// Processes the path.
+        /// </summary>
+        /// <param name="relativePath">The relative path to a file or directory.</param>
+        /// <returns>The absolute path to file or directory.</returns>
         private string ProcessPath(string relativePath)
         {
             relativePath = relativePath.Replace("\\", Path.DirectorySeparatorChar.ToString());

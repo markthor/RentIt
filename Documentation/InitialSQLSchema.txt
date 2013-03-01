@@ -21,3 +21,79 @@ TrackPlay(trackId**, date)
 
 Vote(trackId**, userId**, value, date)
 
+
+
+-------------------- SQL DDL ------------------
+CREATE TABLE `channels`(
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(200) NOT NULL,
+	`rating` FLOAT,
+	`plays` VARCHAR(500),
+	`description` VARCHAR(5000),
+	`user` INTEGER UNSIGNED NOT NULL,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`user`) REFERENCES `users`(`id`)
+		ON UPDATE CASCADE);
+		
+CREATE TABLE `comments`(
+	`channel` INTEGER UNSIGNED NOT NULL,
+	`user` INTEGER UNSIGNED NO NULL,
+	`content` VARCHAR(500) NOT NULL,
+	`date` DATE NOT NULL,
+	PRIMARY KEY (`channel`,`user`),
+	FOREIGN KEY (`channel`) REFERENCES `channels`(`id`),
+	FOREIGN KEY (`user`) REFERENCES `users`(`id`));
+	
+CREATE TABLE `genres`(
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(200) NOT NULL,
+	PRIMARY KEY(`id`));
+	
+CREATE TABLE `channelgenres`(
+	`channel` INTEGER UNSIGNED NOT NULL,
+	`genre` INTEGER UNSIGNED NOT NULL,
+	PRIMARY KEY(`channel`, `genre`),
+	FOREIGN KEY(`channel`) REFERENCES `channels`(`id`),
+	FOREIGN KEY(`genre`) REFERENCES `genres`(`id`));
+	
+CREATE TABLE `subscriptions`(
+	`user` INTEGER UNSIGNED NOT NULL,
+	`channel` INTEGER UNSIGNED NOT NULL);
+	
+CREATE TABLE `tracks`(
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`channel` INTEGER UNSIGNED NOT NULL,
+	`trackpath` VARCHAR(1000) NOT NULL,
+	`name` VARCHAR(500) NOT NULL,
+	`artist` VARCHAR(500),
+	`length` FLOAT,
+	`upvotes` INTEGER UNSIGNED,
+	`downvotes` INTEGER UNSIGNED,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`channel`) REFERENCES `channels`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE);
+	
+CREATE TABLE `users`(
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(50) NOT NULL,
+	`password` VARCHAR(20) NOT NULL,
+	PRIMARY KEY(`id`));
+	
+CREATE TABLE `trackplays`(
+	`track` INTEGER UNSIGNED NOT NULL,
+	`date` DATE,
+	PRIMARY KEY(`track`),
+	FOREIGN KEY(`track`) REFERNCES `tracks`(`id`));
+
+CREATE TABLE `votes`(
+	`track` INTEGER UNSIGNED NOT NULL,
+	`user` INTEGER UNSIGNED NOT NULL,
+	`value` INTEGER NOT NULL,
+	`date` DATE,
+	PRIMARY KEY(`track`, `user`),
+	FOREIGN KEY(`track`) REFERENCES `tracks`(`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	FOREIGN KEY(`user`) REFERENCES `users`(`id`)
+		ON UPDATE CASCADE);
