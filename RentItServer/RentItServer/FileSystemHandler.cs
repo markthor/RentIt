@@ -9,7 +9,7 @@ namespace RentItServer
     public class FileSystemHandler
     {
         //Singleton instance of the class
-        public static FileSystemHandler _instance;
+        private static FileSystemHandler _instance;
 
         //TODO: This should be defined through argument in constructor in future
         private String _root = "<Drive letter>:" + Path.DirectorySeparatorChar
@@ -19,14 +19,13 @@ namespace RentItServer
         /// <summary>
         /// The log
         /// </summary>
-        private readonly Logger _log = new Logger("ABSOLUTE PATH TO LOG FILE");
+        private readonly Logger _log = Logger.GetInstance();
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
         private FileSystemHandler()
         {
-
         }
 
         /// <summary>
@@ -35,11 +34,7 @@ namespace RentItServer
         /// <returns>The singleton instance of the class</returns>
         public static FileSystemHandler GetInstance()
         {
-            if (_instance == null)
-            {
-                _instance = new FileSystemHandler();
-            }
-            return _instance;
+            return _instance ?? (_instance = new FileSystemHandler());
         }
 
         /// <summary>
@@ -104,11 +99,10 @@ namespace RentItServer
             }
             catch(Exception e)
             {
-                _log.AddEntry(
-                @"Exception thrown: " + e.ToString() + ". " +
-                 "FileSystemHandler state: _root = " + _root + ". " + 
-                 "Local variables: fullPath = " + fullPath);
-                throw e;
+                _log.AddEntry( @"Exception thrown: " + e + ". " +
+                                "FileSystemHandler state: _root = " + _root + ". " +
+                                "Local variables: fullPath = " + fullPath +".");
+                throw;
             }
         }
 
