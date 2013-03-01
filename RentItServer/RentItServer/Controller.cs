@@ -11,7 +11,7 @@ namespace RentItServer
         public static Controller _instance;
         //Data access object for database IO
         public static DAO _dao = DAO.GetInstance();
-        //Responsible for choosing the next track
+        //Responsible for choosing the next trackStream
         public static TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
         public static FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();

@@ -5,11 +5,11 @@ SQL SCHEMA RentIt
 
 Channel(id*, name, rating, plays, description, user**)
 
-Comment(channelId*, UserId*, content, date)
+Comment(channelId**, UserId**, content, date)
 
 Genre(id*, name)
 
-GenreTag(channelId**, genreName**)
+ChannelGenre(channelId**, genre**)
 
 Subscription(userId**, channelId**)
 
