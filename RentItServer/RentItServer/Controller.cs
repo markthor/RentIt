@@ -46,5 +46,14 @@ namespace RentItServer
             _logger.AddEntry(  @"User id ["+userId+"] commented on the channel ["+channelId+"]."+
                                 "Comment content = "+comment + ".");
         }
+
+        
+        public int GetChannelPort(int channelId, int ipAddress, int port)
+        {
+            
+
+
+            return -1;
+        }
     }
 }
