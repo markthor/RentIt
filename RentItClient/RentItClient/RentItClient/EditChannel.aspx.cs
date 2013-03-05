@@ -24,6 +24,7 @@ namespace RentItClient
                 tbx_channelName.ReadOnly = true;
                 InitGenres();      
                 InitDatabindings();
+                //Save sessions
                 Session["GenreList"] = genreList;
                 Session["Genres"] = genres; 
             }    
