@@ -64,6 +64,6 @@ namespace RentItClient {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.Subscriptions1 uc_subscriptions;
+        protected global::RentItClient.Subscriptions uc_subscriptions;
     }
 }

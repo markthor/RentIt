@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Subscriptions.ascx.cs">
       <DependentUpon>Subscriptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Subscriptions.ascx.designer.cs">
       <DependentUpon>Subscriptions.ascx</DependentUpon>

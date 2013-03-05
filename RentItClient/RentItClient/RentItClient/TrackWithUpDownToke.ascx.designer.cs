@@ -10,42 +10,33 @@
 namespace RentItClient {
     
     
-    public partial class Subscriptions {
+    public partial class TrackWithUpDownToke {
         
         /// <summary>
-        /// lbx_subscripedChannels control.
+        /// lbl_trackName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbx_subscripedChannels;
+        protected global::System.Web.UI.WebControls.Label lbl_trackName;
         
         /// <summary>
-        /// btn_selectChannel control.
+        /// img_uptokeTrack1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_selectChannel;
+        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack1;
         
         /// <summary>
-        /// lbx_myChannels control.
+        /// img_downtokeTrack1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbx_myChannels;
-        
-        /// <summary>
-        /// btn_editChannel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_editChannel;
+        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack1;
     }
 }

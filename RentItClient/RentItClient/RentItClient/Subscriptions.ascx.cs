@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace RentItClient
 {
-    public partial class Subscriptions1 : System.Web.UI.Page
+    public partial class Subscriptions : System.Web.UI.UserControl
     {
         private List<string> channelList;
         protected void Page_Load(object sender, EventArgs e)

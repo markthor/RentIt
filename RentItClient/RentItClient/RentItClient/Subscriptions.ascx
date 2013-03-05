@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Subscriptions.ascx.cs" Inherits="RentItClient.Subscriptions1" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Subscriptions.ascx.cs" Inherits="RentItClient.Subscriptions" %>
 
 <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
 
