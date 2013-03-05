@@ -12,8 +12,14 @@ namespace RentItServer
     using System;
     using System.Collections.Generic;
     
-    public partial class Entity1
+    public partial class comments
     {
-        public int Id { get; set; }
+        public int channelId { get; set; }
+        public int userId { get; set; }
+        public string content { get; set; }
+        public System.DateTime date { get; set; }
+    
+        public virtual channels channels { get; set; }
+        public virtual users users { get; set; }
     }
 }

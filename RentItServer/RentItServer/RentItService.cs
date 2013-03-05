@@ -91,5 +91,13 @@ namespace RentItServer
         public void UnSubscribe(int userId, int channelId)
         {
         }
+
+        public int GetChannelPort(int channelId, int ipAddress, int port)
+        {
+            int i = Controller.GetInstance().GetChannelPort(channelId,ipAddress,port);
+
+
+            return -1;
+        }
     }
 }

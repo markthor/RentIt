@@ -62,5 +62,8 @@ namespace RentItServer
         
         [OperationContract]
         void UnSubscribe(int userId, int channelId);
+
+        [OperationContract]
+        int GetChannelPort(int channelId, int ipAddress, int port);
     }
 }
