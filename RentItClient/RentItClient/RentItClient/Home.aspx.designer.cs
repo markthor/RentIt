@@ -22,6 +22,15 @@ namespace RentItClient {
         protected global::RentItClient.TopBar topBar;
         
         /// <summary>
+        /// streamPlayer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::RentItClient.StreamPlayer streamPlayer;
+        
+        /// <summary>
         /// div_homeScreen control.
         /// </summary>
         /// <remarks>
