@@ -76,7 +76,7 @@ namespace RentItServer
 
             lock (_entryLock)
             {
-                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
+                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "]    ";
                 _taskCollection.Add(timeStamp + entry);
             }
         }

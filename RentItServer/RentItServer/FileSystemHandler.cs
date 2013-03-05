@@ -99,7 +99,7 @@ namespace RentItServer
             }
             catch(Exception e)
             {
-                _log.AddEntry( @"Exception thrown: " + e + ". " +
+                _log.AddEntry( @"Exception thrown [" + e + "]. " +
                                 "FileSystemHandler state: _root = " + _root + ". " +
                                 "Local variables: fullPath = " + fullPath +".");
                 throw;

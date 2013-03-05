@@ -19,13 +19,13 @@ namespace RentItServer
         int[] GetChannelIds(String channelName, SearchArgs args);
 
         [OperationContract]
-        Channel GetChannel(int channelId);
+        Channel GetChannel( int channelId);
 
         [OperationContract]
-        Channel ModifyChannel(int channelId);
+        Channel ModifyChannel(int userId, int channelId);
 
         [OperationContract]
-        void DeleteChannel(int channelId);
+        void DeleteChannel(int userId, int channelId);
 
         [OperationContract]
         int Login(string username, string password);
@@ -34,10 +34,10 @@ namespace RentItServer
         int CreateUser(string username, string password, string email);
 
         [OperationContract]
-        void UploadTrack(Track track, int channelId);
+        void UploadTrack(Track track, int userId, int channelId);
 
         [OperationContract]
-        void RemoveTrack(int trackId);
+        void RemoveTrack(int userId, int trackId);
 
         [OperationContract]
         void VoteTrack(int rating, int userId, int trackId);

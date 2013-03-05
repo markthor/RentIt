@@ -43,9 +43,24 @@ namespace RentItServer
             return -1;
         }
 
+        public int CreateUser(string username, string password, string email)
+        {
+            return -1;
+        }
+
         public Channel GetChannel(int channelId)
         {
             return new Channel();
+        }
+
+        public void DeleteChannel(int userId, int channelId)
+        {
+            
+        }
+
+        public void VoteTrack(int rating, int userId, int trackId)
+        {
+            
         }
 
         public void Comment(string comment, int userId, int channelId)

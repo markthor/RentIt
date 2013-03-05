@@ -9,5 +9,17 @@ namespace RentItServer
     public partial class Channel
     {
         public Channel() { }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public int OwnerId
+        {
+            get;
+            set;
+        }
     }
 }

@@ -10,11 +10,11 @@ namespace RentItServer
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
-        private DAO _dao = DAO.GetInstance();
+        private readonly DAO _dao = DAO.GetInstance();
         //Responsible for choosing the next trackStream
-        private TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
+        private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
-        private FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
 
@@ -49,14 +49,19 @@ namespace RentItServer
             if (userId < 0)             LogAndThrowException(new ArgumentException("userId was below 0"), "CreateChannel");
             if (description == null)    LogAndThrowException(new ArgumentException("description"), "CreateChannel");
             if (genres == null)         LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
-            
-            int channelId = _dao.CreateChannel(channelName, userId, description, genres);
-            _logger.AddEntry(   @"User id [" + userId + "] want to create the channel [" + channelName + "]." +
-                                 "Channel description = " + description + "." +
-                                 "Channel genres = " + genres + "." +
-                                 (channelId == -1 ?
-                                 "Channel creation failed." : 
-                                 "Channel creation succeeded."));
+
+            int channelId;
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres ["+genres+"]. ";
+            try
+            {
+                channelId = _dao.CreateChannel(channelName, userId, description, genres);
+                _logger.AddEntry(logEntry + "Channel creation succeeded.");
+            }
+            catch(Exception e)
+            {
+                _logger.AddEntry(logEntry + "Channel creation failed with exception ["+e+"].");
+                throw;
+            }
             return channelId;
         }
 
@@ -77,41 +82,121 @@ namespace RentItServer
             return new int[]{};
         }
 
+        /// <summary>
+        /// Gets a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id for the channel to get.</param>
+        /// <returns></returns>
         public Channel GetChannel(int channelId)
         {
             if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
+
             return _dao.GetChannel(channelId);
         }
 
-        public Channel ModifyChannel(int channelId)
+        public Channel ModifyChannel(int userId, int channelId)
         {
+            //TODO .... waaht?
             return new Channel();
         }
 
-        public void DeleteChannel(int channelId)
+        /// <summary>
+        /// Deletes the channel.
+        /// </summary>
+        /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
+        /// <param name="channelId">The channel id.</param>
+        public void DeleteChannel(int userId, int channelId)
         {
+            if(userId < 0)  LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
+            if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
+
+            try
+            {
+                Channel channel = _dao.GetChannel(channelId);
+                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
+                if (channel.OwnerId == userId)
+                {
+                    _dao.DeleteChannel(userId, channelId);
+                    _logger.AddEntry(logEntry + "Deletion successful.");
+                }
+                else
+                {
+                    _logger.AddEntry(logEntry + "Deletion failed. Request comes from a user other than channel owner.");
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Channel deletion failed with exception [" + e + "].");
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Login the specified user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public int Login(string username, string password)
         {
+            // TODO
             return 0;
         }
 
-        public int CreateUser(string username, string password)
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <param name="email">The email associated with user.</param>
+        /// <returns>The id of the created user.</returns>
+        public int CreateUser(string username, string password, string email)
         {
-            return 0;
+            if (username == null) LogAndThrowException(new ArgumentNullException("username"), "CreateUser");
+            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "CreateUser");
+            if (password == null) LogAndThrowException(new ArgumentException("password"), "CreateUser");
+            if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "CreateUser");
+            if (email == null) LogAndThrowException(new ArgumentNullException("email"), "CreateUser");
+            if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
+            // TODO use regex to better check mail validity
+
+            int userId;
+            try
+            {
+                userId = _dao.CreateUser(username, password, email);
+                _logger.AddEntry("User created with username ["+username+"] and e-mail ["+email+"].");
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("User creation failed with exception [" + e + "].");
+                throw;
+            }
+            return userId;
         }
 
-        public void UploadTrack(Track track, int channelId)
+        public void UploadTrack(Track track, int userId, int channelId)
         {
+            // TODO possibly better with MemoryStream instead of Track
         }
 
-        public void RemoveTrack(int trackId)
+        public void RemoveTrack(int userId, int trackId)
         {
+            // TODO
         }
 
         public void VoteTrack(int rating, int userId, int trackId)
         {
+            // TODO parameter validation
+            try
+            {
+                _dao.VoteTrack(rating, userId, trackId);
+                _logger.AddEntry("User with user id ["+userId+"] rated track with track id ["+trackId+"] with the rating ["+rating+"].");
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Voting failed with exception ["+e+"].");
+                throw;
+            }
         }
 
         public int[] GetTrackIds(int channelId)
@@ -133,8 +218,7 @@ namespace RentItServer
         public void Comment(string comment, int userId, int channelId)
         {
             _dao.Comment(comment, userId, channelId);
-            _logger.AddEntry(  @"User id ["+userId+"] commented on the channel ["+channelId+"]."+
-                                "Comment content = "+comment + ".");
+            _logger.AddEntry("User id ["+userId+"] commented on the channel ["+channelId+"] with the comment ["+comment + "].");
         }
 
         public int[] GetCommentIds(int channelId)
@@ -162,7 +246,7 @@ namespace RentItServer
         /// <param name="operationName">Name of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
-            _logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]");
+            _logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
             throw e;
         }
     }

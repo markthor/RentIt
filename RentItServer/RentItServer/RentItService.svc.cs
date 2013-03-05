@@ -43,47 +43,57 @@ namespace RentItServer
         public Channel GetChannel(int channelId)
         {
             return new Channel();
+            return _controller.GetChannel(channelId);
         }
 
-        public Channel ModifyChannel(int channelId)
+        public Channel ModifyChannel(int userId, int channelId)
         {
             return new Channel();
+            return _controller.ModifyChannel(userId, channelId);
         }
 
-        public void DeleteChannel(int channelId)
+        public void DeleteChannel(int userId, int channelId)
         {
+            _controller.DeleteChannel(userId, channelId);
         }
-
+        
         public int Login(string username, string password)
         {
             return 0;
+            return _controller.Login(username, password);
         }
 
         public int CreateUser(string username, string password, string email)
         {
             return 0;
+            return _controller.CreateUser(username, password, email);
         }
 
-        public void UploadTrack(Track track, int channelId)
+        public void UploadTrack(Track track, int userId, int channelId)
         {
+            _controller.UploadTrack(track, userId, channelId);
         }
 
-        public void RemoveTrack(int trackId)
+        public void RemoveTrack(int userId, int trackId)
         {
+            _controller.RemoveTrack(userId, trackId);
         }
 
         public void VoteTrack(int rating, int userId, int trackId)
         {
+            _controller.VoteTrack(rating, userId, trackId);
         }
 
         public int[] GetTrackIds(int channelId)
         {
             return new[] { 0 };
+            return _controller.GetTrackIds(channelId);
         }
 
         public TrackInfo GetTrackInfo(int trackId)
         {
             return new TrackInfo();
+            return _controller.GetTrackInfo(trackId);
         }
 
         public void Comment(string comment, int userId, int channelId)
@@ -94,26 +104,29 @@ namespace RentItServer
         public int[] GetCommentIds(int channelId)
         {
             return new[] { 0 };
+            return _controller.GetCommentIds(channelId);
         }
 
         public Comment GetComment(int commentId)
         {
             return new Comment();
+            return _controller.GetComment(commentId);
         }
 
         public void Subscribe(int userId, int channelId)
         {
+            _controller.Subscribe(userId, channelId);
         }
 
         public void UnSubscribe(int userId, int channelId)
         {
+            _controller.UnSubscribe(userId, channelId);
         }
 
         public int GetChannelPort(int channelId, int ipAddress, int port)
         {
-            //int i = Controller.GetInstance().GetChannelPort(channelId,ipAddress,port);
-
             return -1;
+            //int i = _controller.GetChannelPort(channelId,ipAddress,port);
         }
     }
 }
