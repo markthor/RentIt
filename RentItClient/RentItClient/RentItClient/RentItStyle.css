@@ -40,10 +40,14 @@
     font-size: medium;
 }
 
+.subscripeButton {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 10px
+}
+
 textarea {
-
-
-resize: none;
+    resize: none;
 }
 
 .labelTextMargin {

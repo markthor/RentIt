@@ -84,6 +84,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <Content Include="StreamPlayer.ascx" />
+    <Content Include="Subscriptions.aspx" />
     <Content Include="TopBar.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
@@ -157,6 +158,13 @@
     </Compile>
     <Compile Include="StreamPlayer.ascx.designer.cs">
       <DependentUpon>StreamPlayer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Subscriptions.aspx.cs">
+      <DependentUpon>Subscriptions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subscriptions.aspx.designer.cs">
+      <DependentUpon>Subscriptions.aspx</DependentUpon>
     </Compile>
     <Compile Include="TopBar.ascx.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>
