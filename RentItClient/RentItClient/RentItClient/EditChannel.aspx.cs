@@ -24,6 +24,7 @@ namespace RentItClient
                 tbx_description.Text = (string)Session["ChannelDescription"];
                 InitGenres();      
                 InitDatabindings();
+                //Save sessions
                 Session["GenreList"] = genreList;
                 Session["Genres"] = genres; 
             }    
