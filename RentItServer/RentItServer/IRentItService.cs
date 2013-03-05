@@ -66,4 +66,5 @@ namespace RentItServer
         [OperationContract]
         int GetChannelPort(int channelId, int ipAddress, int port);
     }
+
 }

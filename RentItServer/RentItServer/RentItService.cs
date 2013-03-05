@@ -24,6 +24,7 @@ namespace RentItServer
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         public int CreateChannel(string channelName, int userId, string description, int[] genres)
         {
+            return 0;
             int channelId;
             try
             {
@@ -44,6 +45,7 @@ namespace RentItServer
         /// <returns>An array of channel ids matching search criteria. </returns>
         public int[] GetChannelIds(string searchString, SearchArgs args)
         {
+            return new int[]{0};
             return _controller.GetChannelIds(searchString, args);
         }
 
