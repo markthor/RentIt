@@ -12,15 +12,37 @@ namespace RentItServer
     // NOTE: In order to launch WCF Test Client for testing this service, please select RentItService.svc or RentItService.svc.cs at the Solution Explorer and start debugging.
     public class RentItService : IRentItService
     {
-
+        /// <summary>
+        /// Creates a channel.
+        /// </summary>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="userId">The id of the user creating the channel.</param>
+        /// <param name="description">The description of the channel.</param>
+        /// <param name="genres">The genres associated with the channel.</param>
+        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         public int CreateChannel(string channelName, int userId, string description, int[] genres)
         {
-            return 0;
+            int channelId;
+            try
+            {
+                channelId = Controller.GetInstance().CreateChannel(channelName, userId, description, genres);
+            }
+            catch
+            {   // An exception was raised or an error occurred
+                return -1;
+            }
+            return channelId;
         }
 
-        public int[] GetChannelIds(string channelName, SearchArgs args)
+        /// <summary>
+        /// Gets the channel ids matching the given search string and search arguments.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <param name="args">The search arguments (used for filtering).</param>
+        /// <returns>An array of channel ids matching search criteria. </returns>
+        public int[] GetChannelIds(string searchString, SearchArgs args)
         {
-            return new []{0};
+            return new int[]{0};
         }
 
         public Channel GetChannel(int channelId)

@@ -1,14 +1,26 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace RentItServer
 {
     public class Logger
     {
+        /// <summary>
+        /// The _entry lock. Used when the AddEntry method is called
+        /// </summary>
+        private static readonly object _entryLock = new object();
+
+        /// <summary>
+        /// The _task collection. Contains pending entries
+        /// </summary>
+        private readonly BlockingCollection<Task> _taskCollection = new BlockingCollection < Task > (new ConcurrentQueue<Task>()); 
+
         /// <summary>
         /// The absolute path
         /// </summary>
@@ -30,6 +42,18 @@ namespace RentItServer
             {
                 File.Create(AbsolutePath);
             }
+            // Logging thread. Used in order to support asyncrhonous writing of entries
+            new Task(() =>
+                {
+                    Task entryTask;
+                    while (true)
+                    {
+                        if (_taskCollection.TryTake(out entryTask))
+                        {
+                            entryTask.Start();
+                        }
+                    }
+                }).Start();
         }
 
         /// <summary>
@@ -49,10 +73,14 @@ namespace RentItServer
         /// <exception cref="System.ArgumentException">Log argument was empty</exception>
         public void AddEntry(string entry)
         {
-            if (entry == null) throw new ArgumentNullException("entry argument was null");
+            if (entry == null) throw new ArgumentNullException("entry");
             if (entry.Equals("")) throw new ArgumentException("entry argument was empty");
-            string timeStamp = "["+DateTime.Now.ToString(CultureInfo.InvariantCulture)+"] ";
-            File.AppendAllText(AbsolutePath, timeStamp + entry);
+
+            lock (_entryLock)
+            {
+                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
+                _taskCollection.Add(new Task(() => File.AppendAllText(AbsolutePath, timeStamp + entry)));
+            }
         }
     }
 }
