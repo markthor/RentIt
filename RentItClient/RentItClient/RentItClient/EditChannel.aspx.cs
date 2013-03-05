@@ -135,11 +135,7 @@ namespace RentItClient
                 string extensions = System.IO.Path.GetExtension(flu_trackUpload.FileName);
                 if (extensions == ".mp3")
                 {
-                    using (ServiceReference.Service1Client proxy = new ServiceReference.Service1Client())
-                    {
-                        Stream track = flu_trackUpload.FileContent;
-                        string s = proxy.GetData(10);
-                    }
+                    Stream track = flu_trackUpload.FileContent;
                 }
             }
             

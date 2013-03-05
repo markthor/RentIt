@@ -37,6 +37,7 @@ namespace RentItClient
         {
             string channel = lbx_myChannels.SelectedItem.Text;
             Session["ChannelName"] = channel;
+            
             Response.Redirect("EditChannel.aspx");
         }
     }

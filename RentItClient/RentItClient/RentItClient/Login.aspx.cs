@@ -33,19 +33,33 @@ namespace RentItClient
             // Checks input
             if (username == "" || email == "" || password == "")
             {
-                ErrorMessage("Username, Email or password is empty");
+                PrintErrorMessage("Username, Email or password is empty");
                 return;
             }
             if (password != passwordConfirm)
             {
-                ErrorMessage("Password not confirmed");
+                PrintErrorMessage("Password not confirmed");
                 return;
             }
             Match match = Regex.Match(email, @"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b", RegexOptions.IgnoreCase);
             if (!match.Success)
             {
-                ErrorMessage("E-mail not correct");
+                PrintErrorMessage("E-mail not correct");
                 return;
+            }
+            using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
+            {
+                int userId = proxy.CreateUser(username, password, email);
+                if (userId == -1)
+                {
+                    PrintErrorMessage("An error occured when trying to create the user");
+                }
+                else
+                {
+                    Session.Add("UserId", userId);
+                    Response.Redirect("Home.aspx");
+                }
+                
             }
         }
 
@@ -60,12 +74,25 @@ namespace RentItClient
             string password = tbx_password.Text;
             if (username == "" ||  password == "")
             {
-                ErrorMessage("Username or password is empty");
+                PrintErrorMessage("Username or password is empty");
                 return;
+            }
+            using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
+            {
+                int userId = proxy.Login(username, password);
+                if (userId == -1)
+                {
+                    PrintErrorMessage("Username and email didn't match");
+                }
+                else
+                {
+                    Session.Add("UserId", userId);
+                    Response.Redirect("Home.aspx");
+                }
             }
         }
 
-        private void ErrorMessage(string msg)
+        private void PrintErrorMessage(string msg)
         {
             Response.Write("<script language='javascript'>alert('" + msg + "');</script>");
         }
