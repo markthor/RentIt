@@ -103,6 +103,33 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_description;
         
         /// <summary>
+        /// lbx_trackList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbx_trackList;
+        
+        /// <summary>
+        /// flu_trackUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload flu_trackUpload;
+        
+        /// <summary>
+        /// btn_uploadSong control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_uploadSong;
+        
+        /// <summary>
         /// btn_saveChanges control.
         /// </summary>
         /// <remarks>

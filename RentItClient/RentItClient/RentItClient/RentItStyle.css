@@ -40,13 +40,10 @@
     font-size: medium;
 }
 
-textarea
-{
+textarea {
 
 
 resize: none;
-
-
 }
 
 .labelTextMargin {
@@ -58,7 +55,7 @@ resize: none;
 }
 
 .channelTextMargin {
-    margin: 0 auto;
+    margin: 10px auto;
     width: 600px;
 }
 

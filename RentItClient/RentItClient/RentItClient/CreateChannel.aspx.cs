@@ -17,7 +17,6 @@ namespace RentItClient
         protected void btn_createChannel_Click(object sender, EventArgs e)
         {
             Session["ChannelName"] = tbx_channelName.Text;
-            Session["ChannelDescription"] = "";
             Response.Redirect("EditChannel.aspx");
         }
 
