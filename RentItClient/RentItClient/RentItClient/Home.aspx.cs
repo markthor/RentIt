@@ -23,6 +23,14 @@ namespace RentItClient
             ListBox tracklist = (ListBox)channelDescription.FindControl("lbx_tracklist");
             tracklist.DataSource = tracks;
             tracklist.DataBind();
+
+            /*
+            Label lbl_track1 = (Label)streamPlayer.FindControl("uc_track1").FindControl("lbl_trackName");
+            lbl_track1.Text = "Bal Sagoth - The Dark Liege of Chaos is unleashed at the Ensorcelled Shrine of A'Zura Kai (The Splendour of a Thousand Swords Gleaming Beneath the Blazon of the Hyperborean Empire Part II)".Substring(0, 60);
+
+            Label lbl_track2 = (Label)streamPlayer.FindControl("uc_track2").FindControl("lbl_trackName");
+            lbl_track2.Text = "Arctic Monkeys - You Probably Couldn't See for the Lights but You Were Looking Straight at Me".Substring(0, 60);
+            */
         }
     }
 }

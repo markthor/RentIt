@@ -84,8 +84,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <Content Include="StreamPlayer.ascx" />
-    <Content Include="Subscriptions.aspx" />
+    <Content Include="Subscriptions.ascx" />
     <Content Include="TopBar.ascx" />
+    <Content Include="TrackWithUpDownToke.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -159,12 +160,12 @@
     <Compile Include="StreamPlayer.ascx.designer.cs">
       <DependentUpon>StreamPlayer.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Subscriptions.aspx.cs">
-      <DependentUpon>Subscriptions.aspx</DependentUpon>
+    <Compile Include="Subscriptions.ascx.cs">
+      <DependentUpon>Subscriptions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Subscriptions.aspx.designer.cs">
-      <DependentUpon>Subscriptions.aspx</DependentUpon>
+    <Compile Include="Subscriptions.ascx.designer.cs">
+      <DependentUpon>Subscriptions.ascx</DependentUpon>
     </Compile>
     <Compile Include="TopBar.ascx.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="TopBar.ascx.designer.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TrackWithUpDownToke.ascx.cs">
+      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TrackWithUpDownToke.ascx.designer.cs">
+      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.ascx.cs">
       <DependentUpon>UserInfo.ascx</DependentUpon>

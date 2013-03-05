@@ -103,8 +103,9 @@ textarea {
 }
 
 .homeScreen {
-    width: 50%;
+    width: 46%;
     float: left;
+    margin: 0 24px;
 }
 
 .subscriptions {
@@ -119,5 +120,6 @@ textarea {
 }
 
 .upDownToke {
-    margin: 0 5px;
+    margin-top: 3px;
+    margin-bottom: 0px;
 }

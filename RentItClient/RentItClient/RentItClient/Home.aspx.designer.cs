@@ -56,5 +56,14 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::RentItClient.ChannelDescription channelDescription;
+        
+        /// <summary>
+        /// uc_subscriptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::RentItClient.Subscriptions uc_subscriptions;
     }
 }
