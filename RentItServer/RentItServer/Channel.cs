@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     [Serializable]
-    public class SearchArgs
+    public partial class Channel
     {
+        public Channel() { }
     }
 }

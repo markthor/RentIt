@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract]
@@ -31,7 +31,7 @@ namespace RentItServer_v1
         int Login(string username, string password);
 
         [OperationContract]
-        int CreateUser(string username, string password);
+        int CreateUser(string username, string password, string email);
 
         [OperationContract]
         void UploadTrack(Track track, int channelId);

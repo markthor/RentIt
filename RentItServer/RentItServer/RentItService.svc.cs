@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
@@ -25,16 +25,7 @@ namespace RentItServer_v1
         public int CreateChannel(string channelName, int userId, string description, int[] genres)
         {
             return 0;
-            int channelId;
-            try
-            {
-                channelId = _controller.CreateChannel(channelName, userId, description, genres);
-            }
-            catch
-            {   // An exception was raised or an error occurred
-                return -1;
-            }
-            return channelId;
+            return _controller.CreateChannel(channelName, userId, description, genres);
         }
 
         /// <summary>
@@ -68,7 +59,7 @@ namespace RentItServer_v1
             return 0;
         }
 
-        public int CreateUser(string username, string password)
+        public int CreateUser(string username, string password, string email)
         {
             return 0;
         }

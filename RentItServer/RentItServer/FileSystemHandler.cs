@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     public class FileSystemHandler
     {

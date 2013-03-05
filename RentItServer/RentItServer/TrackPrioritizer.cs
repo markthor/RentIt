@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     public class TrackPrioritizer
     {

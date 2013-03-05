@@ -7,7 +7,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace RentItServer_v1
+namespace RentItServer
 {
     public class Logger
     {

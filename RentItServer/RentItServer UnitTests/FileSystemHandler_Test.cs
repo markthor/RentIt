@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RentItServer;
 using System.IO;
+using RentItServer;
 
 namespace RentItServer_UnitTests
 {
