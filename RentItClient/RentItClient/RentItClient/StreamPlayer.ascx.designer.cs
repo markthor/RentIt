@@ -22,138 +22,48 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.ImageButton img_playPause;
         
         /// <summary>
-        /// lbl_track1 control.
+        /// uc_track1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_track1;
+        protected global::RentItClient.TrackWithUpDownToke uc_track1;
         
         /// <summary>
-        /// img_uptokeTrack1 control.
+        /// uc_track2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack1;
+        protected global::RentItClient.TrackWithUpDownToke uc_track2;
         
         /// <summary>
-        /// img_downtokeTrack1 control.
+        /// uc_track3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack1;
+        protected global::RentItClient.TrackWithUpDownToke uc_track3;
         
         /// <summary>
-        /// lbl_track2 control.
+        /// uc_track4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_track2;
+        protected global::RentItClient.TrackWithUpDownToke uc_track4;
         
         /// <summary>
-        /// img_uptokeTrack2 control.
+        /// uc_track5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack2;
-        
-        /// <summary>
-        /// img_downtokeTrack2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack2;
-        
-        /// <summary>
-        /// lbl_track3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_track3;
-        
-        /// <summary>
-        /// img_uptokeTrack3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack3;
-        
-        /// <summary>
-        /// img_downtokeTrack3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack3;
-        
-        /// <summary>
-        /// lbl_track4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_track4;
-        
-        /// <summary>
-        /// img_uptokeTrack4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack4;
-        
-        /// <summary>
-        /// img_downtokeTrack4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack4;
-        
-        /// <summary>
-        /// lbl_track5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_track5;
-        
-        /// <summary>
-        /// img_uptokeTrack5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack5;
-        
-        /// <summary>
-        /// img_downtokeTrack5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack5;
+        protected global::RentItClient.TrackWithUpDownToke uc_track5;
     }
 }

@@ -73,6 +73,7 @@
     <Content Include="SearchResult.ascx" />
     <Content Include="StreamPlayer.ascx" />
     <Content Include="TopBar.ascx" />
+    <Content Include="TrackWithUpDownToke.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -148,6 +149,13 @@
     <Compile Include="TopBar.ascx.designer.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>
     </Compile>
+    <Compile Include="TrackWithUpDownToke.ascx.cs">
+      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TrackWithUpDownToke.ascx.designer.cs">
+      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserInfo.ascx.cs">
       <DependentUpon>UserInfo.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -164,7 +172,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
