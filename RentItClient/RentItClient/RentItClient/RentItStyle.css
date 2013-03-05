@@ -40,13 +40,14 @@
     font-size: medium;
 }
 
-textarea
-{
+.subscripeButton {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 10px
+}
 
-
-resize: none;
-
-
+textarea {
+    resize: none;
 }
 
 .labelTextMargin {
@@ -58,7 +59,7 @@ resize: none;
 }
 
 .channelTextMargin {
-    margin: 0 auto;
+    margin: 10px auto;
     width: 600px;
 }
 

@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="UC" TagName="ChannelDescription" Src="~/ChannelDescription.ascx" %>
 <%@ Register TagPrefix="UC" TagName="TopBar" Src="~/TopBar.ascx" %>
 <%@ Register TagPrefix="UC" TagName="StreamPlayer" Src="~/StreamPlayer.ascx" %>
+<%@ Register TagPrefix="UC" TagName="Subscriptions" Src="~/Subscriptions.ascx" %>
 
 <!DOCTYPE html>
 
@@ -24,7 +25,7 @@
             <UC:ChannelDescription ID="channelDescription" runat="server" />
         </div>
         <div id="div_subscriptions" class="subscriptions">
-            
+            <UC:Subscriptions ID="uc_subscriptions" runat="server" />
         </div>
     </form>
 </body>
