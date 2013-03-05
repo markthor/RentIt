@@ -15,6 +15,8 @@ namespace RentItServer
         public static TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
         public static FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        //The logger
+        private readonly Logger _logger = Logger.GetInstance();
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -29,11 +31,20 @@ namespace RentItServer
         /// <returns>The singleton instance of the class</returns>
         public static Controller GetInstance()
         {
-            if (_instance == null)
-            {
-                _instance = new Controller();
-            }
-            return _instance;
+            return _instance ?? (_instance = new Controller());
+        }
+
+        /// <summary>
+        /// Comments on the specified channel.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        public void Comment(string comment, int userId, int channelId)
+        {
+            DAO.GetInstance().Comment(comment, userId, channelId);
+            _logger.AddEntry(  @"User id ["+userId+"] commented on the channel ["+channelId+"]."+
+                                "Comment content = "+comment + ".");
         }
     }
 }

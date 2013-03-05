@@ -68,6 +68,7 @@
     <Content Include="RentItStyle.css" />
     <Content Include="SearchBar.ascx" />
     <Content Include="SearchResult.ascx" />
+    <Content Include="TopBar.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -85,7 +86,7 @@
     </Compile>
     <Compile Include="EditChannel.aspx.designer.cs">
       <DependentUpon>EditChannel.aspx</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="ChannelDescription.ascx.cs">
       <DependentUpon>ChannelDescription.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -128,6 +129,13 @@
     </Compile>
     <Compile Include="SearchResult.ascx.designer.cs">
       <DependentUpon>SearchResult.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TopBar.ascx.cs">
+      <DependentUpon>TopBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TopBar.ascx.designer.cs">
+      <DependentUpon>TopBar.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.ascx.cs">
       <DependentUpon>UserInfo.ascx</DependentUpon>

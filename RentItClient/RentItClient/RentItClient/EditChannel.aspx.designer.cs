@@ -22,6 +22,15 @@ namespace RentItClient {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// topBar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::RentItClient.TopBar topBar;
+        
+        /// <summary>
         /// lbl_channelName control.
         /// </summary>
         /// <remarks>
@@ -31,49 +40,40 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.Label lbl_channelName;
         
         /// <summary>
-        /// tbx_channelName control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbx_channelName;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Label1 control.
+        /// lbx_availableGenres control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.ListBox lbx_availableGenres;
         
         /// <summary>
-        /// lb_genrelist control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lb_genrelist;
+        protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// Label2 control.
+        /// lbx_chosenGenres control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
-        /// lb_genres control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lb_genres;
+        protected global::System.Web.UI.WebControls.ListBox lbx_chosenGenres;
         
         /// <summary>
         /// btn_addGenre control.
@@ -94,21 +94,30 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.Button btn_deleteGenre;
         
         /// <summary>
-        /// lbl_channelDescription control.
+        /// tbx_description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_channelDescription;
+        protected global::System.Web.UI.WebControls.TextBox tbx_description;
         
         /// <summary>
-        /// TextBox1 control.
+        /// btn_saveChanges control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.Button btn_saveChanges;
+        
+        /// <summary>
+        /// btn_discardChanges control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_discardChanges;
     }
 }

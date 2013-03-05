@@ -13,31 +13,31 @@ namespace RentItClient {
     public partial class ChannelDescription {
         
         /// <summary>
-        /// tbl_main control.
+        /// lbl_plays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tbl_main;
+        protected global::System.Web.UI.WebControls.Label lbl_plays;
         
         /// <summary>
-        /// tbc_description control.
+        /// lbl_uptokes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TableCell tbc_description;
+        protected global::System.Web.UI.WebControls.Label lbl_uptokes;
         
         /// <summary>
-        /// tbl_playsUptokesDowntokes control.
+        /// lbl_downtokes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tbl_playsUptokesDowntokes;
+        protected global::System.Web.UI.WebControls.Label lbl_downtokes;
         
         /// <summary>
         /// lbl_numberOfPlays control.

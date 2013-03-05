@@ -71,6 +71,7 @@ namespace RentItServer
 
         public void Comment(string comment, int userId, int channelId)
         {
+            Controller.GetInstance().Comment(comment, userId, channelId);
         }
 
         public int[] GetCommentIds(int channelId)

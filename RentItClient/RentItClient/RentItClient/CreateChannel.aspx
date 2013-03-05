@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CreateChannel.aspx.cs" Inherits="RentItClient.CreateChannel" %>
+<%@ Register TagPrefix="userControl" TagName="topBar" Src="~/TopBar.ascx" %>
 
 <!DOCTYPE html>
 
@@ -7,17 +8,22 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
 </head>
-<body class="createBody">
-    <form id="form1" runat="server">
-        <h1 id="loginTitle">Create Channel</h1>
-    <div class="channelTextMargin">
-        <asp:Label ID="lbl_loginTitle" runat="server" Text="Create Channel" CssClass="loginTitle"></asp:Label>
-            <div class="clear">
-                <asp:Label ID="lbl_channelName" runat="server" Text="Channel name" CssClass ="loginLabel"></asp:Label>
-                <asp:TextBox ID="tbx_channelName" runat="server" CssClass="loginTextbox"></asp:TextBox>     
-            </div>
-        <asp:Button ID="btn_createChannel" runat="server" Text="Create" OnClick="btn_createChannel_Click" />
-    </div>
+<body>
+    <form runat="server">
+        <div>
+            <userControl:topBar ID="topBar" runat="server" />
+        </div>
+        <div id="div_createChannelTitle" class="centered">
+            <h1>Create Channel</h1>
+        </div>
+        <div class="centered">
+            <asp:Label ID="lbl_channelName" runat="server" Text="Channel name" CssClass ="loginLabel"></asp:Label>
+            <asp:TextBox ID="tbx_channelName" runat="server" CssClass="loginTextbox"></asp:TextBox>     
+        </div>
+        <div class="centered">
+            <asp:Button ID="btn_createChannel" runat="server" Text="Create" OnClick="btn_createChannel_Click" />
+            <asp:Button ID="btn_cancelCreateChannel" runat="server" Text="Cancel" OnClick="btn_cancelCreateChannel_Click" />
+        </div>
     </form>
 </body>
 </html>

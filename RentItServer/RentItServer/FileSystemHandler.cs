@@ -9,21 +9,23 @@ namespace RentItServer
     public class FileSystemHandler
     {
         //Singleton instance of the class
-        public static FileSystemHandler _instance;
+        private static FileSystemHandler _instance;
 
         //TODO: This should be defined through argument in constructor in future
         private String _root = "<Drive letter>:" + Path.DirectorySeparatorChar
                                 + "Folder1" + Path.DirectorySeparatorChar
                                 + "Folder2" + Path.DirectorySeparatorChar;
 
-        private readonly Logger _log = new Logger("ABSOLUTE PATH TO LOG FILE");
+        /// <summary>
+        /// The log
+        /// </summary>
+        private readonly Logger _log = Logger.GetInstance();
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
         private FileSystemHandler()
         {
-
         }
 
         /// <summary>
@@ -32,13 +34,19 @@ namespace RentItServer
         /// <returns>The singleton instance of the class</returns>
         public static FileSystemHandler GetInstance()
         {
-            if (_instance == null)
-            {
-                _instance = new FileSystemHandler();
-            }
-            return _instance;
+            return _instance ?? (_instance = new FileSystemHandler());
         }
 
+        /// <summary>
+        /// Writes the specified trackStream to a file at the path relative to the root directory.
+        /// </summary>
+        /// <param name="relativePath">The relative path.</param>
+        /// <param name="trackStream">The track stream.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Relative path was null
+        /// or
+        /// MemoryStream argument was null
+        /// </exception>
         public void Write(string relativePath, MemoryStream trackStream)
         {
             if (relativePath == null) throw new ArgumentNullException("Relative path was null");
@@ -62,6 +70,17 @@ namespace RentItServer
             }
         }
 
+        /// <summary>
+        /// Reads the file at the specified path relative to the root directory.
+        /// </summary>
+        /// <param name="relativePath">The relative path.</param>
+        /// <returns> <see cref="MemoryStream"/> containing the contents of the file</returns>
+        /// <exception cref="System.ArgumentNullException">Relative path was null</exception>
+        /// <exception cref="System.ArgumentException">
+        /// Relative path must target a file
+        /// or
+        /// Relative path must target a file. Relative path =  + relativePath
+        /// </exception>
         public MemoryStream Read(string relativePath)
         {
             if (relativePath == null) throw new ArgumentNullException("Relative path was null");
@@ -80,14 +99,18 @@ namespace RentItServer
             }
             catch(Exception e)
             {
-                _log.AddEntry(
-                @"Exception thrown: " + e.ToString() + ". " +
-                 "FileSystemHandler state: _root = " + _root + ". " + 
-                 "Local variables: fullPath = " + fullPath);
-                throw e;
+                _log.AddEntry( @"Exception thrown: " + e + ". " +
+                                "FileSystemHandler state: _root = " + _root + ". " +
+                                "Local variables: fullPath = " + fullPath +".");
+                throw;
             }
         }
 
+        /// <summary>
+        /// Processes the path.
+        /// </summary>
+        /// <param name="relativePath">The relative path to a file or directory.</param>
+        /// <returns>The absolute path to file or directory.</returns>
         private string ProcessPath(string relativePath)
         {
             relativePath = relativePath.Replace("\\", Path.DirectorySeparatorChar.ToString());

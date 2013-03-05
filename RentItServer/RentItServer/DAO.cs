@@ -8,7 +8,7 @@ namespace RentItServer
     public class DAO
     {
         //Singleton instance of the class
-        public static DAO _instance;
+        private static DAO _instance;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -28,6 +28,11 @@ namespace RentItServer
                 _instance = new DAO();
             }
             return _instance;
+        }
+
+        public void Comment(string comment, int userId, int channelId)
+        {
+            
         }
     }
 }

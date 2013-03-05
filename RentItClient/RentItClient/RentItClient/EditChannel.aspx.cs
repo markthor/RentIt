@@ -20,8 +20,8 @@ namespace RentItClient
         { 
             if (!Page.IsPostBack)
             {
-                tbx_channelName.Text = Request.QueryString["name"];
-                tbx_channelName.ReadOnly = true;
+                lbl_channelName.Text = (string)Session["ChannelName"];
+                tbx_description.Text = (string)Session["ChannelDescription"];
                 InitGenres();      
                 InitDatabindings();
                 //Save sessions
@@ -32,28 +32,28 @@ namespace RentItClient
 
         protected void btn_addGenre_Click(object sender, EventArgs e)
         {
-            string s = lb_genrelist.SelectedItem.Text;
+            string s = lbx_availableGenres.SelectedItem.Text;
             genres = (List<string>)Session["Genres"];
             genres.Add(s);
-            lb_genres.DataSource = genres;
-            lb_genres.DataBind();
+            lbx_chosenGenres.DataSource = genres;
+            lbx_chosenGenres.DataBind();
             genreList = (List<string>)Session["GenreList"];
             genreList.Remove(s);
-            lb_genrelist.DataSource = genreList;
-            lb_genrelist.DataBind();
+            lbx_availableGenres.DataSource = genreList;
+            lbx_availableGenres.DataBind();
         }
 
         protected void btn_deleteGenre_Click(object sender, EventArgs e)
         {
-            string s = lb_genres.SelectedItem.Text;
+            string s = lbx_chosenGenres.SelectedItem.Text;
             genres = (List<string>)Session["Genres"];
             genres.Remove(s);
-            lb_genres.DataSource = genres;
-            lb_genres.DataBind();
+            lbx_chosenGenres.DataSource = genres;
+            lbx_chosenGenres.DataBind();
             genreList = (List<string>)Session["GenreList"];
             genreList.Add(s);
-            lb_genrelist.DataSource = genreList;
-            lb_genrelist.DataBind();
+            lbx_availableGenres.DataSource = genreList;
+            lbx_availableGenres.DataBind();
         }
 
         private void InitGenres()
@@ -69,10 +69,20 @@ namespace RentItClient
 
         private void InitDatabindings()
         {
-            lb_genrelist.DataSource = genreList;
-            lb_genrelist.DataBind();
-            lb_genres.DataSource = genres;
-            lb_genres.DataBind();
+            lbx_availableGenres.DataSource = genreList;
+            lbx_availableGenres.DataBind();
+            lbx_chosenGenres.DataSource = genres;
+            lbx_chosenGenres.DataBind();
+        }
+
+        protected void btn_saveChanges_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btn_discardChanges_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
         }
     }
 }
