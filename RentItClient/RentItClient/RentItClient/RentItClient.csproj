@@ -63,8 +63,11 @@
     <Content Include="EditChannel.aspx" />
     <Content Include="ChannelDescription.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="Images\DownToke-25x25.jpg" />
     <Content Include="Images\Logo-300x100.jpg" />
     <Content Include="Images\Logo-300x50.jpg" />
+    <Content Include="Images\play_pause_24x24.png" />
+    <Content Include="Images\UpToke-25x25.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Logo.ascx" />
     <Content Include="RentItStyle.css" />
@@ -80,6 +83,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
+    <Content Include="StreamPlayer.ascx" />
     <Content Include="TopBar.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
@@ -146,6 +150,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="StreamPlayer.ascx.cs">
+      <DependentUpon>StreamPlayer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StreamPlayer.ascx.designer.cs">
+      <DependentUpon>StreamPlayer.ascx</DependentUpon>
     </Compile>
     <Compile Include="TopBar.ascx.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>

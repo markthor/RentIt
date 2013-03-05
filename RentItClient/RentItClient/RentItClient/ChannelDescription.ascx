@@ -5,6 +5,10 @@
 <div id="div_channelName" class="centered">
     <h1>Channel Name</h1>
 </div>
+<div class="centered">
+    <asp:Button ID="btn_play" runat="server" Text="Play" />
+    <asp:Button ID="btn_subscribe" runat="server" Text="Subscribe" />
+</div>
 <div style="float:left; text-align:right; width:50%;">
     <div style="margin-right:5px">
         <asp:Label ID="lbl_plays" runat="server" Text="Plays:" />
@@ -43,8 +47,4 @@
 <div>
     <h3>Genrelist</h3>
     <asp:ListBox ID="lbx_genrelist" runat="server" Width="100%" Rows="5" />
-</div>
-<div>
-    <asp:Button ID="btn_play" runat="server" Text="Play" />
-    <asp:Button ID="btn_subscribe" runat="server" Text="Subscribe" />
 </div>

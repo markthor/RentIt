@@ -13,6 +13,24 @@ namespace RentItClient {
     public partial class ChannelDescription {
         
         /// <summary>
+        /// btn_play control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_play;
+        
+        /// <summary>
+        /// btn_subscribe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_subscribe;
+        
+        /// <summary>
         /// lbl_plays control.
         /// </summary>
         /// <remarks>
@@ -83,23 +101,5 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbx_genrelist;
-        
-        /// <summary>
-        /// btn_play control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_play;
-        
-        /// <summary>
-        /// btn_subscribe control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_subscribe;
     }
 }
