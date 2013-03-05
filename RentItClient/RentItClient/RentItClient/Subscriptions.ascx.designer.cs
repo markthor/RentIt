@@ -10,51 +10,42 @@
 namespace RentItClient {
     
     
-    public partial class Home {
+    public partial class Subscriptions1 {
         
         /// <summary>
-        /// topBar control.
+        /// lbx_subscripedChannels control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.TopBar topBar;
+        protected global::System.Web.UI.WebControls.ListBox lbx_subscripedChannels;
         
         /// <summary>
-        /// streamPlayer control.
+        /// btn_selectChannel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.StreamPlayer streamPlayer;
+        protected global::System.Web.UI.WebControls.Button btn_selectChannel;
         
         /// <summary>
-        /// div_homeScreen control.
+        /// lbx_myChannels control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_homeScreen;
+        protected global::System.Web.UI.WebControls.ListBox lbx_myChannels;
         
         /// <summary>
-        /// searchResult control.
+        /// btn_editChannel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.SearchResult searchResult;
-        
-        /// <summary>
-        /// channelDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::RentItClient.ChannelDescription channelDescription;
+        protected global::System.Web.UI.WebControls.Button btn_editChannel;
     }
 }

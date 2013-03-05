@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -61,13 +63,28 @@
     <Content Include="EditChannel.aspx" />
     <Content Include="ChannelDescription.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="Images\DownToke-25x25.jpg" />
     <Content Include="Images\Logo-300x100.jpg" />
     <Content Include="Images\Logo-300x50.jpg" />
+    <Content Include="Images\play_pause_24x24.png" />
+    <Content Include="Images\UpToke-25x25.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Logo.ascx" />
     <Content Include="RentItStyle.css" />
     <Content Include="SearchBar.ascx" />
     <Content Include="SearchResult.ascx" />
+    <Content Include="Service References\ServiceReference\RentItClient.ServiceReference.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ServiceReference\Service1.disco" />
+    <Content Include="Service References\ServiceReference\configuration91.svcinfo" />
+    <Content Include="Service References\ServiceReference\configuration.svcinfo" />
+    <Content Include="Service References\ServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="StreamPlayer.ascx" />
+    <Content Include="Subscriptions.aspx" />
     <Content Include="TopBar.ascx" />
     <Content Include="UserInfo.ascx" />
     <Content Include="Web.config" />
@@ -130,6 +147,25 @@
     <Compile Include="SearchResult.ascx.designer.cs">
       <DependentUpon>SearchResult.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="StreamPlayer.ascx.cs">
+      <DependentUpon>StreamPlayer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StreamPlayer.ascx.designer.cs">
+      <DependentUpon>StreamPlayer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Subscriptions.aspx.cs">
+      <DependentUpon>Subscriptions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subscriptions.aspx.designer.cs">
+      <DependentUpon>Subscriptions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TopBar.ascx.cs">
       <DependentUpon>TopBar.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -146,6 +182,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Service References\ServiceReference\Service1.wsdl" />
+    <None Include="Service References\ServiceReference\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\Service11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference\Service12.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -153,7 +199,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
