@@ -30,6 +30,24 @@ namespace RentItServer
             return _instance;
         }
 
+        /// <summary>
+        /// Creates a channel.
+        /// </summary>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="userId">The id of the user creating the channel.</param>
+        /// <param name="description">The description of the channel.</param>
+        /// <param name="genres">The genres associated with the channel.</param>
+        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
+        public int CreateChannel(string channelName, int userId, string description, int[] genres)
+        {
+            return -1;
+        }
+
+        public Channel GetChannel(int channelId)
+        {
+            return new Channel();
+        }
+
         public void Comment(string comment, int userId, int channelId)
         {
             

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RentItServer
 {
+    [Serializable]
     public class SearchArgs
     {
     }

@@ -65,14 +65,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RentItServer\RentItServer.csproj">
-      <Project>{bb83f389-291f-4f2c-8424-7133d9d293aa}</Project>
-      <Name>RentItServer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RentItServer\RentItServer.csproj">
+      <Project>{79d0ac5a-dc28-4424-ae0a-4593e4216b56}</Project>
+      <Name>RentItServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

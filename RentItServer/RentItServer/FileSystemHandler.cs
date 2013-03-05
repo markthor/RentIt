@@ -49,8 +49,8 @@ namespace RentItServer
         /// </exception>
         public void Write(string relativePath, MemoryStream trackStream)
         {
-            if (relativePath == null) throw new ArgumentNullException("Relative path was null");
-            if (trackStream == null) throw new ArgumentNullException("MemoryStream argument was null");
+            if (relativePath == null) throw new ArgumentNullException("relativePath");
+            if (trackStream == null) throw new ArgumentNullException("trackStream");
             
             string fullPath = ProcessPath(relativePath);            
             if (fullPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
@@ -83,7 +83,7 @@ namespace RentItServer
         /// </exception>
         public MemoryStream Read(string relativePath)
         {
-            if (relativePath == null) throw new ArgumentNullException("Relative path was null");
+            if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
             
             string fullPath = ProcessPath(relativePath);
