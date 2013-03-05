@@ -12,6 +12,8 @@ namespace RentItServer
     // NOTE: In order to launch WCF Test Client for testing this service, please select RentItService.svc or RentItService.svc.cs at the Solution Explorer and start debugging.
     public class RentItService : IRentItService
     {
+        private static readonly Controller _controller = Controller.GetInstance();
+
         /// <summary>
         /// Creates a channel.
         /// </summary>
@@ -25,7 +27,7 @@ namespace RentItServer
             int channelId;
             try
             {
-                channelId = Controller.GetInstance().CreateChannel(channelName, userId, description, genres);
+                channelId = _controller.CreateChannel(channelName, userId, description, genres);
             }
             catch
             {   // An exception was raised or an error occurred
@@ -42,7 +44,7 @@ namespace RentItServer
         /// <returns>An array of channel ids matching search criteria. </returns>
         public int[] GetChannelIds(string searchString, SearchArgs args)
         {
-            return new int[]{0};
+            return _controller.GetChannelIds(searchString, args);
         }
 
         public Channel GetChannel(int channelId)
@@ -93,7 +95,7 @@ namespace RentItServer
 
         public void Comment(string comment, int userId, int channelId)
         {
-            Controller.GetInstance().Comment(comment, userId, channelId);
+            _controller.Comment(comment, userId, channelId);
         }
 
         public int[] GetCommentIds(int channelId)
@@ -116,8 +118,7 @@ namespace RentItServer
 
         public int GetChannelPort(int channelId, int ipAddress, int port)
         {
-            int i = Controller.GetInstance().GetChannelPort(channelId,ipAddress,port);
-
+            //int i = Controller.GetInstance().GetChannelPort(channelId,ipAddress,port);
 
             return -1;
         }

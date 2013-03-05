@@ -43,6 +43,11 @@ namespace RentItServer
             return -1;
         }
 
+        public Channel GetChannel(int channelId)
+        {
+            return new Channel();
+        }
+
         public void Comment(string comment, int userId, int channelId)
         {
             

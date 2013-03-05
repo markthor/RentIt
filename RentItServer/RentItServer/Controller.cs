@@ -71,14 +71,16 @@ namespace RentItServer
             if (searchString == null)    LogAndThrowException(new ArgumentNullException("searchString"), "GetChannelIds");
             if (searchString.Equals("")) LogAndThrowException(new ArgumentException("searchString was empty"), "GetChannelIds");
             
-            //String[] = TernarySearchTrie.WildcardMatch(searchString)
-            //List<
+            //String[] searchMatches = TernarySearchTrie.WildcardMatch(searchString)
+            //List<int> idList = new List<int>();
+            //foreach ....
             return new int[]{};
         }
 
         public Channel GetChannel(int channelId)
         {
-            return new Channel();
+            if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
+            return _dao.GetChannel(channelId);
         }
 
         public Channel ModifyChannel(int channelId)

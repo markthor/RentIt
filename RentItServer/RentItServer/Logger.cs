@@ -19,7 +19,7 @@ namespace RentItServer
         /// <summary>
         /// The _task collection. Contains pending entries
         /// </summary>
-        private readonly BlockingCollection<Task> _taskCollection = new BlockingCollection < Task > (new ConcurrentQueue<Task>()); 
+        private readonly BlockingCollection<string> _taskCollection = new BlockingCollection < string > (new ConcurrentQueue<string>()); 
 
         /// <summary>
         /// The absolute path
@@ -45,13 +45,11 @@ namespace RentItServer
             // Logging thread. Used in order to support asyncrhonous writing of entries
             new Task(() =>
                 {
-                    Task entryTask;
+                    string logEntry;
                     while (true)
                     {
-                        if (_taskCollection.TryTake(out entryTask))
-                        {
-                            entryTask.Start();
-                        }
+                        logEntry = _taskCollection.Take();
+                        File.AppendAllText(AbsolutePath, logEntry);
                     }
                 }).Start();
         }
@@ -79,7 +77,7 @@ namespace RentItServer
             lock (_entryLock)
             {
                 string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
-                _taskCollection.Add(new Task(() => File.AppendAllText(AbsolutePath, timeStamp + entry)));
+                _taskCollection.Add(timeStamp + entry);
             }
         }
     }
