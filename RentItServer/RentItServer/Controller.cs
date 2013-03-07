@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RentItServer.Search;
 
 namespace RentItServer
 {
@@ -17,12 +18,18 @@ namespace RentItServer
         private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
+        //The ternary search trie for channels
+        private TernarySearchTrie<bool> _channelSearch;
+        //The ternary search trie for users
+        private TernarySearchTrie<String> _userSearch;
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
         private Controller()
         {
+            _channelSearch = new TernarySearchTrie<bool>();
+            _userSearch = new TernarySearchTrie<string>();
         }
 
         /// <summary>
@@ -70,16 +77,23 @@ namespace RentItServer
         /// </summary>
         /// <param name="searchString">The search string.</param>
         /// <param name="args">The search arguments (used for filtering).</param>
-        /// <returns>An array of channel ids matching search criteria. </returns>
+        /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
         public int[] GetChannelIds(string searchString, SearchArgs args)
         {
             if (searchString == null)    LogAndThrowException(new ArgumentNullException("searchString"), "GetChannelIds");
             if (searchString.Equals("")) LogAndThrowException(new ArgumentException("searchString was empty"), "GetChannelIds");
-            
-            //String[] searchMatches = TernarySearchTrie.WildcardMatch(searchString)
-            //List<int> idList = new List<int>();
-            //foreach ....
-            return new int[]{};
+
+            int[] channelIds = new int[] { };
+            IEnumerable<String> channelMatches = _channelSearch.PrefixMatch(searchString);
+            if (channelMatches.Any() == true) 
+            {
+                foreach (String channelName in channelMatches)
+                {
+                    // TODO: seems a bit silly to use EF to find IDs just to have it find a channel for each ID just after.
+                }
+            }
+
+            return channelIds;
         }
 
         /// <summary>
@@ -139,6 +153,10 @@ namespace RentItServer
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public int Login(string username, string password)
         {
+            if (_userSearch.Contains(username) == true)
+            {
+                // TODO: why should the id be returned? we can find the id from the username...
+            }
             // TODO
             return 0;
         }
