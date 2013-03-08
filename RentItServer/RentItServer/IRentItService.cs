@@ -12,7 +12,7 @@ namespace RentItServer
     public interface IRentItService
     {
         [OperationContract]
-        int CreateChannel(string channelName, int userId, string description, int[] genres);
+        int CreateChannel(string channelName, int userId, string description, string[] genres);
 
         [OperationContract]
         int[] GetChannelIds(String channelName, SearchArgs args);

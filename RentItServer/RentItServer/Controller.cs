@@ -49,7 +49,7 @@ namespace RentItServer
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
-        public int CreateChannel(string channelName, int userId, string description, int[] genres)
+        public int CreateChannel(string channelName, int userId, string description, string[] genres)
         {
             if (channelName == null)    LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
@@ -89,6 +89,7 @@ namespace RentItServer
             {
                 foreach (String channelName in channelMatches)
                 {
+
                     // TODO: seems a bit silly to use EF to find IDs just to have it find a channel for each ID just after.
                 }
             }
