@@ -21,5 +21,11 @@ namespace RentItServer
             get;
             set;
         }
+
+        public int ChannelId
+        {
+            get;
+            set;
+        }
     }
 }

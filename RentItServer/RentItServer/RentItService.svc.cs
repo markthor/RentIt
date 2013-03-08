@@ -40,6 +40,11 @@ namespace RentItServer
             return _controller.GetChannelIds(searchString, args);
         }
 
+        /// <summary>
+        /// Gets a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id for the channel to get.</param>
+        /// <returns>The channel matching the given id.</returns>
         public Channel GetChannel(int channelId)
         {
             return new Channel();
@@ -52,6 +57,11 @@ namespace RentItServer
             return _controller.ModifyChannel(userId, channelId);
         }
 
+        /// <summary>
+        /// Deletes the channel.
+        /// </summary>
+        /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
+        /// <param name="channelId">The channel id.</param>
         public void DeleteChannel(int userId, int channelId)
         {
             _controller.DeleteChannel(userId, channelId);
@@ -69,6 +79,13 @@ namespace RentItServer
             return _controller.Login(username, password);
         }
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <param name="email">The email associated with user.</param>
+        /// <returns>The id of the created user.</returns>
         public int CreateUser(string username, string password, string email)
         {
             return 0;
@@ -102,6 +119,12 @@ namespace RentItServer
             return _controller.GetTrackInfo(trackId);
         }
 
+        /// <summary>
+        /// Comments on the specified channel.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
         public void Comment(string comment, int userId, int channelId)
         {
             _controller.Comment(comment, userId, channelId);

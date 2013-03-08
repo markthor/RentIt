@@ -18,9 +18,9 @@ namespace RentItServer
         private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
-        //The ternary search trie for channels
+        //The ternary search trie for channels. Each channel has its id as value
         private TernarySearchTrie<int> _channelSearch;
-        //The ternary search trie for users
+        //The ternary search trie for users. Each user has his/her password as value
         private TernarySearchTrie<String> _userSearch;
 
         /// <summary>
@@ -30,6 +30,14 @@ namespace RentItServer
         {
             _channelSearch = new TernarySearchTrie<int>();
             _userSearch = new TernarySearchTrie<string>();
+            // Initialize channel search trie
+            IEnumerable<Channel> allChannels = _dao.GetAllChannels();
+            foreach (Channel channel in allChannels)
+            {
+                _channelSearch.Put(channel.Name, channel.ChannelId);
+            }
+            // Initialize user search trie
+            // TODO
         }
 
         /// <summary>
@@ -62,6 +70,7 @@ namespace RentItServer
             try
             {
                 channelId = _dao.CreateChannel(channelName, userId, description, genres);
+                _channelSearch.Put(channelName, channelId);
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
             }
             catch(Exception e)
@@ -83,25 +92,25 @@ namespace RentItServer
             if (searchString == null)    LogAndThrowException(new ArgumentNullException("searchString"), "GetChannelIds");
             if (searchString.Equals("")) LogAndThrowException(new ArgumentException("searchString was empty"), "GetChannelIds");
 
-            int[] channelIds = new int[] { };
-            IEnumerable<String> channelMatches = _channelSearch.PrefixMatch(searchString);
+            List<int> channelIds = new List<int>();
+            IEnumerable<String> channelMatches = _channelSearch.PrefixMatch(searchString).ToArray();
             if (channelMatches.Any() == true) 
             {
                 foreach (String channelName in channelMatches)
                 {
-
-                    // TODO: seems a bit silly to use EF to find IDs just to have it find a channel for each ID just after.
+                    channelIds.Add(_channelSearch.Get(channelName));
                 }
+                channelIds = _dao.FilterChannels(channelIds, args);
             }
 
-            return channelIds;
+            return channelIds.ToArray();
         }
 
         /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
-        /// <returns></returns>
+        /// <returns>The channel matching the given id.</returns>
         public Channel GetChannel(int channelId)
         {
             if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
@@ -154,7 +163,7 @@ namespace RentItServer
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public int Login(string username, string password)
         {
-            if (_userSearch.Contains(username) == true)
+            if (_userSearch.Get(username).Equals(password))
             {
                 // TODO: why should the id be returned? we can find the id from the username...
             }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.ServiceModel;
 
 namespace RentItServer
 {
@@ -52,6 +54,22 @@ namespace RentItServer
         {
             return new Channel();
         }
+
+        public IEnumerable<Channel> GetAllChannels()
+        {
+            return new List<Channel>();
+        }
+
+        /// <summary>
+        /// Filters the channels with respect to the filter argument.
+        /// </summary>
+        /// <param name="channelIds">The channel ids.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>Channel ids of the channels matching the filter.</returns>
+        public List<int> FilterChannels(List<int> channelIds, SearchArgs filter)
+        {
+            return new List<int>();
+        }   
 
         public void DeleteChannel(int userId, int channelId)
         {

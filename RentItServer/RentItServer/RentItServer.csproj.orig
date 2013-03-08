@@ -110,10 +110,13 @@
     <Compile Include="Search\TernarySearchTrieNode.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="TrackInfo.cs" />
+<<<<<<< HEAD
     <Compile Include="TrackPlay.cs" />
+=======
     <Compile Include="trackplays.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+>>>>>>> 20e1ccd1e4cc8c5127cab22cfc8bd88607b7a0c4
     <Compile Include="TrackPrioritizer.cs" />
     <Compile Include="tracks.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>

@@ -11,24 +11,62 @@ namespace RentItServer
     [ServiceContract]
     public interface IRentItService
     {
+        /// <summary>
+        /// Creates a channel.
+        /// </summary>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="userId">The id of the user creating the channel.</param>
+        /// <param name="description">The description of the channel.</param>
+        /// <param name="genres">The genres associated with the channel.</param>
+        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         [OperationContract]
         int CreateChannel(string channelName, int userId, string description, string[] genres);
 
+        /// <summary>
+        /// Gets the channel ids matching the given search string and search arguments.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <param name="args">The search arguments (used for filtering).</param>
+        /// <returns>An array of channel ids matching search criteria. </returns>
         [OperationContract]
-        int[] GetChannelIds(String channelName, SearchArgs args);
+        int[] GetChannelIds(String searchString, SearchArgs args);
 
+
+        /// <summary>
+        /// Gets a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id for the channel to get.</param>
+        /// <returns>The channel matching the given id.</returns>
         [OperationContract]
         Channel GetChannel( int channelId);
 
         [OperationContract]
         Channel ModifyChannel(int userId, int channelId);
 
+        /// <summary>
+        /// Deletes the channel.
+        /// </summary>
+        /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
+        /// <param name="channelId">The channel id.</param>
         [OperationContract]
         void DeleteChannel(int userId, int channelId);
 
+        /// <summary>
+        /// Logins the user with the specified username and password.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
         [OperationContract]
         int Login(string username, string password);
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <param name="email">The email associated with user.</param>
+        /// <returns>The id of the created user.</returns>
         [OperationContract]
         int CreateUser(string username, string password, string email);
 
@@ -47,6 +85,12 @@ namespace RentItServer
         [OperationContract]
         TrackInfo GetTrackInfo(int trackId);
 
+        /// <summary>
+        /// Comments on the specified channel.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
         [OperationContract]
         void Comment(string comment, int userId, int channelId);
 
