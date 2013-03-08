@@ -39,7 +39,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -64,12 +70,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channel.cs" />
+    <Compile Include="channels.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Comment.cs" />
+    <Compile Include="comments.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controller.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="Exceptions\NullValueException.cs" />
     <Compile Include="FileSystemHandler.cs" />
+    <Compile Include="genres.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Logger.cs" />
+    <Compile Include="RentItModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RentItModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentItModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentItModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RentItModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="SearchArgs.cs" />
     <Compile Include="RentItService.svc.cs">
       <DependentUpon>RentItService.svc</DependentUpon>
@@ -79,18 +109,51 @@
     <Compile Include="Search\TernarySearchTrie.cs" />
     <Compile Include="Search\TernarySearchTrieNode.cs" />
     <Compile Include="TrackInfo.cs" />
+    <Compile Include="trackplays.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TrackPrioritizer.cs" />
+    <Compile Include="tracks.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="users.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="votes.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="RentItModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RentItModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="packages.config" />
+    <Content Include="RentItModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RentItModel.edmx</DependentUpon>
+      <LastGenOutput>RentItModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RentItModel.edmx.diagram">
+      <DependentUpon>RentItModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="RentItModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RentItModel.edmx</DependentUpon>
+      <LastGenOutput>RentItModel.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -103,11 +166,12 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>51758</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6604/</IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
