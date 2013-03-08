@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using RentItClient.RentItService;
 
 namespace RentItClient
 {
@@ -35,17 +36,18 @@ namespace RentItClient
         {
             genreList = new List<string>();
             genres = new List<string>();
+            // temporary test data
             genreList.Add("Rock");
             genreList.Add("Pop");
             genreList.Add("Dancehall");
             genreList.Add("Techno");
             genreList.Add("Reggae");
-            // sets databindings
+            //sets databindings
             lbx_availableGenres.DataSource = genreList;
             lbx_availableGenres.DataBind();
             lbx_chosenGenres.DataSource = genres;
             lbx_chosenGenres.DataBind();
-            // saves session data
+            //saves session data
             Session["GenreList"] = genreList;
             Session["Genres"] = genres;
         }
@@ -63,6 +65,7 @@ namespace RentItClient
 
         private void InitChannelDescription()
         {
+
             channelDescription = "Enter description here...";
             tbx_description.Text = channelDescription;
         }
@@ -110,7 +113,15 @@ namespace RentItClient
         /// <param name="e">Eventargs</param>
         protected void btn_saveChanges_Click(object sender, EventArgs e)
         {
-
+            using (RentItServiceClient service = new RentItServiceClient())
+            {
+                string name = lbl_channelName.Text;
+                string desc = tbx_description.Text;
+                int id = 1;
+                int[] genre = { 1, 2, 3, 4, 5, 6 };
+                // Change this to modify channel
+                int channelId = service.CreateChannel(name, id, desc, genre);
+            }
         }
 
         /// <summary>
