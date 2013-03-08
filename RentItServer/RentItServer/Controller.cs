@@ -19,7 +19,7 @@ namespace RentItServer
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
         //The ternary search trie for channels
-        private TernarySearchTrie<bool> _channelSearch;
+        private TernarySearchTrie<int> _channelSearch;
         //The ternary search trie for users
         private TernarySearchTrie<String> _userSearch;
 
@@ -28,7 +28,7 @@ namespace RentItServer
         /// </summary>
         private Controller()
         {
-            _channelSearch = new TernarySearchTrie<bool>();
+            _channelSearch = new TernarySearchTrie<int>();
             _userSearch = new TernarySearchTrie<string>();
         }
 
