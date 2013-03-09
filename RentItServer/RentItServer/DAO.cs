@@ -52,6 +52,17 @@ namespace RentItServer
 
         public Channel GetChannel(int channelId)
         {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channel = from channels in context.channels.Where(channels => channels.id == channelId)
+                              select channels;
+                if (channel.Any() == false)
+                {   // No channel with matching id
+                    return null;
+                }
+                channels ch = channel.First();
+                // TODO not finished... consider renaming tables
+            }
             return new Channel();
         }
 
