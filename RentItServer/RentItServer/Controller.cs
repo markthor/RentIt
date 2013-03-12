@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -89,11 +90,18 @@ namespace RentItServer
         public int[] GetChannelIds(SearchArgs args)
         {
             List<Channel> channels = _dao.GetChannelsWithFilter(args);
-            IEnumerable<string> channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
+            string[] channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
+            
+            List<int> filteredChannelIds = new List<int>();
+            for(int i = 0; i < channels.Count(); i++)
+            {   // TODO: There's gotta be a better way...
+                if (channelMatches.Contains(channels[i].name))
+                {
+                    filteredChannelIds.Add(channels[i].id);
+                }
+            }
 
-           // channels.BinarySearch();
-
-            return new int[]{};
+            return filteredChannelIds.ToArray();
         }
 
         /// <summary>
