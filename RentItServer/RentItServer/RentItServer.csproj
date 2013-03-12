@@ -114,10 +114,12 @@
     <Compile Include="Track.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TrackCustom.cs" />
     <Compile Include="TrackInfo.cs" />
     <Compile Include="TrackPlay.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TrackPlayCustom.cs" />
     <Compile Include="TrackPrioritizer.cs" />
     <Compile Include="User.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>

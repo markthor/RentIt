@@ -10,6 +10,7 @@ namespace RentItServer
     {
         //Singleton instance of the class
         public static TrackPrioritizer _instance;
+        public static Random rng = new Random();
         public const double _maxFrequency = 0.3;
         public const int _ratioConstant = 10;
         public const int _minimumRepeatDistance = 3;
@@ -33,7 +34,7 @@ namespace RentItServer
             }
             return _instance;
         }
-        /*
+        
         public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
             //Initializing data structure for track prioritizing.
@@ -42,15 +43,15 @@ namespace RentItServer
             //Adding a key for each track and a TrackData object.
             foreach (Track t in trackList)
             {
-                trackData.Add(t.Id, new TrackData());
+                trackData.Add(t.id, new TrackData(t.upvotes.Value, t.downvotes.Value));
             }
             
             //Counting trackPlay occurences and adding it to TrackData.
             foreach (TrackPlay tp in plays)
             {
-                TrackData currentTrackData = trackData[tp.TrackId];
+                TrackData currentTrackData = trackData[tp.trackId];
                 currentTrackData.Plays++;
-                trackData.Add(tp.TrackId, currentTrackData);
+                trackData.Add(tp.trackId, currentTrackData);
             }
 
             //The total amount of recorded plays.
@@ -75,15 +76,39 @@ namespace RentItServer
 
             //Calculating TrackData ratio for tracks that are candidate to the next track.
             //Counts the total amount of ratio.
+            double sumOfRatios = 0;
             foreach (KeyValuePair<int, TrackData> kvp in trackData)
             {
                 if (kvp.Value.NextTrackCandidate)
                 {
-                    kvp.Value.Ratio = 
+                    kvp.Value.Ratio = GetRatio(kvp.Value.Upvotes, kvp.Value.Downvotes);
+                    sumOfRatios += kvp.Value.Ratio;
                 }
             }
+
+            //Generates a random number from 0 to 1 that chooses the next track.
+            double nextTrackRandomRatioIndex = sumOfRatios * rng.NextDouble();
+            //Finds the next track from the nextTrackRandomRatioIndex.
+            double ratioAccumulator = 0;
+            foreach (KeyValuePair<int, TrackData> kvp in trackData)
+            {
+                if (kvp.Value.NextTrackCandidate)
+                {
+                    if ((ratioAccumulator + kvp.Value.Ratio) > nextTrackRandomRatioIndex)
+                    {
+                        return kvp.Key;
+                    }
+                    else
+                    {
+                        ratioAccumulator += kvp.Value.Ratio;
+                    }
+
+                }
+            }
+
+            return 0;
         }
-        */
+        
         private double GetRatio(int upvotes, int downvotes)
         {
             return (_ratioConstant + upvotes) / (_ratioConstant + downvotes);
@@ -137,10 +162,12 @@ namespace RentItServer
 
     public class TrackData
     {
-        public TrackData()
+        public TrackData(int Upvotes, int Downvotes)
         {
             NextTrackCandidate = true;
             Plays = 0;
+            this.Upvotes = Upvotes;
+            this.Downvotes = Downvotes;
         }
 
         public double Ratio
@@ -150,6 +177,18 @@ namespace RentItServer
         }
 
         public int Plays
+        {
+            get;
+            set;
+        }
+
+        public int Upvotes
+        {
+            get;
+            set;
+        }
+
+        public int Downvotes
         {
             get;
             set;
