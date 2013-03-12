@@ -76,21 +76,76 @@ namespace RentItServer
             IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                allChannels = from channel in context.channels select channel;
+                var channels = from channel in context.channels select channel;
+                allChannels = channels.ToList();
             }
             return allChannels;
         }
 
         /// <summary>
-        /// Filters the channels with respect to the filter argument.
+        /// Filters the with respect to the filter arguments: 
+        ///     filter.AmountPlayed
+        ///     filter.Genres
+        ///     filter.NumberOfComments
+        ///     filter.NumberOfSubscriptions
+        ///     filter.SortOptions.
         /// </summary>
-        /// <param name="channelIds">The channel ids.</param>
         /// <param name="filter">The filter.</param>
-        /// <returns>Channel ids of the channels matching the filter.</returns>
-        public List<int> FilterChannels(List<int> channelIds, SearchArgs filter)
+        /// <returns>
+        /// Channel ids of the channels matching the filter.
+        /// </returns>
+        public IEnumerable<Channel> GetChannelsWithFilter(SearchArgs filter)
         {
-
-            return new List<int>();
+            List<Channel> filteredChannels;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.channels
+                               select channel;
+                if (filter.AmountPlayed > -1)
+                {   // Apply amount played filter
+                    channels = from channel in channels 
+                               where channel.plays >= filter.AmountPlayed 
+                               select channel;
+                }
+                if (filter.Genres.Any() == true)
+                {   // Apply genre filter
+                    int amountOfGenres = filter.Genres.Count();
+                    channels = from channel in channels
+                               where channel.genres.Any(genre => filter.Genres.Contains(genre.name))
+                               select channel;
+                }
+                if (filter.NumberOfComments > -1)
+                {   // Apply comment filter
+                    channels = from channel in channels
+                               where channel.comments.Count >= filter.NumberOfComments
+                               select channel;
+                }
+                if (filter.NumberOfSubscriptions > -1)
+                {   // Apply subscription filter
+                    channels = from channel in channels
+                               where channel.subscriptions.Count >= filter.NumberOfSubscriptions
+                               select channel;
+                }
+                if (filter.SortOption == -1)
+                {   // Descending
+                    channels = from channel in channels
+                               orderby channel.name descending
+                               select channel;
+                }else if (filter.SortOption == 1)
+                {   // Ascending
+                    channels = from channel in channels
+                               orderby channel.name ascending
+                               select channel;
+                }
+                filteredChannels = channels.ToList();
+            }
+            if (filter.startIndex != -1 && filter.endIndex != -1)
+            {
+                Channel[] range = new Channel[filter.endIndex - filter.startIndex];
+                filteredChannels.CopyTo(filter.startIndex, range, 0, filter.endIndex-filter.startIndex);
+                filteredChannels = new List<Channel>(range);
+            }
+            return filteredChannels;
         }   
 
         public void DeleteChannel(int userId, int channelId)

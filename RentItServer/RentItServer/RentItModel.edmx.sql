@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/12/2013 14:06:51
+-- Date Created: 03/12/2013 15:23:48
 -- Generated from EDMX file: D:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
@@ -139,7 +139,8 @@ GO
 CREATE TABLE [dbo].[users] (
     [id] int IDENTITY(1,1) NOT NULL,
     [username] varchar(50)  NOT NULL,
-    [password] varchar(25)  NOT NULL
+    [password] varchar(25)  NOT NULL,
+    [channelsSubscriped_id] int  NOT NULL
 );
 GO
 
@@ -156,13 +157,6 @@ GO
 CREATE TABLE [dbo].[channelgenres] (
     [channels_id] int  NOT NULL,
     [genres_id] int  NOT NULL
-);
-GO
-
--- Creating table 'subscriptions'
-CREATE TABLE [dbo].[subscriptions] (
-    [channels1_id] int  NOT NULL,
-    [users1_id] int  NOT NULL
 );
 GO
 
@@ -216,12 +210,6 @@ GO
 ALTER TABLE [dbo].[channelgenres]
 ADD CONSTRAINT [PK_channelgenres]
     PRIMARY KEY NONCLUSTERED ([channels_id], [genres_id] ASC);
-GO
-
--- Creating primary key on [channels1_id], [users1_id] in table 'subscriptions'
-ALTER TABLE [dbo].[subscriptions]
-ADD CONSTRAINT [PK_subscriptions]
-    PRIMARY KEY NONCLUSTERED ([channels1_id], [users1_id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -334,27 +322,18 @@ ON [dbo].[channelgenres]
     ([genres_id]);
 GO
 
--- Creating foreign key on [channels1_id] in table 'subscriptions'
-ALTER TABLE [dbo].[subscriptions]
-ADD CONSTRAINT [FK_subscriptions_channels]
-    FOREIGN KEY ([channels1_id])
+-- Creating foreign key on [channelsSubscriped_id] in table 'users'
+ALTER TABLE [dbo].[users]
+ADD CONSTRAINT [FK_subscriptions]
+    FOREIGN KEY ([channelsSubscriped_id])
     REFERENCES [dbo].[channels]
         ([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
--- Creating foreign key on [users1_id] in table 'subscriptions'
-ALTER TABLE [dbo].[subscriptions]
-ADD CONSTRAINT [FK_subscriptions_users]
-    FOREIGN KEY ([users1_id])
-    REFERENCES [dbo].[users]
-        ([id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_subscriptions_users'
-CREATE INDEX [IX_FK_subscriptions_users]
-ON [dbo].[subscriptions]
-    ([users1_id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_subscriptions'
+CREATE INDEX [IX_FK_subscriptions]
+ON [dbo].[users]
+    ([channelsSubscriped_id]);
 GO
 
 -- --------------------------------------------------

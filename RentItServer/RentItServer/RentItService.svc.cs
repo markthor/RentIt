@@ -31,13 +31,12 @@ namespace RentItServer
         /// <summary>
         /// Gets the channel ids matching the given search string and search arguments.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
         /// <param name="args">The search arguments (used for filtering).</param>
         /// <returns>An array of channel ids matching search criteria. </returns>
-        public int[] GetChannelIds(string searchString, SearchArgs args)
+        public int[] GetChannelIds(SearchArgs args)
         {
             return new int[] { 0 };
-            return _controller.GetChannelIds(searchString, args);
+            return _controller.GetChannelIds(args);
         }
 
         /// <summary>

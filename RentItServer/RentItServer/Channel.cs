@@ -19,7 +19,7 @@ namespace RentItServer
             this.comments = new HashSet<Comment>();
             this.tracks = new HashSet<Track>();
             this.genres = new HashSet<Genre>();
-            this.users1 = new HashSet<User>();
+            this.subscriptions = new HashSet<User>();
         }
     
         public int id { get; set; }
@@ -33,6 +33,6 @@ namespace RentItServer
         public virtual ICollection<Comment> comments { get; set; }
         public virtual ICollection<Track> tracks { get; set; }
         public virtual ICollection<Genre> genres { get; set; }
-        public virtual ICollection<User> users1 { get; set; }
+        public virtual ICollection<User> subscriptions { get; set; }
     }
 }

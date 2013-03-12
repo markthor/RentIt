@@ -19,7 +19,6 @@ namespace RentItServer
             this.channels = new HashSet<Channel>();
             this.comments = new HashSet<Comment>();
             this.votes = new HashSet<Vote>();
-            this.channels1 = new HashSet<Channel>();
         }
     
         public int id { get; set; }
@@ -29,6 +28,6 @@ namespace RentItServer
         public virtual ICollection<Channel> channels { get; set; }
         public virtual ICollection<Comment> comments { get; set; }
         public virtual ICollection<Vote> votes { get; set; }
-        public virtual ICollection<Channel> channels1 { get; set; }
+        public virtual Channel channelsSubscriped { get; set; }
     }
 }
