@@ -1,28 +1,32 @@
 ﻿body {
     width: 1200px;
     height: auto;
+    margin: 0 auto;
+}
+
+.createBody{
+    text-align: center;
+    width: 100%;
 }
 
 .login {
     margin: 3px 3px 3px 3px;
 }
 
-#loginTitle{
-    text-align: center;
-    font-family: Arial;
-}
+.genreBox {
+   
+    float: left;
+    }
 
 .loginTitle{
     font-family: Arial;
     text-align: center;
     font-size: large;
-    padding-right: 3px;
     border-bottom: 1px solid black;
     margin: 5px;
 }
 
 .loginLabel {
-    Width: 100px;
     margin-right: 6px;
     margin-left: 6px;
     font-family: Arial;
@@ -32,9 +36,18 @@
 .loginTextbox {
     clear: left;
     margin-right: 6px;
-    margin-left: px;
     font-family: Arial;
     font-size: medium;
+}
+
+.subscripeButton {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 10px
+}
+
+textarea {
+    resize: none;
 }
 
 .labelTextMargin {
@@ -42,11 +55,18 @@
     margin-right: 50px;
     border: 1px solid black;
     float: left;
-    width: 293px;
+    width: 335px;
+}
+
+.channelTextMargin {
+    margin: 10px auto;
+    width: 600px;
 }
 
 .clear {
     margin-bottom: 5px;
+    text-align: left;
+    margin-right: 0px;
 }
 
 .logo {
@@ -56,9 +76,12 @@
 }
 
 .search {
+    margin: 0px 0px;
+    text-align: center;
     width: 50%;
     height: 50px;
     float: left;
+    background-color: aqua;
 }
 
 .element {
@@ -70,6 +93,8 @@
     width: 25%;
     height: 50px;
     float: left;
+    text-align: center;
+    background-color: red;
 }
 
 .streamPlayer {
@@ -78,11 +103,23 @@
 }
 
 .homeScreen {
-    width: 50%;
+    width: 46%;
     float: left;
+    margin: 0 24px;
 }
 
 .subscriptions {
     width: 25%;
     float:left;
+}
+
+.centered {
+    margin: 0 auto;
+    text-align: center;
+    clear:both;
+}
+
+.upDownToke {
+    margin-top: 3px;
+    margin-bottom: 0px;
 }

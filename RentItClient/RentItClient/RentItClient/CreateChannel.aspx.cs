@@ -13,5 +13,16 @@ namespace RentItClient
         {
 
         }
+
+        protected void btn_createChannel_Click(object sender, EventArgs e)
+        {
+            Session["ChannelName"] = tbx_channelName.Text;
+            Response.Redirect("EditChannel.aspx");
+        }
+
+        protected void btn_cancelCreateChannel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }

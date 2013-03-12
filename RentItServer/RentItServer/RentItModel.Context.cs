@@ -13,10 +13,10 @@ namespace RentItServer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ModelContainer : DbContext
+    public partial class RENTIT21Entities : DbContext
     {
-        public ModelContainer()
-            : base("name=ModelContainer")
+        public RENTIT21Entities()
+            : base("name=RENTIT21Entities")
         {
         }
     
@@ -25,5 +25,12 @@ namespace RentItServer
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<channels> channels { get; set; }
+        public DbSet<comments> comments { get; set; }
+        public DbSet<genres> genres { get; set; }
+        public DbSet<trackplays> trackplays { get; set; }
+        public DbSet<tracks> tracks { get; set; }
+        public DbSet<users> users { get; set; }
+        public DbSet<votes> votes { get; set; }
     }
 }

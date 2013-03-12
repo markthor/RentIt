@@ -4,7 +4,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
     <title>RentIt Login</title>
     <link rel="stylesheet" type="text/css" href="RentItStyle.css" />
 </head>
@@ -19,7 +18,7 @@
             </div>
             <div class="clear">
                 <asp:Label ID="lbl_password" runat="server" Text="Password" CssClass="loginLabel" Width="70px"></asp:Label>           
-                <asp:TextBox ID="tbx_password" runat="server" CssClass="loginTextbox"></asp:TextBox>
+                <asp:TextBox ID="tbx_password" runat="server" CssClass="loginTextbox" TextMode="Password"></asp:TextBox>
             </div>
             <asp:Button ID="btn_login" runat="server" Text="Login" OnClick="btn_login_Click" />
         </div> 
