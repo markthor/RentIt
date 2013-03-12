@@ -10,9 +10,9 @@ namespace RentItServer
     {
         //Singleton instance of the class
         public static TrackPrioritizer _instance;
-        public static const double _maxFrequency = 0.3;
-        public static const int _ratioConstant = 10;
-        public static const int _minimumRepeatDistance = 3;
+        public const double _maxFrequency = 0.3;
+        public const int _ratioConstant = 10;
+        public const int _minimumRepeatDistance = 3;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -86,7 +86,7 @@ namespace RentItServer
         */
         private double GetRatio(int upvotes, int downvotes)
         {
-            return (_ratioConstant+upvotes)/(_ratioConstant+downvotes)
+            return (_ratioConstant + upvotes) / (_ratioConstant + downvotes);
         }
 
         private List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)
