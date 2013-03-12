@@ -82,28 +82,18 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the channel ids matching the given search string and search arguments.
+        /// Gets the channel ids matching the given search arguments.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
         /// <param name="args">The search arguments (used for filtering).</param>
         /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
-        public int[] GetChannelIds(string searchString, SearchArgs args)
+        public int[] GetChannelIds(SearchArgs args)
         {
-            if (searchString == null)    LogAndThrowException(new ArgumentNullException("searchString"), "GetChannelIds");
-            if (searchString.Equals("")) LogAndThrowException(new ArgumentException("searchString was empty"), "GetChannelIds");
+            List<Channel> channels = _dao.GetChannelsWithFilter(args);
+            IEnumerable<string> channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
 
-            List<int> channelIds = new List<int>();
-            IEnumerable<String> channelMatches = _channelSearch.PrefixMatch(searchString).ToArray();
-            if (channelMatches.Any() == true) 
-            {
-                foreach (String channelName in channelMatches)
-                {
-                    channelIds.Add(_channelSearch.Get(channelName));
-                }
-                channelIds = _dao.FilterChannels(channelIds, args);
-            }
+           // channels.BinarySearch();
 
-            return channelIds.ToArray();
+            return new int[]{};
         }
 
         /// <summary>

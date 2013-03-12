@@ -15,7 +15,6 @@ namespace RentItServer
     public partial class TrackPlay
     {
         public int trackId { get; set; }
-        public System.DateTime date { get; set; }
         public System.DateTime playtime { get; set; }
     
         public virtual Track tracks { get; set; }

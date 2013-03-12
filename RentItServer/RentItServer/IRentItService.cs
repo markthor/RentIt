@@ -23,13 +23,12 @@ namespace RentItServer
         int CreateChannel(string channelName, int userId, string description, string[] genres);
 
         /// <summary>
-        /// Gets the channel ids matching the given search string and search arguments.
+        /// Gets the channel ids matching the given search arguments.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
         /// <param name="args">The search arguments (used for filtering).</param>
         /// <returns>An array of channel ids matching search criteria. </returns>
         [OperationContract]
-        int[] GetChannelIds(String searchString, SearchArgs args);
+        int[] GetChannelIds(SearchArgs args);
 
 
         /// <summary>
