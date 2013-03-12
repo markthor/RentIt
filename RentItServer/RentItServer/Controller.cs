@@ -89,9 +89,12 @@ namespace RentItServer
         /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
         public int[] GetChannelIds(SearchArgs args)
         {
+            // Get channels that match all filters except args.SearchString
             List<Channel> channels = _dao.GetChannelsWithFilter(args);
+            // Get all channel names matching filter args.SearchString
             string[] channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
             
+            // Intersect
             List<int> filteredChannelIds = new List<int>();
             for(int i = 0; i < channels.Count(); i++)
             {   // TODO: There's gotta be a better way...
