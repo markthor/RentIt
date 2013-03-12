@@ -25,12 +25,12 @@ namespace RentItServer
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<channels> channels { get; set; }
-        public DbSet<comments> comments { get; set; }
-        public DbSet<genres> genres { get; set; }
-        public DbSet<trackplays> trackplays { get; set; }
-        public DbSet<tracks> tracks { get; set; }
-        public DbSet<users> users { get; set; }
-        public DbSet<votes> votes { get; set; }
+        public DbSet<Channel> channels { get; set; }
+        public DbSet<Comment> comments { get; set; }
+        public DbSet<Genre> genres { get; set; }
+        public DbSet<TrackPlay> trackplays { get; set; }
+        public DbSet<Track> tracks { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<Vote> votes { get; set; }
     }
 }

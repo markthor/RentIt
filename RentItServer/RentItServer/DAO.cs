@@ -52,23 +52,33 @@ namespace RentItServer
 
         public Channel GetChannel(int channelId)
         {
+            Channel ch;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channel = from channels in context.channels.Where(channels => channels.id == channelId)
-                              select channels;
-                if (channel.Any() == false)
+                var channels = from channel in context.channels.Where(channel => channel.id == channelId)
+                              select channel;
+
+                if (channels.Any() == false)
                 {   // No channel with matching id
                     return null;
                 }
-                channels ch = channel.First();
-                // TODO not finished... consider renaming tables
+                if (channels.Count() > 1)
+                {
+                    // Da fuk?
+                }
+                ch = channels.First();
             }
-            return new Channel();
+            return ch;
         }
 
         public IEnumerable<Channel> GetAllChannels()
         {
-            return new List<Channel>();
+            IEnumerable<Channel> allChannels;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                allChannels = from channel in context.channels select channel;
+            }
+            return allChannels;
         }
 
         /// <summary>
@@ -79,6 +89,7 @@ namespace RentItServer
         /// <returns>Channel ids of the channels matching the filter.</returns>
         public List<int> FilterChannels(List<int> channelIds, SearchArgs filter)
         {
+
             return new List<int>();
         }   
 

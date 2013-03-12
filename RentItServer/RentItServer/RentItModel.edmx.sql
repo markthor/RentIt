@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/09/2013 11:40:55
--- Generated from EDMX file: E:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
+-- Date Created: 03/12/2013 14:06:51
+-- Generated from EDMX file: D:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,32 +17,20 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK__channelge__chann__267ABA7A]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[channelgenres] DROP CONSTRAINT [FK__channelge__chann__267ABA7A];
-GO
-IF OBJECT_ID(N'[dbo].[FK__channelge__genre__276EDEB3]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[channelgenres] DROP CONSTRAINT [FK__channelge__genre__276EDEB3];
-GO
 IF OBJECT_ID(N'[dbo].[FK__channels__userId__182C9B23]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[channels] DROP CONSTRAINT [FK__channels__userId__182C9B23];
 GO
 IF OBJECT_ID(N'[dbo].[FK__comments__channe__1CF15040]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[comments] DROP CONSTRAINT [FK__comments__channe__1CF15040];
 GO
+IF OBJECT_ID(N'[dbo].[FK__tracks__channelI__31EC6D26]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[tracks] DROP CONSTRAINT [FK__tracks__channelI__31EC6D26];
+GO
 IF OBJECT_ID(N'[dbo].[FK__comments__userId__1DE57479]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[comments] DROP CONSTRAINT [FK__comments__userId__1DE57479];
 GO
-IF OBJECT_ID(N'[dbo].[FK__subscript__chann__2D27B809]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK__subscript__chann__2D27B809];
-GO
-IF OBJECT_ID(N'[dbo].[FK__subscript__userI__2C3393D0]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK__subscript__userI__2C3393D0];
-GO
 IF OBJECT_ID(N'[dbo].[FK__trackplay__track__36B12243]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[trackplays] DROP CONSTRAINT [FK__trackplay__track__36B12243];
-GO
-IF OBJECT_ID(N'[dbo].[FK__tracks__channelI__31EC6D26]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[tracks] DROP CONSTRAINT [FK__tracks__channelI__31EC6D26];
 GO
 IF OBJECT_ID(N'[dbo].[FK__votes__trackId__3B75D760]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[votes] DROP CONSTRAINT [FK__votes__trackId__3B75D760];
@@ -50,14 +38,23 @@ GO
 IF OBJECT_ID(N'[dbo].[FK__votes__userId__3C69FB99]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[votes] DROP CONSTRAINT [FK__votes__userId__3C69FB99];
 GO
+IF OBJECT_ID(N'[dbo].[FK_channelgenres_channels]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[channelgenres] DROP CONSTRAINT [FK_channelgenres_channels];
+GO
+IF OBJECT_ID(N'[dbo].[FK_channelgenres_genres]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[channelgenres] DROP CONSTRAINT [FK_channelgenres_genres];
+GO
+IF OBJECT_ID(N'[dbo].[FK_subscriptions_channels]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK_subscriptions_channels];
+GO
+IF OBJECT_ID(N'[dbo].[FK_subscriptions_users]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK_subscriptions_users];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[channelgenres]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[channelgenres];
-GO
 IF OBJECT_ID(N'[dbo].[channels]', 'U') IS NOT NULL
     DROP TABLE [dbo].[channels];
 GO
@@ -66,9 +63,6 @@ IF OBJECT_ID(N'[dbo].[comments]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[genres]', 'U') IS NOT NULL
     DROP TABLE [dbo].[genres];
-GO
-IF OBJECT_ID(N'[dbo].[subscriptions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[subscriptions];
 GO
 IF OBJECT_ID(N'[dbo].[trackplays]', 'U') IS NOT NULL
     DROP TABLE [dbo].[trackplays];
@@ -81,6 +75,12 @@ IF OBJECT_ID(N'[dbo].[users]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[votes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[votes];
+GO
+IF OBJECT_ID(N'[dbo].[channelgenres]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[channelgenres];
+GO
+IF OBJECT_ID(N'[dbo].[subscriptions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[subscriptions];
 GO
 
 -- --------------------------------------------------
@@ -117,7 +117,8 @@ GO
 -- Creating table 'trackplays'
 CREATE TABLE [dbo].[trackplays] (
     [trackId] int  NOT NULL,
-    [date] datetime  NOT NULL
+    [date] datetime  NOT NULL,
+    [playtime] datetime  NOT NULL
 );
 GO
 

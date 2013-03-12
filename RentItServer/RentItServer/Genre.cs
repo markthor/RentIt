@@ -12,16 +12,16 @@ namespace RentItServer
     using System;
     using System.Collections.Generic;
     
-    public partial class genres
+    public partial class Genre
     {
-        public genres()
+        public Genre()
         {
-            this.channels = new HashSet<channels>();
+            this.channels = new HashSet<Channel>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<channels> channels { get; set; }
+        public virtual ICollection<Channel> channels { get; set; }
     }
 }

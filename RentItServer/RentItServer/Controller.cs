@@ -34,7 +34,7 @@ namespace RentItServer
             IEnumerable<Channel> allChannels = _dao.GetAllChannels();
             foreach (Channel channel in allChannels)
             {
-                _channelSearch.Put(channel.Name, channel.ChannelId);
+                _channelSearch.Put(channel.name, channel.id);
             }
             // Initialize user search trie
             // TODO
@@ -137,8 +137,8 @@ namespace RentItServer
             try
             {
                 Channel channel = _dao.GetChannel(channelId);
-                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
-                if (channel.OwnerId == userId)
+                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.name + "]. ";
+                if (channel.userId == userId)
                 {
                     _dao.DeleteChannel(userId, channelId);
                     _logger.AddEntry(logEntry + "Deletion successful.");

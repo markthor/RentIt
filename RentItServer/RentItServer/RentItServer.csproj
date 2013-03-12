@@ -69,23 +69,22 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RentItModel.edmx.sql" />
     <Content Include="RentItService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel.cs" />
-    <Compile Include="channels.cs">
+    <Compile Include="Channel.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Comment.cs" />
-    <Compile Include="comments.cs">
+    <Compile Include="Comment.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controller.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="Exceptions\NullValueException.cs" />
     <Compile Include="FileSystemHandler.cs" />
-    <Compile Include="genres.cs">
+    <Compile Include="Genre.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
@@ -112,20 +111,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\TernarySearchTrie.cs" />
     <Compile Include="Search\TernarySearchTrieNode.cs" />
-    <Compile Include="Track.cs" />
+    <Compile Include="Track.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TrackInfo.cs" />
-    <Compile Include="TrackPlay.cs" />
-    <Compile Include="trackplays.cs">
+    <Compile Include="TrackPlay.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TrackPrioritizer.cs" />
-    <Compile Include="tracks.cs">
+    <Compile Include="User.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="users.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="votes.cs">
+    <Compile Include="Vote.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

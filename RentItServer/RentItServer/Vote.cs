@@ -12,14 +12,14 @@ namespace RentItServer
     using System;
     using System.Collections.Generic;
     
-    public partial class comments
+    public partial class Vote
     {
-        public int channelId { get; set; }
+        public int trackId { get; set; }
         public int userId { get; set; }
-        public string content { get; set; }
-        public System.DateTime date { get; set; }
+        public int value { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     
-        public virtual channels channels { get; set; }
-        public virtual users users { get; set; }
+        public virtual Track tracks { get; set; }
+        public virtual User users { get; set; }
     }
 }

@@ -104,7 +104,7 @@ namespace RentItServer
             List<int> ids = new List<int>(numberOfTracks);
             foreach (TrackPlay tp in recentlyPlayedTracks)
             {
-                ids.Add(tp.TrackId);
+                ids.Add(tp.trackId);
             }
 
             return ids;
@@ -114,7 +114,7 @@ namespace RentItServer
         {
             foreach (TrackPlay tp in plays)
             {
-                if (tp.PlayTime < targetTrack.PlayTime) { return true; }
+                if (tp.playtime < targetTrack.playtime) { return true; }
             }
             return false;
         }
@@ -125,9 +125,9 @@ namespace RentItServer
             TrackPlay playToBeRemoved = null;
             foreach (TrackPlay tp in plays)
             {
-                if (tp.PlayTime < oldestDate)
+                if (tp.playtime < oldestDate)
                 {
-                    oldestDate = tp.PlayTime;
+                    oldestDate = tp.playtime;
                     playToBeRemoved = tp;
                 }
             }
