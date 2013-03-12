@@ -33,7 +33,7 @@ namespace RentItServer
             }
             return _instance;
         }
-
+        /*
         public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
             //Initializing data structure for track prioritizing.
@@ -83,7 +83,7 @@ namespace RentItServer
                 }
             }
         }
-
+        */
         private double GetRatio(int upvotes, int downvotes)
         {
             return (_ratioConstant+upvotes)/(_ratioConstant+downvotes)
