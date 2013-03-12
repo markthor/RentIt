@@ -86,10 +86,9 @@
   <EntityType Name="trackplays">
     <Key>
       <PropertyRef Name="trackId" />
-      <PropertyRef Name="date" />
+      <PropertyRef Name="playtime" />
     </Key>
     <Property Name="trackId" Type="int" Nullable="false" />
-    <Property Name="date" Type="datetime" Nullable="false" />
     <Property Name="playtime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="tracks">
@@ -340,10 +339,9 @@
         <EntityType Name="TrackPlay">
           <Key>
             <PropertyRef Name="trackId" />
-            <PropertyRef Name="date" />
+            <PropertyRef Name="playtime" />
           </Key>
           <Property Name="trackId" Type="Int32" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="tracks" Relationship="RENTITModel.FK__trackplay__track__36B12243" FromRole="trackplays" ToRole="tracks" />
           <Property Type="DateTime" Name="playtime" Nullable="false" />
         </EntityType>
@@ -519,7 +517,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.TrackPlay)">
         <MappingFragment StoreEntitySet="trackplays">
           <ScalarProperty Name="trackId" ColumnName="trackId" />
-          <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="playtime" ColumnName="playtime" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -88,19 +88,20 @@ namespace RentItServer
         ///     filter.Genres
         ///     filter.NumberOfComments
         ///     filter.NumberOfSubscriptions
-        ///     filter.SortOptions.
+        ///     filter.SortOptions
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>
         /// Channel ids of the channels matching the filter.
         /// </returns>
-        public IEnumerable<Channel> GetChannelsWithFilter(SearchArgs filter)
+        public List<Channel> GetChannelsWithFilter(SearchArgs filter)
         {
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.channels
                                select channel;
+
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
                     channels = from channel in channels 
@@ -109,7 +110,6 @@ namespace RentItServer
                 }
                 if (filter.Genres.Any() == true)
                 {   // Apply genre filter
-                    int amountOfGenres = filter.Genres.Count();
                     channels = from channel in channels
                                where channel.genres.Any(genre => filter.Genres.Contains(genre.name))
                                select channel;
@@ -139,7 +139,7 @@ namespace RentItServer
                 }
                 filteredChannels = channels.ToList();
             }
-            if (filter.startIndex != -1 && filter.endIndex != -1)
+            if (filter.startIndex != -1 && filter.endIndex != -1 && filter.startIndex <= filter.endIndex)
             {
                 Channel[] range = new Channel[filter.endIndex - filter.startIndex];
                 filteredChannels.CopyTo(filter.startIndex, range, 0, filter.endIndex-filter.startIndex);

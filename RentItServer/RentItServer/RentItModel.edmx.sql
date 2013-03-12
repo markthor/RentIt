@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/12/2013 15:23:48
+-- Date Created: 03/12/2013 15:49:57
 -- Generated from EDMX file: D:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
@@ -44,11 +44,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_channelgenres_genres]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[channelgenres] DROP CONSTRAINT [FK_channelgenres_genres];
 GO
-IF OBJECT_ID(N'[dbo].[FK_subscriptions_channels]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK_subscriptions_channels];
-GO
-IF OBJECT_ID(N'[dbo].[FK_subscriptions_users]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[subscriptions] DROP CONSTRAINT [FK_subscriptions_users];
+IF OBJECT_ID(N'[dbo].[FK_subscriptions]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[users] DROP CONSTRAINT [FK_subscriptions];
 GO
 
 -- --------------------------------------------------
@@ -78,9 +75,6 @@ IF OBJECT_ID(N'[dbo].[votes]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[channelgenres]', 'U') IS NOT NULL
     DROP TABLE [dbo].[channelgenres];
-GO
-IF OBJECT_ID(N'[dbo].[subscriptions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[subscriptions];
 GO
 
 -- --------------------------------------------------
@@ -117,7 +111,6 @@ GO
 -- Creating table 'trackplays'
 CREATE TABLE [dbo].[trackplays] (
     [trackId] int  NOT NULL,
-    [date] datetime  NOT NULL,
     [playtime] datetime  NOT NULL
 );
 GO
@@ -182,10 +175,10 @@ ADD CONSTRAINT [PK_genres]
     PRIMARY KEY CLUSTERED ([id] ASC);
 GO
 
--- Creating primary key on [trackId], [date] in table 'trackplays'
+-- Creating primary key on [trackId], [playtime] in table 'trackplays'
 ALTER TABLE [dbo].[trackplays]
 ADD CONSTRAINT [PK_trackplays]
-    PRIMARY KEY CLUSTERED ([trackId], [date] ASC);
+    PRIMARY KEY CLUSTERED ([trackId], [playtime] ASC);
 GO
 
 -- Creating primary key on [id] in table 'tracks'

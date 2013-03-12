@@ -88,9 +88,11 @@ namespace RentItServer
         /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
         public int[] GetChannelIds(SearchArgs args)
         {
-            IEnumerable<Channel> channels = _dao.GetChannelsWithFilter(args);
+            List<Channel> channels = _dao.GetChannelsWithFilter(args);
             IEnumerable<string> channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
-            
+
+           // channels.BinarySearch();
+
             return new int[]{};
         }
 
