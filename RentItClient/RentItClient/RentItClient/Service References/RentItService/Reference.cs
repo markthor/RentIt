@@ -229,110 +229,56 @@ namespace RentItClient.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
         int CreateChannel(string channelName, int userId, string description, int[] genres);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
-        System.Threading.Tasks.Task<int> CreateChannelAsync(string channelName, int userId, string description, int[] genres);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetChannelIdsResponse")]
         int[] GetChannelIds(string channelName, RentItClient.RentItService.SearchArgs args);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetChannelIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetChannelIdsAsync(string channelName, RentItClient.RentItService.SearchArgs args);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
         RentItClient.RentItService.Channel GetChannel(int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
-        System.Threading.Tasks.Task<RentItClient.RentItService.Channel> GetChannelAsync(int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ModifyChannel", ReplyAction="http://tempuri.org/IRentItService/ModifyChannelResponse")]
         RentItClient.RentItService.Channel ModifyChannel(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ModifyChannel", ReplyAction="http://tempuri.org/IRentItService/ModifyChannelResponse")]
-        System.Threading.Tasks.Task<RentItClient.RentItService.Channel> ModifyChannelAsync(int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
         void DeleteChannel(int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
-        System.Threading.Tasks.Task DeleteChannelAsync(int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
         int Login(string username, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
-        System.Threading.Tasks.Task<int> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateUser", ReplyAction="http://tempuri.org/IRentItService/CreateUserResponse")]
         int CreateUser(string username, string password, string email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateUser", ReplyAction="http://tempuri.org/IRentItService/CreateUserResponse")]
-        System.Threading.Tasks.Task<int> CreateUserAsync(string username, string password, string email);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UploadTrack", ReplyAction="http://tempuri.org/IRentItService/UploadTrackResponse")]
         void UploadTrack(RentItClient.RentItService.Track track, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UploadTrack", ReplyAction="http://tempuri.org/IRentItService/UploadTrackResponse")]
-        System.Threading.Tasks.Task UploadTrackAsync(RentItClient.RentItService.Track track, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
         void RemoveTrack(int trackId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
-        System.Threading.Tasks.Task RemoveTrackAsync(int trackId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/VoteTrack", ReplyAction="http://tempuri.org/IRentItService/VoteTrackResponse")]
         void VoteTrack(int rating, int userId, int trackId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/VoteTrack", ReplyAction="http://tempuri.org/IRentItService/VoteTrackResponse")]
-        System.Threading.Tasks.Task VoteTrackAsync(int rating, int userId, int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
         int[] GetTrackIds(int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfo", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoResponse")]
         RentItClient.RentItService.TrackInfo GetTrackInfo(int trackId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfo", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoResponse")]
-        System.Threading.Tasks.Task<RentItClient.RentItService.TrackInfo> GetTrackInfoAsync(int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Comment", ReplyAction="http://tempuri.org/IRentItService/CommentResponse")]
         void Comment([System.ServiceModel.MessageParameterAttribute(Name="comment")] string comment1, int userId, int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Comment", ReplyAction="http://tempuri.org/IRentItService/CommentResponse")]
-        System.Threading.Tasks.Task CommentAsync(string comment, int userId, int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCommentIds", ReplyAction="http://tempuri.org/IRentItService/GetCommentIdsResponse")]
         int[] GetCommentIds(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCommentIds", ReplyAction="http://tempuri.org/IRentItService/GetCommentIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetCommentIdsAsync(int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
         RentItClient.RentItService.Comment GetComment(int commentId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
-        System.Threading.Tasks.Task<RentItClient.RentItService.Comment> GetCommentAsync(int commentId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
         void Subscribe(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
-        System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UnSubscribe", ReplyAction="http://tempuri.org/IRentItService/UnSubscribeResponse")]
         void UnSubscribe(int userId, int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UnSubscribe", ReplyAction="http://tempuri.org/IRentItService/UnSubscribeResponse")]
-        System.Threading.Tasks.Task UnSubscribeAsync(int userId, int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
         int GetChannelPort(int channelId, int ipAddress, int port);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -366,144 +312,72 @@ namespace RentItClient.RentItService {
             return base.Channel.CreateChannel(channelName, userId, description, genres);
         }
         
-        public System.Threading.Tasks.Task<int> CreateChannelAsync(string channelName, int userId, string description, int[] genres) {
-            return base.Channel.CreateChannelAsync(channelName, userId, description, genres);
-        }
-        
         public int[] GetChannelIds(string channelName, RentItClient.RentItService.SearchArgs args) {
             return base.Channel.GetChannelIds(channelName, args);
-        }
-        
-        public System.Threading.Tasks.Task<int[]> GetChannelIdsAsync(string channelName, RentItClient.RentItService.SearchArgs args) {
-            return base.Channel.GetChannelIdsAsync(channelName, args);
         }
         
         public RentItClient.RentItService.Channel GetChannel(int channelId) {
             return base.Channel.GetChannel(channelId);
         }
         
-        public System.Threading.Tasks.Task<RentItClient.RentItService.Channel> GetChannelAsync(int channelId) {
-            return base.Channel.GetChannelAsync(channelId);
-        }
-        
         public RentItClient.RentItService.Channel ModifyChannel(int channelId) {
             return base.Channel.ModifyChannel(channelId);
-        }
-        
-        public System.Threading.Tasks.Task<RentItClient.RentItService.Channel> ModifyChannelAsync(int channelId) {
-            return base.Channel.ModifyChannelAsync(channelId);
         }
         
         public void DeleteChannel(int channelId) {
             base.Channel.DeleteChannel(channelId);
         }
         
-        public System.Threading.Tasks.Task DeleteChannelAsync(int channelId) {
-            return base.Channel.DeleteChannelAsync(channelId);
-        }
-        
         public int Login(string username, string password) {
             return base.Channel.Login(username, password);
-        }
-        
-        public System.Threading.Tasks.Task<int> LoginAsync(string username, string password) {
-            return base.Channel.LoginAsync(username, password);
         }
         
         public int CreateUser(string username, string password, string email) {
             return base.Channel.CreateUser(username, password, email);
         }
         
-        public System.Threading.Tasks.Task<int> CreateUserAsync(string username, string password, string email) {
-            return base.Channel.CreateUserAsync(username, password, email);
-        }
-        
         public void UploadTrack(RentItClient.RentItService.Track track, int channelId) {
             base.Channel.UploadTrack(track, channelId);
-        }
-        
-        public System.Threading.Tasks.Task UploadTrackAsync(RentItClient.RentItService.Track track, int channelId) {
-            return base.Channel.UploadTrackAsync(track, channelId);
         }
         
         public void RemoveTrack(int trackId) {
             base.Channel.RemoveTrack(trackId);
         }
         
-        public System.Threading.Tasks.Task RemoveTrackAsync(int trackId) {
-            return base.Channel.RemoveTrackAsync(trackId);
-        }
-        
         public void VoteTrack(int rating, int userId, int trackId) {
             base.Channel.VoteTrack(rating, userId, trackId);
-        }
-        
-        public System.Threading.Tasks.Task VoteTrackAsync(int rating, int userId, int trackId) {
-            return base.Channel.VoteTrackAsync(rating, userId, trackId);
         }
         
         public int[] GetTrackIds(int channelId) {
             return base.Channel.GetTrackIds(channelId);
         }
         
-        public System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId) {
-            return base.Channel.GetTrackIdsAsync(channelId);
-        }
-        
         public RentItClient.RentItService.TrackInfo GetTrackInfo(int trackId) {
             return base.Channel.GetTrackInfo(trackId);
-        }
-        
-        public System.Threading.Tasks.Task<RentItClient.RentItService.TrackInfo> GetTrackInfoAsync(int trackId) {
-            return base.Channel.GetTrackInfoAsync(trackId);
         }
         
         public void Comment(string comment1, int userId, int channelId) {
             base.Channel.Comment(comment1, userId, channelId);
         }
         
-        public System.Threading.Tasks.Task CommentAsync(string comment, int userId, int channelId) {
-            return base.Channel.CommentAsync(comment, userId, channelId);
-        }
-        
         public int[] GetCommentIds(int channelId) {
             return base.Channel.GetCommentIds(channelId);
-        }
-        
-        public System.Threading.Tasks.Task<int[]> GetCommentIdsAsync(int channelId) {
-            return base.Channel.GetCommentIdsAsync(channelId);
         }
         
         public RentItClient.RentItService.Comment GetComment(int commentId) {
             return base.Channel.GetComment(commentId);
         }
         
-        public System.Threading.Tasks.Task<RentItClient.RentItService.Comment> GetCommentAsync(int commentId) {
-            return base.Channel.GetCommentAsync(commentId);
-        }
-        
         public void Subscribe(int userId, int channelId) {
             base.Channel.Subscribe(userId, channelId);
-        }
-        
-        public System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId) {
-            return base.Channel.SubscribeAsync(userId, channelId);
         }
         
         public void UnSubscribe(int userId, int channelId) {
             base.Channel.UnSubscribe(userId, channelId);
         }
         
-        public System.Threading.Tasks.Task UnSubscribeAsync(int userId, int channelId) {
-            return base.Channel.UnSubscribeAsync(userId, channelId);
-        }
-        
         public int GetChannelPort(int channelId, int ipAddress, int port) {
             return base.Channel.GetChannelPort(channelId, ipAddress, port);
-        }
-        
-        public System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPortAsync(channelId, ipAddress, port);
         }
     }
 }
