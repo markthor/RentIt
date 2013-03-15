@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.ServiceModel;
 
-namespace RentItServer
+namespace RentItServer.ITU
 {
     public class DAO
     {
@@ -84,6 +80,7 @@ namespace RentItServer
 
         /// <summary>
         /// Filters the with respect to the filter arguments: 
+        ///     filter.SearchString
         ///     filter.AmountPlayed
         ///     filter.Genres
         ///     filter.NumberOfComments
@@ -98,8 +95,9 @@ namespace RentItServer
         {
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
-            {
+            {   // get all channels that starts with filter.SearchString
                 var channels = from channel in context.channels
+                               where channel.name.StartsWith(filter.SearchString)
                                select channel;
 
                 if (filter.AmountPlayed > -1)
@@ -131,6 +129,7 @@ namespace RentItServer
                     channels = from channel in channels
                                orderby channel.name descending
                                select channel;
+
                 }else if (filter.SortOption == 1)
                 {   // Ascending
                     channels = from channel in channels
@@ -140,7 +139,7 @@ namespace RentItServer
                 filteredChannels = channels.ToList();
             }
             if (filter.startIndex != -1 && filter.endIndex != -1 && filter.startIndex <= filter.endIndex)
-            {
+            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
                 Channel[] range = new Channel[filter.endIndex - filter.startIndex];
                 filteredChannels.CopyTo(filter.startIndex, range, 0, filter.endIndex-filter.startIndex);
                 filteredChannels = new List<Channel>(range);
@@ -150,7 +149,17 @@ namespace RentItServer
 
         public void DeleteChannel(int userId, int channelId)
         {
-            
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.channels.Where(channel => channel.userId == userId && channel.id == channelId)
+                               select channel;
+
+                if (channels.Any() == false)
+                {   // The channel does not exist
+                    return;
+                }
+
+            }
         }
 
         public void VoteTrack(int rating, int userId, int trackId)
