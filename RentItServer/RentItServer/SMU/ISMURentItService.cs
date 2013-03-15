@@ -7,7 +7,7 @@ using RentItServer.ITU;
 namespace RentItServer.SMU
 {
     [ServiceContract]
-    public interface IRentItServiceSMU
+    public interface ISMURentItService
     {
         //sign up a new user account
         //creates and int userId in database

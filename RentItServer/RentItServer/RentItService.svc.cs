@@ -12,7 +12,7 @@ namespace RentItServer
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class RentItService : IRentItService, IRentItServiceSMU
+    public class RentItService : IRentItService, ISMURentItService
     {
         private static readonly Controller _controller = Controller.GetInstance();
 
@@ -157,6 +157,50 @@ namespace RentItServer
         {
             return -1;
             //int i = _controller.GetChannelPort(channelId,ipAddress,port);
+        }
+
+        /********************************
+         * SMU STUFF
+         * ******************************/
+
+        public int SignUp(string email, string name, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int LogIn(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUserInfo(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateUserInfo(int userId, string email, string name, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteAccount(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int HasRental(int userId, int bookId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteBook(int bookId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
