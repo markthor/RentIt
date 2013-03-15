@@ -26,7 +26,7 @@ namespace RentItServer
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         public int CreateChannel(string channelName, int userId, string description, string[] genres)
         {
-            return 0;
+            throw new NotImplementedException();
             return _controller.CreateChannel(channelName, userId, description, genres);
         }
 
@@ -37,7 +37,7 @@ namespace RentItServer
         /// <returns>An array of channel ids matching search criteria. </returns>
         public int[] GetChannelIds(SearchArgs args)
         {
-            return new int[] { 0 };
+            throw new NotImplementedException();
             return _controller.GetChannelIds(args);
         }
 
@@ -48,13 +48,13 @@ namespace RentItServer
         /// <returns>The channel matching the given id.</returns>
         public Channel GetChannel(int channelId)
         {
-            return new Channel();
+            throw new NotImplementedException();
             return _controller.GetChannel(channelId);
         }
 
         public Channel ModifyChannel(int userId, int channelId)
         {
-            return new Channel();
+            throw new NotImplementedException();
             return _controller.ModifyChannel(userId, channelId);
         }
 
@@ -76,7 +76,7 @@ namespace RentItServer
         /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
         public int Login(string username, string password)
         {
-            return 0;
+            throw new NotImplementedException();
             return _controller.Login(username, password);
         }
 
@@ -89,7 +89,7 @@ namespace RentItServer
         /// <returns>The id of the created user.</returns>
         public int CreateUser(string username, string password, string email)
         {
-            return 0;
+            throw new NotImplementedException();
             return _controller.CreateUser(username, password, email);
         }
 
@@ -110,13 +110,13 @@ namespace RentItServer
 
         public int[] GetTrackIds(int channelId)
         {
-            return new[] { 0 };
+            throw new NotImplementedException();
             return _controller.GetTrackIds(channelId);
         }
 
         public TrackInfo GetTrackInfo(int trackId)
         {
-            return new TrackInfo();
+            throw new NotImplementedException();
             return _controller.GetTrackInfo(trackId);
         }
 
@@ -133,13 +133,13 @@ namespace RentItServer
 
         public int[] GetCommentIds(int channelId)
         {
-            return new[] { 0 };
+            throw new NotImplementedException();
             return _controller.GetCommentIds(channelId);
         }
 
         public Comment GetComment(int commentId)
         {
-            return new Comment();
+            throw new NotImplementedException();
             return _controller.GetComment(commentId);
         }
 
