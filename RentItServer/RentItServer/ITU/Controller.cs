@@ -72,7 +72,7 @@ namespace RentItServer.ITU
             try
             {
                 channelId = _dao.CreateChannel(channelName, userId, description, genres);
-                _channelSearch.Put(channelName, channelId);
+                _channelSearch.Put(channelName, userId);
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
             }
             catch(Exception e)
@@ -90,7 +90,7 @@ namespace RentItServer.ITU
         /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
         public int[] GetChannelIds(SearchArgs args)
         {
-            // Get channels that match all filters except args.SearchString
+            // Get channels that match all filters
             List<Channel> channels = _dao.GetChannelsWithFilter(args);
             
             // Extract all ids
@@ -206,7 +206,22 @@ namespace RentItServer.ITU
 
         public void RemoveTrack(int userId, int trackId)
         {
-            // TODO
+            if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "RemoveTrack");
+            if (trackId < 0) LogAndThrowException(new ArgumentException("trackId was below 0"), "RemoveTrack");
+
+            try
+            {
+                Track track = _dao.GetTrack(trackId);
+                string logEntry = "User id [" + userId + "] want to delete the track [" + track.name + "]. ";
+                
+                    _dao.RemoveTrack(track);
+                    _logger.AddEntry(logEntry + "Deletion successful.");
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Track deletion failed with exception [" + e + "].");
+                throw;
+            }
         }
 
         public void VoteTrack(int rating, int userId, int trackId)
