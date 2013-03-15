@@ -136,7 +136,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RentItModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="RentItModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RentItModel.edmx</DependentUpon>

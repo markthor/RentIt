@@ -49,6 +49,15 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_username;
         
         /// <summary>
+        /// rfv_username control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_username;
+        
+        /// <summary>
         /// lbl_password control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbx_password;
+        
+        /// <summary>
+        /// rfv_password control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_password;
         
         /// <summary>
         /// btn_login control.
@@ -166,6 +184,15 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_confirmPassword;
         
         /// <summary>
+        /// cmp_passwords control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator cmp_passwords;
+        
+        /// <summary>
         /// lbl_email control.
         /// </summary>
         /// <remarks>
@@ -200,15 +227,6 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_email;
-        
-        /// <summary>
-        /// cmp_passwords control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cmp_passwords;
         
         /// <summary>
         /// btn_createUser control.
