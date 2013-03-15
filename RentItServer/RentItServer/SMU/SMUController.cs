@@ -23,6 +23,16 @@ namespace RentItServer.SMU
             return _instance ?? (_instance = new SMUController());
         }
 
+        public int LogIn(string username, string password)
+        {
+            return _dao.LogIn(username, password);
+        }
+
+        public int SignUp(string username, string password, string email)
+        {
+            return _dao.SignUp(username, password, email);
+        }
+
 
     }
 }
