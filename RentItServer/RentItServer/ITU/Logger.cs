@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace RentItServer
+namespace RentItServer.ITU
 {
     public class Logger
     {

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using RentItServer.Search;
+using RentItServer.ITU.Search;
 
-namespace RentItServer
+namespace RentItServer.ITU
 {
     public class Controller
     {
@@ -19,9 +17,9 @@ namespace RentItServer
         private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
-        //The ternary search trie for channels. Each channel has its id as value
+        //The ternary search trie for channels. Each channel name has its id as value
         private TernarySearchTrie<int> _channelSearch;
-        //The ternary search trie for users. Each user has his/her password as value
+        //The ternary search trie for users. Each username has his/her password as value
         private TernarySearchTrie<String> _userSearch;
 
         /// <summary>
@@ -91,17 +89,12 @@ namespace RentItServer
         {
             // Get channels that match all filters except args.SearchString
             List<Channel> channels = _dao.GetChannelsWithFilter(args);
-            // Get all channel names matching filter args.SearchString
-            string[] channelMatches = _channelSearch.PrefixMatch(args.SearchString).ToArray();
             
-            // Intersect
+            // Extract all ids
             List<int> filteredChannelIds = new List<int>();
             for(int i = 0; i < channels.Count(); i++)
-            {   // TODO: There's gotta be a better way...
-                if (channelMatches.Contains(channels[i].name))
-                {
+            { 
                     filteredChannelIds.Add(channels[i].id);
-                }
             }
 
             return filteredChannelIds.ToArray();
