@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RentItServer.ITU
@@ -158,18 +159,69 @@ namespace RentItServer.ITU
                 {   // The channel does not exist
                     return;
                 }
-
+                // Delete the channel entry from the database
+                context.channels.Remove(channels.First());
+                context.SaveChanges();
             }
         }
 
         public void VoteTrack(int rating, int userId, int trackId)
         {
-            
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {   // TODO: Will only work if the vote table doesn't have "tracks" and "users" associated...
+                Vote vote = new Vote()
+                    {
+                        trackId = trackId,
+                        userId = userId,
+                        value = rating,
+                        date = DateTime.Now
+                    };
+                context.votes.Add(vote);
+                context.SaveChanges();
+            }
+        }
+
+        public Track GetTrack(int trackId)
+        {
+            Track theTrack;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var tracks = from track in context.tracks.Where(track => track.id == trackId)
+                             select track;
+
+                if (tracks.Any() == false)
+                {
+                    throw new Exception("No track found with id = " + trackId);
+                }
+                theTrack = tracks.First();
+            }
+            return theTrack;
+        }
+
+        public void RemoveTrack(Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                context.tracks.Remove(track);
+                context.SaveChanges();
+            }
         }
 
         public void Comment(string comment, int userId, int channelId)
         {
-            
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                // TODO: Will only work if the comment table doesn't have "channels" and "users" associated..
+                Comment theComment = new Comment()
+                    {
+                        channelId = channelId,
+                        content = comment,
+                        userId = userId,
+                        date = DateTime.Now
+                    };
+                context.comments.Add(theComment);
+                context.SaveChanges();
+            }
         }
     }
 }
