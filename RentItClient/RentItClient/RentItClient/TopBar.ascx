@@ -10,7 +10,7 @@
 </div>
 <div id="div_search" class="search">
     <div class="centered" style="margin: 10px 0px 0px;">
-        <userControl:searchBar id="searchBar" runat="server" />    
+        <userControl:searchBar id="searchBar" runat="server" />
     </div>
 </div>
 <div id="div_userInfo" class="userInfo">

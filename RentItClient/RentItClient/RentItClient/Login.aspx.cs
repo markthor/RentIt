@@ -30,23 +30,6 @@ namespace RentItClient
             string password = tbx_createPassword.Text;
             string passwordConfirm = tbx_confirmPassword.Text;
 
-            // Checks input
-            if (username == "" || email == "" || password == "")
-            {
-                PrintErrorMessage("Username, Email or password is empty");
-                return;
-            }
-            if (password != passwordConfirm)
-            {
-                PrintErrorMessage("Password not confirmed");
-                return;
-            }
-            Match match = Regex.Match(email, @"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b", RegexOptions.IgnoreCase);
-            if (!match.Success)
-            {
-                PrintErrorMessage("E-mail not correct");
-                return;
-            }
             using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
             {
                 int userId = proxy.CreateUser(username, password, email);

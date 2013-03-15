@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
-using RentItClient.RentItService;
 
 namespace RentItClient
 {
@@ -113,14 +112,14 @@ namespace RentItClient
         /// <param name="e">Eventargs</param>
         protected void btn_saveChanges_Click(object sender, EventArgs e)
         {
-            using (RentItServiceClient service = new RentItServiceClient())
+            using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
             {
                 string name = lbl_channelName.Text;
                 string desc = tbx_description.Text;
                 int id = 1;
                 int[] genre = { 1, 2, 3, 4, 5, 6 };
                 // Change this to modify channel
-                int channelId = service.CreateChannel(name, id, desc, genre);
+                int channelId = proxy.CreateChannel(name, id, desc, genre);
             }
         }
 

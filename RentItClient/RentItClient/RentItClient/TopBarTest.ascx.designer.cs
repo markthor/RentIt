@@ -10,69 +10,69 @@
 namespace RentItClient {
     
     
-    public partial class Home {
+    public partial class TopBarTest {
         
         /// <summary>
-        /// topBar control.
+        /// img_logo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.TopBar topBar;
+        protected global::System.Web.UI.WebControls.ImageButton img_logo;
         
         /// <summary>
-        /// topBarTest control.
+        /// tbx_searchField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.TopBarTest topBarTest;
+        protected global::System.Web.UI.WebControls.TextBox tbx_searchField;
         
         /// <summary>
-        /// streamPlayer control.
+        /// btn_search control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.StreamPlayer streamPlayer;
+        protected global::System.Web.UI.WebControls.Button btn_search;
         
         /// <summary>
-        /// div_homeScreen control.
+        /// bth_searchAdvanced control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_homeScreen;
+        protected global::System.Web.UI.WebControls.Button bth_searchAdvanced;
         
         /// <summary>
-        /// searchResult control.
+        /// btn_createChannel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.SearchResult searchResult;
+        protected global::System.Web.UI.WebControls.Button btn_createChannel;
         
         /// <summary>
-        /// channelDescription control.
+        /// lbl_loggedInUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.ChannelDescription channelDescription;
+        protected global::System.Web.UI.WebControls.Label lbl_loggedInUser;
         
         /// <summary>
-        /// uc_subscriptions control.
+        /// btn_logout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::RentItClient.Subscriptions uc_subscriptions;
+        protected global::System.Web.UI.WebControls.Button btn_logout;
     }
 }

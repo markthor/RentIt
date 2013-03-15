@@ -32,5 +32,16 @@ namespace RentItClient
             lbl_track2.Text = "Arctic Monkeys - You Probably Couldn't See for the Lights but You Were Looking Straight at Me".Substring(0, 60);
             */
         }
+
+        public void SimpleSearch()
+        {
+
+        }
+
+        protected void topBarTest_SimpleSearchClick(object sender, EventArgs e)
+        {
+            string msg = "Search Clicked!";
+            Response.Write("<script language='javascript'>alert('" + msg + "');</script>");
+        }
     }
 }
