@@ -18,7 +18,7 @@ namespace RentItServer.SMU
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var u = from user in proxy.users
+                var u = from user in proxy.SMUusers
                            where user.username == username && user.password == password
                            select user;
                 if (u.Any())
@@ -31,10 +31,11 @@ namespace RentItServer.SMU
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                User user = new User();
+                SMUuser user = new SMUuser();
+                user.email = email;
                 user.username = name;
                 user.password = password;
-                return proxy.users.Add(user).id;
+                return proxy.SMUusers.Add(user).id;
             }
         }
     }

@@ -113,8 +113,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITU\Search\TernarySearchTrie.cs" />
     <Compile Include="ITU\Search\TernarySearchTrieNode.cs" />
+    <Compile Include="SMUaudio.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMUbook.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMUrental.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SMURentItService.svc.cs">
       <DependentUpon>SMURentItService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SMUuser.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SMU\ISMURentItService.cs" />
     <Compile Include="SMU\SMUController.cs" />
