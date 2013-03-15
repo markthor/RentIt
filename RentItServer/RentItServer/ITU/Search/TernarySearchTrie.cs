@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
-using RentItServer.Exceptions;
+using RentItServer.ITU.Exceptions;
 
-namespace RentItServer.Search
+namespace RentItServer.ITU.Search
 {
     /// <summary>
     /// A special trie data structure where the child nodes of a standard trie are ordered as 
