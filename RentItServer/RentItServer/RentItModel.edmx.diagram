@@ -21,10 +21,10 @@
         <AssociationConnector Association="RENTITModel.FK__votes__userId__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.channelgenres" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.subscriptions" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RENTITModel.SMUaudio" Width="1.5" PointX="12.5" PointY="13.875" />
-        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="9.375" PointY="12.875" />
-        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="12.25" PointY="9" />
-        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="16.625" PointY="13.75" />
+        <EntityTypeShape EntityType="RENTITModel.SMUaudio" Width="1.5" PointX="1.75" PointY="17.375" />
+        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="8.125" PointY="18.25" />
+        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="10.50735294563107" PointY="18.768248462475952" />
+        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="4.375" PointY="19.625" />
         <AssociationConnector Association="RENTITModel.FK_SMUbooks_audioId" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_audioId" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_bookId" />
