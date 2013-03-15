@@ -22,5 +22,7 @@ namespace RentItServer.SMU
         {
             return _instance ?? (_instance = new SMUController());
         }
+
+
     }
 }

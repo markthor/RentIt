@@ -3,8 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using RentItServer;
 using System.Collections.Generic;
-using Track = RentItServer.ITU.Track;
-using TrackPlay = RentItServer.ITU.TrackPlay;
+using Track = RentItServer.Track;
+using TrackPlay = RentItServer.TrackPlay;
+using TrackPrioritizer = RentItServer.ITU.TrackPrioritizer;
 
 namespace RentItServer_UnitTests
 {

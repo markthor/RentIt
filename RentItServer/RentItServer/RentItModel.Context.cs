@@ -18,6 +18,7 @@ namespace RentItServer
         public RENTIT21Entities()
             : base("name=RENTIT21Entities")
         {
+
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
