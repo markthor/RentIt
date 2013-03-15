@@ -7,6 +7,9 @@ using RentItServer.Search;
 
 namespace RentItServer
 {
+    /// <summary>
+    /// Reviewed by Toke
+    /// </summary>
     public class Controller
     {
         //Singleton instance of the class
