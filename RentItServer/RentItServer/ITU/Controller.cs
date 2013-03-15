@@ -5,6 +5,9 @@ using RentItServer.ITU.Search;
 
 namespace RentItServer.ITU
 {
+    /// <summary>
+    /// Reviewed by Toke
+    /// </summary>
     public class Controller
     {
         //Singleton instance of the class
