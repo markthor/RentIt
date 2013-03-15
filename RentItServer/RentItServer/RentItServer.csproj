@@ -80,14 +80,14 @@
     <Compile Include="Comment.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controller.cs" />
-    <Compile Include="DAO.cs" />
-    <Compile Include="Exceptions\NullValueException.cs" />
-    <Compile Include="FileSystemHandler.cs" />
+    <Compile Include="ITU\Controller.cs" />
+    <Compile Include="ITU\DAO.cs" />
+    <Compile Include="ITU\Exceptions\NullValueException.cs" />
+    <Compile Include="ITU\FileSystemHandler.cs" />
     <Compile Include="Genre.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Logger.cs" />
+    <Compile Include="ITU\Logger.cs" />
     <Compile Include="RentItModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,24 +103,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RentItModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="SearchArgs.cs" />
+    <Compile Include="ITU\SearchArgs.cs" />
     <Compile Include="RentItService.svc.cs">
       <DependentUpon>RentItService.svc</DependentUpon>
     </Compile>
-    <Compile Include="IRentItService.cs" />
+    <Compile Include="ITU\IRentItService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\TernarySearchTrie.cs" />
-    <Compile Include="Search\TernarySearchTrieNode.cs" />
+    <Compile Include="ITU\Search\TernarySearchTrie.cs" />
+    <Compile Include="ITU\Search\TernarySearchTrieNode.cs" />
+    <Compile Include="SMU\ISMURentItService.cs" />
+    <Compile Include="SMU\SMUController.cs" />
+    <Compile Include="SMU\SMUDao.cs" />
+    <Compile Include="SMU\SMULogger.cs" />
     <Compile Include="Track.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TrackCustom.cs" />
-    <Compile Include="TrackInfo.cs" />
+    <Compile Include="ITU\TrackInfo.cs" />
     <Compile Include="TrackPlay.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TrackPlayCustom.cs" />
-    <Compile Include="TrackPrioritizer.cs" />
+    <Compile Include="ITU\TrackPrioritizer.cs" />
     <Compile Include="User.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
