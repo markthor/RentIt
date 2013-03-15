@@ -16,17 +16,16 @@ CREATE TABLE [dbo].[SMUbooks] (
 	[dateAdded] DATE NOT NULL,
 	[hasAudio] int NOT NULL,
 	[audioId] int NULL,
-	[PDFFilePath] VARCHAR(255),
-	[imageFilePath] VARCHAR(255),
+	[PDFFilePath] VARCHAR(255) NULL,
+	[imageFilePath] VARCHAR(255) NULL,
 	[hit] int NOT NULL,
-	FOREIGN KEY(`audioId`) REFERENCES `audio`(`id`),
-	PRIMARY KEY(`id`));
+);
 
 CREATE TABLE [dbo].[SMUaudio] (
 	[id] int IDENTITY(1,1) NOT NULL,
 	[narrator] VARCHAR(50) NULL,
 	[filePath] VARCHAR(255) NOT NULL,
-	PRIMARY KEY(`id`));
+);
 	
 CREATE TABLE [dbo].[SMUrentals] (
 	[id] int IDENTITY(1,1) NOT NULL,
@@ -34,9 +33,7 @@ CREATE TABLE [dbo].[SMUrentals] (
 	[bookId] int NULL,
 	[audioId] int NULL,
 	[startDate] datetime NOT NULL,
-	FOREIGN KEY(`bookId`) REFERENCES `books`(`id`),
-	FOREIGN KEY(`audioId`) REFERENCES `audio`(`id`),
-	PRIMARY KEY(`id`));
+);
 	
 ALTER TABLE [dbo].[SMUusers]
 ADD CONSTRAINT [PK_SMUusers]
