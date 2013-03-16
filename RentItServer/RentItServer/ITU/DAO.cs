@@ -74,6 +74,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.channels select channel;
+
+                // Execute the query before leaving "using" block
                 allChannels = channels.ToList();
             }
             return allChannels;
@@ -137,12 +139,14 @@ namespace RentItServer.ITU
                                orderby channel.name ascending
                                select channel;
                 }
+                // Execute the query before leaving "using" block
                 filteredChannels = channels.ToList();
             }
-            if (filter.startIndex != -1 && filter.endIndex != -1 && filter.startIndex <= filter.endIndex)
+
+            if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
-                Channel[] range = new Channel[filter.endIndex - filter.startIndex];
-                filteredChannels.CopyTo(filter.startIndex, range, 0, filter.endIndex-filter.startIndex);
+                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex-filter.StartIndex);
                 filteredChannels = new List<Channel>(range);
             }
             return filteredChannels;
