@@ -6,13 +6,13 @@
     <edmx:Diagrams>
       <Diagram DiagramId="fa280c6c045c446f93dff629d66871cd" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="RENTITModel.Channel" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RENTITModel.Comment" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RENTITModel.Genre" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RENTITModel.TrackPlay" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RENTITModel.Track" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RENTITModel.User" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RENTITModel.Comment" Width="1.5" PointX="0.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RENTITModel.Genre" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RENTITModel.TrackPlay" Width="1.5" PointX="8" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RENTITModel.Track" Width="1.5" PointX="5.375" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RENTITModel.User" Width="1.5" PointX="3.25" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="RENTITModel.Vote" Width="1.5" PointX="7.25" PointY="10.875" IsExpanded="true" />
-        <AssociationConnector Association="RENTITModel.FK__channels__userId__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="RENTITModel.FK__channels__userId__182C9B23"></AssociationConnector>
         <AssociationConnector Association="RENTITModel.FK__comments__channe__1CF15040" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.FK__tracks__channelI__31EC6D26" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.FK__comments__userId__1DE57479" ManuallyRouted="false" />
@@ -20,11 +20,11 @@
         <AssociationConnector Association="RENTITModel.FK__votes__trackId__3B75D760" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.FK__votes__userId__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.channelgenres" ManuallyRouted="false" />
-        <AssociationConnector Association="RENTITModel.subscriptions" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RENTITModel.SMUaudio" Width="1.5" PointX="1.75" PointY="17.375" />
-        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="8.125" PointY="18.25" />
-        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="10.50735294563107" PointY="18.768248462475952" />
-        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="4.375" PointY="19.625" />
+        <AssociationConnector Association="RENTITModel.subscriptions" ManuallyRouted="false" ></AssociationConnector>
+        <EntityTypeShape EntityType="RENTITModel.SMUaudio" Width="1.5" PointX="1.75" PointY="17.5" />
+        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="5.25" PointY="18.5" />
+        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="8.375" PointY="17.125" />
+        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="8.375" PointY="20.375" />
         <AssociationConnector Association="RENTITModel.FK_SMUbooks_audioId" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_audioId" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_bookId" />

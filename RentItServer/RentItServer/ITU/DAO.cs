@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace RentItServer.ITU
@@ -36,10 +37,63 @@ namespace RentItServer.ITU
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
-        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
-        public int CreateChannel(string channelName, int userId, string description, string[] genres)
+        /// <returns>The created channel.</returns>
+        public Channel CreateChannel(string channelName, int userId, string description, string[] genres)
         {
-            return -1;
+            // int channelId;
+            Channel ch;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var someGenres = from genre in context.genres.Where(genre => genres.Contains(genre.name))
+                                 select genre;
+
+                var aUser = from user in context.users.Where(user => user.id == userId)
+                            select user;
+
+                // Create the channel object
+                ch = new Channel()
+                {
+                    comments = new Collection<Comment>(),
+                    description = description,
+                    genres = someGenres.ToList(),
+                    userId = userId,
+                    name = channelName,
+                    users = aUser.First(),  // what if aUser is null/empty?... btw i assume that this is the channels owner. just as userId.... for some reason it is both a foreign key and a "navigational property"...
+                    subscriptions = new Collection<User>(),
+                    plays = null,
+                    rating = null,
+                    tracks = new Collection<Track>()
+                };
+
+                // I'm not sure this will work, i have not specified the channels id as the databse should generate it itself. 
+                context.channels.Add(ch);
+                context.SaveChanges();
+
+                //// Seems a bit weird way around this, but for now it's the deal :)
+                //var thelId = from channel in context.channels.Where(channel => channel.name == channelName && channel.userId == userId)
+                //                select channel.id;
+
+                //if(thelId.Any() == true){
+                //    channelId = thelId.First();
+                //}
+                //else
+                //{   // The channel does not have an id in the database, either something fucked up or another thread removed it already.
+                //    throw new Exception("Channel got created and saved in the database but has no id.... O.ô.");
+                //}
+
+                var theChannel = from channel in context.channels.Where(channel => channel.name == channelName && channel.userId == userId)
+                                 select channel;
+
+                if (theChannel.Any() == true){
+                    ch = theChannel.First();
+                }
+                else
+                {   // The channel does not exist in the database, either something fucked up or another thread removed it already.
+                   throw new Exception("Channel got created and saved in the database but is not in the database.... O.ô.");     
+                }
+            }
+
+            return ch;
         }
 
         public int CreateUser(string username, string password, string email)
@@ -53,7 +107,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.channels.Where(channel => channel.id == channelId)
-                              select channel;
+                               select channel;
 
                 if (channels.Any() == false)
                 {   // No channel with matching id
@@ -105,8 +159,8 @@ namespace RentItServer.ITU
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
-                    channels = from channel in channels 
-                               where channel.plays >= filter.AmountPlayed 
+                    channels = from channel in channels
+                               where channel.plays >= filter.AmountPlayed
                                select channel;
                 }
                 if (filter.Genres.Any() == true)
@@ -133,7 +187,8 @@ namespace RentItServer.ITU
                                orderby channel.name descending
                                select channel;
 
-                }else if (filter.SortOption == 1)
+                }
+                else if (filter.SortOption == 1)
                 {   // Ascending
                     channels = from channel in channels
                                orderby channel.name ascending
@@ -146,11 +201,11 @@ namespace RentItServer.ITU
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex-filter.StartIndex);
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex);
                 filteredChannels = new List<Channel>(range);
             }
             return filteredChannels;
-        }   
+        }
 
         public void DeleteChannel(int userId, int channelId)
         {
