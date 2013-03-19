@@ -13,11 +13,6 @@ namespace RentItServer
     // NOTE: In order to launch WCF Test Client for testing this service, please select SMURentItService.svc or SMURentItService.svc.cs at the Solution Explorer and start debugging.
     public class SMURentItService : ISMURentItService
     {
-        public int SignUp(string email, string name, string password)
-        {
-            throw new NotImplementedException("SingUp not implemented");
-        }
-
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
             throw new NotImplementedException();
@@ -25,12 +20,12 @@ namespace RentItServer
 
         public int LogIn(string email, string password)
         {
-            throw new NotImplementedException("LogIn not implemented");
+            throw new NotImplementedException();
         }
 
         public User GetUserInfo(int userId)
         {
-            throw new NotImplementedException("GetUserInfo not implemented");
+            throw new NotImplementedException();
         }
 
         public bool UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
@@ -38,32 +33,22 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public bool UpdateUserInfo(int userId, string email, string username, string password)
-        {
-            throw new NotImplementedException("UpdateUserInfo not implemented");
-        }
-
         public bool DeleteAccount(int userId)
-        {
-            throw new NotImplementedException("DeleteAccount not implemented");
-        }
-
-        public int HasRental(int userId, int bookId)
-        {
-            throw new NotImplementedException("HasRental not implemented");
-        }
-
-        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
-        {
-            throw new NotImplementedException("RentBook not implemented");
-        }
-
-        public List<Book> getAllBooks()
         {
             throw new NotImplementedException();
         }
 
-        public List<Book> getPopularBooks()
+        public int HasRental(int userId, int bookId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Book> GetAllBooks()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Book> GetPopularBooks()
         {
             throw new NotImplementedException();
         }
@@ -83,24 +68,24 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public int rentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
             throw new NotImplementedException();
         }
 
-        public MemoryStream downloadPDF(int bookId)
+        public MemoryStream DownloadPDF(int bookId)
         {
             throw new NotImplementedException();
         }
 
-        public MemoryStream downloadAudio(int bookId)
+        public MemoryStream DownloadAudio(int bookId)
         {
             throw new NotImplementedException();
         }
 
         public bool DeleteBook(int userId, int bookId)
         {
-            throw new NotImplementedException("DeleteBook not implemented");
+            throw new NotImplementedException();
         }
 
         public int UploadBook(int userId, string title, string author, string description, string genre, DateTime dateAdded,
@@ -123,13 +108,6 @@ namespace RentItServer
         public void UploadPDF(int bookID, MemoryStream PDF)
         {
             throw new NotImplementedException();
-        }
-
-        public int AddBook(int userId, string title, string author, string description, string genre, double price,
-                            string pdfFilePath, string imageFilePath)
-        {
-            throw new NotImplementedException("AddBook not implemented");
-
         }
     }
 }
