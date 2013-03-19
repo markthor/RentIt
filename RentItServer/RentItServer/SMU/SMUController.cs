@@ -32,5 +32,25 @@ namespace RentItServer.SMU
         {
             return _dao.SignUp(email, username, password);
         }
+
+        public SMUuser GetUser(int id)
+        {
+            return _dao.GetUser(id);
+        }
+
+        public bool UpdateUserInfo(int userId, string email, string username, string password)
+        {
+            return _dao.UpdateUserInfo(userId, email, username, password);
+        }
+
+        public bool DeleteAccount(int userId)
+        {
+            return _dao.DeleteAccount(userId);
+        }
+
+        public int HasRental(int userId, int bookId)
+        {
+            return _dao.HasRental(userId, bookId);
+        }
     }
 }
