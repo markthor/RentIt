@@ -58,5 +58,16 @@ namespace RentItServer.SMU
         { 
             return _dao.AddBook(userId, title, author, description, genre, price, pdfFilePath, imageFilePath);
         }
+
+        public int RentBook(int userId, int bookId, int mediaType)
+        {
+            return _dao.RentBook(userId, bookId, mediaType);
+        }
+
+
+        public bool DeleteBook(int userId, int bookId)
+        {
+            return _dao.DeleteBook(userId, bookId);
+        }
     }
 }

@@ -51,5 +51,12 @@ namespace RentItServer
         {
             throw new NotImplementedException("DeleteBook not implemented");
         }
+
+        public int AddBook(int userId, string title, string author, string description, string genre, double price,
+                            string pdfFilePath, string imageFilePath)
+        {
+            throw new NotImplementedException("AddBook not implemented");
+
+        }
     }
 }

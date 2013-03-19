@@ -69,5 +69,8 @@ namespace RentItServer.SMU
 
         //delete a book
         bool DeleteBook(int userId, int bookId);
+
+        int AddBook(int userId, string title, string author, string description, string genre, double price,
+                            string pdfFilePath, string imageFilePath);
     }
 }

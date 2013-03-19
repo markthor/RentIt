@@ -268,10 +268,9 @@ namespace RentItServer.SMU
             }
         }
 
-        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        public int RentBook(int userId, int bookId, int mediaType)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
-            if (startDate == null) throw new ArgumentNullException("startDate");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -330,7 +329,7 @@ namespace RentItServer.SMU
                 SMUuser theUser = users.First();
                 if (theUser.isAdmin == false)
                 {
-                    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
                 }
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
