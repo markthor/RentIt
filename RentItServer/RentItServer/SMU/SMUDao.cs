@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
@@ -165,6 +166,60 @@ namespace RentItServer.SMU
             }
         }
 
+        public int AddBook(int userId, string title, string author, string description, string genre, double price,
+                           int associatedAudioId, string pdfFilePath, string imageFilePath)
+        {
+            if (title == null) throw new ArgumentNullException("title");
+            if (author == null) throw new ArgumentNullException("author");
+            if (description == null) throw new ArgumentNullException("description");
+            if (genre == null) throw new ArgumentNullException("genre");
+            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
+            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
+            if (userId < 0) throw new ArgumentException("userId < 0");
+            if (price < 0.0) throw new ArgumentException("price < 0.0");
+            if (title.Equals("")) throw new ArgumentException("title was empty");
+            if (author.Equals("")) throw new ArgumentException("author was empty");
+            if (genre.Equals("")) throw new ArgumentException("genre was empty");
+            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
+            if (imageFilePath.Equals("")) throw new ArgumentException("imageFilePath was empty");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                // Check if the user is an admin
+                var users = from user in proxy.SMUusers
+                            where user.id == userId
+                            select user;
+                if (users.Any() == false)
+                {
+                    throw new ArgumentException("No user with userId = " + userId);
+                }
+                SMUuser theUser = users.First();
+                if (theUser.isAdmin == false)
+                {
+                    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                }
+
+                // TODO: This may not work as the SMUaudio navigational property is not set.
+                SMUbook theBook = new SMUbook()
+                {
+                    title = title,
+                    author = author,
+                    description = description,
+                    genre = genre,
+                    price = price,
+                    audioId = associatedAudioId,
+                    PDFFilePath = pdfFilePath,
+                    imageFilePath = imageFilePath,
+                    dateAdded = DateTime.Now,
+                    SMUrentals = new Collection<SMUrental>()
+                };
+
+                proxy.SMUbooks.Add(theBook);
+                proxy.SaveChanges();
+                return theBook.id;
+            }
+        }
+
         public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -186,7 +241,7 @@ namespace RentItServer.SMU
                     startDate = DateTime.Now
                 };
                 SMUbook theBook = books.First();
-                
+                theBook.hit += 1;
                 if (mediaType == 0)
                 {   // Only rent the book
                     theRental.bookId = bookId;
@@ -213,23 +268,26 @@ namespace RentItServer.SMU
 
         public bool DeleteBook(int userId, int bookId)
         {
-            if(userId < 0)  throw new ArgumentException("userId < 0");
+            if (userId < 0) throw new ArgumentException("userId < 0");
 
-            using (RENTIT21Entities proxy = new RENTIT21Entities()){
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
                 var users = from user in proxy.SMUusers
                             where user.id == userId
                             select user;
-                if (users.Any() == false){
+                if (users.Any() == false)
+                {
                     throw new ArgumentException("No user with userId = " + userId);
                 }
                 SMUuser theUser = users.First();
-                if (theUser.isAdmin == false){
+                if (theUser.isAdmin == false)
+                {
                     throw new ArgumentException("User with userId = " + userId + " is not administrator");
                 }
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
-                
+
                 if (books.Any() == false)
                 {
                     throw new ArgumentException("No book with bookId = " + bookId);
