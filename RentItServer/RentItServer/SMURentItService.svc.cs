@@ -88,12 +88,12 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public MemoryStream downloadPDF(int bookId)
+        public MemoryStream DownloadPDF(int bookId)
         {
             throw new NotImplementedException();
         }
 
-        public MemoryStream downloadAudio(int bookId)
+        public MemoryStream DownloadAudio(int bookId)
         {
             throw new NotImplementedException();
         }

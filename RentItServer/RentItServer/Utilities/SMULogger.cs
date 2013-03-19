@@ -3,10 +3,11 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using RentItServer.SMU;
 
-namespace RentItServer.SMU
+namespace RentItServer.Utilities
 {
-    public class SMULogger
+    public class Logger
     {
         /// <summary>
         /// The _entry lock. Used when the AddEntry method is called
@@ -30,20 +31,17 @@ namespace RentItServer.SMU
             "SMUlog.txt";
 
         /// <summary>
-        /// The logger
-        /// </summary>
-        private static SMULogger _logger;
-
-        /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
-        private SMULogger()
+        public Logger(string absolutePath, SMUController.LogEvent entryEvent)
         {
             if (File.Exists(AbsolutePath) == false)
             {
                 File.Create(AbsolutePath);
             }
+
+            entryEvent += new SMUController.LogEvent(AddEntry);
             // Logging thread. Used in order to support asyncrhonous writing of entries
             new Task(() =>
             {
@@ -57,21 +55,12 @@ namespace RentItServer.SMU
         }
 
         /// <summary>
-        /// Gets the logger instance.
-        /// </summary>
-        /// <returns></returns>
-        public static SMULogger GetInstance()
-        {
-            return _logger ?? (_logger = new SMULogger());
-        }
-
-        /// <summary>
         /// Adds an entry to the log.
         /// </summary>
         /// <param name="entry">The entry to be appended to the log file.</param>
         /// <exception cref="System.ArgumentNullException">Log argument was null</exception>
         /// <exception cref="System.ArgumentException">Log argument was empty</exception>
-        public void AddEntry(string entry)
+        private void AddEntry(object sender, string entry)
         {
             if (entry == null) throw new ArgumentNullException("entry");
             if (entry.Equals("")) throw new ArgumentException("entry argument was empty");

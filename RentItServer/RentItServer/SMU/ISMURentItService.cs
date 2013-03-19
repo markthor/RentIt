@@ -54,14 +54,6 @@ namespace RentItServer.SMU
         [OperationContract]
         int HasRental(int userId, int bookId);
 
-        //return rentId if successful
-        // For mediaType:
-        // 0 = book
-        // 1 = audio
-        // 2 = both
-        [OperationContract]
-        int RentBook(int userId, int bookId, DateTime startDate, int mediaType);
-
         //returns all books
         [OperationContract]
         List<Book> getAllBooks();
