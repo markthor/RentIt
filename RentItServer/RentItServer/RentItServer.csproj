@@ -128,6 +128,7 @@
     <Compile Include="SMUuser.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SMU\Book.cs" />
     <Compile Include="SMU\ISMURentItService.cs" />
     <Compile Include="SMU\SMUController.cs" />
     <Compile Include="SMU\SMUDao.cs" />
