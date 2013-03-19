@@ -51,6 +51,7 @@ namespace RentItServer.SMU
         //return 0 if rented PDF
         //return 1 if rented audio
         //return 2 if rented both
+        [OperationContract]
         int HasRental(int userId, int bookId);
 
         //return rentId if successful
@@ -58,21 +59,27 @@ namespace RentItServer.SMU
         // 0 = book
         // 1 = audio
         // 2 = both
+        [OperationContract]
         int RentBook(int userId, int bookId, DateTime startDate, int mediaType);
 
         //returns all books
+        [OperationContract]
         List<Book> getAllBooks();
 
         //returns up to 30 books with the most hits.
+        [OperationContract]
         List<Book> getPopularBooks();
 
         //returns books that contains the search string in its title or author.
+        [OperationContract]
         List<Book> SearchBooks(String searchString);
 
         //returns books with the specified genre.
+        [OperationContract]
         List<Book> GetBooksByGenre(String genre);
 
         //returns the book object with the specified id.
+        [OperationContract]
         Book GetBookInfo(int bookId);
 
         //check if user has rented a specific book
@@ -80,6 +87,7 @@ namespace RentItServer.SMU
         //return 0 if rented PDF
         //return 1 if rented audio
         //return 2 if rented both
+        [OperationContract]
         int HasRental(int userId, int bookId);
 
         /// <summary>
@@ -90,12 +98,15 @@ namespace RentItServer.SMU
         /// <param name="startDate">The date that the rent starts</param>
         /// <param name="mediaType">0 if PDF, 1 if audio, 2 if both PDF and audio</param>
         /// <returns>The id of the rental object</returns>
+        [OperationContract]
         int rentBook(int userId, int bookId, DateTime startDate, int mediaType);
 
         //Returns a MemoryStream that contains the PDF file.
+        [OperationContract]
         MemoryStream downloadPDF(int bookId);
 
         //Returns a MemoryStream that contains the audio file.
+        [OperationContract]
         MemoryStream downloadAudio(int bookId);
 
         /***********************************************
@@ -103,20 +114,23 @@ namespace RentItServer.SMU
          * *********************************************/
 
         //delete a book
+        [OperationContract]
         bool DeleteBook(int userId, int bookId);
 
         //Adds a book object withoud PDF or audio files.
+        [OperationContract]
         int UploadBook(int userId, string title, string author, string description, string genre, DateTime dateAdded, double price);
 
         //Updates information of an existing book object.
+        [OperationContract]
         Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price);
 
         //Uploads an audio file to a book. Overrides if audio is already existing.
+        [OperationContract]
         void UploadAudio(int bookId, MemoryStream MP3);
 
         //Uploads a PDF file to a book. Overrides if PDF is already existing.
+        [OperationContract]
         void UploadPDF(int bookID, MemoryStream PDF);
-
-
     }
 }
