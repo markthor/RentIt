@@ -14,11 +14,11 @@ namespace RentItServer.SMU
         //Data access object for database IO
         private readonly SMUDao _dao = SMUDao.GetInstance();
         //The logger
-        private readonly Logger _logger = new Logger("", entry);
+        private readonly Logger _logger;
         //Log eventHandler
         public delegate void LogEvent(object sender, string LogMessage);
         //Event cast when log must make an entry
-        public static event LogEvent entry;
+        public event LogEvent entry;
         
         /// <summary>
         /// Accessor method to access the only instance of the class
@@ -29,17 +29,30 @@ namespace RentItServer.SMU
             return _instance ?? (_instance = new SMUController()); 
         }
 
+        private SMUController()
+        {
+            _logger = new Logger("C:"+ Path.DirectorySeparatorChar +
+                                    "Users" + Path.DirectorySeparatorChar +
+                                    "Toke Jensen" + Path.DirectorySeparatorChar +
+                                    "Documents" + Path.DirectorySeparatorChar +
+                                    "Visual Studio 2012" + Path.DirectorySeparatorChar +
+                                    "Projects" + Path.DirectorySeparatorChar +
+                                    "Logs", entry);
+        }
+
         public int LogIn(string username, string password)
         {
             int id = _dao.LogIn(username, password);
-            entry(this, "LogIn: " + username + "-" + password);
+            if(entry != null)
+                entry(this, "LogIn: " + username + "-" + password);
             return id;
         }
 
         public int SignUp(string username, string password, string email)
         {
             int id = _dao.SignUp(email, username, password);
-            entry(this, "SignUp: " + email + "-" + username + "-" + password);
+            if(entry != null)
+                entry(this, "SignUp: " + email + "-" + username + "-" + password);
             return id;
         }
 

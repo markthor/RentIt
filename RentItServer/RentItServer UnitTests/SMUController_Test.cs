@@ -12,7 +12,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestSignUp()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance();
 
             int u1 = controller.SignUp("John Doe1", "1Fisk", "gogogo1@yo.dk");
             int u2 = controller.SignUp("John Doe2", "12Fisk", "gogogo2@yo.dk");
@@ -26,7 +26,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestGetUser()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int u1 = controller.SignUp("Peter Parker1", "1Fisk", "gogogo1@yo.dk");
             int u2 = controller.SignUp("Peter Parker2", "12Fisk", "gogogo2@yo.dk");
             int u3 = controller.SignUp("Peter Parker3", "123Fisk", "gogogo3@yo.dk");
@@ -40,7 +40,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestUpdateUserInfo()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int u1 = controller.SignUp("Bruce Wayne1", "1Fisk", "gogogo1@yo.dk");
 
             string name = "Albert Einstein";
@@ -59,7 +59,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestDeleteAccount()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int u1 = controller.SignUp("Don Draper", "1Fisk", "gogogo1@yo.dk");
             Assert.AreEqual(true, controller.DeleteAccount(u1));
             try
@@ -73,7 +73,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestAddBook()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk");
             try
             {
@@ -87,7 +87,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestRentBook()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk");
             int bookId = controller.AddBook(user, "The Torah", "Jah", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
             int rental = controller.RentBook(user, bookId, 0);
@@ -105,7 +105,7 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestDeleteBook()
         {
-            SMUController controller = new SMUController();
+            SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk");
             int bookId = controller.AddBook(user, "Book of the dead", "Jah", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
 

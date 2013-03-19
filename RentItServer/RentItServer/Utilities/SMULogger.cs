@@ -22,26 +22,21 @@ namespace RentItServer.Utilities
         /// <summary>
         /// The absolute path
         /// </summary>
-        private readonly string AbsolutePath = "C:" + Path.DirectorySeparatorChar + 
-            "Users" + Path.DirectorySeparatorChar + 
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
-            "SMU" + Path.DirectorySeparatorChar +
-            "Logs" + Path.DirectorySeparatorChar + 
-            "SMUlog.txt";
+        private readonly string absolutePath;
 
         /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
-        public Logger(string absolutePath, SMUController.LogEvent entryEvent)
+        public Logger(string absolutePath, SMUController.LogEvent entry)
         {
-            if (File.Exists(AbsolutePath) == false)
-            {
-                File.Create(AbsolutePath);
-            }
+            //if (File.Exists(absolutePath) == false)
+            //{
+                File.Create(absolutePath);
+            //}
+            this.absolutePath = absolutePath;
 
-            entryEvent += new SMUController.LogEvent(AddEntry);
+            entry += new SMUController.LogEvent(AddEntry);
             // Logging thread. Used in order to support asyncrhonous writing of entries
             new Task(() =>
             {
@@ -49,7 +44,7 @@ namespace RentItServer.Utilities
                 while (true)
                 {
                     logEntry = _taskCollection.Take();
-                    File.AppendAllText(AbsolutePath, logEntry);
+                    File.AppendAllText(absolutePath, logEntry);
                 }
             }).Start();
         }
