@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.IO;
-using RentItServer.ITU;
 
-namespace RentItServer
+namespace RentItServer.ITU
 {
     public class FileSystemHandler
     {
@@ -13,9 +9,13 @@ namespace RentItServer
         private static FileSystemHandler _instance;
 
         //TODO: This should be defined through argument in constructor in future
-        private String _root = "<Drive letter>:" + Path.DirectorySeparatorChar
-                                + "Folder1" + Path.DirectorySeparatorChar
-                                + "Folder2" + Path.DirectorySeparatorChar;
+        private String _root = "C:" + Path.DirectorySeparatorChar + 
+            "Users" + Path.DirectorySeparatorChar + 
+            "Rentit21" + Path.DirectorySeparatorChar +
+            "Documents" + Path.DirectorySeparatorChar +
+            "SMU" + Path.DirectorySeparatorChar +
+            "Logs" + Path.DirectorySeparatorChar + 
+            "SMUlog.txt";;
 
         /// <summary>
         /// The log
