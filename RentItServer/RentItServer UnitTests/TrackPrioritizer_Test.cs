@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Collections.Generic;
-using RentItServer;
 using RentItServer.ITU;
 
 namespace RentItServer_UnitTests
