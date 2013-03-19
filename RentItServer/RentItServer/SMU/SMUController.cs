@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
+using RentItServer.Utilities;
 
 namespace RentItServer.SMU
 {
@@ -12,25 +14,33 @@ namespace RentItServer.SMU
         //Data access object for database IO
         private readonly SMUDao _dao = SMUDao.GetInstance();
         //The logger
-        //private readonly SMULogger _logger = SMULogger.GetInstance();
-
+        private readonly Logger _logger = new Logger("", entry);
+        //Log eventHandler
+        public delegate void LogEvent(object sender, string LogMessage);
+        //Event cast when log must make an entry
+        public static event LogEvent entry;
+        
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
         /// <returns>The singleton instance of the class</returns>
         public static SMUController GetInstance()
         {
-            return _instance ?? (_instance = new SMUController());
+            return _instance ?? (_instance = new SMUController()); 
         }
 
         public int LogIn(string username, string password)
         {
-            return _dao.LogIn(username, password);
+            int id = _dao.LogIn(username, password);
+            entry(this, "LogIn: " + username + "-" + password);
+            return id;
         }
 
         public int SignUp(string username, string password, string email)
         {
-            return _dao.SignUp(email, username, password);
+            int id = _dao.SignUp(email, username, password);
+            entry(this, "SignUp: " + email + "-" + username + "-" + password);
+            return id;
         }
 
         public SMUuser GetUser(int id)
@@ -69,5 +79,17 @@ namespace RentItServer.SMU
         {
             return _dao.DeleteBook(userId, bookId);
         }
+
+        public void UploadAudio(int bookId, MemoryStream MP3)
+        { 
+        
+        }
+
+        public void UploadPDF(int bookID, MemoryStream PDF)
+        { 
+            
+        }
+
+        
     }
 }
