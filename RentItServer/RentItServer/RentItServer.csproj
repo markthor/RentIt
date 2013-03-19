@@ -133,6 +133,7 @@
     <Compile Include="SMU\SMUController.cs" />
     <Compile Include="SMU\SMUDao.cs" />
     <Compile Include="SMU\SMULogger.cs" />
+    <Compile Include="SMU\SMUMediaFileIO.cs" />
     <Compile Include="Track.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

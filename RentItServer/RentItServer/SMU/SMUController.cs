@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 
 namespace RentItServer.SMU
 {
@@ -68,6 +69,13 @@ namespace RentItServer.SMU
         public bool DeleteBook(int userId, int bookId)
         {
             return _dao.DeleteBook(userId, bookId);
+        }
+
+        public void UploadPDF(int bookId, MemoryStream PDF)
+        {
+
+            byte[] bytes = SMUMediaFileIO.ReadStream(PDF);
+            throw new NotImplementedException();
         }
     }
 }
