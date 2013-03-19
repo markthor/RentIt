@@ -21,7 +21,13 @@ namespace RentItServer.SMU
         /// <summary>
         /// The absolute path
         /// </summary>
-        private const string AbsolutePath = "";
+        private readonly string AbsolutePath = "C:" + Path.DirectorySeparatorChar + 
+            "Users" + Path.DirectorySeparatorChar + 
+            "Rentit21" + Path.DirectorySeparatorChar +
+            "Documents" + Path.DirectorySeparatorChar +
+            "SMU" + Path.DirectorySeparatorChar +
+            "Logs" + Path.DirectorySeparatorChar + 
+            "SMUlog.txt";
 
         /// <summary>
         /// The logger
@@ -29,9 +35,8 @@ namespace RentItServer.SMU
         private static SMULogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logger" /> class.
+        /// Initializes a new instance of the Logger class.
         /// </summary>
-        /// <param name="absolutePath">The absolute path to the log file. If a file does not exist at the specified location it will be created.</param>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
         private SMULogger()
         {

@@ -21,7 +21,13 @@ namespace RentItServer.ITU
         /// <summary>
         /// The absolute path
         /// </summary>
-        private const string AbsolutePath = "";
+        private readonly string AbsolutePath = "C:" + Path.DirectorySeparatorChar +
+            "Users" + Path.DirectorySeparatorChar +
+            "Rentit21" + Path.DirectorySeparatorChar +
+            "Documents" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "Logs" + Path.DirectorySeparatorChar +
+            "ITUlog.txt";
 
         /// <summary>
         /// The logger
@@ -31,7 +37,6 @@ namespace RentItServer.ITU
         /// <summary>
         /// Initializes a new instance of the <see cref="Logger" /> class.
         /// </summary>
-        /// <param name="absolutePath">The absolute path to the log file. If a file does not exist at the specified location it will be created.</param>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
         private Logger()
         {
