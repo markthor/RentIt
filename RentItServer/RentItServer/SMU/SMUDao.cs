@@ -15,6 +15,21 @@ namespace RentItServer.SMU
             return _instance ?? (_instance = new SMUDao());
         }
 
+        public int SignUp(string email, string name, string password, bool isAdmin)
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                SMUuser user = new SMUuser();
+                user.email = email;
+                user.username = name;
+                user.password = password;
+                user.isAdmin = isAdmin;
+                proxy.SMUusers.Add(user);
+                proxy.SaveChanges();
+                return user.id;
+            }
+        }
+
         public int LogIn(string username, string password)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -27,20 +42,6 @@ namespace RentItServer.SMU
                     return u.First().id;
                 }
                 throw new ArgumentException("No SMUuser with username/password combination = " + username + "/" + password);
-            }
-        }
-
-        public int SignUp(string email, string name, string password)
-        {
-            using (RENTIT21Entities proxy = new RENTIT21Entities())
-            {
-                SMUuser user = new SMUuser();
-                user.email = email;
-                user.username = name;
-                user.password = password;
-                proxy.SMUusers.Add(user);
-                proxy.SaveChanges();
-                return user.id;
             }
         }
 
@@ -60,7 +61,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public bool UpdateUserInfo(int userId, string email, string username, string password)
+        public SMUuser UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
             if (email == null) throw new ArgumentNullException("email");
@@ -85,18 +86,14 @@ namespace RentItServer.SMU
                 theUser.email = email;
                 theUser.username = username;
                 theUser.password = password;
+                theUser.isAdmin = isAdmin;
                 proxy.SaveChanges();
 
-                var updatedUsers = from user in proxy.SMUusers
-                                   where user.id == userId && user.email.Equals(email) && user.username.Equals(username) &&
-                                       user.password.Equals(password)
-                                   select user;
-
-                return updatedUsers.Any();
+                return theUser;
             }
         }
 
-        public bool DeleteAccount(int userId)
+        public void DeleteAccount(int userId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
 
@@ -114,12 +111,6 @@ namespace RentItServer.SMU
                 SMUuser theUser = users.First();
                 proxy.SMUusers.Remove(theUser);
                 proxy.SaveChanges();
-
-                users = from user in proxy.SMUusers
-                        where user.id == userId
-                        select user;
-
-                return users.Any() == false;
             }
         }
 
@@ -166,106 +157,92 @@ namespace RentItServer.SMU
             }
         }
 
-        public int AddAudio(int userId, int bookId, string narrator, string filePath)
+        public List<Book> GetAllBooks()
         {
-            if (userId < 0) throw new ArgumentException("userId < 0");
-
+            List<Book> list = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                // TODO: Move the admin check to a separate method
-                // Check if the user is an admin
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
-                if (users.Any() == false)
-                {
-                    throw new ArgumentException("No user with userId = " + userId);
-                }
-                SMUuser theUser = users.First();
-                if (theUser.isAdmin == false)
-                {
-                    throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                }
+                var books = from book in proxy.SMUbooks
+                            select book;
 
+                foreach (SMUbook book in books)
+                {
+                    list.Add(book.getBook());
+                }
+            }
+            return list;
+        }
+
+        public List<Book> GetPopularBooks()
+        {
+            List<Book> list = new List<Book>();
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from book in proxy.SMUbooks
+                            orderby book.hit descending
+                            select book;
+
+                int limit = 30;
+                foreach (SMUbook book in books)
+                {
+                    list.Add(book.getBook());
+                    limit++;
+                    if (limit >= 30) break;
+                }
+            }
+            return list;
+        }
+
+        public List<Book> SearhBooks(string searchString)
+        {
+            if (searchString == null) throw new ArgumentNullException("searchString");
+            List<Book> list = new List<Book>();
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from book in proxy.SMUbooks
+                            where book.title.StartsWith(searchString)
+                            select book;
+
+                foreach (SMUbook book in books)
+                {
+                    list.Add(book.getBook());
+                }
+            }
+            return list;
+        }
+
+        public List<Book> GetBooksByGenre(String genre)
+        {
+            if (genre == null) throw new ArgumentNullException("genre");
+            List<Book> list = new List<Book>();
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from book in proxy.SMUbooks
+                            where book.genre.Contains(genre)
+                            select book;
+
+                foreach (SMUbook book in books)
+                {
+                    list.Add(book.getBook());
+                }
+            }
+            return list;
+        }
+
+        public Book GetBookInfo(int bookId)
+        {
+            Book theBook;
+            using (RENTIT21Entities proxy = new RENTIT21Entities()){
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
-                if (books.Any() == false)
-                {
+
+                if (books.Any() == false){
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
-                SMUbook theBook = books.First();
-
-                SMUaudio theAudio = new SMUaudio()
-                {
-                    narrator = narrator,
-                    filePath = filePath,
-                    SMUbooks = new Collection<SMUbook>(),
-                    SMUrentals = new Collection<SMUrental>()
-                };
-
-                proxy.SMUaudios.Add(theAudio);
-                proxy.SaveChanges();
-
-                theBook.audioId = theAudio.id;
-                theBook.SMUaudio = theAudio;
-                proxy.SaveChanges();
-                return theAudio.id;
+                theBook = books.First().getBook();
             }
-        }
-
-        public int AddBook(int userId, string title, string author, string description, string genre, double price, string pdfFilePath, string imageFilePath)
-        {
-            if (title == null) throw new ArgumentNullException("title");
-            if (author == null) throw new ArgumentNullException("author");
-            if (description == null) throw new ArgumentNullException("description");
-            if (genre == null) throw new ArgumentNullException("genre");
-            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
-            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-            if (userId < 0) throw new ArgumentException("userId < 0");
-            if (price < 0.0) throw new ArgumentException("price < 0.0");
-            if (title.Equals("")) throw new ArgumentException("title was empty");
-            if (author.Equals("")) throw new ArgumentException("author was empty");
-            if (genre.Equals("")) throw new ArgumentException("genre was empty");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
-            if (imageFilePath.Equals("")) throw new ArgumentException("imageFilePath was empty");
-
-            using (RENTIT21Entities proxy = new RENTIT21Entities())
-            {
-                // Check if the user is an admin
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
-                if (users.Any() == false)
-                {
-                    throw new ArgumentException("No user with userId = " + userId);
-                }
-                SMUuser theUser = users.First();
-                if (theUser.isAdmin == false)
-                {
-                    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                }
-
-                // TODO: This may not work as the SMUaudio navigational property is not set.
-                SMUbook theBook = new SMUbook()
-                {
-                    title = title,
-                    author = author,
-                    description = description,
-                    genre = genre,
-                    price = price,
-                    audioId = null,
-                    PDFFilePath = pdfFilePath,
-                    imageFilePath = imageFilePath,
-                    dateAdded = DateTime.Now,
-                    SMUrentals = new Collection<SMUrental>(),
-                    SMUaudio = null
-                };
-
-                proxy.SMUbooks.Add(theBook);
-                proxy.SaveChanges();
-                return theBook.id;
-            }
+            return theBook;
         }
 
         public int RentBook(int userId, int bookId, int mediaType)
@@ -313,24 +290,24 @@ namespace RentItServer.SMU
             }
         }
 
-        public bool DeleteBook(int userId, int bookId)
+        public bool DeleteBook(int bookId)
         {
-            if (userId < 0) throw new ArgumentException("userId < 0");
+            //if (userId < 0) throw new ArgumentException("userId < 0");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
-                if (users.Any() == false)
-                {
-                    throw new ArgumentException("No user with userId = " + userId);
-                }
-                SMUuser theUser = users.First();
-                if (theUser.isAdmin == false)
-                {
-                    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                }
+                //var users = from user in proxy.SMUusers
+                //            where user.id == userId
+                //            select user;
+                //if (users.Any() == false)
+                //{
+                //    throw new ArgumentException("No user with userId = " + userId);
+                //}
+                //SMUuser theUser = users.First();
+                //if (theUser.isAdmin == false)
+                //{
+                //    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                //}
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
@@ -349,6 +326,159 @@ namespace RentItServer.SMU
                         select book;
 
                 return books.Any() == false;
+            }
+        }
+
+        public int AddAudio(int bookId, string narrator, string filePath)
+        {
+           // if (userId < 0) throw new ArgumentException("userId < 0");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                // TODO: Move the admin check to a separate method
+                // Check if the user is an admin
+                //var users = from user in proxy.SMUusers
+                //            where user.id == userId
+                //            select user;
+                //if (users.Any() == false)
+                //{
+                //    throw new ArgumentException("No user with userId = " + userId);
+                //}
+                //SMUuser theUser = users.First();
+                //if (theUser.isAdmin == false)
+                //{
+                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                //}
+
+                var books = from book in proxy.SMUbooks
+                            where book.id == bookId
+                            select book;
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+                SMUbook theBook = books.First();
+
+                SMUaudio theAudio = new SMUaudio()
+                {
+                    narrator = narrator,
+                    filePath = filePath,
+                    SMUbooks = new Collection<SMUbook>(),
+                    SMUrentals = new Collection<SMUrental>()
+                };
+
+                proxy.SMUaudios.Add(theAudio);
+                proxy.SaveChanges();
+
+                theBook.audioId = theAudio.id;
+                theBook.SMUaudio = theAudio;
+                proxy.SaveChanges();
+                return theAudio.id;
+            }
+        }
+
+        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        {
+            if (title == null) throw new ArgumentNullException("title");
+            if (author == null) throw new ArgumentNullException("author");
+            if (description == null) throw new ArgumentNullException("description");
+            if (genre == null) throw new ArgumentNullException("genre");
+            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
+           // if (userId < 0) throw new ArgumentException("userId < 0");
+            if (price < 0.0) throw new ArgumentException("price < 0.0");
+            if (title.Equals("")) throw new ArgumentException("title was empty");
+            if (author.Equals("")) throw new ArgumentException("author was empty");
+            if (genre.Equals("")) throw new ArgumentException("genre was empty");
+            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                // Check if the user is an admin
+                //var users = from user in proxy.SMUusers
+                //            where user.id == userId
+                //            select user;
+                //if (users.Any() == false)
+                //{
+                //    throw new ArgumentException("No user with userId = " + userId);
+                //}
+                //SMUuser theUser = users.First();
+                //if (theUser.isAdmin == false)
+                //{
+                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                //}
+
+                SMUbook theBook = new SMUbook()
+                {
+                    title = title,
+                    author = author,
+                    description = description,
+                    genre = genre,
+                    price = price,
+                    audioId = null,
+                    PDFFilePath = pdfFilePath,
+                    imageFilePath = imageFilePath,
+                    dateAdded = dateAdded,
+                    SMUrentals = new Collection<SMUrental>(),
+                    SMUaudio = null
+                };
+
+                proxy.SMUbooks.Add(theBook);
+                proxy.SaveChanges();
+                return theBook.id;
+            }
+        }
+
+        public void UpdateBook(int bookId, String title, String author, String description, String genre,
+                               DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        {
+            if (title == null) throw new ArgumentNullException("title");
+            if (author == null) throw new ArgumentNullException("author");
+            if (description == null) throw new ArgumentNullException("description");
+            if (genre == null) throw new ArgumentNullException("genre");
+            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
+            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
+           // if (userId < 0) throw new ArgumentException("userId < 0");
+            if (price < 0.0) throw new ArgumentException("price < 0.0");
+            if (title.Equals("")) throw new ArgumentException("title was empty");
+            if (author.Equals("")) throw new ArgumentException("author was empty");
+            if (genre.Equals("")) throw new ArgumentException("genre was empty");
+            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                // Check if the user is an admin
+                //var users = from user in proxy.SMUusers
+                //            where user.id == userId
+                //            select user;
+                //if (users.Any() == false)
+                //{
+                //    throw new ArgumentException("No user with userId = " + userId);
+                //}
+                //SMUuser theUser = users.First();
+                //if (theUser.isAdmin == false)
+                //{
+                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                //}
+
+                var books = from book in proxy.SMUbooks
+                            where book.id == bookId
+                            select book;
+
+                if (books.Any() == false){
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook theBook = books.First();
+                theBook.title = title;
+                theBook.author = author;
+                theBook.description = description;
+                theBook.genre = genre;
+                theBook.price = price;
+                theBook.PDFFilePath = pdfFilePath;
+                theBook.imageFilePath = imageFilePath;
+                theBook.dateAdded = dateAdded;
+                
+                proxy.SaveChanges();
             }
         }
     }

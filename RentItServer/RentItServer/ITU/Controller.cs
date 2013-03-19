@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using RentItServer.ITU.Search;
@@ -10,6 +11,12 @@ namespace RentItServer.ITU
     /// </summary>
     public class Controller
     {
+        private static string _mediaFileDirectoryPath = "C:" + Path.DirectorySeparatorChar +
+            "Users" + Path.DirectorySeparatorChar +
+            "Rentit21" + Path.DirectorySeparatorChar +
+            "Documents" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "Tracks";
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
@@ -17,7 +24,7 @@ namespace RentItServer.ITU
         //Responsible for choosing the next trackStream
         private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
-        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        private readonly FileSystemHandler _fileSystemHandler = new FileSystemHandler(_mediaFileDirectoryPath);
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
