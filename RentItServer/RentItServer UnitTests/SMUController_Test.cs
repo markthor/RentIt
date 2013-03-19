@@ -71,10 +71,17 @@ namespace RentItServer_UnitTests
         }
 
         [TestMethod]
-        public void TestHasRental()
+        public void TestAddBook()
         {
             SMUController controller = new SMUController();
-
+            int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk");
+            try
+            {
+                int bookId = controller.AddBook(user, "the bible", "God", "Great Book", "religion", 100.0, 1, "/testpathpdf", "testpathimg");
+            }
+            catch (Exception e) {
+                Assert.Fail();
+            }
         }
     }
 }

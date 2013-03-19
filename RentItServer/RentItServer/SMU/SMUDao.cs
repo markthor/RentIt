@@ -196,7 +196,7 @@ namespace RentItServer.SMU
                 SMUuser theUser = users.First();
                 if (theUser.isAdmin == false)
                 {
-                    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
                 }
 
                 // TODO: This may not work as the SMUaudio navigational property is not set.
