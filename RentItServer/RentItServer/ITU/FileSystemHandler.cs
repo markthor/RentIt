@@ -5,17 +5,8 @@ namespace RentItServer.ITU
 {
     public class FileSystemHandler
     {
-        //Singleton instance of the class
-        private static FileSystemHandler _instance;
-
-        //TODO: This should be defined through argument in constructor in future
-        private String _root = "C:" + Path.DirectorySeparatorChar + 
-            "Users" + Path.DirectorySeparatorChar + 
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
-            "SMU" + Path.DirectorySeparatorChar +
-            "Logs" + Path.DirectorySeparatorChar + 
-            "SMUlog.txt";
+        //The target folder for write and read operations.
+        private string _root;
 
         /// <summary>
         /// The log
@@ -23,19 +14,12 @@ namespace RentItServer.ITU
         private readonly Logger _log = Logger.GetInstance();
 
         /// <summary>
-        /// Private to ensure local instantiation.
+        /// Constructs a FileSystemHandler with the specific file path.
         /// </summary>
-        private FileSystemHandler()
+        /// <param name="path">The path of the folder to contain files</param>
+        public FileSystemHandler(string path)
         {
-        }
-
-        /// <summary>
-        /// Accessor method to access the only instance of the class
-        /// </summary>
-        /// <returns>The singleton instance of the class</returns>
-        public static FileSystemHandler GetInstance()
-        {
-            return _instance ?? (_instance = new FileSystemHandler());
+            _root = CorrectSeperator(path);
         }
 
         /// <summary>
@@ -114,9 +98,20 @@ namespace RentItServer.ITU
         /// <returns>The absolute path to file or directory.</returns>
         private string ProcessPath(string relativePath)
         {
-            relativePath = relativePath.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            relativePath = relativePath.Replace("/", Path.DirectorySeparatorChar.ToString());
+            relativePath = CorrectSeperator(relativePath);
             return _root + relativePath;
+        }
+
+        /// <summary>
+        /// Corrects the folder seperators
+        /// </summary>
+        /// <param name="path">The path to correct</param>
+        /// <returns>The corrected path</returns>
+        private string CorrectSeperator(string path)
+        {
+            path = path.Replace("\\", Path.DirectorySeparatorChar.ToString());
+            path = path.Replace("/", Path.DirectorySeparatorChar.ToString());
+            return path;
         }
     }
 }
