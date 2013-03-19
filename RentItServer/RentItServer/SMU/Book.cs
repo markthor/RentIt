@@ -5,6 +5,7 @@ using System.Web;
 
 namespace RentItServer.SMU
 {
+    [Serializable]
     public class Book
     {
         public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, Nullable<int> audioId, int hit)

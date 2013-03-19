@@ -56,11 +56,11 @@ namespace RentItServer.SMU
 
         //returns all books
         [OperationContract]
-        List<Book> getAllBooks();
+        List<Book> GetAllBooks();
 
         //returns up to 30 books with the most hits.
         [OperationContract]
-        List<Book> getPopularBooks();
+        List<Book> GetPopularBooks();
 
         //returns books that contains the search string in its title or author.
         [OperationContract]
