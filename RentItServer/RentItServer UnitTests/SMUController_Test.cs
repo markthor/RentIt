@@ -69,5 +69,12 @@ namespace RentItServer_UnitTests
             }
             catch (Exception) { }    
         }
+
+        [TestMethod]
+        public void TestHasRental()
+        {
+            SMUController controller = new SMUController();
+
+        }
     }
 }

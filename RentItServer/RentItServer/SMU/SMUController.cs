@@ -43,9 +43,9 @@ namespace RentItServer.SMU
             return _dao.UpdateUserInfo(userId, email, username, password);
         }
 
-        public bool DeleteAccount(int id, int userId)
+        public bool DeleteAccount(int userId)
         {
-            return _dao.DeleteAccount(id);
+            return _dao.DeleteAccount(userId);
         }
 
         public int HasRental(int userId, int bookId)
