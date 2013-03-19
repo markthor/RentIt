@@ -379,8 +379,8 @@
           <EntitySet Name="users" EntityType="RENTITModel.User" />
           <EntitySet Name="votes" EntityType="RENTITModel.Vote" />
           <AssociationSet Name="FK__channels__userId__182C9B23" Association="RENTITModel.FK__channels__userId__182C9B23">
-            <End Role="users" EntitySet="users" />
-            <End Role="channels" EntitySet="channels" />
+            <End EntitySet="users" Role="users" />
+            <End EntitySet="channels" Role="channels" />
           </AssociationSet>
           <AssociationSet Name="FK__comments__channe__1CF15040" Association="RENTITModel.FK__comments__channe__1CF15040">
             <End Role="channels" EntitySet="channels" />
@@ -434,7 +434,7 @@
             <End Role="SMUuser" EntitySet="SMUusers" />
             <End Role="SMUrental" EntitySet="SMUrentals" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="id" />
@@ -521,8 +521,8 @@
           <NavigationProperty Name="users" Relationship="RENTITModel.FK__votes__userId__3C69FB99" FromRole="votes" ToRole="users" />
         </EntityType>
         <Association Name="FK__channels__userId__182C9B23">
-          <End Role="users" Type="RENTITModel.User" Multiplicity="1" />
-          <End Role="channels" Type="RENTITModel.Channel" Multiplicity="*" />
+          <End Type="RENTITModel.User" Multiplicity="1" Role="users" />
+          <End Type="RENTITModel.Channel" Multiplicity="*" Role="channels" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -715,7 +715,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -857,7 +857,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-  </EntityContainerMapping>
+          </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

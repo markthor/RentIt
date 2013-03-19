@@ -20,8 +20,8 @@ namespace RentItServer.ITU
         private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         //The logger
         private readonly Logger _logger = Logger.GetInstance();
-        //The ternary search trie for channels. Each channel name has its id as value
-        private TernarySearchTrie<int> _channelSearch;
+        // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
+        private readonly Dictionary<int, Channel> _channelCache;
         //The ternary search trie for users. Each username has his/her password as value
         private TernarySearchTrie<String> _userSearch;
 
@@ -30,13 +30,13 @@ namespace RentItServer.ITU
         /// </summary>
         private Controller()
         {
-            _channelSearch = new TernarySearchTrie<int>();
+            _channelCache = new Dictionary<int, Channel>();
             _userSearch = new TernarySearchTrie<string>();
             // Initialize channel search trie
             IEnumerable<Channel> allChannels = _dao.GetAllChannels();
             foreach (Channel channel in allChannels)
             {
-                _channelSearch.Put(channel.name, channel.id);
+                _channelCache[channel.id] = channel;
             }
             // Initialize user search trie
             // TODO
@@ -61,26 +61,26 @@ namespace RentItServer.ITU
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         public int CreateChannel(string channelName, int userId, string description, string[] genres)
         {
-            if (channelName == null)    LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
+            if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
-            if (userId < 0)             LogAndThrowException(new ArgumentException("userId was below 0"), "CreateChannel");
-            if (description == null)    LogAndThrowException(new ArgumentException("description"), "CreateChannel");
-            if (genres == null)         LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
+            if (userId < 0) LogAndThrowException(new ArgumentException("userId was below 0"), "CreateChannel");
+            if (description == null) LogAndThrowException(new ArgumentException("description"), "CreateChannel");
+            if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
-            int channelId;
-            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres ["+genres+"]. ";
+            Channel channel;
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
-                channelId = _dao.CreateChannel(channelName, userId, description, genres);
-                _channelSearch.Put(channelName, userId);
+                channel = _dao.CreateChannel(channelName, userId, description, genres);
+                _channelCache[channel.id] = channel;
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                _logger.AddEntry(logEntry + "Channel creation failed with exception ["+e+"].");
+                _logger.AddEntry(logEntry + "Channel creation failed with exception [" + e + "].");
                 throw;
             }
-            return channelId;
+            return channel.id;
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace RentItServer.ITU
         {
             // Get channels that match all filters
             List<Channel> channels = _dao.GetChannelsWithFilter(args);
-            
+
             // Extract all ids
             List<int> filteredChannelIds = new List<int>();
-            for(int i = 0; i < channels.Count(); i++)
-            { 
-                    filteredChannelIds.Add(channels[i].id);
+            for (int i = 0; i < channels.Count(); i++)
+            {
+                filteredChannelIds.Add(channels[i].id);
             }
 
             return filteredChannelIds.ToArray();
@@ -110,9 +110,25 @@ namespace RentItServer.ITU
         /// <returns>The channel matching the given id.</returns>
         public Channel GetChannel(int channelId)
         {
-            if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
+            if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
 
-            return _dao.GetChannel(channelId);
+            if (_channelCache[channelId] != null)
+            {   // Attempt to use cache first
+                return _channelCache[channelId];
+            }
+
+            // cache might be outdated, query the databse to be sure.
+            Channel channel = _dao.GetChannel(channelId);
+            if (channel != null){
+                // channel was found in the database, adding to cache
+                _channelCache[channelId] = channel;
+            }
+            else
+            {   // A channel with id = channelId does not exist in cache or in database nigga
+                LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
+            }
+
+            return channel;
         }
 
         public Channel ModifyChannel(int userId, int channelId)
@@ -128,8 +144,8 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void DeleteChannel(int userId, int channelId)
         {
-            if(userId < 0)  LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
-            if(channelId < 0)   LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
+            if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
+            if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
 
             try
             {
@@ -189,7 +205,7 @@ namespace RentItServer.ITU
             try
             {
                 userId = _dao.CreateUser(username, password, email);
-                _logger.AddEntry("User created with username ["+username+"] and e-mail ["+email+"].");
+                _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
             }
             catch (Exception e)
             {
@@ -213,9 +229,9 @@ namespace RentItServer.ITU
             {
                 Track track = _dao.GetTrack(trackId);
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.name + "]. ";
-                
-                    _dao.RemoveTrack(track);
-                    _logger.AddEntry(logEntry + "Deletion successful.");
+
+                _dao.RemoveTrack(track);
+                _logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
             {
@@ -230,11 +246,11 @@ namespace RentItServer.ITU
             try
             {
                 _dao.VoteTrack(rating, userId, trackId);
-                _logger.AddEntry("User with user id ["+userId+"] rated track with track id ["+trackId+"] with the rating ["+rating+"].");
+                _logger.AddEntry("User with user id [" + userId + "] rated track with track id [" + trackId + "] with the rating [" + rating + "].");
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Voting failed with exception ["+e+"].");
+                _logger.AddEntry("Voting failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -258,7 +274,7 @@ namespace RentItServer.ITU
         public void Comment(string comment, int userId, int channelId)
         {
             _dao.Comment(comment, userId, channelId);
-            _logger.AddEntry("User id ["+userId+"] commented on the channel ["+channelId+"] with the comment ["+comment + "].");
+            _logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
         }
 
         public int[] GetCommentIds(int channelId)
