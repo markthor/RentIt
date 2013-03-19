@@ -82,14 +82,6 @@ namespace RentItServer.SMU
         [OperationContract]
         Book GetBookInfo(int bookId);
 
-        //check if user has rented a specific book
-        //return -1 if not rented
-        //return 0 if rented PDF
-        //return 1 if rented audio
-        //return 2 if rented both
-        [OperationContract]
-        int HasRental(int userId, int bookId);
-
         /// <summary>
         /// Rents a book or and audio file to a user.
         /// </summary>
