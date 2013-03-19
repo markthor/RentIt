@@ -11,6 +11,7 @@ namespace RentItServer
 {
     using System;
     using System.Collections.Generic;
+    using RentItServer.SMU;
     
     public partial class SMUbook
     {
@@ -33,5 +34,14 @@ namespace RentItServer
     
         public virtual SMUaudio SMUaudio { get; set; }
         public virtual ICollection<SMUrental> SMUrentals { get; set; }
+
+        /// <summary>
+        /// Returns a book object that contains the information of the SMUBook, except for filepaths.
+        /// </summary>
+        /// <returns>A new Book object</returns>
+        public Book getBook()
+        {
+            return new Book(id, title, author, description, genre, price, dateAdded, audioId, hit);
+        }
     }
 }
