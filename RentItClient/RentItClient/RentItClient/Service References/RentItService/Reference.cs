@@ -15,12 +15,28 @@ namespace RentItClient.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
     [System.SerializableAttribute()]
     public partial class SearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int AmountPlayedk__BackingFieldField;
+        
+        private int EndIndexk__BackingFieldField;
+        
+        private string[] Genresk__BackingFieldField;
+        
+        private int NumberOfCommentsk__BackingFieldField;
+        
+        private int NumberOfSubscriptionsk__BackingFieldField;
+        
+        private string SearchStringk__BackingFieldField;
+        
+        private int SortOptionk__BackingFieldField;
+        
+        private int StartIndexk__BackingFieldField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -29,6 +45,110 @@ namespace RentItClient.RentItService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<AmountPlayed>k__BackingField", IsRequired=true)]
+        public int AmountPlayedk__BackingField {
+            get {
+                return this.AmountPlayedk__BackingFieldField;
+            }
+            set {
+                if ((this.AmountPlayedk__BackingFieldField.Equals(value) != true)) {
+                    this.AmountPlayedk__BackingFieldField = value;
+                    this.RaisePropertyChanged("AmountPlayedk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
+        public int EndIndexk__BackingField {
+            get {
+                return this.EndIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.EndIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Genres>k__BackingField", IsRequired=true)]
+        public string[] Genresk__BackingField {
+            get {
+                return this.Genresk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Genresk__BackingFieldField, value) != true)) {
+                    this.Genresk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Genresk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfComments>k__BackingField", IsRequired=true)]
+        public int NumberOfCommentsk__BackingField {
+            get {
+                return this.NumberOfCommentsk__BackingFieldField;
+            }
+            set {
+                if ((this.NumberOfCommentsk__BackingFieldField.Equals(value) != true)) {
+                    this.NumberOfCommentsk__BackingFieldField = value;
+                    this.RaisePropertyChanged("NumberOfCommentsk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfSubscriptions>k__BackingField", IsRequired=true)]
+        public int NumberOfSubscriptionsk__BackingField {
+            get {
+                return this.NumberOfSubscriptionsk__BackingFieldField;
+            }
+            set {
+                if ((this.NumberOfSubscriptionsk__BackingFieldField.Equals(value) != true)) {
+                    this.NumberOfSubscriptionsk__BackingFieldField = value;
+                    this.RaisePropertyChanged("NumberOfSubscriptionsk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
+        public string SearchStringk__BackingField {
+            get {
+                return this.SearchStringk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
+                    this.SearchStringk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SearchStringk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
+        public int SortOptionk__BackingField {
+            get {
+                return this.SortOptionk__BackingFieldField;
+            }
+            set {
+                if ((this.SortOptionk__BackingFieldField.Equals(value) != true)) {
+                    this.SortOptionk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SortOptionk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
+        public int StartIndexk__BackingField {
+            get {
+                return this.StartIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.StartIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                }
             }
         }
         
@@ -51,6 +171,39 @@ namespace RentItClient.RentItService {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Comment[] commentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string descriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Genre[] genresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string nameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> playsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> ratingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.User[] subscriptionsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Track[] tracksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int userIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.User usersField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -58,6 +211,492 @@ namespace RentItClient.RentItService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Comment[] comments {
+            get {
+                return this.commentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.commentsField, value) != true)) {
+                    this.commentsField = value;
+                    this.RaisePropertyChanged("comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.descriptionField, value) != true)) {
+                    this.descriptionField = value;
+                    this.RaisePropertyChanged("description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Genre[] genres {
+            get {
+                return this.genresField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.genresField, value) != true)) {
+                    this.genresField = value;
+                    this.RaisePropertyChanged("genres");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> plays {
+            get {
+                return this.playsField;
+            }
+            set {
+                if ((this.playsField.Equals(value) != true)) {
+                    this.playsField = value;
+                    this.RaisePropertyChanged("plays");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> rating {
+            get {
+                return this.ratingField;
+            }
+            set {
+                if ((this.ratingField.Equals(value) != true)) {
+                    this.ratingField = value;
+                    this.RaisePropertyChanged("rating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.User[] subscriptions {
+            get {
+                return this.subscriptionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.subscriptionsField, value) != true)) {
+                    this.subscriptionsField = value;
+                    this.RaisePropertyChanged("subscriptions");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Track[] tracks {
+            get {
+                return this.tracksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tracksField, value) != true)) {
+                    this.tracksField = value;
+                    this.RaisePropertyChanged("tracks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int userId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.User users {
+            get {
+                return this.usersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.usersField, value) != true)) {
+                    this.usersField = value;
+                    this.RaisePropertyChanged("users");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Channel[] channelsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Channel channelsSubscripedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Comment[] commentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string passwordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string usernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Vote[] votesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Channel[] channels {
+            get {
+                return this.channelsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.channelsField, value) != true)) {
+                    this.channelsField = value;
+                    this.RaisePropertyChanged("channels");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Channel channelsSubscriped {
+            get {
+                return this.channelsSubscripedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.channelsSubscripedField, value) != true)) {
+                    this.channelsSubscripedField = value;
+                    this.RaisePropertyChanged("channelsSubscriped");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Comment[] comments {
+            get {
+                return this.commentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.commentsField, value) != true)) {
+                    this.commentsField = value;
+                    this.RaisePropertyChanged("comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.passwordField, value) != true)) {
+                    this.passwordField = value;
+                    this.RaisePropertyChanged("password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.usernameField, value) != true)) {
+                    this.usernameField = value;
+                    this.RaisePropertyChanged("username");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Vote[] votes {
+            get {
+                return this.votesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.votesField, value) != true)) {
+                    this.votesField = value;
+                    this.RaisePropertyChanged("votes");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Comment", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.SerializableAttribute()]
+    public partial class Comment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int channelIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Channel channelsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string contentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime dateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int userIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.User usersField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int channelId {
+            get {
+                return this.channelIdField;
+            }
+            set {
+                if ((this.channelIdField.Equals(value) != true)) {
+                    this.channelIdField = value;
+                    this.RaisePropertyChanged("channelId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Channel channels {
+            get {
+                return this.channelsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.channelsField, value) != true)) {
+                    this.channelsField = value;
+                    this.RaisePropertyChanged("channels");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string content {
+            get {
+                return this.contentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.contentField, value) != true)) {
+                    this.contentField = value;
+                    this.RaisePropertyChanged("content");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime date {
+            get {
+                return this.dateField;
+            }
+            set {
+                if ((this.dateField.Equals(value) != true)) {
+                    this.dateField = value;
+                    this.RaisePropertyChanged("date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int userId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.User users {
+            get {
+                return this.usersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.usersField, value) != true)) {
+                    this.usersField = value;
+                    this.RaisePropertyChanged("users");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.SerializableAttribute()]
+    public partial class Genre : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Channel[] channelsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string nameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Channel[] channels {
+            get {
+                return this.channelsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.channelsField, value) != true)) {
+                    this.channelsField = value;
+                    this.RaisePropertyChanged("channels");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
             }
         }
         
@@ -81,16 +720,37 @@ namespace RentItClient.RentItService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DownvotesField;
+        private string artistField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private int channelIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private RentItClient.RentItService.Channel channelsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int UpvotesField;
+        private System.Nullable<int> downvotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string lengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string nameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string trackpathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.TrackPlay[] trackplaysField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> upvotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Vote[] votesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -103,53 +763,144 @@ namespace RentItClient.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Downvotes {
+        public string artist {
             get {
-                return this.DownvotesField;
+                return this.artistField;
             }
             set {
-                if ((this.DownvotesField.Equals(value) != true)) {
-                    this.DownvotesField = value;
-                    this.RaisePropertyChanged("Downvotes");
+                if ((object.ReferenceEquals(this.artistField, value) != true)) {
+                    this.artistField = value;
+                    this.RaisePropertyChanged("artist");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public int channelId {
             get {
-                return this.IdField;
+                return this.channelIdField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.channelIdField.Equals(value) != true)) {
+                    this.channelIdField = value;
+                    this.RaisePropertyChanged("channelId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public RentItClient.RentItService.Channel channels {
             get {
-                return this.NameField;
+                return this.channelsField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.channelsField, value) != true)) {
+                    this.channelsField = value;
+                    this.RaisePropertyChanged("channels");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Upvotes {
+        public System.Nullable<int> downvotes {
             get {
-                return this.UpvotesField;
+                return this.downvotesField;
             }
             set {
-                if ((this.UpvotesField.Equals(value) != true)) {
-                    this.UpvotesField = value;
-                    this.RaisePropertyChanged("Upvotes");
+                if ((this.downvotesField.Equals(value) != true)) {
+                    this.downvotesField = value;
+                    this.RaisePropertyChanged("downvotes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string length {
+            get {
+                return this.lengthField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.lengthField, value) != true)) {
+                    this.lengthField = value;
+                    this.RaisePropertyChanged("length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string trackpath {
+            get {
+                return this.trackpathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.trackpathField, value) != true)) {
+                    this.trackpathField = value;
+                    this.RaisePropertyChanged("trackpath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.TrackPlay[] trackplays {
+            get {
+                return this.trackplaysField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.trackplaysField, value) != true)) {
+                    this.trackplaysField = value;
+                    this.RaisePropertyChanged("trackplays");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> upvotes {
+            get {
+                return this.upvotesField;
+            }
+            set {
+                if ((this.upvotesField.Equals(value) != true)) {
+                    this.upvotesField = value;
+                    this.RaisePropertyChanged("upvotes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Vote[] votes {
+            get {
+                return this.votesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.votesField, value) != true)) {
+                    this.votesField = value;
+                    this.RaisePropertyChanged("votes");
                 }
             }
         }
@@ -166,13 +917,31 @@ namespace RentItClient.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TrackInfo", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Vote", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
     [System.SerializableAttribute()]
-    public partial class TrackInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Vote : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> dateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int trackIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.Track tracksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int userIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItClient.RentItService.User usersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int valueField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -180,6 +949,84 @@ namespace RentItClient.RentItService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> date {
+            get {
+                return this.dateField;
+            }
+            set {
+                if ((this.dateField.Equals(value) != true)) {
+                    this.dateField = value;
+                    this.RaisePropertyChanged("date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int trackId {
+            get {
+                return this.trackIdField;
+            }
+            set {
+                if ((this.trackIdField.Equals(value) != true)) {
+                    this.trackIdField = value;
+                    this.RaisePropertyChanged("trackId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.Track tracks {
+            get {
+                return this.tracksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tracksField, value) != true)) {
+                    this.tracksField = value;
+                    this.RaisePropertyChanged("tracks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int userId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItClient.RentItService.User users {
+            get {
+                return this.usersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.usersField, value) != true)) {
+                    this.usersField = value;
+                    this.RaisePropertyChanged("users");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int value {
+            get {
+                return this.valueField;
+            }
+            set {
+                if ((this.valueField.Equals(value) != true)) {
+                    this.valueField = value;
+                    this.RaisePropertyChanged("value");
+                }
             }
         }
         
@@ -195,9 +1042,83 @@ namespace RentItClient.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Comment", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TrackPlay", Namespace="http://schemas.datacontract.org/2004/07/RentItServer")]
     [System.SerializableAttribute()]
-    public partial class Comment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class TrackPlay : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private System.DateTime playtimek__BackingFieldField;
+        
+        private int trackIdk__BackingFieldField;
+        
+        private RentItClient.RentItService.Track tracksk__BackingFieldField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<playtime>k__BackingField", IsRequired=true)]
+        public System.DateTime playtimek__BackingField {
+            get {
+                return this.playtimek__BackingFieldField;
+            }
+            set {
+                if ((this.playtimek__BackingFieldField.Equals(value) != true)) {
+                    this.playtimek__BackingFieldField = value;
+                    this.RaisePropertyChanged("playtimek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<trackId>k__BackingField", IsRequired=true)]
+        public int trackIdk__BackingField {
+            get {
+                return this.trackIdk__BackingFieldField;
+            }
+            set {
+                if ((this.trackIdk__BackingFieldField.Equals(value) != true)) {
+                    this.trackIdk__BackingFieldField = value;
+                    this.RaisePropertyChanged("trackIdk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<tracks>k__BackingField", IsRequired=true)]
+        public RentItClient.RentItService.Track tracksk__BackingField {
+            get {
+                return this.tracksk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tracksk__BackingFieldField, value) != true)) {
+                    this.tracksk__BackingFieldField = value;
+                    this.RaisePropertyChanged("tracksk__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TrackInfo", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
+    [System.SerializableAttribute()]
+    public partial class TrackInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -227,19 +1148,19 @@ namespace RentItClient.RentItService {
     public interface IRentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
-        int CreateChannel(string channelName, int userId, string description, int[] genres);
+        int CreateChannel(string channelName, int userId, string description, string[] genres);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetChannelIdsResponse")]
-        int[] GetChannelIds(string channelName, RentItClient.RentItService.SearchArgs args);
+        int[] GetChannelIds(RentItClient.RentItService.SearchArgs args);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
         RentItClient.RentItService.Channel GetChannel(int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ModifyChannel", ReplyAction="http://tempuri.org/IRentItService/ModifyChannelResponse")]
-        RentItClient.RentItService.Channel ModifyChannel(int channelId);
+        RentItClient.RentItService.Channel ModifyChannel(int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
-        void DeleteChannel(int channelId);
+        void DeleteChannel(int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
         int Login(string username, string password);
@@ -248,10 +1169,10 @@ namespace RentItClient.RentItService {
         int CreateUser(string username, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UploadTrack", ReplyAction="http://tempuri.org/IRentItService/UploadTrackResponse")]
-        void UploadTrack(RentItClient.RentItService.Track track, int channelId);
+        void UploadTrack(RentItClient.RentItService.Track track, int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
-        void RemoveTrack(int trackId);
+        void RemoveTrack(int userId, int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/VoteTrack", ReplyAction="http://tempuri.org/IRentItService/VoteTrackResponse")]
         void VoteTrack(int rating, int userId, int trackId);
@@ -308,24 +1229,24 @@ namespace RentItClient.RentItService {
                 base(binding, remoteAddress) {
         }
         
-        public int CreateChannel(string channelName, int userId, string description, int[] genres) {
+        public int CreateChannel(string channelName, int userId, string description, string[] genres) {
             return base.Channel.CreateChannel(channelName, userId, description, genres);
         }
         
-        public int[] GetChannelIds(string channelName, RentItClient.RentItService.SearchArgs args) {
-            return base.Channel.GetChannelIds(channelName, args);
+        public int[] GetChannelIds(RentItClient.RentItService.SearchArgs args) {
+            return base.Channel.GetChannelIds(args);
         }
         
         public RentItClient.RentItService.Channel GetChannel(int channelId) {
             return base.Channel.GetChannel(channelId);
         }
         
-        public RentItClient.RentItService.Channel ModifyChannel(int channelId) {
-            return base.Channel.ModifyChannel(channelId);
+        public RentItClient.RentItService.Channel ModifyChannel(int userId, int channelId) {
+            return base.Channel.ModifyChannel(userId, channelId);
         }
         
-        public void DeleteChannel(int channelId) {
-            base.Channel.DeleteChannel(channelId);
+        public void DeleteChannel(int userId, int channelId) {
+            base.Channel.DeleteChannel(userId, channelId);
         }
         
         public int Login(string username, string password) {
@@ -336,12 +1257,12 @@ namespace RentItClient.RentItService {
             return base.Channel.CreateUser(username, password, email);
         }
         
-        public void UploadTrack(RentItClient.RentItService.Track track, int channelId) {
-            base.Channel.UploadTrack(track, channelId);
+        public void UploadTrack(RentItClient.RentItService.Track track, int userId, int channelId) {
+            base.Channel.UploadTrack(track, userId, channelId);
         }
         
-        public void RemoveTrack(int trackId) {
-            base.Channel.RemoveTrack(trackId);
+        public void RemoveTrack(int userId, int trackId) {
+            base.Channel.RemoveTrack(userId, trackId);
         }
         
         public void VoteTrack(int rating, int userId, int trackId) {

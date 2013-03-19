@@ -14,11 +14,13 @@
             <asp:Label ID="lbl_loginTitle" runat="server" Text="Login" CssClass="loginTitle"></asp:Label>
             <div class="clear">       
                 <asp:Label ID="lbl_username" runat="server" Text="Username" CssClass="loginLabel" Width="70px"></asp:Label>
-                <asp:TextBox ID="tbx_username" runat="server" CssClass="loginTextbox"></asp:TextBox> 
+                <asp:TextBox ID="tbx_username" runat="server" CssClass="loginTextbox"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfv_username" runat="server" ControlToValidate="tbx_username" ErrorMessage="*" ForeColor="Red" />
             </div>
             <div class="clear">
                 <asp:Label ID="lbl_password" runat="server" Text="Password" CssClass="loginLabel" Width="70px"></asp:Label>           
                 <asp:TextBox ID="tbx_password" runat="server" CssClass="loginTextbox" TextMode="Password"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfv_password" runat="server" ControlToValidate="tbx_password" ErrorMessage="*" ForeColor="Red" />
             </div>
             <asp:Button ID="btn_login" runat="server" Text="Login" OnClick="btn_login_Click" />
         </div> 
@@ -27,27 +29,25 @@
         <div class="clear">
             <asp:Label ID="lbl_createUsername" runat="server" Text="Username" CssClass="loginLabel" Width="70px"></asp:Label>
             <asp:TextBox ID="tbx_createUsername" runat="server" CssClass="loginTextbox"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfv_createUsername" runat="server" ControlToValidate="tbx_createUsername" ErrorMessage="Please enter your username!" ForeColor="Red" />
+            <asp:RequiredFieldValidator ID="rfv_createUsername" runat="server" ControlToValidate="tbx_createUsername" ErrorMessage="*" ForeColor="Red" />
         </div>
         <div class="clear">
             <asp:Label ID="lbl_createPassword" runat="server" Text="Password" CssClass ="loginLabel"  Width="70px"></asp:Label>
             <asp:TextBox ID="tbx_createPassword" runat="server" CssClass="loginTextbox" TextMode="Password"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfv_createPassword" runat="server" ControlToValidate="tbx_createPassword" ErrorMessage="Please enter your password!" ForeColor="Red" />
+            <asp:RequiredFieldValidator ID="rfv_createPassword" runat="server" ControlToValidate="tbx_createPassword" ErrorMessage="*" ForeColor="Red" />
         </div>
         <div class="clear">
             <asp:Label ID="lbl_confirmPassword" runat="server" Text="(Confirm)" CssClass ="loginLabel" Width="70px"></asp:Label>
             <asp:TextBox ID="tbx_confirmPassword" runat="server" CssClass="loginTextbox" TextMode="Password"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfv_confirmPassword" runat="server" ControlToValidate="tbx_confirmPassword" ErrorMessage="Please confirm your password!" ForeColor="Red" />
+            <asp:RequiredFieldValidator ID="rfv_confirmPassword" runat="server" ControlToValidate="tbx_confirmPassword" ErrorMessage="*" ForeColor="Red" />
+            <asp:CompareValidator ID="cmp_passwords" runat="server" ControlToValidate="tbx_createPassword" ControlToCompare="tbx_confirmPassword" Operator="Equal" Type="String" ErrorMessage="The two passwords must be equal!" ForeColor="Red" />
         </div>
         <div class="clear">
             <asp:Label ID="lbl_email" runat="server" Text="E-mail" CssClass="loginLabel" Width="70px"></asp:Label>
             <asp:TextBox ID="tbx_email" runat="server" CssClass="loginTextbox"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="rfv_email" runat="server" ControlToValidate="tbx_email" ErrorMessage="Please enter an email address!" ForeColor="Red" />
-            <br />
-            <asp:RegularExpressionValidator ID="rev_email" runat="server" ControlToValidate="tbx_email" ErrorMessage="Please enter a vaild email address!" ForeColor="Red" ValidationExpression="[\w\d\._-]+@[\w\d\._-]+\.[\w]+" />
+            <asp:RequiredFieldValidator ID="rfv_email" runat="server" ControlToValidate="tbx_email" ErrorMessage="*" ForeColor="Red" />
+            <asp:RegularExpressionValidator ID="rev_email" runat="server" ControlToValidate="tbx_email" ErrorMessage="Invalid email!" ForeColor="Red" ValidationExpression="[\w\d\._-]+@[\w\d\._-]+\.[\w]+" />
         </div>
-        <asp:CompareValidator ID="cmp_passwords" runat="server" ControlToValidate="tbx_createPassword" ControlToCompare="tbx_confirmPassword" Operator="Equal" Type="String" ErrorMessage="The two passwords must be equal!" ForeColor="Red" />
-        <br />
         <asp:Button ID="btn_createUser" runat="server" Text="Create user" OnClick="btn_createUser_Click" />
     </div>
     </form>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
+  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
+  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
   <xs:element name="CreateChannel">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="channelName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="genres" nillable="true" type="q1:ArrayOfint" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="genres" nillable="true" type="q1:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -22,8 +23,7 @@
   <xs:element name="GetChannelIds">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="channelName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="args" nillable="true" type="q2:SearchArgs" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="args" nillable="true" type="q2:SearchArgs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -51,6 +51,7 @@
   <xs:element name="ModifyChannel">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -65,6 +66,7 @@
   <xs:element name="DeleteChannel">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -109,6 +111,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="track" nillable="true" type="q6:Track" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -121,6 +124,7 @@
   <xs:element name="RemoveTrack">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="trackId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -168,7 +172,7 @@
   <xs:element name="GetTrackInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="GetTrackInfoResult" nillable="true" type="q8:TrackInfo" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetTrackInfoResult" nillable="true" type="q8:TrackInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

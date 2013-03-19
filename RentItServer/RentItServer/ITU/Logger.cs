@@ -40,11 +40,9 @@ namespace RentItServer.ITU
                 File.Create(AbsolutePath);
             }
             // Logging thread. Used in order to support asyncrhonous writing of entries
-            new Task(() =>
-                {
+            new Task(() =>{
                     string logEntry;
-                    while (true)
-                    {
+                    while (true){
                         logEntry = _taskCollection.Take();
                         File.AppendAllText(AbsolutePath, logEntry);
                     }

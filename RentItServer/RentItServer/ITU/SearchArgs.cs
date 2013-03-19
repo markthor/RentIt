@@ -53,14 +53,14 @@ namespace RentItServer.ITU
         /// <value>
         /// The start index.
         /// </value>
-        public int startIndex { get; private set; }
+        public int StartIndex { get; private set; }
         /// <summary>
         /// Gets the end index.
         /// </summary>
         /// <value>
         /// The end index.
         /// </value>
-        public int endIndex { get; private set; }
+        public int EndIndex { get; private set; }
 
         public SearchArgs()
         {
@@ -70,8 +70,8 @@ namespace RentItServer.ITU
             NumberOfSubscriptions = -1;
             NumberOfComments = -1;
             SortOption = 0;
-            startIndex = -1;
-            endIndex = -1;
+            StartIndex = -1;
+            EndIndex = -1;
         }
     }
 }
