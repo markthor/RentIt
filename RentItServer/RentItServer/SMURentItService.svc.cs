@@ -47,7 +47,7 @@ namespace RentItServer
             throw new NotImplementedException("RentBook not implemented");
         }
 
-        public bool DeleteBook(int bookId)
+        public bool DeleteBook(int userId, int bookId)
         {
             throw new NotImplementedException("DeleteBook not implemented");
         }

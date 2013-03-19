@@ -23,7 +23,7 @@ namespace RentItServer
         public string email { get; set; }
         public string username { get; set; }
         public string password { get; set; }
-        public int isAdmin { get; set; }
+        public bool isAdmin { get; set; }
     
         public virtual ICollection<SMUrental> SMUrentals { get; set; }
     }

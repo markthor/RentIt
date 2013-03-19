@@ -128,27 +128,122 @@ namespace RentItServer.SMU
         //return 2 if rented both
         public int HasRental(int userId, int bookId)
         {
-            if(userId < 0) throw new ArgumentException("userId < 0");
+            if (userId < 0) throw new ArgumentException("userId < 0");
 
-            using (RENTIT21Entities proxy = new RENTIT21Entities()){
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
                 var rentals = from rental in proxy.SMUrentals
                               where rental.bookId == bookId && rental.SMUuser.id == userId
                               select rental;
 
-                if (rentals.Any() == false){
+                if (rentals.Any() == false)
+                {
                     return -1;
                 }
                 SMUrental theRental = rentals.First();
-                if (theRental.audioId != null && theRental.bookId != null){
+
+                if (DateTime.Now.Subtract(theRental.startDate) > new TimeSpan(7, 0, 0, 0))
+                {   // The rental has passed 7 days - it will be removed from the database
+                    proxy.SMUrentals.Remove(theRental);
+                    proxy.SaveChanges();
+                    return -1;
+                }
+
+                if (theRental.audioId != null && theRental.bookId != null)
+                {
                     return 2;
                 }
-                if (theRental.audioId != null){
+                if (theRental.audioId != null)
+                {
                     return 1;
                 }
-                if (theRental.bookId != null){
+                if (theRental.bookId != null)
+                {
                     return 0;
                 }
                 throw new Exception("There was a rental, but bookId and audioId was null. Dayum");
+            }
+        }
+
+        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        {
+            if (userId < 0) throw new ArgumentException("userId < 0");
+            if (startDate == null) throw new ArgumentNullException("startDate");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from book in proxy.SMUbooks
+                            where book.id == bookId
+                            select book;
+
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("no book with bookId = " + bookId);
+                }
+                SMUrental theRental = new SMUrental()
+                {
+                    userId = userId,
+                    startDate = DateTime.Now
+                };
+                SMUbook theBook = books.First();
+                
+                if (mediaType == 0)
+                {   // Only rent the book
+                    theRental.bookId = bookId;
+                }
+                if (mediaType == 1)
+                {   // Only rent the audio for the book
+                    if (theBook.audioId == null)
+                    {
+                        throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
+                    }
+                    theRental.audioId = theBook.audioId;
+                }
+                if (mediaType == 2)
+                {   // Rent both the book and the audio for the book
+                    theRental.bookId = bookId;
+                    theRental.audioId = theBook.audioId;
+                }
+
+                proxy.SMUrentals.Add(theRental);
+                proxy.SaveChanges();
+                return theRental.id;
+            }
+        }
+
+        public bool DeleteBook(int userId, int bookId)
+        {
+            if(userId < 0)  throw new ArgumentException("userId < 0");
+
+            using (RENTIT21Entities proxy = new RENTIT21Entities()){
+                var users = from user in proxy.SMUusers
+                            where user.id == userId
+                            select user;
+                if (users.Any() == false){
+                    throw new ArgumentException("No user with userId = " + userId);
+                }
+                SMUuser theUser = users.First();
+                if (theUser.isAdmin == false){
+                    throw new ArgumentException("User with userId = " + userId + " is not administrator");
+                }
+                var books = from book in proxy.SMUbooks
+                            where book.id == bookId
+                            select book;
+                
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook theBook = books.First();
+                proxy.SMUbooks.Remove(theBook);
+                proxy.SaveChanges();
+
+                books = from book in proxy.SMUbooks
+                        where book.id == bookId
+                        select book;
+
+                return books.Any() == false;
             }
         }
     }

@@ -26,7 +26,6 @@ namespace RentItServer
         public string genre { get; set; }
         public double price { get; set; }
         public System.DateTime dateAdded { get; set; }
-        public int hasAudio { get; set; }
         public Nullable<int> audioId { get; set; }
         public string PDFFilePath { get; set; }
         public string imageFilePath { get; set; }

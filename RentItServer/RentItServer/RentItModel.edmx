@@ -162,7 +162,6 @@
     <Property Name="genre" Type="varchar" Nullable="true" MaxLength="50" />
     <Property Name="price" Type="float" Nullable="false" />
     <Property Name="dateAdded" Type="datetime" Nullable="false" />
-    <Property Name="hasAudio" Type="int" Nullable="false" />
     <Property Name="audioId" Type="int" Nullable="true" />
     <Property Name="PDFFilePath" Type="varchar" Nullable="true" MaxLength="255" />
     <Property Name="imageFilePath" Type="varchar" Nullable="true" MaxLength="255" />
@@ -186,7 +185,7 @@
     <Property Name="email" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="password" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="isAdmin" Type="int" Nullable="false" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="channelgenres">
     <Key>
@@ -633,8 +632,7 @@
           <Property Type="String" Name="genre" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Double" Name="price" Nullable="false" />
           <Property Type="DateTime" Name="dateAdded" Nullable="false" Precision="0" />
-          <Property Type="Int32" Name="hasAudio" Nullable="false" />
-          <Property Type="Int32" Name="audioId" />
+          <Property Type="Int32" Name="audioId" Nullable="true" />
           <Property Type="String" Name="PDFFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="imageFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="hit" Nullable="false" />
@@ -662,7 +660,7 @@
           <Property Type="String" Name="email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="password" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="isAdmin" Nullable="false" />
+          <Property Type="Boolean" Name="isAdmin" Nullable="false" />
           <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_userId" FromRole="SMUuser" ToRole="SMUrental" />
         </EntityType>
         <Association Name="FK_SMUbooks_audioId">
@@ -811,7 +809,6 @@
           <ScalarProperty Name="genre" ColumnName="genre" />
           <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
-          <ScalarProperty Name="hasAudio" ColumnName="hasAudio" />
           <ScalarProperty Name="audioId" ColumnName="audioId" />
           <ScalarProperty Name="PDFFilePath" ColumnName="PDFFilePath" />
           <ScalarProperty Name="imageFilePath" ColumnName="imageFilePath" />

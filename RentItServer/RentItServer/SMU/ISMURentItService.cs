@@ -57,6 +57,10 @@ namespace RentItServer.SMU
         int HasRental(int userId, int bookId);
 
         //return rentId if successful
+        // For mediaType:
+        // 0 = book
+        // 1 = audio
+        // 2 = both
         int RentBook(int userId, int bookId, DateTime startDate, int mediaType);
 
         /***********************************************
@@ -64,6 +68,6 @@ namespace RentItServer.SMU
          * *********************************************/
 
         //delete a book
-        bool DeleteBook(int bookId);
+        bool DeleteBook(int userId, int bookId);
     }
 }
