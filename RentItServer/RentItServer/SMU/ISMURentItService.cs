@@ -35,12 +35,12 @@ namespace RentItServer.SMU
         //update user information
         //returns true if changes updated
         [OperationContract]
-        bool UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
+        User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
 
         //delete user account
         //returns true if account deleted
         [OperationContract]
-        bool DeleteAccount(int userId);
+        void DeleteAccount(int userId);
 
         //returns a list of books arranged by specified parameter (date, hit, etc)
         //list will contain listSize number of books 
@@ -99,11 +99,11 @@ namespace RentItServer.SMU
 
         //delete a book
         [OperationContract]
-        bool DeleteBook(int userId, int bookId);
+        bool DeleteBook(int bookId);
 
         //Adds a book object withoud PDF or audio files.
         [OperationContract]
-        int UploadBook(int userId, string title, string author, string description, string genre, DateTime dateAdded, double price);
+        int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price);
 
         //Updates information of an existing book object.
         [OperationContract]
