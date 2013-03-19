@@ -12,7 +12,7 @@ namespace RentItServer.SMU
         //Data access object for database IO
         private readonly SMUDao _dao = SMUDao.GetInstance();
         //The logger
-        private readonly SMULogger _logger = SMULogger.GetInstance();
+        //private readonly SMULogger _logger = SMULogger.GetInstance();
 
         /// <summary>
         /// Accessor method to access the only instance of the class
@@ -30,9 +30,7 @@ namespace RentItServer.SMU
 
         public int SignUp(string username, string password, string email)
         {
-            return _dao.SignUp(username, password, email);
+            return _dao.SignUp(email, username, password);
         }
-
-
     }
 }
