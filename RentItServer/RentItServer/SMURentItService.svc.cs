@@ -28,12 +28,12 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public bool UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteAccount(int userId)
+        public void DeleteAccount(int userId)
         {
             throw new NotImplementedException();
         }
@@ -83,13 +83,12 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public bool DeleteBook(int userId, int bookId)
+        public bool DeleteBook(int bookId)
         {
             throw new NotImplementedException();
         }
 
-        public int UploadBook(int userId, string title, string author, string description, string genre, DateTime dateAdded,
-                              double price)
+        public int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             throw new NotImplementedException();
         }
