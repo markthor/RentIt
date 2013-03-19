@@ -15,7 +15,7 @@ namespace RentItServer.ITU
             "Documents" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
             "Logs" + Path.DirectorySeparatorChar + 
-            "SMUlog.txt";;
+            "SMUlog.txt";
 
         /// <summary>
         /// The log
