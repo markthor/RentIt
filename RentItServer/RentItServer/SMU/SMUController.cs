@@ -32,7 +32,5 @@ namespace RentItServer.SMU
         {
             return _dao.SignUp(username, password, email);
         }
-
-
     }
 }
