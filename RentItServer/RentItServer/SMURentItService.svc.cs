@@ -27,7 +27,7 @@ namespace RentItServer
             throw new NotImplementedException("GetUserInfo not implemented");
         }
 
-        public bool UpdateUserInfo(int userId, string email, string name, string password)
+        public bool UpdateUserInfo(int userId, string email, string username, string password)
         {
             throw new NotImplementedException("UpdateUserInfo not implemented");
         }

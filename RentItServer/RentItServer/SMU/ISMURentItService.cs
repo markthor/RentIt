@@ -34,7 +34,7 @@ namespace RentItServer.SMU
         //update user information
         //returns true if changes updated
         [OperationContract]
-        bool UpdateUserInfo(int userId, string email, string name, string password);
+        bool UpdateUserInfo(int userId, string email, string username, string password);
 
         //delete user account
         //returns true if account deleted
@@ -50,10 +50,6 @@ namespace RentItServer.SMU
         //Book GetBookInfo(int bookId);
 
         //check if user has rented a specific book
-        //returns 0 if not rented
-        //returns 1 if rented PDF
-        //returns 2 if rented audio
-        //returns 3 if rented both
         //return -1 if not rented
         //return 0 if rented PDF
         //return 1 if rented audio
@@ -70,5 +66,4 @@ namespace RentItServer.SMU
         //delete a book
         bool DeleteBook(int bookId);
     }
-
 }
