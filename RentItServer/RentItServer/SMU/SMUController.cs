@@ -54,10 +54,9 @@ namespace RentItServer.SMU
         }
 
         public int AddBook(int userId, string title, string author, string description, string genre, double price,
-                           int associatedAudioId, string pdfFilePath, string imageFilePath)
+                            string pdfFilePath, string imageFilePath)
         { 
-            return _dao.AddBook(userId, title, author, description, genre, price,
-                           associatedAudioId, pdfFilePath, imageFilePath);
+            return _dao.AddBook(userId, title, author, description, genre, price, pdfFilePath, imageFilePath);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk");
             try
             {
-                int bookId = controller.AddBook(user, "the bible", "God", "Great Book", "religion", 100.0, 1, "/testpathpdf", "testpathimg");
+                int bookId = controller.AddBook(user, "the bible", "God", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
             }
             catch (Exception e) {
                 Assert.Fail();

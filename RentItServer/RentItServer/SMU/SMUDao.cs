@@ -210,6 +210,7 @@ namespace RentItServer.SMU
                 theBook.audioId = theAudio.id;
                 theBook.SMUaudio = theAudio;
                 proxy.SaveChanges();
+                return theAudio.id;
             }
         }
 
