@@ -117,7 +117,7 @@ namespace RentItClient
                 string name = lbl_channelName.Text;
                 string desc = tbx_description.Text;
                 int id = 1;
-                int[] genre = { 1, 2, 3, 4, 5, 6 };
+                string[] genre = { "1", "2", "3", "4", "5", "6" };
                 // Change this to modify channel
                 int channelId = proxy.CreateChannel(name, id, desc, genre);
             }
