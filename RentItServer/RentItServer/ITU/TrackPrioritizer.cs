@@ -48,6 +48,7 @@ namespace RentItServer.ITU
             {
                 TrackData currentTrackData = trackData[tp.trackId];
                 currentTrackData.Plays++;
+                trackData.Remove(tp.trackId);
                 trackData.Add(tp.trackId, currentTrackData);
             }
 
@@ -57,7 +58,7 @@ namespace RentItServer.ITU
             //Updating candidate boolean for TrackData based on percentage of plays.
             foreach (KeyValuePair<int, TrackData> kvp in trackData)
             {
-                double percentageOfPlays = kvp.Value.Plays/totalPlays;
+                double percentageOfPlays = Convert.ToDouble(kvp.Value.Plays) / Convert.ToDouble(totalPlays);
                 if (percentageOfPlays > _maxFrequency)
                 {
                     kvp.Value.NextTrackCandidate = false;
@@ -108,7 +109,7 @@ namespace RentItServer.ITU
         
         private double GetRatio(int upvotes, int downvotes)
         {
-            return (_ratioConstant + upvotes) / (_ratioConstant + downvotes);
+            return Convert.ToDouble(_ratioConstant + upvotes) / Convert.ToDouble(_ratioConstant + downvotes);
         }
 
         private List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)

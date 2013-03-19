@@ -71,10 +71,51 @@ namespace RentItServer_UnitTests
         }
 
         [TestMethod]
-        public void TestHasRental()
+        public void TestAddBook()
         {
             SMUController controller = new SMUController();
+            int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk");
+            try
+            {
+                int bookId = controller.AddBook(user, "the bible", "God", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
+            }
+            catch (Exception e) {
+                Assert.Fail();
+            }
+        }
 
+        [TestMethod]
+        public void TestRentBook()
+        {
+            SMUController controller = new SMUController();
+            int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk");
+            int bookId = controller.AddBook(user, "The Torah", "Jah", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
+            int rental = controller.RentBook(user, bookId, 0);
+            try
+            {
+                controller.RentBook(Int32.MaxValue, Int32.MaxValue, 0);
+                Assert.Fail();
+            }
+            catch (Exception)
+            { 
+            
+            }
+        }
+
+        [TestMethod]
+        public void TestDeleteBook()
+        {
+            SMUController controller = new SMUController();
+            int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk");
+            int bookId = controller.AddBook(user, "Book of the dead", "Jah", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
+
+            Assert.AreEqual(true,controller.DeleteBook(user, bookId));
+            try
+            {
+                controller.DeleteBook(user, Int32.MaxValue);
+                Assert.Fail();
+            }
+            catch (Exception) { }
         }
     }
 }
