@@ -83,13 +83,13 @@
     <Content Include="Service References\RentItService\RentItClient.RentItService.TrackInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItService.disco" />
-    <Content Include="Service References\RentItService\configuration91.svcinfo" />
-    <Content Include="Service References\RentItService\configuration.svcinfo" />
-    <Content Include="Service References\RentItService\Reference.svcmap">
+    <None Include="Service References\RentItService\RentItService.disco" />
+    <None Include="Service References\RentItService\configuration91.svcinfo" />
+    <None Include="Service References\RentItService\configuration.svcinfo" />
+    <None Include="Service References\RentItService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="StreamPlayer.ascx" />
     <Content Include="Subscriptions.ascx" />
     <Content Include="TopBar.ascx" />
@@ -212,7 +212,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service References\RentItService\RentItService.wsdl" />
+    <None Include="Service References\RentItService\RentItService.wsdl" />
     <None Include="Service References\RentItService\RentItService.xsd">
       <SubType>Designer</SubType>
     </None>
