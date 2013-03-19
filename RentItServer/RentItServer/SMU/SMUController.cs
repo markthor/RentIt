@@ -96,7 +96,7 @@ namespace RentItServer.SMU
 
         public void UploadPDF(int bookId, MemoryStream PDF)
         {
-            String relativePath = String.Format("{0}{1}{0}{2}", Path.DirectorySeparatorChar, "PDF", bookId.ToString());
+            String relativePath = String.Format("{0}{1}{0}{2}.pdf", Path.DirectorySeparatorChar, "PDF", bookId.ToString());
             _fileSystemHandler.WriteFile(relativePath, PDF);
         }
     }
