@@ -19,11 +19,6 @@ namespace RentItServer.Utilities
         private readonly BlockingCollection<string> _taskCollection = new BlockingCollection<string>(new ConcurrentQueue<string>());
 
         /// <summary>
-        /// The absolute path
-        /// </summary>
-        private readonly string absolutePath;
-
-        /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
@@ -33,7 +28,6 @@ namespace RentItServer.Utilities
             //{
                 File.Create(absolutePath);
             //}
-            this.absolutePath = absolutePath;
 
             handler += AddEntry;
             // Logging thread. Used in order to support asyncrhonous writing of entries
@@ -49,7 +43,7 @@ namespace RentItServer.Utilities
         }
 
         /// <summary>
-        /// Adds an handler to the log.
+        /// Adds an entry to the log.
         /// </summary>
         /// <param name="sender">The sender object.</param>
         /// <param name="eventArguments">The event arguments.</param>

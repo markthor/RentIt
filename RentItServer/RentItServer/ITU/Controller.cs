@@ -12,11 +12,11 @@ namespace RentItServer.ITU
     public class Controller
     {
         private static string _mediaFileDirectoryPath = "C:" + Path.DirectorySeparatorChar +
-            "Users" + Path.DirectorySeparatorChar +
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
-            "ITU" + Path.DirectorySeparatorChar +
-            "Tracks";
+                                                        "Users" + Path.DirectorySeparatorChar +
+                                                        "Rentit21" + Path.DirectorySeparatorChar +
+                                                        "Documents" + Path.DirectorySeparatorChar +
+                                                        "ITU" + Path.DirectorySeparatorChar +
+                                                        "Tracks";
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
