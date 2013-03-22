@@ -103,6 +103,9 @@ namespace RentItServer.ITU
         [OperationContract]
         int GetChannelPort(int channelId, int ipAddress, int port);
 
+        //Returns the port which the client should connect to
+        [OperationContract]
+        int ListenToChannel(int channelId);
     }
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
