@@ -39,7 +39,7 @@ namespace RentItServer.Utilities
                 while (true)
                 {
                     logEntry = _taskCollection.Take();
-                    File.AppendAllText(absolutePath, logEntry);
+                    //File.AppendAllText(absolutePath, logEntry);
                 }
             }).Start();
         }
