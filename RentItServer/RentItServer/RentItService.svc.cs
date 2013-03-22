@@ -157,5 +157,11 @@ namespace RentItServer
             return -1;
             //int i = _controller.GetChannelPort(channelId,ipAddress,port);
         }
+
+        public int ListenToChannel(int channelId)
+        {
+            //check at der eksisterer en channel med det her id
+            return _controller.ListenToChannel(channelId);
+        }
     }
 }

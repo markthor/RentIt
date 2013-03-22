@@ -40,15 +40,15 @@ namespace RentItServer.SMU
             _logger = new Logger(DirectoryPath + LogFileName, ref _handler);
         }
 
-        public int LogIn(string username, string password)
+        public int LogIn(string email, string password)
         {
-            int id = _dao.LogIn(username, password);
+            int id = _dao.LogIn(email, password);
             if(_handler != null)
-                _handler(this, new RentItEventArgs("LogIn: " + username + "-" + password));
+                _handler(this, new RentItEventArgs("LogIn: " + email + "-" + password));
             return id;
         }
 
-        public int SignUp(string username, string password, string email, bool isAdmin)
+        public int SignUp(string email, string username, string password, bool isAdmin)
         {
             int id = _dao.SignUp(email, username, password, isAdmin);
             if(_handler != null)
@@ -76,21 +76,29 @@ namespace RentItServer.SMU
             return _dao.HasRental(userId, bookId);
         }
 
-        public int AddBook(int userId, string title, string author, string description, string genre, DateTime dateAdded, double price,
-                            string pdfFilePath, string imageFilePath)
+        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
-            return _dao.AddBook(title, author, description, genre, dateAdded, price, pdfFilePath, imageFilePath);
+            return _dao.AddBook(title, author, description, genre, dateAdded, price);
         }
 
-        public int RentBook(int userId, int bookId, int mediaType)
+        public int RentBook(int userId, int bookId, DateTime time, int mediaType)
         {
             return _dao.RentBook(userId, bookId, mediaType);
         }
 
+        public Book GetBookInfo(int bookId)
+        {
+            return _dao.GetBookInfo(bookId);
+        }
 
         public void DeleteBook(int bookId)
         {
             _dao.DeleteBook(bookId);
+        }
+
+        public List<Book> GetAllBooks()
+        {
+            return _dao.GetAllBooks();
         }
 
         public void UploadAudio(int bookId, MemoryStream MP3)

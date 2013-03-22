@@ -13,6 +13,8 @@ void UploadTrack(Track t, int cId)
 void RemoveTrack(int tId)
 void VoteTrack(int rating, int uId, int tId)
 int[] GetTrackIds(int cId)
+List<Track> GetTracks(int cId)
+List<TrackPlay> GetTrackPlays(int cId)
 TrackInfo GetTrackInfo(int tId)
 
 void Comment(string comment, int uId, int cId)

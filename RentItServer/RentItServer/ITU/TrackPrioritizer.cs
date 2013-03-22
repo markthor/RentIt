@@ -6,11 +6,11 @@ namespace RentItServer.ITU
     public class TrackPrioritizer
     {
         //Singleton instance of the class
-        public static TrackPrioritizer _instance;
-        public static Random rng = new Random();
-        public const double _maxFrequency = 0.3;
-        public const int _ratioConstant = 10;
-        public const int _minimumRepeatDistance = 3;
+        private static TrackPrioritizer _instance;
+        private static Random rng = new Random();
+        private const double _maxFrequency = 0.3;
+        private const int _ratioConstant = 10;
+        private const int _minimumRepeatDistance = 3;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -32,6 +32,13 @@ namespace RentItServer.ITU
             return _instance;
         }
         
+        /// <summary>
+        /// Gets the id of the next track to be played from predefined selection criteria.
+        /// These includes the ratio between the upvotes and downvotes, the percentage of plays and whether the track has been played recently.
+        /// </summary>
+        /// <param name="trackList">The tracks on the channels playlist</param>
+        /// <param name="plays">The record of tracks played on the channel</param>
+        /// <returns>The id of the next track to be played</returns>
         public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
             //Initializing data structure for track prioritizing.
