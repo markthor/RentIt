@@ -101,6 +101,11 @@ namespace RentItServer.SMU
             _dao.DeleteBook(bookId);
         }
 
+        public List<Book> GetAllBooks()
+        {
+            return _dao.GetAllBooks();
+        }
+
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
 
