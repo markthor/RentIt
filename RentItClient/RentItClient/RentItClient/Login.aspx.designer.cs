@@ -49,15 +49,6 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_username;
         
         /// <summary>
-        /// rfv_username control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_username;
-        
-        /// <summary>
         /// lbl_password control.
         /// </summary>
         /// <remarks>
@@ -74,15 +65,6 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbx_password;
-        
-        /// <summary>
-        /// rfv_password control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_password;
         
         /// <summary>
         /// btn_login control.
@@ -121,15 +103,6 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_createUsername;
         
         /// <summary>
-        /// rfv_createUsername control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_createUsername;
-        
-        /// <summary>
         /// lbl_createPassword control.
         /// </summary>
         /// <remarks>
@@ -146,15 +119,6 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbx_createPassword;
-        
-        /// <summary>
-        /// rfv_createPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_createPassword;
         
         /// <summary>
         /// lbl_confirmPassword control.
@@ -175,24 +139,6 @@ namespace RentItClient {
         protected global::System.Web.UI.WebControls.TextBox tbx_confirmPassword;
         
         /// <summary>
-        /// rfv_confirmPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_confirmPassword;
-        
-        /// <summary>
-        /// cmp_passwords control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cmp_passwords;
-        
-        /// <summary>
         /// lbl_email control.
         /// </summary>
         /// <remarks>
@@ -209,24 +155,6 @@ namespace RentItClient {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbx_email;
-        
-        /// <summary>
-        /// rfv_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_email;
-        
-        /// <summary>
-        /// rev_email control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rev_email;
         
         /// <summary>
         /// btn_createUser control.
