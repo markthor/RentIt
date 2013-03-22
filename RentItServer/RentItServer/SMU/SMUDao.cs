@@ -30,18 +30,18 @@ namespace RentItServer.SMU
             }
         }
 
-        public int LogIn(string username, string password)
+        public int LogIn(string email, string password)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var u = from user in proxy.SMUusers
-                        where user.username == username && user.password == password
+                        where user.email == email && user.password == password
                         select user;
                 if (u.Any())
                 {
                     return u.First().id;
                 }
-                throw new ArgumentException("No SMUuser with username/password combination = " + username + "/" + password);
+                throw new ArgumentException("No SMUuser with email/password combination = " + email + "/" + password);
             }
         }
 

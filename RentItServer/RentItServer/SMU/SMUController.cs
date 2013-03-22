@@ -45,11 +45,11 @@ namespace RentItServer.SMU
                                     "Logs", ref _handler);
         }
 
-        public int LogIn(string username, string password)
+        public int LogIn(string email, string password)
         {
-            int id = _dao.LogIn(username, password);
+            int id = _dao.LogIn(email, password);
             if(_handler != null)
-                _handler(this, new RentItEventArgs("LogIn: " + username + "-" + password));
+                _handler(this, new RentItEventArgs("LogIn: " + email + "-" + password));
             return id;
         }
 
