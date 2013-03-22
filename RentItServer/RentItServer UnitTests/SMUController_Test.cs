@@ -79,7 +79,7 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk", false);
             try
             {
-                int bookId = controller.AddBook(user, "the bible", "God", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
+                controller.AddBook(user, "the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
             }
             catch (Exception e) {
                 Assert.Fail();
@@ -91,7 +91,7 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId = controller.AddBook(user, "The Torah", "Jah", "Great Book", "religion", 100.0, "/testpathpdf", "testpathimg");
+            int bookId = controller.AddBook(user, "The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
             int rental = controller.RentBook(user, bookId, 0);
             try
             {
@@ -111,10 +111,10 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook(user, "Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
 
-            Assert.AreEqual(true,controller.DeleteBook(bookId));
+            controller.DeleteBook(bookId);
             try
             {
-                controller.DeleteBook(user, Int32.MaxValue);
+                controller.DeleteBook(Int32.MaxValue);
                 Assert.Fail();
             }
             catch (Exception) { }

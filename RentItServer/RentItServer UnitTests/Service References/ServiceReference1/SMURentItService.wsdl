@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SMURentItService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RentItServer.SMU" />
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISMURentItService_Test_InputMessage">
+    <wsdl:part name="parameters" element="tns:Test" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_Test_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_SignUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignUp" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_SignUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignUpResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_LogIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogIn" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_LogIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogInResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UpdateUserInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UpdateUserInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DeleteAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccount" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DeleteAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_HasRental_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasRental" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_HasRental_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasRentalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetAllBooks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBooks" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetAllBooks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBooksResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetPopularBooks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPopularBooks" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetPopularBooks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPopularBooksResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_SearchBooks_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchBooks" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_SearchBooks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchBooksResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetBooksByGenre_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBooksByGenre" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetBooksByGenre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBooksByGenreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetBookInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookInfo" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetBookInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_RentBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:RentBook" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_RentBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RentBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadPDF_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadPDF" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadPDF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadPDFResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadAudio_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadAudio" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadAudio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadAudioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DeleteBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBook" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DeleteBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadBook" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UpdateBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBook" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UpdateBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadAudio_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadAudio" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadAudio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadAudioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadPDF_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadPDF" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_UploadPDF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadPDFResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISMURentItService">
+    <wsdl:operation name="Test">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/Test" message="tns:ISMURentItService_Test_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/TestResponse" message="tns:ISMURentItService_Test_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SignUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/SignUp" message="tns:ISMURentItService_SignUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/SignUpResponse" message="tns:ISMURentItService_SignUp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/LogIn" message="tns:ISMURentItService_LogIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/LogInResponse" message="tns:ISMURentItService_LogIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetUserInfo" message="tns:ISMURentItService_GetUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetUserInfoResponse" message="tns:ISMURentItService_GetUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UpdateUserInfo" message="tns:ISMURentItService_UpdateUserInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UpdateUserInfoResponse" message="tns:ISMURentItService_UpdateUserInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DeleteAccount" message="tns:ISMURentItService_DeleteAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DeleteAccountResponse" message="tns:ISMURentItService_DeleteAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasRental">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/HasRental" message="tns:ISMURentItService_HasRental_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/HasRentalResponse" message="tns:ISMURentItService_HasRental_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBooks">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetAllBooks" message="tns:ISMURentItService_GetAllBooks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetAllBooksResponse" message="tns:ISMURentItService_GetAllBooks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPopularBooks">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetPopularBooks" message="tns:ISMURentItService_GetPopularBooks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetPopularBooksResponse" message="tns:ISMURentItService_GetPopularBooks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchBooks">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/SearchBooks" message="tns:ISMURentItService_SearchBooks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/SearchBooksResponse" message="tns:ISMURentItService_SearchBooks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBooksByGenre">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetBooksByGenre" message="tns:ISMURentItService_GetBooksByGenre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetBooksByGenreResponse" message="tns:ISMURentItService_GetBooksByGenre_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBookInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetBookInfo" message="tns:ISMURentItService_GetBookInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetBookInfoResponse" message="tns:ISMURentItService_GetBookInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RentBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/RentBook" message="tns:ISMURentItService_RentBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/RentBookResponse" message="tns:ISMURentItService_RentBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadPDF">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPDF" message="tns:ISMURentItService_DownloadPDF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPDFResponse" message="tns:ISMURentItService_DownloadPDF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadAudio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadAudio" message="tns:ISMURentItService_DownloadAudio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadAudioResponse" message="tns:ISMURentItService_DownloadAudio_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DeleteBook" message="tns:ISMURentItService_DeleteBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DeleteBookResponse" message="tns:ISMURentItService_DeleteBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadBook" message="tns:ISMURentItService_UploadBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadBookResponse" message="tns:ISMURentItService_UploadBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UpdateBook" message="tns:ISMURentItService_UpdateBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UpdateBookResponse" message="tns:ISMURentItService_UpdateBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAudio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadAudio" message="tns:ISMURentItService_UploadAudio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadAudioResponse" message="tns:ISMURentItService_UploadAudio_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadPDF">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadPDF" message="tns:ISMURentItService_UploadPDF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadPDFResponse" message="tns:ISMURentItService_UploadPDF_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ISMURentItService" type="tns:ISMURentItService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Test">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignUp">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/SignUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogIn">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/LogIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserInfo">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserInfo">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UpdateUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccount">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DeleteAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasRental">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/HasRental" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBooks">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetAllBooks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPopularBooks">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetPopularBooks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchBooks">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/SearchBooks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBooksByGenre">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetBooksByGenre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookInfo">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetBookInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RentBook">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/RentBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadPDF">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadPDF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadAudio">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadAudio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DeleteBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadBook">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UpdateBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAudio">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadAudio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadPDF">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadPDF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SMURentItService">
+    <wsdl:port name="BasicHttpBinding_ISMURentItService" binding="tns:BasicHttpBinding_ISMURentItService">
+      <soap:address location="http://rentit.itu.dk/RentIt21/SMURentItService.svc/RentItServer.SMURentItService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

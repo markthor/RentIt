@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using RentItServer.ITU.Search;
+using RentItServer.Utilities;
 
 namespace RentItServer.ITU
 {
@@ -26,7 +27,7 @@ namespace RentItServer.ITU
         //Data access object for file system IO
         private readonly FileSystemHandler _fileSystemHandler = new FileSystemHandler(_mediaFileDirectoryPath);
         //The logger
-        private readonly Logger _logger = Logger.GetInstance();
+        private readonly Logger _logger;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The ternary search trie for users. Each username has his/her password as value
@@ -80,11 +81,9 @@ namespace RentItServer.ITU
             {
                 channel = _dao.CreateChannel(channelName, userId, description, genres);
                 _channelCache[channel.id] = channel;
-                _logger.AddEntry(logEntry + "Channel creation succeeded.");
             }
             catch (Exception e)
             {
-                _logger.AddEntry(logEntry + "Channel creation failed with exception [" + e + "].");
                 throw;
             }
             return channel.id;
@@ -161,16 +160,13 @@ namespace RentItServer.ITU
                 if (channel.userId == userId)
                 {
                     _dao.DeleteChannel(userId, channelId);
-                    _logger.AddEntry(logEntry + "Deletion successful.");
                 }
                 else
                 {
-                    _logger.AddEntry(logEntry + "Deletion failed. Request comes from a user other than channel owner.");
                 }
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Channel deletion failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -212,11 +208,9 @@ namespace RentItServer.ITU
             try
             {
                 userId = _dao.CreateUser(username, password, email);
-                _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
             }
             catch (Exception e)
             {
-                _logger.AddEntry("User creation failed with exception [" + e + "].");
                 throw;
             }
             return userId;
@@ -238,11 +232,9 @@ namespace RentItServer.ITU
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.name + "]. ";
 
                 _dao.RemoveTrack(track);
-                _logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Track deletion failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -253,11 +245,9 @@ namespace RentItServer.ITU
             try
             {
                 _dao.VoteTrack(rating, userId, trackId);
-                _logger.AddEntry("User with user id [" + userId + "] rated track with track id [" + trackId + "] with the rating [" + rating + "].");
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Voting failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -281,7 +271,6 @@ namespace RentItServer.ITU
         public void Comment(string comment, int userId, int channelId)
         {
             _dao.Comment(comment, userId, channelId);
-            _logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
         }
 
         public int[] GetCommentIds(int channelId)
@@ -309,7 +298,6 @@ namespace RentItServer.ITU
         /// <param name="operationName">Name of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
-            _logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
             throw e;
         }
     }

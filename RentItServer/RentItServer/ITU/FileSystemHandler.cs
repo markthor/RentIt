@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using RentItServer.Utilities;
 namespace RentItServer.ITU
 {
     public class FileSystemHandler
@@ -11,7 +11,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// The log
         /// </summary>
-        private readonly Logger _log = Logger.GetInstance();
+        //private readonly Logger _log = Logger.GetInstance();
 
         /// <summary>
         /// Constructs a FileSystemHandler with the specific file path.
@@ -84,9 +84,6 @@ namespace RentItServer.ITU
             }
             catch(Exception e)
             {
-                _log.AddEntry( @"Exception thrown [" + e + "]. " +
-                                "FileSystemHandler state: _root = " + _root + ". " +
-                                "Local variables: fullPath = " + fullPath +".");
                 throw;
             }
         }
