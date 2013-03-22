@@ -122,9 +122,14 @@ namespace RentItServer.ITU
         private List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)
         {
             List<TrackPlay> recentlyPlayedTracks = new List<TrackPlay>(numberOfTracks);
+
             foreach (TrackPlay tp in plays)
             {
-                if (ContainsOlderTrackPlay(tp, recentlyPlayedTracks))
+                if (recentlyPlayedTracks.Count < numberOfTracks)
+                {
+                    recentlyPlayedTracks.Add(tp);
+                }
+                else if (ContainsOlderTrackPlay(tp, recentlyPlayedTracks))
                 {
                     RemoveOldestTrackPlay(recentlyPlayedTracks);
                     recentlyPlayedTracks.Add(tp);
