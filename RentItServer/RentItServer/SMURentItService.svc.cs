@@ -15,12 +15,12 @@ namespace RentItServer
     {   
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
-            SMUController.GetInstance().SignUp(email, name, password, isAdmin);
+            return SMUController.GetInstance().SignUp(email, name, password, isAdmin);
         }
 
         public int LogIn(string email, string password)
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().LogIn(email, password);
         }
 
         public User GetUserInfo(int userId)

@@ -8,7 +8,7 @@ namespace RentItServer_UnitTests
     public class SMUService_test
     {
         [TestMethod]
-        public void TestSignUp()
+        public void TestSignUp_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
             int userId = service.SignUp("TBone@gmail.com", "TBone", "Fish", false);
