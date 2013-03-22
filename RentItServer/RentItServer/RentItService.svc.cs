@@ -89,7 +89,6 @@ namespace RentItServer
         /// <returns>The id of the created user.</returns>
         public int CreateUser(string username, string password, string email)
         {
-            throw new NotImplementedException();
             return _controller.CreateUser(username, password, email);
         }
 

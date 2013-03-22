@@ -358,7 +358,7 @@
   </wsdl:binding>
   <wsdl:service name="RentItService">
     <wsdl:port name="BasicHttpBinding_IRentItService" binding="tns:BasicHttpBinding_IRentItService">
-      <soap:address location="http://rentit.itu.dk/RentIt21/RentItService.svc" />
+      <soap:address location="http://rentit.itu.dk/RentIt21/RentItService.svc/RentItServer.RentItService" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
