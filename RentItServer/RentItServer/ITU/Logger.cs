@@ -71,6 +71,7 @@ namespace RentItServer.ITU
         /// <exception cref="System.ArgumentException">Log argument was empty</exception>
         public void AddEntry(string entry)
         {
+            /**
             if (entry == null) throw new ArgumentNullException("entry");
             if (entry.Equals("")) throw new ArgumentException("entry argument was empty");
 
@@ -79,6 +80,7 @@ namespace RentItServer.ITU
                 string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "]    ";
                 _taskCollection.Add(timeStamp + entry);
             }
+            */
         }
     }
 }
