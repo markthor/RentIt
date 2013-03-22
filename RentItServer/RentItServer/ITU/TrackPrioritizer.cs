@@ -32,6 +32,13 @@ namespace RentItServer.ITU
             return _instance;
         }
         
+        /// <summary>
+        /// Gets the id of the next track to be played from predefined selection criteria.
+        /// These includes the ratio between the upvotes and downvotes, the percentage of plays and whether the track has been played recently.
+        /// </summary>
+        /// <param name="trackList">The tracks on the channels playlist</param>
+        /// <param name="plays">The record of tracks played on the channel</param>
+        /// <returns>The id of the next track to be played</returns>
         public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
             //Initializing data structure for track prioritizing.
