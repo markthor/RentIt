@@ -81,17 +81,20 @@ namespace RentItServer.SMU
             return _dao.HasRental(userId, bookId);
         }
 
-        public int AddBook(int userId, string title, string author, string description, string genre, DateTime dateAdded, double price,
-                            string pdfFilePath, string imageFilePath)
+        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
-            return _dao.AddBook(title, author, description, genre, dateAdded, price, pdfFilePath, imageFilePath);
+            return _dao.AddBook(title, author, description, genre, dateAdded, price);
         }
 
-        public int RentBook(int userId, int bookId, int mediaType)
+        public int RentBook(int userId, int bookId, DateTime time, int mediaType)
         {
             return _dao.RentBook(userId, bookId, mediaType);
         }
 
+        public Book GetBookInfo(int bookId)
+        {
+            return _dao.GetBookInfo(bookId);
+        }
 
         public void DeleteBook(int bookId)
         {

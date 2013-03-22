@@ -79,7 +79,7 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk", false);
             try
             {
-                controller.AddBook(user, "the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
             }
             catch (Exception e) {
                 Assert.Fail();
@@ -91,11 +91,11 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId = controller.AddBook(user, "The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
-            int rental = controller.RentBook(user, bookId, 0);
+            int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            int rental = controller.RentBook(user, bookId, DateTime.Now, 0);
             try
             {
-                controller.RentBook(Int32.MaxValue, Int32.MaxValue, 0);
+                controller.RentBook(Int32.MaxValue, Int32.MaxValue,DateTime.Now , 0);
                 Assert.Fail();
             }
             catch (Exception)
@@ -109,7 +109,7 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId = controller.AddBook(user, "Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, "/testpathpdf", "testpathimg");
+            int bookId = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
 
             controller.DeleteBook(bookId);
             try

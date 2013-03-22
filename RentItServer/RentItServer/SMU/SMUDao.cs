@@ -377,19 +377,17 @@ namespace RentItServer.SMU
             }
         }
 
-        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
             if (author == null) throw new ArgumentNullException("author");
             if (description == null) throw new ArgumentNullException("description");
             if (genre == null) throw new ArgumentNullException("genre");
-            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
            // if (userId < 0) throw new ArgumentException("userId < 0");
             if (price < 0.0) throw new ArgumentException("price < 0.0");
             if (title.Equals("")) throw new ArgumentException("title was empty");
             if (author.Equals("")) throw new ArgumentException("author was empty");
             if (genre.Equals("")) throw new ArgumentException("genre was empty");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -415,8 +413,6 @@ namespace RentItServer.SMU
                     genre = genre,
                     price = price,
                     audioId = null,
-                    PDFFilePath = pdfFilePath,
-                    imageFilePath = imageFilePath,
                     dateAdded = dateAdded,
                     SMUrentals = new Collection<SMUrental>(),
                     SMUaudio = null

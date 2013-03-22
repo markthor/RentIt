@@ -65,12 +65,12 @@ namespace RentItServer
 
         public Book GetBookInfo(int bookId)
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().GetBookInfo(bookId);
         }
 
         public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().RentBook(userId, bookId, startDate, mediaType);
         }
 
         public MemoryStream DownloadPDF(int bookId)
@@ -90,7 +90,7 @@ namespace RentItServer
 
         public int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().AddBook(title, author, description,genre,dateAdded, price);
         }
 
         public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
