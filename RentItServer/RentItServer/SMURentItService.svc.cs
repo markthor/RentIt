@@ -104,9 +104,9 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public void UploadPDF(int bookId, MemoryStream PDF)
+        public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            SMUController.GetInstance().UploadPDF(bookId, PDF);
+            SMUController.GetInstance().UploadPDF(bookId, pdf);
         }
     }
 }

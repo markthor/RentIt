@@ -39,6 +39,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Writes the specified trackStream to a file at the path relative to the root directory.
         /// </summary>
+        /// <param name="path"></param>
         /// <param name="relativePath">The relative path.</param>
         /// <param name="trackStream">The track stream.</param>
         /// <exception cref="System.ArgumentNullException">
@@ -48,25 +49,22 @@ namespace RentItServer.ITU
         /// </exception>
         public void WriteFile(FilePath path, string relativePath, MemoryStream trackStream)
         {
+            if (path == null) throw new ArgumentNullException("path");
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (trackStream == null) throw new ArgumentNullException("trackStream");
 
-            string fullPath = path + relativePath; //ProcessPath(path + relativePath);            
-            if (fullPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
-            {   // The path specifies a directory
-                if (Directory.Exists(fullPath) == false)
-                {   // Create the directory
-                    Directory.CreateDirectory(fullPath);
-                }
-            }
-            else
-            {
-                FileStream fs = File.OpenWrite(fullPath);
-                trackStream.CopyTo(fs);
-                trackStream.Close();
-                fs.Flush();
-                fs.Close();
-            }
+            //Full path to the file
+            string fullPath = path.GetPath() + relativePath;
+            
+            //Create the directory
+            Directory.CreateDirectory(path.GetPath());
+            //Open the file to write to it
+            FileStream fs = File.OpenWrite(fullPath);
+            //Write the content and close the resources
+            trackStream.CopyTo(fs);
+            trackStream.Close();
+            fs.Flush();
+            fs.Close();
         }
 
         /// <summary>

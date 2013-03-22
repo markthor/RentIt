@@ -28,5 +28,10 @@ namespace RentItServer.Utilities
         {
             this.path = path;
         }
+
+        public string GetPath()
+        {
+            return path;
+        }
     }
 }

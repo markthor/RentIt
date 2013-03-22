@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using RentItServer.ITU;
 using RentItServer.Utilities;
 
 namespace RentItServer.SMU
@@ -24,7 +25,7 @@ namespace RentItServer.SMU
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //Data access object for file system IO
-        private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(_mediaFileDirectoryPath);
+        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
@@ -106,11 +107,10 @@ namespace RentItServer.SMU
 
         }
 
-
-        public void UploadPDF(int bookId, MemoryStream PDF)
+        public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            String relativePath = String.Format("{0}{1}{0}{2}.pdf", Path.DirectorySeparatorChar, "PDF", bookId.ToString());
-            _fileSystemHandler.WriteFile(relativePath, PDF);
+            String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
+            _fileSystemHandler.WriteFile(FilePath.SMUFilePath, relativePath, pdf);
         }
     }
 }
