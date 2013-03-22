@@ -24,9 +24,11 @@ namespace RentItServer.Utilities
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
         public Logger(string absolutePath, ref EventHandler handler)
         {
-            //if (File.Exists(absolutePath) == false)
+            String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            Directory.CreateDirectory(directory);
+            //if (File.Exists(absolutePath))
             //{
-                //File.Create(absolutePath);
+                File.Create(absolutePath);
             //}
 
             handler += AddEntry;
@@ -37,7 +39,7 @@ namespace RentItServer.Utilities
                 while (true)
                 {
                     logEntry = _taskCollection.Take();
-                    //File.AppendAllText(absolutePath, logEntry);
+                    File.AppendAllText(absolutePath, logEntry);
                 }
             }).Start();
         }
@@ -51,14 +53,14 @@ namespace RentItServer.Utilities
         private void AddEntry(object sender, EventArgs eventArguments)
         {
             if (eventArguments == null) throw new ArgumentNullException("eventArguments");
-           
+
             RentItEventArgs args = eventArguments as RentItEventArgs;
             if (args == null) return;
 
             lock (_entryLock)
             {
                 string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
-                _taskCollection.Add(timeStamp + args.Entry);
+                _taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace RentItServer.SMU
     {
         private static readonly string DirectoryPath =  "C:" + Path.DirectorySeparatorChar +
                                                         "Users" + Path.DirectorySeparatorChar +
-                                                        "Rentit21" + Path.DirectorySeparatorChar +
+                                                        "Mr.Green" + Path.DirectorySeparatorChar +
                                                         "Documents" + Path.DirectorySeparatorChar +
                                                         "SMU" + Path.DirectorySeparatorChar;
 
@@ -37,7 +37,7 @@ namespace RentItServer.SMU
 
         private SMUController()
         {
-            _logger = new Logger(LogFileName, ref _handler);
+            _logger = new Logger(DirectoryPath + LogFileName, ref _handler);
         }
 
         public int LogIn(string username, string password)

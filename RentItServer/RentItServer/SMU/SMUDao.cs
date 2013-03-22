@@ -118,6 +118,8 @@ namespace RentItServer.SMU
         //return 0 if rented PDF
         //return 1 if rented audio
         //return 2 if rented both
+
+
         public int HasRental(int userId, int bookId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
