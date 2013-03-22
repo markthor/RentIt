@@ -17,17 +17,17 @@ namespace RentItServer.SMU
 
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
+            SMUuser user = new SMUuser();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
-            {
-                SMUuser user = new SMUuser();
+            {          
                 user.email = email;
                 user.username = name;
                 user.password = password;
                 user.isAdmin = isAdmin;
                 proxy.SMUusers.Add(user);
-                proxy.SaveChanges();
-                return user.id;
+                proxy.SaveChanges();         
             }
+            return user.id;
         }
 
         public int LogIn(string email, string password)
