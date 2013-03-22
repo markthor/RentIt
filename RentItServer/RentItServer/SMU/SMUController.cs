@@ -25,7 +25,7 @@ namespace RentItServer.SMU
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //Data access object for file system IO
-        private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(DirectoryPath);
+        //private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(DirectoryPath);
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
@@ -110,7 +110,7 @@ namespace RentItServer.SMU
         public void UploadPDF(int bookId, MemoryStream PDF)
         {
             String relativePath = String.Format("{0}{1}{0}{2}.pdf", Path.DirectorySeparatorChar, "PDF", bookId.ToString());
-            _fileSystemHandler.WriteFile(relativePath, PDF);
+        //    _fileSystemHandler.WriteFile(relativePath, PDF);
         }
     }
 }
