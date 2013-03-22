@@ -53,7 +53,7 @@ namespace RentItServer.SMU
             return id;
         }
 
-        public int SignUp(string username, string password, string email, bool isAdmin)
+        public int SignUp(string email, string username, string password, bool isAdmin)
         {
             int id = _dao.SignUp(email, username, password, isAdmin);
             if(_handler != null)
