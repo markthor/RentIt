@@ -27,7 +27,7 @@ namespace RentItServer.Utilities
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
-        public Logger(string absolutePath, EventHandler entry)
+        public Logger(string absolutePath, ref EventHandler handler)
         {
             //if (File.Exists(absolutePath) == false)
             //{
@@ -35,7 +35,7 @@ namespace RentItServer.Utilities
             //}
             this.absolutePath = absolutePath;
 
-            entry += new EventHandler(AddEntry);
+            handler += AddEntry;
             // Logging thread. Used in order to support asyncrhonous writing of entries
             new Task(() =>
             {
@@ -49,20 +49,22 @@ namespace RentItServer.Utilities
         }
 
         /// <summary>
-        /// Adds an entry to the log.
+        /// Adds an handler to the log.
         /// </summary>
-        /// <param name="entry">The entry to be appended to the log file.</param>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="eventArguments">The event arguments.</param>
         /// <exception cref="System.ArgumentNullException">Log argument was null</exception>
-        /// <exception cref="System.ArgumentException">Log argument was empty</exception>
-        private void AddEntry(object sender, EventArgs entry)
+        private void AddEntry(object sender, EventArgs eventArguments)
         {
-            if (entry == null) throw new ArgumentNullException("entry");
-            if (entry.Equals("")) throw new ArgumentException("entry argument was empty");
-            RentItEvtArgs args = (RentItEvtArgs)entry;
+            if (eventArguments == null) throw new ArgumentNullException("eventArguments");
+           
+            RentItEventArgs args = eventArguments as RentItEventArgs;
+            if (args == null) return;
+
             lock (_entryLock)
             {
-                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "]    ";
-                _taskCollection.Add(timeStamp + args.entry);
+                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
+                _taskCollection.Add(timeStamp + args.Entry);
             }
         }
     }
