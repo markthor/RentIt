@@ -111,7 +111,7 @@ namespace RentItServer.ITU
             int trackId = tp.GetNextTrackId(DAO.GetInstance().GetTrackList(ChannelId), DAO.GetInstance().GetTrackPlays(ChannelId));
             currentTrack = DAO.GetInstance().GetTrack(trackId);
 
-            SongBytes = FileSystemHandler.LoadTrackBytes();
+            SongBytes = FileSystemHandler.LoadTrackBytes(currentTrack.trackpath);
 
             /*Console.WriteLine("NextSong: Loading next song");
             SongBytes = LoadSong("a.mp3");

@@ -25,7 +25,7 @@ namespace RentItServer
         public string trackpath { get; set; }
         public string name { get; set; }
         public string artist { get; set; }
-        public string length { get; set; }
+        public Nullable<int> length { get; set; }
         public Nullable<int> upvotes { get; set; }
         public Nullable<int> downvotes { get; set; }
     

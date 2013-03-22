@@ -126,5 +126,10 @@ namespace RentItServer.ITU
             return path;
         }
         */
+
+        internal static byte[] LoadTrackBytes(string p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
