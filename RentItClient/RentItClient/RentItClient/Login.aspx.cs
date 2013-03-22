@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
 
 namespace RentItClient
 {
-
     public partial class Login : System.Web.UI.Page
     {
+        private const string EmailRe = @"[\w\d\._-]+@[\w\d\._-]+\.[\w]+";
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -30,8 +24,13 @@ namespace RentItClient
             string password = tbx_createPassword.Text;
             string passwordConfirm = tbx_confirmPassword.Text;
 
-            using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
+            using (var proxy = new RentItService.RentItServiceClient())
             {
+                bool validInputs = ValidateInputs(username, email, password, passwordConfirm);
+                if (!validInputs)
+                {
+                    return;
+                }
                 int userId = proxy.CreateUser(username, password, email);
                 if (userId == -1)
                 {
@@ -42,8 +41,30 @@ namespace RentItClient
                     Session.Add("UserId", userId);
                     Response.Redirect("Home.aspx");
                 }
-                
             }
+        }
+
+        private bool ValidateInputs(string username, string email, string password, string passwordConfirm)
+        {
+            //Check that the user has entered all information
+            if (username.Equals("") || email.Equals("") || password.Equals(""))
+            {
+                PrintErrorMessage("Please fill all information");
+                return false;
+            }
+            //Check that the email is an email
+            if (Regex.Match(password, EmailRe).Success)
+            {
+                PrintErrorMessage("Please enter a valid email");
+                return false;
+            }
+            //Check that the two passwords are equal
+            if (!password.Equals(passwordConfirm))
+            {
+                PrintErrorMessage("The two passwords are not equal");
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -55,12 +76,12 @@ namespace RentItClient
         {
             string username = tbx_username.Text;
             string password = tbx_password.Text;
-            if (username == "" ||  password == "")
+            if (username.Equals("") ||  password.Equals(""))
             {
                 PrintErrorMessage("Username or password is empty");
                 return;
             }
-            using (RentItService.RentItServiceClient proxy = new RentItService.RentItServiceClient())
+            using (var proxy = new RentItService.RentItServiceClient())
             {
                 int userId = proxy.Login(username, password);
                 if (userId == -1)
