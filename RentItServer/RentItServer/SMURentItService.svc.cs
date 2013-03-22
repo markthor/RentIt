@@ -45,7 +45,7 @@ namespace RentItServer
 
         public List<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().GetAllBooks();
         }
 
         public List<Book> GetPopularBooks()

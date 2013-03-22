@@ -120,7 +120,7 @@
     <Property Name="trackpath" Type="varchar" Nullable="false" MaxLength="230" />
     <Property Name="name" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="artist" Type="varchar" Nullable="true" MaxLength="100" />
-    <Property Name="length" Type="varchar" Nullable="true" MaxLength="10" />
+    <Property Name="length" Type="int" Nullable="true" />
     <Property Name="upvotes" Type="int" Nullable="true" />
     <Property Name="downvotes" Type="int" Nullable="true" />
   </EntityType>
@@ -488,7 +488,7 @@
           <Property Name="trackpath" Type="String" Nullable="false" MaxLength="230" Unicode="false" FixedLength="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="artist" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="length" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="length" Type="Int32" />
           <Property Name="upvotes" Type="Int32" />
           <Property Name="downvotes" Type="Int32" />
           <NavigationProperty Name="channels" Relationship="RENTITModel.FK__tracks__channelI__31EC6D26" FromRole="tracks" ToRole="channels" />

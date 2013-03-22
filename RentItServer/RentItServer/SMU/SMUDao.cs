@@ -118,6 +118,8 @@ namespace RentItServer.SMU
         //return 0 if rented PDF
         //return 1 if rented audio
         //return 2 if rented both
+
+
         public int HasRental(int userId, int bookId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -167,7 +169,7 @@ namespace RentItServer.SMU
 
                 foreach (SMUbook book in books)
                 {
-                    list.Add(book.getBook());
+                    list.Add(book.GetBook());
                 }
             }
             return list;
@@ -185,7 +187,7 @@ namespace RentItServer.SMU
                 int limit = 30;
                 foreach (SMUbook book in books)
                 {
-                    list.Add(book.getBook());
+                    list.Add(book.GetBook());
                     limit++;
                     if (limit >= 30) break;
                 }
@@ -205,7 +207,7 @@ namespace RentItServer.SMU
 
                 foreach (SMUbook book in books)
                 {
-                    list.Add(book.getBook());
+                    list.Add(book.GetBook());
                 }
             }
             return list;
@@ -223,7 +225,7 @@ namespace RentItServer.SMU
 
                 foreach (SMUbook book in books)
                 {
-                    list.Add(book.getBook());
+                    list.Add(book.GetBook());
                 }
             }
             return list;
@@ -240,7 +242,7 @@ namespace RentItServer.SMU
                 if (books.Any() == false){
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
-                theBook = books.First().getBook();
+                theBook = books.First().GetBook();
             }
             return theBook;
         }

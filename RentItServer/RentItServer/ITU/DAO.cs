@@ -282,5 +282,15 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        internal List<Track> GetTrackList(int ChannelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<TrackPlay> GetTrackPlays(int ChannelId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

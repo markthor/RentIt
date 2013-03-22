@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/19/2013 12:18:51
--- Generated from EDMX file: E:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
+-- Date Created: 03/22/2013 15:44:20
+-- Generated from EDMX file: C:\Users\Mikkel\Documents\GitHub\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -146,7 +146,7 @@ CREATE TABLE [dbo].[tracks] (
     [trackpath] varchar(230)  NOT NULL,
     [name] varchar(100)  NOT NULL,
     [artist] varchar(100)  NULL,
-    [length] varchar(10)  NULL,
+    [length] int  NULL,
     [upvotes] int  NULL,
     [downvotes] int  NULL
 );
