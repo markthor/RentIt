@@ -84,6 +84,8 @@
     <Compile Include="Comment.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ITU\ChannelOrganizer.cs" />
+    <Compile Include="ITU\ChannelStreamer.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DAO.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />

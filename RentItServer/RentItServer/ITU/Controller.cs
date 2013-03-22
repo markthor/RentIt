@@ -312,5 +312,20 @@ namespace RentItServer.ITU
             _logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
             throw e;
         }
+
+        public int ListenToChannel(int channelId)
+        {
+            ChannelOrganizer co = ChannelOrganizer.GetInstance();
+
+            if (co.IsChannelRunnig(channelId))
+            {
+                return co.GetChannelPortNumber(channelId);
+            }
+            else
+            {
+                co.StartChannel(channelId);
+            }
+            return co.GetChannelPortNumber(channelId);
+        }
     }
 }
