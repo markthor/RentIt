@@ -6,22 +6,30 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Web;
 
-namespace RentItServer
+namespace RentItServer.ITU
 {
     public class ChannelStreamer
     {
         List<Socket> clients;
         int bytesSend;
         int packetSize;
-        int songLengthMillis;
+        //int songLengthMillis;
+        Track currentTrack;
 
         Stopwatch stopwatch;
 
-        public ChannelStreamer(int portNumber)
+        public ChannelStreamer(int channelId, int portNumber)
         {
+            ChannelId = channelId;
             PortNumber = portNumber;
             clients = new List<Socket>();
             stopwatch = new Stopwatch();
+        }
+
+        public int ChannelId
+        {
+            get;
+            set;
         }
 
         public int PortNumber
@@ -53,7 +61,7 @@ namespace RentItServer
 
 
             Console.WriteLine("PlaySong: Started playing");
-            while (stopwatch.ElapsedMilliseconds < songLengthMillis)
+            while (stopwatch.ElapsedMilliseconds < currentTrack.length)
             {
                 while (bytesSend < SongBytes.Length)
                 {
@@ -99,19 +107,25 @@ namespace RentItServer
         //Method not done
         private void NextSong()
         {
-            Console.WriteLine("NextSong: Loading next song");
+            TrackPrioritizer tp = TrackPrioritizer.GetInstance();
+            int trackId = tp.GetNextTrackId(DAO.GetInstance().GetTrackList(ChannelId), DAO.GetInstance().GetTrackPlays(ChannelId));
+            currentTrack = DAO.GetInstance().GetTrack(trackId);
+
+            SongBytes = FileSystemHandler.LoadTrackBytes();
+
+            /*Console.WriteLine("NextSong: Loading next song");
             SongBytes = LoadSong("a.mp3");
-            songLengthMillis = 211000; //get from DB
-            packetSize = (int)((double)SongBytes.Length / (double)songLengthMillis) * 1000;
+            songLengthMillis = 211000; //get from DB*/
+            packetSize = (int)((double)SongBytes.Length / (double)currentTrack.length) * 1000;
         }
 
-        private byte[] LoadSong(string fileName)
+        /*private byte[] LoadSong(string fileName)
         {
             //default path to all music
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic) + "\\";
             //IO-handling, ryk til file system handler
             return File.ReadAllBytes(path + fileName);
-        }
+        }*/
 
         public void Start()
         {

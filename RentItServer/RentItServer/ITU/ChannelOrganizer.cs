@@ -134,7 +134,7 @@ namespace RentItServer.ITU
             if (!IsChannelRunnig(channelId))
             {
                 Console.WriteLine("StartChannel: Starting channel - chID: " + channelId);
-                ChannelStreamer cs = new ChannelStreamer(currentPort);
+                ChannelStreamer cs = new ChannelStreamer(channelId, currentPort);
 
                 cs.Start();
 
