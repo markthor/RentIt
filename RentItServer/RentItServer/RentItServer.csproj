@@ -122,6 +122,7 @@
     <Compile Include="SMUbook.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SMUbookCustom.cs" />
     <Compile Include="SMUrental.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

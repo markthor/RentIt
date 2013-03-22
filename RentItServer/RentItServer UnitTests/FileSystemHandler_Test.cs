@@ -9,7 +9,7 @@ namespace RentItServer_UnitTests
     [TestClass]
     public class FileSystemHandler_Test
     {
-        [TestMethod]
+        /*[TestMethod]
         public void FileSystemHandler_Write()
         {
             FileSystemHandler fs = new FileSystemHandler("C:" + Path.DirectorySeparatorChar +
@@ -21,6 +21,6 @@ namespace RentItServer_UnitTests
             byte[] bytes = File.ReadAllBytes("D:"+Path.DirectorySeparatorChar+"Games"+Path.DirectorySeparatorChar+"billede.bmp");
             MemoryStream ms = new MemoryStream(bytes);
             fs.WriteFile("BILLEDER.bmp",ms);
-        }
+        }*/
     }
 }
