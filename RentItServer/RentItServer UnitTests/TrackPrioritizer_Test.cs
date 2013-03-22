@@ -34,6 +34,9 @@ namespace RentItServer_UnitTests
             testPlays.Add(new TrackPlay(1, new DateTime(2013, 1, 9)));
             int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
             Assert.AreNotEqual(0, result);
+            Assert.AreNotEqual(2, result);
+            Assert.AreNotEqual(3, result);
+            Assert.AreNotEqual(4, result);
         }
     }
 }

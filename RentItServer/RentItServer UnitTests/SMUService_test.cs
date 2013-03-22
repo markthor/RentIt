@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace RentItServer_UnitTests
 {
@@ -31,7 +33,32 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(bookId, book.id);
             Assert.AreEqual(title, book.title);
             Assert.AreEqual(author, book.author);
+        }
 
+
+        [TestMethod]
+        public void GetAllBooksTest_service()
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId1 = service.UploadBook("The Wolf", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
+            int bookId2 = service.UploadBook("The Bird", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
+            int bookId3 = service.UploadBook("The Rat", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
+
+            List<Book> list = new List<Book>(service.GetAllBooks());
+
+            bool boo1 = false;
+            bool boo2 = false;
+            bool boo3 = false;
+            foreach(Book b in list)
+            {        
+                if (b.id == bookId1)
+                    boo1 = true;
+                if (b.id == bookId2)
+                    boo1 = true;
+                if (b.id == bookId3)
+                    boo1 = true;
+            }
+            Assert.AreEqual(true, boo1 && boo2 && boo3);         
         }
     }
 }

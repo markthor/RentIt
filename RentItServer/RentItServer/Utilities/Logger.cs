@@ -19,21 +19,17 @@ namespace RentItServer.Utilities
         private readonly BlockingCollection<string> _taskCollection = new BlockingCollection<string>(new ConcurrentQueue<string>());
 
         /// <summary>
-        /// The absolute path
-        /// </summary>
-        private readonly string absolutePath;
-
-        /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
         public Logger(string absolutePath, ref EventHandler handler)
         {
-            //if (File.Exists(absolutePath) == false)
+            String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            Directory.CreateDirectory(directory);
+            //if (File.Exists(absolutePath))
             //{
-                //File.Create(absolutePath);
+                File.Create(absolutePath);
             //}
-            this.absolutePath = absolutePath;
 
             handler += AddEntry;
             // Logging thread. Used in order to support asyncrhonous writing of entries
@@ -43,13 +39,13 @@ namespace RentItServer.Utilities
                 while (true)
                 {
                     logEntry = _taskCollection.Take();
-                    //File.AppendAllText(absolutePath, logEntry);
+                    File.AppendAllText(absolutePath, logEntry);
                 }
             }).Start();
         }
 
         /// <summary>
-        /// Adds an handler to the log.
+        /// Adds an entry to the log.
         /// </summary>
         /// <param name="sender">The sender object.</param>
         /// <param name="eventArguments">The event arguments.</param>
@@ -57,14 +53,14 @@ namespace RentItServer.Utilities
         private void AddEntry(object sender, EventArgs eventArguments)
         {
             if (eventArguments == null) throw new ArgumentNullException("eventArguments");
-           
+
             RentItEventArgs args = eventArguments as RentItEventArgs;
             if (args == null) return;
 
             lock (_entryLock)
             {
                 string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
-                _taskCollection.Add(timeStamp + args.Entry);
+                _taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
             }
         }
     }
