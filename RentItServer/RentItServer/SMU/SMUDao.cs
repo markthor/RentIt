@@ -17,31 +17,31 @@ namespace RentItServer.SMU
 
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
+            SMUuser user = new SMUuser();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
-            {
-                SMUuser user = new SMUuser();
+            {          
                 user.email = email;
                 user.username = name;
                 user.password = password;
                 user.isAdmin = isAdmin;
                 proxy.SMUusers.Add(user);
-                proxy.SaveChanges();
-                return user.id;
+                proxy.SaveChanges();         
             }
+            return user.id;
         }
 
-        public int LogIn(string username, string password)
+        public int LogIn(string email, string password)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var u = from user in proxy.SMUusers
-                        where user.username == username && user.password == password
+                        where user.email == email && user.password == password
                         select user;
                 if (u.Any())
                 {
                     return u.First().id;
                 }
-                throw new ArgumentException("No SMUuser with username/password combination = " + username + "/" + password);
+                throw new ArgumentException("No SMUuser with email/password combination = " + email + "/" + password);
             }
         }
 

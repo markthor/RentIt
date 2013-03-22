@@ -21,8 +21,8 @@ namespace RentItServer.SMU
         private readonly SMUDao _dao = SMUDao.GetInstance();
         //The logger
         private readonly Logger _logger;
-        //Event cast when log must make an entry
-        public static event EventHandler entry;
+        //Event cast when log must make an _handler
+        private static EventHandler _handler;
         //Data access object for file system IO
         private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(_mediaFileDirectoryPath);
         /// <summary>
@@ -42,22 +42,22 @@ namespace RentItServer.SMU
                                     "Documents" + Path.DirectorySeparatorChar +
                                     "Visual Studio 2012" + Path.DirectorySeparatorChar +
                                     "Projects" + Path.DirectorySeparatorChar +
-                                    "Logs", entry);
+                                    "Logs", ref _handler);
         }
 
-        public int LogIn(string username, string password)
+        public int LogIn(string email, string password)
         {
-            int id = _dao.LogIn(username, password);
-            if(entry != null)
-                entry(this, new RentItEvtArgs("LogIn: " + username + "-" + password));
+            int id = _dao.LogIn(email, password);
+            if(_handler != null)
+                _handler(this, new RentItEventArgs("LogIn: " + email + "-" + password));
             return id;
         }
 
-        public int SignUp(string username, string password, string email, bool isAdmin)
+        public int SignUp(string email, string username, string password, bool isAdmin)
         {
             int id = _dao.SignUp(email, username, password, isAdmin);
-            if(entry != null)
-                entry(this, new RentItEvtArgs("SignUp: " + email + "-" + username + "-" + password));
+            if(_handler != null)
+                _handler(this, new RentItEventArgs("SignUp: " + email + "-" + username + "-" + password));
             return id;
         }
 
