@@ -12,12 +12,13 @@ namespace RentItServer.ITU
     /// </summary>
     public class Controller
     {
-        private static string _mediaFileDirectoryPath = "C:" + Path.DirectorySeparatorChar +
-            "Users" + Path.DirectorySeparatorChar +
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
-            "ITU" + Path.DirectorySeparatorChar +
-            "Tracks";
+        private static readonly string DirectoryPath = "C:" + Path.DirectorySeparatorChar +
+                                                        "Users" + Path.DirectorySeparatorChar +
+                                                        "Rentit21" + Path.DirectorySeparatorChar +
+                                                        "Documents" + Path.DirectorySeparatorChar +
+                                                        "ITU" + Path.DirectorySeparatorChar;
+
+        private static readonly string LogFileName = "ItuLogs.txt";
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
@@ -25,7 +26,9 @@ namespace RentItServer.ITU
         //Responsible for choosing the next trackStream
         private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
-        private readonly FileSystemHandler _fileSystemHandler = new FileSystemHandler(_mediaFileDirectoryPath);
+        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        //Event cast when log must make an _handler
+        private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
@@ -47,7 +50,7 @@ namespace RentItServer.ITU
                 _channelCache[channel.id] = channel;
             }
             // Initialize user search trie
-            // TODO
+            _logger = new Logger(DirectoryPath + LogFileName, ref _handler);
         }
 
         /// <summary>
@@ -81,9 +84,13 @@ namespace RentItServer.ITU
             {
                 channel = _dao.CreateChannel(channelName, userId, description, genres);
                 _channelCache[channel.id] = channel;
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs(logEntry + "Channel creation succeeded."));
             }
             catch (Exception e)
             {
+               if(_handler != null)
+                    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
                 throw;
             }
             return channel.id;
@@ -160,13 +167,19 @@ namespace RentItServer.ITU
                 if (channel.userId == userId)
                 {
                     _dao.DeleteChannel(userId, channelId);
+                    if(_handler != null)
+                    _handler(this, new RentItEventArgs(logEntry + "Deletion successful."));
                 }
                 else
                 {
+                    if(_handler != null)
+                    _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
                 }
             }
             catch (Exception e)
             {
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs("Channel deletion failed with exception [" + e + "]."));
                 throw;
             }
         }
@@ -208,9 +221,13 @@ namespace RentItServer.ITU
             try
             {
                 userId = _dao.CreateUser(username, password, email);
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs("User created with username [" + username + "] and e-mail [" + email + "]."));
             }
             catch (Exception e)
             {
+               if(_handler != null)
+                    _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
                 throw;
             }
             return userId;
@@ -232,9 +249,13 @@ namespace RentItServer.ITU
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.name + "]. ";
 
                 _dao.RemoveTrack(track);
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs(logEntry + "Deletion successful."));
             }
             catch (Exception e)
             {
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs("Track deletion failed with exception [" + e + "]."));
                 throw;
             }
         }
@@ -245,9 +266,13 @@ namespace RentItServer.ITU
             try
             {
                 _dao.VoteTrack(rating, userId, trackId);
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs("User with user id [" + userId + "] rated track with track id [" + trackId + "] with the rating [" + rating + "]."));
             }
             catch (Exception e)
             {
+                if(_handler != null)
+                    _handler(this, new RentItEventArgs("Voting failed with exception [" + e + "]."));
                 throw;
             }
         }
@@ -271,6 +296,8 @@ namespace RentItServer.ITU
         public void Comment(string comment, int userId, int channelId)
         {
             _dao.Comment(comment, userId, channelId);
+            if(_handler != null)
+                    _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
         }
 
         public int[] GetCommentIds(int channelId)
@@ -298,7 +325,20 @@ namespace RentItServer.ITU
         /// <param name="operationName">Name of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
+            if(_handler != null)
+                    _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
             throw e;
+        }
+
+        public int ListenToChannel(int channelId)
+        {
+            ChannelOrganizer co = ChannelOrganizer.GetInstance();
+
+            if (!co.IsChannelRunnig(channelId))
+            {
+                co.StartChannel(channelId);
+            }
+            return co.GetChannelPortNumber(channelId);
         }
     }
 }

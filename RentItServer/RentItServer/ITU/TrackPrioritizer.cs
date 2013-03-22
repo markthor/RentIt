@@ -6,11 +6,11 @@ namespace RentItServer.ITU
     public class TrackPrioritizer
     {
         //Singleton instance of the class
-        public static TrackPrioritizer _instance;
-        public static Random rng = new Random();
-        public const double _maxFrequency = 0.3;
-        public const int _ratioConstant = 10;
-        public const int _minimumRepeatDistance = 3;
+        private static TrackPrioritizer _instance;
+        private static Random rng = new Random();
+        private const double _maxFrequency = 0.3;
+        private const int _ratioConstant = 10;
+        private const int _minimumRepeatDistance = 3;
 
         /// <summary>
         /// Private to ensure local instantiation.

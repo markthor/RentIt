@@ -6,20 +6,34 @@ namespace RentItServer.ITU
     public class FileSystemHandler
     {
         //The target folder for write and read operations.
-        private string _root;
+        //private string _root;
 
         /// <summary>
         /// The log
         /// </summary>
         //private readonly Logger _log = Logger.GetInstance();
 
+        //Singleton instance of the class
+        private static FileSystemHandler _instance;
+
         /// <summary>
-        /// Constructs a FileSystemHandler with the specific file path.
+        /// Private to ensure local instantiation.
         /// </summary>
-        /// <param name="path">The path of the folder to contain files</param>
-        public FileSystemHandler(string path)
+        private FileSystemHandler()
         {
-            _root = CorrectSeperator(path);
+        }
+
+        /// <summary>
+        /// Accessor method to access the only instance of the class
+        /// </summary>
+        /// <returns>The singleton instance of the class</returns>
+        public static FileSystemHandler GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new FileSystemHandler();
+            }
+            return _instance;
         }
 
         /// <summary>
@@ -32,12 +46,12 @@ namespace RentItServer.ITU
         /// or
         /// MemoryStream argument was null
         /// </exception>
-        public void WriteFile(string relativePath, MemoryStream trackStream)
+        public void WriteFile(FilePath path, string relativePath, MemoryStream trackStream)
         {
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (trackStream == null) throw new ArgumentNullException("trackStream");
-            
-            string fullPath = ProcessPath(relativePath);            
+
+            string fullPath = path + relativePath; //ProcessPath(path + relativePath);            
             if (fullPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {   // The path specifies a directory
                 if (Directory.Exists(fullPath) == false)
@@ -66,12 +80,12 @@ namespace RentItServer.ITU
         /// or
         /// Relative path must target a file. Relative path =  + relativePath
         /// </exception>
-        public MemoryStream Read(string relativePath)
+        public MemoryStream Read(FilePath path, string relativePath)
         {
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
-            
-            string fullPath = ProcessPath(relativePath);
+
+            string fullPath = path + relativePath; //ProcessPath(path + relativePath);
             if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
             
             try
@@ -88,6 +102,7 @@ namespace RentItServer.ITU
             }
         }
 
+        /*
         /// <summary>
         /// Processes the path.
         /// </summary>
@@ -110,5 +125,6 @@ namespace RentItServer.ITU
             path = path.Replace("/", Path.DirectorySeparatorChar.ToString());
             return path;
         }
+        */
     }
 }

@@ -9,12 +9,13 @@ namespace RentItServer.SMU
 {
     public class SMUController
     {
-        private static string _mediaFileDirectoryPath = "C:" + Path.DirectorySeparatorChar +
-            "Users" + Path.DirectorySeparatorChar +
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
-            "SMU" + Path.DirectorySeparatorChar +
-            "MediaFiles";
+        private static readonly string DirectoryPath =  "C:" + Path.DirectorySeparatorChar +
+                                                        "Users" + Path.DirectorySeparatorChar +
+                                                        "Mr.Green" + Path.DirectorySeparatorChar +
+                                                        "Documents" + Path.DirectorySeparatorChar +
+                                                        "SMU" + Path.DirectorySeparatorChar;
+
+        private static readonly string LogFileName =  "SmuLogs.txt";
         //Singleton instance of the class
         private static SMUController _instance;
         //Data access object for database IO
@@ -24,7 +25,7 @@ namespace RentItServer.SMU
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //Data access object for file system IO
-        private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(_mediaFileDirectoryPath);
+        //private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(DirectoryPath);
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
@@ -36,13 +37,7 @@ namespace RentItServer.SMU
 
         private SMUController()
         {
-            _logger = new Logger("C:"+ Path.DirectorySeparatorChar +
-                                    "Users" + Path.DirectorySeparatorChar +
-                                    "Toke Jensen" + Path.DirectorySeparatorChar +
-                                    "Documents" + Path.DirectorySeparatorChar +
-                                    "Visual Studio 2012" + Path.DirectorySeparatorChar +
-                                    "Projects" + Path.DirectorySeparatorChar +
-                                    "Logs", ref _handler);
+            _logger = new Logger(DirectoryPath + LogFileName, ref _handler);
         }
 
         public int LogIn(string email, string password)
@@ -101,6 +96,11 @@ namespace RentItServer.SMU
             _dao.DeleteBook(bookId);
         }
 
+        public List<Book> GetAllBooks()
+        {
+            return _dao.GetAllBooks();
+        }
+
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
 
@@ -110,7 +110,7 @@ namespace RentItServer.SMU
         public void UploadPDF(int bookId, MemoryStream PDF)
         {
             String relativePath = String.Format("{0}{1}{0}{2}.pdf", Path.DirectorySeparatorChar, "PDF", bookId.ToString());
-            _fileSystemHandler.WriteFile(relativePath, PDF);
+        //    _fileSystemHandler.WriteFile(relativePath, PDF);
         }
     }
 }
