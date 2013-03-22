@@ -5,13 +5,14 @@ using System.Web;
 
 namespace RentItServer.Utilities
 {
-    public class RentItEvtArgs : EventArgs
+    public class RentItEventArgs : EventArgs
     {
-        public RentItEvtArgs(string entry)
+        public RentItEventArgs(string entry)
         {
-            this.entry = entry;
+            Entry = entry;
         }
-        public string entry
+
+        public string Entry
         {
             get;
             private set;
