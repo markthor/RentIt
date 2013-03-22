@@ -91,6 +91,10 @@ namespace RentItServer.SMU
             return _dao.RentBook(userId, bookId, mediaType);
         }
 
+        public Book GetBookInfo(int bookId)
+        {
+            return _dao.GetBookInfo(bookId);
+        }
 
         public void DeleteBook(int bookId)
         {

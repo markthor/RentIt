@@ -22,8 +22,16 @@ namespace RentItServer_UnitTests
         public void AddBookTest_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
-            int bookId = service.UploadBook("bible", "God", "gods book", "religious", DateTime.Now, 1000.0);
+            string title = "bible";
+            string author = "God";
+            int bookId = service.UploadBook(title, author, "gods book", "religious", DateTime.Now, 1000.0);
             int rentId = service.RentBook(1, bookId, DateTime.Now, 0);
+            Book book = service.GetBookInfo(bookId);
+
+            Assert.AreEqual(bookId, book.id);
+            Assert.AreEqual(title, book.title);
+            Assert.AreEqual(author, book.author);
+
         }
     }
 }

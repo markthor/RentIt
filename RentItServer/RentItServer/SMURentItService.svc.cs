@@ -65,7 +65,7 @@ namespace RentItServer
 
         public Book GetBookInfo(int bookId)
         {
-            throw new NotImplementedException();
+            return SMUController.GetInstance().GetBookInfo(bookId);
         }
 
         public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
