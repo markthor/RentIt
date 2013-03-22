@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using RentItServer.SMU;
 
 namespace RentItServer.Utilities
 {
@@ -28,7 +27,7 @@ namespace RentItServer.Utilities
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
-        public Logger(string absolutePath, SMUController.LogEvent entry)
+        public Logger(string absolutePath, EventHandler entry)
         {
             //if (File.Exists(absolutePath) == false)
             //{
@@ -36,7 +35,7 @@ namespace RentItServer.Utilities
             //}
             this.absolutePath = absolutePath;
 
-            entry += new SMUController.LogEvent(AddEntry);
+            entry += new EventHandler(AddEntry);
             // Logging thread. Used in order to support asyncrhonous writing of entries
             new Task(() =>
             {
@@ -55,15 +54,15 @@ namespace RentItServer.Utilities
         /// <param name="entry">The entry to be appended to the log file.</param>
         /// <exception cref="System.ArgumentNullException">Log argument was null</exception>
         /// <exception cref="System.ArgumentException">Log argument was empty</exception>
-        private void AddEntry(object sender, string entry)
+        private void AddEntry(object sender, EventArgs entry)
         {
             if (entry == null) throw new ArgumentNullException("entry");
             if (entry.Equals("")) throw new ArgumentException("entry argument was empty");
-
+            RentItEvtArgs args = (RentItEvtArgs)entry;
             lock (_entryLock)
             {
                 string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "]    ";
-                _taskCollection.Add(timeStamp + entry);
+                _taskCollection.Add(timeStamp + args.entry);
             }
         }
     }

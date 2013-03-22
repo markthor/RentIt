@@ -21,10 +21,8 @@ namespace RentItServer.SMU
         private readonly SMUDao _dao = SMUDao.GetInstance();
         //The logger
         private readonly Logger _logger;
-        //Log eventHandler
-        public delegate void LogEvent(object sender, string LogMessage);
         //Event cast when log must make an entry
-        public static event LogEvent entry;
+        public static event EventHandler entry;
         //Data access object for file system IO
         private readonly RentItServer.ITU.FileSystemHandler _fileSystemHandler = new RentItServer.ITU.FileSystemHandler(_mediaFileDirectoryPath);
         /// <summary>
@@ -51,7 +49,7 @@ namespace RentItServer.SMU
         {
             int id = _dao.LogIn(username, password);
             if(entry != null)
-                entry(this, "LogIn: " + username + "-" + password);
+                entry(this, new RentItEvtArgs("LogIn: " + username + "-" + password));
             return id;
         }
 
@@ -59,7 +57,7 @@ namespace RentItServer.SMU
         {
             int id = _dao.SignUp(email, username, password, isAdmin);
             if(entry != null)
-                entry(this, "SignUp: " + email + "-" + username + "-" + password);
+                entry(this, new RentItEvtArgs("SignUp: " + email + "-" + username + "-" + password));
             return id;
         }
 
