@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
 using RentItServer;
@@ -73,7 +74,6 @@ namespace RentItServer_UnitTests
         public void TestAddBook()
         {
             SMUController controller = SMUController.GetInstance();
-            int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk", false); //Hvad laver denne linje her??
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
@@ -176,6 +176,27 @@ namespace RentItServer_UnitTests
                 Assert.Fail();
             }
             catch (Exception) { }
+        }
+
+        [TestMethod]
+        public void TestGetAllBooks()
+        {
+            //TODO: Clean DB
+            SMUController controller = SMUController.GetInstance();
+            List<Book> result = null;
+            try
+            {
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                result = controller.GetAllBooks();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(4, result.Count);
         }
     }
 }
