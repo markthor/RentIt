@@ -32,7 +32,7 @@ namespace RentItServer.SMU
 
         private SMUController()
         {
-            _logger = new Logger(FilePath.SMULogPath.GetPath() + Path.DirectorySeparatorChar + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.SMULogPath.GetPath() + LogFileName, ref _handler);
         }
 
         public int LogIn(string email, string password)

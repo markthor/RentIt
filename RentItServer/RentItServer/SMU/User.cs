@@ -8,7 +8,6 @@ namespace RentItServer.SMU
     [Serializable]
     public class User
     {
-    
         public User(int id, string email, string username, string password, bool isAdmin, ICollection<SMUrental> rentals)
         {
             this.id = id;

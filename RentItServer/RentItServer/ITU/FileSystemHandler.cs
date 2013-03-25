@@ -83,6 +83,7 @@ namespace RentItServer.ITU
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
 
+            //Full path to the file
             string fullPath = path.GetPath() + relativePath;
             if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
             
@@ -93,31 +94,6 @@ namespace RentItServer.ITU
             ms.Position = 0L;
             return ms;
         }
-
-        /*
-        /// <summary>
-        /// Processes the path.
-        /// </summary>
-        /// <param name="relativePath">The relative path to a file or directory.</param>
-        /// <returns>The absolute path to file or directory.</returns>
-        private string ProcessPath(string relativePath)
-        {
-            relativePath = CorrectSeperator(relativePath);
-            return _root + relativePath;
-        }
-
-        /// <summary>
-        /// Corrects the folder seperators
-        /// </summary>
-        /// <param name="path">The path to correct</param>
-        /// <returns>The corrected path</returns>
-        private string CorrectSeperator(string path)
-        {
-            path = path.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            path = path.Replace("/", Path.DirectorySeparatorChar.ToString());
-            return path;
-        }
-        */
 
         internal static byte[] LoadTrackBytes(string p)
         {
