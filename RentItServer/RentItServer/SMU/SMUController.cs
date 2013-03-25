@@ -32,7 +32,7 @@ namespace RentItServer.SMU
 
         private SMUController()
         {
-            _logger = new Logger(FilePath.SMULogPath.GetPath() + Path.DirectorySeparatorChar + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.SMULogPath.GetPath() + LogFileName, ref _handler);
         }
 
         public int LogIn(string email, string password)
@@ -196,8 +196,7 @@ namespace RentItServer.SMU
             try
             {
                 Book book = _dao.GetBookInfo(bookId);
-                String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
-                MemoryStream pdf = FileSystemHandler.GetInstance().Read(FilePath.SMUPdfPath, relativePath);
+                MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
                 if (pdf != null)
                 {
                     // TODO: Delete the file
@@ -320,7 +319,7 @@ namespace RentItServer.SMU
         {
             MemoryStream theAudio;
             try{
-                theAudio = _fileSystemHandler.Read(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                theAudio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
                 theAudio.Position = 0L;
             }
             catch (Exception e){
