@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
 using RentItServer;
 using System.Data.Entity;
+using System.IO;
 
 namespace RentItServer_UnitTests
 {
@@ -217,11 +218,33 @@ namespace RentItServer_UnitTests
                 controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
                 result = controller.GetAllBooks();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail();
             }
             Assert.AreEqual(4, result.Count);
+        }
+
+        [TestMethod]
+        public void TestUploadDownloadPdf()
+        {
+            SMUController controller = SMUController.GetInstance();
+            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0);
+            
+            string path = Directory.GetCurrentDirectory();
+            string filename = "test.pdf";
+            path = string.Concat(path, "\\..\\..\\..\\RentItServer\\Test Files\\", filename);
+            MemoryStream uploadedPdf = new MemoryStream();
+            File.OpenRead(path).CopyTo(uploadedPdf);
+            uploadedPdf.Position = 0L;
+
+            long uploadedPdfLength = uploadedPdf.Length;
+
+            controller.UploadPDF(bookId, uploadedPdf);
+
+            MemoryStream downloadedPdf = controller.DownloadPDF(bookId);
+
+            Assert.IsTrue(uploadedPdfLength > 0 && uploadedPdfLength == downloadedPdf.Length);
         }
     }
 }

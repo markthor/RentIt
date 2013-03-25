@@ -184,6 +184,7 @@
       <DependentUpon>RentItModel.edmx</DependentUpon>
       <LastGenOutput>RentItModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Test Files\test.pdf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
