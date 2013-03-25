@@ -99,7 +99,7 @@ namespace RentItServer.SMU
 
         //delete a book
         [OperationContract]
-        bool DeleteBook(int bookId);
+        void DeleteBook(int bookId);
 
         //Adds a book object withoud PDF or audio files.
         [OperationContract]
