@@ -299,13 +299,15 @@ namespace RentItServer.SMU
 
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
             _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
+            string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), relativePath);
+            _dao.AddPdf(bookId, fullPath);
         }
 
         public MemoryStream DownloadPDF(int bookId)
         {
-            String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
             return _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, relativePath);
         }
     }
