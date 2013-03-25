@@ -44,7 +44,7 @@ namespace RentItServer.ITU
                 _channelCache[channel.id] = channel;
             }
             // Initialize user search trie
-            _logger = new Logger(FilePath.ITULogPath.GetPath() + Path.DirectorySeparatorChar + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
         }
 
         /// <summary>
@@ -325,10 +325,7 @@ namespace RentItServer.ITU
         {
             ChannelOrganizer co = ChannelOrganizer.GetInstance();
 
-            if (!co.IsChannelRunnig(channelId))
-            {
-                co.StartChannel(channelId);
-            }
+            co.StartChannel(1);
             return co.GetChannelPortNumber(channelId);
         }
     }

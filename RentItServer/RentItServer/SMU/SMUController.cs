@@ -10,12 +10,6 @@ namespace RentItServer.SMU
 {
     public class SMUController
     {
-        private static readonly string DirectoryPath = "C:" + Path.DirectorySeparatorChar +
-                                                        "Users" + Path.DirectorySeparatorChar +
-                                                        "Mr.Green" + Path.DirectorySeparatorChar +
-                                                        "Documents" + Path.DirectorySeparatorChar +
-                                                        "SMU" + Path.DirectorySeparatorChar;
-
         private static readonly string LogFileName = "SmuLogs.txt";
         //Singleton instance of the class
         private static SMUController _instance;
@@ -38,7 +32,7 @@ namespace RentItServer.SMU
 
         private SMUController()
         {
-            _logger = new Logger(FilePath.SMULogPath.GetPath() + Path.DirectorySeparatorChar + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.SMULogPath.GetPath() + LogFileName, ref _handler);
         }
 
         public int LogIn(string email, string password)
@@ -167,9 +161,9 @@ namespace RentItServer.SMU
             int rentalId;
             try
             {
-                rentalId = _dao.RentBook(userId, bookId, mediaType);
+                rentalId = _dao.RentBook(userId, bookId, time, mediaType);
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] mediaType [" + mediaType + "]"));
+                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] time [" + time + "] mediaType [" + mediaType + "]"));
             }
             catch (Exception e)
             {
@@ -198,14 +192,22 @@ namespace RentItServer.SMU
 
         public void DeleteBook(int bookId)
         {
+            //TODO: Get relevant info in case of failure
             try
             {
+                Book book = _dao.GetBookInfo(bookId);
+                MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                if (pdf != null)
+                {
+                    // TODO: Delete the file
+                }
                 _dao.DeleteBook(bookId);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
             }
             catch (Exception e)
             {
+                // TODO: roll back changes
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "]"));
                 throw;
@@ -300,13 +302,46 @@ namespace RentItServer.SMU
 
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
+            try
+            {
+                _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), MP3);
+                _dao.UpdateBook(bookId, null, null, null, null, DateTime.MinValue, -1, null, FilePath.SMUAudioPath+FileName.GenerateAudioFileName(bookId));
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("UploadAudio failed with exception [" + e + "]"));
+                throw;
+            }
+        }
 
+        public MemoryStream DownloadAudio(int bookId)
+        {
+            MemoryStream theAudio;
+            try{
+                theAudio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                theAudio.Position = 0L;
+            }
+            catch (Exception e){
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("DownloadAudio failed with exception [" + e + "]"));
+                throw;
+            }
+            return theAudio;
         }
 
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
             _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
+            string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), relativePath);
+            _dao.AddPdf(bookId, fullPath);
+        }
+
+        public MemoryStream DownloadPDF(int bookId)
+        {
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
+            return _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, relativePath);
         }
 
         public void DeleteSMUDatabaseData()

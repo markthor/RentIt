@@ -19,13 +19,13 @@ namespace RentItServer.SMU
         {
             SMUuser user = new SMUuser();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
-            {          
+            {
                 user.email = email;
                 user.username = name;
                 user.password = password;
                 user.isAdmin = isAdmin;
                 proxy.SMUusers.Add(user);
-                proxy.SaveChanges();         
+                proxy.SaveChanges();
             }
             return user.id;
         }
@@ -239,12 +239,14 @@ namespace RentItServer.SMU
         public Book GetBookInfo(int bookId)
         {
             Book theBook;
-            using (RENTIT21Entities proxy = new RENTIT21Entities()){
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
 
-                if (books.Any() == false){
+                if (books.Any() == false)
+                {
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
                 theBook = books.First().GetBook();
@@ -252,7 +254,7 @@ namespace RentItServer.SMU
             return theBook;
         }
 
-        public int RentBook(int userId, int bookId, int mediaType)
+        public int RentBook(int userId, int bookId, DateTime time, int mediaType)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
 
@@ -262,39 +264,36 @@ namespace RentItServer.SMU
                             where book.id == bookId
                             select book;
 
-                if (books.Any() == false)
-                {
-                    throw new ArgumentException("no book with bookId = " + bookId);
-                }
+                if (books.Any() == false) throw new ArgumentException("no book with bookId = " + bookId);
+
                 SMUrental theRental = new SMUrental()
                 {
                     userId = userId,
-                    startDate = DateTime.Now
+                    startDate = time
                 };
                 SMUbook theBook = books.First();
-                theBook.hit += 1;
                 if (mediaType == 0)
-                {   // Only rent the book
+                {   // Only rent the pdf
+                    if (theBook.PDFFilePath == null) throw new ArgumentException("mediaType parameter specified pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with a pdf. ");
+
                     theRental.bookId = bookId;
                 }
                 if (mediaType == 1)
                 {   // Only rent the audio for the book
-                    if (theBook.audioId == null)
-                    {
-                        throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
-                    }
+                    if (theBook.audioId == null) throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
+
                     theRental.audioId = theBook.audioId;
                 }
                 if (mediaType == 2)
                 {   // Rent both the book and the audio for the book
-                    if (theBook.audioId == null)
-                    {
-                        throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
-                    }
+                    if (theBook.audioId == null) throw new ArgumentException("mediaType parameter specified audio and pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
+                    if (theBook.PDFFilePath == null) throw new ArgumentException("mediaType parameter specified audio and pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with a pdf. ");
+
                     theRental.bookId = bookId;
                     theRental.audioId = theBook.audioId;
                 }
 
+                theBook.hit += 1;
                 proxy.SMUrentals.Add(theRental);
                 proxy.SaveChanges();
                 return theRental.id;
@@ -342,7 +341,7 @@ namespace RentItServer.SMU
 
         public int AddAudio(int bookId, string narrator, string filePath)
         {
-           // if (userId < 0) throw new ArgumentException("userId < 0");
+            // if (userId < 0) throw new ArgumentException("userId < 0");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -394,7 +393,7 @@ namespace RentItServer.SMU
             if (author == null) throw new ArgumentNullException("author");
             if (description == null) throw new ArgumentNullException("description");
             if (genre == null) throw new ArgumentNullException("genre");
-           // if (userId < 0) throw new ArgumentException("userId < 0");
+            // if (userId < 0) throw new ArgumentException("userId < 0");
             if (price < 0.0) throw new ArgumentException("price < 0.0");
             if (title.Equals("")) throw new ArgumentException("title was empty");
             if (author.Equals("")) throw new ArgumentException("author was empty");
@@ -438,18 +437,19 @@ namespace RentItServer.SMU
         public Book UpdateBook(int bookId, String title, String author, String description, String genre,
                                DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
         {
-            if (title == null) throw new ArgumentNullException("title");
-            if (author == null) throw new ArgumentNullException("author");
-            if (description == null) throw new ArgumentNullException("description");
-            if (genre == null) throw new ArgumentNullException("genre");
-            if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
-            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-           // if (userId < 0) throw new ArgumentException("userId < 0");
-            if (price < 0.0) throw new ArgumentException("price < 0.0");
-            if (title.Equals("")) throw new ArgumentException("title was empty");
-            if (author.Equals("")) throw new ArgumentException("author was empty");
-            if (genre.Equals("")) throw new ArgumentException("genre was empty");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
+            // Parameter validation is no really needed here :)
+            //if (title == null) throw new ArgumentNullException("title");
+            //if (author == null) throw new ArgumentNullException("author");
+            //if (description == null) throw new ArgumentNullException("description");
+            //if (genre == null) throw new ArgumentNullException("genre");
+            //if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
+            //if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
+            //// if (userId < 0) throw new ArgumentException("userId < 0");
+            //if (price < 0.0) throw new ArgumentException("price < 0.0");
+            //if (title.Equals("")) throw new ArgumentException("title was empty");
+            //if (author.Equals("")) throw new ArgumentException("author was empty");
+            //if (genre.Equals("")) throw new ArgumentException("genre was empty");
+            //if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
 
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -472,20 +472,20 @@ namespace RentItServer.SMU
                             where book.id == bookId
                             select book;
 
-                if (books.Any() == false){
+                if (books.Any() == false)
+                {
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
-
                 theBook = books.First();
-                theBook.title = title;
-                theBook.author = author;
-                theBook.description = description;
-                theBook.genre = genre;
-                theBook.price = price;
-                theBook.PDFFilePath = pdfFilePath;
-                theBook.imageFilePath = imageFilePath;
-                theBook.dateAdded = dateAdded;
-                
+                if (title != null)          theBook.title = title;
+                if (author != null)         theBook.author = author;
+                if (description != null)    theBook.description = description;
+                if (genre != null)          theBook.genre = genre;
+                if (price >= 0)             theBook.price = price;
+                if (pdfFilePath != null)    theBook.PDFFilePath = pdfFilePath;
+                if (imageFilePath != null)  theBook.imageFilePath = imageFilePath;
+                if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
+
                 proxy.SaveChanges();
             }
             return theBook.GetBook();
@@ -522,6 +522,24 @@ namespace RentItServer.SMU
                 {
                     proxy.SMUrentals.Remove(r);
                 }
+                proxy.SaveChanges();
+            }
+        }
+
+        public void AddPdf(int bookId, string pdfFilePath)
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from b in proxy.SMUbooks
+                           where b.id == bookId
+                           select b;
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook book = books.First();
+                book.PDFFilePath = pdfFilePath;
                 proxy.SaveChanges();
             }
         }

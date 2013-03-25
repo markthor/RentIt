@@ -12,6 +12,7 @@ namespace RentItServer
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "SMURentItService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select SMURentItService.svc or SMURentItService.svc.cs at the Solution Explorer and start debugging.
     public class SMURentItService : ISMURentItService{
+        
         private SMUController _smuController = SMUController.GetInstance();
 
         public int SignUp(string email, string name, string password, bool isAdmin)
@@ -74,14 +75,9 @@ namespace RentItServer
             return _smuController.RentBook(userId, bookId, startDate, mediaType);
         }
 
-        public MemoryStream DownloadPDF(int bookId)
-        {
-            throw new NotImplementedException();
-        }
-
         public MemoryStream DownloadAudio(int bookId)
         {
-            throw new NotImplementedException();
+            return _smuController.DownloadAudio(bookId);
         }
 
         public void DeleteBook(int bookId)
@@ -102,12 +98,17 @@ namespace RentItServer
 
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
-            throw new NotImplementedException();
+            _smuController.UploadAudio(bookId, MP3);
         }
 
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
             SMUController.GetInstance().UploadPDF(bookId, pdf);
+        }
+
+        public MemoryStream DownloadPDF(int bookId)
+        {
+            return SMUController.GetInstance().DownloadPDF(bookId);
         }
     }
 }
