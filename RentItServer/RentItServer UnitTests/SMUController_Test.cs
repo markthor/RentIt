@@ -209,20 +209,19 @@ namespace RentItServer_UnitTests
         {
             //TODO: Clean DB
             SMUController controller = SMUController.GetInstance();
-            List<Book> result = null;
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
                 controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
                 controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
                 controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
-                result = controller.GetAllBooks();
+                Book[] result = controller.GetAllBooks();
+                Assert.AreEqual(4, result.Length);
             }
             catch (Exception)
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(4, result.Count);
         }
 
         [TestMethod]
