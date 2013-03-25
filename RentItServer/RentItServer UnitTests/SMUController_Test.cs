@@ -10,18 +10,43 @@ namespace RentItServer_UnitTests
     [TestClass]
     public class SMUController_Test
     {
+        /// <summary>
+        /// Deletes all tuples in SMU database.
+        /// </summary>
+        //[TestInitialize()]
+        public void CleanDataBase()
+        {
+            SMUController.GetInstance().DeleteSMUDatabaseData();
+        }
+
+        /// <summary>
+        /// Deletes all tuples in SMU database.
+        /// </summary>
+        //[ClassCleanup()]
+        public static void CleanDataBaseFinish()
+        {
+            SMUController.GetInstance().DeleteSMUDatabaseData();
+        }
+
         [TestMethod]
         public void TestSignUp()
         {
             SMUController controller = SMUController.GetInstance();
+            string email1 = "gogogo1@yo.dk";
+            string email2 = "gogogo2@yo.dk";
+            string email3 = "gogogo3@yo.dk";
 
-            int u1 = controller.SignUp("John Doe1", "1Fisk", "gogogo1@yo.dk", false);
-            int u2 = controller.SignUp("John Doe2", "12Fisk", "gogogo2@yo.dk", false);
-            int u3 = controller.SignUp("John Doe3", "123Fisk", "gogogo3@yo.dk", false);
+            string password1 = "1Fisk";
+            string password2 = "12Fisk";
+            string password3 = "123Fisk";
 
-            controller.LogIn("gogogo1@yo.dk", "1Fisk");
-            controller.LogIn("gogogo2@yo.dk", "12Fisk");
-            controller.LogIn("gogogo3@yo.dk", "123Fisk");     
+            int u1 = controller.SignUp(email1, "Jens", password1, false);
+            int u2 = controller.SignUp(email2, "Jens", password2, false);
+            int u3 = controller.SignUp(email3, "Jens", password3, false);
+
+            controller.LogIn(email1, password1);
+            controller.LogIn(email2, password2);
+            controller.LogIn(email3, password3);   
        }
 
         [TestMethod]

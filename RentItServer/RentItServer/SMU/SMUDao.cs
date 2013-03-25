@@ -45,7 +45,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public SMUuser GetUser(int userId)
+        public User GetUser(int userId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -57,11 +57,16 @@ namespace RentItServer.SMU
                 {
                     throw new ArgumentException("No SMUuser with userId = " + userId);
                 }
-                return users.First();
+                SMUuser result = users.First();
+                if (result != null)
+                {
+                    return result.GetUser();
+                }
+                return null;
             }
         }
 
-        public SMUuser UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
             if (email == null) throw new ArgumentNullException("email");
@@ -89,7 +94,7 @@ namespace RentItServer.SMU
                 theUser.isAdmin = isAdmin;
                 proxy.SaveChanges();
 
-                return theUser;
+                return theUser.GetUser();
             }
         }
 
@@ -506,6 +511,41 @@ namespace RentItServer.SMU
                 proxy.SaveChanges();
             }
             return theBook.GetBook();
+        }
+
+        public void DeleteSMUDatabaseData()
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                //Delete all SMUusers
+                var users = proxy.SMUusers;
+                foreach (SMUuser u in users)
+                {
+                    proxy.SMUusers.Remove(u);
+                }
+
+                //Delete all SMUbooks
+                var books = proxy.SMUbooks;
+                foreach (SMUbook b in books)
+                {
+                    proxy.SMUbooks.Remove(b);
+                }
+
+                //Delete all SMUaudio
+                var audio = proxy.SMUaudios;
+                foreach (SMUaudio a in audio)
+                {
+                    proxy.SMUaudios.Remove(a);
+                }
+
+                //Delete all rentals
+                var rentals = proxy.SMUrentals;
+                foreach (SMUrental r in rentals)
+                {
+                    proxy.SMUrentals.Remove(r);
+                }
+                proxy.SaveChanges();
+            }
         }
 
         public void AddPdf(int bookId, string pdfFilePath)
