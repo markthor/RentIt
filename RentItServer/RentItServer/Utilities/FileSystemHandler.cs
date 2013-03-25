@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using RentItServer.Utilities;
-namespace RentItServer.ITU
+
+namespace RentItServer.Utilities
 {
     public class FileSystemHandler
     {
