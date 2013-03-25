@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+
 using RentItServer.SMU;
 
 namespace RentItServer
@@ -13,7 +10,7 @@ namespace RentItServer
     // NOTE: In order to launch WCF Test Client for testing this service, please select SMURentItService.svc or SMURentItService.svc.cs at the Solution Explorer and start debugging.
     public class SMURentItService : ISMURentItService{
         
-        private SMUController _smuController = SMUController.GetInstance();
+        private readonly SMUController _smuController = SMUController.GetInstance();
 
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
@@ -75,11 +72,6 @@ namespace RentItServer
             return _smuController.RentBook(userId, bookId, startDate, mediaType);
         }
 
-        public MemoryStream DownloadAudio(int bookId)
-        {
-            return _smuController.DownloadAudio(bookId);
-        }
-
         public void DeleteBook(int bookId)
         {
             _smuController.DeleteBook(bookId);
@@ -99,6 +91,11 @@ namespace RentItServer
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
             _smuController.UploadAudio(bookId, MP3);
+        }
+
+        public MemoryStream DownloadAudio(int bookId)
+        {
+            return _smuController.DownloadAudio(bookId);
         }
 
         public void UploadPDF(int bookId, MemoryStream pdf)
