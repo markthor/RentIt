@@ -195,6 +195,28 @@ namespace RentItServer.SMU
             return list;
         }
 
+        public List<Book> GetNewBooks()
+        {
+            List<Book> theBooks = new List<Book>();
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from book in proxy.SMUbooks
+                            select book;
+
+                if (books.Any() == true)
+                {
+                    int count = 0;
+                    foreach (SMUbook book in books)
+                    {
+                        theBooks.Add(book.GetBook());
+                        count++;
+                        if (count == 30) break;
+                    }
+                }
+            }
+            return theBooks;
+        }
+
         public List<Book> SearhBooks(string searchString)
         {
             if (searchString == null) throw new ArgumentNullException("searchString");
@@ -472,13 +494,13 @@ namespace RentItServer.SMU
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
                 theBook = books.First();
-                if (title != null)          theBook.title = title;
-                if (author != null)         theBook.author = author;
-                if (description != null)    theBook.description = description;
-                if (genre != null)          theBook.genre = genre;
-                if (price >= 0)             theBook.price = price;
-                if (pdfFilePath != null)    theBook.PDFFilePath = pdfFilePath;
-                if (imageFilePath != null)  theBook.imageFilePath = imageFilePath;
+                if (title != null) theBook.title = title;
+                if (author != null) theBook.author = author;
+                if (description != null) theBook.description = description;
+                if (genre != null) theBook.genre = genre;
+                if (price >= 0) theBook.price = price;
+                if (pdfFilePath != null) theBook.PDFFilePath = pdfFilePath;
+                if (imageFilePath != null) theBook.imageFilePath = imageFilePath;
                 if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
 
                 proxy.SaveChanges();
@@ -491,8 +513,8 @@ namespace RentItServer.SMU
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from b in proxy.SMUbooks
-                           where b.id == bookId
-                           select b;
+                            where b.id == bookId
+                            select b;
                 if (books.Any() == false)
                 {
                     throw new ArgumentException("No book with bookId = " + bookId);
