@@ -49,7 +49,7 @@ namespace RentItServer_UnitTests
             string email = "hest@yoyo.dk";
 
             controller.UpdateUserInfo(u1, email, name, password, false);
-            SMUuser user = controller.GetUser(u1);
+            RentItServer.SMU.User user = controller.GetUser(u1);
 
             Assert.AreEqual(name, user.username);
             Assert.AreEqual(password, user.password);

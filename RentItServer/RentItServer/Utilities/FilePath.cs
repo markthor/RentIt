@@ -15,35 +15,35 @@ namespace RentItServer.Utilities
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
-            "Audio");
+            "Audio" + Path.DirectorySeparatorChar);
 
         public static readonly FilePath SMULogPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
-            "Log");
+            "Log" + Path.DirectorySeparatorChar);
 
         public static readonly FilePath SMUPdfPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
-            "PDF");
+            "PDF" + Path.DirectorySeparatorChar);
 
         public static readonly FilePath ITUTrackPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
-            "Tracks");
+            "Tracks" + Path.DirectorySeparatorChar);
 
         public static readonly FilePath ITULogPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
-            "Log");
+            "Log" + Path.DirectorySeparatorChar);
 
         private FilePath(string path)
         {

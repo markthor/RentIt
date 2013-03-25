@@ -485,5 +485,23 @@ namespace RentItServer.SMU
             }
             return theBook.GetBook();
         }
+
+        public void AddPdf(int bookId, string pdfFilePath)
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                var books = from b in proxy.SMUbooks
+                           where b.id == bookId
+                           select b;
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook book = books.First();
+                book.PDFFilePath = pdfFilePath;
+                proxy.SaveChanges();
+            }
+        }
     }
 }

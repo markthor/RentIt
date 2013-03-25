@@ -10,12 +10,6 @@ namespace RentItServer.SMU
 {
     public class SMUController
     {
-        private static readonly string DirectoryPath = "C:" + Path.DirectorySeparatorChar +
-                                                        "Users" + Path.DirectorySeparatorChar +
-                                                        "Mr.Green" + Path.DirectorySeparatorChar +
-                                                        "Documents" + Path.DirectorySeparatorChar +
-                                                        "SMU" + Path.DirectorySeparatorChar;
-
         private static readonly string LogFileName = "SmuLogs.txt";
         //Singleton instance of the class
         private static SMUController _instance;
@@ -339,7 +333,16 @@ namespace RentItServer.SMU
 
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId), pdf);
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
+            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
+            string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), relativePath);
+            _dao.AddPdf(bookId, fullPath);
+        }
+
+        public MemoryStream DownloadPDF(int bookId)
+        {
+            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
+            return _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, relativePath);
         }
     }
 }

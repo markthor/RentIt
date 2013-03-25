@@ -41,17 +41,17 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="path"></param>
         /// <param name="relativePath">The relative path.</param>
-        /// <param name="trackStream">The track stream.</param>
+        /// <param name="memoryStream">The track stream.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Relative path was null
         /// or
         /// MemoryStream argument was null
         /// </exception>
-        public void WriteFile(FilePath path, string relativePath, MemoryStream trackStream)
+        public void WriteFile(FilePath path, string relativePath, MemoryStream memoryStream)
         {
             if (path == null) throw new ArgumentNullException("path");
             if (relativePath == null) throw new ArgumentNullException("relativePath");
-            if (trackStream == null) throw new ArgumentNullException("trackStream");
+            if (memoryStream == null) throw new ArgumentNullException("memoryStream");
 
             //Full path to the file
             string fullPath = path.GetPath() + relativePath;
@@ -61,8 +61,8 @@ namespace RentItServer.ITU
             //Open the file to write to it
             FileStream fs = File.OpenWrite(fullPath);
             //Write the content and close the resources
-            trackStream.CopyTo(fs);
-            trackStream.Close();
+            memoryStream.CopyTo(fs);
+            memoryStream.Close();
             fs.Flush();
             fs.Close();
         }
@@ -78,26 +78,20 @@ namespace RentItServer.ITU
         /// or
         /// Relative path must target a file. Relative path =  + relativePath
         /// </exception>
-        public MemoryStream Read(FilePath path, string relativePath)
+        public MemoryStream ReadFile(FilePath path, string relativePath)
         {
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
 
-            string fullPath = path + relativePath; //ProcessPath(path + relativePath);
+            string fullPath = path.GetPath() + relativePath;
             if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
             
-            try
-            {
-                FileStream fs = File.OpenRead(fullPath);
-                MemoryStream ms = new MemoryStream();
-                fs.CopyTo(ms);
-                fs.Close();
-                return ms;
-            }
-            catch(Exception e)
-            {
-                throw;
-            }
+            FileStream fs = File.OpenRead(fullPath);
+            MemoryStream ms = new MemoryStream();
+            fs.CopyTo(ms);
+            fs.Close();
+            ms.Position = 0L;
+            return ms;
         }
 
         /*
