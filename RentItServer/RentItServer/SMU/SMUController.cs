@@ -251,7 +251,7 @@ namespace RentItServer.SMU
             List<Book> books;
             try
             {
-                books = _dao.SearhBooks(searchString);
+                books = _dao.SearchBooks(searchString);
             }
             catch (Exception e)
             {

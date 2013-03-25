@@ -200,7 +200,7 @@ namespace RentItServer.SMU
             return list;
         }
 
-        public List<Book> SearhBooks(string searchString)
+        public List<Book> SearchBooks(string searchString)
         {
             if (searchString == null) throw new ArgumentNullException("searchString");
             List<Book> list = new List<Book>();

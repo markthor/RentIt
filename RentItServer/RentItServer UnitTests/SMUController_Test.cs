@@ -13,7 +13,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        //[TestInitialize()]
+        [TestInitialize()]
         public void CleanDataBase()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -22,7 +22,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        //[ClassCleanup()]
+        [ClassCleanup()]
         public static void CleanDataBaseFinish()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -114,6 +114,7 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            controller.UploadPDF(bookId, new System.IO.MemoryStream());
             int rental = controller.RentBook(user, bookId, DateTime.Now, 0);
             try
             {
@@ -134,6 +135,8 @@ namespace RentItServer_UnitTests
             int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
             int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
             int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            controller.UploadPDF(bookId, new System.IO.MemoryStream());
+            controller.UploadAudio(bookId, new System.IO.MemoryStream());
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
@@ -193,7 +196,7 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-
+            controller.UploadPDF(bookId, new System.IO.MemoryStream());
             controller.DeleteBook(bookId);
             try
             {
@@ -206,7 +209,6 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestGetAllBooks()
         {
-            //TODO: Clean DB
             SMUController controller = SMUController.GetInstance();
             List<Book> result = null;
             try
@@ -223,5 +225,29 @@ namespace RentItServer_UnitTests
             }
             Assert.AreEqual(4, result.Count);
         }
+
+        //Bad test, does not test for exclution of books with low hit count.
+        [TestMethod]
+        public void TestGetPopularBooks()
+        {
+            SMUController controller = SMUController.GetInstance();
+            List<Book> result = null;
+            try
+            {
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                result = controller.GetPopularBooks();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(4, result.Count);
+        }
+
+
+
     }
 }
