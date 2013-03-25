@@ -251,7 +251,7 @@ namespace RentItServer
         /// <param name="pdf">The PDF.</param>
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            SMUController.GetInstance().UploadPDF(bookId, pdf);
+            _smuController.UploadPDF(bookId, pdf);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace RentItServer
         /// </returns>
         public MemoryStream DownloadPDF(int bookId)
         {
-            return SMUController.GetInstance().DownloadPDF(bookId);
+            return _smuController.DownloadPDF(bookId);
         }
     }
 }
