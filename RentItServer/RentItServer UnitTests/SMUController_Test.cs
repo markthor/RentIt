@@ -18,9 +18,9 @@ namespace RentItServer_UnitTests
             int u2 = controller.SignUp("John Doe2", "12Fisk", "gogogo2@yo.dk", false);
             int u3 = controller.SignUp("John Doe3", "123Fisk", "gogogo3@yo.dk", false);
 
-            controller.LogIn("John Doe1", "1Fisk");
-            controller.LogIn("John Doe2", "12Fisk");
-            controller.LogIn("John Doe3", "123Fisk");     
+            controller.LogIn("gogogo1@yo.dk", "1Fisk");
+            controller.LogIn("gogogo2@yo.dk", "12Fisk");
+            controller.LogIn("gogogo3@yo.dk", "123Fisk");     
        }
 
         [TestMethod]
@@ -30,7 +30,6 @@ namespace RentItServer_UnitTests
             int u1 = controller.SignUp("Peter Parker1", "1Fisk", "gogogo1@yo.dk", false);
             int u2 = controller.SignUp("Peter Parker2", "12Fisk", "gogogo2@yo.dk", false);
             int u3 = controller.SignUp("Peter Parker3", "123Fisk", "gogogo3@yo.dk", false);
-
 
             Assert.AreEqual(u1, controller.GetUser(u1).id);
             Assert.AreEqual(u2, controller.GetUser(u2).id);
@@ -60,7 +59,6 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestDeleteAccount()
         {
-
             SMUController controller = SMUController.GetInstance();
             int u1 = controller.SignUp("Don Draper", "1Fisk", "gogogo1@yo.dk", false);
             try
@@ -74,9 +72,8 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestAddBook()
         {
-
             SMUController controller = SMUController.GetInstance();
-            int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk", false);
+            int user = controller.SignUp("Lee Perry", "1Fisk", "gogogo1@yo.dk", false); //Hvad laver denne linje her??
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
@@ -102,6 +99,67 @@ namespace RentItServer_UnitTests
             { 
             
             }
+        }
+
+        [TestMethod]
+        public void TestHasRental()
+        {
+            SMUController controller = SMUController.GetInstance();
+            int userId1 = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
+            int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
+            int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
+            int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            int mediaTypeBook = 0;
+            int mediaTypeAudio = 1;
+            int mediaTypeBoth = 2;
+            RentAndVerify(userId1, bookId, mediaTypeBook, mediaTypeBook);
+            RentAndVerify(userId1, bookId, mediaTypeAudio, mediaTypeBoth);
+            RentAndVerify(userId2, bookId, mediaTypeBoth, mediaTypeBoth);
+            RentAndVerify(userId3, bookId, mediaTypeAudio, mediaTypeAudio);
+
+        }
+
+        public void RentAndVerify(int userId, int bookId, int mediaTypeRent, int mediaTypeAssert)
+        {
+            SMUController controller = SMUController.GetInstance();
+            int result = -1;
+            try
+            {
+                controller.RentBook(userId, bookId, DateTime.Now, mediaTypeRent);
+                result = controller.HasRental(userId, bookId);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(result, mediaTypeAssert);
+        }
+
+        [TestMethod]
+        public void TestGetBookInfo()
+        {
+            SMUController controller = SMUController.GetInstance();
+            string title = "Ender's Game";
+            string author = "Orson Scott Card";
+            string genre = "Science Fiction";
+            string description = "SciFi adventure far out in outer space";
+            DateTime time = DateTime.Now;
+            double price = 100;
+            Book book = null;
+            int bookId = controller.AddBook(title, author, description, genre, time, price);
+            try
+            {
+                book = controller.GetBookInfo(bookId);
+            }
+            catch(Exception e)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(title, book.title);
+            Assert.AreEqual(author, book.author);
+            Assert.AreEqual(genre, book.genre);
+            Assert.AreEqual(description, book.description);
+            Assert.AreEqual(price, book.price);
         }
 
         [TestMethod]

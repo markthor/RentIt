@@ -38,5 +38,20 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(3, result);
             Assert.AreNotEqual(4, result);
         }
+
+        [TestMethod]
+        public void TrackPrioritizer_GetNextTrackIdEmptyPlaysList()
+        {
+            List<Track> testTracks = new List<Track>();
+            testTracks.Add(new Track(1, 10, 2));
+            testTracks.Add(new Track(2, 0, 1));
+            testTracks.Add(new Track(3, 3, 30));
+            testTracks.Add(new Track(4, 20, 4));
+            testTracks.Add(new Track(5, 39, 33));
+
+            List<TrackPlay> testPlays = new List<TrackPlay>();
+            int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
+            Assert.AreNotEqual(0, result);
+        }
     }
 }
