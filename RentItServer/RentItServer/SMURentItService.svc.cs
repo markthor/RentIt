@@ -11,66 +11,67 @@ namespace RentItServer
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "SMURentItService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select SMURentItService.svc or SMURentItService.svc.cs at the Solution Explorer and start debugging.
-    public class SMURentItService : ISMURentItService
-    {   
+    public class SMURentItService : ISMURentItService{
+        private SMUController _smuController = SMUController.GetInstance();
+
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
-            return SMUController.GetInstance().SignUp(email, name, password, isAdmin);
+            return _smuController.SignUp(email, name, password, isAdmin);
         }
 
         public int LogIn(string email, string password)
         {
-            return SMUController.GetInstance().LogIn(email, password);
+            return _smuController.LogIn(email, password);
         }
 
-        public User GetUserInfo(int userId)
+        public SMU.User GetUserInfo(int userId)
         {
-            throw new NotImplementedException();
+            return _smuController.GetUser(userId);
         }
 
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
-            throw new NotImplementedException();
+            return _smuController.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
 
         public void DeleteAccount(int userId)
         {
-            throw new NotImplementedException();
+            _smuController.DeleteAccount(userId);
         }
 
         public int HasRental(int userId, int bookId)
         {
-            throw new NotImplementedException();
+            return _smuController.HasRental(userId, bookId);
         }
 
         public List<Book> GetAllBooks()
         {
-            return SMUController.GetInstance().GetAllBooks();
+            return _smuController.GetAllBooks();
         }
 
         public List<Book> GetPopularBooks()
         {
-            throw new NotImplementedException();
+            return _smuController.GetPopularBooks();
         }
 
         public List<Book> SearchBooks(string searchString)
         {
-            throw new NotImplementedException();
+            return _smuController.SearchBooks(searchString);
         }
 
         public List<Book> GetBooksByGenre(string genre)
         {
-            throw new NotImplementedException();
+            return _smuController.GetBooksByGenre(genre);
         }
 
         public Book GetBookInfo(int bookId)
         {
-            return SMUController.GetInstance().GetBookInfo(bookId);
+            return _smuController.GetBookInfo(bookId);
         }
 
         public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
-            return SMUController.GetInstance().RentBook(userId, bookId, startDate, mediaType);
+            return _smuController.RentBook(userId, bookId, startDate, mediaType);
         }
 
         public MemoryStream DownloadPDF(int bookId)
@@ -83,20 +84,20 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public bool DeleteBook(int bookId)
+        public void DeleteBook(int bookId)
         {
-            throw new NotImplementedException();
+            _smuController.DeleteBook(bookId);
         }
 
         public int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
-            return SMUController.GetInstance().AddBook(title, author, description,genre,dateAdded, price);
+            return _smuController.AddBook(title, author, description,genre,dateAdded, price);
         }
 
         public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
                                double price)
         {
-            throw new NotImplementedException();
+            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price);
         }
 
         public void UploadAudio(int bookId, MemoryStream MP3)
