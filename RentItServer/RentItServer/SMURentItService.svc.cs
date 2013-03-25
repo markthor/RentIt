@@ -74,11 +74,6 @@ namespace RentItServer
             return _smuController.RentBook(userId, bookId, startDate, mediaType);
         }
 
-        public MemoryStream DownloadPDF(int bookId)
-        {
-            throw new NotImplementedException();
-        }
-
         public MemoryStream DownloadAudio(int bookId)
         {
             throw new NotImplementedException();
@@ -108,6 +103,11 @@ namespace RentItServer
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
             SMUController.GetInstance().UploadPDF(bookId, pdf);
+        }
+
+        public MemoryStream DownloadPDF(int bookId)
+        {
+            return SMUController.GetInstance().DownloadPDF(bookId);
         }
     }
 }
