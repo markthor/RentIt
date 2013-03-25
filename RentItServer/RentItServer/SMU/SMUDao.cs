@@ -328,18 +328,6 @@ namespace RentItServer.SMU
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                //var users = from user in proxy.SMUusers
-                //            where user.id == userId
-                //            select user;
-                //if (users.Any() == false)
-                //{
-                //    throw new ArgumentException("No user with userId = " + userId);
-                //}
-                //SMUuser theUser = users.First();
-                //if (theUser.isAdmin == false)
-                //{
-                //    //throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                //}
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
@@ -361,27 +349,12 @@ namespace RentItServer.SMU
             }
         }
 
-        public int AddAudio(int bookId, string narrator, string filePath)
+        public int AddAudio(int bookId, string filePath)
         {
             // if (userId < 0) throw new ArgumentException("userId < 0");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                // TODO: Move the admin check to a separate method
-                // Check if the user is an admin
-                //var users = from user in proxy.SMUusers
-                //            where user.id == userId
-                //            select user;
-                //if (users.Any() == false)
-                //{
-                //    throw new ArgumentException("No user with userId = " + userId);
-                //}
-                //SMUuser theUser = users.First();
-                //if (theUser.isAdmin == false)
-                //{
-                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                //}
-
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;
@@ -393,7 +366,7 @@ namespace RentItServer.SMU
 
                 SMUaudio theAudio = new SMUaudio()
                 {
-                    narrator = narrator,
+                    narrator = "Narrator... this is not in the service interface method :)",
                     filePath = filePath,
                     SMUbooks = new Collection<SMUbook>(),
                     SMUrentals = new Collection<SMUrental>()
@@ -408,7 +381,7 @@ namespace RentItServer.SMU
                 return theAudio.id;
             }
         }
-
+        
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
@@ -423,20 +396,6 @@ namespace RentItServer.SMU
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                // Check if the user is an admin
-                //var users = from user in proxy.SMUusers
-                //            where user.id == userId
-                //            select user;
-                //if (users.Any() == false)
-                //{
-                //    throw new ArgumentException("No user with userId = " + userId);
-                //}
-                //SMUuser theUser = users.First();
-                //if (theUser.isAdmin == false)
-                //{
-                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                //}
-
                 SMUbook theBook = new SMUbook()
                 {
                     title = title,
@@ -459,7 +418,6 @@ namespace RentItServer.SMU
         public Book UpdateBook(int bookId, String title, String author, String description, String genre,
                                DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
         {
-            // Parameter validation is no really needed here :)
             //if (title == null) throw new ArgumentNullException("title");
             //if (author == null) throw new ArgumentNullException("author");
             //if (description == null) throw new ArgumentNullException("description");
@@ -476,20 +434,6 @@ namespace RentItServer.SMU
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                // Check if the user is an admin
-                //var users = from user in proxy.SMUusers
-                //            where user.id == userId
-                //            select user;
-                //if (users.Any() == false)
-                //{
-                //    throw new ArgumentException("No user with userId = " + userId);
-                //}
-                //SMUuser theUser = users.First();
-                //if (theUser.isAdmin == false)
-                //{
-                //    throw new ArgumentException("User with userId = " + userId + " is not administrator");
-                //}
-
                 var books = from book in proxy.SMUbooks
                             where book.id == bookId
                             select book;

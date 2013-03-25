@@ -450,7 +450,7 @@ namespace RentItServer.SMU
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), MP3);
-                _dao.UpdateBook(bookId, null, null, null, null, DateTime.MinValue, -1, null, FilePath.SMUAudioPath+FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath+FileName.GenerateAudioFileName(bookId));
             }
             catch (Exception e)
             {
@@ -471,6 +471,7 @@ namespace RentItServer.SMU
         {
             MemoryStream theAudio;
             try{
+                //TODO: DAO should probably have a method that gives you filepath given a certain book id
                 theAudio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
                 theAudio.Position = 0L;
             }
