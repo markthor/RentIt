@@ -81,7 +81,7 @@ namespace RentItServer
 
         public MemoryStream DownloadAudio(int bookId)
         {
-            throw new NotImplementedException();
+            return _smuController.DownloadAudio(bookId);
         }
 
         public void DeleteBook(int bookId)
@@ -102,7 +102,7 @@ namespace RentItServer
 
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
-            throw new NotImplementedException();
+            _smuController.UploadAudio(bookId, MP3);
         }
 
         public void UploadPDF(int bookId, MemoryStream pdf)

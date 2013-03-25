@@ -167,9 +167,9 @@ namespace RentItServer.SMU
             int rentalId;
             try
             {
-                rentalId = _dao.RentBook(userId, bookId, mediaType);
+                rentalId = _dao.RentBook(userId, bookId, time, mediaType);
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] mediaType [" + mediaType + "]"));
+                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] time [" + time + "] mediaType [" + mediaType + "]"));
             }
             catch (Exception e)
             {
@@ -198,14 +198,23 @@ namespace RentItServer.SMU
 
         public void DeleteBook(int bookId)
         {
+            //TODO: Get relevant info in case of failure
             try
             {
+                Book book = _dao.GetBookInfo(bookId);
+                String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
+                MemoryStream pdf = FileSystemHandler.GetInstance().Read(FilePath.SMUPdfPath, relativePath);
+                if (pdf != null)
+                {
+                    // TODO: Delete the file
+                }
                 _dao.DeleteBook(bookId);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
             }
             catch (Exception e)
             {
+                // TODO: roll back changes
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "]"));
                 throw;
@@ -300,13 +309,37 @@ namespace RentItServer.SMU
 
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
+            try
+            {
+                _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), MP3);
+                _dao.UpdateBook(bookId, null, null, null, null, DateTime.MinValue, -1, null, FilePath.SMUAudioPath+FileName.GenerateAudioFileName(bookId));
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("UploadAudio failed with exception [" + e + "]"));
+                throw;
+            }
+        }
 
+        public MemoryStream DownloadAudio(int bookId)
+        {
+            MemoryStream theAudio;
+            try{
+                theAudio = _fileSystemHandler.Read(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                theAudio.Position = 0L;
+            }
+            catch (Exception e){
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("DownloadAudio failed with exception [" + e + "]"));
+                throw;
+            }
+            return theAudio;
         }
 
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
-            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
+            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId), pdf);
         }
     }
 }
