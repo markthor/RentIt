@@ -104,7 +104,7 @@ namespace RentItServer_UnitTests
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
             }
-            catch (Exception e) {
+            catch (Exception) {
                 Assert.Fail();
             }
         }
@@ -157,7 +157,7 @@ namespace RentItServer_UnitTests
                 controller.RentBook(userId, bookId, DateTime.Now, mediaTypeRent);
                 result = controller.HasRental(userId, bookId);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail();
             }
@@ -180,7 +180,7 @@ namespace RentItServer_UnitTests
             {
                 book = controller.GetBookInfo(bookId);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 Assert.Fail();
             }
@@ -262,7 +262,7 @@ namespace RentItServer_UnitTests
                 controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
                 result = controller.GetPopularBooks();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail();
             }
@@ -288,7 +288,7 @@ namespace RentItServer_UnitTests
                 result3 = controller.SearchBooks("lett");
                 result4 = controller.SearchBooks("God");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail();
             }
