@@ -325,10 +325,7 @@ namespace RentItServer.ITU
         {
             ChannelOrganizer co = ChannelOrganizer.GetInstance();
 
-            if (!co.IsChannelRunnig(channelId))
-            {
-                co.StartChannel(channelId);
-            }
+            co.StartChannel(1);
             return co.GetChannelPortNumber(channelId);
         }
     }
