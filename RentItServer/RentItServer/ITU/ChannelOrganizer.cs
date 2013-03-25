@@ -16,8 +16,6 @@ namespace RentItServer.ITU
         Dictionary<int, ChannelStreamer> channelsDic;
         //port number, channelId
         Dictionary<int, int> channelsPortDic;
-        //channelId, socket
-        Dictionary<int,Socket> channelSocketDic;
 
         //The next port number to be assignd
         private int currentPort;
@@ -49,60 +47,8 @@ namespace RentItServer.ITU
 
             channelsDic = new Dictionary<int, ChannelStreamer>();
             channelsPortDic = new Dictionary<int, int>();
-            channelSocketDic = new Dictionary<int, Socket>();
             currentPort = 22000;
             Console.WriteLine("Setup: setup done");
-        }
-
-        public void StartListener(int channelId)
-        {
-            Console.WriteLine("StartListener: Listener started - chID: " + channelId);
-
-
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            ChannelStreamer channel = null;
-            if (channelsDic.TryGetValue(channelId, out channel))
-            {
-                IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, channel.PortNumber);
-                s.Bind(endpoint);
-
-                s.Listen(1);
-
-                AsyncCallback aCallback = new AsyncCallback(OnClientConnect);
-                s.BeginAccept(aCallback, s);
-
-                channelSocketDic.Add(channelId, s);
-            }
-            else
-            {
-                Console.WriteLine("StartListener: Channel eksisterer ikke - chID: " + channelId);
-                //channel eksisterer ikke
-                //er det muligt på det her tidspunkt?
-            }
-        }
-
-        private void OnClientConnect(IAsyncResult ar)
-        {
-            Console.WriteLine("Client connected");
-            Socket listener = (Socket)ar.AsyncState;
-            Socket client = listener.EndAccept(ar);
-
-            int port = ((IPEndPoint)client.LocalEndPoint).Port;
-            int cId = -1;
-            if (channelsPortDic.TryGetValue(port, out cId))
-            {
-                channelsDic[cId].AddClient(client);
-            }
-            else
-            {
-                Console.WriteLine("OnClientConnect: Channel eksisterer ikke - portNumber: " + port);
-                //Is it ever possible that the channel is not running when someone connects? if it is not, then this should be an error
-                //start channel, then add
-            }
-
-            AsyncCallback aCallback = new AsyncCallback(OnClientConnect);
-            listener.BeginAccept(aCallback, listener);
         }
 
         public int GetChannelPortNumber(int channelId)
@@ -117,15 +63,14 @@ namespace RentItServer.ITU
                 }
                 else
                 {
+                    throw new ChannelNotFound("ChannelId: " + channelId + " is not found in \"channelsDic\"-dictionary");
                     //error, channel should exsist
                 }
             }
             else
             {
-                //error channel should be running now
+                throw new ChannelNotRunningException("ChannelId: " + channelId + " is not running");
             }
-
-            return -1;
         }
 
         //Den her metode er public for the sake of testing lige nu. Channels skal startes herinde fra på en måde regner jeg med
@@ -142,8 +87,6 @@ namespace RentItServer.ITU
                 channelsPortDic.Add(currentPort, channelId);
                 currentPort++;
 
-                StartListener(channelId);
-
                 Console.WriteLine("StartChannel: Channel started - chID: " + channelId);
             }
         }
@@ -158,9 +101,37 @@ namespace RentItServer.ITU
                 }
                 else
                 {
-                    return false;
+                    throw new ChannelNotFound("ChannelId: " + channelId + " is not found in \"channelsDic\"-dictionary");
                 }
             }
+        }
+    }
+
+    class ChannelNotRunningException : Exception
+    {
+        string ErrorMessage
+        {
+            get;
+            set;
+        }
+
+        public ChannelNotRunningException(string message)
+        {
+            ErrorMessage = message;
+        }
+    }
+
+    class ChannelNotFound : Exception
+    {
+        string ErrorMessage
+        {
+            get;
+            set;
+        }
+
+        public ChannelNotFound(string message)
+        {
+            ErrorMessage = message;
         }
     }
 }
