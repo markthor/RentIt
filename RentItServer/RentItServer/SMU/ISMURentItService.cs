@@ -10,69 +10,109 @@ namespace RentItServer.SMU
     [ServiceContract]
     public interface ISMURentItService
     {
-        //sign up a new user account
-        //creates and int userId in database
-        //returns 0 if sign up successful
-        //returns 1 if email already in use
-        //return -1 if email is already in use
-        //return userId if sign up is successful
+        /// <summary>
+        /// Signs up a new user account.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="isAdmin">if user is admin.</param>
+        /// <returns>The id of the user, -1 if email is already in use</returns>
         [OperationContract]
         int SignUp(string email, string name, string password, bool isAdmin);
 
-        //existing user login (with email address)
-        //returns 0 if email/pass is invalid
-        //returns int userId if login successful
-        //return -1 if email/pass is invalid
-        //return userId if logIn successful
+        /// <summary>
+        /// Log in the existing user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The id of the user, -1 if email/password pair is invalid</returns>
         [OperationContract]
         int LogIn(string email, string password);
 
-        //get user account info
-        //not sure what this will return. We want to get all info for a user (name, password, email etc.)
+        /// <summary>
+        /// Gets the user account info.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>The user with the associated id, null if userId does not exist</returns>
         [OperationContract]
         User GetUserInfo(int userId);
 
-        //update user information
-        //returns true if changes updated
+        /// <summary>
+        /// Updates the user info.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="isAdmin">The users admin status.</param>
+        /// <returns>The updated user</returns>
         [OperationContract]
         User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
 
-        //delete user account
-        //returns true if account deleted
+        /// <summary>
+        /// Deletes the user account.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <exception cref="ArgumentException">userId doesn't exist.</exception>
         [OperationContract]
         void DeleteAccount(int userId);
 
-        //returns a list of books arranged by specified parameter (date, hit, etc)
-        //list will contain listSize number of books 
-        //List<Book> GetBooks(string sortString, int listSize);
-
-        //check if user has rented a specific book
-        //return -1 if not rented
-        //return 0 if rented PDF
-        //return 1 if rented audio
-        //return 2 if rented both
+        /// <summary>
+        /// Gets all books.
+        /// </summary>
+        /// <returns>An array containing all books on the server</returns>
         [OperationContract]
-        int HasRental(int userId, int bookId);
+        Book[] GetAllBooks();
 
-        //returns all books
+        /// <summary>
+        /// Gets the 30 most popular books.
+        /// </summary>
+        /// <returns>An array containing 30 books with the most hits</returns>
         [OperationContract]
-        List<Book> GetAllBooks();
+        Book[] GetPopularBooks();
 
-        //returns up to 30 books with the most hits.
+        /// <summary>
+        /// Gets the books that have been added within the last 30 days.
+        /// </summary>
+        /// <returns>An array of all books added within the last 30 days</returns>
         [OperationContract]
-        List<Book> GetPopularBooks();
+        Book[] GetNewBooks();
 
-        //returns books that contains the search string in its title or author.
+        /// <summary>
+        /// Searches for books containing the search string.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>An array containing all books containing the search string</returns>
         [OperationContract]
-        List<Book> SearchBooks(String searchString);
+        Book[] SearchBooks(String searchString);
 
         //returns books with the specified genre.
+        /// <summary>
+        /// Gets the books with the specified genre.
+        /// </summary>
+        /// <param name="genre">The genre.</param>
+        /// <returns>Am array of all books matching the genre</returns>
         [OperationContract]
-        List<Book> GetBooksByGenre(String genre);
+        Book[] GetBooksByGenre(String genre);
 
-        //returns the book object with the specified id.
+        /// <summary>
+        /// Gets the book object associated with the book id.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>The book</returns>
+        /// <exception cref="ArgumentException">A book with the given id does not exist</exception>
         [OperationContract]
         Book GetBookInfo(int bookId);
+
+        /// <summary>
+        /// Determines whether the specified user id has a book rental.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>0 if user rented a pdf, 1 if user rented audio, 2 if user rented both, -1 if user haven't rented</returns>
+        [OperationContract]
+        int HasRental(int userId, int bookId);
 
         /// <summary>
         /// Rents a book or and audio file to a user.
@@ -85,11 +125,19 @@ namespace RentItServer.SMU
         [OperationContract]
         int RentBook(int userId, int bookId, DateTime startDate, int mediaType);
 
-        //Returns a MemoryStream that contains the PDF file.
+        /// <summary>
+        /// Downloads the PDF for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>Stream containing the contents of the pdf.</returns>
         [OperationContract]
         MemoryStream DownloadPDF(int bookId);
 
-        //Returns a MemoryStream that contains the audio file.
+        /// <summary>
+        /// Downloads the audio for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>Stream containing the audio.</returns>
         [OperationContract]
         MemoryStream DownloadAudio(int bookId);
 
@@ -97,23 +145,54 @@ namespace RentItServer.SMU
          * Admin stuff
          * *********************************************/
 
-        //delete a book
+        /// <summary>
+        /// Deletes the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <exception cref="ArgumentException">book id does not exist.</exception>
         [OperationContract]
         void DeleteBook(int bookId);
 
-        //Adds a book object withoud PDF or audio files.
+        /// <summary>
+        /// Adds a book object to the databse withoud associated PDF or audio files.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="author">The author.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="genre">The genre.</param>
+        /// <param name="dateAdded">The date added.</param>
+        /// <param name="price">The price.</param>
+        /// <returns>The id of the book.</returns>
         [OperationContract]
         int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price);
 
-        //Updates information of an existing book object.
+        /// <summary>
+        /// Updates the book.
+        /// </summary>
+        /// <param name="bookId">The book id. Can be null.</param>
+        /// <param name="title">The title. Can be null.</param>
+        /// <param name="author">The author. Can be null.</param>
+        /// <param name="description">The description. Can be null.</param>
+        /// <param name="genre">The genre. Can be null.</param>
+        /// <param name="dateAdded">The date added.</param>
+        /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
+        /// <returns>The updated book</returns>
         [OperationContract]
         Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price);
 
-        //Uploads an audio file to a book. Overrides if audio is already existing.
+        /// <summary>
+        /// Uploads an audio file to a book. Overrides if audio file already exists.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <param name="MP3">The Mp3.</param>
         [OperationContract]
         void UploadAudio(int bookId, MemoryStream MP3);
 
-        //Uploads a PDF file to a book. Overrides if PDF is already existing.
+        /// <summary>
+        /// Uploads a PDF file to a book. Overrides if PDF file already exists.
+        /// </summary>
+        /// <param name="bookID">The book ID.</param>
+        /// <param name="PDF">The PDF.</param>
         [OperationContract]
         void UploadPDF(int bookID, MemoryStream PDF);
     }

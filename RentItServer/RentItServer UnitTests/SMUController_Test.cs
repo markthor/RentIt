@@ -210,7 +210,7 @@ namespace RentItServer_UnitTests
         public void TestGetAllBooks()
         {
             SMUController controller = SMUController.GetInstance();
-            List<Book> result = null;
+            Book[] result = null;
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
@@ -223,7 +223,7 @@ namespace RentItServer_UnitTests
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(4, result.Length);
         }
 
         //Bad test, does not test for exclution of books with low hit count.
@@ -231,7 +231,7 @@ namespace RentItServer_UnitTests
         public void TestGetPopularBooks()
         {
             SMUController controller = SMUController.GetInstance();
-            List<Book> result = null;
+            Book[] result = null;
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
@@ -244,7 +244,40 @@ namespace RentItServer_UnitTests
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(4, result.Length);
+        }
+
+        [TestMethod]
+        public void TestSearchBooks()
+        {
+            SMUController controller = SMUController.GetInstance();
+            Book[] result1 = null;
+            Book[] result2 = null;
+            Book[] result3 = null;
+            Book[] result4 = null;
+            try
+            {
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                result1 = controller.SearchBooks("Fall Of The Giants");
+                result2 = controller.SearchBooks("Sin");
+                result3 = controller.SearchBooks("lett");
+                result4 = controller.SearchBooks("God");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail();
+            }
+            Assert.AreEqual(1, result1.Length);
+            Assert.AreEqual(1, result2.Length);
+            Assert.AreEqual(1, result3.Length);
+            Assert.AreEqual(1, result4.Length);
+            Assert.AreEqual("Ken Folett", result1[0].author);
+            Assert.AreEqual("Sin Zu", result2[0].author);
+            Assert.AreEqual("Ken Folett", result3[0].author);
+            Assert.AreEqual("God", result4[0].author);
         }
 
 
