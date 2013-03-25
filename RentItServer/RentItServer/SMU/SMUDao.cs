@@ -190,11 +190,12 @@ namespace RentItServer.SMU
                             select book;
 
                 int limit = 30;
+                int accumulatorValue = 1;
                 foreach (SMUbook book in books)
                 {
                     list.Add(book.GetBook());
-                    limit++;
-                    if (limit >= 30) break;
+                    accumulatorValue++;
+                    if (accumulatorValue >= limit) break;
                 }
             }
             return list;
@@ -222,14 +223,14 @@ namespace RentItServer.SMU
             return theBooks;
         }
 
-        public List<Book> SearhBooks(string searchString)
+        public List<Book> SearchBooks(string searchString)
         {
             if (searchString == null) throw new ArgumentNullException("searchString");
             List<Book> list = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
-                            where book.title.StartsWith(searchString)
+                            where (book.title.Contains(searchString) || book.author.Contains(searchString))
                             select book;
 
                 foreach (SMUbook book in books)
