@@ -10,19 +10,40 @@ namespace RentItServer.Utilities
     {
         private string path;
 
-        public static readonly FilePath SMUFilePath = new FilePath("C:" + Path.DirectorySeparatorChar +
-            "Users" + Path.DirectorySeparatorChar +
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
+        public static readonly FilePath SMUAudioPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
-            "Files");
+            "Audio");
 
-        public static readonly FilePath ITUTrackPath = new FilePath("C:" + Path.DirectorySeparatorChar +
-            "Users" + Path.DirectorySeparatorChar +
-            "Rentit21" + Path.DirectorySeparatorChar +
-            "Documents" + Path.DirectorySeparatorChar +
+        public static readonly FilePath SMULogPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "SMU" + Path.DirectorySeparatorChar +
+            "Log");
+
+        public static readonly FilePath SMUPdfPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "SMU" + Path.DirectorySeparatorChar +
+            "PDF");
+
+        public static readonly FilePath ITUTrackPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "Tracks");
+
+        public static readonly FilePath ITULogPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "Log");
 
         private FilePath(string path)
         {

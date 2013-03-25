@@ -12,12 +12,6 @@ namespace RentItServer.ITU
     /// </summary>
     public class Controller
     {
-        private static readonly string DirectoryPath = "C:" + Path.DirectorySeparatorChar +
-                                                        "Users" + Path.DirectorySeparatorChar +
-                                                        "Rentit21" + Path.DirectorySeparatorChar +
-                                                        "Documents" + Path.DirectorySeparatorChar +
-                                                        "ITU" + Path.DirectorySeparatorChar;
-
         private static readonly string LogFileName = "ItuLogs.txt";
         //Singleton instance of the class
         private static Controller _instance;
@@ -50,7 +44,7 @@ namespace RentItServer.ITU
                 _channelCache[channel.id] = channel;
             }
             // Initialize user search trie
-            _logger = new Logger(DirectoryPath + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.ITULogPath.GetPath() + Path.DirectorySeparatorChar + LogFileName, ref _handler);
         }
 
         /// <summary>
