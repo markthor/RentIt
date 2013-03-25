@@ -27,7 +27,7 @@ namespace RentItServer.SMU
         public string description { get; set; }
         public string genre { get; set; }
         public double price { get; set; }
-        public System.DateTime dateAdded { get; set; }
+        public DateTime dateAdded { get; set; }
         public Nullable<int> audioId { get; set; }
         public int hit { get; set; }
     }
