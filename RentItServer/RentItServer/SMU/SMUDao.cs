@@ -45,7 +45,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public SMUuser GetUser(int userId)
+        public User GetUser(int userId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -57,11 +57,16 @@ namespace RentItServer.SMU
                 {
                     throw new ArgumentException("No SMUuser with userId = " + userId);
                 }
-                return users.First();
+                SMUuser result = users.First();
+                if (result != null)
+                {
+                    return result.GetUser();
+                }
+                return null;
             }
         }
 
-        public SMUuser UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
             if (email == null) throw new ArgumentNullException("email");
@@ -89,7 +94,7 @@ namespace RentItServer.SMU
                 theUser.isAdmin = isAdmin;
                 proxy.SaveChanges();
 
-                return theUser;
+                return theUser.GetUser();
             }
         }
 
@@ -486,9 +491,8 @@ namespace RentItServer.SMU
             return theBook.GetBook();
         }
 
-        public void DeleteAllSMUData()
+        public void DeleteSMUDatabaseData()
         {
-            /*
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 //Delete all SMUusers
@@ -505,28 +509,20 @@ namespace RentItServer.SMU
                     proxy.SMUbooks.Remove(b);
                 }
 
-                //Delete all documents
-                var documents = context.Documents;
-                foreach (Document d in documents)
+                //Delete all SMUaudio
+                var audio = proxy.SMUaudios;
+                foreach (SMUaudio a in audio)
                 {
-                    context.Documents.DeleteObject(d);
+                    proxy.SMUaudios.Remove(a);
                 }
 
-                //Delete all documentRevision
-                var documentRevisions = context.Documentrevisions;
-                foreach (Documentrevision d in documentRevisions)
+                //Delete all rentals
+                var rentals = proxy.SMUrentals;
+                foreach (SMUrental r in rentals)
                 {
-                    context.Documentrevisions.DeleteObject(d);
+                    proxy.SMUrentals.Remove(r);
                 }
-
-                //Delete all userDocuments
-                var userdocuments = context.Userdocuments;
-                foreach (Userdocument ud in userdocuments)
-                {
-                    context.Userdocuments.DeleteObject(ud);
-                }
-                context.SaveChanges();
-                */
+                proxy.SaveChanges();
             }
         }
     }

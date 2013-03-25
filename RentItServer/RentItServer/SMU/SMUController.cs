@@ -83,7 +83,7 @@ namespace RentItServer.SMU
             User user;
             try
             {
-                user = _dao.GetUser(id).GetUser();
+                user = _dao.GetUser(id);
             }
             catch (Exception e)
             {
@@ -99,7 +99,7 @@ namespace RentItServer.SMU
             User user;
             try
             {
-                user = _dao.UpdateUserInfo(userId, email, username, password, isAdmin).GetUser();
+                user = _dao.UpdateUserInfo(userId, email, username, password, isAdmin);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("UpdateUserInfo. User id [" + userId + "]'s new attributes: email [" + email + "] username [" + username + "] password [" + password + "] isAdmin [" + isAdmin + "]"));
             }
@@ -309,9 +309,9 @@ namespace RentItServer.SMU
             _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
         }
 
-        public void DeleteEntireDatabase()
+        public void DeleteSMUDatabaseData()
         {
-
+            _dao.DeleteSMUDatabaseData();
         }
     }
 }
