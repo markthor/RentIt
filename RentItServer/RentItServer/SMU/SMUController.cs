@@ -106,5 +106,10 @@ namespace RentItServer.SMU
             String relativePath = String.Format("{0}PDF_BookId_{1}.pdf", Path.DirectorySeparatorChar, bookId.ToString());
             _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
         }
+
+        public void DeleteEntireDatabase()
+        {
+
+        }
     }
 }

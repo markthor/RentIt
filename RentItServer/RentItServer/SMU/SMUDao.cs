@@ -479,5 +479,49 @@ namespace RentItServer.SMU
                 proxy.SaveChanges();
             }
         }
+
+        public void DeleteAllSMUData()
+        {
+            /*
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                //Delete all SMUusers
+                var users = proxy.SMUusers;
+                foreach (SMUuser u in users)
+                {
+                    proxy.SMUusers.Remove(u);
+                }
+
+                //Delete all SMUbooks
+                var books = proxy.SMUbooks;
+                foreach (SMUbook b in books)
+                {
+                    proxy.SMUbooks.Remove(b);
+                }
+
+                //Delete all documents
+                var documents = context.Documents;
+                foreach (Document d in documents)
+                {
+                    context.Documents.DeleteObject(d);
+                }
+
+                //Delete all documentRevision
+                var documentRevisions = context.Documentrevisions;
+                foreach (Documentrevision d in documentRevisions)
+                {
+                    context.Documentrevisions.DeleteObject(d);
+                }
+
+                //Delete all userDocuments
+                var userdocuments = context.Userdocuments;
+                foreach (Userdocument ud in userdocuments)
+                {
+                    context.Userdocuments.DeleteObject(ud);
+                }
+                context.SaveChanges();
+                */
+            }
+        }
     }
 }
