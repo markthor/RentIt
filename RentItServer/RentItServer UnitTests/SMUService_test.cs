@@ -54,9 +54,9 @@ namespace RentItServer_UnitTests
                 if (b.id == bookId1)
                     boo1 = true;
                 if (b.id == bookId2)
-                    boo1 = true;
+                    boo2 = true;
                 if (b.id == bookId3)
-                    boo1 = true;
+                    boo3 = true;
             }
             Assert.AreEqual(true, boo1 && boo2 && boo3);         
         }
