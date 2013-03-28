@@ -289,12 +289,20 @@ namespace RentItServer.SMU
 
                 if (books.Any() == false) throw new ArgumentException("no book with bookId = " + bookId);
 
+                var us = from user in proxy.SMUusers
+                           where user.id == userId
+                           select user;
+
+                if (us.Any() == false) throw new ArgumentException("No user with that userid");
+
                 SMUrental theRental = new SMUrental()
                 {
                     userId = userId,
                     startDate = time
                 };
                 SMUbook theBook = books.First();
+                SMUuser theUser = us.First();
+
                 if (mediaType == 0)
                 {   // Only rent the pdf
                     if (theBook.PDFFilePath == null) throw new ArgumentException("mediaType parameter specified pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with a pdf. ");
@@ -315,7 +323,7 @@ namespace RentItServer.SMU
                     theRental.bookId = bookId;
                     theRental.audioId = theBook.audioId;
                 }
-
+                theRental.SMUuser = theUser;
                 theBook.hit += 1;
                 proxy.SMUrentals.Add(theRental);
                 proxy.SaveChanges();
