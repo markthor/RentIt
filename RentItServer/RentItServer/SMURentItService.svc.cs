@@ -226,6 +226,7 @@ namespace RentItServer
         /// <param name="MP3">The Mp3.</param>
         public void UploadAudio(int bookId, MemoryStream MP3)
         {
+            throw new NotImplementedException();
             _smuController.UploadAudio(bookId, MP3);
         }
 
@@ -238,6 +239,7 @@ namespace RentItServer
         /// </returns>
         public MemoryStream DownloadAudio(int bookId)
         {
+            throw new NotImplementedException();
             return _smuController.DownloadAudio(bookId);
         }
 
@@ -248,6 +250,7 @@ namespace RentItServer
         /// <param name="pdf">The PDF.</param>
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
+            throw new NotImplementedException();
             _smuController.UploadPDF(bookId, pdf);
         }
 
@@ -260,6 +263,7 @@ namespace RentItServer
         /// </returns>
         public MemoryStream DownloadPDF(int bookId)
         {
+            throw new NotImplementedException();
             return _smuController.DownloadPDF(bookId);
         }
     }

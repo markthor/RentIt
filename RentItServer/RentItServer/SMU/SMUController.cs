@@ -30,6 +30,9 @@ namespace RentItServer.SMU
             return _instance ?? (_instance = new SMUController());
         }
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="SMUController"/> class from being created.
+        /// </summary>
         private SMUController()
         {
             _logger = new Logger(FilePath.SMULogPath.GetPath() + LogFileName, ref _handler);
@@ -65,7 +68,7 @@ namespace RentItServer.SMU
         /// Signs up a new user account.
         /// </summary>
         /// <param name="email">The email.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="isAdmin">if user is admin.</param>
         /// <returns>
@@ -226,14 +229,14 @@ namespace RentItServer.SMU
         /// <returns>
         /// The id of the rental object
         /// </returns>
-        public int RentBook(int userId, int bookId, DateTime time, int mediaType)
+        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
             int rentalId;
             try
             {
-                rentalId = _dao.RentBook(userId, bookId, time, mediaType);
+                rentalId = _dao.RentBook(userId, bookId, startDate, mediaType);
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] time [" + time + "] mediaType [" + mediaType + "]"));
+                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] startDate [" + startDate + "] mediaType [" + mediaType + "]"));
             
                   }
             catch (Exception e)
