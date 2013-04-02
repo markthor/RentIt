@@ -118,10 +118,10 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
             controller.UploadPDF(bookId, new System.IO.MemoryStream());
-            int rental = controller.RentBook(user, bookId, DateTime.Now, 0);
+            int rental = controller.RentBook(user, bookId, 0);
             try
             {
-                controller.RentBook(Int32.MaxValue, Int32.MaxValue,DateTime.Now , 0);
+                controller.RentBook(Int32.MaxValue, Int32.MaxValue, 0);
                 Assert.Fail();
             }
             catch (Exception)
@@ -286,10 +286,10 @@ namespace RentItServer_UnitTests
             Book[] result4 = null;
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
-                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
                 result1 = controller.SearchBooks("Fall Of The Giants");
                 result2 = controller.SearchBooks("Sin");
                 result3 = controller.SearchBooks("lett");
@@ -309,7 +309,15 @@ namespace RentItServer_UnitTests
             Assert.AreEqual("God", result4[0].author);
         }
 
-
+        [TestMethod]
+        public void TestGetBooksByGenre()
+        {
+            SMUController controller = SMUController.GetInstance();
+            controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+            controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+            controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
+            controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
+        }
 
     }
 }
