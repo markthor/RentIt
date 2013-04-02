@@ -161,6 +161,19 @@ namespace RentItServer.SMU
                         }
                     }
                 }
+                // returns 2, 1 or 0 depending on audio and pdf
+                if (aud == true && pdf == true)
+                {
+                    return 2;
+                }
+                if (aud == true)
+                {
+                    return 1;
+                }
+                if (pdf == true)
+                {
+                    return 0;
+                }
                 return theRental.mediaType;
             }
         }
