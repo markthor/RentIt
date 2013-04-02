@@ -26,12 +26,12 @@ namespace RentItServer
         public string genre { get; set; }
         public double price { get; set; }
         public System.DateTime dateAdded { get; set; }
-        public Nullable<int> audioId { get; set; }
         public string PDFFilePath { get; set; }
         public string imageFilePath { get; set; }
         public int hit { get; set; }
+        public string audioFilePath { get; set; }
+        public string audioNarrator { get; set; }
     
-        public virtual SMUaudio SMUaudio { get; set; }
         public virtual ICollection<SMUrental> SMUrentals { get; set; }
     }
 }

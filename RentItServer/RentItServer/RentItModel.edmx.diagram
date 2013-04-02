@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fa280c6c045c446f93dff629d66871cd" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="fa280c6c045c446f93dff629d66871cd" Name="Diagram1" ZoomLevel="79">
         <EntityTypeShape EntityType="RENTITModel.Channel" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="RENTITModel.Comment" Width="1.5" PointX="0.5" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="RENTITModel.Genre" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
@@ -21,14 +21,12 @@
         <AssociationConnector Association="RENTITModel.FK__votes__userId__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.channelgenres" ManuallyRouted="false" />
         <AssociationConnector Association="RENTITModel.subscriptions" ManuallyRouted="false" ></AssociationConnector>
-        <EntityTypeShape EntityType="RENTITModel.SMUaudio" Width="1.5" PointX="1.75" PointY="17.5" />
-        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="5.25" PointY="18.5" />
-        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="8.375" PointY="17.125" />
-        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="8.375" PointY="20.375" />
-        <AssociationConnector Association="RENTITModel.FK_SMUbooks_audioId" />
-        <AssociationConnector Association="RENTITModel.FK_SMUrentals_audioId" />
+        <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="3.125" PointY="17.75" />
+        <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="5.625" PointY="17.75" />
+        <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="8.25" PointY="17.75" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_bookId" />
         <AssociationConnector Association="RENTITModel.FK_SMUrentals_userId" />
+        <EntityTypeShape EntityType="RENTITModel.sysdiagram" Width="1.5" PointX="5.2348675770847439" PointY="3.5336730943683876" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

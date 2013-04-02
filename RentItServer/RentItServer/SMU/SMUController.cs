@@ -286,7 +286,7 @@ namespace RentItServer.SMU
             {
                 SMUbook book = _dao.GetBookInfo(bookId);
                 _dao.DeleteBook(bookId);
-                SMUaudio audio = null;
+                string audio = null;
                 try
                 {
                     if (book.PDFFilePath != null && book.PDFFilePath.Equals(string.Empty))
@@ -297,10 +297,10 @@ namespace RentItServer.SMU
                     {
                         _fileSystemHandler.DeleteFile(book.imageFilePath);
                     }
-                    if (book.audioId != null)
+                    if (book.audioFilePath != null)
                     {
-                        audio = _dao.GetAudio((int)book.audioId);
-                        _fileSystemHandler.DeleteFile(audio.filePath);
+                        audio = book.audioFilePath;
+                        _fileSystemHandler.DeleteFile(book.audioFilePath);
                     }
                 }
                 catch (Exception e)
@@ -310,8 +310,8 @@ namespace RentItServer.SMU
                         msg += "Pdf file was not deleted at path ["+book.PDFFilePath+"]. ";
                     if (_fileSystemHandler.Exists(book.imageFilePath))
                         msg += "Image file was not deleted at path [" + book.imageFilePath + "]. ";
-                    if (audio != null && _fileSystemHandler.Exists(audio.filePath))
-                        msg += "Audio file was not deleted at path ["+audio.filePath+"]. ";
+                    if (audio != null && _fileSystemHandler.Exists(audio))
+                        msg += "Audio file was not deleted at path ["+audio+"]. ";
 
                     if (_handler != null)
                         _handler(this, new RentItEventArgs(msg));
@@ -478,12 +478,13 @@ namespace RentItServer.SMU
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="mp3">The mp3.</param>
-        public void UploadAudio(int bookId, MemoryStream mp3)
+        /// <param name="narrator">The narrator.</param>
+        public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId), narrator);
             }
             catch (Exception e)
             {

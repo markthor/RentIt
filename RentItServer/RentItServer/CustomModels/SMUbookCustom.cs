@@ -10,7 +10,7 @@ namespace RentItServer
     {
         public Book GetBook()
         {
-            return new Book(id, title, author, description, genre, price, dateAdded, audioId, hit);
+            return new Book(id, title, author, description, genre, price, dateAdded, audioId, audioNarrator, hit);
         }
     }
 }

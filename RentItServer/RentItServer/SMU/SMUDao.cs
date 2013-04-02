@@ -122,8 +122,6 @@ namespace RentItServer.SMU
         //return 0 if rented PDF
         //return 1 if rented audio
         //return 2 if rented both
-
-
         public int HasRental(int userId, int bookId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -146,20 +144,7 @@ namespace RentItServer.SMU
                     proxy.SaveChanges();
                     return -1;
                 }
-
-                if (theRental.audioId != null && theRental.bookId != null)
-                {
-                    return 2;
-                }
-                if (theRental.audioId != null)
-                {
-                    return 1;
-                }
-                if (theRental.bookId != null)
-                {
-                    return 0;
-                }
-                throw new Exception("There was a rental, but bookId and audioId was null. Dayum");
+                return theRental.mediaType;
             }
         }
 
@@ -303,39 +288,30 @@ namespace RentItServer.SMU
                 if (books.Any() == false) throw new ArgumentException("no book with bookId = " + bookId);
 
                 var us = from user in proxy.SMUusers
-                           where user.id == userId
-                           select user;
+                         where user.id == userId
+                         select user;
 
                 if (us.Any() == false) throw new ArgumentException("No user with that userid");
 
                 SMUrental theRental = new SMUrental()
                 {
                     userId = userId,
-                    startDate = time
+                    startDate = time,
+                    bookId = bookId,
+                    mediaType = mediaType
                 };
                 SMUbook theBook = books.First();
                 SMUuser theUser = us.First();
 
-                if (mediaType == 0)
-                {   // Only rent the pdf
+                if (mediaType == 0 || mediaType == 2)
+                {   // Only rent the pdf, throw exception if there's no pdf path
                     if (theBook.PDFFilePath == null) throw new ArgumentException("mediaType parameter specified pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with a pdf. ");
-
-                    theRental.bookId = bookId;
                 }
                 if (mediaType == 1)
-                {   // Only rent the audio for the book
-                    if (theBook.audioId == null) throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
-
-                    theRental.audioId = theBook.audioId;
+                {   // Only rent the audio for the book, throw exception if there's no audio path
+                    if (theBook.audioFilePath == null) throw new ArgumentException("mediaType parameter specified audio. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
                 }
-                if (mediaType == 2)
-                {   // Rent both the book and the audio for the book
-                    if (theBook.audioId == null) throw new ArgumentException("mediaType parameter specified audio and pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with audio. ");
-                    if (theBook.PDFFilePath == null) throw new ArgumentException("mediaType parameter specified audio and pdf. The book [" + theBook.title + "] with id [" + theBook.id + "] is not associated with a pdf. ");
-
-                    theRental.bookId = bookId;
-                    theRental.audioId = theBook.audioId;
-                }
+                theRental.SMUbook = theBook;
                 theRental.SMUuser = theUser;
                 theBook.hit += 1;
                 proxy.SMUrentals.Add(theRental);
@@ -371,7 +347,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public int AddAudio(int bookId, string filePath)
+        public void AddAudio(int bookId, string filePath, string narrator)
         {
             // if (userId < 0) throw new ArgumentException("userId < 0");
 
@@ -386,42 +362,13 @@ namespace RentItServer.SMU
                 }
                 SMUbook theBook = books.First();
 
-                SMUaudio theAudio = new SMUaudio()
-                {
-                    narrator = "Narrator :)",
-                    filePath = filePath,
-                    SMUbooks = new Collection<SMUbook>(),
-                    SMUrentals = new Collection<SMUrental>()
-                };
-
-                proxy.SMUaudios.Add(theAudio);
+                theBook.audioNarrator = narrator;
+                theBook.audioFilePath = filePath;
+                
                 proxy.SaveChanges();
-
-                theBook.audioId = theAudio.id;
-                theBook.SMUaudio = theAudio;
-                proxy.SaveChanges();
-                return theAudio.id;
             }
         }
-
-        /// <summary>
-        /// Gets the audio object associated with audioId.
-        /// </summary>
-        /// <param name="audioId">The audio id.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentException">No audio entry with audio id [+audioId+].</exception>
-        public SMUaudio GetAudio(int audioId)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var audios = from audio in context.SMUaudios
-                             where audio.id == audioId
-                             select audio;
-                if(audios.Any() == false)   throw new ArgumentException("No audio entry with audio id ["+audioId+"].");
-                return audios.First();
-            }
-        }
-
+        
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
@@ -443,10 +390,8 @@ namespace RentItServer.SMU
                     description = description,
                     genre = genre,
                     price = price,
-                    audioId = null,
                     dateAdded = dateAdded,
                     SMUrentals = new Collection<SMUrental>(),
-                    SMUaudio = null
                 };
 
                 proxy.SMUbooks.Add(theBook);
@@ -513,13 +458,6 @@ namespace RentItServer.SMU
                 foreach (SMUbook b in books)
                 {
                     proxy.SMUbooks.Remove(b);
-                }
-
-                //Delete all SMUaudio
-                var audio = proxy.SMUaudios;
-                foreach (SMUaudio a in audio)
-                {
-                    proxy.SMUaudios.Remove(a);
                 }
 
                 //Delete all rentals
