@@ -174,7 +174,7 @@ namespace RentItServer.SMU
                 {
                     return 0;
                 }
-                return theRental.mediaType;
+                return -1;
             }
         }
 
