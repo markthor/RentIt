@@ -276,59 +276,24 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         public void DeleteBook(int bookId)
         {
-            MemoryStream pdf = null;
-            MemoryStream audio = null;
+            SMUbook book = _dao.GetBookInfo(bookId);
             try
             {
-                SMUbook dbBook = _dao.GetBookInfo(bookId);
-                string pdfFilePath = dbBook.PDFFilePath;
-                if (pdfFilePath != null)
+                _dao.DeleteBook(bookId);
+                if (!book.PDFFilePath.Equals(string.Empty))
                 {
-                    // Backup the book
-                    try
-                    {
-                        pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
-                    }
-                    catch (Exception e)
-                    {
-                        if (_handler != null)
-                            _handler(this, new RentItEventArgs("Reading pdf at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
-                    }
+                    File.Delete(book.PDFFilePath);
                 }
-                if (dbBook.audioId != null)
-                {   // Backup the audio
-                    try
-                    {
-                        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
-                    }
-                    catch (Exception e)
-                    {
-                        if (_handler != null)
-                            _handler(this, new RentItEventArgs("Reading audio at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
-                    }
-                }
-                try
+                if (book.audioId != null)
                 {
-                    _dao.DeleteBook(bookId);
+                    string audioPath = string.Concat(FilePath.SMUAudioPath.GetPath(),
+                                                     FileName.GenerateAudioFileName(bookId));
+                    File.Delete(audioPath);
                 }
-                catch (SqlException)
-                {
-                    if (pdf != null)
-                    {
-                        //Write pdf again
-                        _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId), pdf);
-                    }
-                    if (audio != null)
-                    {
-                        //Write audio again
-                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);
-                    }
-                }
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
             }
             catch (Exception e)
             {
+                //Delete book failed
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "], no changes occurred."));
                 throw;
