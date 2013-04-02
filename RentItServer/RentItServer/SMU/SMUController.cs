@@ -560,5 +560,11 @@ namespace RentItServer.SMU
             string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), filename);
             _dao.AddImage(bookId, fullPath);
         }
+
+        public MemoryStream DownloadImage(int bookId)
+        {
+            string filename = FileName.GenerateImageFileName(bookId);
+            return _fileSystemHandler.ReadFile(FilePath.SMUImagePath, filename);
+        }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using RentItServer.ITU;
 
 namespace RentItServer.SMU
 {
@@ -119,7 +116,6 @@ namespace RentItServer.SMU
         /// </summary>
         /// <param name="userId">The user id</param>
         /// <param name="bookId">The book id</param>
-        /// <param name="startDate">The date that the rent starts</param>
         /// <param name="mediaType">0 if PDF, 1 if audio, 2 if both PDF and audio</param>
         /// <returns>The id of the rental object</returns>
         [OperationContract]
@@ -131,7 +127,7 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         /// <returns>Stream containing the contents of the pdf.</returns>
         [OperationContract]
-        MemoryStream DownloadPDF(int bookId);
+        MemoryStream DownloadPdf(int bookId);
 
         /// <summary>
         /// Downloads the audio for the book.
@@ -162,6 +158,7 @@ namespace RentItServer.SMU
         /// <param name="genre">The genre.</param>
         /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
+        /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The id of the book.</returns>
         [OperationContract]
         int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image);
@@ -176,6 +173,7 @@ namespace RentItServer.SMU
         /// <param name="genre">The genre. Can be null.</param>
         /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
+        /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The updated book</returns>
         [OperationContract]
         Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price, MemoryStream image);
@@ -192,9 +190,12 @@ namespace RentItServer.SMU
         /// <summary>
         /// Uploads a PDF file to a book. Overrides if PDF file already exists.
         /// </summary>
-        /// <param name="bookID">The book ID.</param>
-        /// <param name="PDF">The PDF.</param>
+        /// <param name="bookId">The id of the book</param>
+        /// <param name="pdf">The MemoryStream containing the pdf</param>
         [OperationContract]
-        void UploadPDF(int bookID, MemoryStream PDF);
+        void UploadPdf(int bookId, MemoryStream pdf);
+
+        [OperationContract]
+        MemoryStream DownloadImage(int bookId);
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
-using RentItServer;
-using System.Data.Entity;
 using System.IO;
 
 namespace RentItServer_UnitTests
@@ -14,7 +11,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        [TestInitialize()]
+        [TestInitialize]
         public void CleanDataBase()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -23,7 +20,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        [ClassCleanup()]
+        [ClassCleanup]
         public static void CleanDataBaseFinish()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -41,14 +38,14 @@ namespace RentItServer_UnitTests
             string password2 = "12Fisk";
             string password3 = "123Fisk";
 
-            int u1 = controller.SignUp(email1, "Jens", password1, false);
-            int u2 = controller.SignUp(email2, "Jens", password2, true);
-            int u3 = controller.SignUp(email3, "Jens", password3, false);
+            controller.SignUp(email1, "Jens", password1, false);
+            controller.SignUp(email2, "Jens", password2, true);
+            controller.SignUp(email3, "Jens", password3, false);
 
             controller.LogIn(email1, password1);
             controller.LogIn(email2, password2);
-            controller.LogIn(email3, password3);   
-       }
+            controller.LogIn(email3, password3);
+        }
 
         [TestMethod]
         public void TestGetUser()
@@ -75,7 +72,7 @@ namespace RentItServer_UnitTests
             string email = "hest@yoyo.dk";
 
             controller.UpdateUserInfo(u1, email, name, password, false);
-            RentItServer.SMU.User user = controller.GetUser(u1);
+            User user = controller.GetUser(u1);
 
             Assert.AreEqual(name, user.username);
             Assert.AreEqual(password, user.password);
@@ -93,7 +90,7 @@ namespace RentItServer_UnitTests
                 controller.DeleteAccount(u1);
                 Assert.Fail(); // If it gets to this line, no exception was thrown
             }
-            catch (Exception) { }    
+            catch (Exception) { }
         }
 
         [TestMethod]
@@ -106,7 +103,8 @@ namespace RentItServer_UnitTests
                 controller.AddBook("Koran", "Allah", "Great Book", "religion", DateTime.Now, 100000000.0, new MemoryStream());
                 controller.AddBook("Book of the dead", "Dalai Lama", "Great Book", "religion", DateTime.Now, 0.0, new MemoryStream());
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 Assert.Fail();
             }
         }
@@ -114,19 +112,20 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestRentBook()
         {
-            SMUController controller = SMUController.GetInstance(); 
+            SMUController controller = SMUController.GetInstance();
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
-            controller.UploadPDF(bookId, new System.IO.MemoryStream());
-            int rental = controller.RentBook(user, bookId, 0);
+            controller.UploadPDF(bookId, new MemoryStream());
+            controller.RentBook(user, bookId, 0);
+
             try
             {
                 controller.RentBook(Int32.MaxValue, Int32.MaxValue, 0);
                 Assert.Fail();
             }
             catch (Exception)
-            { 
-            
+            {
+
             }
         }
 
@@ -136,13 +135,11 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             int userId1 = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
-            int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
+            controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
             int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
-            controller.UploadPDF(bookId1, new System.IO.MemoryStream());
-            controller.UploadAudio(bookId1, new System.IO.MemoryStream(), "Thomas Pierce");
-            controller.UploadPDF(bookId2, new System.IO.MemoryStream());
-            controller.UploadAudio(bookId2, new System.IO.MemoryStream(), "Sean John");
+            controller.UploadPDF(bookId1, new MemoryStream());
+            controller.UploadPDF(bookId2, new MemoryStream());
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
@@ -183,7 +180,7 @@ namespace RentItServer_UnitTests
             {
                 book = controller.GetBookInfo(bookId);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Assert.Fail();
             }
@@ -197,13 +194,12 @@ namespace RentItServer_UnitTests
         [TestMethod]
         public void TestDeleteBook()
         {
-            SMUController controller = SMUController.GetInstance(); 
-            int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
+            SMUController controller = SMUController.GetInstance();
             int bookId1 = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
-            controller.UploadPDF(bookId1, new System.IO.MemoryStream());
+            controller.UploadPDF(bookId1, new MemoryStream());
             controller.DeleteBook(bookId1);
-            controller.DeleteBook(bookId2);     
+            controller.DeleteBook(bookId2);
             try
             {
                 // negative tests
@@ -309,7 +305,42 @@ namespace RentItServer_UnitTests
             Assert.AreEqual("God", result4[0].author);
         }
 
+        [TestMethod]
+        public void TestUploadDownloadPdf()
+        {
+            SMUController controller = SMUController.GetInstance();
+            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0, new MemoryStream());
 
+            MemoryStream uploadedPdf = new MemoryStream(TestFiles.testpdf);
+            uploadedPdf.Position = 0L;
 
+            long uploadedPdfLength = uploadedPdf.Length;
+
+            controller.UploadPDF(bookId, uploadedPdf);
+
+            MemoryStream downloadedPdf = controller.DownloadPDF(bookId);
+
+            Assert.IsTrue(uploadedPdfLength > 0 && uploadedPdfLength == downloadedPdf.Length);
+        }
+
+        [TestMethod]
+        public void TestUploadDownloadImage()
+        {
+            SMUController controller = SMUController.GetInstance();
+
+            //Convert image to MemoryStream
+            MemoryStream uploadedImage = new MemoryStream();
+            TestFiles.testimage.Save(uploadedImage, System.Drawing.Imaging.ImageFormat.Jpeg);
+            uploadedImage.Position = 0L;
+
+            //Upload the book with the image
+            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0, uploadedImage);
+
+            //Download the image
+            MemoryStream downloadedImage = controller.DownloadImage(bookId);
+
+            //Check that the two image streams are equal
+            Assert.AreEqual(uploadedImage, downloadedImage);
+        }
     }
 }
