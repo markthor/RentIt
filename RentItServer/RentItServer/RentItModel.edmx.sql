@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/22/2013 15:44:20
+-- Date Created: 04/02/2013 10:34:46
 -- Generated from EDMX file: C:\Users\Mikkel\Documents\GitHub\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
@@ -181,9 +181,9 @@ GO
 -- Creating table 'SMUbooks'
 CREATE TABLE [dbo].[SMUbooks] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [title] varchar(50)  NOT NULL,
+    [title] varchar(500)  NOT NULL,
     [author] varchar(50)  NOT NULL,
-    [description] varchar(255)  NULL,
+    [description] varchar(5000)  NULL,
     [genre] varchar(50)  NULL,
     [price] float  NOT NULL,
     [dateAdded] datetime  NOT NULL,

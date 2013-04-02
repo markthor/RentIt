@@ -156,9 +156,9 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="title" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="title" Type="varchar" Nullable="false" MaxLength="500" />
     <Property Name="author" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="description" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="description" Type="varchar" Nullable="true" MaxLength="5000" />
     <Property Name="genre" Type="varchar" Nullable="true" MaxLength="50" />
     <Property Name="price" Type="float" Nullable="false" />
     <Property Name="dateAdded" Type="datetime" Nullable="false" />
@@ -626,9 +626,9 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="title" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Type="String" Name="author" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="description" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="genre" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Double" Name="price" Nullable="false" />
           <Property Type="DateTime" Name="dateAdded" Nullable="false" Precision="0" />

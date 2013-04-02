@@ -517,5 +517,13 @@ namespace RentItServer.SMU
         {
             _dao.DeleteSMUDatabaseData();
         }
+
+        public void UploadImage(int bookId, MemoryStream image)
+        {
+            string relativePath = String.Format("Image_BookId_{0}.jpg", bookId.ToString());
+            _fileSystemHandler.WriteFile(FilePath.SMUImagePath, relativePath, image);
+            string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), relativePath);
+            _dao.AddImage(bookId, fullPath);
+        }
     }
 }

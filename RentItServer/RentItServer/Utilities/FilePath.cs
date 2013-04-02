@@ -31,6 +31,13 @@ namespace RentItServer.Utilities
             "SMU" + Path.DirectorySeparatorChar +
             "PDF" + Path.DirectorySeparatorChar);
 
+        public static readonly FilePath SMUImagePath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "SMU" + Path.DirectorySeparatorChar +
+            "Images" + Path.DirectorySeparatorChar);
+
         public static readonly FilePath ITUTrackPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
