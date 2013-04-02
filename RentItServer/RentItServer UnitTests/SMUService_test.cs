@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
 using System.Collections.Generic;
-using System.Data.Entity;
 
 namespace RentItServer_UnitTests
 {
@@ -81,7 +80,7 @@ namespace RentItServer_UnitTests
                 service.DeleteBook(bookId);
                 Assert.Fail(); // must fail
             }
-            catch (Exception e)
+            catch (Exception)
             { 
             
             }
@@ -98,7 +97,7 @@ namespace RentItServer_UnitTests
                 service.UploadPDF(Int32.MaxValue, new System.IO.MemoryStream());
                 Assert.Fail(); // must fail
             }
-            catch (Exception e)
+            catch (Exception)
             { 
             
             }
