@@ -143,7 +143,6 @@ namespace RentItServer.SMU
                 {
                     return -1;
                 }
-                SMUrental theRental = rentals.First();
 
                 List<SMUrental> list = rentals.ToList();
                 bool aud = false;
@@ -153,10 +152,10 @@ namespace RentItServer.SMU
                     // tests if the rental is more than 7 days old
                     if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
                         //tests for audio and book
-                        if (rental.SMUbook.audioFilePath != null) {
+                        if (rental.mediaType == 1) {
                             aud = true;
                         }
-                        if (rental.SMUbook != null) {
+                        if (rental.mediaType == 0) {
                             pdf = true;
                         }
                     }

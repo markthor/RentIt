@@ -19,7 +19,6 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(userId, id);
         }
 
-
         [TestMethod]
         public void AddBookTest_service()
         {
