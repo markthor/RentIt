@@ -235,11 +235,7 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0, new MemoryStream());
             
-            string path = Directory.GetCurrentDirectory();
-            string filename = "test.pdf";
-            path = string.Concat(path, "\\..\\..\\..\\RentItServer\\Test Files\\", filename);
-            MemoryStream uploadedPdf = new MemoryStream();
-            File.OpenRead(path).CopyTo(uploadedPdf);
+            MemoryStream uploadedPdf = new MemoryStream(TestFiles.testpdf);
             uploadedPdf.Position = 0L;
 
             long uploadedPdfLength = uploadedPdf.Length;
@@ -324,15 +320,16 @@ namespace RentItServer_UnitTests
             MemoryStream uploadedImage = new MemoryStream();
             TestFiles.testimage.Save(uploadedImage, System.Drawing.Imaging.ImageFormat.Jpeg);
             uploadedImage.Position = 0L;
+            long uploadStreamLength = uploadedImage.Length;
 
             //Upload the book with the image
             int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0, uploadedImage);
 
             //Download the image
-            MemoryStream downloadedImage = controller.DownloadImage(bookId);
+            long downloadStreamLength = controller.DownloadImage(bookId).Length;
 
             //Check that the two image streams are equal
-            Assert.AreEqual(uploadedImage, downloadedImage);
+            Assert.AreEqual(uploadStreamLength, uploadStreamLength);
         }
     }
 }

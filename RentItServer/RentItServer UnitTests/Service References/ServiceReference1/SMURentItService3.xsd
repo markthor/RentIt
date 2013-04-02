@@ -21,12 +21,14 @@
   <xs:complexType name="Book">
     <xs:sequence>
       <xs:element name="_x003C_audioId_x003E_k__BackingField" nillable="true" type="xs:int" />
+      <xs:element name="_x003C_audioNarrator_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_author_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_dateAdded_x003E_k__BackingField" type="xs:dateTime" />
       <xs:element name="_x003C_description_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_genre_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_hit_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_id_x003E_k__BackingField" type="xs:int" />
+      <xs:element name="_x003C_narrator_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_price_x003E_k__BackingField" type="xs:double" />
       <xs:element name="_x003C_title_x003E_k__BackingField" nillable="true" type="xs:string" />
     </xs:sequence>
