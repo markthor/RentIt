@@ -8,7 +8,7 @@ namespace RentItServer.SMU
     [Serializable]
     public class Book
     {
-        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, Nullable<int> audioId, int hit)
+        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, int hit)
         {
             this.id = id;
             this.title = title;
