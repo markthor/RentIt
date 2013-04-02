@@ -42,7 +42,7 @@ namespace RentItServer_UnitTests
             string password3 = "123Fisk";
 
             int u1 = controller.SignUp(email1, "Jens", password1, false);
-            int u2 = controller.SignUp(email2, "Jens", password2, false);
+            int u2 = controller.SignUp(email2, "Jens", password2, true);
             int u3 = controller.SignUp(email3, "Jens", password3, false);
 
             controller.LogIn(email1, password1);
@@ -160,7 +160,7 @@ namespace RentItServer_UnitTests
             }
             catch (Exception)
             {
-                Assert.Fail();
+                Assert.Fail(); // must fail
             }
             Assert.AreEqual(result, mediaTypeAssert);
         }
