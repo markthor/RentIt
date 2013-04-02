@@ -62,7 +62,7 @@ namespace RentItServer.SMU
             catch (Exception e)
             {
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("LogIn failed with due to exception ["+e+"]"));
+                    _handler(this, new RentItEventArgs("LogIn failed with due to exception [" + e + "]"));
                 throw;
             }
             return id;
@@ -282,19 +282,39 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         public void DeleteBook(int bookId)
         {
-            SMUbook book = _dao.GetBookInfo(bookId);
             try
             {
+                SMUbook book = _dao.GetBookInfo(bookId);
                 _dao.DeleteBook(bookId);
-                if (!book.PDFFilePath.Equals(string.Empty))
+                SMUaudio audio = null;
+                try
                 {
-                    File.Delete(book.PDFFilePath);
+                    if (book.PDFFilePath != null && book.PDFFilePath.Equals(string.Empty))
+                    {
+                        _fileSystemHandler.DeleteFile(book.PDFFilePath);
+                    }
+                    if (book.imageFilePath != null && book.imageFilePath.Equals(string.Empty))
+                    {
+                        _fileSystemHandler.DeleteFile(book.imageFilePath);
+                    }
+                    if (book.audioId != null)
+                    {
+                        audio = _dao.GetAudio((int)book.audioId);
+                        _fileSystemHandler.DeleteFile(audio.filePath);
+                    }
                 }
-                if (book.audioId != null)
+                catch (Exception e)
                 {
-                    string audioPath = string.Concat(FilePath.SMUAudioPath.GetPath(),
-                                                     FileName.GenerateAudioFileName(bookId));
-                    File.Delete(audioPath);
+                    string msg = "DeleteBook failed with exception [" + e + "], database entry was deleted successfully. ";
+                    if (_fileSystemHandler.Exists(book.PDFFilePath))
+                        msg += "Pdf file was not deleted at path ["+book.PDFFilePath+"]. ";
+                    if (_fileSystemHandler.Exists(book.imageFilePath))
+                        msg += "Image file was not deleted at path [" + book.imageFilePath + "]. ";
+                    if (audio != null && _fileSystemHandler.Exists(audio.filePath))
+                        msg += "Audio file was not deleted at path ["+audio.filePath+"]. ";
+
+                    if (_handler != null)
+                        _handler(this, new RentItEventArgs(msg));
                 }
             }
             catch (Exception e)
