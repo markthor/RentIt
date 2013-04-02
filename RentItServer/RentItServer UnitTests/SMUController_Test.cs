@@ -162,7 +162,7 @@ namespace RentItServer_UnitTests
             }
             catch (Exception)
             {
-                Assert.Fail(); // must fail
+                Assert.Fail(); 
             }
             Assert.AreEqual(result, mediaTypeAssert);
         }
