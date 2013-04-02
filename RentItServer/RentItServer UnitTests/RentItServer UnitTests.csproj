@@ -76,6 +76,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\RentItServer.SMU.Book.datasource" />
+    <None Include="Properties\DataSources\RentItServer.SMU.User.datasource" />
     <None Include="Properties\DataSources\RentItServer.User.datasource" />
     <None Include="Service References\ServiceReference1\SMURentItService.disco" />
     <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
