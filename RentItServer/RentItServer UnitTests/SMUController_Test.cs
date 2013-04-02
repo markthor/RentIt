@@ -133,14 +133,17 @@ namespace RentItServer_UnitTests
         public void TestHasRental()
         {
             SMUController controller = SMUController.GetInstance();
-            int userId1 = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
+            int userId1 = controller.SignUp("Sly Dunbar1", "1Fisk", "gogogo1@yo.dk", false);
             int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
-            int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
+            controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
             int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
             int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", 100.0, new MemoryStream());
 
             controller.UploadPDF(bookId1, new MemoryStream());
             controller.UploadPDF(bookId2, new MemoryStream());
+            controller.UploadAudio(bookId1, new MemoryStream(), "narrator Geo");
+            controller.UploadAudio(bookId2, new MemoryStream(), "narrator John");
+
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
@@ -235,11 +238,7 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0, new MemoryStream());
             
-            string path = Directory.GetCurrentDirectory();
-            string filename = "test.pdf";
-            path = string.Concat(path, "\\..\\..\\..\\RentItServer\\Test Files\\", filename);
-            MemoryStream uploadedPdf = new MemoryStream();
-            File.OpenRead(path).CopyTo(uploadedPdf);
+            MemoryStream uploadedPdf = new MemoryStream(TestFiles.testpdf);
             uploadedPdf.Position = 0L;
 
             long uploadedPdfLength = uploadedPdf.Length;
@@ -324,15 +323,16 @@ namespace RentItServer_UnitTests
             MemoryStream uploadedImage = new MemoryStream();
             TestFiles.testimage.Save(uploadedImage, System.Drawing.Imaging.ImageFormat.Jpeg);
             uploadedImage.Position = 0L;
+            long uploadStreamLength = uploadedImage.Length;
 
             //Upload the book with the image
             int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0, uploadedImage);
 
             //Download the image
-            MemoryStream downloadedImage = controller.DownloadImage(bookId);
+            long downloadStreamLength = controller.DownloadImage(bookId).Length;
 
             //Check that the two image streams are equal
-            Assert.AreEqual(uploadedImage, downloadedImage);
+            Assert.AreEqual(uploadStreamLength, downloadStreamLength);
         }
     }
 }
