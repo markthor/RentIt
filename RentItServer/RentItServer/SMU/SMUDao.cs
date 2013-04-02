@@ -258,9 +258,8 @@ namespace RentItServer.SMU
             return list;
         }
 
-        public Book GetBookInfo(int bookId)
+        public SMUbook GetBookInfo(int bookId)
         {
-            Book theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
@@ -271,9 +270,24 @@ namespace RentItServer.SMU
                 {
                     throw new ArgumentException("No book with bookId = " + bookId);
                 }
-                theBook = books.First().GetBook();
+                return books.First();
             }
-            return theBook;
+        }
+
+        public Book GetBookRepresentation(SMUbook theBook)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var books = from book in context.SMUbooks
+                            where book.id == theBook.id
+                            select book;
+
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + theBook.id);
+                }
+                return books.First().GetBook();
+            }
         }
 
         public int RentBook(int userId, int bookId, DateTime time, int mediaType)
@@ -531,6 +545,24 @@ namespace RentItServer.SMU
                             where u.email.Equals(email)
                             select u;
                 return users.Any();
+            }
+        }
+
+        public void AddImage(int bookId, string fullPath)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var books = from b in context.SMUbooks
+                            where b.id == bookId
+                            select b;
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook book = books.First();
+                book.imageFilePath = fullPath;
+                context.SaveChanges();
             }
         }
     }

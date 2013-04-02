@@ -42,7 +42,7 @@ namespace RentItServer.SMU
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
         /// <returns>
-        /// The id of the user, -1 if email/password pair is invalid
+        /// The userId of the user, -1 if email/password pair is invalid
         /// </returns>
         public int LogIn(string email, string password)
         {
@@ -70,19 +70,16 @@ namespace RentItServer.SMU
         /// <param name="password">The password.</param>
         /// <param name="isAdmin">if user is admin.</param>
         /// <returns>
-        /// The id of the user, -1 if email is already in use
+        /// The userId of the user, -1 if email is already in use
         /// </returns>
         public int SignUp(string email, string username, string password, bool isAdmin)
         {
-            if (_dao.CheckIfEmailExistsInDb(email))
-            {
-                throw new ArgumentException(string.Format("A user with email {0} already exists", email));
-            }
+            int id;
             try
             {
+                id = _dao.SignUp(email, username, password, isAdmin);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("SignUp: " + email + "-" + username + "-" + password));
-                return _dao.SignUp(email, username, password, isAdmin);
             }
             catch (Exception e)
             {
@@ -90,6 +87,8 @@ namespace RentItServer.SMU
                     _handler(this, new RentItEventArgs("SignUp failed with exception [" + e + "]"));
                 throw;
             }
+
+            return id;
         }
 
         /// <summary>
@@ -165,10 +164,10 @@ namespace RentItServer.SMU
         }
 
         /// <summary>
-        /// Determines whether the specified user id has a book rental.
+        /// Determines whether the specified user userId has a book rental.
         /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="userId">The user userId.</param>
+        /// <param name="bookId">The book userId.</param>
         /// <returns>
         /// 0 if user rented a pdf, 1 if user rented audio, 2 if user rented both, -1 if user haven't rented
         /// </returns>
@@ -189,7 +188,7 @@ namespace RentItServer.SMU
         }
 
         /// <summary>
-        /// Adds a book object to the database withoud associated PDF or audio files.
+        /// Adds a book object to the databse withoud associated PDF or audio files.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="author">The author.</param>
@@ -198,7 +197,7 @@ namespace RentItServer.SMU
         /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
         /// <returns>
-        /// The id of the book.
+        /// The userId of the book.
         /// </returns>
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
@@ -221,12 +220,12 @@ namespace RentItServer.SMU
         /// <summary>
         /// Rents a book or and audio file to a user.
         /// </summary>
-        /// <param name="userId">The user id</param>
-        /// <param name="bookId">The book id</param>
+        /// <param name="userId">The user userId</param>
+        /// <param name="bookId">The book userId</param>
         /// <param name="startDate">The date that the rent starts</param>
         /// <param name="mediaType">0 if PDF, 1 if audio, 2 if both PDF and audio</param>
         /// <returns>
-        /// The id of the rental object
+        /// The userId of the rental object
         /// </returns>
         public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
         {
@@ -248,9 +247,9 @@ namespace RentItServer.SMU
         }
 
         /// <summary>
-        /// Gets the book object associated with the book id.
+        /// Gets the book object associated with the book userId.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="bookId">The book userId.</param>
         /// <returns>
         /// The book
         /// </returns>
@@ -259,7 +258,7 @@ namespace RentItServer.SMU
             Book book;
             try
             {
-                book = _dao.GetBookRepresentation(_dao.GetBookInfo(bookId));
+                book = _dao.GetBookInfo(bookId);
             }
             catch (Exception e)
             {
@@ -273,18 +272,19 @@ namespace RentItServer.SMU
         /// <summary>
         /// Deletes the book.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="bookId">The book userId.</param>
         public void DeleteBook(int bookId)
         {
-            MemoryStream pdf = null;
-            MemoryStream audio = null;
             try
             {
+<<<<<<< HEAD
                 SMUbook dbBook = _dao.GetBookInfo(bookId);
-                string pdfFilePath = dbBook.PDFFilePath;
-                if (pdfFilePath != null)
-                {
-                    // Backup the book
+                string bookPath = dbBook.PDFFilePath;
+                // TODO: Get audio filepath from db
+                MemoryStream pdf = null;
+                MemoryStream audio = null;
+                if (bookPath != null)
+                {   // Backup the book
                     try
                     {
                         pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
@@ -292,21 +292,44 @@ namespace RentItServer.SMU
                     catch (Exception e)
                     {
                         if (_handler != null)
-                            _handler(this, new RentItEventArgs("Reading pdf at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
+                            _handler(this, new RentItEventArgs("Reading pdf at path ["+bookPath+"] failed with exception ["+e+"]"));
                     }
                 }
-                if (dbBook.audioId != null)
-                {   // Backup the audio
-                    try
-                    {
-                        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
-                    }
-                    catch (Exception e)
-                    {
-                        if (_handler != null)
-                            _handler(this, new RentItEventArgs("Reading audio at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
-                    }
+                //TODO: do this for audio as well
+                //if (audioPath != null)
+                //{   // Backup the audio
+                //    try
+                //    {
+                //        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        if (_handler != null)
+                //            _handler(this, new RentItEventArgs("Reading audio at path [" + bookPath + "] failed with exception [" + e + "]"));
+                //    }
+                //}
+                try
+                {   // Delete the book
+                    _fileSystemHandler.DeleteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+=======
+                Book book = _dao.GetBookInfo(bookId);
+                MemoryStream pdf = null;
+                MemoryStream audio = null;
+                try
+                {
+                    pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                    string filepath = string.Concat(FilePath.SMUPdfPath.GetPath(), FileName.GeneratePdfFileName(bookId));
+                    File.Delete(filepath);
+>>>>>>> a0df9f264f9cbc366acad08709625ced66b34be8
                 }
+                catch (FileNotFoundException) { } //Do nothing
+                try
+                {
+                    audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                    string filepath = string.Concat(FilePath.SMUAudioPath.GetPath(), FileName.GenerateAudioFileName(bookId));
+                    File.Delete(filepath);
+                }
+                catch (FileNotFoundException) { } //Do nothing
                 try
                 {
                     _dao.DeleteBook(bookId);
@@ -321,16 +344,18 @@ namespace RentItServer.SMU
                     if (audio != null)
                     {
                         //Write audio again
-                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);
-                    }
+                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);    
+                    }   
                 }
+
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
             }
             catch (Exception e)
             {
+                // TODO: roll back changes
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "], no changes occurred."));
+                    _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "]"));
                 throw;
             }
         }
@@ -450,7 +475,7 @@ namespace RentItServer.SMU
         /// <summary>
         /// Updates the book.
         /// </summary>
-        /// <param name="bookId">The book id. Can be null.</param>
+        /// <param name="bookId">The book userId. Can be null.</param>
         /// <param name="title">The title. Can be null.</param>
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
@@ -468,7 +493,7 @@ namespace RentItServer.SMU
                 theBook = _dao.UpdateBook(bookId, title, author, description, genre, dateAdded, price, "", "");
                 if (_handler != null)
                     _handler(this,
-                             new RentItEventArgs("UpdateBookInfo succeeded for book id [" + bookId +
+                             new RentItEventArgs("UpdateBookInfo succeeded for book userId [" + bookId +
                                                  "]. New attributes: title [" + title + "] author [" + author +
                                                  "] description [" + description + "] genre [" + genre + "] dateAdded [" +
                                                  dateAdded + "] price [" + price + "]."));
@@ -485,14 +510,14 @@ namespace RentItServer.SMU
         /// <summary>
         /// Uploads an audio file to a book. Overrides if audio file already exists.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
-        /// <param name="mp3">The mp3.</param>
+        /// <param name="bookId">The book userId.</param>
+        /// <param name="mp3">The Mp3.</param>
         public void UploadAudio(int bookId, MemoryStream mp3)
         {
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath + FileName.GenerateAudioFileName(bookId));
             }
             catch (Exception e)
             {
@@ -505,7 +530,7 @@ namespace RentItServer.SMU
         /// <summary>
         /// Downloads the audio for the book.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="bookId">The book userId.</param>
         /// <returns>
         /// Stream containing the audio.
         /// </returns>
@@ -514,7 +539,7 @@ namespace RentItServer.SMU
             MemoryStream theAudio;
             try
             {
-                //TODO: DAO should probably have a method that gives you filepath given a certain book id
+                //TODO: DAO should probably have a method that gives you filepath given a certain book userId
                 theAudio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
                 theAudio.Position = 0L;
             }
@@ -530,7 +555,7 @@ namespace RentItServer.SMU
         /// <summary>
         /// Uploads the PDF.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="bookId">The book userId.</param>
         /// <param name="pdf">The PDF.</param>
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
@@ -543,7 +568,7 @@ namespace RentItServer.SMU
         /// <summary>
         /// Downloads the PDF for the book.
         /// </summary>
-        /// <param name="bookId">The book id.</param>
+        /// <param name="bookId">The book userId.</param>
         /// <returns>
         /// Stream containing the contents of the pdf.
         /// </returns>
@@ -560,9 +585,9 @@ namespace RentItServer.SMU
 
         public void UploadImage(int bookId, MemoryStream image)
         {
-            string filename = FileName.GenerateImageFileName(bookId);
-            _fileSystemHandler.WriteFile(FilePath.SMUImagePath, filename, image);
-            string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), filename);
+            string relativePath = String.Format("Image_BookId_{0}.jpg", bookId.ToString());
+            _fileSystemHandler.WriteFile(FilePath.SMUImagePath, relativePath, image);
+            string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), relativePath);
             _dao.AddImage(bookId, fullPath);
         }
     }
