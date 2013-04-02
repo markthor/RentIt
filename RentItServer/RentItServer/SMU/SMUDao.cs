@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
 
 namespace RentItServer.SMU
 {
@@ -530,6 +529,24 @@ namespace RentItServer.SMU
                 SMUbook book = books.First();
                 book.PDFFilePath = pdfFilePath;
                 proxy.SaveChanges();
+            }
+        }
+
+        public void AddImage(int bookId, string fullPath)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var books = from b in context.SMUbooks
+                            where b.id == bookId
+                            select b;
+                if (books.Any() == false)
+                {
+                    throw new ArgumentException("No book with bookId = " + bookId);
+                }
+
+                SMUbook book = books.First();
+                book.imageFilePath = fullPath;
+                context.SaveChanges();
             }
         }
     }
