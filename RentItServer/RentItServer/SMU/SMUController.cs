@@ -463,7 +463,7 @@ namespace RentItServer.SMU
                              new RentItEventArgs("UpdateBookInfo succeeded for book id [" + bookId +
                                                  "]. New attributes: title [" + title + "] author [" + author +
                                                  "] description [" + description + "] genre [" + genre + "] dateAdded [" +
-                                                 dateAdded + "] price [" + price + "]."));
+                                                 DateTime.Now + "] price [" + price + "]."));
                 if (image != null)
                     SaveImage(bookId, image); //Error handling? logging?
             }
