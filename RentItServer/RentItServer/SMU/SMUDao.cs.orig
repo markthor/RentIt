@@ -118,6 +118,13 @@ namespace RentItServer.SMU
             }
         }
 
+<<<<<<< HEAD
+        //return -1 if not rented
+        //return 0 if rented PDF
+        //return 1 if rented audio
+        //return 2 if rented both
+=======
+
         /// <summary>
         /// Checks if the book is already rented
         /// </summary>
@@ -129,6 +136,7 @@ namespace RentItServer.SMU
         /// return 1 if rented audio
         /// return 2 if rented both
         /// </returns>
+>>>>>>> c918e488a69f85f1300abb1ded0aa0a3012f6386
         public int HasRental(int userId, int bookId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -143,7 +151,6 @@ namespace RentItServer.SMU
                 {
                     return -1;
                 }
-                SMUrental theRental = rentals.First();
 
                 List<SMUrental> list = rentals.ToList();
                 bool aud = false;
@@ -153,7 +160,7 @@ namespace RentItServer.SMU
                     // tests if the rental is more than 7 days old
                     if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
                         //tests for audio and book
-                        if (rental.SMUbook.audioFilePath != null) {
+                        if (rental.SMUaudio != null) {
                             aud = true;
                         }
                         if (rental.SMUbook != null) {
@@ -161,7 +168,25 @@ namespace RentItServer.SMU
                         }
                     }
                 }
+<<<<<<< HEAD
                 return theRental.mediaType;
+=======
+
+                // returns 2, 1 or 0 depending on audio and pdf
+                if (aud == true && pdf == true)
+                {
+                    return 2;
+                }
+                if (aud == true)
+                {
+                    return 1;
+                }
+                if (pdf == true)
+                {
+                    return 0;
+                }
+                throw new Exception("There was a rental, but bookId and audioId was null");
+>>>>>>> c918e488a69f85f1300abb1ded0aa0a3012f6386
             }
         }
 

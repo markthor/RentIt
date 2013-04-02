@@ -44,6 +44,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
@@ -70,6 +71,11 @@
     </Compile>
     <Compile Include="SMUController_Test.cs" />
     <Compile Include="SMUService_test.cs" />
+    <Compile Include="TestFiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestFiles.resx</DependentUpon>
+    </Compile>
     <Compile Include="TrackPrioritizer_Test.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +91,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Test Files\testimage.jpg" />
     <Content Include="Web.config" />
     <None Include="Service References\ServiceReference1\SMURentItService.wsdl" />
     <None Include="Service References\ServiceReference1\SMURentItService.xsd">
@@ -105,6 +112,7 @@
     <None Include="Service References\ServiceReference1\SMURentItService5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Test Files\testpdf.pdf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -123,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestFiles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

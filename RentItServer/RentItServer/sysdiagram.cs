@@ -12,19 +12,12 @@ namespace RentItServer
     using System;
     using System.Collections.Generic;
     
-    public partial class SMUaudio
+    public partial class sysdiagram
     {
-        public SMUaudio()
-        {
-            this.SMUbooks = new HashSet<SMUbook>();
-            this.SMUrentals = new HashSet<SMUrental>();
-        }
-    
-        public int id { get; set; }
-        public string narrator { get; set; }
-        public string filePath { get; set; }
-    
-        public virtual ICollection<SMUbook> SMUbooks { get; set; }
-        public virtual ICollection<SMUrental> SMUrentals { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

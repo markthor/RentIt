@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 using RentItServer.SMU;
@@ -224,9 +223,10 @@ namespace RentItServer
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="mp3">The Mp3.</param>
-        public void UploadAudio(int bookId, MemoryStream mp3)
+        /// <param name="narrator">The narrator.</param>
+        public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
-            _smuController.UploadAudio(bookId, mp3);
+            _smuController.UploadAudio(bookId, mp3, narrator);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace RentItServer
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="pdf">The PDF.</param>
-        public void UploadPDF(int bookId, MemoryStream pdf)
+        public void UploadPdf(int bookId, MemoryStream pdf)
         {
             _smuController.UploadPDF(bookId, pdf);
         }
@@ -258,9 +258,14 @@ namespace RentItServer
         /// <returns>
         /// Stream containing the contents of the pdf.
         /// </returns>
-        public MemoryStream DownloadPDF(int bookId)
+        public MemoryStream DownloadPdf(int bookId)
         {
             return _smuController.DownloadPDF(bookId);
+        }
+
+        public MemoryStream DownloadImage(int bookId)
+        {
+            return _smuController.DownloadImage(bookId);
         }
     }
 }

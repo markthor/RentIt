@@ -14,13 +14,17 @@ namespace RentItServer
     
     public partial class SMUrental
     {
+        public SMUrental()
+        {
+            this.mediaType = -1;
+        }
+    
         public int id { get; set; }
         public int userId { get; set; }
         public Nullable<int> bookId { get; set; }
-        public Nullable<int> audioId { get; set; }
         public System.DateTime startDate { get; set; }
+        public int mediaType { get; set; }
     
-        public virtual SMUaudio SMUaudio { get; set; }
         public virtual SMUbook SMUbook { get; set; }
         public virtual SMUuser SMUuser { get; set; }
     }
