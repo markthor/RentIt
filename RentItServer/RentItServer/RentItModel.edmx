@@ -148,8 +148,8 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="narrator" Type="varchar" Nullable="true" MaxLength="50" />
-    <Property Name="filePath" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="narrator" Type="varchar" Nullable="true" MaxLength="1000" />
+    <Property Name="filePath" Type="varchar" Nullable="false" MaxLength="600" />
   </EntityType>
   <EntityType Name="SMUbooks">
     <Key>
@@ -616,7 +616,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="narrator" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="narrator" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="filePath" Nullable="false" MaxLength="600" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SMUbooks" Relationship="RENTITModel.FK_SMUbooks_audioId" FromRole="SMUaudio" ToRole="SMUbook" />
           <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_audioId" FromRole="SMUaudio" ToRole="SMUrental" />
