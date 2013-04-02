@@ -388,7 +388,7 @@ namespace RentItServer.SMU
 
                 SMUaudio theAudio = new SMUaudio()
                 {
-                    narrator = "Narrator... this is not in the service interface method :)",
+                    narrator = "Narrator :)",
                     filePath = filePath,
                     SMUbooks = new Collection<SMUbook>(),
                     SMUrentals = new Collection<SMUrental>()
