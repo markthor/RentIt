@@ -169,9 +169,9 @@ namespace RentItServer
         /// <returns>
         /// The id of the rental object
         /// </returns>
-        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        public int RentBook(int userId, int bookId, int mediaType)
         {
-            return _smuController.RentBook(userId, bookId, startDate, mediaType);
+            return _smuController.RentBook(userId, bookId, mediaType);
         }
 
         /// <summary>
