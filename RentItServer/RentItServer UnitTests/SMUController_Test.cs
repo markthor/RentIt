@@ -103,6 +103,8 @@ namespace RentItServer_UnitTests
             try
             {
                 controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
+                controller.AddBook("Koran", "Allah", "Great Book", "religion", DateTime.Now, 100000000.0);
+                controller.AddBook("Book of the dead", "Dalai Lama", "Great Book", "religion", DateTime.Now, 0.0);
             }
             catch (Exception) {
                 Assert.Fail();
@@ -145,7 +147,6 @@ namespace RentItServer_UnitTests
             RentAndVerify(userId1, bookId, mediaTypeAudio, mediaTypeBoth);
             RentAndVerify(userId2, bookId, mediaTypeBoth, mediaTypeBoth);
             RentAndVerify(userId3, bookId, mediaTypeAudio, mediaTypeAudio);
-
         }
 
         public void RentAndVerify(int userId, int bookId, int mediaTypeRent, int mediaTypeAssert)
@@ -196,11 +197,15 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-            controller.UploadPDF(bookId, new System.IO.MemoryStream());
-            controller.DeleteBook(bookId);
+            int bookId1 = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0);
+            controller.UploadPDF(bookId1, new System.IO.MemoryStream());
+            controller.DeleteBook(bookId1);
+            controller.DeleteBook(bookId2);     
             try
             {
+                // negative tests
+                controller.DeleteBook(bookId1);
                 controller.DeleteBook(Int32.MaxValue);
                 Assert.Fail();
             }

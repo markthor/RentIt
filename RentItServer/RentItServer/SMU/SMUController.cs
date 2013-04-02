@@ -281,10 +281,13 @@ namespace RentItServer.SMU
             try
             {
                 Book book = _dao.GetBookInfo(bookId);
-                MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
-                if (pdf != null)
+                try
                 {
-                    // TODO: Delete the file
+                    MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                }
+                catch (FileNotFoundException e)
+                { 
+                
                 }
                 _dao.DeleteBook(bookId);
                 if (_handler != null)
