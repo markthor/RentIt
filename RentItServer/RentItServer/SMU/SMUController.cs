@@ -237,8 +237,8 @@ namespace RentItServer.SMU
                 rentalId = _dao.RentBook(userId, bookId, startDate, mediaType);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] startDate [" + startDate + "] mediaType [" + mediaType + "]"));
-            
-                  }
+
+            }
             catch (Exception e)
             {
                 if (_handler != null)
@@ -284,11 +284,17 @@ namespace RentItServer.SMU
                 try
                 {
                     MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                    string filepath = string.Concat(FilePath.SMUPdfPath.GetPath(), FileName.GeneratePdfFileName(bookId));
+                    File.Delete(filepath);
                 }
-                catch (FileNotFoundException e)
-                { 
-                
+                catch (FileNotFoundException) { } //Do nothing
+                try
+                {
+                    MemoryStream audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                    string filepath = string.Concat(FilePath.SMUAudioPath.GetPath(), FileName.GenerateAudioFileName(bookId));
+                    File.Delete(filepath);
                 }
+                catch (FileNotFoundException) { } //Do nothing
                 _dao.DeleteBook(bookId);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
@@ -355,10 +361,12 @@ namespace RentItServer.SMU
         public Book[] GetNewBooks()
         {
             List<Book> books;
-            try{
+            try
+            {
                 books = _dao.GetNewBooks();
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("GetNewBooks failed with exception [" + e + "]"));
                 throw;
@@ -457,7 +465,7 @@ namespace RentItServer.SMU
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), MP3);
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath+FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath + FileName.GenerateAudioFileName(bookId));
             }
             catch (Exception e)
             {
@@ -477,12 +485,14 @@ namespace RentItServer.SMU
         public MemoryStream DownloadAudio(int bookId)
         {
             MemoryStream theAudio;
-            try{
+            try
+            {
                 //TODO: DAO should probably have a method that gives you filepath given a certain book id
                 theAudio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
                 theAudio.Position = 0L;
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DownloadAudio failed with exception [" + e + "]"));
                 throw;
