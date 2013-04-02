@@ -497,9 +497,9 @@ namespace RentItServer.SMU
         /// <param name="pdf">The PDF.</param>
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
-            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, relativePath, pdf);
-            string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), relativePath);
+            string filename = FileName.GeneratePdfFileName(bookId);
+            _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, filename, pdf);
+            string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), filename);
             _dao.AddPdf(bookId, fullPath);
         }
 
@@ -512,8 +512,8 @@ namespace RentItServer.SMU
         /// </returns>
         public MemoryStream DownloadPDF(int bookId)
         {
-            string relativePath = String.Format("PDF_BookId_{0}.pdf", bookId.ToString());
-            return _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, relativePath);
+            string filename = FileName.GeneratePdfFileName(bookId);
+            return _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, filename);
         }
 
         public void DeleteSMUDatabaseData()
