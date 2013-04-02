@@ -88,11 +88,11 @@
   <wsdl:message name="ISMURentItService_RentBook_OutputMessage">
     <wsdl:part name="parameters" element="tns:RentBookResponse" />
   </wsdl:message>
-  <wsdl:message name="ISMURentItService_DownloadPDF_InputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadPDF" />
+  <wsdl:message name="ISMURentItService_DownloadPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadPdf" />
   </wsdl:message>
-  <wsdl:message name="ISMURentItService_DownloadPDF_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadPDFResponse" />
+  <wsdl:message name="ISMURentItService_DownloadPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadPdfResponse" />
   </wsdl:message>
   <wsdl:message name="ISMURentItService_DownloadAudio_InputMessage">
     <wsdl:part name="parameters" element="tns:DownloadAudio" />
@@ -124,11 +124,17 @@
   <wsdl:message name="ISMURentItService_UploadAudio_OutputMessage">
     <wsdl:part name="parameters" element="tns:UploadAudioResponse" />
   </wsdl:message>
-  <wsdl:message name="ISMURentItService_UploadPDF_InputMessage">
-    <wsdl:part name="parameters" element="tns:UploadPDF" />
+  <wsdl:message name="ISMURentItService_UploadPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadPdf" />
   </wsdl:message>
-  <wsdl:message name="ISMURentItService_UploadPDF_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UploadPDFResponse" />
+  <wsdl:message name="ISMURentItService_UploadPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadImage_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadImage" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadImage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadImageResponse" />
   </wsdl:message>
   <wsdl:portType name="ISMURentItService">
     <wsdl:operation name="SignUp">
@@ -183,9 +189,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/RentBook" message="tns:ISMURentItService_RentBook_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/RentBookResponse" message="tns:ISMURentItService_RentBook_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DownloadPDF">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPDF" message="tns:ISMURentItService_DownloadPDF_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPDFResponse" message="tns:ISMURentItService_DownloadPDF_OutputMessage" />
+    <wsdl:operation name="DownloadPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPdf" message="tns:ISMURentItService_DownloadPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadPdfResponse" message="tns:ISMURentItService_DownloadPdf_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="DownloadAudio">
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadAudio" message="tns:ISMURentItService_DownloadAudio_InputMessage" />
@@ -207,9 +213,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadAudio" message="tns:ISMURentItService_UploadAudio_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadAudioResponse" message="tns:ISMURentItService_UploadAudio_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UploadPDF">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadPDF" message="tns:ISMURentItService_UploadPDF_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadPDFResponse" message="tns:ISMURentItService_UploadPDF_OutputMessage" />
+    <wsdl:operation name="UploadPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadPdf" message="tns:ISMURentItService_UploadPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadPdfResponse" message="tns:ISMURentItService_UploadPdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadImage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImage" message="tns:ISMURentItService_DownloadImage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImageResponse" message="tns:ISMURentItService_DownloadImage_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISMURentItService" type="tns:ISMURentItService">
@@ -331,8 +341,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DownloadPDF">
-      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadPDF" style="document" />
+    <wsdl:operation name="DownloadPdf">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadPdf" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -385,8 +395,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UploadPDF">
-      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadPDF" style="document" />
+    <wsdl:operation name="UploadPdf">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadImage">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadImage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
