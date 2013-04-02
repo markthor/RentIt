@@ -156,12 +156,11 @@ namespace RentItServer.SMU
         /// <param name="author">The author.</param>
         /// <param name="description">The description.</param>
         /// <param name="genre">The genre.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
         /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The id of the book.</returns>
         [OperationContract]
-        int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image);
+        int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image);
 
         /// <summary>
         /// Updates the book.

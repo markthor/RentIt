@@ -216,9 +216,9 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion",  100.0, new MemoryStream());
-                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion",  100.0, new MemoryStream());
-                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction",  400.0, new MemoryStream());
+                controller.AddBook("the bible", "God", "Great Book", "religion", 100.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", 400.0, new MemoryStream());
                 controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", 150.0, new MemoryStream());
                 Book[] result = controller.GetAllBooks();
                 Assert.AreEqual(4, result.Length);
@@ -285,7 +285,7 @@ namespace RentItServer_UnitTests
                 controller.AddBook("the bible", "God", "Great Book", "religion", 100.0, new MemoryStream());
                 controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
                 controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", 400.0, new MemoryStream());
-                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual",  150.0, new MemoryStream());
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", 150.0, new MemoryStream());
                 result1 = controller.SearchBooks("Fall Of The Giants");
                 result2 = controller.SearchBooks("Sin");
                 result3 = controller.SearchBooks("lett");
@@ -309,28 +309,10 @@ namespace RentItServer_UnitTests
         public void TestGetBooksByGenre()
         {
             SMUController controller = SMUController.GetInstance();
-            controller.AddBook("the bible", "God", "Great Book", "religion",  100.0, new MemoryStream());
-            controller.AddBook("Book of the dead", "Jah", "Great Book", "religion",  100.0, new MemoryStream());
-            controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction",  400.0, new MemoryStream());
-            controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual",  150.0, new MemoryStream());
-        }
-
-        [TestMethod]
-        public void TestUploadDownloadPdf()
-        {
-            SMUController controller = SMUController.GetInstance();
-            int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0.0, new MemoryStream());
-
-            MemoryStream uploadedPdf = new MemoryStream(TestFiles.testpdf);
-            uploadedPdf.Position = 0L;
-
-            long uploadedPdfLength = uploadedPdf.Length;
-
-            controller.UploadPDF(bookId, uploadedPdf);
-
-            MemoryStream downloadedPdf = controller.DownloadPDF(bookId);
-
-            Assert.IsTrue(uploadedPdfLength > 0 && uploadedPdfLength == downloadedPdf.Length);
+            controller.AddBook("the bible", "God", "Great Book", "religion", 100.0, new MemoryStream());
+            controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
+            controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", 400.0, new MemoryStream());
+            controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", 150.0, new MemoryStream());
         }
 
         [TestMethod]
