@@ -419,7 +419,25 @@ namespace RentItServer.SMU
                 return theAudio.id;
             }
         }
-        
+
+        /// <summary>
+        /// Gets the audio object associated with audioId.
+        /// </summary>
+        /// <param name="audioId">The audio id.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">No audio entry with audio id [+audioId+].</exception>
+        public SMUaudio GetAudio(int audioId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var audios = from audio in context.SMUaudios
+                             where audio.id == audioId
+                             select audio;
+                if(audios.Any() == false)   throw new ArgumentException("No audio entry with audio id ["+audioId+"].");
+                return audios.First();
+            }
+        }
+
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");

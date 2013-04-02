@@ -108,16 +108,23 @@ namespace RentItServer.Utilities
         /// Relative path must target a file. Relative path =  + relativePath
         /// </exception>
         /// <exception cref="System.Exception">File with path [+fullPath+] was not deleted.</exception>
-        public void DeleteFile(FilePath path, string relativePath)
+        public void DeleteFile(string absolutePath)
         {
-            if (relativePath == null) throw new ArgumentNullException("relativePath");
-            if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
-            if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
+            if (absolutePath == null) throw new ArgumentNullException("absolutePath");
+            if (absolutePath.Equals("")) throw new ArgumentException("absolutePath path must target a file");
+            if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
 
-            //Full path to the file
-            string fullPath = path.GetPath() + relativePath;
-            File.Delete(fullPath);
-            if(File.Exists(fullPath) == true)   throw new Exception("File with path ["+fullPath+"] was not deleted.");
+            File.Delete(absolutePath);
+            if (File.Exists(absolutePath) == true) throw new Exception("File with path [" + absolutePath + "] was not deleted.");
+        }
+
+        public bool Exists(string absolutePath)
+        {
+            if (absolutePath == null) throw new ArgumentNullException("absolutePath");
+            if (absolutePath.Equals("")) throw new ArgumentException("absolutePath path must target a file");
+            if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
+
+            return File.Exists(absolutePath);
         }
 
         internal static byte[] LoadTrackBytes(string p)
