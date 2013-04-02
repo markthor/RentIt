@@ -89,8 +89,19 @@ namespace RentItServer_UnitTests
 
         [TestMethod]
         public void UploadPDFTest_service()
-        { 
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId = service.UploadBook("Sean Paul bio", "SP", "gods book", "religious", DateTime.Now, 1000.0);
+            service.UploadPDF(bookId, new System.IO.MemoryStream());
+            try
+            {
+                service.UploadPDF(Int32.MaxValue, new System.IO.MemoryStream());
+                Assert.Fail(); // must fail
+            }
+            catch (Exception e)
+            { 
             
+            }
         }
     }
 }
