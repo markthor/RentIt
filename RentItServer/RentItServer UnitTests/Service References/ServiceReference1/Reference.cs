@@ -15,9 +15,6 @@ namespace RentItServer_UnitTests.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.ISMURentItService")]
     public interface ISMURentItService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/Test", ReplyAction="http://tempuri.org/ISMURentItService/TestResponse")]
-        int Test();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/SignUp", ReplyAction="http://tempuri.org/ISMURentItService/SignUpResponse")]
         int SignUp(string email, string name, string password, bool isAdmin);
         
@@ -25,22 +22,22 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         int LogIn(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetUserInfo", ReplyAction="http://tempuri.org/ISMURentItService/GetUserInfoResponse")]
-        RentItServer.User GetUserInfo(int userId);
+        RentItServer.SMU.User GetUserInfo(int userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UpdateUserInfo", ReplyAction="http://tempuri.org/ISMURentItService/UpdateUserInfoResponse")]
-        RentItServer.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
+        RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DeleteAccount", ReplyAction="http://tempuri.org/ISMURentItService/DeleteAccountResponse")]
         void DeleteAccount(int userId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/HasRental", ReplyAction="http://tempuri.org/ISMURentItService/HasRentalResponse")]
-        int HasRental(int userId, int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetAllBooks", ReplyAction="http://tempuri.org/ISMURentItService/GetAllBooksResponse")]
         RentItServer.SMU.Book[] GetAllBooks();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetPopularBooks", ReplyAction="http://tempuri.org/ISMURentItService/GetPopularBooksResponse")]
         RentItServer.SMU.Book[] GetPopularBooks();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetNewBooks", ReplyAction="http://tempuri.org/ISMURentItService/GetNewBooksResponse")]
+        RentItServer.SMU.Book[] GetNewBooks();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/SearchBooks", ReplyAction="http://tempuri.org/ISMURentItService/SearchBooksResponse")]
         RentItServer.SMU.Book[] SearchBooks(string searchString);
@@ -50,6 +47,9 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetBookInfo", ReplyAction="http://tempuri.org/ISMURentItService/GetBookInfoResponse")]
         RentItServer.SMU.Book GetBookInfo(int bookId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/HasRental", ReplyAction="http://tempuri.org/ISMURentItService/HasRentalResponse")]
+        int HasRental(int userId, int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/RentBook", ReplyAction="http://tempuri.org/ISMURentItService/RentBookResponse")]
         int RentBook(int userId, int bookId, System.DateTime startDate, int mediaType);
@@ -61,7 +61,7 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         System.IO.MemoryStream DownloadAudio(int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DeleteBook", ReplyAction="http://tempuri.org/ISMURentItService/DeleteBookResponse")]
-        bool DeleteBook(int bookId);
+        void DeleteBook(int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadBook", ReplyAction="http://tempuri.org/ISMURentItService/UploadBookResponse")]
         int UploadBook(string title, string author, string description, string genre, System.DateTime dateAdded, double price);
@@ -103,10 +103,6 @@ namespace RentItServer_UnitTests.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public int Test() {
-            return base.Channel.Test();
-        }
-        
         public int SignUp(string email, string name, string password, bool isAdmin) {
             return base.Channel.SignUp(email, name, password, isAdmin);
         }
@@ -115,20 +111,16 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.LogIn(email, password);
         }
         
-        public RentItServer.User GetUserInfo(int userId) {
+        public RentItServer.SMU.User GetUserInfo(int userId) {
             return base.Channel.GetUserInfo(userId);
         }
         
-        public RentItServer.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin) {
+        public RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin) {
             return base.Channel.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
         
         public void DeleteAccount(int userId) {
             base.Channel.DeleteAccount(userId);
-        }
-        
-        public int HasRental(int userId, int bookId) {
-            return base.Channel.HasRental(userId, bookId);
         }
         
         public RentItServer.SMU.Book[] GetAllBooks() {
@@ -137,6 +129,10 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         public RentItServer.SMU.Book[] GetPopularBooks() {
             return base.Channel.GetPopularBooks();
+        }
+        
+        public RentItServer.SMU.Book[] GetNewBooks() {
+            return base.Channel.GetNewBooks();
         }
         
         public RentItServer.SMU.Book[] SearchBooks(string searchString) {
@@ -151,6 +147,10 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.GetBookInfo(bookId);
         }
         
+        public int HasRental(int userId, int bookId) {
+            return base.Channel.HasRental(userId, bookId);
+        }
+        
         public int RentBook(int userId, int bookId, System.DateTime startDate, int mediaType) {
             return base.Channel.RentBook(userId, bookId, startDate, mediaType);
         }
@@ -163,8 +163,8 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.DownloadAudio(bookId);
         }
         
-        public bool DeleteBook(int bookId) {
-            return base.Channel.DeleteBook(bookId);
+        public void DeleteBook(int bookId) {
+            base.Channel.DeleteBook(bookId);
         }
         
         public int UploadBook(string title, string author, string description, string genre, System.DateTime dateAdded, double price) {

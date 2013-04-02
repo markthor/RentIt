@@ -75,17 +75,16 @@ namespace RentItServer_UnitTests
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
             int bookId = service.UploadBook("Captain Pepper", "Yoyooyoy", "gods book", "religious", DateTime.Now, 1000.0);
-            bool b = service.DeleteBook(bookId);
+            service.DeleteBook(bookId);
             try
             {
                 service.DeleteBook(bookId);
-                Assert.Fail();
+                Assert.Fail(); // must fail
             }
             catch (Exception e)
             { 
             
             }
-            Assert.AreEqual(true, b);
         }
 
         [TestMethod]

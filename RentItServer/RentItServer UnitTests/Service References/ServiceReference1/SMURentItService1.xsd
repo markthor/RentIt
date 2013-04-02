@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer.SMU" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer.SMU" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfBook">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfSMUrental">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="tns:Book" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SMUrental" nillable="true" type="tns:SMUrental" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfBook" nillable="true" type="tns:ArrayOfBook" />
-  <xs:complexType name="Book">
+  <xs:element name="ArrayOfSMUrental" nillable="true" type="tns:ArrayOfSMUrental" />
+  <xs:complexType name="SMUrental">
     <xs:sequence>
-      <xs:element name="_x003C_audioId_x003E_k__BackingField" nillable="true" type="xs:int" />
-      <xs:element name="_x003C_author_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_dateAdded_x003E_k__BackingField" type="xs:dateTime" />
-      <xs:element name="_x003C_description_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_genre_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_hit_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_id_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_price_x003E_k__BackingField" type="xs:double" />
-      <xs:element name="_x003C_title_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SMUaudio" nillable="true" type="tns:SMUaudio" />
+      <xs:element minOccurs="0" name="SMUbook" nillable="true" type="tns:SMUbook" />
+      <xs:element minOccurs="0" name="SMUuser" nillable="true" type="tns:SMUuser" />
+      <xs:element minOccurs="0" name="audioId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="bookId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="userId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Book" nillable="true" type="tns:Book" />
+  <xs:element name="SMUrental" nillable="true" type="tns:SMUrental" />
+  <xs:complexType name="SMUaudio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SMUbooks" nillable="true" type="tns:ArrayOfSMUbook" />
+      <xs:element minOccurs="0" name="SMUrentals" nillable="true" type="tns:ArrayOfSMUrental" />
+      <xs:element minOccurs="0" name="filePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="narrator" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SMUaudio" nillable="true" type="tns:SMUaudio" />
+  <xs:complexType name="ArrayOfSMUbook">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SMUbook" nillable="true" type="tns:SMUbook" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSMUbook" nillable="true" type="tns:ArrayOfSMUbook" />
+  <xs:complexType name="SMUbook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PDFFilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SMUaudio" nillable="true" type="tns:SMUaudio" />
+      <xs:element minOccurs="0" name="SMUrentals" nillable="true" type="tns:ArrayOfSMUrental" />
+      <xs:element minOccurs="0" name="audioId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="author" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dateAdded" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="genre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="hit" type="xs:int" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="imageFilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="price" type="xs:double" />
+      <xs:element minOccurs="0" name="title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SMUbook" nillable="true" type="tns:SMUbook" />
+  <xs:complexType name="SMUuser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SMUrentals" nillable="true" type="tns:ArrayOfSMUrental" />
+      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="isAdmin" type="xs:boolean" />
+      <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SMUuser" nillable="true" type="tns:SMUuser" />
 </xs:schema>
