@@ -307,7 +307,6 @@ namespace RentItServer_UnitTests
         }
 
         [TestMethod]
-<<<<<<< HEAD
         public void TestGetBooksByGenre()
         {
             SMUController controller = SMUController.GetInstance();
@@ -316,11 +315,12 @@ namespace RentItServer_UnitTests
             controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
             controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
         }
-=======
+
+        [TestMethod]
         public void TestUploadDownloadPdf()
         {
             SMUController controller = SMUController.GetInstance();
-            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0, new MemoryStream());
+            int bookId = controller.AddBook("asd", "asd", "asd", "asd", 0.0, new MemoryStream());
 
             MemoryStream uploadedPdf = new MemoryStream(TestFiles.testpdf);
             uploadedPdf.Position = 0L;
@@ -330,7 +330,6 @@ namespace RentItServer_UnitTests
             controller.UploadPDF(bookId, uploadedPdf);
 
             MemoryStream downloadedPdf = controller.DownloadPDF(bookId);
->>>>>>> 9b3c5efd3d62fea51dc2969e9230a76986c25983
 
             Assert.IsTrue(uploadedPdfLength > 0 && uploadedPdfLength == downloadedPdf.Length);
         }
