@@ -59,7 +59,7 @@ namespace RentItServer.SMU
             {
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("LogIn failed with exception [" + e + "]"));
-                throw;
+                id = -1;
             }
             return id;
         }
@@ -277,13 +277,41 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         public void DeleteBook(int bookId)
         {
-            //TODO: Get relevant info in case of failure
             try
             {
-                Book book = _dao.GetBookInfo(bookId);
+                SMUbook dbBook = _dao.GetBookInfo(bookId);
+                string bookPath = dbBook.PDFFilePath;
+                // TODO: Get audio filepath from db
+                MemoryStream pdf = null;
+                MemoryStream audio = null;
+                if (bookPath != null)
+                {   // Backup the book
+                    try
+                    {
+                        pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                    }
+                    catch (Exception e)
+                    {
+                        if (_handler != null)
+                            _handler(this, new RentItEventArgs("Reading pdf at path ["+bookPath+"] failed with exception ["+e+"]"));
+                    }
+                }
+                //TODO: do this for audio as well
+                //if (audioPath != null)
+                //{   // Backup the audio
+                //    try
+                //    {
+                //        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                //    }
+                //    catch (Exception e)
+                //    {
+                //        if (_handler != null)
+                //            _handler(this, new RentItEventArgs("Reading audio at path [" + bookPath + "] failed with exception [" + e + "]"));
+                //    }
+                //}
                 try
-                {
-                    MemoryStream pdf = _fileSystemHandler.ReadFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
+                {   // Delete the book
+                    _fileSystemHandler.DeleteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
                 }
                 catch (FileNotFoundException e)
                 { 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.ServiceModel;
 
 namespace RentItServer.Utilities
 {
@@ -82,17 +83,40 @@ namespace RentItServer.Utilities
         {
             if (relativePath == null) throw new ArgumentNullException("relativePath");
             if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
-
-            //Full path to the file
-            string fullPath = path.GetPath() + relativePath;
             if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
             
+            //Full path to the file
+            string fullPath = path.GetPath() + relativePath;
             FileStream fs = File.OpenRead(fullPath);
             MemoryStream ms = new MemoryStream();
             fs.CopyTo(ms);
             fs.Close();
             ms.Position = 0L;
             return ms;
+        }
+
+        /// <summary>
+        /// Deletes the file at the specified path+relativepath.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="relativePath">The relative path.</param>
+        /// <exception cref="System.ArgumentNullException">relativePath</exception>
+        /// <exception cref="System.ArgumentException">
+        /// Relative path must target a file
+        /// or
+        /// Relative path must target a file. Relative path =  + relativePath
+        /// </exception>
+        /// <exception cref="System.Exception">File with path [+fullPath+] was not deleted.</exception>
+        public void DeleteFile(FilePath path, string relativePath)
+        {
+            if (relativePath == null) throw new ArgumentNullException("relativePath");
+            if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
+            if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
+
+            //Full path to the file
+            string fullPath = path.GetPath() + relativePath;
+            File.Delete(fullPath);
+            if(File.Exists(fullPath) == true)   throw new Exception("File with path ["+fullPath+"] was not deleted.");
         }
 
         internal static byte[] LoadTrackBytes(string p)
