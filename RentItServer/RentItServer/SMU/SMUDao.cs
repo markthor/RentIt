@@ -517,5 +517,21 @@ namespace RentItServer.SMU
                 proxy.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Check if a user already exist with the specified email
+        /// </summary>
+        /// <param name="email">The email to check for</param>
+        /// <returns>True if a user with the email exists - false otherwise</returns>
+        public bool CheckIfEmailExistsInDb(string email)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.SMUusers
+                            where u.email.Equals(email)
+                            select u;
+                return users.Any();
+            }
+        }
     }
 }

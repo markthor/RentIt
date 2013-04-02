@@ -223,10 +223,10 @@ namespace RentItServer
         /// Uploads an audio file to a book. Overrides if audio file already exists.
         /// </summary>
         /// <param name="bookId">The book id.</param>
-        /// <param name="MP3">The Mp3.</param>
-        public void UploadAudio(int bookId, MemoryStream MP3)
+        /// <param name="mp3">The Mp3.</param>
+        public void UploadAudio(int bookId, MemoryStream mp3)
         {
-            _smuController.UploadAudio(bookId, MP3);
+            _smuController.UploadAudio(bookId, mp3);
         }
 
         /// <summary>

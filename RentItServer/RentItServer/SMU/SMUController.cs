@@ -70,16 +70,19 @@ namespace RentItServer.SMU
         /// <param name="password">The password.</param>
         /// <param name="isAdmin">if user is admin.</param>
         /// <returns>
-        /// The userId of the user, -1 if email is already in use
+        /// The id of the user, -1 if email is already in use
         /// </returns>
         public int SignUp(string email, string username, string password, bool isAdmin)
         {
-            int id;
+            if (_dao.CheckIfEmailExistsInDb(email))
+            {
+                throw new ArgumentException(string.Format("A user with email {0} already exists", email));
+            }
             try
             {
-                id = _dao.SignUp(email, username, password, isAdmin);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("SignUp: " + email + "-" + username + "-" + password));
+                return _dao.SignUp(email, username, password, isAdmin);
             }
             catch (Exception e)
             {
@@ -87,8 +90,6 @@ namespace RentItServer.SMU
                     _handler(this, new RentItEventArgs("SignUp failed with exception [" + e + "]"));
                 throw;
             }
-
-            return id;
         }
 
         /// <summary>
@@ -309,8 +310,8 @@ namespace RentItServer.SMU
                     if (audio != null)
                     {
                         //Write audio again
-                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);    
-                    }   
+                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);
+                    }
                 }
 
                 if (_handler != null)

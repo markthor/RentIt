@@ -184,9 +184,9 @@ namespace RentItServer.SMU
         /// Uploads an audio file to a book. Overrides if audio file already exists.
         /// </summary>
         /// <param name="bookId">The book id.</param>
-        /// <param name="MP3">The Mp3.</param>
+        /// <param name="mp3">The Mp3.</param>
         [OperationContract]
-        void UploadAudio(int bookId, MemoryStream MP3);
+        void UploadAudio(int bookId, MemoryStream mp3);
 
         /// <summary>
         /// Uploads a PDF file to a book. Overrides if PDF file already exists.
