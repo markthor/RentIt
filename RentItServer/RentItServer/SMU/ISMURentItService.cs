@@ -123,7 +123,7 @@ namespace RentItServer.SMU
         /// <param name="mediaType">0 if PDF, 1 if audio, 2 if both PDF and audio</param>
         /// <returns>The id of the rental object</returns>
         [OperationContract]
-        int RentBook(int userId, int bookId, DateTime startDate, int mediaType);
+        int RentBook(int userId, int bookId, int mediaType);
 
         /// <summary>
         /// Downloads the PDF for the book.

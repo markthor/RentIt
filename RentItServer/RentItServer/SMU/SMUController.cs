@@ -234,12 +234,12 @@ namespace RentItServer.SMU
         /// <returns>
         /// The id of the rental object
         /// </returns>
-        public int RentBook(int userId, int bookId, DateTime startDate, int mediaType)
+        public int RentBook(int userId, int bookId, int mediaType)
         {
             int rentalId;
             try
             {
-                rentalId = _dao.RentBook(userId, bookId, startDate, mediaType);
+                rentalId = _dao.RentBook(userId, bookId, DateTime.Now, mediaType);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] startDate [" + startDate + "] mediaType [" + mediaType + "]"));
 

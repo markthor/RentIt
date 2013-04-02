@@ -157,7 +157,7 @@ namespace RentItServer_UnitTests
             int result = -1;
             try
             {
-                controller.RentBook(userId, bookId, DateTime.Now, mediaTypeRent);
+                controller.RentBook(userId, bookId, mediaTypeRent);
                 result = controller.HasRental(userId, bookId);
             }
             catch (Exception)
