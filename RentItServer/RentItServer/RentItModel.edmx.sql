@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/02/2013 12:34:16
--- Generated from EDMX file: C:\Users\Mikkel\Documents\GitHub\RentIt\RentItServer\RentItServer\RentItModel.edmx
+-- Date Created: 04/02/2013 14:58:01
+-- Generated from EDMX file: D:\Dropbox\PRIVATE\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -47,12 +47,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_subscriptions]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[users] DROP CONSTRAINT [FK_subscriptions];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SMUbooks_audioId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SMUbooks] DROP CONSTRAINT [FK_SMUbooks_audioId];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SMUrentals_audioId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SMUrentals] DROP CONSTRAINT [FK_SMUrentals_audioId];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SMUrentals_bookId]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SMUrentals] DROP CONSTRAINT [FK_SMUrentals_bookId];
 GO
@@ -85,9 +79,6 @@ GO
 IF OBJECT_ID(N'[dbo].[votes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[votes];
 GO
-IF OBJECT_ID(N'[dbo].[SMUaudios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SMUaudios];
-GO
 IF OBJECT_ID(N'[dbo].[SMUbooks]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SMUbooks];
 GO
@@ -96,6 +87,9 @@ IF OBJECT_ID(N'[dbo].[SMUrentals]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SMUusers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SMUusers];
+GO
+IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sysdiagrams];
 GO
 IF OBJECT_ID(N'[dbo].[channelgenres]', 'U') IS NOT NULL
     DROP TABLE [dbo].[channelgenres];
@@ -170,14 +164,6 @@ CREATE TABLE [dbo].[votes] (
 );
 GO
 
--- Creating table 'SMUaudios'
-CREATE TABLE [dbo].[SMUaudios] (
-    [id] int IDENTITY(1,1) NOT NULL,
-    [narrator] varchar(1000)  NULL,
-    [filePath] varchar(600)  NOT NULL
-);
-GO
-
 -- Creating table 'SMUbooks'
 CREATE TABLE [dbo].[SMUbooks] (
     [id] int IDENTITY(1,1) NOT NULL,
@@ -187,10 +173,11 @@ CREATE TABLE [dbo].[SMUbooks] (
     [genre] varchar(50)  NULL,
     [price] float  NOT NULL,
     [dateAdded] datetime  NOT NULL,
-    [audioId] int  NULL,
     [PDFFilePath] varchar(255)  NULL,
     [imageFilePath] varchar(255)  NULL,
-    [hit] int  NOT NULL
+    [hit] int  NOT NULL,
+    [audioFilePath] nvarchar(max)  NOT NULL,
+    [audioNarrator] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -199,8 +186,8 @@ CREATE TABLE [dbo].[SMUrentals] (
     [id] int IDENTITY(1,1) NOT NULL,
     [userId] int  NOT NULL,
     [bookId] int  NULL,
-    [audioId] int  NULL,
-    [startDate] datetime  NOT NULL
+    [startDate] datetime  NOT NULL,
+    [mediaType] int  NOT NULL
 );
 GO
 
@@ -211,6 +198,16 @@ CREATE TABLE [dbo].[SMUusers] (
     [username] varchar(50)  NOT NULL,
     [password] varchar(20)  NOT NULL,
     [isAdmin] bit  NOT NULL
+);
+GO
+
+-- Creating table 'sysdiagrams'
+CREATE TABLE [dbo].[sysdiagrams] (
+    [name] nvarchar(128)  NOT NULL,
+    [principal_id] int  NOT NULL,
+    [diagram_id] int IDENTITY(1,1) NOT NULL,
+    [version] int  NULL,
+    [definition] varbinary(max)  NULL
 );
 GO
 
@@ -267,12 +264,6 @@ ADD CONSTRAINT [PK_votes]
     PRIMARY KEY CLUSTERED ([trackId], [userId] ASC);
 GO
 
--- Creating primary key on [id] in table 'SMUaudios'
-ALTER TABLE [dbo].[SMUaudios]
-ADD CONSTRAINT [PK_SMUaudios]
-    PRIMARY KEY CLUSTERED ([id] ASC);
-GO
-
 -- Creating primary key on [id] in table 'SMUbooks'
 ALTER TABLE [dbo].[SMUbooks]
 ADD CONSTRAINT [PK_SMUbooks]
@@ -289,6 +280,12 @@ GO
 ALTER TABLE [dbo].[SMUusers]
 ADD CONSTRAINT [PK_SMUusers]
     PRIMARY KEY CLUSTERED ([id] ASC);
+GO
+
+-- Creating primary key on [diagram_id] in table 'sysdiagrams'
+ALTER TABLE [dbo].[sysdiagrams]
+ADD CONSTRAINT [PK_sysdiagrams]
+    PRIMARY KEY CLUSTERED ([diagram_id] ASC);
 GO
 
 -- Creating primary key on [channels_id], [genres_id] in table 'channelgenres'
@@ -419,34 +416,6 @@ ADD CONSTRAINT [FK_subscriptions]
 CREATE INDEX [IX_FK_subscriptions]
 ON [dbo].[users]
     ([channelsSubscriped_id]);
-GO
-
--- Creating foreign key on [audioId] in table 'SMUbooks'
-ALTER TABLE [dbo].[SMUbooks]
-ADD CONSTRAINT [FK_SMUbooks_audioId]
-    FOREIGN KEY ([audioId])
-    REFERENCES [dbo].[SMUaudios]
-        ([id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SMUbooks_audioId'
-CREATE INDEX [IX_FK_SMUbooks_audioId]
-ON [dbo].[SMUbooks]
-    ([audioId]);
-GO
-
--- Creating foreign key on [audioId] in table 'SMUrentals'
-ALTER TABLE [dbo].[SMUrentals]
-ADD CONSTRAINT [FK_SMUrentals_audioId]
-    FOREIGN KEY ([audioId])
-    REFERENCES [dbo].[SMUaudios]
-        ([id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SMUrentals_audioId'
-CREATE INDEX [IX_FK_SMUrentals_audioId]
-ON [dbo].[SMUrentals]
-    ([audioId]);
 GO
 
 -- Creating foreign key on [bookId] in table 'SMUrentals'

@@ -223,9 +223,10 @@ namespace RentItServer
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="mp3">The Mp3.</param>
-        public void UploadAudio(int bookId, MemoryStream mp3)
+        /// <param name="narrator">The narrator.</param>
+        public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
-            _smuController.UploadAudio(bookId, mp3);
+            _smuController.UploadAudio(bookId, mp3, narrator);
         }
 
         /// <summary>

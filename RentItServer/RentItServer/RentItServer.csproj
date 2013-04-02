@@ -91,6 +91,9 @@
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DAO.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\FileSystemHandler.cs" />
     <Compile Include="Genre.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
@@ -118,9 +121,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITU\Search\TernarySearchTrie.cs" />
     <Compile Include="ITU\Search\TernarySearchTrieNode.cs" />
-    <Compile Include="SMUaudio.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SMUbook.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

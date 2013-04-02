@@ -32,9 +32,9 @@ namespace RentItServer
         public DbSet<Track> tracks { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Vote> votes { get; set; }
-        public DbSet<SMUaudio> SMUaudios { get; set; }
         public DbSet<SMUbook> SMUbooks { get; set; }
         public DbSet<SMUrental> SMUrentals { get; set; }
         public DbSet<SMUuser> SMUusers { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

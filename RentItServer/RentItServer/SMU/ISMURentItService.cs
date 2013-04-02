@@ -183,8 +183,9 @@ namespace RentItServer.SMU
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="mp3">The Mp3.</param>
+        /// <param name="narrator">The narrator.</param>
         [OperationContract]
-        void UploadAudio(int bookId, MemoryStream mp3);
+        void UploadAudio(int bookId, MemoryStream mp3, string narrator);
 
         /// <summary>
         /// Uploads a PDF file to a book. Overrides if PDF file already exists.
