@@ -332,7 +332,7 @@ namespace RentItServer_UnitTests
             long downloadStreamLength = controller.DownloadImage(bookId).Length;
 
             //Check that the two image streams are equal
-            Assert.AreEqual(uploadStreamLength, uploadStreamLength);
+            Assert.AreEqual(uploadStreamLength, downloadStreamLength);
         }
     }
 }
