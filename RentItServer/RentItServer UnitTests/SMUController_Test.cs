@@ -138,9 +138,7 @@ namespace RentItServer_UnitTests
             int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             controller.UploadPDF(bookId1, new MemoryStream());
-            controller.UploadAudio(bookId1, new MemoryStream());
             controller.UploadPDF(bookId2, new MemoryStream());
-            controller.UploadAudio(bookId2, new MemoryStream());
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
