@@ -206,7 +206,7 @@ namespace RentItServer.SMU
         /// <returns>
         /// The id of the book.
         /// </returns>
-        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
+        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
         {
             int bookId;
             try
@@ -214,6 +214,7 @@ namespace RentItServer.SMU
                 bookId = _dao.AddBook(title, author, description, genre, dateAdded, price);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("AddBook succeeded. Title [" + title + "] Author [" + author + "] Description [" + description + "] Genre [" + genre + "] Price [" + price + "]"));
+                SaveImage(bookId, image); //some error handling maybe? logging?
             }
             catch (Exception e)
             {
@@ -451,7 +452,7 @@ namespace RentItServer.SMU
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, DateTime dateAdded, double price)
+        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
         {
             Book theBook;
             try
@@ -463,6 +464,8 @@ namespace RentItServer.SMU
                                                  "]. New attributes: title [" + title + "] author [" + author +
                                                  "] description [" + description + "] genre [" + genre + "] dateAdded [" +
                                                  dateAdded + "] price [" + price + "]."));
+                if (image != null)
+                    SaveImage(bookId, image); //Error handling? logging?
             }
             catch (Exception e)
             {
@@ -549,7 +552,7 @@ namespace RentItServer.SMU
             _dao.DeleteSMUDatabaseData();
         }
 
-        public void UploadImage(int bookId, MemoryStream image)
+        private void SaveImage(int bookId, MemoryStream image)
         {
             string filename = FileName.GenerateImageFileName(bookId);
             _fileSystemHandler.WriteFile(FilePath.SMUImagePath, filename, image);

@@ -195,9 +195,9 @@ namespace RentItServer
         /// <returns>
         /// The id of the book.
         /// </returns>
-        public int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
+        public int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
         {
-            return _smuController.AddBook(title, author, description,genre,dateAdded, price);
+            return _smuController.AddBook(title, author, description,genre,dateAdded, price, image);
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace RentItServer
         /// The updated book
         /// </returns>
         public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
-                               double price)
+                               double price, MemoryStream image)
         {
-            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price);
+            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price, image);
         }
 
         /// <summary>
@@ -261,11 +261,6 @@ namespace RentItServer
         public MemoryStream DownloadPDF(int bookId)
         {
             return _smuController.DownloadPDF(bookId);
-        }
-
-        public void UploadImage(int bookId, MemoryStream image)
-        {
-            _smuController.UploadImage(bookId, image);
         }
     }
 }
