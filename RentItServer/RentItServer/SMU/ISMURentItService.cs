@@ -131,7 +131,7 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         /// <returns>Stream containing the contents of the pdf.</returns>
         [OperationContract]
-        MemoryStream DownloadPDF(int bookId);
+        MemoryStream DownloadPdf(int bookId);
 
         /// <summary>
         /// Downloads the audio for the book.
@@ -191,12 +191,15 @@ namespace RentItServer.SMU
         /// <summary>
         /// Uploads a PDF file to a book. Overrides if PDF file already exists.
         /// </summary>
-        /// <param name="bookID">The book ID.</param>
-        /// <param name="PDF">The PDF.</param>
+        /// <param name="bookId">The id of the book</param>
+        /// <param name="pdf">The MemoryStream containing the pdf</param>
         [OperationContract]
-        void UploadPDF(int bookID, MemoryStream PDF);
+        void UploadPdf(int bookId, MemoryStream pdf);
 
         [OperationContract]
         void UploadImage(int bookId, MemoryStream image);
+
+        [OperationContract]
+        MemoryStream DownloadImage(int bookId);
     }
 }
