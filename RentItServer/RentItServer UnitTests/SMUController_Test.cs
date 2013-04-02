@@ -11,7 +11,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        [TestInitialize()]
+        [TestInitialize]
         public void CleanDataBase()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -20,7 +20,7 @@ namespace RentItServer_UnitTests
         /// <summary>
         /// Deletes all tuples in SMU database.
         /// </summary>
-        [ClassCleanup()]
+        [ClassCleanup]
         public static void CleanDataBaseFinish()
         {
             SMUController.GetInstance().DeleteSMUDatabaseData();
@@ -137,10 +137,9 @@ namespace RentItServer_UnitTests
             int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
             int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
             int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", 100.0, new MemoryStream());
+
             controller.UploadPDF(bookId1, new MemoryStream());
-            controller.UploadAudio(bookId1, new MemoryStream());
             controller.UploadPDF(bookId2, new MemoryStream());
-            controller.UploadAudio(bookId2, new MemoryStream());
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
