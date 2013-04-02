@@ -80,12 +80,15 @@ namespace RentItServer.SMU
         /// </returns>
         public int SignUp(string email, string username, string password, bool isAdmin)
         {
-            int id;
+            if (_dao.CheckIfEmailExistsInDb(email))
+            {
+                throw new ArgumentException(string.Format("A user with email {0} already exists", email));
+            }
             try
             {
-                id = _dao.SignUp(email, username, password, isAdmin);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("SignUp: " + email + "-" + username + "-" + password));
+                return _dao.SignUp(email, username, password, isAdmin);
             }
             catch (Exception e)
             {
@@ -93,8 +96,6 @@ namespace RentItServer.SMU
                     _handler(this, new RentItEventArgs("SignUp failed with exception [" + e + "]"));
                 throw;
             }
-
-            return id;
         }
 
         /// <summary>
@@ -286,9 +287,8 @@ namespace RentItServer.SMU
             try
             {
                 SMUbook dbBook = _dao.GetBookInfo(bookId);
-                string bookPath = dbBook.PDFFilePath;
-                // TODO: Get audio filepath from db
-                if (bookPath != null)
+                string pdfFilePath = dbBook.PDFFilePath;
+                if (pdfFilePath != null)
                 {
                     // Backup the book
                     try
@@ -298,56 +298,43 @@ namespace RentItServer.SMU
                     catch (Exception e)
                     {
                         if (_handler != null)
-                            _handler(this, new RentItEventArgs("Reading pdf at path [" + bookPath + "] failed with exception [" + e + "]"));
+                            _handler(this, new RentItEventArgs("Reading pdf at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
                     }
                 }
-                //TODO: do this for audio as well
-                //if (audioPath != null)
-                //{   // Backup the audio
-                //    try
-                //    {
-                //        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        if (_handler != null)
-                //            _handler(this, new RentItEventArgs("Reading audio at path [" + bookPath + "] failed with exception [" + e + "]"));
-                //    }
-                //}
-                try
-                {
-                    // Delete the book
-                    _fileSystemHandler.DeleteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId));
-                }
-                catch (Exception e)
-                {
-                    //TODO: use bookPath intead of "FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId)"
-                    if (_handler != null)
-                        _handler(this, new RentItEventArgs("Deletin file at path [" + bookPath + "] failed with exception [" + e + "]"));
+                if (dbBook.audioId != null)
+                {   // Backup the audio
+                    try
+                    {
+                        audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+                    }
+                    catch (Exception e)
+                    {
+                        if (_handler != null)
+                            _handler(this, new RentItEventArgs("Reading audio at path [" + pdfFilePath + "] failed with exception [" + e + "]"));
+                    }
                 }
                 try
                 {
                     _dao.DeleteBook(bookId);
                 }
-                catch (ArgumentException)
+                catch (SqlException)
                 {
+                    if (pdf != null)
+                    {
+                        //Write pdf again
+                        _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId), pdf);
+                    }
+                    if (audio != null)
+                    {
+                        //Write audio again
+                        _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);
+                    }
                 }
-
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook succeeded for bookId [" + bookId + "]"));
             }
             catch (Exception e)
-            {   // TODO: roll back changes
-                if (pdf != null)
-                {
-                    //Write pdf again
-                    _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, FileName.GeneratePdfFileName(bookId), pdf);
-                }
-                if (audio != null)
-                {
-                    //Write audio again
-                    //_fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), audio);
-                }
+            {
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("DeleteBook failed with exception [" + e + "], no changes occurred."));
                 throw;
@@ -511,7 +498,7 @@ namespace RentItServer.SMU
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath + FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId));
             }
             catch (Exception e)
             {
@@ -579,9 +566,9 @@ namespace RentItServer.SMU
 
         public void UploadImage(int bookId, MemoryStream image)
         {
-            string relativePath = String.Format("Image_BookId_{0}.jpg", bookId.ToString());
-            _fileSystemHandler.WriteFile(FilePath.SMUImagePath, relativePath, image);
-            string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), relativePath);
+            string filename = FileName.GenerateImageFileName(bookId);
+            _fileSystemHandler.WriteFile(FilePath.SMUImagePath, filename, image);
+            string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), filename);
             _dao.AddImage(bookId, fullPath);
         }
     }
