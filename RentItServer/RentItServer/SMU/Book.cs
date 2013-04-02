@@ -8,7 +8,7 @@ namespace RentItServer.SMU
     [Serializable]
     public class Book
     {
-        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, Nullable<int> audioId, int hit)
+        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, Nullable<int> audioId, int hit)
         {
             this.id = id;
             this.title = title;
@@ -20,6 +20,7 @@ namespace RentItServer.SMU
             this.audioId = audioId;
             this.audioNarrator = audioNarrator;
             this.hit = hit;
+            this.narrator = narrator;
         }
 
         public int id { get; set; }
@@ -28,6 +29,7 @@ namespace RentItServer.SMU
         public string description { get; set; }
         public string genre { get; set; }
         public double price { get; set; }
+        public string narrator { get; set; }
         public DateTime dateAdded { get; set; }
         public Nullable<int> audioId { get; set; }
         public string audioNarrator { get; set; }
