@@ -39,22 +39,22 @@ namespace RentItServer.Utilities
         /// <summary>
         /// Writes the specified trackStream to a file at the path relative to the root directory.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="relativePath">The relative path.</param>
+        /// <param name="path">The path to the directory in which the file should be placed</param>
+        /// <param name="filename">The name of the file</param>
         /// <param name="memoryStream">The track stream.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Relative path was null
         /// or
         /// MemoryStream argument was null
         /// </exception>
-        public void WriteFile(FilePath path, string relativePath, MemoryStream memoryStream)
+        public void WriteFile(FilePath path, string filename, MemoryStream memoryStream)
         {
             if (path == null) throw new ArgumentNullException("path");
-            if (relativePath == null) throw new ArgumentNullException("relativePath");
+            if (filename == null) throw new ArgumentNullException("filename");
             if (memoryStream == null) throw new ArgumentNullException("memoryStream");
 
             //Full path to the file
-            string fullPath = path.GetPath() + relativePath;
+            string fullPath = path.GetPath() + filename;
             
             //Create the directory
             Directory.CreateDirectory(path.GetPath());
@@ -70,22 +70,23 @@ namespace RentItServer.Utilities
         /// <summary>
         /// Reads the file at the specified path relative to the root directory.
         /// </summary>
-        /// <param name="relativePath">The relative path.</param>
+        /// <param name="path">The path where the file should be placed</param>
+        /// <param name="filename">The name of the file</param>
         /// <returns> <see cref="MemoryStream"/> containing the contents of the file</returns>
         /// <exception cref="System.ArgumentNullException">Relative path was null</exception>
         /// <exception cref="System.ArgumentException">
         /// Relative path must target a file
         /// or
-        /// Relative path must target a file. Relative path =  + relativePath
+        /// Relative path must target a file. Relative path =  + filename
         /// </exception>
-        public MemoryStream ReadFile(FilePath path, string relativePath)
+        public MemoryStream ReadFile(FilePath path, string filename)
         {
-            if (relativePath == null) throw new ArgumentNullException("relativePath");
-            if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
+            if (filename == null) throw new ArgumentNullException("filename");
+            if (filename.Equals("")) throw new ArgumentException("Relative path must target a file");
 
             //Full path to the file
-            string fullPath = path.GetPath() + relativePath;
-            if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
+            string fullPath = path.GetPath() + filename;
+            if (filename.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + filename);
             
             FileStream fs = File.OpenRead(fullPath);
             MemoryStream ms = new MemoryStream();

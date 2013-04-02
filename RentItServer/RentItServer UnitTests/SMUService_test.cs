@@ -39,6 +39,7 @@ namespace RentItServer_UnitTests
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
             int bookId = service.UploadBook("Peter PLys", "A. A. Milne", "gbook", "religious", DateTime.Now, 1000.0);
+            service.UploadPDF(bookId, new System.IO.MemoryStream());
             int userId = service.SignUp("peter@gogo.dk", "userman", "abekat1", false); 
             int rentId = service.RentBook(userId, bookId, DateTime.Now, 0);
         }
@@ -67,6 +68,40 @@ namespace RentItServer_UnitTests
                     boo3 = true;
             }
             Assert.AreEqual(true, boo1 && boo2 && boo3);         
+        }
+
+        [TestMethod]
+        public void DeleteBookTest_service()
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId = service.UploadBook("Captain Pepper", "Yoyooyoy", "gods book", "religious", DateTime.Now, 1000.0);
+            service.DeleteBook(bookId);
+            try
+            {
+                service.DeleteBook(bookId);
+                Assert.Fail(); // must fail
+            }
+            catch (Exception e)
+            { 
+            
+            }
+        }
+
+        [TestMethod]
+        public void UploadPDFTest_service()
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId = service.UploadBook("Sean Paul bio", "SP", "gods book", "religious", DateTime.Now, 1000.0);
+            service.UploadPDF(bookId, new System.IO.MemoryStream());
+            try
+            {
+                service.UploadPDF(Int32.MaxValue, new System.IO.MemoryStream());
+                Assert.Fail(); // must fail
+            }
+            catch (Exception e)
+            { 
+            
+            }
         }
     }
 }
