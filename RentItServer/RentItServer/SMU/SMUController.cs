@@ -206,12 +206,12 @@ namespace RentItServer.SMU
         /// <returns>
         /// The id of the book.
         /// </returns>
-        public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
+        public int AddBook(string title, string author, string description, string genre, double price, MemoryStream image)
         {
             int bookId;
             try
             {
-                bookId = _dao.AddBook(title, author, description, genre, dateAdded, price);
+                bookId = _dao.AddBook(title, author, description, genre, DateTime.Now, price);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("AddBook succeeded. Title [" + title + "] Author [" + author + "] Description [" + description + "] Genre [" + genre + "] Price [" + price + "]"));
                 SaveImage(bookId, image); //some error handling maybe? logging?
@@ -452,12 +452,12 @@ namespace RentItServer.SMU
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
+        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double price, MemoryStream image)
         {
             Book theBook;
             try
             {
-                theBook = _dao.UpdateBook(bookId, title, author, description, genre, dateAdded, price, "", "");
+                theBook = _dao.UpdateBook(bookId, title, author, description, genre, DateTime.Now, price, "", "");
                 if (_handler != null)
                     _handler(this,
                              new RentItEventArgs("UpdateBookInfo succeeded for book id [" + bookId +
