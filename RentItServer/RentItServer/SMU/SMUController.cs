@@ -53,11 +53,17 @@ namespace RentItServer.SMU
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("LogIn: " + email + "-" + password));
             }
+            catch (ArgumentException)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("LogIn failed with due to email/password mismatch"));
+                id = -1;
+            }
             catch (Exception e)
             {
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("LogIn failed with exception [" + e + "]"));
-                id = -1;
+                    _handler(this, new RentItEventArgs("LogIn failed with due to exception ["+e+"]"));
+                throw;
             }
             return id;
         }
