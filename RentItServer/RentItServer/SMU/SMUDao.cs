@@ -118,12 +118,18 @@ namespace RentItServer.SMU
             }
         }
 
-        //return -1 if not rented
-        //return 0 if rented PDF
-        //return 1 if rented audio
-        //return 2 if rented both
 
-
+        /// <summary>
+        /// Checks if the book is already rented
+        /// </summary>
+        /// <param name="userId">int</param>
+        /// <param name="bookId">int</param>
+        /// <returns>
+        /// return -1 if not rented
+        /// return 0 if rented PDF
+        /// return 1 if rented audio
+        /// return 2 if rented both
+        /// </returns>
         public int HasRental(int userId, int bookId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -138,28 +144,38 @@ namespace RentItServer.SMU
                 {
                     return -1;
                 }
-                SMUrental theRental = rentals.First();
 
-                if (DateTime.Now.Subtract(theRental.startDate) > new TimeSpan(7, 0, 0, 0))
-                {   // The rental has passed 7 days - it will be removed from the database
-                    proxy.SMUrentals.Remove(theRental);
-                    proxy.SaveChanges();
-                    return -1;
+                List<SMUrental> list = rentals.ToList();
+                bool aud = false;
+                bool pdf = false;
+                foreach(SMUrental rental in list)
+                {
+                    // tests if the rental is more than 7 days old
+                    if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
+                        //tests for audio and book
+                        if (rental.SMUaudio != null) {
+                            aud = true;
+                        }
+                        if (rental.SMUbook != null) {
+                            pdf = true;
+                        }
+                    }
                 }
 
-                if (theRental.audioId != null && theRental.bookId != null)
+                // returns 2, 1 or 0 depending on audio and pdf
+                if (aud == true && pdf == true)
                 {
                     return 2;
                 }
-                if (theRental.audioId != null)
+                if (aud == true)
                 {
                     return 1;
                 }
-                if (theRental.bookId != null)
+                if (pdf == true)
                 {
                     return 0;
                 }
-                throw new Exception("There was a rental, but bookId and audioId was null. Dayum");
+                throw new Exception("There was a rental, but bookId and audioId was null");
             }
         }
 
