@@ -52,10 +52,10 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         int HasRental(int userId, int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/RentBook", ReplyAction="http://tempuri.org/ISMURentItService/RentBookResponse")]
-        int RentBook(int userId, int bookId, System.DateTime startDate, int mediaType);
+        int RentBook(int userId, int bookId, int mediaType);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadPDF", ReplyAction="http://tempuri.org/ISMURentItService/DownloadPDFResponse")]
-        System.IO.MemoryStream DownloadPDF(int bookId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadPdf", ReplyAction="http://tempuri.org/ISMURentItService/DownloadPdfResponse")]
+        System.IO.MemoryStream DownloadPdf(int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadAudio", ReplyAction="http://tempuri.org/ISMURentItService/DownloadAudioResponse")]
         System.IO.MemoryStream DownloadAudio(int bookId);
@@ -64,16 +64,19 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         void DeleteBook(int bookId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadBook", ReplyAction="http://tempuri.org/ISMURentItService/UploadBookResponse")]
-        int UploadBook(string title, string author, string description, string genre, System.DateTime dateAdded, double price);
+        int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UpdateBook", ReplyAction="http://tempuri.org/ISMURentItService/UpdateBookResponse")]
-        RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price);
+        RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price, System.IO.MemoryStream image);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadAudio", ReplyAction="http://tempuri.org/ISMURentItService/UploadAudioResponse")]
-        void UploadAudio(int bookId, System.IO.MemoryStream MP3);
+        void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadPDF", ReplyAction="http://tempuri.org/ISMURentItService/UploadPDFResponse")]
-        void UploadPDF(int bookID, System.IO.MemoryStream PDF);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadPdf", ReplyAction="http://tempuri.org/ISMURentItService/UploadPdfResponse")]
+        void UploadPdf(int bookId, System.IO.MemoryStream pdf);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadImage", ReplyAction="http://tempuri.org/ISMURentItService/DownloadImageResponse")]
+        System.IO.MemoryStream DownloadImage(int bookId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -151,12 +154,12 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.HasRental(userId, bookId);
         }
         
-        public int RentBook(int userId, int bookId, System.DateTime startDate, int mediaType) {
-            return base.Channel.RentBook(userId, bookId, startDate, mediaType);
+        public int RentBook(int userId, int bookId, int mediaType) {
+            return base.Channel.RentBook(userId, bookId, mediaType);
         }
         
-        public System.IO.MemoryStream DownloadPDF(int bookId) {
-            return base.Channel.DownloadPDF(bookId);
+        public System.IO.MemoryStream DownloadPdf(int bookId) {
+            return base.Channel.DownloadPdf(bookId);
         }
         
         public System.IO.MemoryStream DownloadAudio(int bookId) {
@@ -167,20 +170,24 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             base.Channel.DeleteBook(bookId);
         }
         
-        public int UploadBook(string title, string author, string description, string genre, System.DateTime dateAdded, double price) {
-            return base.Channel.UploadBook(title, author, description, genre, dateAdded, price);
+        public int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image) {
+            return base.Channel.UploadBook(title, author, description, genre, price, image);
         }
         
-        public RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price) {
-            return base.Channel.UpdateBook(bookId, title, author, description, genre, dateAdded, price);
+        public RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price, System.IO.MemoryStream image) {
+            return base.Channel.UpdateBook(bookId, title, author, description, genre, dateAdded, price, image);
         }
         
-        public void UploadAudio(int bookId, System.IO.MemoryStream MP3) {
-            base.Channel.UploadAudio(bookId, MP3);
+        public void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator) {
+            base.Channel.UploadAudio(bookId, mp3, narrator);
         }
         
-        public void UploadPDF(int bookID, System.IO.MemoryStream PDF) {
-            base.Channel.UploadPDF(bookID, PDF);
+        public void UploadPdf(int bookId, System.IO.MemoryStream pdf) {
+            base.Channel.UploadPdf(bookId, pdf);
+        }
+        
+        public System.IO.MemoryStream DownloadImage(int bookId) {
+            return base.Channel.DownloadImage(bookId);
         }
     }
 }

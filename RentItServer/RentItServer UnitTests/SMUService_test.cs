@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
 using System.Collections.Generic;
+using System.IO;
 
 namespace RentItServer_UnitTests
 {
@@ -25,7 +26,7 @@ namespace RentItServer_UnitTests
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
             string title = "bible";
             string author = "God";
-            int bookId = service.UploadBook(title, author, "gods book", "religious", DateTime.Now, 1000.0);
+            int bookId = service.UploadBook(title, author, "gods book", "religious", 1000.0, new MemoryStream());
             Book book = service.GetBookInfo(bookId);
 
             Assert.AreEqual(bookId, book.id);
@@ -37,10 +38,10 @@ namespace RentItServer_UnitTests
         public void RentBookTest_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
-            int bookId = service.UploadBook("Peter PLys", "A. A. Milne", "gbook", "religious", DateTime.Now, 1000.0);
-            service.UploadPDF(bookId, new System.IO.MemoryStream());
+            int bookId = service.UploadBook("Peter PLys", "A. A. Milne", "gbook", "religious", 1000.0, new MemoryStream());
+            service.UploadPdf(bookId, new System.IO.MemoryStream());
             int userId = service.SignUp("peter@gogo.dk", "userman", "abekat1", false); 
-            int rentId = service.RentBook(userId, bookId, DateTime.Now, 0);
+            int rentId = service.RentBook(userId, bookId, 0);
         }
 
 
@@ -48,9 +49,9 @@ namespace RentItServer_UnitTests
         public void GetAllBooksTest_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
-            int bookId1 = service.UploadBook("The Wolf", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
-            int bookId2 = service.UploadBook("The Bird", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
-            int bookId3 = service.UploadBook("The Rat", "Mr. Bean", "gods book", "religious", DateTime.Now, 1000.0);
+            int bookId1 = service.UploadBook("The Wolf", "Mr. Bean", "gods book", "religious", 1000.0, new MemoryStream());
+            int bookId2 = service.UploadBook("The Bird", "Mr. Bean", "gods book", "religious", 1000.0, new MemoryStream());
+            int bookId3 = service.UploadBook("The Rat", "Mr. Bean", "gods book", "religious", 1000.0, new MemoryStream());
 
             List<Book> list = new List<Book>(service.GetAllBooks());
 
@@ -73,7 +74,7 @@ namespace RentItServer_UnitTests
         public void DeleteBookTest_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
-            int bookId = service.UploadBook("Captain Pepper", "Yoyooyoy", "gods book", "religious", DateTime.Now, 1000.0);
+            int bookId = service.UploadBook("Captain Pepper", "Yoyooyoy", "gods book", "religious", 1000.0, new MemoryStream());
             service.DeleteBook(bookId);
             try
             {
@@ -90,11 +91,11 @@ namespace RentItServer_UnitTests
         public void UploadPDFTest_service()
         {
             ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
-            int bookId = service.UploadBook("Sean Paul bio", "SP", "gods book", "religious", DateTime.Now, 1000.0);
-            service.UploadPDF(bookId, new System.IO.MemoryStream());
+            int bookId = service.UploadBook("Sean Paul bio", "SP", "gods book", "religious", 1000.0, new MemoryStream());
+            service.UploadPdf(bookId, new System.IO.MemoryStream());
             try
             {
-                service.UploadPDF(Int32.MaxValue, new System.IO.MemoryStream());
+                service.UploadPdf(Int32.MaxValue, new System.IO.MemoryStream());
                 Assert.Fail(); // must fail
             }
             catch (Exception)
