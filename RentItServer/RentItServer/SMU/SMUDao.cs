@@ -388,7 +388,7 @@ namespace RentItServer.SMU
 
                 SMUaudio theAudio = new SMUaudio()
                 {
-                    narrator = "Narrator... this is not in the service interface method :)",
+                    narrator = "Narrator :)",
                     filePath = filePath,
                     SMUbooks = new Collection<SMUbook>(),
                     SMUrentals = new Collection<SMUrental>()
@@ -529,6 +529,22 @@ namespace RentItServer.SMU
                 SMUbook book = books.First();
                 book.PDFFilePath = pdfFilePath;
                 proxy.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Check if a user already exist with the specified email
+        /// </summary>
+        /// <param name="email">The email to check for</param>
+        /// <returns>True if a user with the email exists - false otherwise</returns>
+        public bool CheckIfEmailExistsInDb(string email)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.SMUusers
+                            where u.email.Equals(email)
+                            select u;
+                return users.Any();
             }
         }
 
