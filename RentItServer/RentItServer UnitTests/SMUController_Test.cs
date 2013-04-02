@@ -137,16 +137,18 @@ namespace RentItServer_UnitTests
             int userId1 = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
             int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
-            int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-            controller.UploadPDF(bookId, new System.IO.MemoryStream());
-            controller.UploadAudio(bookId, new System.IO.MemoryStream());
+            int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0);
+            controller.UploadPDF(bookId1, new System.IO.MemoryStream());
+            controller.UploadAudio(bookId1, new System.IO.MemoryStream());
+            controller.UploadPDF(bookId2, new System.IO.MemoryStream());
+            controller.UploadAudio(bookId2, new System.IO.MemoryStream());
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
-            RentAndVerify(userId1, bookId, mediaTypeBook, mediaTypeBook);
-            RentAndVerify(userId1, bookId, mediaTypeAudio, mediaTypeBoth);
-            RentAndVerify(userId2, bookId, mediaTypeBoth, mediaTypeBoth);
-            RentAndVerify(userId3, bookId, mediaTypeAudio, mediaTypeAudio);
+            RentAndVerify(userId1, bookId1, mediaTypeBook, mediaTypeBook);
+            RentAndVerify(userId1, bookId1, mediaTypeAudio, mediaTypeBoth);
+            RentAndVerify(userId2, bookId2, mediaTypeBoth, mediaTypeBoth);
         }
 
         public void RentAndVerify(int userId, int bookId, int mediaTypeRent, int mediaTypeAssert)
