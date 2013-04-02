@@ -196,8 +196,5 @@ namespace RentItServer.SMU
         /// <param name="PDF">The PDF.</param>
         [OperationContract]
         void UploadPDF(int bookID, MemoryStream PDF);
-
-        [OperationContract]
-        void UploadImage(int bookId, MemoryStream image);
     }
 }
