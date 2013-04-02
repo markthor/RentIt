@@ -262,11 +262,6 @@ namespace RentItServer
             return _smuController.DownloadPDF(bookId);
         }
 
-        public void UploadImage(int bookId, MemoryStream image)
-        {
-            _smuController.UploadImage(bookId, image);
-        }
-
         public MemoryStream DownloadImage(int bookId)
         {
             return _smuController.DownloadImage(bookId);

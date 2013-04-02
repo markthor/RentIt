@@ -242,7 +242,7 @@ namespace RentItServer.SMU
             {
                 rentalId = _dao.RentBook(userId, bookId, DateTime.Now, mediaType);
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] startDate [" + startDate + "] mediaType [" + mediaType + "]"));
+                    _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] mediaType [" + mediaType + "]"));
 
             }
             catch (Exception e)
