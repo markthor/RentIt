@@ -482,7 +482,7 @@ namespace RentItServer.SMU
             try
             {
                 _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath + FileName.GenerateAudioFileName(bookId));
+                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId));
             }
             catch (Exception e)
             {
