@@ -16,9 +16,9 @@ namespace RentItServer
         /// Signs up a new user account.
         /// </summary>
         /// <param name="email">The email.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="isAdmin">if user is admin.</param>
+        /// <param name="name">The name</param>
+        /// <param name="password">The password</param>
+        /// <param name="isAdmin">if user is admin</param>
         /// <returns>
         /// The id of the user, -1 if email is already in use
         /// </returns>
@@ -28,10 +28,10 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Log in the existing user.
+        /// Log in the existing user
         /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="password">The password.</param>
+        /// <param name="email">The email</param>
+        /// <param name="password">The password</param>
         /// <returns>
         /// The id of the user, -1 if email/password pair is invalid
         /// </returns>
@@ -41,9 +41,9 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the user account info.
+        /// Gets the user account info
         /// </summary>
-        /// <param name="userId">The user id.</param>
+        /// <param name="userId">The user id</param>
         /// <returns>
         /// The user with the associated id, null if userId does not exist
         /// </returns>
@@ -53,10 +53,10 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Updates the user info.
+        /// Updates the user info
         /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="userId">The user id</param>
+        /// <param name="email">The email</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="isAdmin">The users admin status.</param>
@@ -224,7 +224,6 @@ namespace RentItServer
         /// </summary>
         /// <param name="bookId">The book id.</param>
         /// <param name="mp3">The Mp3.</param>
-        /// <param name="narrator">The narrator.</param>
         public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
             _smuController.UploadAudio(bookId, mp3, narrator);

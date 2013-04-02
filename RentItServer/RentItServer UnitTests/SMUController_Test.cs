@@ -102,9 +102,9 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Koran", "Allah", "Great Book", "religion", DateTime.Now, 100000000.0);
-                controller.AddBook("Book of the dead", "Dalai Lama", "Great Book", "religion", DateTime.Now, 0.0);
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Koran", "Allah", "Great Book", "religion", DateTime.Now, 100000000.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Dalai Lama", "Great Book", "religion", DateTime.Now, 0.0, new MemoryStream());
             }
             catch (Exception) {
                 Assert.Fail();
@@ -116,12 +116,12 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
+            int bookId = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             controller.UploadPDF(bookId, new System.IO.MemoryStream());
-            int rental = controller.RentBook(user, bookId, DateTime.Now, 0);
+            int rental = controller.RentBook(user, bookId, 0);
             try
             {
-                controller.RentBook(Int32.MaxValue, Int32.MaxValue,DateTime.Now , 0);
+                controller.RentBook(Int32.MaxValue, Int32.MaxValue, 0);
                 Assert.Fail();
             }
             catch (Exception)
@@ -137,12 +137,12 @@ namespace RentItServer_UnitTests
             int userId1 = controller.SignUp("Sly Dunbar", "1Fisk", "gogogo1@yo.dk", false);
             int userId2 = controller.SignUp("Bumbas", "TorskT", "gogogo2@yo.dk", false);
             int userId3 = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
-            int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0);
+            int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             controller.UploadPDF(bookId1, new System.IO.MemoryStream());
-            controller.UploadAudio(bookId1, new System.IO.MemoryStream());
+            controller.UploadAudio(bookId1, new System.IO.MemoryStream(), "Thomas Pierce");
             controller.UploadPDF(bookId2, new System.IO.MemoryStream());
-            controller.UploadAudio(bookId2, new System.IO.MemoryStream());
+            controller.UploadAudio(bookId2, new System.IO.MemoryStream(), "Sean John");
             int mediaTypeBook = 0;
             int mediaTypeAudio = 1;
             int mediaTypeBoth = 2;
@@ -178,7 +178,7 @@ namespace RentItServer_UnitTests
             DateTime time = DateTime.Now;
             double price = 100;
             Book book = null;
-            int bookId = controller.AddBook(title, author, description, genre, time, price);
+            int bookId = controller.AddBook(title, author, description, genre, time, price, new MemoryStream());
             try
             {
                 book = controller.GetBookInfo(bookId);
@@ -199,8 +199,8 @@ namespace RentItServer_UnitTests
         {
             SMUController controller = SMUController.GetInstance(); 
             int user = controller.SignUp("Anton Knopper", "1Fisk", "gogogo1@yo.dk", false);
-            int bookId1 = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0);
+            int bookId1 = controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
             controller.UploadPDF(bookId1, new System.IO.MemoryStream());
             controller.DeleteBook(bookId1);
             controller.DeleteBook(bookId2);     
@@ -220,10 +220,10 @@ namespace RentItServer_UnitTests
             SMUController controller = SMUController.GetInstance();
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
-                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
                 Book[] result = controller.GetAllBooks();
                 Assert.AreEqual(4, result.Length);
             }
@@ -237,7 +237,7 @@ namespace RentItServer_UnitTests
         public void TestUploadDownloadPdf()
         {
             SMUController controller = SMUController.GetInstance();
-            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0);
+            int bookId = controller.AddBook("asd", "asd", "asd", "asd", DateTime.Now, 0, new MemoryStream());
             
             string path = Directory.GetCurrentDirectory();
             string filename = "test.pdf";
@@ -263,10 +263,10 @@ namespace RentItServer_UnitTests
             Book[] result = null;
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
-                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
                 result = controller.GetPopularBooks();
             }
             catch (Exception)
@@ -286,10 +286,10 @@ namespace RentItServer_UnitTests
             Book[] result4 = null;
             try
             {
-                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0);
-                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0);
-                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0);
+                controller.AddBook("the bible", "God", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Book of the dead", "Jah", "Great Book", "religion", DateTime.Now, 100.0, new MemoryStream());
+                controller.AddBook("Fall Of The Giants", "Ken Folett", "In the twentieth century, man must fight for survival... ", "Faction", DateTime.Now, 400.0, new MemoryStream());
+                controller.AddBook("The Art Of War", "Sin Zu", "Fight or die trying", "Battle Manual", DateTime.Now, 150.0, new MemoryStream());
                 result1 = controller.SearchBooks("Fall Of The Giants");
                 result2 = controller.SearchBooks("Sin");
                 result3 = controller.SearchBooks("lett");
