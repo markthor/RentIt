@@ -149,8 +149,8 @@
     <Property Name="PDFFilePath" Type="varchar" Nullable="true" MaxLength="255" />
     <Property Name="imageFilePath" Type="varchar" Nullable="true" MaxLength="255" />
     <Property Name="hit" Type="int" Nullable="false" />
-    <Property Name="audioFilePath" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="audioNarrator" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="audioFilePath" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="audioNarrator" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="SMUrentals">
     <Key>
@@ -589,8 +589,8 @@
           <Property Type="String" Name="imageFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="hit" Nullable="false" />
           <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_bookId" FromRole="SMUbook" ToRole="SMUrental" />
-          <Property Type="String" Name="audioFilePath" Nullable="false" />
-          <Property Type="String" Name="audioNarrator" Nullable="false" />
+          <Property Type="String" Name="audioFilePath" Nullable="true" />
+          <Property Type="String" Name="audioNarrator" Nullable="true" />
         </EntityType>
         <EntityType Name="SMUrental">
           <Key>
