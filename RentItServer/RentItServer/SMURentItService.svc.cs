@@ -252,11 +252,6 @@ namespace RentItServer
             _smuController.UploadPDF(bookId, pdf);
         }
 
-        public void UploadImage(int bookId, MemoryStream image)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Downloads the PDF for the book.
         /// </summary>
