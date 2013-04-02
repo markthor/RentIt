@@ -152,6 +152,11 @@ namespace RentItServer.SMU
                     // tests if the rental is more than 7 days old
                     if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
                         //tests for audio and book
+                        if (rental.mediaType == 2)
+                        {
+                            aud = true;
+                            pdf = true;
+                        }
                         if (rental.mediaType == 1) {
                             aud = true;
                         }
