@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/02/2013 10:34:46
+-- Date Created: 04/02/2013 12:24:47
 -- Generated from EDMX file: C:\Users\Mikkel\Documents\GitHub\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
@@ -173,8 +173,8 @@ GO
 -- Creating table 'SMUaudios'
 CREATE TABLE [dbo].[SMUaudios] (
     [id] int IDENTITY(1,1) NOT NULL,
-    [narrator] varchar(50)  NULL,
-    [filePath] varchar(255)  NOT NULL
+    [narrator] varchar(1024)  NULL,
+    [filePath] varchar(600)  NOT NULL
 );
 GO
 

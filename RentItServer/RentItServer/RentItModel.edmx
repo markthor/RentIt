@@ -616,8 +616,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="narrator" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="filePath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="narrator" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="filePath" Nullable="false" MaxLength="600" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SMUbooks" Relationship="RENTITModel.FK_SMUbooks_audioId" FromRole="SMUaudio" ToRole="SMUbook" />
           <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_audioId" FromRole="SMUaudio" ToRole="SMUrental" />
         </EntityType>
