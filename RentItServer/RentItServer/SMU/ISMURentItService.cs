@@ -164,7 +164,7 @@ namespace RentItServer.SMU
         /// <param name="price">The price.</param>
         /// <returns>The id of the book.</returns>
         [OperationContract]
-        int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price);
+        int UploadBook(string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image);
 
         /// <summary>
         /// Updates the book.
@@ -178,7 +178,7 @@ namespace RentItServer.SMU
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <returns>The updated book</returns>
         [OperationContract]
-        Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price);
+        Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price, MemoryStream image);
 
         /// <summary>
         /// Uploads an audio file to a book. Overrides if audio file already exists.
