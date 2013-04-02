@@ -82,12 +82,21 @@ namespace RentItServer.Utilities
         /// </exception>
         public MemoryStream ReadFile(FilePath path, string filename)
         {
+<<<<<<< HEAD
+            if (relativePath == null) throw new ArgumentNullException("relativePath");
+            if (relativePath.Equals("")) throw new ArgumentException("Relative path must target a file");
+            if (relativePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + relativePath);
+=======
             if (filename == null) throw new ArgumentNullException("filename");
             if (filename.Equals("")) throw new ArgumentException("Relative path must target a file");
-            if (filename.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + filename);
-            
+
             //Full path to the file
             string fullPath = path.GetPath() + filename;
+            if (filename.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Relative path must target a file. Relative path = " + filename);
+>>>>>>> a0df9f264f9cbc366acad08709625ced66b34be8
+            
+            //Full path to the file
+            string fullPath = path.GetPath() + relativePath;
             FileStream fs = File.OpenRead(fullPath);
             MemoryStream ms = new MemoryStream();
             fs.CopyTo(ms);
