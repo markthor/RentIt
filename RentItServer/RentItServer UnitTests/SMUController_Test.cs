@@ -342,12 +342,15 @@ namespace RentItServer_UnitTests
             int user = controller.SignUp("Robbie Williams", "1Fisk", "gogogo1@yo.dk", false);
             int bookId = controller.AddBook("YOYO", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
             controller.UploadPDF(bookId, new MemoryStream());
-            int rentalId = controller.RentBook(user, bookId,0);
-            Rental rental = controller.GetRental(user, bookId);
-            Assert.AreEqual(bookId, rental.bookId);
-            Assert.AreEqual(user, rental.userId);
-            Assert.AreNotEqual(Int32.MaxValue, rental.bookId);
-            
+            controller.UploadAudio(bookId, new MemoryStream(), "Sean John");
+            int rentalId = controller.RentBook(user, bookId, 0);
+            int rentalId2 = controller.RentBook(user, bookId, 1);
+            Rental[] rental = controller.GetRental(user, bookId);
+            Assert.AreEqual(1, rental[0].mediaType);
+            Assert.AreEqual(0, rental[1].mediaType);
+            Assert.AreEqual(bookId, rental[0].bookId);
+            Assert.AreEqual(user, rental[0].userId);
+            Assert.AreNotEqual(Int32.MaxValue, rental[0].bookId);      
         }
     }
 }

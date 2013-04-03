@@ -202,9 +202,9 @@ namespace RentItServer.SMU
         /// <returns>
         /// The rental
         /// </returns>
-        public Rental GetRental(int userId, int bookId)
+        public Rental[] GetRental(int userId, int bookId)
         {
-            Rental rental;
+            Rental[] rental;
             try
             {
                 rental = _dao.GetRental(userId, bookId);

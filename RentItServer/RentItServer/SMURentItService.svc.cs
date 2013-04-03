@@ -97,7 +97,7 @@ namespace RentItServer
         /// <returns>
         /// The rental
         /// </returns>
-        public Rental GetRental(int userId, int bookId)
+        public Rental[] GetRental(int userId, int bookId)
         {
             return _smuController.GetRental(userId, bookId);
         }
