@@ -590,5 +590,48 @@ namespace RentItServer.SMU
             string filename = FileName.GenerateImageFileName(bookId);
             return _fileSystemHandler.ReadFile(FilePath.SMUImagePath, filename);
         }
+
+        public Rental[] GetActiveUserRentals(int userId)
+        {
+            List<Rental> rentals;
+            List<Rental> activeRentals = new List<Rental>();
+            try
+            {
+                rentals = _dao.GetUserRentals(userId);
+
+                foreach (Rental r in rentals)
+                {
+                    DateTime startDate = r.startDate;
+                    startDate.AddDays(7);
+                    if (r.startDate.AddDays(7) > DateTime.Now)
+                    {
+                        activeRentals.Add(r);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetActiveUserRentals failed with exception [" + e + "]"));
+                throw;
+            }
+            return activeRentals.ToArray();
+        }
+
+        public Rental[] GetAllUserRentals(int userId)
+        {
+            List<Rental> rentals;
+            try
+            {
+                rentals = _dao.GetUserRentals(userId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetActiveUserRentals failed with exception [" + e + "]"));
+                throw;
+            }
+            return rentals.ToArray();
+        }
     }
 }

@@ -575,5 +575,22 @@ namespace RentItServer.SMU
                 context.SaveChanges();
             }
         }
+
+        public List<Rental> GetUserRentals(int userId)
+        {
+            List<Rental> list = new List<Rental>();
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var rentals = from r in context.SMUrentals
+                            where r.userId == userId
+                            select r;
+
+                foreach (SMUrental r in rentals)
+                {
+                    list.Add(r.GetRental());
+                }
+            }
+            return list;
+        }
     }
 }

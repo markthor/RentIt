@@ -205,5 +205,11 @@ namespace RentItServer.SMU
 
         [OperationContract]
         MemoryStream DownloadImage(int bookId);
+
+        [OperationContract]
+        Rental[] GetActiveUserRentals(int userId);
+
+        [OperationContract]
+        Rental[] GetAllUserRentals(int userId);
     }
 }

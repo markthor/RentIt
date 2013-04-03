@@ -279,5 +279,15 @@ namespace RentItServer
         {
             return _smuController.DownloadImage(bookId);
         }
+
+        public Rental[] GetActiveUserRentals(int userId)
+        {
+            return _smuController.GetActiveUserRentals(userId);
+        }
+
+        public Rental[] GetAllUserRentals(int userId)
+        {
+            return _smuController.GetAllUserRentals(userId);
+        }
     }
 }
