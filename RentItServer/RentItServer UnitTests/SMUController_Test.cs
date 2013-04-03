@@ -334,5 +334,20 @@ namespace RentItServer_UnitTests
             //Check that the two image streams are equal
             Assert.AreEqual(uploadStreamLength, downloadStreamLength);
         }
+
+        [TestMethod]
+        public void TestGetRental()
+        {
+            SMUController controller = SMUController.GetInstance();
+            int user = controller.SignUp("Robbie Williams", "1Fisk", "gogogo1@yo.dk", false);
+            int bookId = controller.AddBook("YOYO", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
+            controller.UploadPDF(bookId, new MemoryStream());
+            int rentalId = controller.RentBook(user, bookId,0);
+            Rental rental = controller.GetRental(user, bookId);
+            Assert.AreEqual(bookId, rental.bookId);
+            Assert.AreEqual(user, rental.userId);
+            Assert.AreNotEqual(Int32.MaxValue, rental.bookId);
+            
+        }
     }
 }
