@@ -183,7 +183,7 @@ namespace RentItServer.SMU
         }
 
         /// <summary>
-        /// Gets the rental for the specified user id and book id.
+        /// Gets the rental for the specified user id and book id. The rental with highest mediatype is always chosen
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <param name="bookId">The book id.</param>
@@ -196,6 +196,7 @@ namespace RentItServer.SMU
             using (RENTIT21Entities context = new RENTIT21Entities()){
                 var rentals = from rental in context.SMUrentals
                               where rental.SMUuser.id == userId && rental.bookId == bookId
+                              orderby rental.mediaType descending
                               select rental;
                 if(rentals.Any() == false)  throw new ArgumentException("No rental with specified userid/bookid pair");
                 return rentals.First().GetRental();
