@@ -52,13 +52,13 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Updates the user info
+        /// Updates the user info.
         /// </summary>
-        /// <param name="userId">The user id</param>
-        /// <param name="email">The email</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="isAdmin">The users admin status.</param>
+        /// <param name="userId">The user userId.</param>
+        /// <param name="email">The email. Can be null.</param>
+        /// <param name="username">The username. Can be null.</param>
+        /// <param name="password">The password. Can be null.</param>
+        /// <param name="isAdmin">The users admin status. Can be null.</param>
         /// <returns>
         /// The updated user
         /// </returns>
@@ -222,13 +222,14 @@ namespace RentItServer
         /// <param name="genre">The genre. Can be null.</param>
         /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
+        /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
         public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
                                double price, MemoryStream image)
         {
-            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, price, image);
+            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price, image);
         }
 
         /// <summary>

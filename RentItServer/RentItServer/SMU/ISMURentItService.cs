@@ -38,12 +38,14 @@ namespace RentItServer.SMU
         /// <summary>
         /// Updates the user info.
         /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="isAdmin">The users admin status.</param>
-        /// <returns>The updated user</returns>
+        /// <param name="userId">The user userId.</param>
+        /// <param name="email">The email. Can be null.</param>
+        /// <param name="username">The username. Can be null.</param>
+        /// <param name="password">The password. Can be null.</param>
+        /// <param name="isAdmin">The users admin status. Can be null.</param>
+        /// <returns>
+        /// The updated user
+        /// </returns>
         [OperationContract]
         User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
 

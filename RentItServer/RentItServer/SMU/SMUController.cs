@@ -125,10 +125,10 @@ namespace RentItServer.SMU
         /// Updates the user info.
         /// </summary>
         /// <param name="userId">The user userId.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="isAdmin">The users admin status.</param>
+        /// <param name="email">The email. Can be null.</param>
+        /// <param name="username">The username. Can be null.</param>
+        /// <param name="password">The password. Can be null.</param>
+        /// <param name="isAdmin">The users admin status. Can be null.</param>
         /// <returns>
         /// The updated user
         /// </returns>
@@ -473,15 +473,16 @@ namespace RentItServer.SMU
         /// <param name="genre">The genre. Can be null.</param>
         /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
+        /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double price, MemoryStream image)
+        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
         {
             Book theBook;
             try
             {
-                theBook = _dao.UpdateBook(bookId, title, author, description, genre, DateTime.Now, price, "", "");
+                theBook = _dao.UpdateBook(bookId, title, author, description, genre, dateAdded, price, "", "");
                 if (_handler != null)
                     _handler(this,
                              new RentItEventArgs("UpdateBookInfo succeeded for book id [" + bookId +

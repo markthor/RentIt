@@ -68,11 +68,8 @@ namespace RentItServer.SMU
         public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
-            if (email == null) throw new ArgumentNullException("email");
             if (email.Equals("")) throw new ArgumentException("email was empty");
-            if (username == null) throw new ArgumentNullException("username");
             if (username.Equals("")) throw new ArgumentException("username was empty");
-            if (password == null) throw new ArgumentNullException("password");
             if (password.Equals("")) throw new ArgumentException("password was empty");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -462,18 +459,8 @@ namespace RentItServer.SMU
         public Book UpdateBook(int bookId, String title, String author, String description, String genre,
                                DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
         {
-            //if (title == null) throw new ArgumentNullException("title");
-            //if (author == null) throw new ArgumentNullException("author");
-            //if (description == null) throw new ArgumentNullException("description");
-            //if (genre == null) throw new ArgumentNullException("genre");
-            //if (pdfFilePath == null) throw new ArgumentNullException("pdfFilePath");
-            //if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-            //// if (userId < 0) throw new ArgumentException("userId < 0");
-            //if (price < 0.0) throw new ArgumentException("price < 0.0");
-            //if (title.Equals("")) throw new ArgumentException("title was empty");
-            //if (author.Equals("")) throw new ArgumentException("author was empty");
-            //if (genre.Equals("")) throw new ArgumentException("genre was empty");
-            //if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
+            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
+            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
 
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -492,8 +479,8 @@ namespace RentItServer.SMU
                 if (description != null) theBook.description = description;
                 if (genre != null) theBook.genre = genre;
                 if (price >= 0) theBook.price = price;
-                if (pdfFilePath != null) theBook.PDFFilePath = pdfFilePath;
-                if (imageFilePath != null) theBook.imageFilePath = imageFilePath;
+                theBook.PDFFilePath = pdfFilePath;
+                theBook.imageFilePath = imageFilePath;
                 if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
 
                 proxy.SaveChanges();
