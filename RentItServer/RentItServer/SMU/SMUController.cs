@@ -180,10 +180,10 @@ namespace RentItServer.SMU
         /// </returns>
         public int HasRental(int userId, int bookId)
         {
-            int rentalId;
+            int rentalType;
             try
             {
-                rentalId = _dao.HasRental(userId, bookId);
+                rentalType = _dao.HasRental(userId, bookId);
             }
             catch (Exception e)
             {
@@ -191,7 +191,31 @@ namespace RentItServer.SMU
                     _handler(this, new RentItEventArgs("HasRental failed with exception [" + e + "]"));
                 throw;
             }
-            return rentalId;
+            return rentalType;
+        }
+
+        /// <summary>
+        /// Gets the rental for the specified user id and book id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>
+        /// The rental
+        /// </returns>
+        public Rental GetRental(int userId, int bookId)
+        {
+            Rental rental;
+            try
+            {
+                rental = _dao.GetRental(userId, bookId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetRental failed with exception [" + e + "]"));
+                throw;
+            }
+            return rental;
         }
 
         /// <summary>

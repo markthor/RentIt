@@ -90,6 +90,19 @@ namespace RentItServer
         }
 
         /// <summary>
+        /// Gets the rental for the specified user id and book id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>
+        /// The rental
+        /// </returns>
+        public Rental GetRental(int userId, int bookId)
+        {
+            return _smuController.GetRental(userId, bookId);
+        }
+
+        /// <summary>
         /// Gets all books.
         /// </summary>
         /// <returns>

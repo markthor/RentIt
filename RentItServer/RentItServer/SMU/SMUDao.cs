@@ -182,6 +182,26 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Gets the rental for the specified user id and book id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="bookId">The book id.</param>
+        /// <returns>
+        /// The rental
+        /// </returns>
+        /// <exception cref="System.ArgumentException">No rental with specified userid/bookid pair</exception>
+        public Rental GetRental(int userId, int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities()){
+                var rentals = from rental in context.SMUrentals
+                              where rental.SMUuser.id == userId && rental.bookId == bookId
+                              select rental;
+                if(rentals.Any() == false)  throw new ArgumentException("No rental with specified userid/bookid pair");
+                return rentals.First().GetRental();
+            }
+        }
+
         public List<Book> GetAllBooks()
         {
             List<Book> list = new List<Book>();
