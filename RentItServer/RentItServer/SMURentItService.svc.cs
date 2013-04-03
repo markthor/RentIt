@@ -90,14 +90,14 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the rental for the specified user id and book id.
+        /// Gets the rental for the specified user id and book id. The rental with highest mediatype is always chosen
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <param name="bookId">The book id.</param>
         /// <returns>
         /// The rental
         /// </returns>
-        public Rental GetRental(int userId, int bookId)
+        public Rental[] GetRental(int userId, int bookId)
         {
             return _smuController.GetRental(userId, bookId);
         }
