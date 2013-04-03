@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.SMU;
 using System.IO;
+using RentItServer;
 
 namespace RentItServer_UnitTests
 {
@@ -72,7 +73,7 @@ namespace RentItServer_UnitTests
             string email = "hest@yoyo.dk";
 
             controller.UpdateUserInfo(u1, email, name, password, false);
-            User user = controller.GetUser(u1);
+            RentItServer.SMU.User user = controller.GetUser(u1);
 
             Assert.AreEqual(name, user.username);
             Assert.AreEqual(password, user.password);
@@ -193,6 +194,63 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(description, book.description);
             Assert.AreEqual(price, book.price);
         }
+
+        [TestMethod]
+        public void TestGetActiveUserRentals()
+        {
+            SMUController controller = SMUController.GetInstance();
+
+            int userId = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
+            int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", 100.0, new MemoryStream());
+            controller.UploadPDF(bookId1, new MemoryStream());
+            controller.UploadPDF(bookId2, new MemoryStream());
+            controller.UploadAudio(bookId1, new MemoryStream(), "narrator Geo");
+            controller.UploadAudio(bookId2, new MemoryStream(), "narrator John");
+
+            int rentId1 = controller.RentBook(userId, bookId1, 0);
+            int rentId2 = controller.RentBook(userId, bookId1, 1);
+            int rentId3 = controller.RentBook(userId, bookId2, 2);
+
+            Rental[] rentals = controller.GetActiveUserRentals(userId);
+            Assert.IsTrue(ContainsRental(rentId1, rentals));
+            Assert.IsTrue(ContainsRental(rentId2, rentals));
+            Assert.IsTrue(ContainsRental(rentId3, rentals));
+        }
+
+        [TestMethod]
+        public void TestGetAllUserRentals()
+        {
+            SMUController controller = SMUController.GetInstance();
+
+            int userId = controller.SignUp("Hippo", "HajH", "gogogo3@yo.dk", false);
+            int bookId1 = controller.AddBook("The Torah", "Jah", "Great Book", "religion", 100.0, new MemoryStream());
+            int bookId2 = controller.AddBook("Blooms book", "Salla", "Great Book", "religion", 100.0, new MemoryStream());
+            controller.UploadPDF(bookId1, new MemoryStream());
+            controller.UploadPDF(bookId2, new MemoryStream());
+            controller.UploadAudio(bookId1, new MemoryStream(), "narrator Geo");
+            controller.UploadAudio(bookId2, new MemoryStream(), "narrator John");
+
+            int rentId1 = controller.RentBook(userId, bookId1, 0);
+            int rentId2 = controller.RentBook(userId, bookId1, 1);
+            int rentId3 = controller.RentBook(userId, bookId2, 2);
+
+            Rental[] rentals = controller.GetAllUserRentals(userId);
+            Assert.IsTrue(ContainsRental(rentId1, rentals));
+            Assert.IsTrue(ContainsRental(rentId2, rentals));
+            Assert.IsTrue(ContainsRental(rentId3, rentals));
+        }
+
+        public Boolean ContainsRental(int rentalId, Rental[] rentals)
+        {
+            foreach (Rental r in rentals)
+            {
+                if (r.id == rentalId) return true;
+            }
+            return false;
+        }
+
+
 
         [TestMethod]
         public void TestDeleteBook()

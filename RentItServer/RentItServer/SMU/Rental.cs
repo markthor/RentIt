@@ -9,8 +9,9 @@ namespace RentItServer.SMU
     [Serializable]
     public class Rental
     {
-        public Rental(int userId, int? bookId, DateTime startDate, int mediaType, SMUbook book, SMUuser user)
+        public Rental(int id, int userId, int? bookId, DateTime startDate, int mediaType, SMUbook book, SMUuser user)
         {
+            this.id = id;
             this.userId = userId;
             this.bookId = bookId;
             this.startDate = startDate;
@@ -19,6 +20,7 @@ namespace RentItServer.SMU
             this.user = user.GetUser();
         }
 
+        public int id { get; set; }
         public int userId { get; set; }
         public Nullable<int> bookId { get; set; }
         public DateTime startDate { get; set; }

@@ -10,7 +10,7 @@ namespace RentItServer
     {
         public Rental GetRental()
         {
-            return new Rental(userId, bookId, startDate, mediaType, SMUbook, SMUuser);
+            return new Rental(id, userId, bookId, startDate, mediaType, SMUbook, SMUuser);
         }
     }
 }
