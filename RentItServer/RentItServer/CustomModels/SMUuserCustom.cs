@@ -1,4 +1,8 @@
-﻿namespace RentItServer
+﻿using System;
+using RentItServer.SMU;
+using System.Collections;
+
+namespace RentItServer
 {
     public partial class SMUuser
     {

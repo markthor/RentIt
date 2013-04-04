@@ -57,11 +57,7 @@ namespace RentItServer.SMU
                     throw new ArgumentException("No SMUuser with userId = " + userId);
                 }
                 SMUuser result = users.First();
-                if (result != null)
-                {
-                    return result.GetUser();
-                }
-                return null;
+                return result.GetUser();
             }
         }
 
