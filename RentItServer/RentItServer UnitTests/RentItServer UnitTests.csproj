@@ -82,6 +82,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\RentItServer.SMU.Book.datasource" />
+    <None Include="Properties\DataSources\RentItServer.SMU.Rental.datasource" />
     <None Include="Properties\DataSources\RentItServer.SMU.User.datasource" />
     <None Include="Properties\DataSources\RentItServer.User.datasource" />
     <None Include="Service References\ServiceReference1\SMURentItService.disco" />
@@ -94,9 +95,6 @@
     <None Include="Test Files\testimage.jpg" />
     <Content Include="Web.config" />
     <None Include="Service References\ServiceReference1\SMURentItService.wsdl" />
-    <None Include="Service References\ServiceReference1\SMURentItService.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference1\SMURentItService1.xsd">
       <SubType>Designer</SubType>
     </None>

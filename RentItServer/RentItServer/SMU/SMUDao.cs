@@ -266,7 +266,9 @@ namespace RentItServer.SMU
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
-                            where (book.title.Contains(searchString) || book.author.Contains(searchString))
+                            where (book.title.Contains(searchString) ||
+                                    book.author.Contains(searchString) ||
+                                    book.description.Contains(searchString))
                             select book;
 
                 foreach (SMUbook book in books)
