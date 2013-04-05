@@ -1,50 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfSMUrental">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SMUrental" nillable="true" type="tns:SMUrental" />
-    </xs:sequence>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.IO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.IO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:complexType name="MemoryStream">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Stream">
+        <xs:sequence>
+          <xs:element name="_buffer" nillable="true" type="xs:base64Binary" />
+          <xs:element name="_capacity" type="xs:int" />
+          <xs:element name="_expandable" type="xs:boolean" />
+          <xs:element name="_exposable" type="xs:boolean" />
+          <xs:element name="_isOpen" type="xs:boolean" />
+          <xs:element name="_length" type="xs:int" />
+          <xs:element name="_origin" type="xs:int" />
+          <xs:element name="_position" type="xs:int" />
+          <xs:element name="_writable" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ArrayOfSMUrental" nillable="true" type="tns:ArrayOfSMUrental" />
-  <xs:complexType name="SMUrental">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="SMUbook" nillable="true" type="tns:SMUbook" />
-      <xs:element minOccurs="0" name="SMUuser" nillable="true" type="tns:SMUuser" />
-      <xs:element minOccurs="0" name="bookId" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" name="id" type="xs:int" />
-      <xs:element minOccurs="0" name="mediaType" type="xs:int" />
-      <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="userId" type="xs:int" />
-    </xs:sequence>
+  <xs:element name="MemoryStream" nillable="true" type="tns:MemoryStream" />
+  <xs:complexType name="Stream">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System" base="q1:MarshalByRefObject">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="SMUrental" nillable="true" type="tns:SMUrental" />
-  <xs:complexType name="SMUbook">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="PDFFilePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SMUrentals" nillable="true" type="tns:ArrayOfSMUrental" />
-      <xs:element minOccurs="0" name="audioFilePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="audioNarrator" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="author" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="dateAdded" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="genre" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="hit" type="xs:int" />
-      <xs:element minOccurs="0" name="id" type="xs:int" />
-      <xs:element minOccurs="0" name="imageFilePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="price" type="xs:double" />
-      <xs:element minOccurs="0" name="title" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SMUbook" nillable="true" type="tns:SMUbook" />
-  <xs:complexType name="SMUuser">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="SMUrentals" nillable="true" type="tns:ArrayOfSMUrental" />
-      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="id" type="xs:int" />
-      <xs:element minOccurs="0" name="isAdmin" type="xs:boolean" />
-      <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SMUuser" nillable="true" type="tns:SMUuser" />
+  <xs:element name="Stream" nillable="true" type="tns:Stream" />
 </xs:schema>
