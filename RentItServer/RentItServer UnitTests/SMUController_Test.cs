@@ -15,7 +15,7 @@ namespace RentItServer_UnitTests
         [TestInitialize]
         public void CleanDataBase()
         {
-            SMUController.GetInstance().DeleteSMUDatabaseData();
+            //SMUController.GetInstance().DeleteSMUDatabaseData();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace RentItServer_UnitTests
         [ClassCleanup]
         public static void CleanDataBaseFinish()
         {
-            SMUController.GetInstance().DeleteSMUDatabaseData();
+            //SMUController.GetInstance().DeleteSMUDatabaseData();
         }
 
         [TestMethod]

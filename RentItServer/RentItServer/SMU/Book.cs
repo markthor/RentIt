@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace RentItServer.SMU
 {
@@ -17,8 +14,6 @@ namespace RentItServer.SMU
             this.genre = genre;
             this.price = price;
             this.dateAdded = dateAdded;
-            this.audioId = audioId;
-            this.audioNarrator = audioNarrator;
             this.hit = hit;
             this.narrator = narrator;
         }
@@ -31,8 +26,6 @@ namespace RentItServer.SMU
         public double price { get; set; }
         public string narrator { get; set; }
         public DateTime dateAdded { get; set; }
-        public Nullable<int> audioId { get; set; }
-        public string audioNarrator { get; set; }
         public int hit { get; set; }
     }
 }
