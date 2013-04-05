@@ -602,9 +602,9 @@ namespace RentItServer.SMU
 
                 foreach (Rental r in rentals)
                 {
-                    DateTime startDate = r.startDate;
+                    DateTime startDate = r.StartDate;
                     startDate.AddDays(7);
-                    if (r.startDate.AddDays(7) > DateTime.Now)
+                    if (r.StartDate.AddDays(7) > DateTime.Now)
                     {
                         activeRentals.Add(r);
                     }
