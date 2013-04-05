@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RentItServer.SMU" />
-  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
   <xs:element name="SignUp">
     <xs:complexType>
       <xs:sequence>
@@ -171,6 +171,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRental">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="bookId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRentalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RentItServer.SMU" minOccurs="0" name="GetRentalResult" nillable="true" type="q9:ArrayOfRental" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RentBook">
     <xs:complexType>
       <xs:sequence>
@@ -197,7 +212,7 @@
   <xs:element name="DownloadPdfResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadPdfResult" nillable="true" type="q9:MemoryStream" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadPdfResult" nillable="true" type="q10:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -211,7 +226,7 @@
   <xs:element name="DownloadAudioResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadAudioResult" nillable="true" type="q10:MemoryStream" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadAudioResult" nillable="true" type="q11:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -235,7 +250,7 @@
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="genre" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="price" type="xs:double" />
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="image" nillable="true" type="q11:MemoryStream" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="image" nillable="true" type="q12:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -256,14 +271,14 @@
         <xs:element minOccurs="0" name="genre" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="dateAdded" type="xs:dateTime" />
         <xs:element minOccurs="0" name="price" type="xs:double" />
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="image" nillable="true" type="q12:MemoryStream" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="image" nillable="true" type="q13:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateBookResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RentItServer.SMU" minOccurs="0" name="UpdateBookResult" nillable="true" type="q13:Book" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RentItServer.SMU" minOccurs="0" name="UpdateBookResult" nillable="true" type="q14:Book" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -271,7 +286,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="bookId" type="xs:int" />
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="mp3" nillable="true" type="q14:MemoryStream" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="mp3" nillable="true" type="q15:MemoryStream" />
         <xs:element minOccurs="0" name="narrator" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -285,7 +300,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="bookId" type="xs:int" />
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="pdf" nillable="true" type="q15:MemoryStream" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="pdf" nillable="true" type="q16:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -304,7 +319,35 @@
   <xs:element name="DownloadImageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadImageResult" nillable="true" type="q16:MemoryStream" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadImageResult" nillable="true" type="q17:MemoryStream" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetActiveUserRentals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetActiveUserRentalsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/RentItServer.SMU" minOccurs="0" name="GetActiveUserRentalsResult" nillable="true" type="q18:ArrayOfRental" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUserRentals">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUserRentalsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/RentItServer.SMU" minOccurs="0" name="GetAllUserRentalsResult" nillable="true" type="q19:ArrayOfRental" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

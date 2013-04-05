@@ -51,6 +51,9 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/HasRental", ReplyAction="http://tempuri.org/ISMURentItService/HasRentalResponse")]
         int HasRental(int userId, int bookId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetRental", ReplyAction="http://tempuri.org/ISMURentItService/GetRentalResponse")]
+        RentItServer.SMU.Rental[] GetRental(int userId, int bookId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/RentBook", ReplyAction="http://tempuri.org/ISMURentItService/RentBookResponse")]
         int RentBook(int userId, int bookId, int mediaType);
         
@@ -77,6 +80,12 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadImage", ReplyAction="http://tempuri.org/ISMURentItService/DownloadImageResponse")]
         System.IO.MemoryStream DownloadImage(int bookId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetActiveUserRentals", ReplyAction="http://tempuri.org/ISMURentItService/GetActiveUserRentalsResponse")]
+        RentItServer.SMU.Rental[] GetActiveUserRentals(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetAllUserRentals", ReplyAction="http://tempuri.org/ISMURentItService/GetAllUserRentalsResponse")]
+        RentItServer.SMU.Rental[] GetAllUserRentals(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -154,6 +163,10 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.HasRental(userId, bookId);
         }
         
+        public RentItServer.SMU.Rental[] GetRental(int userId, int bookId) {
+            return base.Channel.GetRental(userId, bookId);
+        }
+        
         public int RentBook(int userId, int bookId, int mediaType) {
             return base.Channel.RentBook(userId, bookId, mediaType);
         }
@@ -188,6 +201,14 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         public System.IO.MemoryStream DownloadImage(int bookId) {
             return base.Channel.DownloadImage(bookId);
+        }
+        
+        public RentItServer.SMU.Rental[] GetActiveUserRentals(int userId) {
+            return base.Channel.GetActiveUserRentals(userId);
+        }
+        
+        public RentItServer.SMU.Rental[] GetAllUserRentals(int userId) {
+            return base.Channel.GetAllUserRentals(userId);
         }
     }
 }

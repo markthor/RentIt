@@ -21,7 +21,6 @@
     <MetadataSource Address="http://rentit.itu.dk/rentit21/SMURentItService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SMURentItService.xsd" MetadataType="Schema" ID="5ce7f2bc-e6dc-462b-846e-ec100b910f74" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd5" />
     <MetadataFile FileName="SMURentItService1.xsd" MetadataType="Schema" ID="cd79c66b-1c43-4a7a-8504-5c579afbda93" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd3" />
     <MetadataFile FileName="SMURentItService2.xsd" MetadataType="Schema" ID="3d7367f2-cde6-4620-91d3-a32caf969838" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd0" />
     <MetadataFile FileName="SMURentItService3.xsd" MetadataType="Schema" ID="090682bf-e8c6-423d-8e92-976ef5a11bd1" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd2" />

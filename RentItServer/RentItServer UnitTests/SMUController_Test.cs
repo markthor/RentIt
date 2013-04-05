@@ -56,10 +56,10 @@ namespace RentItServer_UnitTests
             int u2 = controller.SignUp("Peter Parker2", "12Fisk", "gogogo2@yo.dk", false);
             int u3 = controller.SignUp("Peter Parker3", "123Fisk", "gogogo3@yo.dk", false);
 
-            Assert.AreEqual(u1, controller.GetUser(u1).id);
-            Assert.AreEqual(u2, controller.GetUser(u2).id);
-            Assert.AreEqual(u3, controller.GetUser(u3).id);
-            Assert.AreNotEqual(u1, controller.GetUser(u3).id);
+            Assert.AreEqual(u1, controller.GetUser(u1).Id);
+            Assert.AreEqual(u2, controller.GetUser(u2).Id);
+            Assert.AreEqual(u3, controller.GetUser(u3).Id);
+            Assert.AreNotEqual(u1, controller.GetUser(u3).Id);
         }
 
         [TestMethod]
@@ -75,10 +75,10 @@ namespace RentItServer_UnitTests
             controller.UpdateUserInfo(u1, email, name, password, false);
             RentItServer.SMU.User user = controller.GetUser(u1);
 
-            Assert.AreEqual(name, user.username);
-            Assert.AreEqual(password, user.password);
-            Assert.AreEqual(email, user.email);
-            Assert.AreNotEqual("test", user.username);
+            Assert.AreEqual(name, user.Username);
+            Assert.AreEqual(password, user.Password);
+            Assert.AreEqual(email, user.Email);
+            Assert.AreNotEqual("test", user.Username);
         }
 
         [TestMethod]
@@ -188,11 +188,11 @@ namespace RentItServer_UnitTests
             {
                 Assert.Fail();
             }
-            Assert.AreEqual(title, book.title);
-            Assert.AreEqual(author, book.author);
-            Assert.AreEqual(genre, book.genre);
-            Assert.AreEqual(description, book.description);
-            Assert.AreEqual(price, book.price);
+            Assert.AreEqual(title, book.Title);
+            Assert.AreEqual(author, book.Author);
+            Assert.AreEqual(genre, book.Genre);
+            Assert.AreEqual(description, book.Description);
+            Assert.AreEqual(price, book.Price);
         }
 
         [TestMethod]
@@ -245,7 +245,7 @@ namespace RentItServer_UnitTests
         {
             foreach (Rental r in rentals)
             {
-                if (r.id == rentalId) return true;
+                if (r.Id == rentalId) return true;
             }
             return false;
         }
@@ -356,10 +356,10 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(1, result2.Length);
             Assert.AreEqual(1, result3.Length);
             Assert.AreEqual(1, result4.Length);
-            Assert.AreEqual("Ken Folett", result1[0].author);
-            Assert.AreEqual("Sin Zu", result2[0].author);
-            Assert.AreEqual("Ken Folett", result3[0].author);
-            Assert.AreEqual("God", result4[0].author);
+            Assert.AreEqual("Ken Folett", result1[0].Author);
+            Assert.AreEqual("Sin Zu", result2[0].Author);
+            Assert.AreEqual("Ken Folett", result3[0].Author);
+            Assert.AreEqual("God", result4[0].Author);
         }
 
         [TestMethod]
@@ -404,11 +404,11 @@ namespace RentItServer_UnitTests
             int rentalId = controller.RentBook(user, bookId, 0);
             int rentalId2 = controller.RentBook(user, bookId, 1);
             Rental[] rental = controller.GetRental(user, bookId);
-            Assert.AreEqual(1, rental[0].mediaType);
-            Assert.AreEqual(0, rental[1].mediaType);
-            Assert.AreEqual(bookId, rental[0].bookId);
-            Assert.AreEqual(user, rental[0].userId);
-            Assert.AreNotEqual(Int32.MaxValue, rental[0].bookId);      
+            Assert.AreEqual(1, rental[0].MediaType);
+            Assert.AreEqual(0, rental[1].MediaType);
+            Assert.AreEqual(bookId, rental[0].BookId);
+            Assert.AreEqual(user, rental[0].UserId);
+            Assert.AreNotEqual(Int32.MaxValue, rental[0].BookId);      
         }
     }
 }

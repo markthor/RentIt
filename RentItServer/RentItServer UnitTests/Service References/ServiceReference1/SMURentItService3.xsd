@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer.SMU" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer.SMU" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/SMURentItService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
   <xs:complexType name="User">
     <xs:sequence>
-      <xs:element name="_x003C_email_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_id_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_isAdmin_x003E_k__BackingField" type="xs:boolean" />
-      <xs:element name="_x003C_password_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RentItServer" name="_x003C_rentals_x003E_k__BackingField" nillable="true" type="q1:ArrayOfSMUrental" />
-      <xs:element name="_x003C_username_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsAdmin" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rentals" nillable="true" type="tns:ArrayOfRental" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfRental">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Rental" nillable="true" type="tns:Rental" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRental" nillable="true" type="tns:ArrayOfRental" />
+  <xs:complexType name="Rental">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BookId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="MediaType" type="xs:int" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Rental" nillable="true" type="tns:Rental" />
   <xs:complexType name="ArrayOfBook">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="tns:Book" />
@@ -20,17 +35,15 @@
   <xs:element name="ArrayOfBook" nillable="true" type="tns:ArrayOfBook" />
   <xs:complexType name="Book">
     <xs:sequence>
-      <xs:element name="_x003C_audioId_x003E_k__BackingField" nillable="true" type="xs:int" />
-      <xs:element name="_x003C_audioNarrator_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_author_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_dateAdded_x003E_k__BackingField" type="xs:dateTime" />
-      <xs:element name="_x003C_description_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_genre_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_hit_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_id_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_narrator_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element name="_x003C_price_x003E_k__BackingField" type="xs:double" />
-      <xs:element name="_x003C_title_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Author" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateAdded" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Genre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Hit" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Narrator" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:double" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Book" nillable="true" type="tns:Book" />

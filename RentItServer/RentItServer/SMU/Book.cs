@@ -1,31 +1,40 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace RentItServer.SMU
 {
-    [Serializable]
+    [DataContract]
     public class Book
     {
         public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, int hit)
         {
-            this.id = id;
-            this.title = title;
-            this.author = author;
-            this.description = description;
-            this.genre = genre;
-            this.price = price;
-            this.dateAdded = dateAdded;
-            this.hit = hit;
-            this.narrator = narrator;
+            Id = id;
+            Title = title;
+            Author = author;
+            Description = description;
+            Genre = genre;
+            Price = price;
+            DateAdded = dateAdded;
+            Hit = hit;
+            Narrator = narrator;
         }
-
-        public int id { get; set; }
-        public string title { get; set; }
-        public string author { get; set; }
-        public string description { get; set; }
-        public string genre { get; set; }
-        public double price { get; set; }
-        public string narrator { get; set; }
-        public DateTime dateAdded { get; set; }
-        public int hit { get; set; }
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Title { get; set; }
+        [DataMember]
+        public string Author { get; set; }
+        [DataMember]
+        public string Description { get; set; }
+        [DataMember]
+        public string Genre { get; set; }
+        [DataMember]
+        public double Price { get; set; }
+        [DataMember]
+        public string Narrator { get; set; }
+        [DataMember]
+        public DateTime DateAdded { get; set; }
+        [DataMember]
+        public int Hit { get; set; }
     }
 }

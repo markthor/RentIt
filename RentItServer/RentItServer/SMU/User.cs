@@ -1,29 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace RentItServer.SMU
 {
-    [Serializable]
+    [DataContract]
     public class User
     {
         public User(int id, string email, string username, string password, bool isAdmin, ICollection<SMUrental> rentals)
         {
-            this.id = id;
-            this.email = email;
-            this.username = username;
-            this.password = password;
-            this.isAdmin = isAdmin;
-            this.rentals = GetRentals(rentals);
+            Id = id;
+            Email = email;
+            Username = username;
+            Password = password;
+            IsAdmin = isAdmin;
+            Rentals = GetRentals(rentals);
         }
 
-        public int id { get; set; }
-        public string email { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public bool isAdmin { get; set; }
-        public ICollection<Rental> rentals { get; set; }
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Email { get; set; }
+        [DataMember]
+        public string Username { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+        [DataMember]
+        public bool IsAdmin { get; set; }
+        [DataMember]
+        public ICollection<Rental> Rentals { get; set; }
 
         private ICollection<Rental> GetRentals(ICollection<SMUrental> smuRentals)
         {
