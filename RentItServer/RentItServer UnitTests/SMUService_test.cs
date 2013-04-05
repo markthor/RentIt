@@ -102,5 +102,20 @@ namespace RentItServer_UnitTests
             
             }
         }
+
+
+        [TestMethod]
+        public void TestGetRental_service()
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId = service.UploadBook("Sasdasd", "SP", "gods book", "religious", 1000.0, new MemoryStream());
+            service.UploadPdf(bookId, new System.IO.MemoryStream());
+            int userId = service.SignUp("sdfsdfgdsg","sdgsdg","sdsdgsdgsdggsd",false);
+            int rentalId = service.RentBook(userId, bookId, 0);
+            Rental[] rentals = service.GetRental(userId, bookId);
+            service.DeleteAccount(userId);
+            Assert.AreEqual(rentalId, rentals[0].Id);
+            Assert.AreEqual(0, rentals[0].MediaType);
+        }
     }
 }
