@@ -1,0 +1,9 @@
+The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities.
+User and channel each represents a unique system entity, while track can represent the exact same data as another track, only seperated by the id and the channel it belongs to.
+The decision to not let channels share tracks is because it would require analysis of the mp3 file, to determine whether it is similar, regardless of the name/artist combination.
+This design does not limit a possible extention of the system to measure similar mp3 files and update references to avoid redundant data in the file system.
+Such an extension does not remove redundant data in the database, which our datamodel does not support. Track has a upvote and downvote count, which vote entities have a functional dependency to,
+because for each vote on a track, upvote or downvote is increased. This duplication is made to speed the algorithm, because it does not need to count vote entities.
+The vote entity exists to prevent users from voting one track several times.
+TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date it was played.
+Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel. 
