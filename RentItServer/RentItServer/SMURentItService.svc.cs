@@ -62,7 +62,7 @@ namespace RentItServer
         /// <returns>
         /// The updated user
         /// </returns>
-        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             return _smuController.UpdateUserInfo(userId, email, username, password, isAdmin);
         }

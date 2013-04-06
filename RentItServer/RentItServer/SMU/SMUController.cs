@@ -132,7 +132,7 @@ namespace RentItServer.SMU
         /// <returns>
         /// The updated user
         /// </returns>
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             User user;
             try

@@ -47,7 +47,7 @@ namespace RentItServer.SMU
         /// The updated user
         /// </returns>
         [OperationContract]
-        User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
+        User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin);
 
         /// <summary>
         /// Deletes the user account.

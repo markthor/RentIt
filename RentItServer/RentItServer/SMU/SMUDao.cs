@@ -61,7 +61,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
             if (email.Equals("")) throw new ArgumentException("email was empty");
@@ -80,10 +80,10 @@ namespace RentItServer.SMU
                 }
 
                 SMUuser theUser = users.First();
-                theUser.email = email;
-                theUser.username = username;
-                theUser.password = password;
-                theUser.isAdmin = isAdmin;
+                theUser.email = email != null ? email : theUser.email;
+                theUser.username = username != null ? username : theUser.username;
+                theUser.password = password != null ? password : theUser.password;
+                theUser.isAdmin = isAdmin != null ? (bool)isAdmin : theUser.isAdmin;
                 proxy.SaveChanges();
 
                 return theUser.GetUser();
@@ -140,20 +140,23 @@ namespace RentItServer.SMU
                 List<SMUrental> list = rentals.ToList();
                 bool aud = false;
                 bool pdf = false;
-                foreach(SMUrental rental in list)
+                foreach (SMUrental rental in list)
                 {
                     // tests if the rental is more than 7 days old
-                    if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
+                    if (DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0))
+                    {
                         //tests for audio and book
                         if (rental.mediaType == 2)
                         {
                             aud = true;
                             pdf = true;
                         }
-                        if (rental.mediaType == 1) {
+                        if (rental.mediaType == 1)
+                        {
                             aud = true;
                         }
-                        if (rental.mediaType == 0) {
+                        if (rental.mediaType == 0)
+                        {
                             pdf = true;
                         }
                     }
@@ -186,16 +189,17 @@ namespace RentItServer.SMU
         /// <exception cref="System.ArgumentException">No rental with specified userid/bookid pair</exception>
         public Rental[] GetRental(int userId, int bookId)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities()){
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
                 var rentals = from rental in context.SMUrentals
                               where rental.SMUuser.id == userId && rental.bookId == bookId
                               orderby rental.mediaType descending
                               select rental;
-                if(rentals.Any() == false)  throw new ArgumentException("No rental with specified userid/bookid pair");
+                if (rentals.Any() == false) throw new ArgumentException("No rental with specified userid/bookid pair");
                 List<SMUrental> list = rentals.ToList();
                 List<Rental> returnList = new List<Rental>();
                 foreach (SMUrental rent in list)
-                    returnList.Add(rent.GetRental()); 
+                    returnList.Add(rent.GetRental());
                 return returnList.ToArray();
             }
         }
@@ -418,11 +422,11 @@ namespace RentItServer.SMU
 
                 theBook.audioNarrator = narrator;
                 theBook.audioFilePath = filePath;
-                
+
                 proxy.SaveChanges();
             }
         }
-        
+
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
@@ -572,8 +576,8 @@ namespace RentItServer.SMU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var rentals = from r in context.SMUrentals
-                            where r.userId == userId
-                            select r;
+                              where r.userId == userId
+                              select r;
 
                 foreach (SMUrental r in rentals)
                 {
