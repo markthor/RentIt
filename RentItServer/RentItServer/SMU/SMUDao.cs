@@ -247,24 +247,26 @@ namespace RentItServer.SMU
 
         public List<Book> GetNewBooks()
         {
-            List<Book> theBooks = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var books = from book in proxy.SMUbooks
-                            select book;
+                var books = from b in proxy.SMUbooks
+                            orderby b.dateAdded ascending 
+                            select b;
 
-                if (books.Any() == true)
+                List<Book> bookList = new List<Book>();
+                if (books.Any())
                 {
                     int count = 0;
                     foreach (SMUbook book in books)
                     {
-                        theBooks.Add(book.GetBook());
+                        bookList.Add(book.GetBook());
                         count++;
                         if (count == 30) break;
                     }
                 }
+                return bookList;
             }
-            return theBooks;
+            
         }
 
         public List<Book> SearchBooks(string searchString)
