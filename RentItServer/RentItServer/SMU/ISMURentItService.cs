@@ -181,12 +181,11 @@ namespace RentItServer.SMU
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="genre">The genre. Can be null.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The updated book</returns>
         [OperationContract]
-        Book UpdateBook(int bookId, String title, String author, String description, String genre, DateTime dateAdded, double price, MemoryStream image);
+        Book UpdateBook(int bookId, String title, String author, String description, String genre, double price, MemoryStream image);
 
         /// <summary>
         /// Uploads an audio file to a book. Overrides if audio file already exists.

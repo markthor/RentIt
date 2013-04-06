@@ -70,27 +70,27 @@ namespace RentItServer.SMU
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
+                var users = from u in proxy.SMUusers
+                            where u.id == userId
+                            select u;
 
                 if (users.Any() == false)
                 {
                     throw new ArgumentException("No SMUuser with userid/password combination = " + userId + "/" + password);
                 }
 
-                SMUuser theUser = users.First();
+                SMUuser user = users.First();
                 if (email != null)
-                    theUser.email = email;
+                    user.email = email;
                 if (username != null)
-                    theUser.username = username;
+                    user.username = username;
                 if (password != null)
-                    theUser.password = password;
+                    user.password = password;
                 if (isAdmin != null)
-                    theUser.isAdmin = (bool)isAdmin;
+                    user.isAdmin = (bool)isAdmin;
                 proxy.SaveChanges();
 
-                return theUser.GetUser();
+                return user.GetUser();
             }
         }
 
@@ -462,12 +462,8 @@ namespace RentItServer.SMU
             }
         }
 
-        public Book UpdateBook(int bookId, String title, String author, String description, String genre,
-                               DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        public Book UpdateBook(int bookId, String title, String author, String description, String genre, double price)
         {
-            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
-
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -485,9 +481,6 @@ namespace RentItServer.SMU
                 if (description != null) theBook.description = description;
                 if (genre != null) theBook.genre = genre;
                 if (price >= 0) theBook.price = price;
-                theBook.PDFFilePath = pdfFilePath;
-                theBook.imageFilePath = imageFilePath;
-                if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
 
                 proxy.SaveChanges();
             }
