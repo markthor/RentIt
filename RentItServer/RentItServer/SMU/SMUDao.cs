@@ -250,7 +250,7 @@ namespace RentItServer.SMU
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from b in proxy.SMUbooks
-                            orderby b.dateAdded ascending 
+                            orderby b.dateAdded ascending
                             select b;
 
                 List<Book> bookList = new List<Book>();
@@ -266,7 +266,7 @@ namespace RentItServer.SMU
                 }
                 return bookList;
             }
-            
+
         }
 
         public List<Book> SearchBooks(string searchString)
@@ -464,7 +464,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public Book UpdateBook(int bookId, String title, String author, String description, String genre, double price)
+        public Book UpdateBook(int bookId, String title, String author, String description, String genre, double? price)
         {
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -482,7 +482,7 @@ namespace RentItServer.SMU
                 if (author != null) theBook.author = author;
                 if (description != null) theBook.description = description;
                 if (genre != null) theBook.genre = genre;
-                if (price >= 0) theBook.price = price;
+                if (price != null) theBook.price = (double)price;
 
                 proxy.SaveChanges();
             }

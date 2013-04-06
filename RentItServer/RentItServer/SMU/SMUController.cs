@@ -470,13 +470,12 @@ namespace RentItServer.SMU
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="genre">The genre. Can be null.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double price, MemoryStream image)
+        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
             Book theBook;
             try

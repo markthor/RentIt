@@ -225,7 +225,7 @@ namespace RentItServer
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBook(int bookId, string title, string author, string description, string genre, double price, MemoryStream image)
+        public Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
             return _smuController.UpdateBookInfo(bookId, title, author, description, genre, price, image);
         }

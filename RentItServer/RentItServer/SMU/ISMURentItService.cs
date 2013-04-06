@@ -185,7 +185,7 @@ namespace RentItServer.SMU
         /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The updated book</returns>
         [OperationContract]
-        Book UpdateBook(int bookId, String title, String author, String description, String genre, double price, MemoryStream image);
+        Book UpdateBook(int bookId, String title, String author, String description, String genre, double? price, MemoryStream image);
 
         /// <summary>
         /// Uploads an audio file to a book. Overrides if audio file already exists.
