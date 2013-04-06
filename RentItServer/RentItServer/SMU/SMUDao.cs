@@ -250,7 +250,7 @@ namespace RentItServer.SMU
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from b in proxy.SMUbooks
-                            orderby b.dateAdded ascending
+                            orderby b.dateAdded descending
                             select b;
 
                 List<Book> bookList = new List<Book>();
