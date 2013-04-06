@@ -44,7 +44,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public User GetUser(int userId)
+        public User GetUserInfo(int userId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -147,7 +147,7 @@ namespace RentItServer.SMU
                 foreach (SMUrental rental in list)
                 {
                     // tests if the rental is more than 7 days old
-                    if (DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0))
+                    if (DateTime.UtcNow.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0))
                     {
                         //tests for audio and book
                         if (rental.mediaType == 2)

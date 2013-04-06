@@ -56,10 +56,10 @@ namespace RentItServer_UnitTests
             int u2 = controller.SignUp("Peter Parker2", "12Fisk", "gogogo2@yo.dk", false);
             int u3 = controller.SignUp("Peter Parker3", "123Fisk", "gogogo3@yo.dk", false);
 
-            Assert.AreEqual(u1, controller.GetUser(u1).Id);
-            Assert.AreEqual(u2, controller.GetUser(u2).Id);
-            Assert.AreEqual(u3, controller.GetUser(u3).Id);
-            Assert.AreNotEqual(u1, controller.GetUser(u3).Id);
+            Assert.AreEqual(u1, controller.GetUserInfo(u1).Id);
+            Assert.AreEqual(u2, controller.GetUserInfo(u2).Id);
+            Assert.AreEqual(u3, controller.GetUserInfo(u3).Id);
+            Assert.AreNotEqual(u1, controller.GetUserInfo(u3).Id);
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace RentItServer_UnitTests
             string email = "hest@yoyo.dk";
 
             controller.UpdateUserInfo(u1, email, name, password, false);
-            RentItServer.SMU.User user = controller.GetUser(u1);
+            RentItServer.SMU.User user = controller.GetUserInfo(u1);
 
             Assert.AreEqual(name, user.Username);
             Assert.AreEqual(password, user.Password);
