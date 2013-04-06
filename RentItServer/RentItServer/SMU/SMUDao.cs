@@ -64,9 +64,9 @@ namespace RentItServer.SMU
         public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
-            if (email.Equals("")) throw new ArgumentException("email was empty");
-            if (username.Equals("")) throw new ArgumentException("username was empty");
-            if (password.Equals("")) throw new ArgumentException("password was empty");
+            if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
+            if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
+            if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -80,10 +80,14 @@ namespace RentItServer.SMU
                 }
 
                 SMUuser theUser = users.First();
-                theUser.email = email != null ? email : theUser.email;
-                theUser.username = username != null ? username : theUser.username;
-                theUser.password = password != null ? password : theUser.password;
-                theUser.isAdmin = isAdmin != null ? (bool)isAdmin : theUser.isAdmin;
+                if (email != null)
+                    theUser.email = email;
+                if (username != null)
+                    theUser.username = username;
+                if (password != null)
+                    theUser.password = password;
+                if (isAdmin != null)
+                    theUser.isAdmin = (bool)isAdmin;
                 proxy.SaveChanges();
 
                 return theUser.GetUser();
