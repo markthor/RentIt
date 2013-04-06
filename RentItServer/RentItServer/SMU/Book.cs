@@ -6,7 +6,7 @@ namespace RentItServer.SMU
     [DataContract]
     public class Book
     {
-        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, int hit)
+        public Book(int id, string title, string author, string description, string genre, double price, DateTime dateAdded, string narrator, int hit, bool hasAudio, bool hasPdf)
         {
             Id = id;
             Title = title;
@@ -17,6 +17,8 @@ namespace RentItServer.SMU
             DateAdded = dateAdded;
             Hit = hit;
             Narrator = narrator;
+            HasAudio = hasAudio;
+            HasPdf = hasPdf;
         }
         [DataMember]
         public int Id { get; set; }
@@ -36,5 +38,9 @@ namespace RentItServer.SMU
         public DateTime DateAdded { get; set; }
         [DataMember]
         public int Hit { get; set; }
+        [DataMember]
+        public bool HasAudio { get; set; }
+        [DataMember]
+        public bool HasPdf { get; set; }
     }
 }
