@@ -63,7 +63,7 @@ namespace RentItServer.ITU
             List<Socket> disconnected = new List<Socket>();
 
             Console.WriteLine("PlaySong: Started playing");
-            while (stopwatch.ElapsedMilliseconds < currentTrack.length)
+            while (stopwatch.ElapsedMilliseconds < currentTrack.Length)
             {
                 while (bytesSend < SongBytes.Length)
                 {
@@ -123,10 +123,10 @@ namespace RentItServer.ITU
 
             currentTrack = new Track();
             SongBytes = LoadSong("a.mp3");
-            currentTrack.length = 235000;
+            currentTrack.Length = 235000;
 
 
-            packetSize = (int)((double)SongBytes.Length / (double)currentTrack.length) * 1000;
+            packetSize = (int)((double)SongBytes.Length / (double)currentTrack.Length) * 1000;
         }
 
         private void ThreadRun()

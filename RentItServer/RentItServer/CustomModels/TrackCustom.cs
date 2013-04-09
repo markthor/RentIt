@@ -6,9 +6,9 @@ namespace RentItServer
     {
         public Track(int id, int upvotes, int downvotes)
         {
-            this.id = id;
-            this.upvotes = new Nullable<int>(upvotes);
-            this.downvotes = new Nullable<int>(downvotes);
+            Id = id;
+            UpVotes = upvotes;
+            DownVotes = downvotes;
         }
     }
 }

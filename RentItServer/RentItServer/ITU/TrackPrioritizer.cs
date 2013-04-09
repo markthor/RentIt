@@ -53,16 +53,16 @@ namespace RentItServer.ITU
             //Adding a key for each track and a TrackData object.
             foreach (Track t in trackList)
             {
-                trackData.Add(t.id, new TrackData(t.upvotes.Value, t.downvotes.Value));
+                trackData.Add(t.Id, new TrackData(t.UpVotes, t.DownVotes));
             }
             
             //Counting trackPlay occurences and adding it to TrackData.
             foreach (TrackPlay tp in plays)
             {
-                TrackData currentTrackData = trackData[tp.trackId];
+                TrackData currentTrackData = trackData[tp.TrackId];
                 currentTrackData.Plays++;
-                trackData.Remove(tp.trackId);
-                trackData.Add(tp.trackId, currentTrackData);
+                trackData.Remove(tp.TrackId);
+                trackData.Add(tp.TrackId, currentTrackData);
             }
 
             //The total amount of recorded plays.
@@ -145,7 +145,7 @@ namespace RentItServer.ITU
             List<int> ids = new List<int>(numberOfTracks);
             foreach (TrackPlay tp in recentlyPlayedTracks)
             {
-                ids.Add(tp.trackId);
+                ids.Add(tp.TrackId);
             }
 
             return ids;
@@ -155,7 +155,7 @@ namespace RentItServer.ITU
         {
             foreach (TrackPlay tp in plays)
             {
-                if (tp.playtime < targetTrack.playtime) { return true; }
+                if (tp.TimePlayed < targetTrack.TimePlayed) { return true; }
             }
             return false;
         }
@@ -166,9 +166,9 @@ namespace RentItServer.ITU
             TrackPlay playToBeRemoved = null;
             foreach (TrackPlay tp in plays)
             {
-                if (tp.playtime < oldestDate)
+                if (tp.TimePlayed < oldestDate)
                 {
-                    oldestDate = tp.playtime;
+                    oldestDate = tp.TimePlayed;
                     playToBeRemoved = tp;
                 }
             }

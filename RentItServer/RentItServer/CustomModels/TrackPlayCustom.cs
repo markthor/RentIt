@@ -6,10 +6,10 @@ namespace RentItServer
     [Serializable]
     public partial class TrackPlay
     {
-        public TrackPlay(int trackId, DateTime playtime)
+        public TrackPlay(int trackId, DateTime timePlayed)
         {
-            this.trackId = trackId;
-            this.playtime = playtime;
+            TrackId = trackId;
+            TimePlayed = timePlayed;
         }
     }
 }

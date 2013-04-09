@@ -16,23 +16,23 @@ namespace RentItServer
     {
         public Channel()
         {
-            this.comments = new HashSet<Comment>();
-            this.tracks = new HashSet<Track>();
-            this.genres = new HashSet<Genre>();
-            this.subscriptions = new HashSet<User>();
+            this.Comments = new HashSet<Comment>();
+            this.Subscribers = new HashSet<User>();
+            this.Genres = new HashSet<Genre>();
+            this.Tracks = new HashSet<Track>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public Nullable<double> rating { get; set; }
-        public Nullable<int> plays { get; set; }
-        public string description { get; set; }
-        public int userId { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Nullable<double> Rating { get; set; }
+        public Nullable<int> Hits { get; set; }
     
-        public virtual User users { get; set; }
-        public virtual ICollection<Comment> comments { get; set; }
-        public virtual ICollection<Track> tracks { get; set; }
-        public virtual ICollection<Genre> genres { get; set; }
-        public virtual ICollection<User> subscriptions { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual User ChannelOwner { get; set; }
+        public virtual ICollection<User> Subscribers { get; set; }
+        public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }
