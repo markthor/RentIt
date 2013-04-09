@@ -70,7 +70,6 @@
     <Content Include="js\jquery-1.2.3.min.js" />
     <Content Include="OurStyle.css" />
     <Content Include="StreamPlayer.ascx" />
-    <Content Include="TrackWithUpDownToke.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -109,13 +108,6 @@
     </Compile>
     <Compile Include="StreamPlayer.ascx.designer.cs">
       <DependentUpon>StreamPlayer.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="TrackWithUpDownToke.ascx.cs">
-      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TrackWithUpDownToke.ascx.designer.cs">
-      <DependentUpon>TrackWithUpDownToke.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

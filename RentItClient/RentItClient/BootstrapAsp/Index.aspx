@@ -1,18 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainPageMaster.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="BootstrapAsp.Index" %>
-<%@ Register tagPrefix="UC" tagName="StreamPlayer" src="StreamPlayer.ascx" %>
+<%@ Register tagPrefix="uc" tagName="StreamPlayer" src="StreamPlayer.ascx" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2"  ContentPlaceHolderID="up" runat="server">
-    
+<asp:Content ID="content_head" ContentPlaceHolderID="head" runat="server">
     
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="left" runat="server">
-    <UC:StreamPlayer runat="server" />
-</asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="center" runat="server">
+<asp:Content ID="content_up"  ContentPlaceHolderID="up" runat="server">
     
 </asp:Content>
-<asp:Content ID="Content5" ContentPlaceHolderID="right" runat="server">
-    
+<asp:Content ID="content_left" ContentPlaceHolderID="left" runat="server">
+    <uc:StreamPlayer ID="uc_streamPlayer" runat="server" />
+</asp:Content>
+<asp:Content ID="content_center" ContentPlaceHolderID="center" runat="server">
+    <uc:StreamPlayer ID="StreamPlayer1" runat="server" />
+</asp:Content>
+<asp:Content ID="content_right" ContentPlaceHolderID="right" runat="server">
+<uc:StreamPlayer ID="StreamPlayer2" runat="server" />
 </asp:Content>
