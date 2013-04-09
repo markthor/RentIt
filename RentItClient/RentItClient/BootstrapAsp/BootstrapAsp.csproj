@@ -57,11 +57,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateChannel.aspx" />
     <Content Include="css\bootstrap-responsive.css" />
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
-    <Content Include="Default.aspx" />
+    <Content Include="EditChannel.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="Index.aspx" />
@@ -78,12 +80,26 @@
     <Compile Include="BootstrapASP.Master.designer.cs">
       <DependentUpon>BootstrapASP.Master</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="CreateChannel.aspx.cs">
+      <DependentUpon>CreateChannel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="CreateChannel.aspx.designer.cs">
+      <DependentUpon>CreateChannel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditChannel.aspx.cs">
+      <DependentUpon>EditChannel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditChannel.aspx.designer.cs">
+      <DependentUpon>EditChannel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>

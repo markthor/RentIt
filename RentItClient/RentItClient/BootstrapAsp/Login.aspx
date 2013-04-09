@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BootstrapASP.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="BootstrapAsp.Default" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/BootstrapASP.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="BootstrapAsp.Default" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
+    <h1>Welcome to RentIt</h1>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p>Welcome to the site, you must log in to enter, or create a new user</p>
