@@ -274,16 +274,31 @@ namespace RentItServer
             return _smuController.DownloadPDF(bookId);
         }
 
+        /// <summary>
+        /// Metod to download an the image for a specific book
+        /// </summary>
+        /// <param name="bookId">The book id</param>
+        /// <returns>Memorystream containing a .jpg image file</returns>
         public MemoryStream DownloadImage(int bookId)
         {
             return _smuController.DownloadImage(bookId);
         }
 
+        /// <summary>
+        /// Method to retreieve all active rentals for a specific user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all active rentals for the given user</returns>
         public Rental[] GetActiveUserRentals(int userId)
         {
             return _smuController.GetActiveUserRentals(userId);
         }
 
+        /// <summary>
+        /// Returns all rentals for the specified user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all rentals ever created by the user</returns>
         public Rental[] GetAllUserRentals(int userId)
         {
             return _smuController.GetAllUserRentals(userId);
