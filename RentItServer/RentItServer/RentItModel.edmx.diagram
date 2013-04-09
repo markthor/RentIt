@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fa280c6c045c446f93dff629d66871cd" Name="Diagram1" ZoomLevel="68">
+      <Diagram DiagramId="fa280c6c045c446f93dff629d66871cd" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="RENTITModel.SMUbook" Width="1.5" PointX="0.5" PointY="8.375" />
         <EntityTypeShape EntityType="RENTITModel.SMUrental" Width="1.5" PointX="3" PointY="8.375" />
         <EntityTypeShape EntityType="RENTITModel.SMUuser" Width="1.5" PointX="5.625" PointY="8.375" />
