@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using RentItServer.Utilities;
 
@@ -142,21 +141,14 @@ namespace RentItServer.SMU
         /// <param name="description">The description.</param>
         /// <param name="genre">The genre.</param>
         /// <param name="price">The price.</param>
+        /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>
         /// The id of the book.
         /// </returns>
         public int AddBook(string title, string author, string description, string genre, double price, MemoryStream image)
         {
-            int bookId;
-            try
-            {
-                bookId = _dao.AddBook(title, author, description, genre, DateTime.UtcNow, price);
-                SaveImage(bookId, image); //some error handling maybe? logging?
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            int bookId = _dao.AddBook(title, author, description, genre, DateTime.UtcNow, price);
+            SaveImage(bookId, image);
             return bookId;
         }
 
@@ -165,7 +157,6 @@ namespace RentItServer.SMU
         /// </summary>
         /// <param name="userId">The user id</param>
         /// <param name="bookId">The book id</param>
-        /// <param name="startDate">The date that the rent starts</param>
         /// <param name="mediaType">0 if PDF, 1 if audio, 2 if both PDF and audio</param>
         /// <returns>
         /// The id of the rental object
@@ -193,10 +184,8 @@ namespace RentItServer.SMU
         /// <param name="bookId">The book id.</param>
         public void DeleteBook(int bookId)
         {
-            try
-            {
-                SMUbook book = _dao.GetBookInfo(bookId);
-                _dao.DeleteBook(bookId);
+            SMUbook book = _dao.GetBookInfo(bookId);
+            _dao.DeleteBook(bookId);
 
                 if (book.PDFFilePath != null && !book.PDFFilePath.Equals(string.Empty))
                 {
@@ -211,13 +200,6 @@ namespace RentItServer.SMU
                     _fileSystemHandler.DeleteFile(book.audioFilePath);
                 }
 
-            }
-            catch (Exception e)
-            {
-                //Delete book failed
-                throw;
-            }
-        }
 
         /// <summary>
         /// Gets all books.
@@ -291,18 +273,10 @@ namespace RentItServer.SMU
         /// </returns>
         public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
-            Book theBook;
-            try
-            {
-                theBook = _dao.UpdateBook(bookId, title, author, description, genre, price);
-                if (image != null)
-                    SaveImage(bookId, image); //Error handling? logging?
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            return theBook;
+            Book book = _dao.UpdateBook(bookId, title, author, description, genre, price);
+            if (image != null)
+                SaveImage(bookId, image);
+            return book;
         }
 
         /// <summary>
@@ -313,8 +287,8 @@ namespace RentItServer.SMU
         /// <param name="narrator">The narrator.</param>
         public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
-                _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId), narrator);
-                _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
+            _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
+            _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId), narrator);
         }
 
         /// <summary>
@@ -326,17 +300,10 @@ namespace RentItServer.SMU
         /// </returns>
         public MemoryStream DownloadAudio(int bookId)
         {
-            MemoryStream theAudio;
-            try
-            {
+            MemoryStream audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
+            audio.Position = 0L;
+            return audio;
                 theAudio = _fileSystemHandler.ReadFile(_dao.GetAudioPath(bookId));
-                theAudio.Position = 0L;
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            return theAudio;
         }
 
         /// <summary>
@@ -402,19 +369,15 @@ namespace RentItServer.SMU
         /// <returns>Array of rentals</returns>
         public Rental[] GetActiveUserRentals(int userId)
         {
-            List<Rental> rentals;
             List<Rental> activeRentals = new List<Rental>();
-           
-                rentals = _dao.GetUserRentals(userId);
 
-                foreach (Rental r in rentals)
+            foreach (Rental rental in _dao.GetUserRentals(userId))
+            {
+                if (rental.StartDate.AddDays(7) > DateTime.UtcNow)
                 {
-                    if (r.StartDate.AddDays(7) > DateTime.UtcNow)
-                    {
-                        activeRentals.Add(r);
-                    }
+                    activeRentals.Add(rental);
                 }
-            
+            }
             return activeRentals.ToArray();
         }
 
