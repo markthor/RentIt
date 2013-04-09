@@ -7,36 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RentItClient {
+
+
+public partial class TrackWithUpDownToke {
     
+    /// <summary>
+    /// lbl_trackName control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Label lbl_trackName;
     
-    public partial class TrackWithUpDownToke {
-        
-        /// <summary>
-        /// lbl_trackName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_trackName;
-        
-        /// <summary>
-        /// img_uptokeTrack1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_uptokeTrack1;
-        
-        /// <summary>
-        /// img_downtokeTrack1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img_downtokeTrack1;
-    }
+    /// <summary>
+    /// btn_uptoke control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btn_uptoke;
+    
+    /// <summary>
+    /// btn_downtoke control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btn_downtoke;
 }

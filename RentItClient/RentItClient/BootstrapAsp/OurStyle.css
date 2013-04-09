@@ -15,4 +15,19 @@
 {
     background-color: #b200ff;
     text-align: center;
-} 
+}
+
+#leftmain
+{
+    float:left;
+}
+
+#centermain
+{
+    float:left;
+}
+
+#rightmain
+{
+    float:left;
+}
