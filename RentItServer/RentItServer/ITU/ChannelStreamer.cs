@@ -75,7 +75,7 @@ namespace RentItServer.ITU
                         {
                             s.Send(SongBytes, bytesSend, packetSize, 0);
                         }
-                        catch (SocketException e)
+                        catch (SocketException)
                         {
                             //socket har ikke forbindelse længere, klienten har lukket
                             disconnected.Add(s);

@@ -1,28 +1,20 @@
 ﻿using System;
 using System.IO;
-using System.ServiceModel;
 
 namespace RentItServer.Utilities
 {
+    /// <summary>
+    /// This class is used to communicate with the filesystem of the server.
+    /// </summary>
     public class FileSystemHandler
     {
-        //The target folder for write and read operations.
-        //private string _root;
-
-        /// <summary>
-        /// The log
-        /// </summary>
-        //private readonly Logger _log = Logger.GetInstance();
-
         //Singleton instance of the class
         private static FileSystemHandler _instance;
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private FileSystemHandler()
-        {
-        }
+        private FileSystemHandler() { }
 
         /// <summary>
         /// Accessor method to access the only instance of the class
@@ -42,11 +34,9 @@ namespace RentItServer.Utilities
         /// </summary>
         /// <param name="path">The path to the directory in which the file should be placed</param>
         /// <param name="filename">The name of the file</param>
-        /// <param name="memoryStream">The track stream.</param>
+        /// <param name="memoryStream">The stream containing the content of the file</param>
         /// <exception cref="System.ArgumentNullException">
-        /// Relative path was null
-        /// or
-        /// MemoryStream argument was null
+        /// Path, filename or memoryStream was null
         /// </exception>
         public void WriteFile(FilePath path, string filename, MemoryStream memoryStream)
         {
@@ -55,7 +45,7 @@ namespace RentItServer.Utilities
             if (memoryStream == null) throw new ArgumentNullException("memoryStream");
 
             //Full path to the file
-            string fullPath = path.GetPath() + filename;
+            string fullPath = string.Concat(path.GetPath(), filename);
             
             //Create the directory
             Directory.CreateDirectory(path.GetPath());
@@ -109,9 +99,14 @@ namespace RentItServer.Utilities
             if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
 
             File.Delete(absolutePath);
-            if (File.Exists(absolutePath) == true) throw new Exception("File with path [" + absolutePath + "] was not deleted.");
+            if (File.Exists(absolutePath)) throw new Exception("File with path [" + absolutePath + "] was not deleted.");
         }
 
+        /// <summary>
+        /// Checks if the file with the given absolute path exists
+        /// </summary>
+        /// <param name="absolutePath">The absolute path of the file</param>
+        /// <returns>Whether the file exists or not</returns>
         public bool Exists(string absolutePath)
         {
             if (absolutePath == null) throw new ArgumentNullException("absolutePath");
@@ -119,11 +114,6 @@ namespace RentItServer.Utilities
             if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
 
             return File.Exists(absolutePath);
-        }
-
-        internal static byte[] LoadTrackBytes(string p)
-        {
-            throw new NotImplementedException();
         }
     }
 }

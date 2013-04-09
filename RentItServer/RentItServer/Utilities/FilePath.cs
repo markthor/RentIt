@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.IO;
+﻿using System.IO;
 
 namespace RentItServer.Utilities
 {
     /// <summary>
-    /// Class containing constants for filepaths to various files related to the SMU service
+    /// Class containing constants for filepaths to various files related to the ITU & SMU service
     /// </summary>
     public sealed class FilePath
     {
         /// <summary>
         /// The path
         /// </summary>
-        private string path;
+        private readonly string _path;
 
         /// <summary>
         /// The SMU audio path
@@ -82,7 +78,7 @@ namespace RentItServer.Utilities
         /// <param name="path">The path.</param>
         private FilePath(string path)
         {
-            this.path = path;
+            _path = path;
         }
 
         /// <summary>
@@ -91,7 +87,7 @@ namespace RentItServer.Utilities
         /// <returns></returns>
         public string GetPath()
         {
-            return path;
+            return _path;
         }
     }
 }
