@@ -5,7 +5,7 @@ Domain concepts:
 A channel has a collection of tracks that can be listened to.
 
 Priority:
-Higest as this is the primary service that the system provides.
+Highest as this is the primary service that the system provides.
 
 Implementation notes:
 The system must be able to stream audio in a smooth and clutter-free manner.

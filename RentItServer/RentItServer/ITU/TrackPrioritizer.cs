@@ -3,13 +3,19 @@ using System.Collections.Generic;
 
 namespace RentItServer.ITU
 {
+    /// <summary>
+    /// Singleton class which has the single functionality of choosing a track from a collection of tracks and trackplays. The class also contains the constants that are involved in the selection of a track.
+    /// </summary>
     public class TrackPrioritizer
     {
         //Singleton instance of the class
         private static TrackPrioritizer _instance;
         private static Random rng = new Random();
+        //The maximal play percentage that a track can have to be considered for the next track.
         private const double _maxFrequency = 0.3;
+        //Determines how much upvotes and downvotes should influence the propability of a track being selected.
         private const int _ratioConstant = 10;
+        //The number of latest played tracks that will not be considered for the next track.
         private const int _minimumRepeatDistance = 3;
 
         /// <summary>
