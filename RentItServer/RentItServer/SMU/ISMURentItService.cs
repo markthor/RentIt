@@ -148,6 +148,30 @@ namespace RentItServer.SMU
         [OperationContract]
         MemoryStream DownloadAudio(int bookId);
 
+        /// <summary>
+        /// Metod to download an the image for a specific book
+        /// </summary>
+        /// <param name="bookId">The book id</param>
+        /// <returns>Memorystream containing a .jpg image file</returns>
+        [OperationContract]
+        MemoryStream DownloadImage(int bookId);
+
+        /// <summary>
+        /// Method to retreieve all active rentals for a specific user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all active rentals for the given user</returns>
+        [OperationContract]
+        Rental[] GetActiveUserRentals(int userId);
+
+        /// <summary>
+        /// Returns all rentals for the specified user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all rentals ever created by the user</returns>
+        [OperationContract]
+        Rental[] GetAllUserRentals(int userId);
+
         /***********************************************
          * Admin stuff
          * *********************************************/
@@ -203,14 +227,5 @@ namespace RentItServer.SMU
         /// <param name="pdf">The MemoryStream containing the pdf</param>
         [OperationContract]
         void UploadPdf(int bookId, MemoryStream pdf);
-
-        [OperationContract]
-        MemoryStream DownloadImage(int bookId);
-
-        [OperationContract]
-        Rental[] GetActiveUserRentals(int userId);
-
-        [OperationContract]
-        Rental[] GetAllUserRentals(int userId);
     }
 }
