@@ -1,5 +1,8 @@
 ﻿namespace RentItServer.Utilities
 {
+    /// <summary>
+    /// This class is used to generate filenames for the different files that can be associated with a book.
+    /// </summary>
     public sealed class FileName
     {
         /// <summary>
