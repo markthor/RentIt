@@ -13,30 +13,30 @@ namespace BootstrapAsp {
     public partial class Index {
         
         /// <summary>
-        /// Label1 control.
+        /// uc_streamPlayer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::BootstrapAsp.StreamPlayer uc_streamPlayer;
         
         /// <summary>
-        /// Label2 control.
+        /// StreamPlayer1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::BootstrapAsp.StreamPlayer StreamPlayer1;
         
         /// <summary>
-        /// Label3 control.
+        /// StreamPlayer2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::BootstrapAsp.StreamPlayer StreamPlayer2;
     }
 }
