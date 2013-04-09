@@ -45,7 +45,7 @@ namespace RentItServer.SMU
         /// The book id.
         /// </value>
         [DataMember]
-        public Nullable<int> BookId { get; private set; }
+        public int? BookId { get; private set; }
         /// <summary>
         /// Gets or sets the start date.
         /// </summary>
