@@ -5,15 +5,31 @@ using System.Linq;
 
 namespace RentItServer.SMU
 {
+    /// <summary>
+    /// Class responsible for communication with the database
+    /// Primary author: Morten
+    /// </summary>
     public class SMUDao
     {
         private static SMUDao _instance;
+        /// <summary>
+        /// SMUDao is a singleton
+        /// </summary>
+        /// <returns></returns>
         public static SMUDao GetInstance()
         {
 
             return _instance ?? (_instance = new SMUDao());
         }
 
+        /// <summary>
+        /// Creates a user in the database
+        /// </summary>
+        /// <param name="email">string email</param>
+        /// <param name="name"> string name</param>
+        /// <param name="password">string password</param>
+        /// <param name="isAdmin">boolean indicating admin status</param>
+        /// <returns>user Id</returns>
         public int SignUp(string email, string name, string password, bool isAdmin)
         {
             SMUuser user = new SMUuser();
@@ -29,6 +45,12 @@ namespace RentItServer.SMU
             return user.id;
         }
 
+        /// <summary>
+        /// Checks if the user is in the database
+        /// </summary>
+        /// <param name="email">string email</param>
+        /// <param name="password">string password</param>
+        /// <returns>user Id</returns>
         public int LogIn(string email, string password)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -44,7 +66,12 @@ namespace RentItServer.SMU
             }
         }
 
-        public User GetUser(int userId)
+        /// <summary>
+        /// Returns Ifo about a User
+        /// </summary>
+        /// <param name="userId">int userId</param>
+        /// <returns>User object</returns>
+        public User GetUserInfo(int userId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -61,35 +88,52 @@ namespace RentItServer.SMU
             }
         }
 
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        /// <summary>
+        /// Updates the database with info about a User
+        /// </summary>
+        /// <param name="userId">int userId</param>
+        /// <param name="email">string email</param>
+        /// <param name="username">string username</param>
+        /// <param name="password">string password</param>
+        /// <param name="isAdmin">boolean indicating admin status</param>
+        /// <returns></returns>
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
-            if (email.Equals("")) throw new ArgumentException("email was empty");
-            if (username.Equals("")) throw new ArgumentException("username was empty");
-            if (password.Equals("")) throw new ArgumentException("password was empty");
+            if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
+            if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
+            if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
+                var users = from u in proxy.SMUusers
+                            where u.id == userId
+                            select u;
 
                 if (users.Any() == false)
                 {
                     throw new ArgumentException("No SMUuser with userid/password combination = " + userId + "/" + password);
                 }
 
-                SMUuser theUser = users.First();
-                theUser.email = email;
-                theUser.username = username;
-                theUser.password = password;
-                theUser.isAdmin = isAdmin;
+                SMUuser user = users.First();
+                if (email != null)
+                    user.email = email;
+                if (username != null)
+                    user.username = username;
+                if (password != null)
+                    user.password = password;
+                if (isAdmin != null)
+                    user.isAdmin = (bool)isAdmin;
                 proxy.SaveChanges();
 
-                return theUser.GetUser();
+                return user.GetUser();
             }
         }
 
+        /// <summary>
+        /// Deletes a User in the database
+        /// </summary>
+        /// <param name="userId">int UserId</param>
         public void DeleteAccount(int userId)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -140,20 +184,23 @@ namespace RentItServer.SMU
                 List<SMUrental> list = rentals.ToList();
                 bool aud = false;
                 bool pdf = false;
-                foreach(SMUrental rental in list)
+                foreach (SMUrental rental in list)
                 {
                     // tests if the rental is more than 7 days old
-                    if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
+                    if (DateTime.UtcNow.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0))
+                    {
                         //tests for audio and book
                         if (rental.mediaType == 2)
                         {
                             aud = true;
                             pdf = true;
                         }
-                        if (rental.mediaType == 1) {
+                        if (rental.mediaType == 1)
+                        {
                             aud = true;
                         }
-                        if (rental.mediaType == 0) {
+                        if (rental.mediaType == 0)
+                        {
                             pdf = true;
                         }
                     }
@@ -186,20 +233,25 @@ namespace RentItServer.SMU
         /// <exception cref="System.ArgumentException">No rental with specified userid/bookid pair</exception>
         public Rental[] GetRental(int userId, int bookId)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities()){
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
                 var rentals = from rental in context.SMUrentals
                               where rental.SMUuser.id == userId && rental.bookId == bookId
                               orderby rental.mediaType descending
                               select rental;
-                if(rentals.Any() == false)  throw new ArgumentException("No rental with specified userid/bookid pair");
+                if (rentals.Any() == false) throw new ArgumentException("No rental with specified userid/bookid pair");
                 List<SMUrental> list = rentals.ToList();
                 List<Rental> returnList = new List<Rental>();
                 foreach (SMUrental rent in list)
-                    returnList.Add(rent.GetRental()); 
+                    returnList.Add(rent.GetRental());
                 return returnList.ToArray();
             }
         }
 
+        /// <summary>
+        /// Returns a List of all books in the database
+        /// </summary>
+        /// <returns>A List containing the Books</returns>
         public List<Book> GetAllBooks()
         {
             List<Book> list = new List<Book>();
@@ -216,6 +268,10 @@ namespace RentItServer.SMU
             return list;
         }
 
+        /// <summary>
+        /// Returns a List of the 30 most popular books
+        /// </summary>
+        /// <returns>List of Books</returns>
         public List<Book> GetPopularBooks()
         {
             List<Book> list = new List<Book>();
@@ -237,28 +293,39 @@ namespace RentItServer.SMU
             return list;
         }
 
+        /// <summary>
+        /// Returns a List of the 30 newest books
+        /// </summary>
+        /// <returns>List of Books</returns>
         public List<Book> GetNewBooks()
         {
-            List<Book> theBooks = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var books = from book in proxy.SMUbooks
-                            select book;
+                var books = from b in proxy.SMUbooks
+                            orderby b.dateAdded descending
+                            select b;
 
-                if (books.Any() == true)
+                List<Book> bookList = new List<Book>();
+                if (books.Any())
                 {
                     int count = 0;
                     foreach (SMUbook book in books)
                     {
-                        theBooks.Add(book.GetBook());
+                        bookList.Add(book.GetBook());
                         count++;
                         if (count == 30) break;
                     }
                 }
+                return bookList;
             }
-            return theBooks;
+
         }
 
+        /// <summary>
+        /// Searches for a Book using a search string
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns>List of Books that matches the search string</returns>
         public List<Book> SearchBooks(string searchString)
         {
             if (searchString == null) throw new ArgumentNullException("searchString");
@@ -266,7 +333,9 @@ namespace RentItServer.SMU
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
-                            where (book.title.Contains(searchString) || book.author.Contains(searchString))
+                            where (book.title.Contains(searchString) ||
+                                    book.author.Contains(searchString) ||
+                                    book.description.Contains(searchString))
                             select book;
 
                 foreach (SMUbook book in books)
@@ -277,6 +346,11 @@ namespace RentItServer.SMU
             return list;
         }
 
+        /// <summary>
+        /// Returns a List of Books matching a specific genre
+        /// </summary>
+        /// <param name="genre">name of the genre</param>
+        /// <returns>A List of Books</returns>
         public List<Book> GetBooksByGenre(String genre)
         {
             if (genre == null) throw new ArgumentNullException("genre");
@@ -295,6 +369,11 @@ namespace RentItServer.SMU
             return list;
         }
 
+        /// <summary>
+        /// Returns info about a specific Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <returns>SMUBook</returns>
         public SMUbook GetBookInfo(int bookId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -311,6 +390,11 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Returns a Book object 
+        /// </summary>
+        /// <param name="theBook">A SMUBook object</param>
+        /// <returns></returns>
         public Book GetBookRepresentation(SMUbook theBook)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -327,6 +411,14 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Makes a Rent Entry in the Database
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="bookId"></param>
+        /// <param name="time"></param>
+        /// <param name="mediaType">Type of media the User wants to Rent</param>
+        /// <returns>The Rent Id</returns>
         public int RentBook(int userId, int bookId, DateTime time, int mediaType)
         {
             if (userId < 0) throw new ArgumentException("userId < 0");
@@ -372,6 +464,11 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Deletes a Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <returns>true if Book is Deleted</returns>
         public bool DeleteBook(int bookId)
         {
             //if (userId < 0) throw new ArgumentException("userId < 0");
@@ -399,6 +496,12 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Adds a MP3 File to a Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="filePath">Path of the File</param>
+        /// <param name="narrator"></param>
         public void AddAudio(int bookId, string filePath, string narrator)
         {
             // if (userId < 0) throw new ArgumentException("userId < 0");
@@ -416,11 +519,21 @@ namespace RentItServer.SMU
 
                 theBook.audioNarrator = narrator;
                 theBook.audioFilePath = filePath;
-                
+
                 proxy.SaveChanges();
             }
         }
-        
+
+        /// <summary>
+        /// Adds a Book object to the database
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="author"></param>
+        /// <param name="description"></param>
+        /// <param name="genre"></param>
+        /// <param name="dateAdded"></param>
+        /// <param name="price"></param>
+        /// <returns>Book Id</returns>
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
@@ -452,12 +565,18 @@ namespace RentItServer.SMU
             }
         }
 
-        public Book UpdateBook(int bookId, String title, String author, String description, String genre,
-                               DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        /// <summary>
+        /// Updates Info about a Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="title"></param>
+        /// <param name="author"></param>
+        /// <param name="description"></param>
+        /// <param name="genre"></param>
+        /// <param name="price"></param>
+        /// <returns>Book object</returns>
+        public Book UpdateBook(int bookId, String title, String author, String description, String genre, double? price)
         {
-            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
-
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -474,16 +593,16 @@ namespace RentItServer.SMU
                 if (author != null) theBook.author = author;
                 if (description != null) theBook.description = description;
                 if (genre != null) theBook.genre = genre;
-                if (price >= 0) theBook.price = price;
-                theBook.PDFFilePath = pdfFilePath;
-                theBook.imageFilePath = imageFilePath;
-                if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
+                if (price != null) theBook.price = (double)price;
 
                 proxy.SaveChanges();
             }
             return theBook.GetBook();
         }
 
+        /// <summary>
+        /// Deletes Data in the database
+        /// </summary>
         public void DeleteSMUDatabaseData()
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -512,6 +631,11 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Adds a PDF file to a Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="pdfFilePath">Path of the PDF</param>
         public void AddPdf(int bookId, string pdfFilePath)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
@@ -546,6 +670,11 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Adds an image to the Book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="fullPath"></param>
         public void AddImage(int bookId, string fullPath)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -564,14 +693,19 @@ namespace RentItServer.SMU
             }
         }
 
+        /// <summary>
+        /// Returns all rentals made by a User
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>List of Rentals</returns>
         public List<Rental> GetUserRentals(int userId)
         {
             List<Rental> list = new List<Rental>();
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var rentals = from r in context.SMUrentals
-                            where r.userId == userId
-                            select r;
+                              where r.userId == userId
+                              select r;
 
                 foreach (SMUrental r in rentals)
                 {
@@ -579,6 +713,66 @@ namespace RentItServer.SMU
                 }
             }
             return list;
+        }
+
+        /// <summary>
+        /// Gets the audio path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetAudioPath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var audioPaths = from book in context.SMUbooks
+                                 where book.id == bookId
+                                 select book.audioFilePath;
+                if (audioPaths.Any() == true)
+                {
+                    return audioPaths.First();
+                }
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the PDF path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetPdfPath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var pdfPaths = from book in context.SMUbooks
+                               where book.id == bookId
+                               select book.PDFFilePath;
+                if (pdfPaths.Any() == true)
+                {
+                    return pdfPaths.First();
+                }
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the image path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetImagePath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var imagePaths = from book in context.SMUbooks
+                                 where book.id == bookId
+                                 select book.imageFilePath;
+                if (imagePaths.Any() == true)
+                {
+                    return imagePaths.First();
+                }
+                return "";
+            }
         }
     }
 }

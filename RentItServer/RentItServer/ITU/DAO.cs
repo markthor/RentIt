@@ -233,7 +233,7 @@ namespace RentItServer.ITU
                         trackId = trackId,
                         userId = userId,
                         value = rating,
-                        date = DateTime.Now
+                        date = DateTime.UtcNow
                     };
                 context.votes.Add(vote);
                 context.SaveChanges();
@@ -276,7 +276,7 @@ namespace RentItServer.ITU
                         channelId = channelId,
                         content = comment,
                         userId = userId,
-                        date = DateTime.Now
+                        date = DateTime.UtcNow
                     };
                 context.comments.Add(theComment);
                 context.SaveChanges();

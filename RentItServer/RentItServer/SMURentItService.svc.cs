@@ -48,7 +48,7 @@ namespace RentItServer
         /// </returns>
         public SMU.User GetUserInfo(int userId)
         {
-            return _smuController.GetUser(userId);
+            return _smuController.GetUserInfo(userId);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace RentItServer
         /// <returns>
         /// The updated user
         /// </returns>
-        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             return _smuController.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
@@ -202,8 +202,8 @@ namespace RentItServer
         /// <param name="author">The author.</param>
         /// <param name="description">The description.</param>
         /// <param name="genre">The genre.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
+        /// <param name="image">The stream containing the image</param>
         /// <returns>
         /// The id of the book.
         /// </returns>
@@ -220,16 +220,14 @@ namespace RentItServer
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="genre">The genre. Can be null.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
-                               double price, MemoryStream image)
+        public Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
-            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price, image);
+            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, price, image);
         }
 
         /// <summary>
@@ -276,16 +274,31 @@ namespace RentItServer
             return _smuController.DownloadPDF(bookId);
         }
 
+        /// <summary>
+        /// Metod to download an the image for a specific book
+        /// </summary>
+        /// <param name="bookId">The book id</param>
+        /// <returns>Memorystream containing a .jpg image file</returns>
         public MemoryStream DownloadImage(int bookId)
         {
             return _smuController.DownloadImage(bookId);
         }
 
+        /// <summary>
+        /// Method to retreieve all active rentals for a specific user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all active rentals for the given user</returns>
         public Rental[] GetActiveUserRentals(int userId)
         {
             return _smuController.GetActiveUserRentals(userId);
         }
 
+        /// <summary>
+        /// Returns all rentals for the specified user
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <returns>Array of all rentals ever created by the user</returns>
         public Rental[] GetAllUserRentals(int userId)
         {
             return _smuController.GetAllUserRentals(userId);

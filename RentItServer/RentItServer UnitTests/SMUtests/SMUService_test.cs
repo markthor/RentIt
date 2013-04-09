@@ -28,9 +28,9 @@ namespace RentItServer_UnitTests
             int bookId = service.UploadBook(title, author, "gods book", "religious", 1000.0, new MemoryStream());
             Book book = service.GetBookInfo(bookId);
 
-            Assert.AreEqual(bookId, book.id);
-            Assert.AreEqual(title, book.title);
-            Assert.AreEqual(author, book.author);
+            Assert.AreEqual(bookId, book.Id);
+            Assert.AreEqual(title, book.Title);
+            Assert.AreEqual(author, book.Author);
         }
 
         [TestMethod]
@@ -59,11 +59,11 @@ namespace RentItServer_UnitTests
             bool boo3 = false;
             foreach(Book b in list)
             {        
-                if (b.id == bookId1)
+                if (b.Id == bookId1)
                     boo1 = true;
-                if (b.id == bookId2)
+                if (b.Id == bookId2)
                     boo2 = true;
-                if (b.id == bookId3)
+                if (b.Id == bookId3)
                     boo3 = true;
             }
             Assert.AreEqual(true, boo1 && boo2 && boo3);         
@@ -101,6 +101,21 @@ namespace RentItServer_UnitTests
             { 
             
             }
+        }
+
+
+        [TestMethod]
+        public void TestGetRental_service()
+        {
+            ServiceReference1.SMURentItServiceClient service = new ServiceReference1.SMURentItServiceClient();
+            int bookId = service.UploadBook("Sasdasd", "SP", "gods book", "religious", 1000.0, new MemoryStream());
+            service.UploadPdf(bookId, new System.IO.MemoryStream());
+            int userId = service.SignUp("sdfsdfgdsg","sdgsdg","sdsdgsdgsdggsd",false);
+            int rentalId = service.RentBook(userId, bookId, 0);
+            Rental[] rentals = service.GetRental(userId, bookId);
+            service.DeleteAccount(userId);
+            Assert.AreEqual(rentalId, rentals[0].Id);
+            Assert.AreEqual(0, rentals[0].MediaType);
         }
     }
 }
