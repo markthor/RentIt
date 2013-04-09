@@ -16,18 +16,19 @@ namespace RentItServer
     {
         public User()
         {
-            this.channels = new HashSet<Channel>();
-            this.comments = new HashSet<Comment>();
-            this.votes = new HashSet<Vote>();
+            this.Comments = new HashSet<Comment>();
+            this.Channels = new HashSet<Channel>();
+            this.SubscribedChannels = new HashSet<Channel>();
+            this.Votes = new HashSet<Vote>();
         }
     
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     
-        public virtual ICollection<Channel> channels { get; set; }
-        public virtual ICollection<Comment> comments { get; set; }
-        public virtual ICollection<Vote> votes { get; set; }
-        public virtual Channel channelsSubscriped { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Channel> Channels { get; set; }
+        public virtual ICollection<Channel> SubscribedChannels { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

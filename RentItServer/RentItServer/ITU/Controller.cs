@@ -41,7 +41,7 @@ namespace RentItServer.ITU
             IEnumerable<Channel> allChannels = _dao.GetAllChannels();
             foreach (Channel channel in allChannels)
             {
-                _channelCache[channel.id] = channel;
+                _channelCache[channel.Id] = channel;
             }
             // Initialize user search trie
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
@@ -77,7 +77,7 @@ namespace RentItServer.ITU
             try
             {
                 channel = _dao.CreateChannel(channelName, userId, description, genres);
-                _channelCache[channel.id] = channel;
+                _channelCache[channel.Id] = channel;
                 //_logger.AddEntry(logEntry + "Channel creation succeeded.");
             }
             catch (Exception e)
@@ -86,7 +86,7 @@ namespace RentItServer.ITU
                     _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
                 throw;
             }
-            return channel.id;
+            return channel.Id;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace RentItServer.ITU
             List<int> filteredChannelIds = new List<int>();
             for (int i = 0; i < channels.Count(); i++)
             {
-                filteredChannelIds.Add(channels[i].id);
+                filteredChannelIds.Add(channels[i].Id);
             }
 
             return filteredChannelIds.ToArray();
@@ -156,8 +156,8 @@ namespace RentItServer.ITU
             try
             {
                 Channel channel = _dao.GetChannel(channelId);
-                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.name + "]. ";
-                if (channel.userId == userId)
+                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
+                if (channel.UserId == userId)
                 {
                     _dao.DeleteChannel(userId, channelId);
                     //_logger.AddEntry(logEntry + "Deletion successful.");
@@ -237,7 +237,7 @@ namespace RentItServer.ITU
             try
             {
                 Track track = _dao.GetTrack(trackId);
-                string logEntry = "User id [" + userId + "] want to delete the track [" + track.name + "]. ";
+                string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
 
                 _dao.RemoveTrack(track);
                 //_logger.AddEntry(logEntry + "Deletion successful.");

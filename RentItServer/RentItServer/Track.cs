@@ -16,21 +16,21 @@ namespace RentItServer
     {
         public Track()
         {
-            this.trackplays = new HashSet<TrackPlay>();
-            this.votes = new HashSet<Vote>();
+            this.Votes = new HashSet<Vote>();
+            this.TrackPlays = new HashSet<TrackPlay>();
         }
     
-        public int id { get; set; }
-        public int channelId { get; set; }
-        public string trackpath { get; set; }
-        public string name { get; set; }
-        public string artist { get; set; }
-        public Nullable<int> length { get; set; }
-        public Nullable<int> upvotes { get; set; }
-        public Nullable<int> downvotes { get; set; }
+        public int Id { get; set; }
+        public int ChannelId { get; set; }
+        public string Path { get; set; }
+        public string Name { get; set; }
+        public string Artist { get; set; }
+        public int Length { get; set; }
+        public int UpVotes { get; set; }
+        public int DownVotes { get; set; }
     
-        public virtual Channel channels { get; set; }
-        public virtual ICollection<TrackPlay> trackplays { get; set; }
-        public virtual ICollection<Vote> votes { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<TrackPlay> TrackPlays { get; set; }
+        public virtual Channel Channel { get; set; }
     }
 }
