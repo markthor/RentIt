@@ -46,7 +46,7 @@ namespace RentItServer.Utilities
 
             //Full path to the file
             string fullPath = string.Concat(path.GetPath(), filename);
-            
+
             //Create the directory
             Directory.CreateDirectory(path.GetPath());
             //Open the file to write to it
@@ -74,7 +74,7 @@ namespace RentItServer.Utilities
             if (absolutePath == null) throw new ArgumentNullException("absolutePath");
             if (absolutePath.Equals("")) throw new ArgumentException("Absolute path must target a file");
             if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("Absolute path must target a file. Absolute path = " + absolutePath);
-            
+
             FileStream fs = File.OpenRead(absolutePath);
             MemoryStream ms = new MemoryStream();
             fs.CopyTo(ms);

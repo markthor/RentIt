@@ -187,19 +187,19 @@ namespace RentItServer.SMU
             SMUbook book = _dao.GetBookInfo(bookId);
             _dao.DeleteBook(bookId);
 
-                if (book.PDFFilePath != null && !book.PDFFilePath.Equals(string.Empty))
-                {
-                    _fileSystemHandler.DeleteFile(book.PDFFilePath);
-                }
-                if (book.imageFilePath != null && !book.imageFilePath.Equals(string.Empty))
-                {
-                    _fileSystemHandler.DeleteFile(book.imageFilePath);
-                }
-                if (book.audioFilePath != null)
-                {
-                    _fileSystemHandler.DeleteFile(book.audioFilePath);
-                }
-
+            if (book.PDFFilePath != null && !book.PDFFilePath.Equals(string.Empty))
+            {
+                _fileSystemHandler.DeleteFile(book.PDFFilePath);
+            }
+            if (book.imageFilePath != null && !book.imageFilePath.Equals(string.Empty))
+            {
+                _fileSystemHandler.DeleteFile(book.imageFilePath);
+            }
+            if (book.audioFilePath != null)
+            {
+                _fileSystemHandler.DeleteFile(book.audioFilePath);
+            }
+        }
 
         /// <summary>
         /// Gets all books.
@@ -300,10 +300,7 @@ namespace RentItServer.SMU
         /// </returns>
         public MemoryStream DownloadAudio(int bookId)
         {
-            MemoryStream audio = _fileSystemHandler.ReadFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId));
-            audio.Position = 0L;
-            return audio;
-                theAudio = _fileSystemHandler.ReadFile(_dao.GetAudioPath(bookId));
+            return _fileSystemHandler.ReadFile(_dao.GetAudioPath(bookId));
         }
 
         /// <summary>

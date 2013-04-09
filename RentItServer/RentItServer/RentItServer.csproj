@@ -141,7 +141,6 @@
     <Compile Include="SMU\ISMURentItService.cs" />
     <Compile Include="SMU\SMUController.cs" />
     <Compile Include="SMU\SMUDao.cs" />
-    <Compile Include="SMU\SMUMediaFileIO.cs" />
     <Compile Include="SMU\User.cs" />
     <Compile Include="Utilities\FileName.cs" />
     <Compile Include="Utilities\FilePath.cs" />
