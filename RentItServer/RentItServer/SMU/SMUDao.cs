@@ -714,5 +714,65 @@ namespace RentItServer.SMU
             }
             return list;
         }
+
+        /// <summary>
+        /// Gets the audio path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetAudioPath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var audioPaths = from book in context.SMUbooks
+                                 where book.id == bookId
+                                 select book.audioFilePath;
+                if (audioPaths.Any() == true)
+                {
+                    return audioPaths.First();
+                }
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the PDF path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetPdfPath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var pdfPaths = from book in context.SMUbooks
+                               where book.id == bookId
+                               select book.PDFFilePath;
+                if (pdfPaths.Any() == true)
+                {
+                    return pdfPaths.First();
+                }
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Gets the image path for the book.
+        /// </summary>
+        /// <param name="bookId">The book id.</param>
+        /// <returns></returns>
+        public string GetImagePath(int bookId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var imagePaths = from book in context.SMUbooks
+                                 where book.id == bookId
+                                 select book.imageFilePath;
+                if (imagePaths.Any() == true)
+                {
+                    return imagePaths.First();
+                }
+                return "";
+            }
+        }
     }
 }
