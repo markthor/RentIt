@@ -14,12 +14,12 @@ namespace RentItServer
     
     public partial class Vote
     {
-        public int trackId { get; set; }
-        public int userId { get; set; }
-        public int value { get; set; }
-        public Nullable<System.DateTime> date { get; set; }
+        public int UserId { get; set; }
+        public int TrackId { get; set; }
+        public int Value { get; set; }
+        public System.DateTime Date { get; set; }
     
-        public virtual Track tracks { get; set; }
-        public virtual User users { get; set; }
+        public virtual User User { get; set; }
+        public virtual Track Track { get; set; }
     }
 }

@@ -16,12 +16,12 @@ namespace RentItServer
     {
         public Genre()
         {
-            this.channels = new HashSet<Channel>();
+            this.Channels = new HashSet<Channel>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<Channel> channels { get; set; }
+        public virtual ICollection<Channel> Channels { get; set; }
     }
 }

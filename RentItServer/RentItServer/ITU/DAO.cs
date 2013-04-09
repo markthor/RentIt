@@ -44,29 +44,29 @@ namespace RentItServer.ITU
             Channel ch;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var someGenres = from genre in context.genres.Where(genre => genres.Contains(genre.name))
+                var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
 
-                var aUser = from user in context.users.Where(user => user.id == userId)
+                var aUser = from user in context.Users.Where(user => user.Id == userId)
                             select user;
 
                 // Create the channel object
                 ch = new Channel()
                 {
-                    comments = new Collection<Comment>(),
-                    description = description,
-                    genres = someGenres.ToList(),
-                    userId = userId,
-                    name = channelName,
-                    users = aUser.First(),  // what if aUser is null/empty?... btw i assume that this is the channels owner. just as userId.... for some reason it is both a foreign key and a "navigational property"...
-                    subscriptions = new Collection<User>(),
-                    plays = null,
-                    rating = null,
-                    tracks = new Collection<Track>()
+                    Comments = new Collection<Comment>(),
+                    Description = description,
+                    Genres = someGenres.ToList(),
+                    UserId = userId,
+                    Name = channelName,
+                    ChannelOwner = aUser.First(),  
+                    Subscribers = new Collection<User>(),
+                    Hits = null,
+                    Rating = null,
+                    Tracks = new Collection<Track>()
                 };
 
                 // I'm not sure this will work, i have not specified the channels id as the databse should generate it itself. 
-                context.channels.Add(ch);
+                context.Channels.Add(ch);
                 context.SaveChanges();
 
                 //// Seems a bit weird way around this, but for now it's the deal :)
@@ -81,7 +81,7 @@ namespace RentItServer.ITU
                 //    throw new Exception("Channel got created and saved in the database but has no id.... O.ô.");
                 //}
 
-                var theChannel = from channel in context.channels.Where(channel => channel.name == channelName && channel.userId == userId)
+                var theChannel = from channel in context.Channels.Where(channel => channel.Name == channelName && channel.UserId == userId)
                                  select channel;
 
                 if (theChannel.Any() == true){
@@ -106,7 +106,7 @@ namespace RentItServer.ITU
             Channel ch;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from channel in context.channels.Where(channel => channel.id == channelId)
+                var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
                                select channel;
 
                 if (channels.Any() == false)
@@ -127,7 +127,7 @@ namespace RentItServer.ITU
             IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from channel in context.channels select channel;
+                var channels = from channel in context.Channels select channel;
 
                 // Execute the query before leaving "using" block
                 allChannels = channels.ToList();
@@ -153,45 +153,45 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.SearchString
-                var channels = from channel in context.channels
-                               where channel.name.StartsWith(filter.SearchString)
+                var channels = from channel in context.Channels
+                               where channel.Name.StartsWith(filter.SearchString)
                                select channel;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
                     channels = from channel in channels
-                               where channel.plays >= filter.AmountPlayed
+                               where channel.Hits >= filter.AmountPlayed
                                select channel;
                 }
                 if (filter.Genres.Any() == true)
                 {   // Apply genre filter
                     channels = from channel in channels
-                               where channel.genres.Any(genre => filter.Genres.Contains(genre.name))
+                               where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name))
                                select channel;
                 }
                 if (filter.NumberOfComments > -1)
                 {   // Apply comment filter
                     channels = from channel in channels
-                               where channel.comments.Count >= filter.NumberOfComments
+                               where channel.Comments.Count >= filter.NumberOfComments
                                select channel;
                 }
                 if (filter.NumberOfSubscriptions > -1)
                 {   // Apply subscription filter
                     channels = from channel in channels
-                               where channel.subscriptions.Count >= filter.NumberOfSubscriptions
+                               where channel.Subscribers.Count >= filter.NumberOfSubscriptions
                                select channel;
                 }
                 if (filter.SortOption == -1)
                 {   // Descending
                     channels = from channel in channels
-                               orderby channel.name descending
+                               orderby channel.Name descending
                                select channel;
 
                 }
                 else if (filter.SortOption == 1)
                 {   // Ascending
                     channels = from channel in channels
-                               orderby channel.name ascending
+                               orderby channel.Name ascending
                                select channel;
                 }
                 // Execute the query before leaving "using" block
@@ -211,7 +211,7 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from channel in context.channels.Where(channel => channel.userId == userId && channel.id == channelId)
+                var channels = from channel in context.Channels.Where(channel => channel.UserId == userId && channel.Id == channelId)
                                select channel;
 
                 if (channels.Any() == false)
@@ -219,7 +219,7 @@ namespace RentItServer.ITU
                     return;
                 }
                 // Delete the channel entry from the database
-                context.channels.Remove(channels.First());
+                context.Channels.Remove(channels.First());
                 context.SaveChanges();
             }
         }
@@ -230,12 +230,12 @@ namespace RentItServer.ITU
             {   // TODO: Will only work if the vote table doesn't have "tracks" and "users" associated...
                 Vote vote = new Vote()
                     {
-                        trackId = trackId,
-                        userId = userId,
-                        value = rating,
-                        date = DateTime.UtcNow
+                        TrackId = trackId,
+                        UserId = userId,
+                        Value = rating,
+                        Date = DateTime.UtcNow
                     };
-                context.votes.Add(vote);
+                context.Votes.Add(vote);
                 context.SaveChanges();
             }
         }
@@ -245,7 +245,7 @@ namespace RentItServer.ITU
             Track theTrack;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var tracks = from track in context.tracks.Where(track => track.id == trackId)
+                var tracks = from track in context.Tracks.Where(track => track.Id == trackId)
                              select track;
 
                 if (tracks.Any() == false)
@@ -261,7 +261,7 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                context.tracks.Remove(track);
+                context.Tracks.Remove(track);
                 context.SaveChanges();
             }
         }
@@ -273,12 +273,12 @@ namespace RentItServer.ITU
                 // TODO: Will only work if the comment table doesn't have "channels" and "users" associated..
                 Comment theComment = new Comment()
                     {
-                        channelId = channelId,
-                        content = comment,
-                        userId = userId,
-                        date = DateTime.UtcNow
+                        ChannelId = channelId,
+                        Content = comment,
+                        UserId = userId,
+                        Date = DateTime.UtcNow
                     };
-                context.comments.Add(theComment);
+                context.Comments.Add(theComment);
                 context.SaveChanges();
             }
         }

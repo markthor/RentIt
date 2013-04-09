@@ -14,12 +14,12 @@ namespace RentItServer
     
     public partial class Comment
     {
-        public int channelId { get; set; }
-        public int userId { get; set; }
-        public string content { get; set; }
-        public System.DateTime date { get; set; }
+        public int ChannelId { get; set; }
+        public int UserId { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Content { get; set; }
     
-        public virtual Channel channels { get; set; }
-        public virtual User users { get; set; }
+        public virtual Channel Channel { get; set; }
+        public virtual User User { get; set; }
     }
 }
