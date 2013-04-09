@@ -74,7 +74,7 @@ namespace RentItServer.SMU
         /// <summary>
         /// Gets the books that have been added within the last 30 days.
         /// </summary>
-        /// <returns>An array of all books added within the last 30 days</returns>
+        /// <returns>An array of all books added within the last 30 day<s/returns>
         [OperationContract]
         Book[] GetNewBooks();
 
@@ -91,7 +91,7 @@ namespace RentItServer.SMU
         /// Gets the books with the specified genre.
         /// </summary>
         /// <param name="genre">The genre.</param>
-        /// <returns>Am array of all books matching the genre</returns>
+        /// <returns>An array of all books matching the genre</returns>
         [OperationContract]
         Book[] GetBooksByGenre(String genre);
 
@@ -149,7 +149,7 @@ namespace RentItServer.SMU
         MemoryStream DownloadAudio(int bookId);
 
         /// <summary>
-        /// Metod to download an the image for a specific book
+        /// Download the image for a specific book
         /// </summary>
         /// <param name="bookId">The book id</param>
         /// <returns>Memorystream containing a .jpg image file</returns>
@@ -209,7 +209,7 @@ namespace RentItServer.SMU
         /// <param name="image">The MemoryStream containing the image</param>
         /// <returns>The updated book</returns>
         [OperationContract]
-        Book UpdateBook(int bookId, String title, String author, String description, String genre, double? price, MemoryStream image);
+        Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image);
 
         /// <summary>
         /// Uploads an audio file to a book. Overrides if audio file already exists.
