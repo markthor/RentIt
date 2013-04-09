@@ -105,12 +105,12 @@ namespace RentItServer.SMU
         /// <returns>
         /// The user with the associated userId, null if userId does not exist
         /// </returns>
-        public User GetUser(int userId)
+        public User GetUserInfo(int userId)
         {
             User user;
             try
             {
-                user = _dao.GetUser(userId);
+                user = _dao.GetUserInfo(userId);
             }
             catch (Exception e)
             {
@@ -132,7 +132,7 @@ namespace RentItServer.SMU
         /// <returns>
         /// The updated user
         /// </returns>
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             User user;
             try
@@ -225,7 +225,6 @@ namespace RentItServer.SMU
         /// <param name="author">The author.</param>
         /// <param name="description">The description.</param>
         /// <param name="genre">The genre.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
         /// <returns>
         /// The id of the book.
@@ -235,7 +234,7 @@ namespace RentItServer.SMU
             int bookId;
             try
             {
-                bookId = _dao.AddBook(title, author, description, genre, DateTime.Now, price);
+                bookId = _dao.AddBook(title, author, description, genre, DateTime.UtcNow, price);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("AddBook succeeded. Title [" + title + "] Author [" + author + "] Description [" + description + "] Genre [" + genre + "] Price [" + price + "]"));
                 SaveImage(bookId, image); //some error handling maybe? logging?
@@ -264,7 +263,7 @@ namespace RentItServer.SMU
             int rentalId;
             try
             {
-                rentalId = _dao.RentBook(userId, bookId, DateTime.Now, mediaType);
+                rentalId = _dao.RentBook(userId, bookId, DateTime.UtcNow, mediaType);
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("RentBook succeeded. UserId [" + userId + "] bookId [" + bookId + "] mediaType [" + mediaType + "]"));
 
@@ -471,24 +470,23 @@ namespace RentItServer.SMU
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="genre">The genre. Can be null.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, DateTime dateAdded, double price, MemoryStream image)
+        public Book UpdateBookInfo(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
             Book theBook;
             try
             {
-                theBook = _dao.UpdateBook(bookId, title, author, description, genre, dateAdded, price, "", "");
+                theBook = _dao.UpdateBook(bookId, title, author, description, genre, price);
                 if (_handler != null)
                     _handler(this,
                              new RentItEventArgs("UpdateBookInfo succeeded for book id [" + bookId +
                                                  "]. New attributes: title [" + title + "] author [" + author +
                                                  "] description [" + description + "] genre [" + genre + "] dateAdded [" +
-                                                 DateTime.Now + "] price [" + price + "]."));
+                                                 DateTime.UtcNow + "] price [" + price + "]."));
                 if (image != null)
                     SaveImage(bookId, image); //Error handling? logging?
             }
@@ -604,7 +602,7 @@ namespace RentItServer.SMU
                 {
                     DateTime startDate = r.StartDate;
                     startDate.AddDays(7);
-                    if (r.StartDate.AddDays(7) > DateTime.Now)
+                    if (r.StartDate.AddDays(7) > DateTime.UtcNow)
                     {
                         activeRentals.Add(r);
                     }

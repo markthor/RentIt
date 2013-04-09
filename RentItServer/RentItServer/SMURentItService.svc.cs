@@ -48,7 +48,7 @@ namespace RentItServer
         /// </returns>
         public SMU.User GetUserInfo(int userId)
         {
-            return _smuController.GetUser(userId);
+            return _smuController.GetUserInfo(userId);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace RentItServer
         /// <returns>
         /// The updated user
         /// </returns>
-        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             return _smuController.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
@@ -202,8 +202,8 @@ namespace RentItServer
         /// <param name="author">The author.</param>
         /// <param name="description">The description.</param>
         /// <param name="genre">The genre.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price.</param>
+        /// <param name="image">The stream containing the image</param>
         /// <returns>
         /// The id of the book.
         /// </returns>
@@ -220,16 +220,14 @@ namespace RentItServer
         /// <param name="author">The author. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="genre">The genre. Can be null.</param>
-        /// <param name="dateAdded">The date added.</param>
         /// <param name="price">The price. Negative values will not be saved (use if price is unchanged)</param>
         /// <param name="image">The image.</param>
         /// <returns>
         /// The updated book
         /// </returns>
-        public Book UpdateBook(int bookId, string title, string author, string description, string genre, DateTime dateAdded,
-                               double price, MemoryStream image)
+        public Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
         {
-            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, dateAdded, price, image);
+            return _smuController.UpdateBookInfo(bookId, title, author, description, genre, price, image);
         }
 
         /// <summary>

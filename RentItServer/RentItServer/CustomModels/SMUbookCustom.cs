@@ -10,7 +10,17 @@ namespace RentItServer
     {
         public Book GetBook()
         {
-            return new Book(id, title, author, description, genre, price, dateAdded, audioNarrator, hit);
+            return new Book(id, title, author, description, genre, price, dateAdded, audioNarrator, hit, HasAudio(), HasPdf());
         }
-    }
+
+        private bool HasAudio()
+        {
+            return this.audioFilePath != null;
+        }
+
+        private bool HasPdf()
+        {
+            return this.PDFFilePath != null;
+        }
+    }    
 }

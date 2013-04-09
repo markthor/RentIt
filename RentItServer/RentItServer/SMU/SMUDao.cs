@@ -44,7 +44,7 @@ namespace RentItServer.SMU
             }
         }
 
-        public User GetUser(int userId)
+        public User GetUserInfo(int userId)
         {
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -61,32 +61,36 @@ namespace RentItServer.SMU
             }
         }
 
-        public User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin)
+        public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
             if (userId < 0) throw new ArgumentException("userId was below 0");
-            if (email.Equals("")) throw new ArgumentException("email was empty");
-            if (username.Equals("")) throw new ArgumentException("username was empty");
-            if (password.Equals("")) throw new ArgumentException("password was empty");
+            if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
+            if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
+            if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
 
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var users = from user in proxy.SMUusers
-                            where user.id == userId
-                            select user;
+                var users = from u in proxy.SMUusers
+                            where u.id == userId
+                            select u;
 
                 if (users.Any() == false)
                 {
                     throw new ArgumentException("No SMUuser with userid/password combination = " + userId + "/" + password);
                 }
 
-                SMUuser theUser = users.First();
-                theUser.email = email;
-                theUser.username = username;
-                theUser.password = password;
-                theUser.isAdmin = isAdmin;
+                SMUuser user = users.First();
+                if (email != null)
+                    user.email = email;
+                if (username != null)
+                    user.username = username;
+                if (password != null)
+                    user.password = password;
+                if (isAdmin != null)
+                    user.isAdmin = (bool)isAdmin;
                 proxy.SaveChanges();
 
-                return theUser.GetUser();
+                return user.GetUser();
             }
         }
 
@@ -140,20 +144,23 @@ namespace RentItServer.SMU
                 List<SMUrental> list = rentals.ToList();
                 bool aud = false;
                 bool pdf = false;
-                foreach(SMUrental rental in list)
+                foreach (SMUrental rental in list)
                 {
                     // tests if the rental is more than 7 days old
-                    if(DateTime.Now.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0)) {
+                    if (DateTime.UtcNow.Subtract(rental.startDate) < new TimeSpan(7, 0, 0, 0))
+                    {
                         //tests for audio and book
                         if (rental.mediaType == 2)
                         {
                             aud = true;
                             pdf = true;
                         }
-                        if (rental.mediaType == 1) {
+                        if (rental.mediaType == 1)
+                        {
                             aud = true;
                         }
-                        if (rental.mediaType == 0) {
+                        if (rental.mediaType == 0)
+                        {
                             pdf = true;
                         }
                     }
@@ -186,16 +193,17 @@ namespace RentItServer.SMU
         /// <exception cref="System.ArgumentException">No rental with specified userid/bookid pair</exception>
         public Rental[] GetRental(int userId, int bookId)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities()){
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
                 var rentals = from rental in context.SMUrentals
                               where rental.SMUuser.id == userId && rental.bookId == bookId
                               orderby rental.mediaType descending
                               select rental;
-                if(rentals.Any() == false)  throw new ArgumentException("No rental with specified userid/bookid pair");
+                if (rentals.Any() == false) throw new ArgumentException("No rental with specified userid/bookid pair");
                 List<SMUrental> list = rentals.ToList();
                 List<Rental> returnList = new List<Rental>();
                 foreach (SMUrental rent in list)
-                    returnList.Add(rent.GetRental()); 
+                    returnList.Add(rent.GetRental());
                 return returnList.ToArray();
             }
         }
@@ -239,24 +247,26 @@ namespace RentItServer.SMU
 
         public List<Book> GetNewBooks()
         {
-            List<Book> theBooks = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
-                var books = from book in proxy.SMUbooks
-                            select book;
+                var books = from b in proxy.SMUbooks
+                            orderby b.dateAdded descending
+                            select b;
 
-                if (books.Any() == true)
+                List<Book> bookList = new List<Book>();
+                if (books.Any())
                 {
                     int count = 0;
                     foreach (SMUbook book in books)
                     {
-                        theBooks.Add(book.GetBook());
+                        bookList.Add(book.GetBook());
                         count++;
                         if (count == 30) break;
                     }
                 }
+                return bookList;
             }
-            return theBooks;
+
         }
 
         public List<Book> SearchBooks(string searchString)
@@ -418,11 +428,11 @@ namespace RentItServer.SMU
 
                 theBook.audioNarrator = narrator;
                 theBook.audioFilePath = filePath;
-                
+
                 proxy.SaveChanges();
             }
         }
-        
+
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
             if (title == null) throw new ArgumentNullException("title");
@@ -454,12 +464,8 @@ namespace RentItServer.SMU
             }
         }
 
-        public Book UpdateBook(int bookId, String title, String author, String description, String genre,
-                               DateTime dateAdded, double price, string pdfFilePath, string imageFilePath)
+        public Book UpdateBook(int bookId, String title, String author, String description, String genre, double? price)
         {
-            if (imageFilePath == null) throw new ArgumentNullException("imageFilePath");
-            if (pdfFilePath.Equals("")) throw new ArgumentException("pdfFilePath was empty");
-
             SMUbook theBook;
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -476,10 +482,7 @@ namespace RentItServer.SMU
                 if (author != null) theBook.author = author;
                 if (description != null) theBook.description = description;
                 if (genre != null) theBook.genre = genre;
-                if (price >= 0) theBook.price = price;
-                theBook.PDFFilePath = pdfFilePath;
-                theBook.imageFilePath = imageFilePath;
-                if (dateAdded != DateTime.MinValue) theBook.dateAdded = dateAdded;
+                if (price != null) theBook.price = (double)price;
 
                 proxy.SaveChanges();
             }
@@ -572,8 +575,8 @@ namespace RentItServer.SMU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var rentals = from r in context.SMUrentals
-                            where r.userId == userId
-                            select r;
+                              where r.userId == userId
+                              select r;
 
                 foreach (SMUrental r in rentals)
                 {

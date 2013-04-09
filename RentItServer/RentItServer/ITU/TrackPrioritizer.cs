@@ -156,7 +156,7 @@ namespace RentItServer.ITU
 
         private void RemoveOldestTrackPlay(List<TrackPlay> plays)
         {
-            DateTime oldestDate = DateTime.Now;
+            DateTime oldestDate = DateTime.UtcNow;
             TrackPlay playToBeRemoved = null;
             foreach (TrackPlay tp in plays)
             {

@@ -59,7 +59,7 @@ namespace RentItServer.Utilities
 
             lock (_entryLock)
             {
-                string timeStamp = "[" + DateTime.Now.ToString(CultureInfo.InvariantCulture) + "] ";
+                string timeStamp = "[" + DateTime.UtcNow.ToString(CultureInfo.InvariantCulture) + "] ";
                 _taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
             }
         }
