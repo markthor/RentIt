@@ -8,7 +8,7 @@
     <div class="control-group">
            <label class="control-label" for="input">Channel name</label>
            <div class="controls">
-             <input type="text" runat="server" id="inputEmail" placeholder="Email">
+             <input type="text" runat="server" id="tbx_channelname" placeholder="Channel name">
            </div>
         </div>
         <div class="control-group">

@@ -13,13 +13,13 @@ namespace BootstrapAsp {
     public partial class CreateChannel {
         
         /// <summary>
-        /// inputEmail control.
+        /// tbx_channelname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputEmail;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText tbx_channelname;
         
         /// <summary>
         /// btn_create control.

@@ -53,7 +53,7 @@
         </div>
         <div class="control-group">
            <div class="controls">
-             <button type="submit" runat="server" class="btn" id="btn_createuser" onclick="SignUp">Create user</button>
+               <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox><button type="submit" runat="server" class="btn" id="btn_createuser" onclick="SignUp">Create user</button>      
            </div>
         </div> 
     </div>
