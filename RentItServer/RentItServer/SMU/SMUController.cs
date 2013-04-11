@@ -95,6 +95,18 @@ namespace RentItServer.SMU
         /// </returns>
         public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
+            if (userId < 0) throw new ArgumentException("userId was below 0");
+            if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
+            if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
+            if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
+            
+            if (email != null)
+            {
+                if (_dao.CheckIfEmailExistsInDb(email))
+                {
+                    throw new ArgumentException("Email is already in use");
+                }
+            }
             return _dao.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
 

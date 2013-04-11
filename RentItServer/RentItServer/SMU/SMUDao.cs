@@ -96,14 +96,9 @@ namespace RentItServer.SMU
         /// <param name="username">string username</param>
         /// <param name="password">string password</param>
         /// <param name="isAdmin">boolean indicating admin status</param>
-        /// <returns></returns>
+        /// <returns>The updated user</returns>
         public User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
         {
-            if (userId < 0) throw new ArgumentException("userId was below 0");
-            if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
-            if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
-            if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var users = from u in proxy.SMUusers
