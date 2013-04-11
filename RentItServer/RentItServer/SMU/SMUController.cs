@@ -99,7 +99,7 @@ namespace RentItServer.SMU
             if (email != null && email.Equals("")) throw new ArgumentException("email was empty");
             if (username != null && username.Equals("")) throw new ArgumentException("username was empty");
             if (password != null && password.Equals("")) throw new ArgumentException("password was empty");
-            
+
             if (email != null)
             {
                 if (_dao.CheckIfEmailExistsInDb(email))
