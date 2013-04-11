@@ -131,8 +131,6 @@ namespace RentItServer.SMU
         /// <param name="userId">int UserId</param>
         public void DeleteAccount(int userId)
         {
-            if (userId < 0) throw new ArgumentException("userId < 0");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var users = from user in proxy.SMUusers
@@ -163,8 +161,6 @@ namespace RentItServer.SMU
         /// </returns>
         public int HasRental(int userId, int bookId)
         {
-            if (userId < 0) throw new ArgumentException("userId < 0");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var rentals = from rental in proxy.SMUrentals
@@ -323,7 +319,6 @@ namespace RentItServer.SMU
         /// <returns>List of Books that matches the search string</returns>
         public List<Book> SearchBooks(string searchString)
         {
-            if (searchString == null) throw new ArgumentNullException("searchString");
             List<Book> list = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -348,7 +343,6 @@ namespace RentItServer.SMU
         /// <returns>A List of Books</returns>
         public List<Book> GetBooksByGenre(String genre)
         {
-            if (genre == null) throw new ArgumentNullException("genre");
             List<Book> list = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
@@ -416,8 +410,6 @@ namespace RentItServer.SMU
         /// <returns>The Rent Id</returns>
         public int RentBook(int userId, int bookId, DateTime time, int mediaType)
         {
-            if (userId < 0) throw new ArgumentException("userId < 0");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
@@ -466,8 +458,6 @@ namespace RentItServer.SMU
         /// <returns>true if Book is Deleted</returns>
         public bool DeleteBook(int bookId)
         {
-            //if (userId < 0) throw new ArgumentException("userId < 0");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
@@ -499,8 +489,6 @@ namespace RentItServer.SMU
         /// <param name="narrator"></param>
         public void AddAudio(int bookId, string filePath, string narrator)
         {
-            // if (userId < 0) throw new ArgumentException("userId < 0");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
@@ -531,16 +519,6 @@ namespace RentItServer.SMU
         /// <returns>Book Id</returns>
         public int AddBook(string title, string author, string description, string genre, DateTime dateAdded, double price)
         {
-            if (title == null) throw new ArgumentNullException("title");
-            if (author == null) throw new ArgumentNullException("author");
-            if (description == null) throw new ArgumentNullException("description");
-            if (genre == null) throw new ArgumentNullException("genre");
-            // if (userId < 0) throw new ArgumentException("userId < 0");
-            if (price < 0.0) throw new ArgumentException("price < 0.0");
-            if (title.Equals("")) throw new ArgumentException("title was empty");
-            if (author.Equals("")) throw new ArgumentException("author was empty");
-            if (genre.Equals("")) throw new ArgumentException("genre was empty");
-
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 SMUbook theBook = new SMUbook()

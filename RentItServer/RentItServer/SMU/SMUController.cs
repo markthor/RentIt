@@ -116,6 +116,8 @@ namespace RentItServer.SMU
         /// <param name="userId">The user userId.</param>
         public void DeleteAccount(int userId)
         {
+            if (userId < 0) throw new ArgumentException("userId < 0");
+
             _dao.DeleteAccount(userId);
         }
 
@@ -129,6 +131,8 @@ namespace RentItServer.SMU
         /// </returns>
         public int HasRental(int userId, int bookId)
         {
+            if (userId < 0) throw new ArgumentException("userId < 0");
+
             return _dao.HasRental(userId, bookId);
         }
 
@@ -159,6 +163,15 @@ namespace RentItServer.SMU
         /// </returns>
         public int AddBook(string title, string author, string description, string genre, double price, MemoryStream image)
         {
+            if (title == null) throw new ArgumentNullException("title");
+            if (author == null) throw new ArgumentNullException("author");
+            if (description == null) throw new ArgumentNullException("description");
+            if (genre == null) throw new ArgumentNullException("genre");
+            if (price < 0.0) throw new ArgumentException("price < 0.0");
+            if (title.Equals("")) throw new ArgumentException("title was empty");
+            if (author.Equals("")) throw new ArgumentException("author was empty");
+            if (genre.Equals("")) throw new ArgumentException("genre was empty");
+
             int bookId = _dao.AddBook(title, author, description, genre, DateTime.UtcNow, price);
             SaveImage(bookId, image);
             return bookId;
@@ -175,6 +188,8 @@ namespace RentItServer.SMU
         /// </returns>
         public int RentBook(int userId, int bookId, int mediaType)
         {
+            if (userId < 0) throw new ArgumentException("userId < 0");
+
             return _dao.RentBook(userId, bookId, DateTime.UtcNow, mediaType);
         }
 
@@ -255,6 +270,8 @@ namespace RentItServer.SMU
         /// </returns>
         public Book[] SearchBooks(string searchString)
         {
+            if (searchString == null) throw new ArgumentNullException("searchString");
+
             return _dao.SearchBooks(searchString).ToArray();
         }
 
@@ -267,6 +284,8 @@ namespace RentItServer.SMU
         /// </returns>
         public Book[] GetBooksByGenre(string genre)
         {
+            if (genre == null) throw new ArgumentNullException("genre");
+
             return _dao.GetBooksByGenre(genre).ToArray();
         }
 
