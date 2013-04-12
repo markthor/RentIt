@@ -16,9 +16,13 @@
 \date{28-05-2013}
 \maketitle
 
-\section{Vision}
+\section{Introduction}
+\subsection{Vision}
 RentIt is a radio hosting service, that enables users to host online radio stations and for other users to listen to them.
 It is a system intended to be used by the common user, without any special knowledge or traning.
+\subsection{Glossary}
+Track: An audio file that the users can listen to via channels. \\*
+Channel: A collection of tracks that is played infinitly, and can be listen to by users. Managed by a channel host.
 
 \section{Specification}
 This section contains the fucntional and non-functional requirements, as well as the use cases that they are based on.
@@ -51,28 +55,25 @@ The creater of the channel does not want the channel anymore and he decides to d
 The user has a channel and wants to upload a song. He selects the song through a filebrowser and selects upload.
 
 \textbf{Delete track:}
-TODODODDODODODO
+The owner of a channel wants to remove a track from his channel. He browses the list of tracks and selects remove on the track he wants to remove.
 
 \textbf{Edit channel:}
-TODODODDODODODO
+The owner of the channel selects edit channel and edits the channel attributes he wants to change. Then he confirmes the changes.
 
 \textbf{Upvote/downvote track:}
-TODODODDODODODO
+The listener of a channel selects up- or downvote on a list of the last tracks that has been played.
 
 \subsection{Functional requirements}
 The functional requirements describe the required functionality of the system and defines enumerations for reference.
 \\ \\
 \textbf{R0:}
 The system shall allow all users to create a channel, add attributes and edit it.
-
 \textbf{Domain concepts:}
 The channel shall have its own collection of tracks that it plays and it is created and maintained by the channel host(the creator of the channel).\\*
 The channel shall have genres, a description and comments posted by users.\\*
 The channel must be visible to other users with prober search parameters.
-
 \textbf{Dependencies:}
 The requirement is nessecary for upload track and listen to channel because a track is associated with a channel.
-
 \textbf{Priority:}
 It is of essential importance, as the requirements depending on it is.
 \\ \\
@@ -84,7 +85,7 @@ A channel has a collection of tracks that can be listened to. \\*
 \textbf{Priority:}
 Highest as this is the primary service that the system provides. \\*
 \textbf{Implementation notes:}
-The system must be able to stream audio in a smooth and clutter-free manner.
+The system must be able to stream audio in a smooth and clutter-free manner. The system must have an intelligent way of selecting the next track to be played, meaning that it must consider up/downvotes and how much it has been played.
 A radio-channel must be able to stream an endless stream of audio without pauses between audio tracks.
 The streaming must be implemented as a webservice(Windows Communication Foundation) and it must be
 easy to write a new clients for the service.
@@ -151,23 +152,41 @@ Users must be able to upvote and downvote the last 5 songs that have been played
 Users must not be required to download or install any third party software in order to listen to a channel. \\*
 
 \textbf{Reliability} \\*
-The server must not be affected by any errors clientside
+The server must not be affected by any errors clientside. All operations requires internet connection. No system failure of any kind should affect any track in the persistence storage. \\*
+If a channel on the server crashes:
+\begin{itemize}
+\item all clients must be notified about the failure.
+\item the website must not be affected by the crash.
+\item the website must refresh the website with possiblity to listen to the channel greyed out until the channel have been fully recovered on the server side.
+\item on the server side, the channel stream must shut down.
+\item the error must be logged and reported automatically. 
+\item the channel must be safe to use again when all track's identity have been confirmed(via hashing), and none of them are in use.
+\end{itemize}
+If upload of a track for fails, everything about the track must be removed from the server and the user must be notified. \\*
 
+\textbf{Supportability} \\*
+The server architecture may not limit the ability to correct eventual errors. This means that no unessesary coupling exists in the server.
+The server and website must be implemented modular so as to ease extendibility.
+This means that extensions such as video streaming or downloading of media must not requrie extensive changes in the system architecture. \\*
+The server will be running on Windows 7 OS with support of .NET 4.0 Framework.\\*
 
+\textbf{Implementaion} \\*
+The server will be written in C\# with the .NET 4.0 Framework and Windows Communication Foundtaion.
+The website will be written in ASP.NET and must work in all popular browsers.
 
+\section{Analysis}
+This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
 
-
-
-
-
-
-
-
-
-
-
-
-
+\subsection{Analysis of the datamodel}
+The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
+User and channel each represents a unique system entity, while track can represent the exact same data as another track, only seperated by the id and the channel it belongs to.
+The decision to not let channels share tracks is because it would require analysis of the mp3 file, to determine whether it is similar, regardless of the name/artist combination.
+This design does not limit a possible extention of the system to measure similar mp3 files and update references to avoid redundant data in the file system.
+Such an extension does not remove redundant data in the database, which our datamodel does not support. Track has a upvote and downvote count, which vote entities have a functional dependency to,
+because for each vote on a track, upvote or downvote is increased. This duplication is made to speed the algorithm, because it does not need to count vote entities when it has counts. \\*
+The vote entity exists to prevent users from voting one track several times.
+TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date it was played. \\*
+Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel. 
 
 
 
