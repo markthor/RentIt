@@ -58,11 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CreateChannel.aspx" />
+    <Content Include="css\bootstrap-duallistbox.css" />
     <Content Include="css\bootstrap-responsive.css" />
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="EditChannel.aspx" />
+    <Content Include="js\jquery.bootstrap-duallistbox.js" />
     <Content Include="Login.aspx" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
