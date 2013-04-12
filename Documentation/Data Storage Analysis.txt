@@ -1,8 +1,6 @@
 Data storage
 
-
-
-transferring data back and forth between clients and the server. Mostly the server will be transferring bits of the songs to the client. The songs can either be stored as a file on the file system or in a database. 
+For storing information about our users, channels etc. we chose Microsoft SQL Server, a database management system (DBMS) developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. We
 
 
 
