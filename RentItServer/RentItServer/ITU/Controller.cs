@@ -239,7 +239,7 @@ namespace RentItServer.ITU
                 Track track = _dao.GetTrack(trackId);
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
 
-                _dao.RemoveTrack(track);
+                _dao.DeleteTrackEntry(track);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)

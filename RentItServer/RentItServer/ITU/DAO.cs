@@ -13,9 +13,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private DAO()
-        {
-        }
+        private DAO(){}
 
         /// <summary>
         /// Accessor method to access the only instance of the class
@@ -23,11 +21,7 @@ namespace RentItServer.ITU
         /// <returns>The singleton instance of the class</returns>
         public static DAO GetInstance()
         {
-            if (_instance == null)
-            {
-                _instance = new DAO();
-            }
-            return _instance;
+            return _instance ?? (_instance = new DAO());
         }
 
         /// <summary>
@@ -68,10 +62,31 @@ namespace RentItServer.ITU
         /// <summary>
         /// Removes the user from the database.
         /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
+        /// <param name="theUser">The user.</param>
         /// <exception cref="System.Exception">End of \RemoveUser\. User was not get removed from the database.</exception>
-        public void DeleteUser(int userId)
+        /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
+        public void DeleteUser(User theUser)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                context.Users.Remove(theUser);
+                context.SaveChanges();
+
+                var users = from user in context.Users
+                            where user.Id == theUser.Id
+                            select user;
+
+                if (users.Any() == true) throw new Exception("End of \"RemoveUser\". User was not get removed from the database.");
+            }
+        }
+
+        /// <summary>
+        /// Gets the user with specified user id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>The user</returns>
+        /// <exception cref="System.ArgumentException">No user with user id [ + userId + ]</exception>
+        public User GetUser(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -80,15 +95,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
 
-                User theUser = users.First();
-                context.Users.Remove(theUser);
-                context.SaveChanges();
-
-                users = from user in context.Users
-                        where user.Id == userId
-                        select user;
-
-                if (users.Any() == true) throw new Exception("End of \"RemoveUser\". User was not get removed from the database.");
+                return users.First();
             }
         }
 
@@ -199,8 +206,8 @@ namespace RentItServer.ITU
                 context.SaveChanges();
 
                 var channels = from channel in context.Channels
-                           where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
-                           select channel;
+                               where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
+                               select channel;
                 //if(channels.Any() == true)  //TODO: throw exception here
             }
         }
@@ -313,46 +320,32 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.SearchString
-                var channels = from channel in context.Channels
-                               where channel.Name.StartsWith(filter.SearchString)
-                               select channel;
+                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
-                    channels = from channel in channels
-                               where channel.Hits >= filter.AmountPlayed
-                               select channel;
+                    channels = from channel in channels where channel.Hits >= filter.AmountPlayed select channel;
                 }
                 if (filter.Genres.Any() == true)
                 {   // Apply genre filter
-                    channels = from channel in channels
-                               where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name))
-                               select channel;
+                    channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
                 }
                 if (filter.NumberOfComments > -1)
                 {   // Apply comment filter
-                    channels = from channel in channels
-                               where channel.Comments.Count >= filter.NumberOfComments
-                               select channel;
+                    channels = from channel in channels where channel.Comments.Count >= filter.NumberOfComments select channel;
                 }
                 if (filter.NumberOfSubscriptions > -1)
                 {   // Apply subscription filter
-                    channels = from channel in channels
-                               where channel.Subscribers.Count >= filter.NumberOfSubscriptions
-                               select channel;
+                    channels = from channel in channels where channel.Subscribers.Count >= filter.NumberOfSubscriptions select channel;
                 }
                 if (filter.SortOption == -1)
                 {   // Descending
-                    channels = from channel in channels
-                               orderby channel.Name descending
-                               select channel;
+                    channels = from channel in channels orderby channel.Name descending select channel;
 
                 }
                 else if (filter.SortOption == 1)
                 {   // Ascending
-                    channels = from channel in channels
-                               orderby channel.Name ascending
-                               select channel;
+                    channels = from channel in channels orderby channel.Name ascending select channel;
                 }
                 // Execute the query before leaving "using" block
                 filteredChannels = channels.ToList();
@@ -386,14 +379,14 @@ namespace RentItServer.ITU
                              where track.Id == trackId
                              select track;
 
-                if(tracks.Any() == false)   throw new ArgumentException("no track with track id ["+trackId+"]");
+                if (tracks.Any() == false) throw new ArgumentException("no track with track id [" + trackId + "]");
                 Track theTrack = tracks.First();
 
                 var users = from user in context.Users
                             where user.Id == userId
                             select user;
 
-                if(users.Any() == false)    throw new ArgumentException("no user with user id ["+userId+"]");
+                if (users.Any() == false) throw new ArgumentException("no user with user id [" + userId + "]");
                 User theUser = users.First();
 
                 Vote vote = new Vote()
@@ -407,6 +400,46 @@ namespace RentItServer.ITU
                     };
                 context.Votes.Add(vote);
                 context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Creates a track entry.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="path">The path.</param>
+        /// <param name="trackName">Name of the track.</param>
+        /// <param name="trackArtist">The track artist.</param>
+        /// <param name="length">The length in ms.</param>
+        /// <param name="upVotes">Up votes.</param>
+        /// <param name="downVotes">Down votes.</param>
+        /// <returns>The track</returns>
+        /// <exception cref="System.ArgumentException">No channel with channel id [+channelId+].</exception>
+        public Track CreateTrackEntry(int channelId, string path, string trackName, string trackArtist, int length, int upVotes, int downVotes)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.Channels where channel.Id == channelId select channel;
+                if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
+
+                Track theTrack = new Track()
+                    {
+                        ChannelId = channelId,
+                        Path = path,
+                        Name = trackName,
+                        Artist = trackArtist,
+                        Length = length,
+                        UpVotes = upVotes,
+                        DownVotes = downVotes,
+                        Channel = channels.First(),
+                        TrackPlays = new Collection<TrackPlay>(),
+                        Votes = new Collection<Vote>()
+                    };
+
+                context.Tracks.Add(theTrack);
+                context.SaveChanges();
+
+                return theTrack;
             }
         }
 
@@ -437,7 +470,7 @@ namespace RentItServer.ITU
         /// Removes the track.
         /// </summary>
         /// <param name="track">The track.</param>
-        public void RemoveTrack(Track track)
+        public void DeleteTrackEntry(Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -464,7 +497,7 @@ namespace RentItServer.ITU
                 var users = from user in context.Users
                             where user.Id == userId
                             select user;
-                if(users.Any() == false)    throw new ArgumentException("No user with user id ["+userId+"]");
+                if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
                 User theUser = users.First();
 
                 var channels = from channel in context.Channels
@@ -486,6 +519,8 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        //TODO: DeleteComment, GetComment
 
         internal List<Track> GetTrackList(int ChannelId)
         {
