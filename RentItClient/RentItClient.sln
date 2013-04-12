@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItClient", "RentItClien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapAsp", "BootstrapAsp\BootstrapAsp.csproj", "{1AA9E107-5D6D-4564-AB46-3F41C82265CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentItMvc", "RentItMvc\RentItMvc.csproj", "{9FA65EF7-C6EA-4BAF-ABB2-F3F70D0AC076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcSample", "MvcSample\MvcSample.csproj", "{CB14129E-3925-49A5-B5EE-B0ED70B52103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
