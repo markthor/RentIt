@@ -105,6 +105,24 @@
   <wsdl:message name="ISMURentItService_DownloadAudio_OutputMessage">
     <wsdl:part name="parameters" element="tns:DownloadAudioResponse" />
   </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadImage_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadImage" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_DownloadImage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetActiveUserRentals_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveUserRentals" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetActiveUserRentals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveUserRentalsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetAllUserRentals_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserRentals" />
+  </wsdl:message>
+  <wsdl:message name="ISMURentItService_GetAllUserRentals_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserRentalsResponse" />
+  </wsdl:message>
   <wsdl:message name="ISMURentItService_DeleteBook_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteBook" />
   </wsdl:message>
@@ -134,24 +152,6 @@
   </wsdl:message>
   <wsdl:message name="ISMURentItService_UploadPdf_OutputMessage">
     <wsdl:part name="parameters" element="tns:UploadPdfResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_DownloadImage_InputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadImage" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_DownloadImage_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DownloadImageResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_GetActiveUserRentals_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveUserRentals" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_GetActiveUserRentals_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetActiveUserRentalsResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_GetAllUserRentals_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllUserRentals" />
-  </wsdl:message>
-  <wsdl:message name="ISMURentItService_GetAllUserRentals_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllUserRentalsResponse" />
   </wsdl:message>
   <wsdl:portType name="ISMURentItService">
     <wsdl:operation name="SignUp">
@@ -218,6 +218,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadAudio" message="tns:ISMURentItService_DownloadAudio_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadAudioResponse" message="tns:ISMURentItService_DownloadAudio_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="DownloadImage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImage" message="tns:ISMURentItService_DownloadImage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImageResponse" message="tns:ISMURentItService_DownloadImage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveUserRentals">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetActiveUserRentals" message="tns:ISMURentItService_GetActiveUserRentals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetActiveUserRentalsResponse" message="tns:ISMURentItService_GetActiveUserRentals_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserRentals">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetAllUserRentals" message="tns:ISMURentItService_GetAllUserRentals_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetAllUserRentalsResponse" message="tns:ISMURentItService_GetAllUserRentals_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="DeleteBook">
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DeleteBook" message="tns:ISMURentItService_DeleteBook_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DeleteBookResponse" message="tns:ISMURentItService_DeleteBook_OutputMessage" />
@@ -237,18 +249,6 @@
     <wsdl:operation name="UploadPdf">
       <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/UploadPdf" message="tns:ISMURentItService_UploadPdf_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/UploadPdfResponse" message="tns:ISMURentItService_UploadPdf_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="DownloadImage">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImage" message="tns:ISMURentItService_DownloadImage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/DownloadImageResponse" message="tns:ISMURentItService_DownloadImage_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetActiveUserRentals">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetActiveUserRentals" message="tns:ISMURentItService_GetActiveUserRentals_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetActiveUserRentalsResponse" message="tns:ISMURentItService_GetActiveUserRentals_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetAllUserRentals">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISMURentItService/GetAllUserRentals" message="tns:ISMURentItService_GetAllUserRentals_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISMURentItService/GetAllUserRentalsResponse" message="tns:ISMURentItService_GetAllUserRentals_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISMURentItService" type="tns:ISMURentItService">
@@ -397,6 +397,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DownloadImage">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveUserRentals">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetActiveUserRentals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserRentals">
+      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetAllUserRentals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DeleteBook">
       <soap:operation soapAction="http://tempuri.org/ISMURentItService/DeleteBook" style="document" />
       <wsdl:input>
@@ -435,33 +462,6 @@
     </wsdl:operation>
     <wsdl:operation name="UploadPdf">
       <soap:operation soapAction="http://tempuri.org/ISMURentItService/UploadPdf" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DownloadImage">
-      <soap:operation soapAction="http://tempuri.org/ISMURentItService/DownloadImage" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetActiveUserRentals">
-      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetActiveUserRentals" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllUserRentals">
-      <soap:operation soapAction="http://tempuri.org/ISMURentItService/GetAllUserRentals" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
