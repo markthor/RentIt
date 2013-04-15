@@ -39,6 +39,8 @@
       <xs:element minOccurs="0" name="DateAdded" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Genre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasAudio" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasPdf" type="xs:boolean" />
       <xs:element minOccurs="0" name="Hit" type="xs:int" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Narrator" nillable="true" type="xs:string" />

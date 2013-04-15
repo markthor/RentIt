@@ -159,7 +159,7 @@ namespace RentItServer.ITU
                 string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
                 if (channel.UserId == userId)
                 {
-                    _dao.DeleteChannel(userId, channelId);
+                    _dao.DeleteChannel(userId, channel);
                     //_logger.AddEntry(logEntry + "Deletion successful.");
                 }
                 else
@@ -239,7 +239,7 @@ namespace RentItServer.ITU
                 Track track = _dao.GetTrack(trackId);
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
 
-                _dao.RemoveTrack(track);
+                _dao.DeleteTrackEntry(track);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
@@ -255,7 +255,7 @@ namespace RentItServer.ITU
             // TODO parameter validation
             try
             {
-                _dao.VoteTrack(rating, userId, trackId);
+                //_dao.VoteTrack(rating, userId, trackId);
                 //_logger.AddEntry("User with user id [" + userId + "] rated track with track id [" + trackId + "] with the rating [" + rating + "].");
             }
             catch (Exception e)
@@ -284,7 +284,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void Comment(string comment, int userId, int channelId)
         {
-            _dao.Comment(comment, userId, channelId);
+            //_dao.Comment(comment, userId, channelId);
             //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
             if(_handler != null)
                     _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));

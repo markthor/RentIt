@@ -1,0 +1,5 @@
+Interaction with the ITU system
+As both the ITU system and the SMU system is an IS and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM is in the same entity framework.
+The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system.
+The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
+The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 

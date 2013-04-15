@@ -25,7 +25,7 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         RentItServer.SMU.User GetUserInfo(int userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UpdateUserInfo", ReplyAction="http://tempuri.org/ISMURentItService/UpdateUserInfoResponse")]
-        RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin);
+        RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, System.Nullable<bool> isAdmin);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DeleteAccount", ReplyAction="http://tempuri.org/ISMURentItService/DeleteAccountResponse")]
         void DeleteAccount(int userId);
@@ -63,21 +63,6 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadAudio", ReplyAction="http://tempuri.org/ISMURentItService/DownloadAudioResponse")]
         System.IO.MemoryStream DownloadAudio(int bookId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DeleteBook", ReplyAction="http://tempuri.org/ISMURentItService/DeleteBookResponse")]
-        void DeleteBook(int bookId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadBook", ReplyAction="http://tempuri.org/ISMURentItService/UploadBookResponse")]
-        int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UpdateBook", ReplyAction="http://tempuri.org/ISMURentItService/UpdateBookResponse")]
-        RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price, System.IO.MemoryStream image);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadAudio", ReplyAction="http://tempuri.org/ISMURentItService/UploadAudioResponse")]
-        void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadPdf", ReplyAction="http://tempuri.org/ISMURentItService/UploadPdfResponse")]
-        void UploadPdf(int bookId, System.IO.MemoryStream pdf);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DownloadImage", ReplyAction="http://tempuri.org/ISMURentItService/DownloadImageResponse")]
         System.IO.MemoryStream DownloadImage(int bookId);
         
@@ -86,6 +71,21 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetAllUserRentals", ReplyAction="http://tempuri.org/ISMURentItService/GetAllUserRentalsResponse")]
         RentItServer.SMU.Rental[] GetAllUserRentals(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/DeleteBook", ReplyAction="http://tempuri.org/ISMURentItService/DeleteBookResponse")]
+        void DeleteBook(int bookId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadBook", ReplyAction="http://tempuri.org/ISMURentItService/UploadBookResponse")]
+        int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UpdateBook", ReplyAction="http://tempuri.org/ISMURentItService/UpdateBookResponse")]
+        RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.Nullable<double> price, System.IO.MemoryStream image);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadAudio", ReplyAction="http://tempuri.org/ISMURentItService/UploadAudioResponse")]
+        void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/UploadPdf", ReplyAction="http://tempuri.org/ISMURentItService/UploadPdfResponse")]
+        void UploadPdf(int bookId, System.IO.MemoryStream pdf);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -127,7 +127,7 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.GetUserInfo(userId);
         }
         
-        public RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, bool isAdmin) {
+        public RentItServer.SMU.User UpdateUserInfo(int userId, string email, string username, string password, System.Nullable<bool> isAdmin) {
             return base.Channel.UpdateUserInfo(userId, email, username, password, isAdmin);
         }
         
@@ -179,26 +179,6 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.DownloadAudio(bookId);
         }
         
-        public void DeleteBook(int bookId) {
-            base.Channel.DeleteBook(bookId);
-        }
-        
-        public int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image) {
-            return base.Channel.UploadBook(title, author, description, genre, price, image);
-        }
-        
-        public RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.DateTime dateAdded, double price, System.IO.MemoryStream image) {
-            return base.Channel.UpdateBook(bookId, title, author, description, genre, dateAdded, price, image);
-        }
-        
-        public void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator) {
-            base.Channel.UploadAudio(bookId, mp3, narrator);
-        }
-        
-        public void UploadPdf(int bookId, System.IO.MemoryStream pdf) {
-            base.Channel.UploadPdf(bookId, pdf);
-        }
-        
         public System.IO.MemoryStream DownloadImage(int bookId) {
             return base.Channel.DownloadImage(bookId);
         }
@@ -209,6 +189,26 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         
         public RentItServer.SMU.Rental[] GetAllUserRentals(int userId) {
             return base.Channel.GetAllUserRentals(userId);
+        }
+        
+        public void DeleteBook(int bookId) {
+            base.Channel.DeleteBook(bookId);
+        }
+        
+        public int UploadBook(string title, string author, string description, string genre, double price, System.IO.MemoryStream image) {
+            return base.Channel.UploadBook(title, author, description, genre, price, image);
+        }
+        
+        public RentItServer.SMU.Book UpdateBook(int bookId, string title, string author, string description, string genre, System.Nullable<double> price, System.IO.MemoryStream image) {
+            return base.Channel.UpdateBook(bookId, title, author, description, genre, price, image);
+        }
+        
+        public void UploadAudio(int bookId, System.IO.MemoryStream mp3, string narrator) {
+            base.Channel.UploadAudio(bookId, mp3, narrator);
+        }
+        
+        public void UploadPdf(int bookId, System.IO.MemoryStream pdf) {
+            base.Channel.UploadPdf(bookId, pdf);
         }
     }
 }
