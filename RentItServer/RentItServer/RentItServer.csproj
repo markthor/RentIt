@@ -180,6 +180,7 @@
     </Content>
     <Content Include="RentItModel.edmx.diagram">
       <DependentUpon>RentItModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="RentItModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
