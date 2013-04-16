@@ -1,0 +1,53 @@
+GUI - analysis of GUI technology
+
+
+A major part of our web-client is the GUI(Graphical User Interface) and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
+
+
+Familiarity - How familiar the programming team are with the technology or a related technology?
+Features - Does the technology have the features needed to support the features of our application?
+Support - Is the technology widely supported on different browsers and in different web environments?
+Extensibility/maintainability - Is the technology easy to maintain and extend and does it live up to common principles for good coding style, such as GRASP(General Responsibility Assignment Software Patterns)?
+
+
+With these criteria defined, we consider several different GUI options:
+
+
+Silverlight
+Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications. 
+
+
+Pros
+Silverlight is fully integrated with Visual Studio and C#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. 
+
+
+Cons
+Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies. 
+
+
+HTML5
+HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. 
+
+
+Pros
+HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. 
+
+
+Cons
+The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it would still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. 
+
+
+ASP.NET
+Asp.Net is a server-side framework developed by Microsoft and is used to dynamicly create web-sites. It is a complete solution to creating a website with a build-in code-behind file written in C#.
+
+
+Pros
+Asp.Net is very well integrated with Visual Studio, which is the IDE, that the development team is mostly familiar with. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. 
+
+
+Cons
+Compared to Silverlight, it does not have the same streaming capabilities. The styling of components are not that pretty and might require some extra work.
+
+
+Our choice
+We choose to use Asp.Net for our web client. Specifically, we choose to use the MVC4 framework in conjunction with the Bootstrap layout, developed by Twitter. MVC4 is an advanced, but beneficial way to develop Asp.Net, that makes it easy to extend the website and dynamically change the website based on input. Bootstrap consists of JavaScript files and Css files, that creates a great styling to the web forms.
