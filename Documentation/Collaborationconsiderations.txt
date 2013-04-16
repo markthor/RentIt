@@ -1,0 +1,30 @@
+﻿Collaboration considerations - working with the people from SMU
+
+
+Our development team consists of 5 people, who are all born in Denmark and have all been educated at the same university. This gives us a lot of common ground and common communication skills, that makes it easier for us to have a good and constructive collaboration. When it comes to our partners at SMU(Singapore Management University), it is not necessarily the case. We have several considerations concerning the collaboration with our partners:
+
+
+1. Language barriers
+2. Communication via. video conference
+3. Cultural barriers
+4. Differences in work ethic and work routines
+
+
+Language barriers
+Language barriers can lead to a lot of misunderstanding, and by language barrier we are not only talking about the respective english skills of us and the SMU people. We are also talking about differences in understanding of terms related to web-development and development in general. For example: Does the term “Web-service” mean the same to us as it means to them? It might seem obvious to us, but since we don't know anything about their education or glossary we cannot take it for given. This requires us to be very precise about what we want from them to be very precise, when we ask about what we want from them. 
+
+
+Communication via. video conference
+Video conference also sets constraints on communication compared to face-to-face communication. You cannot have the same body language and sound might make some words disappear or become cluttered. There is also all the communication outside the frame of the video. If all persons can’t fit within the screen, there will be communication between the members of the team, that will not appear to the people on the other end of the video conference. It is also harder to help with concrete problems in the code, since you can't just look at their screen. 
+
+
+Cultural barriers
+Cultural barriers can be a big concern too. Denmark and Singapore lie in two very different parts of the world, with two very different cultural backgrounds. In Denmark we are shaped by the history of western Europe, by the nordic welfare model and by a society where the well-being of the individual is the primary concern. In Singapore they are shaped by the South-east asian culture, with China and Japan as the dominant regional factors and with a very different welfare model. They might have a different view on politeness and etiquette and what to expect from a collaboration.
+
+
+Differences in work-ethic and work-routines
+The most obvious difference in work routine is the fact, that there is an 6 hour time difference between them and us. Another potential difference is a difference in expectations of work hours put into the project. They could have a higher expectation of the final product than us. Maybe they have a more important exam related to the final outcome of this project than we have. In Denmark we have a relatively relaxed relationship to education with space for personal time and job on the side, and the education is free for everyone. It could be a lot different in Singapore, where education often costs money and is not an opportunity, that everyone gets. This difference could also lead to a conflict, that ultimately could affect the project in a negative way. 
+
+
+Solutions
+Almost all of these problems can be addressed by a high level of preparation leading up to the meeting. If we have a clear definition of the questions we want an answer to, there is a much higher chance that their can understand and answer them. We must also define clearly, what information we want from them and what constitutes a satisfying answer from their side. To start with, we must also keep the conversations formal and free from jokes and personal talk. As we progress, the conversations can become more relaxed and personal.
