@@ -7,14 +7,15 @@ using RentItMvc.Models;
 
 namespace RentItMvc.Controllers
 {
-    public class HomeController : Controller
+    public class AccountController : Controller
     {
-        //
-        // GET: /Home/
 
-        public ActionResult Index()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogIn(Account account)
         {
-            return View();
+            return Redirect("Narrow");
         }
+
     }
 }
