@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "BlobFish Radio";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/our-custom.css" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="" title="change in _bootstrapLayout.basic.cshtml">@ViewBag.Title</a>
+                <form>
+                    <div style="float:right">
+                        <div class="input-field input-email">
+                            <input type="text" class="input-block-level" placeholder="Email">    
+                        </div>
+                        <div class="input-field input-password">
+                            <input type="password" class="input-block-level" placeholder="Password">
+                        </div>
+                        <div style="width: 100px; float: left">
+                            @Html.ActionLink("Log in", "LogIn", null, null);
+                            <button class="btn btn-primary" type="submit">Sign in</button>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </div>   
+    <div class="container">
+        @RenderBody()
+        <footer>
+            <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
+        </footer> 
+    </div>
+</body>
+</html>

@@ -19,6 +19,7 @@ namespace BootstrapMvcSample
                   .AddChildRoute<ExampleLayoutsController>("Marketing", c => c.Marketing())
                   .AddChildRoute<ExampleLayoutsController>("Fluid", c => c.Fluid())
                   .AddChildRoute<ExampleLayoutsController>("Sign In", c => c.SignIn())
+                  .AddChildRoute<ExampleLayoutsController>("Narrow", c => c.Narrow())
                 ;
         }
     }
