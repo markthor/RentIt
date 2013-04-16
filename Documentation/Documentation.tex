@@ -194,7 +194,54 @@ Genre is an entity and not an attribute of channel because we want to make a fix
 \subsection{Data storage}
 For storing information about our users, channels etc. we chose Microsoft SQL Server, a database management system (DBMS) developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
+\subsection{Smu webservice api}
+
+The following api is the api the group from Singapore requested. 
+
+\begin{itemize}
+	\item int SignUp(string email, string name, string password, bool isAdmin)
+	\item int LogIn(string email, string password)
+	\item User GetUserInfo(int userId)
+	\item User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
+	\item void DeleteAccount(int userId)
+	\item Book[] GetAllBooks()
+	\item Book[] GetPopularBooks()
+	\item Book[] GetNewBooks()
+	\item Book[] SearchBooks(String searchString)
+	\item Book[] GetBooksByGenre(String genre)
+	\item Book GetBookInfo(int bookId)
+	\item int HasRental(int userId, int bookId)
+	\item Rental[] GetRental(int userId, int bookId)
+	\item int RentBook(int userId, int bookId, int mediaType)
+	\item MemoryStream DownloadPdf(int bookId)
+	\item MemoryStream DownloadAudio(int bookId)
+	\item MemoryStream DownloadImage(int bookId)
+	\item Rental[] GetActiveUserRentals(int userId)
+	\item Rental[] GetAllUserRentals(int userId)
+	\item void DeleteBook(int bookId)
+	\item int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)
+	\item Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
+	\item void UploadAudio(int bookId, MemoryStream mp3, string narrator)
+	\item void UploadPdf(int bookId, MemoryStream pdf)
+\end{itemize}
+
 \section{Implementation}
+
+\subsection{Major classes}
+\textbf{Dao} \\*
+Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD operations on the database for the server program. 
+
+\textbf{FileSystemHandler} \\*
+Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the Dao does on the database
+
+\textbf{RentItService} \\*
+All communication between clients and the server go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
+
+\textbf{TrackPrioritizer} \\*
+This class manages the prioritizing of tracks being returned to the client, fulfilling the requirements about the order of tracks being played.
+
+\textbf{Controller} \\*
+This class is the single point of entry to the server programs functionality.
 
 \section{Collaboration with SMU}
 
