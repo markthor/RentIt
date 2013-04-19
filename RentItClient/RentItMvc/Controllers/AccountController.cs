@@ -11,33 +11,29 @@ namespace RentItMvc.Controllers
     public class AccountController : Controller
     {
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SignUp(string username, string email, string password, string confirmPassword)
+        public ActionResult SignUp(Account account)
         {
             if (ModelState.IsValid)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    if (password.Equals(confirmPassword))
+                    if (account.Password.Equals(account.ConfirmPassword))
                     {
-                        User user = proxy.SignUp(username, email, password);
+                        User user = proxy.SignUp(account.Username, account.Email, account.Password);
                         Session["userId"] = user.Id;
                         Session["username"] = user.Username;
                     }
-                }    
+                }
             }
             return Redirect("/");
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogIn(string email, string password)
+        public ActionResult LogIn(Account account)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                User user = new User();
-                user.Id = 1;
-                user.Username = "Mikkel";
+                User user = proxy.Login(account.Email, account.Password);
                 Session["userId"] = user.Id;
                 Session["username"] = user.Username;
             }
@@ -45,7 +41,6 @@ namespace RentItMvc.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
             Session.RemoveAll();

@@ -16,7 +16,12 @@
         {
             <div style="float:right">
                 <a href="/" class="brand">@Session["username"]</a>
-                @Html.ActionLink("Log out", "LogOut", "Account", null, new { @class = "btn btn-danger", @style = "width: 49px"} )
+                <div style="float: left">
+                    @using(@Html.BeginForm("LogOut", "Account", FormMethod.Post))
+                    {
+                        <button class="btn btn-danger btn-signInOut" type="submit">Sign out</button>
+                    }
+                </div>
             </div>
         }
         else
@@ -33,7 +38,7 @@
                         @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Password" })
                     </div>
                     <div style="float: left">
-                        <button class="btn btn-success" style="width: 75px" type="submit">Sign in</button>
+                        <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
                     </div>
                 </div>
             }   

@@ -28,7 +28,6 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user = null;
                 var users = from u in context.Users
                             where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
                                    u.Password.Equals(password)
@@ -37,7 +36,9 @@ namespace RentItServer.ITU
                 {
                     return null;
                 }
-                return users.First();
+                User user = users.First();
+                return user;
+
             }
         }
 
