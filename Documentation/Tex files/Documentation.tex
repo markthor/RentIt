@@ -9,8 +9,8 @@
 \usepackage{epstopdf}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
-\begin{document}
 
+\begin{document}
 \title{RentIt}
 \author{Andreas Precht Poulsen, Morten F. Therkildsen, Mark Thorhauge, Toke Loke \& Mikkel Funch}
 \date{28-05-2013}
@@ -22,40 +22,40 @@ RentIt is a radio hosting service, that enables users to host online radio stati
 It is a system intended to be used by the common user, without any special knowledge or traning.
 \subsection{Glossary}
 Track: An audio file that the users can listen to via channels. \\*
-Channel: A collection of tracks that is played infinitly, and can be listen to by users. Managed by a channel host.
+Channel: A collection of tracks that is played infinitly, and can be listened to by users. Managed by a channel host.
 
 \section{Specification}
-This section contains the fucntional and non-functional requirements, as well as the use cases that they are based on.
+This section contains the functional and non-functional requirements, as well as the use cases that they are based on.
 \subsection{Use Cases}
 \textbf{Create account:}
-The user navigates to the "create account"/"register" page. He fills out required information and agrees on eventual conditions.
+The user navigates to the "create account"/"register" page. He fills out required information and agrees on possible conditions.
 
 \textbf{Delete account:}
-The user does not want to use the service any longer, he has chosen to delete his account. All data about the user is deleted accordingly
+The user does not want to use the service any longer. He navigates to edit account and selects delete account. All data about the user is deleted accordingly.
 
 \textbf{Listen to channel:}
-The user navigates to the channel, possibly by searching for it and selects listen to channel.
+The user navigates to the channel, possibly by searching for it and selects "listen to channel".
 
 \textbf{Subscribe to channel:}
-The user has selected a channel and selects subscribe to channel. The subscription status changes accordingly.
+The user has selected a channel and selects "subscribe to channel". The subscription status changes accordingly.
 
 \textbf{Unsubscribe to channel:}
-The user has selected a channel and selects unsubsribe to channel, if he/she is already subscribed. The subscription status changes accordingly.
+The user has selected a channel he is already subscribed to and selects unsubscribe to channel. The subscription status changes accordingly.
 
 \textbf{Comment channel:}
-The user is on a channel and want to comment on it. He writes his message and submits the comment. The comment is saved and the page is refreshed
+The user is on a channel and want to comment on it. He writes and submits the comment. The comment is saved and the page is refreshed
 
 \textbf{Create channel:}
-The user navigates to "create channel" and fills out the required information as well as uploading tracks. When the user is done it is immediatly accessible by other users.
+The user navigates to "create channel" and fills out the required information as well as uploading tracks. When the user is done it is immediately accessible by other users.
 
 \textbf{Delete channel:}
-The creater of the channel does not want the channel anymore and he decides to delete it. All subscriptions to the channel is deleted, subscribers gets notified, and the channel is removed.
+The creater of the channel does not want the channel anymore and he decides to delete it. He navigates to edit channel and selects delete channel. All subscriptions to the channel are deleted, subscribers get notified, and the channel is removed.
 
 \textbf{Upload track:}
-The user has a channel and wants to upload a song. He selects the song through a filebrowser and selects upload.
+The user has a channel and wants to upload a song. He navigates to edit channel. He selects the song through a filebrowser and selects upload.
 
 \textbf{Delete track:}
-The owner of a channel wants to remove a track from his channel. He browses the list of tracks and selects remove on the track he wants to remove.
+The owner of a channel wants to remove a track from his channel. He navigates to edit channel. He browses the list of tracks and selects remove on the track he wants to remove.
 
 \textbf{Edit channel:}
 The owner of the channel selects edit channel and edits the channel attributes he wants to change. Then he confirmes the changes.
@@ -67,14 +67,14 @@ The listener of a channel selects up- or downvote on a list of the last tracks t
 The functional requirements describe the required functionality of the system and defines enumerations for reference.
 \\ \\
 \textbf{R0:}
-The system shall allow all users to create a channel, add attributes and edit it.
+The system shall allow all users to create a channel, add attributes and edit it. \\*
 \textbf{Domain concepts:}
-The channel shall have its own collection of tracks that it plays and it is created and maintained by the channel host(the creator of the channel).\\*
-The channel shall have genres, a description and comments posted by users.\\*
-The channel must be visible to other users with prober search parameters.
-\textbf{Dependencies:}
-The requirement is nessecary for upload track and listen to channel because a track is associated with a channel.
-\textbf{Priority:}
+The channel shall have its own collection of tracks that it plays and it is created and maintained by the channel host(the creator of the channel).
+The channel shall have genres, a description and comments posted by users.
+The channel must be visible to other users with prober search parameters. \\*
+\textbf{Dependencies:} 
+The requirement is nessecary for upload track and listen to channel because a track is associated with a channel. \\*
+\textbf{Priority:} 
 It is of essential importance, as the requirements depending on it is.
 \\ \\
 
@@ -87,8 +87,7 @@ Highest as this is the primary service that the system provides. \\*
 \textbf{Implementation notes:}
 The system must be able to stream audio in a smooth and clutter-free manner. The system must have an intelligent way of selecting the next track to be played, meaning that it must consider up/downvotes and how much it has been played.
 A radio-channel must be able to stream an endless stream of audio without pauses between audio tracks.
-The streaming must be implemented as a webservice(Windows Communication Foundation) and it must be
-easy to write a new clients for the service.
+Iit must be easy to write new clients for the service.
 The interface for listening to audio must be as user friendly as possible.
 \\ \\
 
@@ -137,7 +136,7 @@ All usage requires authentication. (usage meaning the use of any services relate
 The website should be intuitive to use for 90\% of persons above the age of 12 with regard to the following:
 \begin{itemize}
 \item listening to a channel
-\item maintaining one. 
+\item maintaining one 
 \item uploading songs
 \item voting
 \item subscribing
@@ -162,20 +161,20 @@ If a channel on the server crashes:
 \item the error must be logged and reported automatically. 
 \item the channel must be safe to use again when all track's identity have been confirmed(via hashing), and none of them are in use.
 \end{itemize}
-If upload of a track for fails, everything about the track must be removed from the server and the user must be notified. \\*
+If upload of a track fails, everything about the track must be removed from the server and the user must be notified. \\*
 
 \textbf{Supportability} \\*
 The server architecture may not limit the ability to correct eventual errors. This means that no unessesary coupling exists in the server.
 The server and website must be implemented modular so as to ease extendibility.
 This means that extensions such as video streaming or downloading of media must not requrie extensive changes in the system architecture. \\*
-The server will be running on Windows 7 OS with support of .NET 4.0 Framework.\\*
+The server will be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
 
 \textbf{Implementaion} \\*
 The server will be written in C\# with the .NET 4.0 Framework and Windows Communication Foundtaion.
 The website will be written in ASP.NET and must work in all popular browsers.
 
 \subsection{Target Audience}
-The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music, we think this might make older users choose ordinary radiostations. Younger people are more used to social networks and we designed our radio system to be a social network combined with radio.
+The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radiostations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
 
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
@@ -189,10 +188,10 @@ Such an extension does not remove redundant data in the database, which our data
 because for each vote on a track, upvote or downvote is increased. This duplication is made to speed the algorithm, because it does not need to count vote entities when it has counts. \\*
 The vote entity exists to prevent users from voting one track several times.
 TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date it was played. \\*
-Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel. 
+Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
 
 \subsection{Data storage}
-For storing information about our users, channels etc. we chose Microsoft SQL Server, a DBMS\footnote[1]{Abbreviation for Database Management System} developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
+For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
 \subsection{Webservice}
 The return types of most methods is straightforward. Methods which have at most one result will return the corresponding object, wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
@@ -200,10 +199,10 @@ With methods which typically have more than one result, we have more options(met
 The first option is to return an array of the ids of the result. The second option is to return an array with all the objects that corresponds to those ids. And the third option would be to return lazy objects, which were first completed(retrieved from the server) when the client called methods upon them. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait till the objects are actually needed.
 The returning of ids give the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage for this is that our webservice api needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
 The advantage for sending all objects back in the first method call is that there will only be one method call and only one network-transfer. The disadvantages is that this could get really rough on the bandwidth and server load as some objects might contain images and other types of heavy properties and all objects would have to be completely instantiated. Another thing is that the client would have to handle this, possibly, huge load of objects even though it might not need to use most of them. \\
-The advantage of lazy object instatiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer.
+The advantage of lazy object instatiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer. \\
 We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is that people want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
-In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs.The  SearchArgs class cointains properties for all the different arguments we alllow to search on, this way we have one method which takes on argument, rather than a method which takes a parameters for every single property we now have in SearchArgs. \\
-All all objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and could be used to hurt the server, for example filesystem paths.
+In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs. The SearchArgs class cointains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in SearchArgs. \\
+All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and could be used to hurt the server, for example filesystem paths.
 
 \section{Implementation}
 This section describes how the system is implemented by describing classes with a class diagram and dynamics with sequence diagrams.
@@ -245,9 +244,6 @@ This class is the single point of entry to the server programs functionality.
 \subsection{Interaction with the ITU system}
 As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
 The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
-The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
-The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
-The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system.
 The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
 
