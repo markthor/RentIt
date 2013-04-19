@@ -7,6 +7,7 @@
 \usepackage{pdfpages}
 \usepackage{epsfig}
 \usepackage{epstopdf}
+\usepackage{amsmath}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
 
@@ -73,7 +74,7 @@ The channel shall have its own collection of tracks that it plays. It is created
 The channel shall have genres, a description and comments posted by users.
 The channel must be visible to other users with proper search parameters. \\*
 \textbf{Dependencies:} 
-The requirement is nessecary for "upload track" and "listen to channel" because a track is associated with a channel. \\*
+The requirement is necessary for "upload track" and "listen to channel" because a track is associated with a channel. \\*
 \textbf{Priority:} 
 It is of essential importance, er since the functionality is prerequested for other fundamentally important requirements.
 \\ \\
@@ -95,19 +96,19 @@ The user must be able to rate a track associated with a channel. \\*
 The rating of a track must affect the frequency with which it is played within its associated channel.
 A higher rating giving a proportionally higher chance of being played. \\*
 \textbf{Dependencies:}
-The listen to channel requirement are depended on this requirement because the track to be played is determined by the rating.\\*
+The listen to channel requirement is dependant on this requirement because the track to be played is determined by its rating.\\*
 \textbf{Priority:}
-It is of essential importance, er since the functionality is prerequested for other fundamentally important requirements.
+It is of essential importance, since the functionality is prerequisite for other fundamentally important requirements.
 \\ \\
 
 \textbf{R3:}
 It should be possible for users with a channel to upload a track to it. \\*
 \textbf{Domain concepts:}
-A channel has tracks that the creator manages. \\*
+A channel has tracks that is managed by the channel creator. \\*
 \textbf{Dependencies:}
-The listen to channel requirement are depended on this requirement because the track to be played is determined by the rating.\\*
+The listen to channel requirement is dependant on this requirement because the track can only be played to others if it has been uploaded to the server.\\*
 \textbf{Priority:}
-It is of essential importance, er since the functionality is prerequested for other fundamentally important requirements.
+It is of essential importance, since the functionality is prerequisite for other fundamentally important requirements.
  \\ \\
 
 \subsection{Non-functional requirements}
@@ -116,7 +117,7 @@ The non-functional requirements describes how the functionality shall work in mu
 \textbf{Functionality} \\*
 \textit{Channels} \\*
 Channel owners must be able to assign genre tags to the channels they control/own. \\*
-Two users listening to the same channel at the same time must hear the same song with same amount of elapsed time (+- 1s), in other words, a channel is "playing" the same for all listeners. \\*
+Two users listening to the same channel at the same time must hear the same song with same amount of elapsed time (\(\Delta\) 1s), in other words, a channel is "playing" the same track for all listeners. \\*
 A function for searching for channels must be implemented. \\*
 A list of the most popular channels should be available to all users. Popularity must be based on an algorithm and it must be explained in the documentation. \\*
 
@@ -162,13 +163,13 @@ If a channel on the server crashes:
 If upload of a track fails, everything about the track must be removed from the server and the user must be notified. \\*
 
 \textbf{Supportability} \\*
-The server architecture may not limit the ability to correct eventual errors. This means that no unessesary coupling exists in the server.
+The server architecture must not limit the ability to correct eventual errors. This means that no unnecessary coupling exists in the server.
 The server and website must be implemented modular so as to ease extendibility.
-This means that extensions such as video streaming or downloading of media must not requrie extensive changes in the system architecture. \\*
+This means that extensions such as video streaming or downloading of media must not require extensive changes in the system architecture. \\*
 The server will be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
 
 \textbf{Implementaion} \\*
-The server will be written in C\# with the .NET 4.0 Framework and Windows Communication Foundtaion.
+The server will be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation.
 The website will be written in ASP.NET and must work in all popular browsers.
 
 \subsection{Target Audience}
@@ -179,41 +180,40 @@ This section contains considerations on how to implement the functional and non-
 
 \subsection{Datamodel}
 The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
-User and channel each represents a unique system entity, while track can represent the exact same data as another track, only seperated by the id and the channel it belongs to.
-The decision to not let channels share tracks is because it would require analysis of the mp3 file, to determine whether it is similar, regardless of the name/artist combination.
-This design does not limit a possible extention of the system to measure similar mp3 files and update references to avoid redundant data in the file system.
-Such an extension does not remove redundant data in the database, which our datamodel does not support. Track has a upvote and downvote count, which vote entities have a functional dependency to,
-because for each vote on a track, upvote or downvote is increased. This duplication is made to speed the algorithm, because it does not need to count vote entities when it has counts. \\*
-The vote entity exists to prevent users from voting one track several times.
-TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date it was played. \\*
+User and channel each represents a unique system entity, while track can represent the exact same data as another track, only separated by the id and the channel it belongs to.
+The decision to not let channels share tracks is because it would require analysis of the mp3 file to determine whether it is similar to another mp3 file, regardless of the name/artist combination.
+This design does not limit a possible extension of the system to measure similar mp3 files and update references to avoid redundant data in the file system, but such an extension will not remove redundant data in the database, as our datamodel does not support it. 
+Track has an upvote and a downvote count, which vote entities have a functional dependency to, because each vote on a track causes upvote or downvote to increase. This duplication is made in order to speed up the algorithm, because it does not need to count vote entities when it has up- and down- vote counters. \\*
+The vote entity exists in order to prevent users from voting one track several times.
+TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date that the track was played. \\*
 Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
 
 \subsection{Data storage}
-For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
+For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4 MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
 \subsection{Webservice}
-The return types of most methods is intuitive. Methods which have at most one result will return the corresponding object, wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
-With methods which typically have more than one result, we have more options(methods like GetTrackIds and GetChannelIds). 
-The first option is to return an array of the ids of the result. The second option is to return an array with all the objects that corresponds to those ids. And the third option would be to return lazy objects, which were first completed(retrieved from the server) when the client called methods upon them. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait till the objects are actually needed.
+The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
+With methods which typically have more than one result, we have more options (methods like GetTrackIds and GetChannelIds). 
+The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option would be to return lazy objects, which were first completed (retrieved from the server) when the client called the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait until the objects are actually needed.
 The returning of ids give the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage for this is that our webservice api needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
 The advantage for sending all objects back in the first method call is that there will only be one method call and only one network-transfer. The disadvantages is that this could get really rough on the bandwidth and server load as some objects might contain images and other types of heavy properties and all objects would have to be completely instantiated. Another thing is that the client would have to handle this, possibly, huge load of objects even though it might not need to use most of them. \\
-The advantage of lazy object instatiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer. \\
-We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is that people want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
-In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs. The SearchArgs class cointains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in SearchArgs. \\
-All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and could be used for malicious purposes, for example filesystem paths.
+The advantage of lazy object instantiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer. \\
+We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is that we assume that users want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
+In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs. The SearchArgs class contains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in SearchArgs. \\
+All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and which could be used for malicious purposes, for example filesystem paths.
 
 \section{Implementation}
 This section describes how the system is implemented by describing classes with a class diagram and functional dynamics with sequence diagrams.
 
 \subsection{Major classes}
-\textbf{Dao} \\*
+\textbf{DatabaseDao} \\*
 Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD operations on the database for the server program. 
 
-\textbf{FileSystemHandler} \\*
-Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the Dao does on the database
+\textbf{FileSystemDao} \\*
+Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the DatabaseDao does on the database
 
 \textbf{RentItService} \\*
-All communication between clients and the server, except streaming of audio, go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
+All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
 
 \textbf{TrackPrioritizer} \\*
 This class selects tracks to be played based on the amount of times they have been played on the channel compared to other tracks, and the track rating.
@@ -240,10 +240,10 @@ This class is the single point of entry to the server programs functionality.
 \section{Collaboration with SMU}
 
 \subsection{Interaction with the ITU system}
-As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
-The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
+As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server, some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
+The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemDao and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
 A success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
-The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
+The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. 
 
 \subsection{SMU webservice api}
 
