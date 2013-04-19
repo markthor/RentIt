@@ -71,12 +71,11 @@ namespace RentItServer
         /// <summary>
         /// Logins the user with the specified username and password.
         /// </summary>
-        /// <param name="usernameOrEmail">The username.</param>
+        /// <param name="usernameOrEmail">The username or email.</param>
         /// <param name="password">The password.</param>
         /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
         public User Login(string usernameOrEmail, string password)
         {
-            throw new NotImplementedException();
             return _controller.Login(usernameOrEmail, password);
         }
 
@@ -84,12 +83,12 @@ namespace RentItServer
         /// Creates the user.
         /// </summary>
         /// <param name="username">The username of the user.</param>
-        /// <param name="password">The password for the user.</param>
         /// <param name="email">The email associated with user.</param>
+        /// <param name="password">The password for the user.</param>
         /// <returns>The id of the created user.</returns>
-        public int CreateUser(string username, string password, string email)
+        public User SignUp(string username, string email, string password)
         {
-            return _controller.CreateUser(username, password, email);
+            return _controller.SignUp(username, password, email);
         }
 
         public void UploadTrack(Track track, int userId, int channelId)

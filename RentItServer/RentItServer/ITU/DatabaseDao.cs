@@ -30,8 +30,8 @@ namespace RentItServer.ITU
             {
                 User user = null;
                 var users = from u in context.Users
-                            where u.Username.Equals(usernameOrEmail) && 
-                            u.Password.Equals(password)
+                            where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
+                                   u.Password.Equals(password)
                             select u;
                 if (!users.Any())
                 {
@@ -45,34 +45,26 @@ namespace RentItServer.ITU
         /// Creates the user.
         /// </summary>
         /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
         /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
         /// <returns>The id of the user.</returns>
-        public int CreateUser(string username, string password, string email)
+        public User SignUp(string username, string email, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User theUser = new User()
+                User user = new User()
                     {
                         Username = username,
+                        Email = email,
                         Password = password,
-                        //TODO: add email to entity
                         Comments = new Collection<Comment>(),
                         Channels = new Collection<Channel>(),
                         SubscribedChannels = new Collection<Channel>(),
                         Votes = new Collection<Vote>()
                     };
-                context.Users.Add(theUser);
+                context.Users.Add(user);
                 context.SaveChanges();
-
-                var users = from user in context.Users
-                            where user.Username.Equals(username) && user.Password.Equals(password)
-                            select user;
-                if (users.Any() == false)
-                {   // The user does not exist in the database, either something fucked up or another thread removed it already.
-                    throw new Exception("User got created and saved in the database but is not in the database.... O.ô.");
-                }
-                return users.First().Id;
+                return user;
             }
         }
 
