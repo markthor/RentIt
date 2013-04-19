@@ -74,7 +74,7 @@ namespace RentItServer
         /// <param name="usernameOrEmail">The username or email.</param>
         /// <param name="password">The password.</param>
         /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
-        public User Login(string usernameOrEmail, string password)
+        public ITU.User Login(string usernameOrEmail, string password)
         {
             return _controller.Login(usernameOrEmail, password);
         }
@@ -86,7 +86,7 @@ namespace RentItServer
         /// <param name="email">The email associated with user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>The id of the created user.</returns>
-        public User SignUp(string username, string email, string password)
+        public ITU.User SignUp(string username, string email, string password)
         {
             return _controller.SignUp(username, password, email);
         }

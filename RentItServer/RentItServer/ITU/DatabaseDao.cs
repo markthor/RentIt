@@ -36,8 +36,7 @@ namespace RentItServer.ITU
                 {
                     return null;
                 }
-                User user = users.First();
-                return user;
+                return users.First().GetUser();
 
             }
         }
@@ -53,7 +52,7 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user = new User()
+                RentItServer.User user = new RentItServer.User()
                     {
                         Username = username,
                         Email = email,
@@ -65,7 +64,7 @@ namespace RentItServer.ITU
                     };
                 context.Users.Add(user);
                 context.SaveChanges();
-                return user;
+                return user.GetUser();
             }
         }
 
@@ -75,7 +74,7 @@ namespace RentItServer.ITU
         /// <param name="theUser">The user.</param>
         /// <exception cref="System.Exception">End of \RemoveUser\. User was not get removed from the database.</exception>
         /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
-        public void DeleteUser(User theUser)
+        /*public void DeleteUser(User theUser)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -88,7 +87,7 @@ namespace RentItServer.ITU
 
                 if (users.Any() == true) throw new Exception("End of \"RemoveUser\". User was not get removed from the database.");
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets the user with specified user id.
@@ -105,7 +104,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
 
-                return users.First();
+                return users.First().GetUser();
             }
         }
 
@@ -129,7 +128,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id[" + userId + "]");
 
-                User theUser = users.First();
+                RentItServer.User theUser = users.First();
                 if (username != null) theUser.Username = username;
                 if (password != null) theUser.Password = password;
                 if (channels != null) theUser.Channels = channels;
@@ -178,7 +177,7 @@ namespace RentItServer.ITU
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
-                    Subscribers = new Collection<User>(),
+                    Subscribers = new Collection<RentItServer.User>(),
                     Hits = null,
                     Rating = null,
                     Tracks = new Collection<Track>()
@@ -397,7 +396,7 @@ namespace RentItServer.ITU
                             select user;
 
                 if (users.Any() == false) throw new ArgumentException("no user with user id [" + userId + "]");
-                User theUser = users.First();
+                RentItServer.User theUser = users.First();
 
                 Vote vote = new Vote()
                     {
@@ -508,7 +507,7 @@ namespace RentItServer.ITU
                             where user.Id == userId
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
-                User theUser = users.First();
+                RentItServer.User theUser = users.First();
 
                 var channels = from channel in context.Channels
                                where channel.Id == channelId

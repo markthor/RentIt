@@ -85,12 +85,14 @@
     <Compile Include="Comment.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\ItuUserCustom.cs" />
     <Compile Include="CustomModels\SMUrentalCustom.cs" />
     <Compile Include="ITU\ChannelOrganizer.cs" />
     <Compile Include="ITU\ChannelStreamer.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DatabaseDao.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
+    <Compile Include="ITU\User.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
