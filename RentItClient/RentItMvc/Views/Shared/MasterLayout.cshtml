@@ -18,7 +18,7 @@
         <div class="navbar-inner">
             <div class="container">
                 <a class="brand" href="/" title="Home">@ViewBag.Title</a>
-                @using (@Html.BeginForm("LogIn", "Account"))
+                @using (@Html.BeginForm("LogIn", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
