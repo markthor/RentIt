@@ -25,7 +25,7 @@ namespace RentItMvc.Controllers
                             Session["userId"] = user.Id;
                             Session["username"] = user.Username;
                         }
-                        catch (ArgumentException e)
+                        catch (Exception e)
                         {
                             string message = e.Message;
                             if (message.StartsWith("Username"))

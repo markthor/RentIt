@@ -102,5 +102,11 @@ namespace RentItServer.ITU
         //Returns the port which the client should connect to
         [OperationContract]
         int ListenToChannel(int channelId);
+
+        [OperationContract]
+        bool IsEmailAvailable(string email);
+
+        [OperationContract]
+        bool IsUsernameAvailable(string username);
     }
 }

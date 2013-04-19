@@ -77,7 +77,6 @@
       <DependentUpon>TestFiles.resx</DependentUpon>
     </Compile>
     <Compile Include="SMUtests\TrackPrioritizer_Test.cs" />
-    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

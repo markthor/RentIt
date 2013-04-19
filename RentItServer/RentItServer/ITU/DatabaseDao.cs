@@ -555,5 +555,27 @@ namespace RentItServer.ITU
         {
             throw new NotImplementedException();
         }
+
+        public bool IsEmailAvailable(string email)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Email == email
+                            select u;
+                return !users.Any();
+            }
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Username == username
+                            select u;
+                return !users.Any();
+            }
+        }
     }
 }

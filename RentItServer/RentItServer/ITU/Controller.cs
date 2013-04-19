@@ -326,5 +326,15 @@ namespace RentItServer.ITU
             _cOrganizer.StartChannel(channelId);
             return _cOrganizer.GetChannelPortNumber(channelId);
         }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return _dao.IsEmailAvailable(email);
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return _dao.IsUsernameAvailable(username);
+        }
     }
 }

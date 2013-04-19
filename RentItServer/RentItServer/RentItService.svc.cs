@@ -157,5 +157,15 @@ namespace RentItServer
             //check at der eksisterer en channel med det her id
             return _controller.ListenToChannel(channelId);
         }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return _controller.IsEmailAvailable(email);
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return _controller.IsUsernameAvailable(username);
+        }
     }
 }
