@@ -113,7 +113,7 @@ namespace RentItServer.ITU
         //Method not done
         private void NextSong()
         {
-            //TrackPrioritizer tp = TrackPrioritizer.GetInstance();
+            TrackPrioritizer tp = TrackPrioritizer.GetInstance();
             int trackId = tp.GetNextTrackId(DatabaseDao.GetInstance().GetTrackList(ChannelId), DatabaseDao.GetInstance().GetTrackPlays(ChannelId));
             //currentTrack = DAO.GetInstance().GetTrack(trackId);
 
