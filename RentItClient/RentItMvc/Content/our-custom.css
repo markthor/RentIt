@@ -2,7 +2,8 @@
     float: left;
     padding-top: 5px;
     padding-right: 8px;
-    line-height: 20px
+    line-height: 20px;
+    width: 200px
 }
 
 .input-email {

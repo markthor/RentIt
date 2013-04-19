@@ -48,21 +48,21 @@ namespace RentItServer.ITU
         /// <summary>
         /// Logins the user with the specified username and password.
         /// </summary>
-        /// <param name="username">The username.</param>
+        /// <param name="usernameOrEmail">The username or email.</param>
         /// <param name="password">The password.</param>
-        /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
+        /// <returns>The User. null if the (username,password) combination does not exist.</returns>
         [OperationContract]
-        int Login(string username, string password);
+        User Login(string usernameOrEmail, string password);
 
         /// <summary>
-        /// Creates the user.
+        /// Signs up a user
         /// </summary>
         /// <param name="username">The username of the user.</param>
-        /// <param name="password">The password for the user.</param>
         /// <param name="email">The email associated with user.</param>
+        /// <param name="password">The password for the user.</param>
         /// <returns>The id of the created user.</returns>
         [OperationContract]
-        int CreateUser(string username, string password, string email);
+        User SignUp(string username, string email, string password);
 
         [OperationContract]
         void UploadTrack(Track track, int userId, int channelId);

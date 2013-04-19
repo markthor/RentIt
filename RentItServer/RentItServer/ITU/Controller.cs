@@ -185,14 +185,9 @@ namespace RentItServer.ITU
         /// <param name="username">The username of the user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
-        public int Login(string username, string password)
+        public User Login(string usernameOrEmail, string password)
         {
-            if (_userSearch.Get(username).Equals(password))
-            {
-                // TODO: why should the id be returned? we can find the id from the username...
-            }
-            // TODO
-            return 1;
+            return _dao.Login(usernameOrEmail, password);
         }
 
         /// <summary>

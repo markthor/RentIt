@@ -24,6 +24,23 @@ namespace RentItServer.ITU
             return _instance ?? (_instance = new DatabaseDao());
         }
 
+        public User Login(string usernameOrEmail, string password)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                User user = null;
+                var users = from u in context.Users
+                            where u.Username.Equals(usernameOrEmail) && 
+                            u.Password.Equals(password)
+                            select u;
+                if (!users.Any())
+                {
+                    return null;
+                }
+                return users.First();
+            }
+        }
+
         /// <summary>
         /// Creates the user.
         /// </summary>

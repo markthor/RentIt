@@ -71,13 +71,13 @@ namespace RentItServer
         /// <summary>
         /// Logins the user with the specified username and password.
         /// </summary>
-        /// <param name="username">The username.</param>
+        /// <param name="usernameOrEmail">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
-        public int Login(string username, string password)
+        public User Login(string usernameOrEmail, string password)
         {
             throw new NotImplementedException();
-            return _controller.Login(username, password);
+            return _controller.Login(usernameOrEmail, password);
         }
 
         /// <summary>

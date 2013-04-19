@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RentItMvc.App_Start;
 
 namespace RentItMvc
 {
@@ -19,6 +20,7 @@ namespace RentItMvc
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BootstrapBundleConfig.RegisterBundles(System.Web.Optimization.BundleTable.Bundles);
         }
     }
 }
