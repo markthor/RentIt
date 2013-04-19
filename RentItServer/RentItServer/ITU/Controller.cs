@@ -192,7 +192,7 @@ namespace RentItServer.ITU
                 // TODO: why should the id be returned? we can find the id from the username...
             }
             // TODO
-            return 0;
+            return 1;
         }
 
         /// <summary>
