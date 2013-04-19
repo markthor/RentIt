@@ -14,7 +14,7 @@ namespace RentItServer.SMU
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //Data access object for file system IO
-        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>

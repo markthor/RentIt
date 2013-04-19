@@ -6,25 +6,25 @@ namespace RentItServer.Utilities
     /// <summary>
     /// This class is used to communicate with the filesystem of the server.
     /// </summary>
-    public class FileSystemHandler
+    public class FileSystemDao
     {
         //Singleton instance of the class
-        private static FileSystemHandler _instance;
+        private static FileSystemDao _instance;
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private FileSystemHandler() { }
+        private FileSystemDao() { }
 
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
         /// <returns>The singleton instance of the class</returns>
-        public static FileSystemHandler GetInstance()
+        public static FileSystemDao GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new FileSystemHandler();
+                _instance = new FileSystemDao();
             }
             return _instance;
         }

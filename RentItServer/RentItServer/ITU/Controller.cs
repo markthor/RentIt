@@ -16,15 +16,17 @@ namespace RentItServer.ITU
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
-        private readonly DAO _dao = DAO.GetInstance();
+        private readonly DatabaseDao _dao = DatabaseDao.GetInstance();
         //Responsible for choosing the next trackStream
         private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
-        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
+        //The channel organizer
+        private readonly ChannelOrganizer _cOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The ternary search trie for users. Each username has his/her password as value
@@ -45,6 +47,7 @@ namespace RentItServer.ITU
             }
             // Initialize user search trie
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            _cOrganizer = ChannelOrganizer.GetInstance();
         }
 
         /// <summary>
@@ -189,7 +192,7 @@ namespace RentItServer.ITU
                 // TODO: why should the id be returned? we can find the id from the username...
             }
             // TODO
-            return 0;
+            return 1;
         }
 
         /// <summary>
@@ -325,10 +328,8 @@ namespace RentItServer.ITU
 
         public int ListenToChannel(int channelId)
         {
-            ChannelOrganizer co = ChannelOrganizer.GetInstance();
-
-            co.StartChannel(1);
-            return co.GetChannelPortNumber(channelId);
+            _cOrganizer.StartChannel(channelId);
+            return _cOrganizer.GetChannelPortNumber(channelId);
         }
     }
 }
