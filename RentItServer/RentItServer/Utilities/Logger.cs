@@ -18,6 +18,8 @@ namespace RentItServer.Utilities
         /// </summary>
         private readonly BlockingCollection<string> _taskCollection = new BlockingCollection<string>(new ConcurrentQueue<string>());
 
+        private readonly string _absolutePath;
+
         /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
@@ -30,18 +32,18 @@ namespace RentItServer.Utilities
             //{
                 File.Create(absolutePath);
             //}
-
+            this._absolutePath = absolutePath;
             handler += AddEntry;
             // Logging thread. Used in order to support asyncrhonous writing of entries
-            new Task(() =>
-            {
-                string logEntry;
-                while (true)
-                {
-                    logEntry = _taskCollection.Take();
-                    //File.AppendAllText(absolutePath, logEntry);
-                }
-            }).Start();
+            //new Task(() =>
+            //{
+            //    string logEntry;
+            //    while (true)
+            //    {
+            //        logEntry = _taskCollection.Take();
+            //        File.AppendAllText(absolutePath, logEntry);
+            //    }
+            //}).Start();
         }
 
         /// <summary>
@@ -60,7 +62,8 @@ namespace RentItServer.Utilities
             lock (_entryLock)
             {
                 string timeStamp = "[" + DateTime.UtcNow.ToString(CultureInfo.InvariantCulture) + "] ";
-                _taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
+                File.AppendAllText(_absolutePath, timeStamp + args.Entry + Environment.NewLine); 
+                //_taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
             }
         }
     }
