@@ -192,7 +192,7 @@ TrackPlay is an entity that represents a play of a track. It is an entity and no
 Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel. 
 
 \subsection{Data storage}
-For storing information about our users, channels etc. we chose Microsoft SQL Server, a database management system (DBMS) developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
+For storing information about our users, channels etc. we chose Microsoft SQL Server, a DBMS\footnote[1]{Abbreviation for Database Management System} developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
 \subsection{Webservice}
 The return types of most methods is straightforward. Methods which have at most one result will return the corresponding object, wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
@@ -225,17 +225,25 @@ This class manages the prioritizing of tracks being returned to the client, fulf
 This class is the single point of entry to the server programs functionality.
 
 \newpage
-\subsection{Class Diagram}
+\subsection{Class diagram}
 \begin{figure}[H]
   \centering
-\includegraphics[]{./ClassDiagramITU.png}
+\includegraphics[]{./ClassDiagram.png}
 \caption{Class diagram of important methods and all classes}
 \end{figure}
+
+\begin{landscape}
+\subsection{Sequence diagram}
+\begin{figure}[H]
+\includegraphics[]{./ListenToChannelSD.png}
+\end{figure}
+\end{landscape}
+
 
 \section{Collaboration with SMU}
 
 \subsection{Interaction with the ITU system}
-As both the ITU system and the SMU system is an IS and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM is in the same entity framework.
+As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
 The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
 The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
@@ -243,7 +251,7 @@ The classes that have been reused are in the utilities namespace, and are FilePa
 The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
 
-\subsection{Smu webservice api}
+\subsection{SMU webservice api}
 
 The following api is the api the group from Singapore requested. 
 
