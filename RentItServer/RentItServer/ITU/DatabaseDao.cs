@@ -5,23 +5,23 @@ using System.Linq;
 
 namespace RentItServer.ITU
 {
-    public class DAO
+    public class DatabaseDao
     {
         //Singleton instance of the class
-        private static DAO _instance;
+        private static DatabaseDao _instance;
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private DAO(){}
+        private DatabaseDao(){}
 
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
         /// <returns>The singleton instance of the class</returns>
-        public static DAO GetInstance()
+        public static DatabaseDao GetInstance()
         {
-            return _instance ?? (_instance = new DAO());
+            return _instance ?? (_instance = new DatabaseDao());
         }
 
         /// <summary>

@@ -89,13 +89,13 @@
     <Compile Include="ITU\ChannelOrganizer.cs" />
     <Compile Include="ITU\ChannelStreamer.cs" />
     <Compile Include="ITU\Controller.cs" />
-    <Compile Include="ITU\DAO.cs" />
+    <Compile Include="ITU\DatabaseDao.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\FileSystemHandler.cs" />
+    <Compile Include="Utilities\FileSystemDao.cs" />
     <Compile Include="Genre.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
@@ -170,9 +170,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RentItModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="packages.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="RentItModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RentItModel.edmx</DependentUpon>
@@ -187,6 +184,7 @@
       <DependentUpon>RentItModel.edmx</DependentUpon>
       <LastGenOutput>RentItModel.cs</LastGenOutput>
     </Content>
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

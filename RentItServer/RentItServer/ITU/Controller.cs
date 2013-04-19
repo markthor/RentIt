@@ -16,11 +16,11 @@ namespace RentItServer.ITU
         //Singleton instance of the class
         private static Controller _instance;
         //Data access object for database IO
-        private readonly DAO _dao = DAO.GetInstance();
+        private readonly DatabaseDao _dao = DatabaseDao.GetInstance();
         //Responsible for choosing the next trackStream
         private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
-        private readonly FileSystemHandler _fileSystemHandler = FileSystemHandler.GetInstance();
+        private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         //Event cast when log must make an _handler
         private static EventHandler _handler;
         //The logger
