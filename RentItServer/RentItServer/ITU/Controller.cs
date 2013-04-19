@@ -25,6 +25,8 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
+        //The channel organizer
+        private readonly ChannelOrganizer _cOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The ternary search trie for users. Each username has his/her password as value
@@ -45,6 +47,7 @@ namespace RentItServer.ITU
             }
             // Initialize user search trie
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            _cOrganizer = ChannelOrganizer.GetInstance();
         }
 
         /// <summary>
@@ -325,10 +328,8 @@ namespace RentItServer.ITU
 
         public int ListenToChannel(int channelId)
         {
-            ChannelOrganizer co = ChannelOrganizer.GetInstance();
-
-            co.StartChannel(1);
-            return co.GetChannelPortNumber(channelId);
+            _cOrganizer.StartChannel(channelId);
+            return _cOrganizer.GetChannelPortNumber(channelId);
         }
     }
 }
