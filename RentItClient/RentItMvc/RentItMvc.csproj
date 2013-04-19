@@ -164,15 +164,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive-custom-for-bootstrap.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.Channel.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.Comment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -199,13 +190,7 @@
     <None Include="Service References\RentItService\RentItService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\RentItService\RentItService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

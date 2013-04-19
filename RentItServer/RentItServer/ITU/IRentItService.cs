@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 
 namespace RentItServer.ITU
 {
@@ -32,10 +31,10 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id for the channel to get.</param>
         /// <returns>The channel matching the given id.</returns>
         [OperationContract]
-        Channel GetChannel( int channelId);
+        DataObjects.Channel GetChannel(int channelId);
 
         [OperationContract]
-        Channel ModifyChannel(int userId, int channelId);
+        DataObjects.Channel ModifyChannel(int userId, int channelId);
 
         /// <summary>
         /// Deletes the channel.
@@ -44,7 +43,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         [OperationContract]
         void DeleteChannel(int userId, int channelId);
-
+        
         /// <summary>
         /// Logins the user with the specified username and password.
         /// </summary>
@@ -52,7 +51,7 @@ namespace RentItServer.ITU
         /// <param name="password">The password.</param>
         /// <returns>The User. null if the (username,password) combination does not exist.</returns>
         [OperationContract]
-        User Login(string usernameOrEmail, string password);
+        DataObjects.User Login(string usernameOrEmail, string password);
 
         /// <summary>
         /// Signs up a user
@@ -62,10 +61,7 @@ namespace RentItServer.ITU
         /// <param name="password">The password for the user.</param>
         /// <returns>The id of the created user.</returns>
         [OperationContract]
-        User SignUp(string username, string email, string password);
-
-        [OperationContract]
-        void UploadTrack(Track track, int userId, int channelId);
+        DataObjects.User SignUp(string username, string email, string password);
 
         [OperationContract]
         void RemoveTrack(int userId, int trackId);
@@ -77,7 +73,7 @@ namespace RentItServer.ITU
         int[] GetTrackIds(int channelId);
 
         [OperationContract]
-        TrackInfo GetTrackInfo(int trackId);
+        DataObjects.Track GetTrackInfo(int trackId);
 
         /// <summary>
         /// Comments on the specified channel.
@@ -92,7 +88,7 @@ namespace RentItServer.ITU
         int[] GetCommentIds(int channelId);
 
         [OperationContract]
-        Comment GetComment(int commentId);
+        DataObjects.Comment GetComment(int commentId);
 
         [OperationContract]
         void Subscribe(int userId, int channelId);
@@ -106,27 +102,5 @@ namespace RentItServer.ITU
         //Returns the port which the client should connect to
         [OperationContract]
         int ListenToChannel(int channelId);
-    }
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
-    public class CompositeType
-    {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
     }
 }

@@ -142,8 +142,9 @@ namespace RentItServer.ITU
 
         public Channel ModifyChannel(int userId, int channelId)
         {
+            throw new NotImplementedException();
             //TODO .... waaht?
-            return new Channel();
+            //return new Channel();
         }
 
         /// <summary>
@@ -268,9 +269,9 @@ namespace RentItServer.ITU
             return new[] { 0 };
         }
 
-        public TrackInfo GetTrackInfo(int trackId)
+        public Track GetTrackInfo(int trackId)
         {
-            return new TrackInfo();
+            return new Track();
         }
 
         /// <summary>

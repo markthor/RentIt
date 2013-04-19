@@ -5,11 +5,11 @@ using System.Web;
 
 namespace RentItServer
 {
-    public partial class User
+    public partial class Genre
     {
-        public ITU.DataObjects.User GetUser()
+        public ITU.DataObjects.Genre GetGenre()
         {
-            return new ITU.DataObjects.User(Id, Username, Email);
+            return new ITU.DataObjects.Genre(Id, Name);
         }
     }
 }

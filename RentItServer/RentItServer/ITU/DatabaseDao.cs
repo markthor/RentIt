@@ -36,7 +36,7 @@ namespace RentItServer.ITU
                 {
                     return null;
                 }
-                return users.First().GetUser();
+                return users.First();
 
             }
         }
@@ -57,14 +57,14 @@ namespace RentItServer.ITU
                         Username = username,
                         Email = email,
                         Password = password,
-                        Comments = new Collection<Comment>(),
-                        Channels = new Collection<Channel>(),
-                        SubscribedChannels = new Collection<Channel>(),
-                        Votes = new Collection<Vote>()
+                        Comments = new Collection<RentItServer.Comment>(),
+                        Channels = new Collection<RentItServer.Channel>(),
+                        SubscribedChannels = new Collection<RentItServer.Channel>(),
+                        Votes = new Collection<RentItServer.Vote>()
                     };
                 context.Users.Add(user);
                 context.SaveChanges();
-                return user.GetUser();
+                return user;
             }
         }
 
@@ -104,7 +104,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
 
-                return users.First().GetUser();
+                return users.First();
             }
         }
 
@@ -119,7 +119,7 @@ namespace RentItServer.ITU
         /// <param name="subscribedChannels">The subscribed channels. Can be null.</param>
         /// <param name="votes">The votes. Can be null.</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
-        public void UpdateUser(int userId, string username, string password, Collection<Channel> channels, Collection<Comment> comments, Collection<Channel> subscribedChannels, Collection<Vote> votes)
+        public void UpdateUser(int userId, string username, string password, Collection<RentItServer.Channel> channels, Collection<RentItServer.Comment> comments, Collection<RentItServer.Channel> subscribedChannels, Collection<RentItServer.Vote> votes)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
