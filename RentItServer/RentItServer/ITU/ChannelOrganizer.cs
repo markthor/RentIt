@@ -94,18 +94,19 @@ namespace RentItServer.ITU
         public bool IsChannelRunnig(int channelId)
         {
             ChannelStreamer cs = null;
+            if (channelsDic.TryGetValue(channelId, out cs))
             {
-                if (channelsDic.TryGetValue(channelId, out cs))
-                {
-                    return cs.IsRunning;
-                }
-                else
-                {
-                    throw new ChannelNotFound("ChannelId: " + channelId + " is not found in \"channelsDic\"-dictionary");
-                }
+                return cs.IsRunning;
+            }
+            else
+            {
+                return false;
+                //throw new ChannelNotFound("ChannelId: " + channelId + " is not found in \"channelsDic\"-dictionary");
             }
         }
     }
+
+    #region Custom exceptions
 
     class ChannelNotRunningException : Exception
     {
@@ -134,4 +135,6 @@ namespace RentItServer.ITU
             ErrorMessage = message;
         }
     }
+
+    #endregion
 }
