@@ -45,11 +45,11 @@
   <wsdl:message name="IRentItService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_CreateUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:CreateUser" />
+  <wsdl:message name="IRentItService_SignUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignUp" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_CreateUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  <wsdl:message name="IRentItService_SignUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignUpResponse" />
   </wsdl:message>
   <wsdl:message name="IRentItService_UploadTrack_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadTrack" />
@@ -148,9 +148,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/LoginResponse" message="tns:IRentItService_Login_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CreateUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/CreateUser" message="tns:IRentItService_CreateUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/CreateUserResponse" message="tns:IRentItService_CreateUser_OutputMessage" />
+    <wsdl:operation name="SignUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/SignUp" message="tns:IRentItService_SignUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/SignUpResponse" message="tns:IRentItService_SignUp_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UploadTrack">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/UploadTrack" message="tns:IRentItService_UploadTrack_InputMessage" />
@@ -257,8 +257,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CreateUser">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/CreateUser" style="document" />
+    <wsdl:operation name="SignUp">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/SignUp" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

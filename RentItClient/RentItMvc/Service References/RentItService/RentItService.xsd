@@ -79,7 +79,7 @@
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usernameOrEmail" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -87,30 +87,30 @@
   <xs:element name="LoginResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="LoginResult" type="xs:int" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="LoginResult" nillable="true" type="q6:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CreateUser">
+  <xs:element name="SignUp">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CreateUserResponse">
+  <xs:element name="SignUpResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="CreateUserResult" type="xs:int" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="SignUpResult" nillable="true" type="q7:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UploadTrack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="track" nillable="true" type="q6:Track" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="track" nillable="true" type="q8:Track" />
         <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
       </xs:sequence>
@@ -158,7 +158,7 @@
   <xs:element name="GetTrackIdsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetTrackIdsResult" nillable="true" type="q7:ArrayOfint" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetTrackIdsResult" nillable="true" type="q9:ArrayOfint" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -172,7 +172,7 @@
   <xs:element name="GetTrackInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetTrackInfoResult" nillable="true" type="q8:TrackInfo" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetTrackInfoResult" nillable="true" type="q10:TrackInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -200,7 +200,7 @@
   <xs:element name="GetCommentIdsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCommentIdsResult" nillable="true" type="q9:ArrayOfint" />
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCommentIdsResult" nillable="true" type="q11:ArrayOfint" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -214,7 +214,7 @@
   <xs:element name="GetCommentResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="GetCommentResult" nillable="true" type="q10:Comment" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="GetCommentResult" nillable="true" type="q12:Comment" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

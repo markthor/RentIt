@@ -14,13 +14,17 @@ namespace RentItMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SignUp(string username, string email, string password, string confirmPassword)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (ModelState.IsValid)
             {
-                if (password.Equals(confirmPassword))
+                using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    int userId = proxy.CreateUser(username, password, email);
-                }
-                
+                    if (password.Equals(confirmPassword))
+                    {
+                        User user = proxy.SignUp(username, email, password);
+                        Session["userId"] = user.Id;
+                        Session["username"] = user.Username;
+                    }
+                }    
             }
             return Redirect("/");
         }

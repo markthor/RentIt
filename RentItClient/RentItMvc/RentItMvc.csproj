@@ -173,6 +173,9 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\RentItService\RentItService.disco" />
     <None Include="Service References\RentItService\configuration91.svcinfo" />
     <None Include="Service References\RentItService\configuration.svcinfo" />

@@ -383,6 +383,9 @@ namespace RentItMvc.RentItService {
         private RentItMvc.RentItService.Comment[] CommentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -429,6 +432,19 @@ namespace RentItMvc.RentItService {
                 if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
                     this.CommentsField = value;
                     this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
                 }
             }
         }
@@ -1178,16 +1194,16 @@ namespace RentItMvc.RentItService {
         System.Threading.Tasks.Task DeleteChannelAsync(int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
-        int Login(string username, string password);
+        RentItMvc.RentItService.User Login(string usernameOrEmail, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
-        System.Threading.Tasks.Task<int> LoginAsync(string username, string password);
+        System.Threading.Tasks.Task<RentItMvc.RentItService.User> LoginAsync(string usernameOrEmail, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateUser", ReplyAction="http://tempuri.org/IRentItService/CreateUserResponse")]
-        int CreateUser(string username, string password, string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/SignUp", ReplyAction="http://tempuri.org/IRentItService/SignUpResponse")]
+        RentItMvc.RentItService.User SignUp(string username, string email, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateUser", ReplyAction="http://tempuri.org/IRentItService/CreateUserResponse")]
-        System.Threading.Tasks.Task<int> CreateUserAsync(string username, string password, string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/SignUp", ReplyAction="http://tempuri.org/IRentItService/SignUpResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string username, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UploadTrack", ReplyAction="http://tempuri.org/IRentItService/UploadTrackResponse")]
         void UploadTrack(RentItMvc.RentItService.Track track, int userId, int channelId);
@@ -1329,20 +1345,20 @@ namespace RentItMvc.RentItService {
             return base.Channel.DeleteChannelAsync(userId, channelId);
         }
         
-        public int Login(string username, string password) {
-            return base.Channel.Login(username, password);
+        public RentItMvc.RentItService.User Login(string usernameOrEmail, string password) {
+            return base.Channel.Login(usernameOrEmail, password);
         }
         
-        public System.Threading.Tasks.Task<int> LoginAsync(string username, string password) {
-            return base.Channel.LoginAsync(username, password);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> LoginAsync(string usernameOrEmail, string password) {
+            return base.Channel.LoginAsync(usernameOrEmail, password);
         }
         
-        public int CreateUser(string username, string password, string email) {
-            return base.Channel.CreateUser(username, password, email);
+        public RentItMvc.RentItService.User SignUp(string username, string email, string password) {
+            return base.Channel.SignUp(username, email, password);
         }
         
-        public System.Threading.Tasks.Task<int> CreateUserAsync(string username, string password, string email) {
-            return base.Channel.CreateUserAsync(username, password, email);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string username, string email, string password) {
+            return base.Channel.SignUpAsync(username, email, password);
         }
         
         public void UploadTrack(RentItMvc.RentItService.Track track, int userId, int channelId) {

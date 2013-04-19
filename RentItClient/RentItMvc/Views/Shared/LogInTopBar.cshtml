@@ -15,7 +15,7 @@
         @if (this.Session["userId"] != null && (int) this.Session["userId"] > 0)
         {
             <div style="float:right">
-                <a href="/" class="brand">@Session["username"] @Session["userId"]</a>
+                <a href="/" class="brand">@Session["username"]</a>
                 @Html.ActionLink("Log out", "LogOut", "Account", null, new { @class = "btn btn-danger", @style = "width: 49px"} )
             </div>
         }

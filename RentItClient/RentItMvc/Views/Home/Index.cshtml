@@ -1,21 +1,31 @@
 ﻿@{
     ViewBag.Title = "Index";
+    Html.EnableClientValidation(true);
 }
 
 @model RentItMvc.Models.Account
 
-@using (Html.BeginForm("SignUp", "Account", null, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    <div style="float:right">
-        <div class="input-field">
-            @Html.TextBoxFor(acc => acc.Username, new { @class = "input-block-level", type = "text", required = "required", placeholder = "Pick a username"})
-            @Html.TextBoxFor(acc => acc.Email, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Your email"})
-            @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Create a password"})
-            @Html.TextBoxFor(acc => acc.ConfirmPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Confirm your password"})
-        </div>
-        <div style="clear:both"/>
-        <button class="btn btn-success" type="submit">Sign up for free</button>
+<div class="row-fluid">
+    <div class="span2"></div>
+    <div class="span8">
+        @using (Html.BeginForm("SignUp", "Account", null, FormMethod.Post))
+        { 
+            Html.AntiForgeryToken();
+            Html.ValidationSummary(true);
+            <div style="float:right; padding-top: 100px">
+                <div class="input-field">
+                    @Html.TextBoxFor(acc => acc.Username, new { @class = "input-block-level", type = "text", required = "required", placeholder = "Pick a username"})
+                    @Html.TextBoxFor(acc => acc.Email, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Your email"})
+                    @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Create a password"})
+                    @Html.TextBoxFor(acc => acc.ConfirmPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Confirm your password"})
+                    @Html.ValidationMessageFor(acc => acc.ConfirmPassword)
+                </div>
+                <div style="clear:both"/>
+                <button class="btn btn-success" style="width: 200px" type="submit">Sign up for free</button>
+            </div>
+        }
     </div>
-}
+    <div class="span2"></div>
+</div>
+
+
