@@ -1,7 +1,7 @@
 \documentclass[a4paper,11pt,report]{article}
 \usepackage[pdftex]{graphicx}
 \usepackage{mathtools}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.9in]{geometry}
 \usepackage{float}
 \usepackage{lscape}
 \usepackage{pdfpages}
@@ -194,6 +194,55 @@ Genre is an entity and not an attribute of channel because we want to make a fix
 \subsection{Data storage}
 For storing information about our users, channels etc. we chose Microsoft SQL Server, a database management system (DBMS) developed by Microsoft. The reason for choosing a DMBS to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to object with size beyond 1MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
+\subsection{Webservice}
+The return types of most methods is straightforward. Methods which have at most one result will return the corresponding object, wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
+With methods which typically have more than one result, we have more options(methods like GetTrackIds and GetChannelIds). 
+The first option is to return an array of the ids of the result. The second option is to return an array with all the objects that corresponds to those ids. And the third option would be to return lazy objects, which were first completed(retrieved from the server) when the client called methods upon them. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait till the objects are actually needed.
+The returning of ids give the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage for this is that our webservice api needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
+The advantage for sending all objects back in the first method call is that there will only be one method call and only one network-transfer. The disadvantages is that this could get really rough on the bandwidth and server load as some objects might contain images and other types of heavy properties and all objects would have to be completely instantiated. Another thing is that the client would have to handle this, possibly, huge load of objects even though it might not need to use most of them. \\
+The advantage of lazy object instatiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer.
+We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is that people want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
+In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs.The  SearchArgs class cointains properties for all the different arguments we alllow to search on, this way we have one method which takes on argument, rather than a method which takes a parameters for every single property we now have in SearchArgs. \\
+All all objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and could be used to hurt the server, for example filesystem paths.
+
+\section{Implementation}
+This section describes how the system is implemented by describing classes with a class diagram and dynamics with sequence diagrams.
+
+\subsection{Major classes}
+\textbf{Dao} \\*
+Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD operations on the database for the server program. 
+
+\textbf{FileSystemHandler} \\*
+Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the Dao does on the database
+
+\textbf{RentItService} \\*
+All communication between clients and the server go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
+
+\textbf{TrackPrioritizer} \\*
+This class manages the prioritizing of tracks being returned to the client, fulfilling the requirements about the order of tracks being played.
+
+\textbf{Controller} \\*
+This class is the single point of entry to the server programs functionality.
+
+\newpage
+\subsection{Class Diagram}
+\begin{figure}[H]
+  \centering
+\includegraphics[]{./ClassDiagramITU.png}
+\caption{Class diagram of important methods and all classes}
+\end{figure}
+
+\section{Collaboration with SMU}
+
+\subsection{Interaction with the ITU system}
+As both the ITU system and the SMU system is an IS and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM is in the same entity framework.
+The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
+The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
+The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
+The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system.
+The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
+The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
+
 \subsection{Smu webservice api}
 
 The following api is the api the group from Singapore requested. 
@@ -224,34 +273,6 @@ The following api is the api the group from Singapore requested.
 	\item void UploadAudio(int bookId, MemoryStream mp3, string narrator)
 	\item void UploadPdf(int bookId, MemoryStream pdf)
 \end{itemize}
-
-\section{Implementation}
-
-\subsection{Major classes}
-\textbf{Dao} \\*
-Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD operations on the database for the server program. 
-
-\textbf{FileSystemHandler} \\*
-Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the Dao does on the database
-
-\textbf{RentItService} \\*
-All communication between clients and the server go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
-
-\textbf{TrackPrioritizer} \\*
-This class manages the prioritizing of tracks being returned to the client, fulfilling the requirements about the order of tracks being played.
-
-\textbf{Controller} \\*
-This class is the single point of entry to the server programs functionality.
-
-\section{Collaboration with SMU}
-
-\subsection{Interaction with the ITU system}
-As both the ITU system and the SMU system is an IS and deployed on the same server,  some of the classes have been reused in the SMU system and the ORM is in the same entity framework.
-The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemHandler and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system.
-The success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
-The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the client needs the web service of the other system. 
-
-
 
 
 
