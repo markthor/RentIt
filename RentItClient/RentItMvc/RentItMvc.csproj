@@ -209,6 +209,8 @@
     <None Include="Service References\RentItService\RentItService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\CreatePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

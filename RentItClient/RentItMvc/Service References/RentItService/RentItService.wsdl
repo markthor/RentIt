@@ -117,6 +117,18 @@
   <wsdl:message name="IRentItService_ListenToChannel_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListenToChannelResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_IsEmailAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsEmailAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IsEmailAvailable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsEmailAvailableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IsUsernameAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUsernameAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IsUsernameAvailable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUsernameAvailableResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="CreateChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/CreateChannel" message="tns:IRentItService_CreateChannel_InputMessage" />
@@ -189,6 +201,14 @@
     <wsdl:operation name="ListenToChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/ListenToChannel" message="tns:IRentItService_ListenToChannel_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/ListenToChannelResponse" message="tns:IRentItService_ListenToChannel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsEmailAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsEmailAvailable" message="tns:IRentItService_IsEmailAvailable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IsEmailAvailableResponse" message="tns:IRentItService_IsEmailAvailable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsUsernameAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsUsernameAvailable" message="tns:IRentItService_IsUsernameAvailable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IsUsernameAvailableResponse" message="tns:IRentItService_IsUsernameAvailable_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -348,6 +368,24 @@
     </wsdl:operation>
     <wsdl:operation name="ListenToChannel">
       <soap:operation soapAction="http://tempuri.org/IRentItService/ListenToChannel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsEmailAvailable">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/IsEmailAvailable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsUsernameAvailable">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/IsUsernameAvailable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

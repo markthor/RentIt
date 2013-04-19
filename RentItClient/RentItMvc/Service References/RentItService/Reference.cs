@@ -1036,6 +1036,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
         System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsEmailAvailable", ReplyAction="http://tempuri.org/IRentItService/IsEmailAvailableResponse")]
+        bool IsEmailAvailable(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsEmailAvailable", ReplyAction="http://tempuri.org/IRentItService/IsEmailAvailableResponse")]
+        System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsUsernameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsUsernameAvailableResponse")]
+        bool IsUsernameAvailable(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsUsernameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsUsernameAvailableResponse")]
+        System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1207,6 +1219,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId) {
             return base.Channel.ListenToChannelAsync(channelId);
+        }
+        
+        public bool IsEmailAvailable(string email) {
+            return base.Channel.IsEmailAvailable(email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsEmailAvailableAsync(string email) {
+            return base.Channel.IsEmailAvailableAsync(email);
+        }
+        
+        public bool IsUsernameAvailable(string username) {
+            return base.Channel.IsUsernameAvailable(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username) {
+            return base.Channel.IsUsernameAvailableAsync(username);
         }
     }
 }

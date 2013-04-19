@@ -10,6 +10,11 @@ namespace RentItMvc.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SignUp(Account account)
         {
@@ -47,11 +52,12 @@ namespace RentItMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(Account account)
+        [ValidateInput(false)]
+        public ActionResult LogIn(string email, string password)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                User user = proxy.Login(account.Email, account.Password);
+                User user = proxy.Login(email, password);
                 Session["userId"] = user.Id;
                 Session["username"] = user.Username;
             }
