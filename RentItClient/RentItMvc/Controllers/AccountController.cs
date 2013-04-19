@@ -19,9 +19,27 @@ namespace RentItMvc.Controllers
                 {
                     if (account.Password.Equals(account.ConfirmPassword))
                     {
-                        User user = proxy.SignUp(account.Username, account.Email, account.Password);
-                        Session["userId"] = user.Id;
-                        Session["username"] = user.Username;
+                        try
+                        {
+                            User user = proxy.SignUp(account.Username, account.Email, account.Password);
+                            Session["userId"] = user.Id;
+                            Session["username"] = user.Username;
+                        }
+                        catch (ArgumentException e)
+                        {
+                            string message = e.Message;
+                            if (message.StartsWith("Username"))
+                            {
+                                ModelState.AddModelError("Username", message);
+                            } else if (message.StartsWith("Email"))
+                            {
+                                ModelState.AddModelError("Email", message);
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
                     }
                 }
             }

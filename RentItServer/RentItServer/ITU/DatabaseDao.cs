@@ -52,15 +52,30 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                RentItServer.User user = new RentItServer.User()
+                var users = from u in context.Users
+                            where u.Username == username
+                            select u;
+                if (users.Any())
+                {
+                    throw new ArgumentException("Username is already taken.");
+                }
+                users = from u in context.Users
+                        where u.Email == email
+                        select u;
+                if (users.Any())
+                {
+                    throw new ArgumentException("Email is already in use.");
+                }
+
+                User user = new User()
                     {
                         Username = username,
                         Email = email,
                         Password = password,
-                        Comments = new Collection<RentItServer.Comment>(),
-                        Channels = new Collection<RentItServer.Channel>(),
-                        SubscribedChannels = new Collection<RentItServer.Channel>(),
-                        Votes = new Collection<RentItServer.Vote>()
+                        Comments = new Collection<Comment>(),
+                        Channels = new Collection<Channel>(),
+                        SubscribedChannels = new Collection<Channel>(),
+                        Votes = new Collection<Vote>()
                     };
                 context.Users.Add(user);
                 context.SaveChanges();
@@ -119,7 +134,7 @@ namespace RentItServer.ITU
         /// <param name="subscribedChannels">The subscribed channels. Can be null.</param>
         /// <param name="votes">The votes. Can be null.</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
-        public void UpdateUser(int userId, string username, string password, Collection<RentItServer.Channel> channels, Collection<RentItServer.Comment> comments, Collection<RentItServer.Channel> subscribedChannels, Collection<RentItServer.Vote> votes)
+        public void UpdateUser(int userId, string username, string password, Collection<Channel> channels, Collection<Comment> comments, Collection<Channel> subscribedChannels, Collection<Vote> votes)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -177,7 +192,7 @@ namespace RentItServer.ITU
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
-                    Subscribers = new Collection<RentItServer.User>(),
+                    Subscribers = new Collection<User>(),
                     Hits = null,
                     Rating = null,
                     Tracks = new Collection<Track>()
@@ -261,7 +276,7 @@ namespace RentItServer.ITU
                 if (channelName != null) theChannel.Name = channelName;
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
-                if (rating != null) theChannel.Rating = (double)rating;
+                if (rating != null) theChannel.Rating = rating;
                 if (comments != null) theChannel.Comments = comments;
                 if (genres != null) theChannel.Genres = genres;
                 if (tracks != null) theChannel.Tracks = tracks;
@@ -396,7 +411,7 @@ namespace RentItServer.ITU
                             select user;
 
                 if (users.Any() == false) throw new ArgumentException("no user with user id [" + userId + "]");
-                RentItServer.User theUser = users.First();
+                User theUser = users.First();
 
                 Vote vote = new Vote()
                     {
@@ -507,7 +522,7 @@ namespace RentItServer.ITU
                             where user.Id == userId
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
-                RentItServer.User theUser = users.First();
+                User theUser = users.First();
 
                 var channels = from channel in context.Channels
                                where channel.Id == channelId

@@ -23,10 +23,12 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="RentItService.disco" MetadataType="Disco" ID="cb90161b-11d1-42b4-8668-7d8d637778d9" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?disco" />
-    <MetadataFile FileName="RentItService1.xsd" MetadataType="Schema" ID="ebab1d25-2232-45b6-a227-1f74fe74d6ca" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd2" />
     <MetadataFile FileName="RentItService.xsd" MetadataType="Schema" ID="474624c8-6b2d-4a2e-81ff-62b7fa66f674" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RentItService1.xsd" MetadataType="Schema" ID="ebab1d25-2232-45b6-a227-1f74fe74d6ca" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RentItService2.xsd" MetadataType="Schema" ID="1fd320a5-ce46-4814-89a3-f3b62d7125c7" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" />
     <MetadataFile FileName="RentItService.wsdl" MetadataType="Wsdl" ID="67ee33da-44db-45b9-8403-fd5a0bbcd038" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?wsdl" />
     <MetadataFile FileName="RentItService3.xsd" MetadataType="Schema" ID="937f5050-4c79-40f0-bd56-7175c14fba66" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RentItService21.xsd" MetadataType="Schema" ID="6b38d595-24df-4da0-ae41-2c712625b4c5" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

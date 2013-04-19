@@ -167,6 +167,15 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.Channel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.Comment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\RentItService\RentItService.disco" />
     <None Include="Service References\RentItService\configuration91.svcinfo" />
     <None Include="Service References\RentItService\configuration.svcinfo" />
@@ -188,6 +197,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RentItService\RentItService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\RentItService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\RentItService21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RentItService\RentItService3.xsd">
