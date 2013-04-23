@@ -13,29 +13,27 @@
     <title>LogInTopBar</title>
 </head>
     <body>
-        <div style="float:right; margin-top: 3px">
+        <div class="pull-right" style="margin-top: 3px">
             @if (this.Session["userId"] != null && (int) this.Session["userId"] > 0)
             {
                 <!--User is logged in-->
-                <div style="float:left; margin-right: 200px">
+                <div class="pull-left" style="margin-right: 200px">
                     @using (@Html.BeginForm("Search", "Search", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
-                        <div class="input-field" style="float:left; padding-right: 8px">
+                        <div class="input-field" style="padding-right: 8px">
                             @Html.TextBox("SearchArgs", null, new { @class="input-block-level", placeholder="Search for ..." })
                         </div>
-                        <div style="float:left">
-                            <button class="btn btn-primary" style="float:left" type="submit">
-                                <i class="icon-search icon-white"></i>
-                            </button>    
-                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="icon-search icon-white"></i>
+                        </button>    
                     }
                 </div>
 
-                <a href="/" class="brand">@Session["username"]</a>
+                <a href="/Account/Details" class="brand">@Session["username"]</a>
                 
-                <div style="float:left">
+                <div class="pull-left">
                     @using(@Html.BeginForm("LogOut", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -47,20 +45,20 @@
             else
             {
                 <!--User is not logged in-->
-                using (@Html.BeginForm("LogIn", "Account", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                    <div class="input-field input-email">
-                        @Html.TextBoxFor(acc => acc.Email, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Email" })
-                    </div>
-                    <div class="input-field input-password">
-                        @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Password" })
-                    </div>
-                    <div style="float: left">
+                <div class="pull-left">
+                    @using (@Html.BeginForm("LogIn", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="input-field input-email">
+                            @Html.TextBoxFor(acc => acc.Email, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Email" })
+                        </div>
+                        <div class="input-field input-password">
+                            @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Password" })
+                        </div>
                         <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
-                    </div>
-                }   
+                    }
+                </div>
             }
         </div>
     </body>

@@ -5,8 +5,8 @@
 
 @model RentItMvc.Models.Account
 
-<div class="row-fluid">
-    <div class="span6" style="padding-top: 75px">
+<div class="row-fluid" style="padding-top: 75px">
+    <div class="span6">
         
             <h1>BlobFish radio</h1>    
             <p class="subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -19,7 +19,7 @@
         { 
             Html.AntiForgeryToken();
             Html.ValidationSummary(true);
-            <div style="float: left; padding-top: 75px;">
+            <div class="pull-left">
                 <div class="signup-field">
                     <div class="input-field">
                         <h1>Sign up</h1>    

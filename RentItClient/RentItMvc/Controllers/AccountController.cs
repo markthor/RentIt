@@ -10,9 +10,23 @@ namespace RentItMvc.Controllers
 {
     public class AccountController : Controller
     {
-        public ActionResult Create()
+        public ActionResult Details()
         {
-            return View();
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                //User user = proxy.GetUser(Session["userId"]);
+                User user = new User();
+                user.Email = @"andreas.p.poulsen@gmail.com";
+                user.Username = "Prechtig";
+                if (user != null)
+                {
+                    Account acc = new Account();
+                    acc.Email = user.Email;
+                    acc.Username = user.Username;
+                    return View(acc);
+                }
+            }
+            return Redirect("/");
         }
 
         [HttpPost]
