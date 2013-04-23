@@ -1,0 +1,20 @@
+﻿@model RentItMvc.Models.Account
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Account</legend>
+    
+    <h1></h1>
+
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+</fieldset>

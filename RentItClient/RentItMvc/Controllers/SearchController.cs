@@ -6,11 +6,15 @@ using System.Web.Mvc;
 
 namespace RentItMvc.Controllers
 {
-    public class SharedController : Controller
+    public class SearchController : Controller
     {
-        public ActionResult Topbar()
+        //
+        // GET: /Search/
+
+        public ActionResult Search(string searchArgs)
         {
-            return PartialView();
+            return Redirect("/");
         }
+
     }
 }

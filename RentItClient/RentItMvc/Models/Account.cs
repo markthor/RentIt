@@ -17,10 +17,11 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "Email address")]
         [Remote("IsEmailAvailable", "Validation")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
        
         [Required]
-        [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars", MinimumLength = 4)]
+        [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

@@ -122,12 +122,15 @@
     <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\ChannelList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\RentItService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -209,8 +212,10 @@
     <None Include="Service References\RentItService\RentItService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Account\Create.cshtml" />
-    <Content Include="Views\Account\CreatePartial.cshtml" />
+    <Content Include="Views\Home\Main.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Home\ChannelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -225,13 +230,7 @@
     <Content Include="Views\Shared\MasterLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Narrow.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\LogIn.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\LogInTopBar.cshtml" />
+    <Content Include="Views\Shared\Topbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

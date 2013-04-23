@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+    HtmlHelper.ClientValidationEnabled = false;
+}
+
+@model RentItMvc.Models.Account
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogInTopBar</title>
+</head>
+    <body>
+        <div class="pull-right" style="margin-top: 3px">
+            @if (this.Session["userId"] != null && (int) this.Session["userId"] > 0)
+            {
+                <!--User is logged in-->
+                <div class="pull-left" style="margin-right: 200px">
+                    @using (@Html.BeginForm("Search", "Search", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="input-field" style="padding-right: 8px">
+                            @Html.TextBox("SearchArgs", null, new { @class="input-block-level", placeholder="Search for ..." })
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="icon-search icon-white"></i>
+                        </button>    
+                    }
+                </div>
+
+                <a href="/Account/Details" class="brand">@Session["username"]</a>
+                
+                <div class="pull-left">
+                    @using(@Html.BeginForm("LogOut", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <button class="btn btn-danger btn-signInOut" type="submit">Sign out</button>
+                    }   
+                </div>
+            }
+            else
+            {
+                <!--User is not logged in-->
+                <div class="pull-left">
+                    @using (@Html.BeginForm("LogIn", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="input-field input-email">
+                            @Html.TextBoxFor(acc => acc.Email, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Email" })
+                        </div>
+                        <div class="input-field input-password">
+                            @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Password" })
+                        </div>
+                        <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
+                    }
+                </div>
+            }
+        </div>
+    </body>
+</html>
