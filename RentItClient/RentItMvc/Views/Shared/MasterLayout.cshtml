@@ -18,7 +18,7 @@
         <div class="navbar-inner"  style="height: 46px">
             <div class="container">
                 <a class="brand" href="/" title="Home">@ViewBag.Title</a>
-                @Html.Partial("LogInTopBar")
+                @Html.Partial("LogInTopBar", new RentItMvc.Models.Account())
             </div>
         </div>
     </div>
@@ -32,5 +32,7 @@
     </footer>
     @Scripts.Render("~/js")
     @RenderSection("Scripts", required: false)
+    <a href="/Home/ChannelList" class="brand">ChannelList</a>
+    <a href="/Home/Main" class="brand">Main</a>
 </body>
 </html>
