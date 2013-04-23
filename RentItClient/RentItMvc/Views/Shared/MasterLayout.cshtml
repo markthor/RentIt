@@ -15,22 +15,25 @@
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner" style="height:46px">
-                <div class="container">
-                    <a class="brand" href="/" title="Home">@ViewBag.Title</a>
-                    @Html.Action("Topbar", "Shared")
+                <div class="navbar-inner" style="height:46px">
+                    <div class="container">
+                        <a class="brand" href="/" title="Home">@ViewBag.Title</a>
+                        @Html.Action("Topbar", "Shared")
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container" style="padding-top: 46px">
+        <div style="clear:both"></div>
+        <div class="container" style="margin-top: 46px">
             @RenderBody()
         </div>
         <div class="container">
-            <footer>
-                <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
-            </footer>    
-        </div>
+                <footer>
+                    <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
+                </footer>    
+            </div>
         @Scripts.Render("~/js")
         @RenderSection("Scripts", required: false)
+        <a href="/Home/ChannelList" class="brand">ChannelList</a>
+        <a href="/Home/Main" class="brand">Main</a>
     </body>
 </html>

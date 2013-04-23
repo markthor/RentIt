@@ -129,6 +129,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\ChannelList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\RentItService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -212,6 +214,8 @@
     </None>
     <Content Include="Views\Home\Main.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Home\ChannelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
