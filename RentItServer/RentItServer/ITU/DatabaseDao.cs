@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using RentItServer.ITU.Exceptions;
 
 namespace RentItServer.ITU
 {
@@ -13,7 +14,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private DatabaseDao(){}
+        private DatabaseDao() { }
 
         /// <summary>
         /// Accessor method to access the only instance of the class
@@ -86,23 +87,30 @@ namespace RentItServer.ITU
         /// <summary>
         /// Removes the user from the database.
         /// </summary>
-        /// <param name="theUser">The user.</param>
-        /// <exception cref="System.Exception">End of \RemoveUser\. User was not get removed from the database.</exception>
+        /// <param name="userId">The user id.</param>
         /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
-        /*public void DeleteUser(User theUser)
+        /// <exception cref="System.Exception">End of \RemoveUser\. User was not get removed from the database.</exception>
+        public void DeleteUser(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
+                var users = from user in context.Users
+                            where user.Id == userId
+                            select user;
+                if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
+
+                User theUser = users.First();
+
                 context.Users.Remove(theUser);
                 context.SaveChanges();
 
-                var users = from user in context.Users
-                            where user.Id == theUser.Id
-                            select user;
+                users = from user in context.Users
+                        where user.Id == theUser.Id
+                        select user;
 
                 if (users.Any() == true) throw new Exception("End of \"RemoveUser\". User was not get removed from the database.");
             }
-        }*/
+        }
 
         /// <summary>
         /// Gets the user with specified user id.
@@ -124,6 +132,21 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Gets all users in the database
+        /// </summary>
+        /// <returns>The users</returns>
+        public List<User> GetAllUsers()
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from user in context.Users
+                            select user;
+
+                return users.ToList();
+            }
+        }
+
+        /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -134,7 +157,7 @@ namespace RentItServer.ITU
         /// <param name="subscribedChannels">The subscribed channels. Can be null.</param>
         /// <param name="votes">The votes. Can be null.</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
-        public void UpdateUser(int userId, string username, string password, Collection<Channel> channels, Collection<Comment> comments, Collection<Channel> subscribedChannels, Collection<Vote> votes)
+        public void UpdateUser(int userId, string username, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -143,13 +166,34 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id[" + userId + "]");
 
-                RentItServer.User theUser = users.First();
+                User theUser = users.First();
                 if (username != null) theUser.Username = username;
                 if (password != null) theUser.Password = password;
-                if (channels != null) theUser.Channels = channels;
-                if (comments != null) theUser.Comments = comments;
-                if (subscribedChannels != null) theUser.SubscribedChannels = subscribedChannels;
-                if (votes != null) theUser.Votes = votes;
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Persists the modifications to this user object in the database.
+        /// </summary>
+        /// <param name="theUser">The user object to persist.</param>
+        /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
+        public void UpdateUser(User theUser)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from user in context.Users
+                            where user.Id == theUser.Id
+                            select user;
+                if (users.Any() == false) throw new ArgumentException("No user with user id[" + theUser.Id + "]");
+
+                User theUpdatedUser = users.First();
+                theUpdatedUser.Username = theUser.Username;
+                theUpdatedUser.Password = theUser.Password;
+                theUpdatedUser.Channels = theUser.Channels;
+                theUpdatedUser.Comments = theUser.Comments;
+                theUpdatedUser.SubscribedChannels = theUser.SubscribedChannels;
+                theUpdatedUser.Votes = theUser.Votes;
                 context.SaveChanges();
             }
         }
@@ -166,22 +210,22 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
+                // Check that no channel with channelName already exists
+                var channels = from channel in context.Channels
+                               where channelName.Equals(channelName)
+                               select channel;
+                if(channels.Any() == true)  throw new ArgumentException("Channel with channelname ["+channelName+"] already exists");
+
                 var users = from user in context.Users
                             where user.Id == userId
                             select user;
-                if (users.Any() == false)
-                {
-                    // throw new ArgumentException("No user with userId ["+userId+"]");
-                    throw new Exception();
-                }
+
+                if (users.Any() == false) throw new ArgumentException("No user with userId ["+userId+"]");
 
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
-                if (someGenres.Any() == false)
-                {
-                    // throw new EmptyTableException("Genres");
-                    throw new Exception();
-                }
+
+                if (someGenres.Any() == false) throw new EmptyTableException("Genres");
 
                 // Create the channel object
                 Channel theChannel = new Channel()
@@ -201,7 +245,7 @@ namespace RentItServer.ITU
                 context.Channels.Add(theChannel);
                 context.SaveChanges();
 
-                var channels = from channel in context.Channels.Where(channel => channel.Name == channelName && channel.UserId == userId)
+                channels = from channel in context.Channels.Where(channel => channel.Name == channelName && channel.UserId == userId)
                                select channel;
 
                 if (channels.Any() == true)
@@ -253,7 +297,7 @@ namespace RentItServer.ITU
         /// or
         /// No user with user id [ + ownerId + ]
         /// </exception>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, Collection<Comment> comments, Collection<Genre> genres, Collection<Track> tracks)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -277,9 +321,6 @@ namespace RentItServer.ITU
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
-                if (comments != null) theChannel.Comments = comments;
-                if (genres != null) theChannel.Genres = genres;
-                if (tracks != null) theChannel.Tracks = tracks;
 
                 context.SaveChanges();
             }
@@ -339,7 +380,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// Channel ids of the channels matching the filter.
         /// </returns>
-        public List<Channel> GetChannelsWithFilter(SearchArgs filter)
+        public List<Channel> GetChannelsWithFilter(ChannelSearchArgs filter)
         {
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -362,15 +403,16 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count >= filter.NumberOfSubscriptions select channel;
                 }
-                if (filter.SortOption == -1)
-                {   // Descending
-                    channels = from channel in channels orderby channel.Name descending select channel;
+                //TODO: HUSK AT IMPLEMENTERE SORTERING :)
+                //if (filter.SortOption == -1)
+                //{   // Descending
+                //    channels = from channel in channels orderby channel.Name descending select channel;
 
-                }
-                else if (filter.SortOption == 1)
-                {   // Ascending
-                    channels = from channel in channels orderby channel.Name ascending select channel;
-                }
+                //}
+                //else if (filter.SortOption == 1)
+                //{   // Ascending
+                //    channels = from channel in channels orderby channel.Name ascending select channel;
+                //}
                 // Execute the query before leaving "using" block
                 filteredChannels = channels.ToList();
             }
@@ -544,18 +586,156 @@ namespace RentItServer.ITU
             }
         }
 
-        //TODO: DeleteComment, GetComment
-
-        internal List<Track> GetTrackList(int ChannelId)
+        /// <summary>
+        /// Deletes the comment.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="date">The date of the comment.</param>
+        /// <exception cref="System.ArgumentException">No comment with channelId [+channelId+] and userId [+userId+] and date [+date+]</exception>
+        public void DeleteComment(int channelId, int userId, DateTime date)
         {
-            throw new NotImplementedException();
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from comment in context.Comments
+                               where comment.ChannelId == channelId && comment.UserId == userId && comment.Date == date
+                               select comment;
+                if (comments.Any() == false) throw new ArgumentException("No comment with channelId [" + channelId + "] and userId [" + userId + "] and date [" + date + "]");
+
+                context.Comments.Remove(comments.First());
+            }
         }
 
-        internal List<TrackPlay> GetTrackPlays(int ChannelId)
+        /// <summary>
+        /// Gets a specific comment.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="date">The date of the comment.</param>
+        /// <returns>The comment</returns>
+        public Comment GetComment(int channelId, int userId, DateTime date)
         {
-            throw new NotImplementedException();
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from comment in context.Comments
+                               where comment.ChannelId == channelId && comment.UserId == userId && comment.Date == date
+                               select comment;
+                if (comments.Any() == false) throw new ArgumentException("No comment with channelId [" + channelId + "] and userId [" + userId + "] and date [" + date + "]");
+
+                return comments.First();
+            }
         }
 
+        /// <summary>
+        /// Gets the comments from a specific user in a specific channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <returns>All comments from a channel made by a specific user</returns>
+        public List<Comment> GetComments(int channelId, int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from comment in context.Comments
+                               where comment.ChannelId == channelId && comment.UserId == userId
+                               select comment;
+
+                // It doesn't matter if there are no comments
+                return comments.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets all comments associated with a channel
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns>
+        /// All comments from a specific channel
+        /// </returns>
+        public List<Comment> GetChannelComments(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from comment in context.Comments
+                               where comment.ChannelId == channelId
+                               select comment;
+
+                // It doesn't matter if there are no comments
+                return comments.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets all comments associated with a user
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>
+        /// All comments from a specific user
+        /// </returns>
+        public List<Comment> GetUserComments(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from comment in context.Comments
+                               where comment.UserId == userId
+                               select comment;
+
+                // It doesn't matter if there are no comments
+                return comments.ToList();
+            }
+        }
+
+        internal List<Track> GetTrackList(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var tracks = from track in context.Tracks
+                             where track.ChannelId == channelId
+                             select track;
+
+                // It doesn't matter if the list is empty
+                return tracks.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets the trackplays for a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns>All TrackPlays associated with the channel</returns>
+        /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
+        internal List<TrackPlay> GetTrackPlays(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.Channels
+                               where channel.Id == channelId
+                               select channel;
+
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
+                Channel theChannel = channels.First();
+                var tracks = theChannel.Tracks;
+
+                List<TrackPlay> trackPlays = new List<TrackPlay>();
+                foreach (Track track in tracks)
+                {
+                    if (track.TrackPlays.Any() == true)
+                    {
+                        trackPlays.AddRange(track.TrackPlays);
+                    }
+                }
+                return trackPlays;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether [is email available] [the specified email].
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>
+        ///   <c>true</c> if [is email available] [the specified email]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsEmailAvailable(string email)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -567,6 +747,13 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Determines whether [is username available] [the specified username].
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>
+        ///   <c>true</c> if [is username available] [the specified username]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsUsernameAvailable(string username)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())

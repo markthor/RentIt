@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using RentItServer.ITU.Search;
@@ -26,11 +27,11 @@ namespace RentItServer.ITU
         //The logger
         private readonly Logger _logger;
         //The channel organizer
-        private readonly ChannelOrganizer _cOrganizer;
+        private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
-        //The ternary search trie for users. Each username has his/her password as value
-        private TernarySearchTrie<String> _userSearch;
+        //The ternary search trie for users. Each username or email has an associated password as value
+        private TernarySearchTrie<User> _userCache;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -38,16 +39,27 @@ namespace RentItServer.ITU
         private Controller()
         {
             _channelCache = new Dictionary<int, Channel>();
-            _userSearch = new TernarySearchTrie<string>();
+            _userCache = new TernarySearchTrie<User>();
             // Initialize channel search trie
             IEnumerable<Channel> allChannels = _dao.GetAllChannels();
             foreach (Channel channel in allChannels)
             {
                 _channelCache[channel.Id] = channel;
             }
-            // Initialize user search trie
+            
+            // Initialize user search tries
+            IEnumerable<User> allUsers = _dao.GetAllUsers();
+            foreach (User user in allUsers)
+            {
+                _userCache.Put(user.Email, user);
+                _userCache.Put(user.Email, user);
+            }
+
+            // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
-            _cOrganizer = ChannelOrganizer.GetInstance();
+            
+            // Initialize the channel organizer
+            _channelOrganizer = ChannelOrganizer.GetInstance();
         }
 
         /// <summary>
@@ -60,6 +72,124 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Login the specified user.
+        /// </summary>
+        /// <param name="usernameOrEmail">The username or email of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
+        public User Login(string usernameOrEmail, string password)
+        {
+            return _userCache.Get(usernameOrEmail) ?? _dao.Login(usernameOrEmail, password);
+        }
+
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <param name="email">The email associated with user.</param>
+        /// <returns>The id of the created user.</returns>
+        public User SignUp(string username, string email, string password)
+        {
+            if (username == null) LogAndThrowException(new ArgumentNullException("username"), "CreateUser");
+            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "CreateUser");
+            if (password == null) LogAndThrowException(new ArgumentException("password"), "CreateUser");
+            if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "CreateUser");
+            if (email == null) LogAndThrowException(new ArgumentNullException("email"), "CreateUser");
+            if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
+            // TODO use regex to better check mail validity
+
+            try
+            {
+                User theUser = _dao.SignUp(username, password, email);
+                _userCache.Put(theUser.Username, theUser);
+                //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
+                throw;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        public void DeleteUser(int userId)
+        {
+            try
+            {
+                User theUser = _dao.GetUser(userId);
+                _dao.DeleteUser(userId);
+                _userCache.Put(theUser.Username, null);
+                _userCache.Put(theUser.Email, null);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("User deletion failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+
+        public User GetUser(int userId)
+        {
+            try
+            {
+                return _dao.GetUser(userId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("Get user failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+
+        public IEnumerable<int> GetAllUserIds()
+        {
+            try
+            {
+                List<int> userIds = new List<int>();
+                var allUsers = _dao.GetAllUsers();
+                foreach (User user in allUsers)
+                {
+                    userIds.Add(user.Id);
+                }
+                return userIds;
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+
+        public void UpdateUser(int userId, string username, string password, string email)
+        {
+            try
+            {
+                User theUser = _dao.GetUser(userId);
+                _dao.UpdateUser(userId, username, password);
+                _userCache.Put(theUser.Username, null);
+                _userCache.Put(theUser.Email, null);
+                User theUpdatedUser = _dao.GetUser(userId);
+                _userCache.Put(username, theUpdatedUser);
+                _userCache.Put(email, theUpdatedUser);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+        
+        /// <summary>
         /// Creates a channel.
         /// </summary>
         /// <param name="channelName">Name of the channel.</param>
@@ -67,7 +197,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
-        public int CreateChannel(string channelName, int userId, string description, string[] genres)
+        public int CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
         {
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
@@ -93,61 +223,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets the channel ids matching the given search arguments.
-        /// </summary>
-        /// <param name="args">The search arguments (used for filtering).</param>
-        /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
-        public int[] GetChannelIds(SearchArgs args)
-        {
-            // Get channels that match all filters
-            List<Channel> channels = _dao.GetChannelsWithFilter(args);
-
-            // Extract all ids
-            List<int> filteredChannelIds = new List<int>();
-            for (int i = 0; i < channels.Count(); i++)
-            {
-                filteredChannelIds.Add(channels[i].Id);
-            }
-
-            return filteredChannelIds.ToArray();
-        }
-
-        /// <summary>
-        /// Gets a channel.
-        /// </summary>
-        /// <param name="channelId">The channel id for the channel to get.</param>
-        /// <returns>The channel matching the given id.</returns>
-        public Channel GetChannel(int channelId)
-        {
-            if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
-
-            if (_channelCache[channelId] != null)
-            {   // Attempt to use cache first
-                return _channelCache[channelId];
-            }
-
-            // cache might be outdated, query the databse to be sure.
-            Channel channel = _dao.GetChannel(channelId);
-            if (channel != null){
-                // channel was found in the database, adding to cache
-                _channelCache[channelId] = channel;
-            }
-            else
-            {   // A channel with id = channelId does not exist in cache or in database nigga
-                LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
-            }
-
-            return channel;
-        }
-
-        public Channel ModifyChannel(int userId, int channelId)
-        {
-            throw new NotImplementedException();
-            //TODO .... waaht?
-            //return new Channel();
-        }
-
-        /// <summary>
         /// Deletes the channel.
         /// </summary>
         /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
@@ -164,67 +239,137 @@ namespace RentItServer.ITU
                 if (channel.UserId == userId)
                 {
                     _dao.DeleteChannel(userId, channel);
+                    _channelCache[channelId] = null;
                     //_logger.AddEntry(logEntry + "Deletion successful.");
                 }
                 else
                 {
-                    if(_handler != null)
-                    _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
+                    if (_handler != null)
+                        _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
                 }
             }
             catch (Exception e)
             {
-                if(_handler != null)
+                if (_handler != null)
                     _handler(this, new RentItEventArgs("Channel deletion failed with exception [" + e + "]."));
                 throw;
             }
         }
 
-        /// <summary>
-        /// Login the specified user.
-        /// </summary>
-        /// <param name="usernameOrEmail">The username or email of the user.</param>
-        /// <param name="password">The password for the user.</param>
-        /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
-        public User Login(string usernameOrEmail, string password)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits,
+                                  double? rating)
         {
-            return _dao.Login(usernameOrEmail, password);
-        }
-
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <param name="username">The username of the user.</param>
-        /// <param name="password">The password for the user.</param>
-        /// <param name="email">The email associated with user.</param>
-        /// <returns>The id of the created user.</returns>
-        public User SignUp(string username, string email, string password)
-        {
-            if (username == null) LogAndThrowException(new ArgumentNullException("username"), "CreateUser");
-            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "CreateUser");
-            if (password == null) LogAndThrowException(new ArgumentException("password"), "CreateUser");
-            if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "CreateUser");
-            if (email == null) LogAndThrowException(new ArgumentNullException("email"), "CreateUser");
-            if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
-            // TODO use regex to better check mail validity
-
             try
             {
-                return _dao.SignUp(username, password, email);
-                //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
             }
             catch (Exception e)
             {
-               if(_handler != null)
-                    _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("Update channel failed with exception [" + e + "]."));
                 throw;
             }
-            return null;
+        }
+        
+        /// <summary>
+        /// Gets a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id for the channel to get.</param>
+        /// <returns>The channel matching the given id.</returns>
+        public Channel GetChannel(int channelId)
+        {
+            if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
+
+            if (_channelCache[channelId] != null)
+            {   // Attempt to use cache first
+                return _channelCache[channelId];
+            }
+
+            // cache might be outdated, query the database to be sure.
+            Channel channel = _dao.GetChannel(channelId);
+            if (channel != null)
+            {
+                // channel was found in the database, adding to cache
+                _channelCache[channelId] = channel;
+            }
+            else
+            {   // A channel with id = channelId does not exist in cache or in database nigga
+                LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
+            }
+
+            return channel;
+        }
+
+        /// <summary>
+        /// Gets the channel ids matching the given search arguments.
+        /// </summary>
+        /// <param name="args">The search arguments (used for filtering).</param>
+        /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
+        public IEnumerable<int> GetAllChannelIds()
+        {
+            try
+            {
+                List<int> allChannelIds = new List<int>();
+                IEnumerable<Channel> channels = _dao.GetAllChannels();
+                foreach (Channel channel in channels)
+                {
+                    allChannelIds.Add(channel.Id);
+                }
+                return allChannelIds;
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetChannelIds failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+
+        public IEnumerable<Channel> GetChannels(ChannelSearchArgs args)
+        {
+            try
+            {
+                return _dao.GetChannelsWithFilter(args);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetChannels failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+
+        public void CreateVote(int rating, int userId, int trackId)
+        {
+            try
+            {
+                _dao.CreateVote(rating, userId, trackId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("CreateVote failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
         public void UploadTrack(Track track, int userId, int channelId)
         {
             // TODO possibly better with MemoryStream instead of Track
+        }
+
+        public Track GetTrackInfo(int trackId)
+        {
+            try
+            {
+                return _dao.GetTrack(trackId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetTrackInfo deletion failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
         public void RemoveTrack(int userId, int trackId)
@@ -248,30 +393,29 @@ namespace RentItServer.ITU
             }
         }
 
-        public void VoteTrack(int rating, int userId, int trackId)
+        public IEnumerable<int> GetTrackIds(int channelId)
         {
-            // TODO parameter validation
             try
             {
-                //_dao.VoteTrack(rating, userId, trackId);
-                //_logger.AddEntry("User with user id [" + userId + "] rated track with track id [" + trackId + "] with the rating [" + rating + "].");
+                List<int> theTrackIds = new List<int>();
+                IEnumerable<Track> theTracks = _dao.GetTrackList(channelId);
+                foreach (Track track in theTracks)
+                {
+                    theTrackIds.Add(track.Id);
+                }
+                return theTrackIds;
             }
             catch (Exception e)
             {
-                if(_handler != null)
-                    _handler(this, new RentItEventArgs("Voting failed with exception [" + e + "]."));
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetTrackIds failed with exception [" + e + "]."));
                 throw;
             }
         }
 
-        public int[] GetTrackIds(int channelId)
+        public IEnumerable<Track> GetTracks(int channelId, TrackSearchArgs args)
         {
-            return new[] { 0 };
-        }
-
-        public Track GetTrackInfo(int trackId)
-        {
-            return new Track();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -280,17 +424,36 @@ namespace RentItServer.ITU
         /// <param name="comment">The comment.</param>
         /// <param name="userId">The user id.</param>
         /// <param name="channelId">The channel id.</param>
-        public void Comment(string comment, int userId, int channelId)
+        public void CreateComment(string comment, int userId, int channelId)
         {
-            //_dao.Comment(comment, userId, channelId);
+            _dao.CreateComment(comment, userId, channelId);
             //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
             if(_handler != null)
                     _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
         }
 
-        public int[] GetCommentIds(int channelId)
+        public void DeleteComment(int userId, int channelId, DateTime date)
         {
-            return new[] { 0 };
+            try
+            {
+                _dao.DeleteComment(channelId, userId, date);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("DeleteComment failed with exception [" + e + "]."));
+                throw;
+            }
+        }
+        
+        public Comment GetComment(int channelId, int userId, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment[] GetComments(int? channelId, int? userId, int fromInclusive, int toExclusive)
+        {
+            throw new NotImplementedException();
         }
 
         public Comment GetComment(int commentId)
@@ -323,8 +486,8 @@ namespace RentItServer.ITU
 
         public int ListenToChannel(int channelId)
         {
-            _cOrganizer.StartChannel(channelId);
-            return _cOrganizer.GetChannelPortNumber(channelId);
+            _channelOrganizer.StartChannel(channelId);
+            return _channelOrganizer.GetChannelPortNumber(channelId);
         }
 
         public bool IsEmailAvailable(string email)

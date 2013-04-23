@@ -7,14 +7,14 @@ namespace RentItServer
 {
     public partial class Track
     {
-        public ITU.DataObjects.Track GetTrack()
+        public ITU.DatabaseWrapperObjects.Track GetTrack()
         {
-            return new ITU.DataObjects.Track(Id, Path, Name, Artist, Length, UpVotes, DownVotes, GetVotes(), GetTrackPlays());
+            return new ITU.DatabaseWrapperObjects.Track(Id, Path, Name, Artist, Length, UpVotes, DownVotes, GetVotes(), GetTrackPlays());
         }
 
-        private List<ITU.DataObjects.Vote> GetVotes()
+        private List<ITU.DatabaseWrapperObjects.Vote> GetVotes()
         {
-            List<ITU.DataObjects.Vote> votes = new List<ITU.DataObjects.Vote>(Votes.Count);
+            List<ITU.DatabaseWrapperObjects.Vote> votes = new List<ITU.DatabaseWrapperObjects.Vote>(Votes.Count);
             foreach(Vote v in Votes)
             {
                 votes.Add(v.GetVote());
@@ -22,9 +22,9 @@ namespace RentItServer
             return votes;
         }
 
-        private List<ITU.DataObjects.TrackPlay> GetTrackPlays()
+        private List<ITU.DatabaseWrapperObjects.TrackPlay> GetTrackPlays()
         {
-            List<ITU.DataObjects.TrackPlay> trackPlays = new List<ITU.DataObjects.TrackPlay>(TrackPlays.Count);
+            List<ITU.DatabaseWrapperObjects.TrackPlay> trackPlays = new List<ITU.DatabaseWrapperObjects.TrackPlay>(TrackPlays.Count);
             foreach (TrackPlay t in TrackPlays)
             {
                 trackPlays.Add(t.GetTrackPlay());

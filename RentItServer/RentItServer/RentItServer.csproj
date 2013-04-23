@@ -72,6 +72,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RentItModel.edmx.sql" />
     <Content Include="RentItService.svc" />
     <Content Include="SMURentItService.svc" />
     <Content Include="Web.config">
@@ -93,18 +94,21 @@
     <Compile Include="CustomModels\ItuUserCustom.cs" />
     <Compile Include="CustomModels\ItuVoteCustom.cs" />
     <Compile Include="CustomModels\SMUrentalCustom.cs" />
-    <Compile Include="ITU\DataObjects\Channel.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\Channel.cs" />
     <Compile Include="ITU\ChannelOrganizer.cs" />
     <Compile Include="ITU\ChannelStreamer.cs" />
-    <Compile Include="ITU\DataObjects\Comment.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\Comment.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DatabaseDao.cs" />
+    <Compile Include="ITU\Exceptions\EmptyTableException.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
-    <Compile Include="ITU\DataObjects\Genre.cs" />
-    <Compile Include="ITU\DataObjects\Track.cs" />
-    <Compile Include="ITU\DataObjects\TrackPlay.cs" />
-    <Compile Include="ITU\DataObjects\User.cs" />
-    <Compile Include="ITU\DataObjects\Vote.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\Genre.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\Track.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\TrackPlay.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\User.cs" />
+    <Compile Include="ITU\DatabaseWrapperObjects\Vote.cs" />
+    <Compile Include="ITU\Search\UserStruct.cs" />
+    <Compile Include="ITU\TrackSearchArgs.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
@@ -128,7 +132,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RentItModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ITU\SearchArgs.cs" />
+    <Compile Include="ITU\ChannelSearchArgs.cs" />
     <Compile Include="RentItService.svc.cs">
       <DependentUpon>RentItService.svc</DependentUpon>
     </Compile>

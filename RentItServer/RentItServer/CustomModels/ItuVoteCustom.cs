@@ -7,9 +7,9 @@ namespace RentItServer
 {
     public partial class Vote
     {
-        public ITU.DataObjects.Vote GetVote()
+        public ITU.DatabaseWrapperObjects.Vote GetVote()
         {
-            return new ITU.DataObjects.Vote(Value, Date, User.GetUser(), Track.GetTrack());
+            return new ITU.DatabaseWrapperObjects.Vote(Value, Date, User.GetUser(), Track.GetTrack());
         }
     }
 }

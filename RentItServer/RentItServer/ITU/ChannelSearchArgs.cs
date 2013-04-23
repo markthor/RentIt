@@ -3,8 +3,19 @@
 namespace RentItServer.ITU
 {
     [Serializable]
-    public class SearchArgs
+    public class ChannelSearchArgs
     {
+        public const string NameDesc = "nam desc";
+        public const string NameAsc = "nam asc";
+        public const string AmountPlayedDesc = "ap desc";
+        public const string AmountPlayedAsc = "ap asc";
+        public const string SubscriptionsDesc = "sub desc";
+        public const string SubscriptionsAsc = "sub asc";
+        public const string NumberOfCommentsDesc = "com desc";
+        public const string NumberOfCommentsAsc = "com asc";
+        public const string RatingDesc = "rat desc";
+        public const string RatingAsc = "rat asc";
+
         /// <summary>
         /// Gets the search string.
         /// </summary>
@@ -44,9 +55,9 @@ namespace RentItServer.ITU
         /// Gets the sort option filter.
         /// </summary>
         /// <value>
-        /// The sort option. Default is 0, -1 is descending, 1 is ascending
+        /// The channels rating. Default is -1
         /// </value>
-        public int SortOption { get; private set; }
+        public double Rating { get; private set; }
         /// <summary>
         /// Gets the start index.
         /// </summary>
@@ -62,16 +73,25 @@ namespace RentItServer.ITU
         /// </value>
         public int EndIndex { get; private set; }
 
-        public SearchArgs()
+        /// <summary>
+        /// Gets the sort option. Must be one of the const fields of this class
+        /// </summary>
+        /// <value>
+        /// The sort option.
+        /// </value>
+        public string SortOption { get; private set; }
+
+        public ChannelSearchArgs()
         {
             SearchString = "";
             Genres = new string[] { };
             AmountPlayed = -1;
             NumberOfSubscriptions = -1;
             NumberOfComments = -1;
-            SortOption = 0;
+            Rating = -1;
             StartIndex = -1;
             EndIndex = -1;
+            SortOption = "";
         }
     }
 }

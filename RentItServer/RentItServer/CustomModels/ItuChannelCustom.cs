@@ -7,15 +7,15 @@ namespace RentItServer
 {
     public partial class Channel
     {
-        public ITU.DataObjects.Channel GetChannel()
+        public ITU.DatabaseWrapperObjects.Channel GetChannel()
         {
-            return new ITU.DataObjects.Channel(Id, Name, Description, Rating, Hits, ChannelOwner.GetUser(),
+            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, ChannelOwner.GetUser(),
                                    GetComments(), GetSubcribers(), GetGenres(), GetTracks());
         }
 
-        private List<ITU.DataObjects.Comment> GetComments()
+        private List<ITU.DatabaseWrapperObjects.Comment> GetComments()
         {
-            List<ITU.DataObjects.Comment> comments = new List<ITU.DataObjects.Comment>(Comments.Count);
+            List<ITU.DatabaseWrapperObjects.Comment> comments = new List<ITU.DatabaseWrapperObjects.Comment>(Comments.Count);
             foreach (Comment c in Comments)
             {
                 comments.Add(c.GetComment());
@@ -23,9 +23,9 @@ namespace RentItServer
             return comments;
         }
 
-        private List<ITU.DataObjects.User> GetSubcribers()
+        private List<ITU.DatabaseWrapperObjects.User> GetSubcribers()
         {
-            List<ITU.DataObjects.User> subscribers = new List<ITU.DataObjects.User>(Subscribers.Count);
+            List<ITU.DatabaseWrapperObjects.User> subscribers = new List<ITU.DatabaseWrapperObjects.User>(Subscribers.Count);
             foreach (User u in Subscribers)
             {
                 subscribers.Add(u.GetUser());
@@ -33,9 +33,9 @@ namespace RentItServer
             return subscribers;
         }
 
-        private List<ITU.DataObjects.Genre> GetGenres()
+        private List<ITU.DatabaseWrapperObjects.Genre> GetGenres()
         {
-            List<ITU.DataObjects.Genre> genres = new List<ITU.DataObjects.Genre>(Genres.Count);
+            List<ITU.DatabaseWrapperObjects.Genre> genres = new List<ITU.DatabaseWrapperObjects.Genre>(Genres.Count);
             foreach (Genre g in Genres)
             {
                 genres.Add(g.GetGenre());
@@ -43,9 +43,9 @@ namespace RentItServer
             return genres;
         }
 
-        private List<ITU.DataObjects.Track> GetTracks()
+        private List<ITU.DatabaseWrapperObjects.Track> GetTracks()
         {
-            List<ITU.DataObjects.Track> tracks = new List<ITU.DataObjects.Track>(Tracks.Count);
+            List<ITU.DatabaseWrapperObjects.Track> tracks = new List<ITU.DatabaseWrapperObjects.Track>(Tracks.Count);
             foreach (Track t in Tracks)
             {
                 tracks.Add(t.GetTrack());

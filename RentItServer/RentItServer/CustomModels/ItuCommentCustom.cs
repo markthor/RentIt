@@ -7,9 +7,9 @@ namespace RentItServer
 {
     public partial class Comment
     {
-        public ITU.DataObjects.Comment GetComment()
+        public ITU.DatabaseWrapperObjects.Comment GetComment()
         {
-            return new ITU.DataObjects.Comment(ChannelId, Date, Content, Channel.GetChannel(), User.GetUser());
+            return new ITU.DatabaseWrapperObjects.Comment(ChannelId, Date, Content, Channel.GetChannel(), User.GetUser());
         }
     }
 }

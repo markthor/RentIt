@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace RentItServer.ITU.DataObjects
+namespace RentItServer.ITU.DatabaseWrapperObjects
 {
     [DataContract]
     public class Comment

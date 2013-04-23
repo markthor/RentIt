@@ -7,9 +7,9 @@ namespace RentItServer
 {
     public partial class Genre
     {
-        public ITU.DataObjects.Genre GetGenre()
+        public ITU.DatabaseWrapperObjects.Genre GetGenre()
         {
-            return new ITU.DataObjects.Genre(Id, Name);
+            return new ITU.DatabaseWrapperObjects.Genre(Id, Name);
         }
     }
 }

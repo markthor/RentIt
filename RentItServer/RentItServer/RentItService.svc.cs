@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -16,146 +18,195 @@ namespace RentItServer
     {
         private static readonly Controller _controller = Controller.GetInstance();
 
+
         /// <summary>
-        /// Creates a channel.
+        /// Logins the user with the specified usernameOrEmail and password.
         /// </summary>
-        /// <param name="channelName">Name of the channel.</param>
-        /// <param name="userId">The id of the user creating the channel.</param>
-        /// <param name="description">The description of the channel.</param>
-        /// <param name="genres">The genres associated with the channel.</param>
-        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
+        /// <param name="usernameOrEmail">The usernameOrEmail of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        /// The User. null if the (usernameOrEmail,password) combination does not exist.
+        /// </returns>
+        public ITU.DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
+        {
+            User theUser = _controller.Login(usernameOrEmail, password);
+            return theUser.GetUser();
+        }
+
+        /// <summary>
+        /// Signs up a user
+        /// </summary>
+        /// <param name="usernameOrEmail">The usernameOrEmail of the user.</param>
+        /// <param name="email">The email associated with user.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <returns>
+        /// The id of the created user.
+        /// </returns>
+        public ITU.DatabaseWrapperObjects.User SignUp(string usernameOrEmail, string email, string password)
+        {
+            User theUser = _controller.SignUp(usernameOrEmail, email, password);
+            return theUser.GetUser();
+        }
+
+        /// <summary>
+        /// Delete the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        public void DeleteUser(int userId)
+        {
+            _controller.DeleteUser(userId);
+        }
+
+        /// <summary>
+        /// Gets the user with specified user id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>
+        /// The user
+        /// </returns>
+        public ITU.DatabaseWrapperObjects.User GetUser(int userId)
+        {
+            User theUser = _controller.GetUser(userId);
+            return theUser.GetUser();
+        }
+
+        public int[] GetAllUserIds()
+        {
+            IEnumerable<int> theUsers = _controller.GetAllUserIds();
+            return theUsers.ToArray();
+        }
+
+        public void UpdateUser(int userId, string username, string password, string email)
+        {
+            _controller.UpdateUser(userId, username, password, email);
+        }
+        
         public int CreateChannel(string channelName, int userId, string description, string[] genres)
         {
-            throw new NotImplementedException();
             return _controller.CreateChannel(channelName, userId, description, genres);
         }
-
-        /// <summary>
-        /// Gets the channel ids matching the given search string and search arguments.
-        /// </summary>
-        /// <param name="args">The search arguments (used for filtering).</param>
-        /// <returns>An array of channel ids matching search criteria. </returns>
-        public int[] GetChannelIds(SearchArgs args)
-        {
-            throw new NotImplementedException();
-            return _controller.GetChannelIds(args);
-        }
-
-        /// <summary>
-        /// Gets a channel.
-        /// </summary>
-        /// <param name="channelId">The channel id for the channel to get.</param>
-        /// <returns>The channel matching the given id.</returns>
-        public ITU.DataObjects.Channel GetChannel(int channelId)
-        {
-            throw new NotImplementedException();
-            return _controller.GetChannel(channelId).GetChannel();
-        }
-
-        public ITU.DataObjects.Channel ModifyChannel(int userId, int channelId)
-        {
-            throw new NotImplementedException();
-            return _controller.ModifyChannel(userId, channelId).GetChannel();
-        }
-
-        /// <summary>
-        /// Deletes the channel.
-        /// </summary>
-        /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
-        /// <param name="channelId">The channel id.</param>
+        
         public void DeleteChannel(int userId, int channelId)
         {
             _controller.DeleteChannel(userId, channelId);
         }
 
-        /// <summary>
-        /// Logins the user with the specified username and password.
-        /// </summary>
-        /// <param name="usernameOrEmail">The username or email.</param>
-        /// <param name="password">The password.</param>
-        /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
-        public ITU.DataObjects.User Login(string usernameOrEmail, string password)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
         {
-            return _controller.Login(usernameOrEmail, password).GetUser();
+            _controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
         }
 
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <param name="username">The username of the user.</param>
-        /// <param name="email">The email associated with user.</param>
-        /// <param name="password">The password for the user.</param>
-        /// <returns>The id of the created user.</returns>
-        public ITU.DataObjects.User SignUp(string username, string email, string password)
+        public ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
-            return _controller.SignUp(username, password, email).GetUser();
+            Channel theChannel = _controller.GetChannel(channelId);
+            return theChannel.GetChannel();
         }
 
+        public int[] GetAllChannelIds()
+        {
+            return _controller.GetAllChannelIds().ToArray();
+        }
+
+        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
+        {
+            IEnumerable<Channel> theRawChannels = _controller.GetChannels(args);
+            List<ITU.DatabaseWrapperObjects.Channel> theChannels = new List<ITU.DatabaseWrapperObjects.Channel>();
+            foreach (Channel channel in theRawChannels)
+            {
+                theChannels.Add(channel.GetChannel());
+            }
+            return theChannels.ToArray();
+        }
+        
+        public void CreateVote(int rating, int userId, int trackId)
+        {
+            _controller.CreateVote(rating, userId, trackId);
+        }
+
+        public ITU.DatabaseWrapperObjects.Track GetTrackInfo(int trackId)
+        {
+            Track theTrack = _controller.GetTrackInfo(trackId);
+            return theTrack.GetTrack();
+        }
+        
         public void RemoveTrack(int userId, int trackId)
         {
             _controller.RemoveTrack(userId, trackId);
         }
 
-        public void VoteTrack(int rating, int userId, int trackId)
-        {
-            _controller.VoteTrack(rating, userId, trackId);
-        }
-
         public int[] GetTrackIds(int channelId)
         {
-            throw new NotImplementedException();
-            return _controller.GetTrackIds(channelId);
+            return _controller.GetTrackIds(channelId).ToArray();
         }
 
-        public ITU.DataObjects.Track GetTrackInfo(int trackId)
+        public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)
         {
             throw new NotImplementedException();
-            return _controller.GetTrackInfo(trackId).GetTrack();
         }
 
-        /// <summary>
-        /// Comments on the specified channel.
-        /// </summary>
-        /// <param name="comment">The comment.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="channelId">The channel id.</param>
-        public void Comment(string comment, int userId, int channelId)
+        public void CreateComment(string comment, int userId, int channelId)
         {
-            _controller.Comment(comment, userId, channelId);
+            _controller.CreateComment(comment, userId, channelId);
         }
 
-        public int[] GetCommentIds(int channelId)
+        public void DeleteComment(int channelId, int userId, DateTime date)
+        {
+            _controller.DeleteComment(channelId, userId, date);
+        }
+
+        public ITU.DatabaseWrapperObjects.Comment[] GetComments(int channelId, int startInclusive, int endExclusive)
         {
             throw new NotImplementedException();
-            return _controller.GetCommentIds(channelId);
+            //return _controller.GetCommentIds(channelId, fromInclusive, toExclusive);
         }
 
-        public ITU.DataObjects.Comment GetComment(int commentId)
+        public ITU.DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date)
         {
             throw new NotImplementedException();
-            return _controller.GetComment(commentId).GetComment();
+            //CreateComment theComment = _controller.GetComment(channelId, userId, date);
+            //return theComment.GetComment();
         }
 
-        public void Subscribe(int userId, int channelId)
+        public ITU.DatabaseWrapperObjects.Comment[] GetComments(int channelId, int userId, int fromInclusive, int toExclusive)
         {
-            _controller.Subscribe(userId, channelId);
+            throw new NotImplementedException();
+            //List<CreateComment> theRawComments = _controller.GetComments(channelId, userId, fromInclusive, toExclusive);
+            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
+            //foreach (CreateComment comment in theRawComments)
+            //{
+            //    theComments.Add(comment.GetComment());
+            //}
+            //return theComments.ToArray();
         }
 
-        public void UnSubscribe(int userId, int channelId)
+        public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int fromInclusive, int toExclusive)
         {
-            _controller.UnSubscribe(userId, channelId);
+            throw new NotImplementedException();
+            //List<CreateComment> theRawComments = _controller.GetComments(channelId, null, fromInclusive, toExclusive);
+            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
+            //foreach (CreateComment comment in theRawComments)
+            //{
+            //    theComments.Add(comment.GetComment());
+            //}
+            //return theComments.ToArray();
         }
 
-        public int GetChannelPort(int channelId, int ipAddress, int port)
+        public ITU.DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
-            return -1;
-            //int i = _controller.GetChannelPort(channelId,ipAddress,port);
+            throw new NotImplementedException();
+            //List<CreateComment> theRawComments = _controller.GetComments(null, userId, fromInclusive, toExclusive);
+            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
+            //foreach (CreateComment comment in theRawComments)
+            //{
+            //    theComments.Add(comment.GetComment());
+            //}
+            //return theComments.ToArray();
         }
 
-        public int ListenToChannel(int channelId)
+        public ITU.DatabaseWrapperObjects.Comment GetComment(int commentId)
         {
-            //check at der eksisterer en channel med det her id
-            return _controller.ListenToChannel(channelId);
+            Comment theComment = _controller.GetComment(commentId);
+            return theComment.GetComment();
         }
 
         public bool IsEmailAvailable(string email)
@@ -166,6 +217,26 @@ namespace RentItServer
         public bool IsUsernameAvailable(string username)
         {
             return _controller.IsUsernameAvailable(username);
+        }
+
+        public void Subscribe(int userId, int channelId)
+        {
+            _controller.Subscribe(userId, channelId);
+        }
+
+        public void Unsubscribe(int userId, int channelId)
+        {
+            _controller.UnSubscribe(userId, channelId);
+        }
+
+        public int GetChannelPort(int channelId, int ipAddress, int port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ListenToChannel(int channelId)
+        {
+            return _controller.ListenToChannel(channelId);
         }
     }
 }

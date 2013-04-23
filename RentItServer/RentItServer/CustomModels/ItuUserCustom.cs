@@ -7,9 +7,9 @@ namespace RentItServer
 {
     public partial class User
     {
-        public ITU.DataObjects.User GetUser()
+        public ITU.DatabaseWrapperObjects.User GetUser()
         {
-            return new ITU.DataObjects.User(Id, Username, Email);
+            return new ITU.DatabaseWrapperObjects.User(Id, Username, Email);
         }
     }
 }

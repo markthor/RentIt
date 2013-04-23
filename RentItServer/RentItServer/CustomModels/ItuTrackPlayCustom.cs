@@ -7,9 +7,9 @@ namespace RentItServer
 {
     public partial class TrackPlay
     {
-        public ITU.DataObjects.TrackPlay GetTrackPlay()
+        public ITU.DatabaseWrapperObjects.TrackPlay GetTrackPlay()
         {
-            return new ITU.DataObjects.TrackPlay(TimePlayed, Track.GetTrack());
+            return new ITU.DatabaseWrapperObjects.TrackPlay(TimePlayed, Track.GetTrack());
         }
     }
 }
