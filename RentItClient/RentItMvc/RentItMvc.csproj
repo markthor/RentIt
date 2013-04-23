@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,13 +165,16 @@
     <Content Include="Scripts\jquery.validate.unobtrusive-custom-for-bootstrap.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Channel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Comment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackInfo.datasource">
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\RentItService\RentItService.disco" />
@@ -199,12 +203,14 @@
     <None Include="Service References\RentItService\RentItService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\RentItService\RentItService21.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\RentItService\RentItService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\CreatePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,15 +1,31 @@
 ﻿.input-field {
     float: left;
     padding-top: 5px;
-    padding-right: 8px;
     line-height: 20px;
-    width: 200px
+    width: 200px;
 }
 
 .input-email {
-    width: 190px
+    width: 190px;
+    padding-right: 8px;
 }
 
 .input-password {
-    width: 110px
+    width: 110px;
+    padding-right: 8px;
+}
+
+.error-field {
+    float: left;
+    width: 200px;
+}
+
+.btn-signInOut {
+    width: 80px;
+}
+
+.txt-error {
+    color: red;
+    margin-left: 10px;
+    font-size: 12px;
 }

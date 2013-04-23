@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    HtmlHelper.ClientValidationEnabled = false;
 }
 
 @model RentItMvc.Models.Account
@@ -15,8 +16,13 @@
         @if (this.Session["userId"] != null && (int) this.Session["userId"] > 0)
         {
             <div style="float:right">
-                <a href="/" class="brand">@Session["username"] @Session["userId"]</a>
-                @Html.ActionLink("Log out", "LogOut", "Account", null, new { @class = "btn btn-danger", @style = "width: 49px"} )
+                <a href="/" class="brand">@Session["username"]</a>
+                <div style="float: left">
+                    @using(@Html.BeginForm("LogOut", "Account", FormMethod.Post))
+                    {
+                        <button class="btn btn-danger btn-signInOut" type="submit">Sign out</button>
+                    }
+                </div>
             </div>
         }
         else
@@ -33,7 +39,7 @@
                         @Html.TextBoxFor(acc => acc.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Password" })
                     </div>
                     <div style="float: left">
-                        <button class="btn btn-success" style="width: 75px" type="submit">Sign in</button>
+                        <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
                     </div>
                 </div>
             }   

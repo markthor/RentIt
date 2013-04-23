@@ -46,16 +46,16 @@ namespace RentItServer
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
         /// <returns>The channel matching the given id.</returns>
-        public Channel GetChannel(int channelId)
+        public ITU.DataObjects.Channel GetChannel(int channelId)
         {
             throw new NotImplementedException();
-            return _controller.GetChannel(channelId);
+            return _controller.GetChannel(channelId).GetChannel();
         }
 
-        public Channel ModifyChannel(int userId, int channelId)
+        public ITU.DataObjects.Channel ModifyChannel(int userId, int channelId)
         {
             throw new NotImplementedException();
-            return _controller.ModifyChannel(userId, channelId);
+            return _controller.ModifyChannel(userId, channelId).GetChannel();
         }
 
         /// <summary>
@@ -71,30 +71,24 @@ namespace RentItServer
         /// <summary>
         /// Logins the user with the specified username and password.
         /// </summary>
-        /// <param name="usernameOrEmail">The username.</param>
+        /// <param name="usernameOrEmail">The username or email.</param>
         /// <param name="password">The password.</param>
         /// <returns>The id of the user. -1 if the (username,password) combination does not exist.</returns>
-        public User Login(string usernameOrEmail, string password)
+        public ITU.DataObjects.User Login(string usernameOrEmail, string password)
         {
-            throw new NotImplementedException();
-            return _controller.Login(usernameOrEmail, password);
+            return _controller.Login(usernameOrEmail, password).GetUser();
         }
 
         /// <summary>
         /// Creates the user.
         /// </summary>
         /// <param name="username">The username of the user.</param>
-        /// <param name="password">The password for the user.</param>
         /// <param name="email">The email associated with user.</param>
+        /// <param name="password">The password for the user.</param>
         /// <returns>The id of the created user.</returns>
-        public int CreateUser(string username, string password, string email)
+        public ITU.DataObjects.User SignUp(string username, string email, string password)
         {
-            return _controller.CreateUser(username, password, email);
-        }
-
-        public void UploadTrack(Track track, int userId, int channelId)
-        {
-            _controller.UploadTrack(track, userId, channelId);
+            return _controller.SignUp(username, password, email).GetUser();
         }
 
         public void RemoveTrack(int userId, int trackId)
@@ -113,10 +107,10 @@ namespace RentItServer
             return _controller.GetTrackIds(channelId);
         }
 
-        public TrackInfo GetTrackInfo(int trackId)
+        public ITU.DataObjects.Track GetTrackInfo(int trackId)
         {
             throw new NotImplementedException();
-            return _controller.GetTrackInfo(trackId);
+            return _controller.GetTrackInfo(trackId).GetTrack();
         }
 
         /// <summary>
@@ -136,10 +130,10 @@ namespace RentItServer
             return _controller.GetCommentIds(channelId);
         }
 
-        public Comment GetComment(int commentId)
+        public ITU.DataObjects.Comment GetComment(int commentId)
         {
             throw new NotImplementedException();
-            return _controller.GetComment(commentId);
+            return _controller.GetComment(commentId).GetComment();
         }
 
         public void Subscribe(int userId, int channelId)
@@ -162,6 +156,16 @@ namespace RentItServer
         {
             //check at der eksisterer en channel med det her id
             return _controller.ListenToChannel(channelId);
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return _controller.IsEmailAvailable(email);
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return _controller.IsUsernameAvailable(username);
         }
     }
 }

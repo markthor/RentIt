@@ -10,30 +10,54 @@ namespace RentItMvc.Controllers
 {
     public class AccountController : Controller
     {
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SignUp(string username, string email, string password, string confirmPassword)
+        public ActionResult Create()
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SignUp(Account account)
+        {
+            if (ModelState.IsValid)
             {
-                if (password.Equals(confirmPassword))
+                using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    int userId = proxy.CreateUser(username, password, email);
+                    if (account.Password.Equals(account.ConfirmPassword))
+                    {
+                        try
+                        {
+                            User user = proxy.SignUp(account.Username, account.Email, account.Password);
+                            Session["userId"] = user.Id;
+                            Session["username"] = user.Username;
+                        }
+                        catch (Exception e)
+                        {
+                            string message = e.Message;
+                            if (message.StartsWith("Username"))
+                            {
+                                ModelState.AddModelError("Username", message);
+                            } else if (message.StartsWith("Email"))
+                            {
+                                ModelState.AddModelError("Email", message);
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
+                    }
                 }
-                
             }
             return Redirect("/");
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult LogIn(string email, string password)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                User user = new User();
-                user.Id = 1;
-                user.Username = "Mikkel";
+                User user = proxy.Login(email, password);
                 Session["userId"] = user.Id;
                 Session["username"] = user.Username;
             }
@@ -41,7 +65,6 @@ namespace RentItMvc.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
             Session.RemoveAll();

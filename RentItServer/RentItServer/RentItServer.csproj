@@ -85,12 +85,26 @@
     <Compile Include="Comment.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\ItuChannelCustom.cs" />
+    <Compile Include="CustomModels\ItuCommentCustom.cs" />
+    <Compile Include="CustomModels\ItuGenreCustom.cs" />
+    <Compile Include="CustomModels\ItuTrackCustom.cs" />
+    <Compile Include="CustomModels\ItuTrackPlayCustom.cs" />
+    <Compile Include="CustomModels\ItuUserCustom.cs" />
+    <Compile Include="CustomModels\ItuVoteCustom.cs" />
     <Compile Include="CustomModels\SMUrentalCustom.cs" />
+    <Compile Include="ITU\DataObjects\Channel.cs" />
     <Compile Include="ITU\ChannelOrganizer.cs" />
     <Compile Include="ITU\ChannelStreamer.cs" />
+    <Compile Include="ITU\DataObjects\Comment.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DatabaseDao.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
+    <Compile Include="ITU\DataObjects\Genre.cs" />
+    <Compile Include="ITU\DataObjects\Track.cs" />
+    <Compile Include="ITU\DataObjects\TrackPlay.cs" />
+    <Compile Include="ITU\DataObjects\User.cs" />
+    <Compile Include="ITU\DataObjects\Vote.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
@@ -149,7 +163,6 @@
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomModels\TrackCustom.cs" />
-    <Compile Include="ITU\TrackInfo.cs" />
     <Compile Include="TrackPlay.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

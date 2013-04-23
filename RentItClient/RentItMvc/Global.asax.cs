@@ -21,6 +21,9 @@ namespace RentItMvc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BootstrapBundleConfig.RegisterBundles(System.Web.Optimization.BundleTable.Bundles);
+
+            HtmlHelper.ClientValidationEnabled = true;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
         }
     }
 }

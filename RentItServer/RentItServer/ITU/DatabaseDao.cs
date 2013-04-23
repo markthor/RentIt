@@ -28,16 +28,16 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user = null;
                 var users = from u in context.Users
-                            where u.Username.Equals(usernameOrEmail) && 
-                            u.Password.Equals(password)
+                            where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
+                                   u.Password.Equals(password)
                             select u;
                 if (!users.Any())
                 {
                     return null;
                 }
                 return users.First();
+
             }
         }
 
@@ -45,34 +45,41 @@ namespace RentItServer.ITU
         /// Creates the user.
         /// </summary>
         /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
         /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
         /// <returns>The id of the user.</returns>
-        public int CreateUser(string username, string password, string email)
+        public User SignUp(string username, string email, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User theUser = new User()
+                var users = from u in context.Users
+                            where u.Username == username
+                            select u;
+                if (users.Any())
+                {
+                    throw new ArgumentException("Username is already taken.");
+                }
+                users = from u in context.Users
+                        where u.Email == email
+                        select u;
+                if (users.Any())
+                {
+                    throw new ArgumentException("Email is already in use.");
+                }
+
+                User user = new User()
                     {
                         Username = username,
+                        Email = email,
                         Password = password,
-                        //TODO: add email to entity
                         Comments = new Collection<Comment>(),
                         Channels = new Collection<Channel>(),
                         SubscribedChannels = new Collection<Channel>(),
                         Votes = new Collection<Vote>()
                     };
-                context.Users.Add(theUser);
+                context.Users.Add(user);
                 context.SaveChanges();
-
-                var users = from user in context.Users
-                            where user.Username.Equals(username) && user.Password.Equals(password)
-                            select user;
-                if (users.Any() == false)
-                {   // The user does not exist in the database, either something fucked up or another thread removed it already.
-                    throw new Exception("User got created and saved in the database but is not in the database.... O.ô.");
-                }
-                return users.First().Id;
+                return user;
             }
         }
 
@@ -82,7 +89,7 @@ namespace RentItServer.ITU
         /// <param name="theUser">The user.</param>
         /// <exception cref="System.Exception">End of \RemoveUser\. User was not get removed from the database.</exception>
         /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
-        public void DeleteUser(User theUser)
+        /*public void DeleteUser(User theUser)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -95,7 +102,7 @@ namespace RentItServer.ITU
 
                 if (users.Any() == true) throw new Exception("End of \"RemoveUser\". User was not get removed from the database.");
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets the user with specified user id.
@@ -136,7 +143,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id[" + userId + "]");
 
-                User theUser = users.First();
+                RentItServer.User theUser = users.First();
                 if (username != null) theUser.Username = username;
                 if (password != null) theUser.Password = password;
                 if (channels != null) theUser.Channels = channels;
@@ -269,7 +276,7 @@ namespace RentItServer.ITU
                 if (channelName != null) theChannel.Name = channelName;
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
-                if (rating != null) theChannel.Rating = (double)rating;
+                if (rating != null) theChannel.Rating = rating;
                 if (comments != null) theChannel.Comments = comments;
                 if (genres != null) theChannel.Genres = genres;
                 if (tracks != null) theChannel.Tracks = tracks;
@@ -547,6 +554,28 @@ namespace RentItServer.ITU
         internal List<TrackPlay> GetTrackPlays(int ChannelId)
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Email == email
+                            select u;
+                return !users.Any();
+            }
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Username == username
+                            select u;
+                return !users.Any();
+            }
         }
     }
 }

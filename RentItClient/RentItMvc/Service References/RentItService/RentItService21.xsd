@@ -14,8 +14,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SearchArgs" nillable="true" type="tns:SearchArgs" />
-  <xs:complexType name="TrackInfo">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:element name="TrackInfo" nillable="true" type="tns:TrackInfo" />
 </xs:schema>

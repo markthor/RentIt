@@ -142,8 +142,9 @@ namespace RentItServer.ITU
 
         public Channel ModifyChannel(int userId, int channelId)
         {
+            throw new NotImplementedException();
             //TODO .... waaht?
-            return new Channel();
+            //return new Channel();
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Login the specified user.
         /// </summary>
-        /// <param name="username">The username of the user.</param>
+        /// <param name="usernameOrEmail">The username or email of the user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public User Login(string usernameOrEmail, string password)
@@ -197,7 +198,7 @@ namespace RentItServer.ITU
         /// <param name="password">The password for the user.</param>
         /// <param name="email">The email associated with user.</param>
         /// <returns>The id of the created user.</returns>
-        public int CreateUser(string username, string password, string email)
+        public User SignUp(string username, string email, string password)
         {
             if (username == null) LogAndThrowException(new ArgumentNullException("username"), "CreateUser");
             if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "CreateUser");
@@ -207,10 +208,9 @@ namespace RentItServer.ITU
             if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
             // TODO use regex to better check mail validity
 
-            int userId;
             try
             {
-                userId = _dao.CreateUser(username, password, email);
+                return _dao.SignUp(username, password, email);
                 //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
             }
             catch (Exception e)
@@ -219,7 +219,7 @@ namespace RentItServer.ITU
                     _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
                 throw;
             }
-            return userId;
+            return null;
         }
 
         public void UploadTrack(Track track, int userId, int channelId)
@@ -269,9 +269,9 @@ namespace RentItServer.ITU
             return new[] { 0 };
         }
 
-        public TrackInfo GetTrackInfo(int trackId)
+        public Track GetTrackInfo(int trackId)
         {
-            return new TrackInfo();
+            return new Track();
         }
 
         /// <summary>
@@ -325,6 +325,16 @@ namespace RentItServer.ITU
         {
             _cOrganizer.StartChannel(channelId);
             return _cOrganizer.GetChannelPortNumber(channelId);
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return _dao.IsEmailAvailable(email);
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return _dao.IsUsernameAvailable(username);
         }
     }
 }
