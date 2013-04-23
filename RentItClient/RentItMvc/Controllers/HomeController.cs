@@ -16,5 +16,10 @@ namespace RentItMvc.Controllers
         {
             return View();
         }
+
+        public ActionResult Main()
+        {
+            return View();
+        }
     }
 }

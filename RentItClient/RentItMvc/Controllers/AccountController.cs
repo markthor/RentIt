@@ -61,7 +61,7 @@ namespace RentItMvc.Controllers
                 Session["userId"] = user.Id;
                 Session["username"] = user.Username;
             }
-            return Redirect("/");
+            return Redirect("/Home/Main");
         }
 
         [HttpPost]
