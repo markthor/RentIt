@@ -1,14 +1,18 @@
 ﻿@model RentItMvc.Models.Channel
 
-@{
-    ViewBag.Title = "SelectChannel";
+@section Left
+{
+    
 }
 
+<<<<<<< HEAD
+@section Middle
+{
 <fieldset>
-    <legend>Channel</legend>
-    
-    <h1></h1>
-
+    <legend>
+        Channel
+        <a class="btn" href="/Home/Main"><i class="icon-play"></i></a>
+    </legend>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
@@ -16,3 +20,9 @@
         @Html.DisplayFor(model => model.Description)
     </div>
 </fieldset>
+}
+
+@section Right
+{
+    
+}
