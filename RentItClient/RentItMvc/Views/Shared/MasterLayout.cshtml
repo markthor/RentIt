@@ -2,28 +2,14 @@
     Layout = "~/Views/Shared/BaseLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-        <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="~/Content/our-custom.css" />
-    </head>
-    <body>
-        <div class="container" style="margin-top: 46px; min-height: 800px">
-            <div class="row-fluid">
-                <div class="span3">
-                    @RenderSection("Left")
-                </div>
-                <div class="span6">
-                    @RenderSection("Middle")
-                </div>
-                <div class="span3">
-                    @RenderSection("Right")
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+<div class="row-fluid">
+    <div class="span3">
+        @RenderSection("Left")
+    </div>
+    <div class="span6">
+        @RenderSection("Middle")
+    </div>
+    <div class="span3">
+        @RenderSection("Right")
+    </div>
+</div>
