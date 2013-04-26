@@ -27,10 +27,10 @@
             @RenderBody()
         </div>
         <div class="container">
-                <footer>
-                    <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
-                </footer>    
-            </div>
+            <footer>
+                <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
+            </footer>    
+        </div>
         @Scripts.Render("~/js")
         @RenderSection("Scripts", required: false)
         <a href="/Home/ChannelList" class="brand">ChannelList</a>
