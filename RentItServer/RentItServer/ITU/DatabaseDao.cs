@@ -84,6 +84,49 @@ namespace RentItServer.ITU
             }
         }
 
+        public void Subscribe(int userId, int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities()){
+                var users = from user in context.Users
+                            where user.Id == userId
+                            select user;
+                if(users.Any() == false)    throw new ArgumentException("No user with userId ["+userId+"]");
+
+                var channels = from channel in context.Channels
+                               where channel.Id == channelId
+                               select channel;
+
+                if(channels.Any() == false) throw new ArgumentException("No channel with channelId ["+channelId+"]");
+
+                User theUser = users.First();
+                Channel theChannel = channels.First();
+                theChannel.Subscribers.Add(theUser);
+                context.SaveChanges();
+            }
+        }
+
+        public void UnSubscribe(int userId, int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from user in context.Users
+                            where user.Id == userId
+                            select user;
+                if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
+
+                var channels = from channel in context.Channels
+                               where channel.Id == channelId
+                               select channel;
+
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
+                User theUser = users.First();
+                Channel theChannel = channels.First();
+                theChannel.Subscribers.Remove(theUser);
+                context.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Removes the user from the database. This method also removed all votes by the user
         /// </summary>
@@ -106,11 +149,12 @@ namespace RentItServer.ITU
                             where vote.UserId == theUser.Id
                             select vote;
 
-                foreach (Vote vote in votes){
+                foreach (Vote vote in votes)
+                {
                     context.Votes.Remove(vote);
                 }
                 context.Users.Remove(theUser);
-                
+
                 context.SaveChanges();
 
                 // Verify deletion succeeded
@@ -211,7 +255,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a channel.
         /// </summary>
-        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="channelName">SearchString of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
@@ -295,7 +339,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <param name="ownerId">The owner id. Can be null.</param>
-        /// <param name="channelName">Name of the channel. Can be null.</param>
+        /// <param name="channelName">SearchString of the channel. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
@@ -413,16 +457,51 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count >= filter.NumberOfSubscriptions select channel;
                 }
-                //TODO: HUSK AT IMPLEMENTERE SORTERING :)
-                //if (filter.SortOption == -1)
-                //{   // Descending
-                //    channels = from channel in channels orderby channel.Name descending select channel;
+                if (filter.Rating > -1)
+                {   // Apply rating filter
+                    channels = from channel in channels where channel.Rating >= filter.Rating select channel;
+                }
+                if (filter.SortOption.Equals(""))
+                {   // Apply default sort order
+                    channels = from channel in channels orderby channel.Name select channel;
+                }
+                else
+                {   // Apply specific sort order
+                    switch (filter.SortOption)
+                    {
+                        case ChannelSearchArgs.AmountPlayedAsc:
+                            channels = from channel in channels orderby channel.Hits ascending select channel;
+                            break;
+                        case ChannelSearchArgs.AmountPlayedDesc:
+                            channels = from channel in channels orderby channel.Hits descending select channel;
+                            break;
+                        case ChannelSearchArgs.NameAsc:
+                            channels = from channel in channels orderby channel.Name ascending select channel;
+                            break;
+                        case ChannelSearchArgs.NameDesc:
+                            channels = from channel in channels orderby channel.Name descending select channel;
+                            break;
+                        case ChannelSearchArgs.NumberOfCommentsAsc:
+                            channels = from channel in channels orderby channel.Comments.Count ascending select channel;
+                            break;
+                        case ChannelSearchArgs.NumberOfCommentsDesc:
+                            channels = from channel in channels orderby channel.Comments.Count descending select channel;
+                            break;
+                        case ChannelSearchArgs.RatingAsc:
+                            channels = from channel in channels orderby channel.Rating ascending select channel;
+                            break;
+                        case ChannelSearchArgs.RatingDesc:
+                            channels = from channel in channels orderby channel.Rating descending select channel;
+                            break;
+                        case ChannelSearchArgs.SubscriptionsAsc:
+                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                            break;
+                        case ChannelSearchArgs.SubscriptionsDesc:
+                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                            break;
+                    }
+                }
 
-                //}
-                //else if (filter.SortOption == 1)
-                //{   // Ascending
-                //    channels = from channel in channels orderby channel.Name ascending select channel;
-                //}
                 // Execute the query before leaving "using" block
                 filteredChannels = channels.ToList();
             }
@@ -490,7 +569,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <param name="path">The path.</param>
-        /// <param name="trackName">Name of the track.</param>
+        /// <param name="trackName">SearchString of the track.</param>
         /// <param name="trackArtist">The track artist.</param>
         /// <param name="length">The length in ms.</param>
         /// <param name="upVotes">Up votes.</param>
@@ -503,7 +582,7 @@ namespace RentItServer.ITU
             {
                 var channels = from channel in context.Channels where channel.Id == channelId select channel;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
-                
+
                 Track theTrack = new Track()
                     {
                         ChannelId = channelId,
@@ -553,19 +632,93 @@ namespace RentItServer.ITU
             return theTrack;
         }
 
+        public List<Track> GetTracksWithFilter(int channelId, TrackSearchArgs filter)
+        {
+            List<Track> filteredTracks;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {   // get all tracks that starts with filter.SearchString
+                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.SearchString) select track;
+
+                if (string.IsNullOrEmpty(filter.Artist) == false)
+                {   // Apply artist filter
+                    tracks = from track in tracks where track.Artist.StartsWith(filter.Artist) select track;
+                }
+                if (string.IsNullOrEmpty(filter.SearchString) == false)
+                {   // Apply name filter
+                    tracks = from track in tracks where track.Name.StartsWith(filter.SearchString) select track;
+                }
+                if (filter.Downvotes > -1)
+                {   // Apply downvotes filter
+                    tracks = from track in tracks where track.DownVotes >= filter.Downvotes select track;
+                }
+                if (filter.Upvotes > -1)
+                {   // Apply upvotes filter
+                    tracks = from track in tracks where track.UpVotes >= filter.Upvotes select track;
+                }
+                if (filter.SortOption.Equals(""))
+                {   // Apply default sort order
+                    tracks = from track in tracks orderby track.Name select track;
+                }
+                else
+                {   // Apply specific sort order
+                    switch (filter.SortOption)
+                    {
+                        case TrackSearchArgs.ArtistAsc:
+                            tracks = from track in tracks orderby track.Artist ascending select track;
+                            break;
+                        case TrackSearchArgs.ArtistDesc:
+                            tracks = from track in tracks orderby track.Artist descending select track;
+                            break;
+                        case TrackSearchArgs.DownvotesAsc:
+                            tracks = from track in tracks orderby track.DownVotes ascending select track;
+                            break;
+                        case TrackSearchArgs.DownvotesDesc:
+                            tracks = from track in tracks orderby track.DownVotes descending select track;
+                            break;
+                        case TrackSearchArgs.NameAsc:
+                            tracks = from track in tracks orderby track.Name ascending select track;
+                            break;
+                        case TrackSearchArgs.NameDesc:
+                            tracks = from track in tracks orderby track.Name descending select track;
+                            break;
+                        case TrackSearchArgs.UpvotesAsc:
+                            tracks = from track in tracks orderby track.UpVotes ascending select track;
+                            break;
+                        case TrackSearchArgs.UpvotesDesc:
+                            tracks = from track in tracks orderby track.UpVotes descending select track;
+                            break;
+                    }
+                }
+
+                // Execute the query before leaving "using" block
+                filteredTracks = tracks.ToList();
+            }
+
+            if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
+            {   // Only get the tracks within the specified interval [filter.startIndex, ..., filter.endIndex]
+                Track[] range = new Track[filter.EndIndex - filter.StartIndex];
+                filteredTracks.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex);
+                filteredTracks = new List<Track>(range);
+            }
+            return filteredTracks;
+
+        }
+
         /// <summary>
         /// Removes the track.
         /// </summary>
         /// <param name="track">The track.</param>
         public void DeleteTrackEntry(Track track)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities()){
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
                 var channels = from channel in context.Channels
                                where channel.Id == track.ChannelId
                                select channel;
 
                 // If the track is associated with a channel, remove it from the channel as well
-                if (channels.Any() == true){
+                if (channels.Any() == true)
+                {
                     Channel theChannel = channels.First();
                     theChannel.Tracks.Remove(track);
                 }

@@ -141,7 +141,13 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)
         {
-            throw new NotImplementedException();
+            IEnumerable<Track> theRawTracks = _controller.GetTracks(channelId, args);
+            List<ITU.DatabaseWrapperObjects.Track> theTracks = new List<ITU.DatabaseWrapperObjects.Track>();
+            foreach (Track track in theRawTracks)
+            {
+                theTracks.Add(track.GetTrack());
+            }
+            return theTracks.ToArray();
         }
 
         public void CreateComment(string comment, int userId, int channelId)

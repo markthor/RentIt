@@ -192,7 +192,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a channel.
         /// </summary>
-        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="channelName">SearchString of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
@@ -415,7 +415,14 @@ namespace RentItServer.ITU
 
         public IEnumerable<Track> GetTracks(int channelId, TrackSearchArgs args)
         {
-            throw new NotImplementedException();
+            try{
+                return _dao.GetTracksWithFilter(channelId, args);
+            }
+            catch (Exception e){
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetTracks failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
         /// <summary>
@@ -463,19 +470,35 @@ namespace RentItServer.ITU
 
         public void Subscribe(int userId, int channelId)
         {
-
+            try{
+                _dao.Subscribe(userId, channelId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("Subscribe failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
         public void UnSubscribe(int userId, int channelId)
         {
-
+            try{
+                _dao.UnSubscribe(userId, channelId);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("UnSubscribe failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
         /// <summary>
         /// Logs and throws the exception e.
         /// </summary>
         /// <param name="e">The exception to throw.</param>
-        /// <param name="operationName">Name of the operation.</param>
+        /// <param name="operationName">SearchString of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
             //_logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
