@@ -85,7 +85,7 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Removes the user from the database.
+        /// Removes the user from the database. This method also removed all votes by the user
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
@@ -101,9 +101,19 @@ namespace RentItServer.ITU
 
                 User theUser = users.First();
 
+                // Remove all votes from the user
+                var votes = from vote in context.Votes
+                            where vote.UserId == theUser.Id
+                            select vote;
+
+                foreach (Vote vote in votes){
+                    context.Votes.Remove(vote);
+                }
                 context.Users.Remove(theUser);
+                
                 context.SaveChanges();
 
+                // Verify deletion succeeded
                 users = from user in context.Users
                         where user.Id == theUser.Id
                         select user;
@@ -214,13 +224,13 @@ namespace RentItServer.ITU
                 var channels = from channel in context.Channels
                                where channelName.Equals(channelName)
                                select channel;
-                if(channels.Any() == true)  throw new ArgumentException("Channel with channelname ["+channelName+"] already exists");
+                if (channels.Any() == true) throw new ArgumentException("Channel with channelname [" + channelName + "] already exists");
 
                 var users = from user in context.Users
                             where user.Id == userId
                             select user;
 
-                if (users.Any() == false) throw new ArgumentException("No user with userId ["+userId+"]");
+                if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
 
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
@@ -246,7 +256,7 @@ namespace RentItServer.ITU
                 context.SaveChanges();
 
                 channels = from channel in context.Channels.Where(channel => channel.Name == channelName && channel.UserId == userId)
-                               select channel;
+                           select channel;
 
                 if (channels.Any() == true)
                 {
@@ -464,7 +474,13 @@ namespace RentItServer.ITU
                         User = theUser,
                         Track = theTrack
                     };
+
+                // Add Vote to database and assign it an id
                 context.Votes.Add(vote);
+                context.SaveChanges();
+
+                // Update the user with the new vote. 
+                theUser.Votes.Add(vote);
                 context.SaveChanges();
             }
         }
@@ -487,7 +503,7 @@ namespace RentItServer.ITU
             {
                 var channels = from channel in context.Channels where channel.Id == channelId select channel;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
-
+                
                 Track theTrack = new Track()
                     {
                         ChannelId = channelId,
@@ -503,6 +519,11 @@ namespace RentItServer.ITU
                     };
 
                 context.Tracks.Add(theTrack);
+                context.SaveChanges();
+
+                // Update the channel with the track
+                Channel theChannel = channels.First();
+                theChannel.Tracks.Add(theTrack);
                 context.SaveChanges();
 
                 return theTrack;
@@ -538,8 +559,17 @@ namespace RentItServer.ITU
         /// <param name="track">The track.</param>
         public void DeleteTrackEntry(Track track)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
+            using (RENTIT21Entities context = new RENTIT21Entities()){
+                var channels = from channel in context.Channels
+                               where channel.Id == track.ChannelId
+                               select channel;
+
+                // If the track is associated with a channel, remove it from the channel as well
+                if (channels.Any() == true){
+                    Channel theChannel = channels.First();
+                    theChannel.Tracks.Remove(track);
+                }
+
                 context.Tracks.Remove(track);
                 context.SaveChanges();
             }
@@ -581,7 +611,12 @@ namespace RentItServer.ITU
                         User = theUser,
                         Channel = theChannel
                     };
+
                 context.Comments.Add(theComment);
+                context.SaveChanges();
+
+                // Update the channel with the comment
+                theChannel.Comments.Add(theComment);
                 context.SaveChanges();
             }
         }
@@ -602,7 +637,25 @@ namespace RentItServer.ITU
                                select comment;
                 if (comments.Any() == false) throw new ArgumentException("No comment with channelId [" + channelId + "] and userId [" + userId + "] and date [" + date + "]");
 
-                context.Comments.Remove(comments.First());
+                var channels = from channel in context.Channels
+                               where channel.Id == channelId
+                               select channel;
+
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
+                var users = from user in context.Users
+                            where user.Id == userId
+                            select user;
+
+                if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
+
+                Comment theComment = comments.First();
+                context.Comments.Remove(theComment);
+                Channel theChannel = channels.First();
+                theChannel.Comments.Remove(theComment);
+                User theUser = users.First();
+                theUser.Comments.Remove(theComment);
+                context.SaveChanges();
             }
         }
 

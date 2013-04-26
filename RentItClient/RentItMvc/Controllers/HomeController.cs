@@ -38,8 +38,9 @@ namespace RentItMvc.Controllers
             return Redirect("/");
         }
 
-        public ActionResult ChannelList()
+        public ActionResult ChannelList(List<Channel> theList)
         {
+            // TO DO: make it so that it displays theList
             ChannelList list1 = new ChannelList();
             Channel chan = new Channel();
             chan.Description = "A nice channel";

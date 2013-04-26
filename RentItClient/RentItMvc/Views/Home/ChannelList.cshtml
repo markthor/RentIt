@@ -15,7 +15,7 @@
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new { userId = p.Id }))'">>
+                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new { userId = p.Id }))'">
                     <td>
                         @p.Name
                     </td>
@@ -27,8 +27,12 @@
                     </td>  
                     <td>
                         @p.Hits
-                    </td>  
+                    </td> 
+                    <td>
+                        <a class="btn" href="/Home/Main"><i class="icon-play"></i></a>
+                    </td> 
                 </tr>
             }
+            
         </table>
 </div>
