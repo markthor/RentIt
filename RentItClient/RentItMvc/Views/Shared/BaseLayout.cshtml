@@ -15,33 +15,30 @@
         <link rel="stylesheet" type="text/css" href="~/Content/our-custom.css" />
         <style type="text/css">
             body {
+                
                 margin-top: 60px;
+                margin-bottom: 40px;
             }
         </style>
     </head>
     <body>
-        <div class="wrap">
-            <div class="navbar navbar-fixed-top">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            @Html.Action("Topbar", "Shared")    
-                        </div>
+        <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        @Html.Action("Topbar", "Shared")    
                     </div>
                 </div>
-            <div class="container">
-                @RenderBody()
             </div>
-            <a href="/Home/ChannelList" class="brand">ChannelList</a>
-            <a href="/Home/Main" class="brand">Main</a>
-            
+        <div class="container">
+            @RenderBody()
         </div>
+        <a href="/Home/ChannelList" class="brand">ChannelList</a>
+        <a href="/Home/Main" class="brand">Main</a>
         
         <div class="footer">
             <div class="container">
-                <footer>
-                    <p>&copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")</p>
-                </footer>    
-            </div>    
+                &copy; @ViewBag.Title @System.DateTime.Now.ToString("yyyy")
+            </div>
         </div>
 
         
