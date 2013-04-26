@@ -18,12 +18,12 @@ namespace RentItServer.ITU
         public const string DownvotesAsc = "downvot asc";
 
         /// <summary>
-        /// Gets the name.
+        /// Gets the search string.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The search string.
         /// </value>
-        public string Name { get; private set; }
+        public string SearchString { get; private set; }
 
         /// <summary>
         /// Gets the artist.
@@ -50,6 +50,22 @@ namespace RentItServer.ITU
         public int Downvotes { get; private set; }
 
         /// <summary>
+        /// Gets the start index.
+        /// </summary>
+        /// <value>
+        /// The start index.
+        /// </value>
+        public int StartIndex { get; private set; }
+        
+        /// <summary>
+        /// Gets the end index.
+        /// </summary>
+        /// <value>
+        /// The end index.
+        /// </value>
+        public int EndIndex { get; private set; }
+        
+        /// <summary>
         /// Gets the sort option. Must be one of the const fields of this class
         /// </summary>
         /// <value>
@@ -59,10 +75,12 @@ namespace RentItServer.ITU
 
         public TrackSearchArgs()
         {
-            Name = "";
+            SearchString = "";
             Artist = "";
             Upvotes = -1;
             Downvotes = -1;
+            StartIndex = -1;
+            EndIndex = -1;
         }
     }
 }
