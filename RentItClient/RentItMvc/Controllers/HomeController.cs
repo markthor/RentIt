@@ -29,7 +29,8 @@ namespace RentItMvc.Controllers
                 //RentItService.Channel chan = proxy.GetChannel((int)channelId);
                 RentItMvc.Models.Channel chan = new RentItMvc.Models.Channel();
                 chan.Name = @"Cyperchannel";
-                chan.Description = "The greatest channel ever made";
+                chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
+                chan.Hits = 1024;
                 if (chan != null)
                 {   
                     return View(chan);

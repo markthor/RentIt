@@ -5,20 +5,32 @@
     
 }
 
-<<<<<<< HEAD
 @section Middle
 {
 <fieldset>
-    <legend>
-        Channel
+    <legend style="text-align:center">
         <a class="btn" href="/Home/Main"><i class="icon-play"></i></a>
-    </legend>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+        <a class="btn" href="/Home/Main"><i class="icon-thumbs-up"></i></a>
+        <a class="btn" href="/Home/Main"><i class="icon-thumbs-down"></i></a>
+        <div class="display-field">
+            <span class="badge badge-inverse" >
+                @Html.DisplayFor(model => model.Hits)
+            </span>
+            <span class="badge badge-success" >
+                @Html.DisplayFor(model => model.Hits)
+            </span>
+            <span class="badge badge-important" >
+                @Html.DisplayFor(model => model.Hits)
+            </span>
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+    </legend>  
     <div class="display-field">
         @Html.DisplayFor(model => model.Description)
     </div>
+
 </fieldset>
 }
 
