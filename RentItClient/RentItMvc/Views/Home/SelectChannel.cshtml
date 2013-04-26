@@ -1,0 +1,18 @@
+﻿@model RentItMvc.Models.Channel
+
+@{
+    ViewBag.Title = "SelectChannel";
+}
+
+<fieldset>
+    <legend>Channel</legend>
+    
+    <h1></h1>
+
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>

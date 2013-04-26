@@ -22,6 +22,22 @@ namespace RentItMvc.Controllers
             return View();
         }
 
+        public ActionResult SelectChannel(int? channelId)
+        {
+            //using (RentItServiceClient proxy = new RentItServiceClient())
+            //{
+                //RentItService.Channel chan = proxy.GetChannel((int)channelId);
+                RentItMvc.Models.Channel chan = new RentItMvc.Models.Channel();
+                chan.Name = @"Cyperchannel";
+                chan.Description = "The greatest channel ever made";
+                if (chan != null)
+                {   
+                    return View(chan);
+                }
+            //}
+            return Redirect("/");
+        }
+
         public ActionResult ChannelList()
         {
             ChannelList list1 = new ChannelList();
