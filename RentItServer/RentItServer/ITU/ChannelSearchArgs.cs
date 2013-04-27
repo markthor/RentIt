@@ -22,7 +22,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The search string. Default is an empty string
         /// </value>
-        public string Name { get; private set; }
+        public string SearchString { get; private set; }
         /// <summary>
         /// Gets the genres to include in search.
         /// </summary>
@@ -83,7 +83,7 @@ namespace RentItServer.ITU
 
         public ChannelSearchArgs()
         {
-            Name = "";
+            SearchString = "";
             Genres = new string[] { };
             AmountPlayed = -1;
             NumberOfSubscriptions = -1;

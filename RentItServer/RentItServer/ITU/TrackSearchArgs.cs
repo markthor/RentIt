@@ -23,7 +23,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The search string.
         /// </value>
-        public string Name { get; private set; }
+        public string SearchString { get; private set; }
 
         /// <summary>
         /// Gets the artist.
@@ -75,7 +75,7 @@ namespace RentItServer.ITU
 
         public TrackSearchArgs()
         {
-            Name = "";
+            SearchString = "";
             Artist = "";
             Upvotes = -1;
             Downvotes = -1;

@@ -165,12 +165,6 @@ namespace RentItServer
             _controller.DeleteComment(channelId, userId, date);
         }
 
-        public ITU.DatabaseWrapperObjects.Comment[] GetComments(int channelId, int startInclusive, int endExclusive)
-        {
-            throw new NotImplementedException();
-            //return _controller.GetCommentIds(channelId, fromInclusive, toExclusive);
-        }
-
         public ITU.DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date)
         {
             throw new NotImplementedException();
@@ -214,11 +208,11 @@ namespace RentItServer
             //return theComments.ToArray();
         }
 
-        public ITU.DatabaseWrapperObjects.Comment GetComment(int commentId)
-        {
-            Comment theComment = _controller.GetComment(commentId);
-            return theComment.GetComment();
-        }
+        //public ITU.DatabaseWrapperObjects.Comment GetComment(int commentId)
+        //{
+        //    Comment theComment = _controller.GetComment(commentId);
+        //    return theComment.GetComment();
+        //}
 
         public bool IsEmailAvailable(string email)
         {

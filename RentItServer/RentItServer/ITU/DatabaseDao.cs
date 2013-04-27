@@ -454,7 +454,7 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
-                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.Name) select channel;
+                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -652,15 +652,15 @@ namespace RentItServer.ITU
             List<Track> filteredTracks;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all tracks that starts with filter.Name
-                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.Name) select track;
+                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.SearchString) select track;
 
                 if (string.IsNullOrEmpty(filter.Artist) == false)
                 {   // Apply artist filter
                     tracks = from track in tracks where track.Artist.StartsWith(filter.Artist) select track;
                 }
-                if (string.IsNullOrEmpty(filter.Name) == false)
+                if (string.IsNullOrEmpty(filter.SearchString) == false)
                 {   // Apply name filter
-                    tracks = from track in tracks where track.Name.StartsWith(filter.Name) select track;
+                    tracks = from track in tracks where track.Name.StartsWith(filter.SearchString) select track;
                 }
                 if (filter.Downvotes > -1)
                 {   // Apply downvotes filter
