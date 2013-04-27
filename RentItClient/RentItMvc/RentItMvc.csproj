@@ -213,7 +213,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Home\Main.cshtml" />
-    <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Home\ChannelList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
     <Content Include="Views\Home\SelectChannel.cshtml" />

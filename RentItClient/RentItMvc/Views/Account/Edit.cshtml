@@ -1,0 +1,63 @@
+﻿@model RentItMvc.Models.Account
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@section Left
+{
+    
+}
+
+@section Middle
+{
+    <h2>Edit Account</h2>
+
+    @using (Html.BeginForm("ChangePassword", "Account", null, FormMethod.Post, new { @class = "form-horizontal"}))
+    {
+        @Html.ValidationSummary(true)
+
+            <div class="editor-label">
+                @Html.DisplayFor(model => model.Username)
+            </div>
+
+        <div class="editor-label">
+            @Html.DisplayFor(model => model.Email)
+        </div>
+        
+            <legend>Change password</legend>
+
+            
+            <div class="signup-field">
+                <div class="input-field">
+                    @Html.TextBoxFor(model => model.CurrentPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Current password" })
+                </div>
+                <div class="error-field">
+                    @Html.ValidationMessageFor(model => model.CurrentPassword, null, new {@class = "txt-error"})
+                </div>    
+            </div>
+            <div class="signup-field">
+                <div class="input-field">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "input-block-level", type = "password", required = "required", placeholder = "New password" })
+                </div>
+                <div class="error-field">
+                    @Html.ValidationMessageFor(model => model.Password, null, new {@class = "txt-error"})
+                </div>    
+            </div>
+            <div class="signup-field">
+                <div class="input-field">
+                    @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Confirm new password" })
+                </div>
+                <div class="error-field">
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new {@class = "txt-error"})
+                </div>    
+            </div>
+            <div class="clearfix"></div>
+            <button class="btn btn-success" type="submit">Save changes</button>
+    }
+}
+
+@section Right
+{
+    
+}

@@ -40,7 +40,11 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if(proxy.)
+                if (proxy.IsCorrectPassword((int) Session["userId"], currentPassword))
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json("The current password is wrong.", JsonRequestBehavior.AllowGet);
             }
         }
     }

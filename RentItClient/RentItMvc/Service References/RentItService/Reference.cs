@@ -1102,6 +1102,12 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUser", ReplyAction="http://tempuri.org/IRentItService/GetUserResponse")]
         System.Threading.Tasks.Task<RentItMvc.RentItService.User> GetUserAsync(int userId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsCorrectPassword", ReplyAction="http://tempuri.org/IRentItService/IsCorrectPasswordResponse")]
+        bool IsCorrectPassword(int userId, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsCorrectPassword", ReplyAction="http://tempuri.org/IRentItService/IsCorrectPasswordResponse")]
+        System.Threading.Tasks.Task<bool> IsCorrectPasswordAsync(int userId, string password);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllUserIds", ReplyAction="http://tempuri.org/IRentItService/GetAllUserIdsResponse")]
         int[] GetAllUserIds();
         
@@ -1292,6 +1298,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<RentItMvc.RentItService.User> GetUserAsync(int userId) {
             return base.Channel.GetUserAsync(userId);
+        }
+        
+        public bool IsCorrectPassword(int userId, string password) {
+            return base.Channel.IsCorrectPassword(userId, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsCorrectPasswordAsync(int userId, string password) {
+            return base.Channel.IsCorrectPasswordAsync(userId, password);
         }
         
         public int[] GetAllUserIds() {

@@ -11,22 +11,8 @@ namespace RentItMvc.Controllers
 {
     public class AccountController : Controller
     {
-        public ActionResult Details()
+        public ActionResult ChangePassword(Account account)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
-            {
-                User user = proxy.GetUser((int)Session["userId"]);
-                //User user = new User();
-                //user.Email = @"andreas.p.poulsen@gmail.com";
-                //user.Username = "Prechtig";
-                if (user != null)
-                {
-                    Account acc = new Account();
-                    acc.Email = user.Email;
-                    acc.Username = user.Username;
-                    return View(acc);
-                }
-            }
             return Redirect("/");
         }
 
