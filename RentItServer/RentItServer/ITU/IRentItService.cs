@@ -43,6 +43,9 @@ namespace RentItServer.ITU
         [OperationContract]
         DatabaseWrapperObjects.User GetUser(int userId);
 
+        [OperationContract]
+        bool IsCorrectPassword(int userId, string password);
+
         /// <summary>
         /// Gets all users
         /// </summary>
@@ -224,8 +227,8 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="commentId">The comment id.</param>
         /// <returns></returns>
-        [OperationContract]
-        DatabaseWrapperObjects.Comment GetComment(int commentId);
+        //[OperationContract]
+        //DatabaseWrapperObjects.Comment GetComment(int commentId);
 
         
         /// <summary>

@@ -15,10 +15,29 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                //User user = proxy.GetUser(Session["userId"]);
-                User user = new User();
-                user.Email = @"andreas.p.poulsen@gmail.com";
-                user.Username = "Prechtig";
+                User user = proxy.GetUser((int)Session["userId"]);
+                //User user = new User();
+                //user.Email = @"andreas.p.poulsen@gmail.com";
+                //user.Username = "Prechtig";
+                if (user != null)
+                {
+                    Account acc = new Account();
+                    acc.Email = user.Email;
+                    acc.Username = user.Username;
+                    return View(acc);
+                }
+            }
+            return Redirect("/");
+        }
+
+        public ActionResult Edit()
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                User user = proxy.GetUser((int)Session["userId"]);
+                //User user = new User();
+                //user.Email = @"andreas.p.poulsen@gmail.com";
+                //user.Username = "Prechtig";
                 if (user != null)
                 {
                     Account acc = new Account();
@@ -51,7 +70,8 @@ namespace RentItMvc.Controllers
                             if (message.StartsWith("Username"))
                             {
                                 ModelState.AddModelError("Username", message);
-                            } else if (message.StartsWith("Email"))
+                            }
+                            else if (message.StartsWith("Email"))
                             {
                                 ModelState.AddModelError("Email", message);
                             }

@@ -35,5 +35,13 @@ namespace RentItMvc.Controllers
                 return Json("Username is already in use.", JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult IsCurrentPasswordCorrect(string currentPassword)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                if(proxy.)
+            }
+        }
     }
 }

@@ -19,6 +19,12 @@ namespace RentItMvc.Models
         [Remote("IsEmailAvailable", "Validation")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public string CurrentPassword { get; set; }
+
+        [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
+        [DataType(DataType.Password)]
+        public string NewPassword { get; set; }
        
         [Required]
         [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]

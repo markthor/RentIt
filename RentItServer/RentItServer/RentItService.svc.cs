@@ -70,6 +70,11 @@ namespace RentItServer
             return theUser.GetUser();
         }
 
+        public bool IsCorrectPassword(int userId, string password)
+        {
+            return _controller.IsCorrectPassword(userId, password);
+        }
+
         public int[] GetAllUserIds()
         {
             IEnumerable<int> theUsers = _controller.GetAllUserIds();

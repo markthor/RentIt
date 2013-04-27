@@ -34,7 +34,7 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                <a href="/Account/Details" class="brand">@Session["username"]</a>
+                <a href="/Account/Edit" class="brand">@Session["username"]</a>
                 <button class="btn btn-danger btn-signInOut pull-left" type="submit">Sign out</button>
             }
         }

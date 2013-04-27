@@ -84,6 +84,21 @@ namespace RentItServer.ITU
             }
         }
 
+        public bool IsCorrectPassword(int userId, string password)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Id == userId
+                            select u;
+                if (users.Any() == false)
+                {
+                    throw new ArgumentException(string.Format("No user with userid {0}", userId));
+                }
+                return users.First().Password.Equals(password);
+            }
+        }
+
         public void Subscribe(int userId, int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities()){

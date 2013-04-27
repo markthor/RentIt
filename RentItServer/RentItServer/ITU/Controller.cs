@@ -149,6 +149,11 @@ namespace RentItServer.ITU
             }
         }
 
+        public bool IsCorrectPassword(int userId, string password)
+        {
+            return _dao.IsCorrectPassword(userId, password);
+        }
+
         public IEnumerable<int> GetAllUserIds()
         {
             try

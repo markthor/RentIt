@@ -15,28 +15,21 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
-    public partial class SearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private int AmountPlayedk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
         
-        private int EndIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
         
-        private string[] Genresk__BackingFieldField;
-        
-        private int NumberOfCommentsk__BackingFieldField;
-        
-        private int NumberOfSubscriptionsk__BackingFieldField;
-        
-        private string SearchStringk__BackingFieldField;
-        
-        private int SortOptionk__BackingFieldField;
-        
-        private int StartIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsernameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -48,106 +41,41 @@ namespace RentItMvc.RentItService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<AmountPlayed>k__BackingField", IsRequired=true)]
-        public int AmountPlayedk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
             get {
-                return this.AmountPlayedk__BackingFieldField;
+                return this.EmailField;
             }
             set {
-                if ((this.AmountPlayedk__BackingFieldField.Equals(value) != true)) {
-                    this.AmountPlayedk__BackingFieldField = value;
-                    this.RaisePropertyChanged("AmountPlayedk__BackingField");
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
-        public int EndIndexk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
             get {
-                return this.EndIndexk__BackingFieldField;
+                return this.IdField;
             }
             set {
-                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.EndIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Genres>k__BackingField", IsRequired=true)]
-        public string[] Genresk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
             get {
-                return this.Genresk__BackingFieldField;
+                return this.UsernameField;
             }
             set {
-                if ((object.ReferenceEquals(this.Genresk__BackingFieldField, value) != true)) {
-                    this.Genresk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Genresk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfComments>k__BackingField", IsRequired=true)]
-        public int NumberOfCommentsk__BackingField {
-            get {
-                return this.NumberOfCommentsk__BackingFieldField;
-            }
-            set {
-                if ((this.NumberOfCommentsk__BackingFieldField.Equals(value) != true)) {
-                    this.NumberOfCommentsk__BackingFieldField = value;
-                    this.RaisePropertyChanged("NumberOfCommentsk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfSubscriptions>k__BackingField", IsRequired=true)]
-        public int NumberOfSubscriptionsk__BackingField {
-            get {
-                return this.NumberOfSubscriptionsk__BackingFieldField;
-            }
-            set {
-                if ((this.NumberOfSubscriptionsk__BackingFieldField.Equals(value) != true)) {
-                    this.NumberOfSubscriptionsk__BackingFieldField = value;
-                    this.RaisePropertyChanged("NumberOfSubscriptionsk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
-        public string SearchStringk__BackingField {
-            get {
-                return this.SearchStringk__BackingFieldField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
-                    this.SearchStringk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SearchStringk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
-        public int SortOptionk__BackingField {
-            get {
-                return this.SortOptionk__BackingFieldField;
-            }
-            set {
-                if ((this.SortOptionk__BackingFieldField.Equals(value) != true)) {
-                    this.SortOptionk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SortOptionk__BackingField");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
-        public int StartIndexk__BackingField {
-            get {
-                return this.StartIndexk__BackingFieldField;
-            }
-            set {
-                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.StartIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
                 }
             }
         }
@@ -164,7 +92,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Channel", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Channel", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class Channel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -353,84 +281,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
-    [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UsernameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Username {
-            get {
-                return this.UsernameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
-                    this.UsernameField = value;
-                    this.RaisePropertyChanged("Username");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Comment", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Comment", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class Comment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -539,7 +390,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class Genre : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -600,7 +451,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Track", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Track", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class Track : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -773,7 +624,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TrackPlay", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TrackPlay", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class TrackPlay : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -834,7 +685,7 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Vote", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DataObjects")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Vote", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
     [System.SerializableAttribute()]
     public partial class Vote : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -925,39 +776,307 @@ namespace RentItMvc.RentItService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ChannelSearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
+    [System.SerializableAttribute()]
+    public partial class ChannelSearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int AmountPlayedk__BackingFieldField;
+        
+        private int EndIndexk__BackingFieldField;
+        
+        private string[] Genresk__BackingFieldField;
+        
+        private string Namek__BackingFieldField;
+        
+        private int NumberOfCommentsk__BackingFieldField;
+        
+        private int NumberOfSubscriptionsk__BackingFieldField;
+        
+        private double Ratingk__BackingFieldField;
+        
+        private string SortOptionk__BackingFieldField;
+        
+        private int StartIndexk__BackingFieldField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<AmountPlayed>k__BackingField", IsRequired=true)]
+        public int AmountPlayedk__BackingField {
+            get {
+                return this.AmountPlayedk__BackingFieldField;
+            }
+            set {
+                if ((this.AmountPlayedk__BackingFieldField.Equals(value) != true)) {
+                    this.AmountPlayedk__BackingFieldField = value;
+                    this.RaisePropertyChanged("AmountPlayedk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
+        public int EndIndexk__BackingField {
+            get {
+                return this.EndIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.EndIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Genres>k__BackingField", IsRequired=true)]
+        public string[] Genresk__BackingField {
+            get {
+                return this.Genresk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Genresk__BackingFieldField, value) != true)) {
+                    this.Genresk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Genresk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Name>k__BackingField", IsRequired=true)]
+        public string Namek__BackingField {
+            get {
+                return this.Namek__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Namek__BackingFieldField, value) != true)) {
+                    this.Namek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Namek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfComments>k__BackingField", IsRequired=true)]
+        public int NumberOfCommentsk__BackingField {
+            get {
+                return this.NumberOfCommentsk__BackingFieldField;
+            }
+            set {
+                if ((this.NumberOfCommentsk__BackingFieldField.Equals(value) != true)) {
+                    this.NumberOfCommentsk__BackingFieldField = value;
+                    this.RaisePropertyChanged("NumberOfCommentsk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfSubscriptions>k__BackingField", IsRequired=true)]
+        public int NumberOfSubscriptionsk__BackingField {
+            get {
+                return this.NumberOfSubscriptionsk__BackingFieldField;
+            }
+            set {
+                if ((this.NumberOfSubscriptionsk__BackingFieldField.Equals(value) != true)) {
+                    this.NumberOfSubscriptionsk__BackingFieldField = value;
+                    this.RaisePropertyChanged("NumberOfSubscriptionsk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Rating>k__BackingField", IsRequired=true)]
+        public double Ratingk__BackingField {
+            get {
+                return this.Ratingk__BackingFieldField;
+            }
+            set {
+                if ((this.Ratingk__BackingFieldField.Equals(value) != true)) {
+                    this.Ratingk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Ratingk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
+        public string SortOptionk__BackingField {
+            get {
+                return this.SortOptionk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SortOptionk__BackingFieldField, value) != true)) {
+                    this.SortOptionk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SortOptionk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
+        public int StartIndexk__BackingField {
+            get {
+                return this.StartIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.StartIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TrackSearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
+    [System.SerializableAttribute()]
+    public partial class TrackSearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string Artistk__BackingFieldField;
+        
+        private int Downvotesk__BackingFieldField;
+        
+        private int EndIndexk__BackingFieldField;
+        
+        private string Namek__BackingFieldField;
+        
+        private string SortOptionk__BackingFieldField;
+        
+        private int StartIndexk__BackingFieldField;
+        
+        private int Upvotesk__BackingFieldField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Artist>k__BackingField", IsRequired=true)]
+        public string Artistk__BackingField {
+            get {
+                return this.Artistk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Artistk__BackingFieldField, value) != true)) {
+                    this.Artistk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Artistk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Downvotes>k__BackingField", IsRequired=true)]
+        public int Downvotesk__BackingField {
+            get {
+                return this.Downvotesk__BackingFieldField;
+            }
+            set {
+                if ((this.Downvotesk__BackingFieldField.Equals(value) != true)) {
+                    this.Downvotesk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Downvotesk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
+        public int EndIndexk__BackingField {
+            get {
+                return this.EndIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.EndIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Name>k__BackingField", IsRequired=true)]
+        public string Namek__BackingField {
+            get {
+                return this.Namek__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Namek__BackingFieldField, value) != true)) {
+                    this.Namek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Namek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
+        public string SortOptionk__BackingField {
+            get {
+                return this.SortOptionk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SortOptionk__BackingFieldField, value) != true)) {
+                    this.SortOptionk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SortOptionk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
+        public int StartIndexk__BackingField {
+            get {
+                return this.StartIndexk__BackingFieldField;
+            }
+            set {
+                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
+                    this.StartIndexk__BackingFieldField = value;
+                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Upvotes>k__BackingField", IsRequired=true)]
+        public int Upvotesk__BackingField {
+            get {
+                return this.Upvotesk__BackingFieldField;
+            }
+            set {
+                if ((this.Upvotesk__BackingFieldField.Equals(value) != true)) {
+                    this.Upvotesk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Upvotesk__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="RentItService.IRentItService")]
     public interface IRentItService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
-        int CreateChannel(string channelName, int userId, string description, string[] genres);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
-        System.Threading.Tasks.Task<int> CreateChannelAsync(string channelName, int userId, string description, string[] genres);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetChannelIdsResponse")]
-        int[] GetChannelIds(RentItMvc.RentItService.SearchArgs args);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetChannelIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetChannelIdsAsync(RentItMvc.RentItService.SearchArgs args);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
-        RentItMvc.RentItService.Channel GetChannel(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> GetChannelAsync(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ModifyChannel", ReplyAction="http://tempuri.org/IRentItService/ModifyChannelResponse")]
-        RentItMvc.RentItService.Channel ModifyChannel(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ModifyChannel", ReplyAction="http://tempuri.org/IRentItService/ModifyChannelResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> ModifyChannelAsync(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
-        void DeleteChannel(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
-        System.Threading.Tasks.Task DeleteChannelAsync(int userId, int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Login", ReplyAction="http://tempuri.org/IRentItService/LoginResponse")]
         RentItMvc.RentItService.User Login(string usernameOrEmail, string password);
@@ -966,28 +1085,76 @@ namespace RentItMvc.RentItService {
         System.Threading.Tasks.Task<RentItMvc.RentItService.User> LoginAsync(string usernameOrEmail, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/SignUp", ReplyAction="http://tempuri.org/IRentItService/SignUpResponse")]
-        RentItMvc.RentItService.User SignUp(string username, string email, string password);
+        RentItMvc.RentItService.User SignUp(string usernameOrEmail, string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/SignUp", ReplyAction="http://tempuri.org/IRentItService/SignUpResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string username, string email, string password);
+        System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string usernameOrEmail, string email, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
-        void RemoveTrack(int userId, int trackId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteUser", ReplyAction="http://tempuri.org/IRentItService/DeleteUserResponse")]
+        void DeleteUser(int userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
-        System.Threading.Tasks.Task RemoveTrackAsync(int userId, int trackId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteUser", ReplyAction="http://tempuri.org/IRentItService/DeleteUserResponse")]
+        System.Threading.Tasks.Task DeleteUserAsync(int userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/VoteTrack", ReplyAction="http://tempuri.org/IRentItService/VoteTrackResponse")]
-        void VoteTrack(int rating, int userId, int trackId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUser", ReplyAction="http://tempuri.org/IRentItService/GetUserResponse")]
+        RentItMvc.RentItService.User GetUser(int userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/VoteTrack", ReplyAction="http://tempuri.org/IRentItService/VoteTrackResponse")]
-        System.Threading.Tasks.Task VoteTrackAsync(int rating, int userId, int trackId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUser", ReplyAction="http://tempuri.org/IRentItService/GetUserResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.User> GetUserAsync(int userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
-        int[] GetTrackIds(int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllUserIds", ReplyAction="http://tempuri.org/IRentItService/GetAllUserIdsResponse")]
+        int[] GetAllUserIds();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllUserIds", ReplyAction="http://tempuri.org/IRentItService/GetAllUserIdsResponse")]
+        System.Threading.Tasks.Task<int[]> GetAllUserIdsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateUser", ReplyAction="http://tempuri.org/IRentItService/UpdateUserResponse")]
+        void UpdateUser(int userId, string username, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateUser", ReplyAction="http://tempuri.org/IRentItService/UpdateUserResponse")]
+        System.Threading.Tasks.Task UpdateUserAsync(int userId, string username, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
+        int CreateChannel(string channelName, int userId, string description, string[] genres);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateChannel", ReplyAction="http://tempuri.org/IRentItService/CreateChannelResponse")]
+        System.Threading.Tasks.Task<int> CreateChannelAsync(string channelName, int userId, string description, string[] genres);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
+        void DeleteChannel(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteChannel", ReplyAction="http://tempuri.org/IRentItService/DeleteChannelResponse")]
+        System.Threading.Tasks.Task DeleteChannelAsync(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateChannel", ReplyAction="http://tempuri.org/IRentItService/UpdateChannelResponse")]
+        void UpdateChannel(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateChannel", ReplyAction="http://tempuri.org/IRentItService/UpdateChannelResponse")]
+        System.Threading.Tasks.Task UpdateChannelAsync(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
+        RentItMvc.RentItService.Channel GetChannel(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> GetChannelAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetAllChannelIdsResponse")]
+        int[] GetAllChannelIds();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetAllChannelIdsResponse")]
+        System.Threading.Tasks.Task<int[]> GetAllChannelIdsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannels", ReplyAction="http://tempuri.org/IRentItService/GetChannelsResponse")]
+        RentItMvc.RentItService.Channel[] GetChannels(RentItMvc.RentItService.ChannelSearchArgs args);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannels", ReplyAction="http://tempuri.org/IRentItService/GetChannelsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetChannelsAsync(RentItMvc.RentItService.ChannelSearchArgs args);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateVote", ReplyAction="http://tempuri.org/IRentItService/CreateVoteResponse")]
+        void CreateVote(int rating, int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateVote", ReplyAction="http://tempuri.org/IRentItService/CreateVoteResponse")]
+        System.Threading.Tasks.Task CreateVoteAsync(int rating, int userId, int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfo", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoResponse")]
         RentItMvc.RentItService.Track GetTrackInfo(int trackId);
@@ -995,47 +1162,41 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfo", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoResponse")]
         System.Threading.Tasks.Task<RentItMvc.RentItService.Track> GetTrackInfoAsync(int trackId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Comment", ReplyAction="http://tempuri.org/IRentItService/CommentResponse")]
-        void Comment([System.ServiceModel.MessageParameterAttribute(Name="comment")] string comment1, int userId, int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
+        void RemoveTrack(int userId, int trackId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Comment", ReplyAction="http://tempuri.org/IRentItService/CommentResponse")]
-        System.Threading.Tasks.Task CommentAsync(string comment, int userId, int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
+        System.Threading.Tasks.Task RemoveTrackAsync(int userId, int trackId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCommentIds", ReplyAction="http://tempuri.org/IRentItService/GetCommentIdsResponse")]
-        int[] GetCommentIds(int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
+        int[] GetTrackIds(int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCommentIds", ReplyAction="http://tempuri.org/IRentItService/GetCommentIdsResponse")]
-        System.Threading.Tasks.Task<int[]> GetCommentIdsAsync(int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
+        System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTracks", ReplyAction="http://tempuri.org/IRentItService/GetTracksResponse")]
+        RentItMvc.RentItService.Track[] GetTracks(int channelId, RentItMvc.RentItService.TrackSearchArgs args);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTracks", ReplyAction="http://tempuri.org/IRentItService/GetTracksResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTracksAsync(int channelId, RentItMvc.RentItService.TrackSearchArgs args);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateComment", ReplyAction="http://tempuri.org/IRentItService/CreateCommentResponse")]
+        void CreateComment(string comment, int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateComment", ReplyAction="http://tempuri.org/IRentItService/CreateCommentResponse")]
+        System.Threading.Tasks.Task CreateCommentAsync(string comment, int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteComment", ReplyAction="http://tempuri.org/IRentItService/DeleteCommentResponse")]
+        void DeleteComment(int channelId, int userId, System.DateTime date);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteComment", ReplyAction="http://tempuri.org/IRentItService/DeleteCommentResponse")]
+        System.Threading.Tasks.Task DeleteCommentAsync(int channelId, int userId, System.DateTime date);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
-        RentItMvc.RentItService.Comment GetComment(int commentId);
+        RentItMvc.RentItService.Comment GetComment(int channelId, int userId, System.DateTime date);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int commentId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
-        void Subscribe(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
-        System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UnSubscribe", ReplyAction="http://tempuri.org/IRentItService/UnSubscribeResponse")]
-        void UnSubscribe(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UnSubscribe", ReplyAction="http://tempuri.org/IRentItService/UnSubscribeResponse")]
-        System.Threading.Tasks.Task UnSubscribeAsync(int userId, int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        int GetChannelPort(int channelId, int ipAddress, int port);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
-        int ListenToChannel(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
-        System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int channelId, int userId, System.DateTime date);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsEmailAvailable", ReplyAction="http://tempuri.org/IRentItService/IsEmailAvailableResponse")]
         bool IsEmailAvailable(string email);
@@ -1048,6 +1209,30 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsUsernameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsUsernameAvailableResponse")]
         System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
+        void Subscribe(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Subscribe", ReplyAction="http://tempuri.org/IRentItService/SubscribeResponse")]
+        System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Unsubscribe", ReplyAction="http://tempuri.org/IRentItService/UnsubscribeResponse")]
+        void Unsubscribe(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Unsubscribe", ReplyAction="http://tempuri.org/IRentItService/UnsubscribeResponse")]
+        System.Threading.Tasks.Task UnsubscribeAsync(int userId, int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
+        int GetChannelPort(int channelId, int ipAddress, int port);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
+        System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
+        int ListenToChannel(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
+        System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1077,36 +1262,60 @@ namespace RentItMvc.RentItService {
                 base(binding, remoteAddress) {
         }
         
+        public RentItMvc.RentItService.User Login(string usernameOrEmail, string password) {
+            return base.Channel.Login(usernameOrEmail, password);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> LoginAsync(string usernameOrEmail, string password) {
+            return base.Channel.LoginAsync(usernameOrEmail, password);
+        }
+        
+        public RentItMvc.RentItService.User SignUp(string usernameOrEmail, string email, string password) {
+            return base.Channel.SignUp(usernameOrEmail, email, password);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string usernameOrEmail, string email, string password) {
+            return base.Channel.SignUpAsync(usernameOrEmail, email, password);
+        }
+        
+        public void DeleteUser(int userId) {
+            base.Channel.DeleteUser(userId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteUserAsync(int userId) {
+            return base.Channel.DeleteUserAsync(userId);
+        }
+        
+        public RentItMvc.RentItService.User GetUser(int userId) {
+            return base.Channel.GetUser(userId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> GetUserAsync(int userId) {
+            return base.Channel.GetUserAsync(userId);
+        }
+        
+        public int[] GetAllUserIds() {
+            return base.Channel.GetAllUserIds();
+        }
+        
+        public System.Threading.Tasks.Task<int[]> GetAllUserIdsAsync() {
+            return base.Channel.GetAllUserIdsAsync();
+        }
+        
+        public void UpdateUser(int userId, string username, string password, string email) {
+            base.Channel.UpdateUser(userId, username, password, email);
+        }
+        
+        public System.Threading.Tasks.Task UpdateUserAsync(int userId, string username, string password, string email) {
+            return base.Channel.UpdateUserAsync(userId, username, password, email);
+        }
+        
         public int CreateChannel(string channelName, int userId, string description, string[] genres) {
             return base.Channel.CreateChannel(channelName, userId, description, genres);
         }
         
         public System.Threading.Tasks.Task<int> CreateChannelAsync(string channelName, int userId, string description, string[] genres) {
             return base.Channel.CreateChannelAsync(channelName, userId, description, genres);
-        }
-        
-        public int[] GetChannelIds(RentItMvc.RentItService.SearchArgs args) {
-            return base.Channel.GetChannelIds(args);
-        }
-        
-        public System.Threading.Tasks.Task<int[]> GetChannelIdsAsync(RentItMvc.RentItService.SearchArgs args) {
-            return base.Channel.GetChannelIdsAsync(args);
-        }
-        
-        public RentItMvc.RentItService.Channel GetChannel(int channelId) {
-            return base.Channel.GetChannel(channelId);
-        }
-        
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> GetChannelAsync(int channelId) {
-            return base.Channel.GetChannelAsync(channelId);
-        }
-        
-        public RentItMvc.RentItService.Channel ModifyChannel(int userId, int channelId) {
-            return base.Channel.ModifyChannel(userId, channelId);
-        }
-        
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> ModifyChannelAsync(int userId, int channelId) {
-            return base.Channel.ModifyChannelAsync(userId, channelId);
         }
         
         public void DeleteChannel(int userId, int channelId) {
@@ -1117,44 +1326,44 @@ namespace RentItMvc.RentItService {
             return base.Channel.DeleteChannelAsync(userId, channelId);
         }
         
-        public RentItMvc.RentItService.User Login(string usernameOrEmail, string password) {
-            return base.Channel.Login(usernameOrEmail, password);
+        public void UpdateChannel(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating) {
+            base.Channel.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
         }
         
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> LoginAsync(string usernameOrEmail, string password) {
-            return base.Channel.LoginAsync(usernameOrEmail, password);
+        public System.Threading.Tasks.Task UpdateChannelAsync(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating) {
+            return base.Channel.UpdateChannelAsync(channelId, ownerId, channelName, description, hits, rating);
         }
         
-        public RentItMvc.RentItService.User SignUp(string username, string email, string password) {
-            return base.Channel.SignUp(username, email, password);
+        public RentItMvc.RentItService.Channel GetChannel(int channelId) {
+            return base.Channel.GetChannel(channelId);
         }
         
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.User> SignUpAsync(string username, string email, string password) {
-            return base.Channel.SignUpAsync(username, email, password);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel> GetChannelAsync(int channelId) {
+            return base.Channel.GetChannelAsync(channelId);
         }
         
-        public void RemoveTrack(int userId, int trackId) {
-            base.Channel.RemoveTrack(userId, trackId);
+        public int[] GetAllChannelIds() {
+            return base.Channel.GetAllChannelIds();
         }
         
-        public System.Threading.Tasks.Task RemoveTrackAsync(int userId, int trackId) {
-            return base.Channel.RemoveTrackAsync(userId, trackId);
+        public System.Threading.Tasks.Task<int[]> GetAllChannelIdsAsync() {
+            return base.Channel.GetAllChannelIdsAsync();
         }
         
-        public void VoteTrack(int rating, int userId, int trackId) {
-            base.Channel.VoteTrack(rating, userId, trackId);
+        public RentItMvc.RentItService.Channel[] GetChannels(RentItMvc.RentItService.ChannelSearchArgs args) {
+            return base.Channel.GetChannels(args);
         }
         
-        public System.Threading.Tasks.Task VoteTrackAsync(int rating, int userId, int trackId) {
-            return base.Channel.VoteTrackAsync(rating, userId, trackId);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetChannelsAsync(RentItMvc.RentItService.ChannelSearchArgs args) {
+            return base.Channel.GetChannelsAsync(args);
         }
         
-        public int[] GetTrackIds(int channelId) {
-            return base.Channel.GetTrackIds(channelId);
+        public void CreateVote(int rating, int userId, int trackId) {
+            base.Channel.CreateVote(rating, userId, trackId);
         }
         
-        public System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId) {
-            return base.Channel.GetTrackIdsAsync(channelId);
+        public System.Threading.Tasks.Task CreateVoteAsync(int rating, int userId, int trackId) {
+            return base.Channel.CreateVoteAsync(rating, userId, trackId);
         }
         
         public RentItMvc.RentItService.Track GetTrackInfo(int trackId) {
@@ -1165,60 +1374,52 @@ namespace RentItMvc.RentItService {
             return base.Channel.GetTrackInfoAsync(trackId);
         }
         
-        public void Comment(string comment1, int userId, int channelId) {
-            base.Channel.Comment(comment1, userId, channelId);
+        public void RemoveTrack(int userId, int trackId) {
+            base.Channel.RemoveTrack(userId, trackId);
         }
         
-        public System.Threading.Tasks.Task CommentAsync(string comment, int userId, int channelId) {
-            return base.Channel.CommentAsync(comment, userId, channelId);
+        public System.Threading.Tasks.Task RemoveTrackAsync(int userId, int trackId) {
+            return base.Channel.RemoveTrackAsync(userId, trackId);
         }
         
-        public int[] GetCommentIds(int channelId) {
-            return base.Channel.GetCommentIds(channelId);
+        public int[] GetTrackIds(int channelId) {
+            return base.Channel.GetTrackIds(channelId);
         }
         
-        public System.Threading.Tasks.Task<int[]> GetCommentIdsAsync(int channelId) {
-            return base.Channel.GetCommentIdsAsync(channelId);
+        public System.Threading.Tasks.Task<int[]> GetTrackIdsAsync(int channelId) {
+            return base.Channel.GetTrackIdsAsync(channelId);
         }
         
-        public RentItMvc.RentItService.Comment GetComment(int commentId) {
-            return base.Channel.GetComment(commentId);
+        public RentItMvc.RentItService.Track[] GetTracks(int channelId, RentItMvc.RentItService.TrackSearchArgs args) {
+            return base.Channel.GetTracks(channelId, args);
         }
         
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int commentId) {
-            return base.Channel.GetCommentAsync(commentId);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTracksAsync(int channelId, RentItMvc.RentItService.TrackSearchArgs args) {
+            return base.Channel.GetTracksAsync(channelId, args);
         }
         
-        public void Subscribe(int userId, int channelId) {
-            base.Channel.Subscribe(userId, channelId);
+        public void CreateComment(string comment, int userId, int channelId) {
+            base.Channel.CreateComment(comment, userId, channelId);
         }
         
-        public System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId) {
-            return base.Channel.SubscribeAsync(userId, channelId);
+        public System.Threading.Tasks.Task CreateCommentAsync(string comment, int userId, int channelId) {
+            return base.Channel.CreateCommentAsync(comment, userId, channelId);
         }
         
-        public void UnSubscribe(int userId, int channelId) {
-            base.Channel.UnSubscribe(userId, channelId);
+        public void DeleteComment(int channelId, int userId, System.DateTime date) {
+            base.Channel.DeleteComment(channelId, userId, date);
         }
         
-        public System.Threading.Tasks.Task UnSubscribeAsync(int userId, int channelId) {
-            return base.Channel.UnSubscribeAsync(userId, channelId);
+        public System.Threading.Tasks.Task DeleteCommentAsync(int channelId, int userId, System.DateTime date) {
+            return base.Channel.DeleteCommentAsync(channelId, userId, date);
         }
         
-        public int GetChannelPort(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPort(channelId, ipAddress, port);
+        public RentItMvc.RentItService.Comment GetComment(int channelId, int userId, System.DateTime date) {
+            return base.Channel.GetComment(channelId, userId, date);
         }
         
-        public System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPortAsync(channelId, ipAddress, port);
-        }
-        
-        public int ListenToChannel(int channelId) {
-            return base.Channel.ListenToChannel(channelId);
-        }
-        
-        public System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId) {
-            return base.Channel.ListenToChannelAsync(channelId);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int channelId, int userId, System.DateTime date) {
+            return base.Channel.GetCommentAsync(channelId, userId, date);
         }
         
         public bool IsEmailAvailable(string email) {
@@ -1235,6 +1436,38 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<bool> IsUsernameAvailableAsync(string username) {
             return base.Channel.IsUsernameAvailableAsync(username);
+        }
+        
+        public void Subscribe(int userId, int channelId) {
+            base.Channel.Subscribe(userId, channelId);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeAsync(int userId, int channelId) {
+            return base.Channel.SubscribeAsync(userId, channelId);
+        }
+        
+        public void Unsubscribe(int userId, int channelId) {
+            base.Channel.Unsubscribe(userId, channelId);
+        }
+        
+        public System.Threading.Tasks.Task UnsubscribeAsync(int userId, int channelId) {
+            return base.Channel.UnsubscribeAsync(userId, channelId);
+        }
+        
+        public int GetChannelPort(int channelId, int ipAddress, int port) {
+            return base.Channel.GetChannelPort(channelId, ipAddress, port);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port) {
+            return base.Channel.GetChannelPortAsync(channelId, ipAddress, port);
+        }
+        
+        public int ListenToChannel(int channelId) {
+            return base.Channel.ListenToChannel(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId) {
+            return base.Channel.ListenToChannelAsync(channelId);
         }
     }
 }
