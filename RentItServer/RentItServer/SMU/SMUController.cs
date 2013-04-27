@@ -264,15 +264,15 @@ namespace RentItServer.SMU
         /// <summary>
         /// Searches for books containing the search string.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
+        /// <param name="Name">The search string.</param>
         /// <returns>
         /// An array containing all books containing the search string
         /// </returns>
-        public Book[] SearchBooks(string searchString)
+        public Book[] SearchBooks(string Name)
         {
-            if (searchString == null) throw new ArgumentNullException("searchString");
+            if (Name == null) throw new ArgumentNullException("Name");
 
-            return _dao.SearchBooks(searchString).ToArray();
+            return _dao.SearchBooks(Name).ToArray();
         }
 
         /// <summary>

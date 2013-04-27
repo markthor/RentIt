@@ -192,7 +192,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a channel.
         /// </summary>
-        /// <param name="channelName">SearchString of the channel.</param>
+        /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
@@ -498,7 +498,7 @@ namespace RentItServer.ITU
         /// Logs and throws the exception e.
         /// </summary>
         /// <param name="e">The exception to throw.</param>
-        /// <param name="operationName">SearchString of the operation.</param>
+        /// <param name="operationName">Name of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
             //_logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");

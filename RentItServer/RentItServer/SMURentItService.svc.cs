@@ -138,13 +138,13 @@ namespace RentItServer
         /// <summary>
         /// Searches for books containing the search string.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
+        /// <param name="Name">The search string.</param>
         /// <returns>
         /// An array containing all books containing the search string
         /// </returns>
-        public Book[] SearchBooks(string searchString)
+        public Book[] SearchBooks(string Name)
         {
-            return _smuController.SearchBooks(searchString);
+            return _smuController.SearchBooks(Name);
         }
 
         /// <summary>

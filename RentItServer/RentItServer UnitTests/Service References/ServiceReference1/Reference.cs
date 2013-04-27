@@ -40,7 +40,7 @@ namespace RentItServer_UnitTests.ServiceReference1 {
         RentItServer.SMU.Book[] GetNewBooks();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/SearchBooks", ReplyAction="http://tempuri.org/ISMURentItService/SearchBooksResponse")]
-        RentItServer.SMU.Book[] SearchBooks(string searchString);
+        RentItServer.SMU.Book[] SearchBooks(string Name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISMURentItService/GetBooksByGenre", ReplyAction="http://tempuri.org/ISMURentItService/GetBooksByGenreResponse")]
         RentItServer.SMU.Book[] GetBooksByGenre(string genre);
@@ -147,8 +147,8 @@ namespace RentItServer_UnitTests.ServiceReference1 {
             return base.Channel.GetNewBooks();
         }
         
-        public RentItServer.SMU.Book[] SearchBooks(string searchString) {
-            return base.Channel.SearchBooks(searchString);
+        public RentItServer.SMU.Book[] SearchBooks(string Name) {
+            return base.Channel.SearchBooks(Name);
         }
         
         public RentItServer.SMU.Book[] GetBooksByGenre(string genre) {

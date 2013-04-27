@@ -255,7 +255,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a channel.
         /// </summary>
-        /// <param name="channelName">SearchString of the channel.</param>
+        /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
@@ -339,7 +339,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <param name="ownerId">The owner id. Can be null.</param>
-        /// <param name="channelName">SearchString of the channel. Can be null.</param>
+        /// <param name="channelName">Name of the channel. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
@@ -423,7 +423,7 @@ namespace RentItServer.ITU
 
         /// <summary>
         /// Filters the with respect to the filter arguments: 
-        ///     filter.SearchString
+        ///     filter.Name
         ///     filter.AmountPlayed
         ///     filter.Genres
         ///     filter.NumberOfComments
@@ -438,8 +438,8 @@ namespace RentItServer.ITU
         {
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
-            {   // get all channels that starts with filter.SearchString
-                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
+            {   // get all channels that starts with filter.Name
+                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.Name) select channel;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -569,7 +569,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <param name="path">The path.</param>
-        /// <param name="trackName">SearchString of the track.</param>
+        /// <param name="trackName">Name of the track.</param>
         /// <param name="trackArtist">The track artist.</param>
         /// <param name="length">The length in ms.</param>
         /// <param name="upVotes">Up votes.</param>
@@ -636,16 +636,16 @@ namespace RentItServer.ITU
         {
             List<Track> filteredTracks;
             using (RENTIT21Entities context = new RENTIT21Entities())
-            {   // get all tracks that starts with filter.SearchString
-                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.SearchString) select track;
+            {   // get all tracks that starts with filter.Name
+                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.Name) select track;
 
                 if (string.IsNullOrEmpty(filter.Artist) == false)
                 {   // Apply artist filter
                     tracks = from track in tracks where track.Artist.StartsWith(filter.Artist) select track;
                 }
-                if (string.IsNullOrEmpty(filter.SearchString) == false)
+                if (string.IsNullOrEmpty(filter.Name) == false)
                 {   // Apply name filter
-                    tracks = from track in tracks where track.Name.StartsWith(filter.SearchString) select track;
+                    tracks = from track in tracks where track.Name.StartsWith(filter.Name) select track;
                 }
                 if (filter.Downvotes > -1)
                 {   // Apply downvotes filter

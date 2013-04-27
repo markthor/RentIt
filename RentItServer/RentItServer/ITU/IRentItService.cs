@@ -64,7 +64,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a channel.
         /// </summary>
-        /// <param name="channelName">SearchString of the channel.</param>
+        /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
@@ -85,7 +85,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <param name="ownerId">The owner id. Can be null.</param>
-        /// <param name="channelName">SearchString of the channel. Can be null.</param>
+        /// <param name="channelName">Name of the channel. Can be null.</param>
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>

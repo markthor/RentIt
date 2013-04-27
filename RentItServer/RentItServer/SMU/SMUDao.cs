@@ -315,17 +315,17 @@ namespace RentItServer.SMU
         /// <summary>
         /// Searches for a Book using a search string
         /// </summary>
-        /// <param name="searchString"></param>
+        /// <param name="Name"></param>
         /// <returns>List of Books that matches the search string</returns>
-        public List<Book> SearchBooks(string searchString)
+        public List<Book> SearchBooks(string Name)
         {
             List<Book> list = new List<Book>();
             using (RENTIT21Entities proxy = new RENTIT21Entities())
             {
                 var books = from book in proxy.SMUbooks
-                            where (book.title.Contains(searchString) ||
-                                    book.author.Contains(searchString) ||
-                                    book.description.Contains(searchString))
+                            where (book.title.Contains(Name) ||
+                                    book.author.Contains(Name) ||
+                                    book.description.Contains(Name))
                             select book;
 
                 foreach (SMUbook book in books)

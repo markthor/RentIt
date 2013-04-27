@@ -4,676 +4,676 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema SearchStringspace="RENTITModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-  <EntityContainer SearchString="RENTITModelStoreContainer">
-    <EntitySet SearchString="SMUbooks" EntityType="RENTITModel.Store.SMUbooks" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="SMUrentals" EntityType="RENTITModel.Store.SMUrentals" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="SMUusers" EntityType="RENTITModel.Store.SMUusers" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="sysdiagrams" EntityType="RENTITModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Channels" EntityType="RENTITModel.Store.Channels" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Genres" EntityType="RENTITModel.Store.Genres" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Tracks" EntityType="RENTITModel.Store.Tracks" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Comments" EntityType="RENTITModel.Store.Comments" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Users" EntityType="RENTITModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="Votes" EntityType="RENTITModel.Store.Votes" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="TrackPlays" EntityType="RENTITModel.Store.TrackPlays" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="ChannelUser1" EntityType="RENTITModel.Store.ChannelUser1" store:Type="Tables" Schema="dbo" />
-    <EntitySet SearchString="ChannelGenre" EntityType="RENTITModel.Store.ChannelGenre" store:Type="Tables" Schema="dbo" />
-    <AssociationSet SearchString="FK_SMUrentals_bookId" Association="RENTITModel.Store.FK_SMUrentals_bookId">
+    <Schema Namespace="RENTITModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="RENTITModelStoreContainer">
+    <EntitySet Name="SMUbooks" EntityType="RENTITModel.Store.SMUbooks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SMUrentals" EntityType="RENTITModel.Store.SMUrentals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SMUusers" EntityType="RENTITModel.Store.SMUusers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="RENTITModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Channels" EntityType="RENTITModel.Store.Channels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Genres" EntityType="RENTITModel.Store.Genres" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tracks" EntityType="RENTITModel.Store.Tracks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="RENTITModel.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="RENTITModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Votes" EntityType="RENTITModel.Store.Votes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TrackPlays" EntityType="RENTITModel.Store.TrackPlays" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ChannelUser1" EntityType="RENTITModel.Store.ChannelUser1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ChannelGenre" EntityType="RENTITModel.Store.ChannelGenre" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_SMUrentals_bookId" Association="RENTITModel.Store.FK_SMUrentals_bookId">
       <End Role="SMUbook" EntitySet="SMUbooks" />
       <End Role="SMUrental" EntitySet="SMUrentals" />
     </AssociationSet>
-    <AssociationSet SearchString="FK_SMUrentals_userId" Association="RENTITModel.Store.FK_SMUrentals_userId">
+    <AssociationSet Name="FK_SMUrentals_userId" Association="RENTITModel.Store.FK_SMUrentals_userId">
       <End Role="SMUuser" EntitySet="SMUusers" />
       <End Role="SMUrental" EntitySet="SMUrentals" />
     </AssociationSet>
-    <AssociationSet SearchString="ChannelComment" Association="RENTITModel.Store.ChannelComment">
+    <AssociationSet Name="ChannelComment" Association="RENTITModel.Store.ChannelComment">
       <End Role="Channel" EntitySet="Channels" />
       <End Role="Comment" EntitySet="Comments" />
     </AssociationSet>
-    <AssociationSet SearchString="CommentUser" Association="RENTITModel.Store.CommentUser">
+    <AssociationSet Name="CommentUser" Association="RENTITModel.Store.CommentUser">
       <End Role="Comment" EntitySet="Comments" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet SearchString="ChannelUser" Association="RENTITModel.Store.ChannelUser">
+    <AssociationSet Name="ChannelUser" Association="RENTITModel.Store.ChannelUser">
       <End Role="Channel" EntitySet="Channels" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet SearchString="FK_ChannelUser1_Channel" Association="RENTITModel.Store.FK_ChannelUser1_Channel">
+    <AssociationSet Name="FK_ChannelUser1_Channel" Association="RENTITModel.Store.FK_ChannelUser1_Channel">
       <End Role="Channel" EntitySet="Channels" />
       <End Role="ChannelUser1" EntitySet="ChannelUser1" />
     </AssociationSet>
-    <AssociationSet SearchString="FK_ChannelUser1_User" Association="RENTITModel.Store.FK_ChannelUser1_User">
+    <AssociationSet Name="FK_ChannelUser1_User" Association="RENTITModel.Store.FK_ChannelUser1_User">
       <End Role="User" EntitySet="Users" />
       <End Role="ChannelUser1" EntitySet="ChannelUser1" />
     </AssociationSet>
-    <AssociationSet SearchString="FK_ChannelGenre_Channel" Association="RENTITModel.Store.FK_ChannelGenre_Channel">
+    <AssociationSet Name="FK_ChannelGenre_Channel" Association="RENTITModel.Store.FK_ChannelGenre_Channel">
       <End Role="Channel" EntitySet="Channels" />
       <End Role="ChannelGenre" EntitySet="ChannelGenre" />
     </AssociationSet>
-    <AssociationSet SearchString="FK_ChannelGenre_Genre" Association="RENTITModel.Store.FK_ChannelGenre_Genre">
+    <AssociationSet Name="FK_ChannelGenre_Genre" Association="RENTITModel.Store.FK_ChannelGenre_Genre">
       <End Role="Genre" EntitySet="Genres" />
       <End Role="ChannelGenre" EntitySet="ChannelGenre" />
     </AssociationSet>
-    <AssociationSet SearchString="UserVote" Association="RENTITModel.Store.UserVote">
+    <AssociationSet Name="UserVote" Association="RENTITModel.Store.UserVote">
       <End Role="User" EntitySet="Users" />
       <End Role="Vote" EntitySet="Votes" />
     </AssociationSet>
-    <AssociationSet SearchString="TrackVote" Association="RENTITModel.Store.TrackVote">
+    <AssociationSet Name="TrackVote" Association="RENTITModel.Store.TrackVote">
       <End Role="Track" EntitySet="Tracks" />
       <End Role="Vote" EntitySet="Votes" />
     </AssociationSet>
-    <AssociationSet SearchString="TrackTrackPlay" Association="RENTITModel.Store.TrackTrackPlay">
+    <AssociationSet Name="TrackTrackPlay" Association="RENTITModel.Store.TrackTrackPlay">
       <End Role="Track" EntitySet="Tracks" />
       <End Role="TrackPlay" EntitySet="TrackPlays" />
     </AssociationSet>
-    <AssociationSet SearchString="ChannelTrack" Association="RENTITModel.Store.ChannelTrack">
+    <AssociationSet Name="ChannelTrack" Association="RENTITModel.Store.ChannelTrack">
       <End Role="Channel" EntitySet="Channels" />
       <End Role="Track" EntitySet="Tracks" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType SearchString="SMUbooks">
+  <EntityType Name="SMUbooks">
     <Key>
-      <PropertyRef SearchString="id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property SearchString="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="title" Type="varchar" Nullable="false" MaxLength="500" />
-    <Property SearchString="author" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property SearchString="description" Type="varchar" Nullable="true" MaxLength="5000" />
-    <Property SearchString="genre" Type="varchar" Nullable="true" MaxLength="50" />
-    <Property SearchString="price" Type="float" Nullable="false" />
-    <Property SearchString="dateAdded" Type="datetime" Nullable="false" />
-    <Property SearchString="PDFFilePath" Type="varchar" Nullable="true" MaxLength="255" />
-    <Property SearchString="imageFilePath" Type="varchar" Nullable="true" MaxLength="255" />
-    <Property SearchString="hit" Type="int" Nullable="false" />
-    <Property SearchString="audioFilePath" Type="nvarchar(max)" Nullable="true" />
-    <Property SearchString="audioNarrator" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="author" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="description" Type="varchar" Nullable="true" MaxLength="5000" />
+    <Property Name="genre" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="dateAdded" Type="datetime" Nullable="false" />
+    <Property Name="PDFFilePath" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="imageFilePath" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="hit" Type="int" Nullable="false" />
+    <Property Name="audioFilePath" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="audioNarrator" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
-  <EntityType SearchString="SMUrentals">
+  <EntityType Name="SMUrentals">
     <Key>
-      <PropertyRef SearchString="id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property SearchString="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="userId" Type="int" Nullable="false" />
-    <Property SearchString="bookId" Type="int" Nullable="true" />
-    <Property SearchString="startDate" Type="datetime" Nullable="false" />
-    <Property SearchString="mediaType" Type="int" Nullable="false" DefaultValue="-1" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="bookId" Type="int" Nullable="true" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="mediaType" Type="int" Nullable="false" DefaultValue="-1" />
   </EntityType>
-  <EntityType SearchString="SMUusers">
+  <EntityType Name="SMUusers">
     <Key>
-      <PropertyRef SearchString="id" />
+      <PropertyRef Name="id" />
     </Key>
-    <Property SearchString="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="email" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property SearchString="username" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property SearchString="password" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property SearchString="isAdmin" Type="bit" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="password" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType SearchString="sysdiagrams">
+  <EntityType Name="sysdiagrams">
     <Key>
-      <PropertyRef SearchString="diagram_id" />
+      <PropertyRef Name="diagram_id" />
     </Key>
-    <Property SearchString="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property SearchString="principal_id" Type="int" Nullable="false" />
-    <Property SearchString="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="version" Type="int" Nullable="true" />
-    <Property SearchString="definition" Type="varbinary(max)" Nullable="true" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
   </EntityType>
-  <EntityType SearchString="Channels">
+  <EntityType Name="Channels">
     <Key>
-      <PropertyRef SearchString="Id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property SearchString="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="UserId" Type="int" Nullable="false" />
-    <Property SearchString="SearchString" Type="nvarchar" Nullable="false" MaxLength="200" />
-    <Property SearchString="Description" Type="nvarchar" Nullable="false" MaxLength="1000" />
-    <Property SearchString="Rating" Type="float" Nullable="true" />
-    <Property SearchString="Hits" Type="int" Nullable="true" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="1000" />
+    <Property Name="Rating" Type="float" Nullable="true" />
+    <Property Name="Hits" Type="int" Nullable="true" />
   </EntityType>
-  <EntityType SearchString="Genres">
+  <EntityType Name="Genres">
     <Key>
-      <PropertyRef SearchString="Id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property SearchString="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="SearchString" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
   </EntityType>
-  <EntityType SearchString="Tracks">
+  <EntityType Name="Tracks">
     <Key>
-      <PropertyRef SearchString="Id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property SearchString="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="ChannelId" Type="int" Nullable="false" />
-    <Property SearchString="Path" Type="nvarchar" Nullable="false" MaxLength="230" />
-    <Property SearchString="SearchString" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property SearchString="Artist" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property SearchString="Length" Type="int" Nullable="false" />
-    <Property SearchString="UpVotes" Type="int" Nullable="false" />
-    <Property SearchString="DownVotes" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChannelId" Type="int" Nullable="false" />
+    <Property Name="Path" Type="nvarchar" Nullable="false" MaxLength="230" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Length" Type="int" Nullable="false" />
+    <Property Name="UpVotes" Type="int" Nullable="false" />
+    <Property Name="DownVotes" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType SearchString="Comments">
+  <EntityType Name="Comments">
     <Key>
-      <PropertyRef SearchString="ChannelId" />
-      <PropertyRef SearchString="UserId" />
+      <PropertyRef Name="ChannelId" />
+      <PropertyRef Name="UserId" />
     </Key>
-    <Property SearchString="ChannelId" Type="int" Nullable="false" />
-    <Property SearchString="UserId" Type="int" Nullable="false" />
-    <Property SearchString="Date" Type="datetime" Nullable="false" />
-    <Property SearchString="Content" Type="nvarchar" Nullable="false" MaxLength="500" />
+    <Property Name="ChannelId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="500" />
   </EntityType>
-  <EntityType SearchString="Users">
+  <EntityType Name="Users">
     <Key>
-      <PropertyRef SearchString="Id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property SearchString="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property SearchString="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property SearchString="Password" Type="nvarchar" Nullable="false" MaxLength="25" />
-    <Property SearchString="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="25" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
-  <EntityType SearchString="Votes">
+  <EntityType Name="Votes">
     <Key>
-      <PropertyRef SearchString="UserId" />
-      <PropertyRef SearchString="TrackId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="TrackId" />
     </Key>
-    <Property SearchString="UserId" Type="int" Nullable="false" />
-    <Property SearchString="TrackId" Type="int" Nullable="false" />
-    <Property SearchString="Value" Type="int" Nullable="false" />
-    <Property SearchString="Date" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="TrackId" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
   </EntityType>
-  <EntityType SearchString="TrackPlays">
+  <EntityType Name="TrackPlays">
     <Key>
-      <PropertyRef SearchString="TrackId" />
-      <PropertyRef SearchString="TimePlayed" />
+      <PropertyRef Name="TrackId" />
+      <PropertyRef Name="TimePlayed" />
     </Key>
-    <Property SearchString="TrackId" Type="int" Nullable="false" />
-    <Property SearchString="TimePlayed" Type="datetime" Nullable="false" />
+    <Property Name="TrackId" Type="int" Nullable="false" />
+    <Property Name="TimePlayed" Type="datetime" Nullable="false" />
   </EntityType>
-  <EntityType SearchString="ChannelUser1">
+  <EntityType Name="ChannelUser1">
     <Key>
-      <PropertyRef SearchString="SubscribedChannels_Id" />
-      <PropertyRef SearchString="Subscribers_Id" />
+      <PropertyRef Name="SubscribedChannels_Id" />
+      <PropertyRef Name="Subscribers_Id" />
     </Key>
-    <Property SearchString="SubscribedChannels_Id" Type="int" Nullable="false" />
-    <Property SearchString="Subscribers_Id" Type="int" Nullable="false" />
+    <Property Name="SubscribedChannels_Id" Type="int" Nullable="false" />
+    <Property Name="Subscribers_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType SearchString="ChannelGenre">
+  <EntityType Name="ChannelGenre">
     <Key>
-      <PropertyRef SearchString="Channels_Id" />
-      <PropertyRef SearchString="Genres_Id" />
+      <PropertyRef Name="Channels_Id" />
+      <PropertyRef Name="Genres_Id" />
     </Key>
-    <Property SearchString="Channels_Id" Type="int" Nullable="false" />
-    <Property SearchString="Genres_Id" Type="int" Nullable="false" />
+    <Property Name="Channels_Id" Type="int" Nullable="false" />
+    <Property Name="Genres_Id" Type="int" Nullable="false" />
   </EntityType>
-  <Association SearchString="FK_SMUrentals_bookId">
+  <Association Name="FK_SMUrentals_bookId">
     <End Role="SMUbook" Type="RENTITModel.Store.SMUbooks" Multiplicity="0..1" />
     <End Role="SMUrental" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SMUbook">
-        <PropertyRef SearchString="id" />
+        <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="SMUrental">
-        <PropertyRef SearchString="bookId" />
+        <PropertyRef Name="bookId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="FK_SMUrentals_userId">
+  <Association Name="FK_SMUrentals_userId">
     <End Role="SMUuser" Type="RENTITModel.Store.SMUusers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="SMUrental" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SMUuser">
-        <PropertyRef SearchString="id" />
+        <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="SMUrental">
-        <PropertyRef SearchString="userId" />
+        <PropertyRef Name="userId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="ChannelComment">
+  <Association Name="ChannelComment">
     <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
     <End Role="Comment" Type="RENTITModel.Store.Comments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Channel">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Comment">
-        <PropertyRef SearchString="ChannelId" />
+        <PropertyRef Name="ChannelId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="CommentUser">
+  <Association Name="CommentUser">
     <End Role="Comment" Type="RENTITModel.Store.Comments" Multiplicity="*" />
     <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="User">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Comment">
-        <PropertyRef SearchString="UserId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="ChannelUser">
+  <Association Name="ChannelUser">
     <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="*" />
     <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="User">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Channel">
-        <PropertyRef SearchString="UserId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="UserVote">
+  <Association Name="UserVote">
     <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
     <End Role="Vote" Type="RENTITModel.Store.Votes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Vote">
-        <PropertyRef SearchString="UserId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="TrackVote">
+  <Association Name="TrackVote">
     <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="1" />
     <End Role="Vote" Type="RENTITModel.Store.Votes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Track">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Vote">
-        <PropertyRef SearchString="TrackId" />
+        <PropertyRef Name="TrackId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="TrackTrackPlay">
+  <Association Name="TrackTrackPlay">
     <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="1" />
     <End Role="TrackPlay" Type="RENTITModel.Store.TrackPlays" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Track">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="TrackPlay">
-        <PropertyRef SearchString="TrackId" />
+        <PropertyRef Name="TrackId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="ChannelTrack">
+  <Association Name="ChannelTrack">
     <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
     <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Channel">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Track">
-        <PropertyRef SearchString="ChannelId" />
+        <PropertyRef Name="ChannelId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="FK_ChannelUser1_Channel">
+  <Association Name="FK_ChannelUser1_Channel">
     <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
     <End Role="ChannelUser1" Type="RENTITModel.Store.ChannelUser1" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Channel">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ChannelUser1">
-        <PropertyRef SearchString="SubscribedChannels_Id" />
+        <PropertyRef Name="SubscribedChannels_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="FK_ChannelUser1_User">
+  <Association Name="FK_ChannelUser1_User">
     <End Role="ChannelUser1" Type="RENTITModel.Store.ChannelUser1" Multiplicity="*" />
     <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="User">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ChannelUser1">
-        <PropertyRef SearchString="Subscribers_Id" />
+        <PropertyRef Name="Subscribers_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="FK_ChannelGenre_Channel">
+  <Association Name="FK_ChannelGenre_Channel">
     <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
     <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Channel">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ChannelGenre">
-        <PropertyRef SearchString="Channels_Id" />
+        <PropertyRef Name="Channels_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association SearchString="FK_ChannelGenre_Genre">
+  <Association Name="FK_ChannelGenre_Genre">
     <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
     <End Role="Genre" Type="RENTITModel.Store.Genres" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="Genre">
-        <PropertyRef SearchString="Id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="ChannelGenre">
-        <PropertyRef SearchString="Genres_Id" />
+        <PropertyRef Name="Genres_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema SearchStringspace="RENTITModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer SearchString="RENTIT21Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet SearchString="SMUbooks" EntityType="RENTITModel.SMUbook" />
-          <EntitySet SearchString="SMUrentals" EntityType="RENTITModel.SMUrental" />
-          <EntitySet SearchString="SMUusers" EntityType="RENTITModel.SMUuser" />
-          <AssociationSet SearchString="FK_SMUrentals_bookId" Association="RENTITModel.FK_SMUrentals_bookId">
+      <Schema Namespace="RENTITModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="RENTIT21Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SMUbooks" EntityType="RENTITModel.SMUbook" />
+          <EntitySet Name="SMUrentals" EntityType="RENTITModel.SMUrental" />
+          <EntitySet Name="SMUusers" EntityType="RENTITModel.SMUuser" />
+          <AssociationSet Name="FK_SMUrentals_bookId" Association="RENTITModel.FK_SMUrentals_bookId">
             <End Role="SMUbook" EntitySet="SMUbooks" />
             <End Role="SMUrental" EntitySet="SMUrentals" />
           </AssociationSet>
-          <AssociationSet SearchString="FK_SMUrentals_userId" Association="RENTITModel.FK_SMUrentals_userId">
+          <AssociationSet Name="FK_SMUrentals_userId" Association="RENTITModel.FK_SMUrentals_userId">
             <End Role="SMUuser" EntitySet="SMUusers" />
             <End Role="SMUrental" EntitySet="SMUrentals" />
           </AssociationSet>
-          <EntitySet SearchString="sysdiagrams" EntityType="RENTITModel.sysdiagram" />
-          <EntitySet SearchString="Channels" EntityType="RENTITModel.Channel" />
-          <EntitySet SearchString="Genres" EntityType="RENTITModel.Genre" />
-          <EntitySet SearchString="Tracks" EntityType="RENTITModel.Track" />
-          <EntitySet SearchString="Comments" EntityType="RENTITModel.Comment" />
-          <EntitySet SearchString="Users" EntityType="RENTITModel.User" />
-          <EntitySet SearchString="Votes" EntityType="RENTITModel.Vote" />
-          <EntitySet SearchString="TrackPlays" EntityType="RENTITModel.TrackPlay" />
-          <AssociationSet SearchString="ChannelComment" Association="RENTITModel.ChannelComment">
+          <EntitySet Name="sysdiagrams" EntityType="RENTITModel.sysdiagram" />
+          <EntitySet Name="Channels" EntityType="RENTITModel.Channel" />
+          <EntitySet Name="Genres" EntityType="RENTITModel.Genre" />
+          <EntitySet Name="Tracks" EntityType="RENTITModel.Track" />
+          <EntitySet Name="Comments" EntityType="RENTITModel.Comment" />
+          <EntitySet Name="Users" EntityType="RENTITModel.User" />
+          <EntitySet Name="Votes" EntityType="RENTITModel.Vote" />
+          <EntitySet Name="TrackPlays" EntityType="RENTITModel.TrackPlay" />
+          <AssociationSet Name="ChannelComment" Association="RENTITModel.ChannelComment">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet SearchString="CommentUser" Association="RENTITModel.CommentUser">
+          <AssociationSet Name="CommentUser" Association="RENTITModel.CommentUser">
             <End Role="Comment" EntitySet="Comments" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet SearchString="ChannelUser" Association="RENTITModel.ChannelUser">
+          <AssociationSet Name="ChannelUser" Association="RENTITModel.ChannelUser">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet SearchString="ChannelUser1" Association="RENTITModel.ChannelUser1">
+          <AssociationSet Name="ChannelUser1" Association="RENTITModel.ChannelUser1">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet SearchString="ChannelGenre" Association="RENTITModel.ChannelGenre">
+          <AssociationSet Name="ChannelGenre" Association="RENTITModel.ChannelGenre">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Genre" EntitySet="Genres" />
           </AssociationSet>
-          <AssociationSet SearchString="UserVote" Association="RENTITModel.UserVote">
+          <AssociationSet Name="UserVote" Association="RENTITModel.UserVote">
             <End Role="User" EntitySet="Users" />
             <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
-          <AssociationSet SearchString="TrackVote" Association="RENTITModel.TrackVote">
+          <AssociationSet Name="TrackVote" Association="RENTITModel.TrackVote">
             <End Role="Track" EntitySet="Tracks" />
             <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
-          <AssociationSet SearchString="TrackTrackPlay" Association="RENTITModel.TrackTrackPlay">
+          <AssociationSet Name="TrackTrackPlay" Association="RENTITModel.TrackTrackPlay">
             <End Role="Track" EntitySet="Tracks" />
             <End Role="TrackPlay" EntitySet="TrackPlays" />
           </AssociationSet>
-          <AssociationSet SearchString="ChannelTrack" Association="RENTITModel.ChannelTrack">
+          <AssociationSet Name="ChannelTrack" Association="RENTITModel.ChannelTrack">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Track" EntitySet="Tracks" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType SearchString="SMUbook">
+        <EntityType Name="SMUbook">
           <Key>
-            <PropertyRef SearchString="id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" SearchString="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" SearchString="title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <Property Type="String" SearchString="author" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" SearchString="description" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Type="String" SearchString="genre" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Double" SearchString="price" Nullable="false" />
-          <Property Type="DateTime" SearchString="dateAdded" Nullable="false" Precision="3" />
-          <Property Type="String" SearchString="PDFFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" SearchString="imageFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" SearchString="hit" Nullable="false" />
-          <NavigationProperty SearchString="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_bookId" FromRole="SMUbook" ToRole="SMUrental" />
-          <Property Type="String" SearchString="audioFilePath" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" SearchString="audioNarrator" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Type="String" Name="author" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="genre" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="price" Nullable="false" />
+          <Property Type="DateTime" Name="dateAdded" Nullable="false" Precision="3" />
+          <Property Type="String" Name="PDFFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="imageFilePath" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="hit" Nullable="false" />
+          <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_bookId" FromRole="SMUbook" ToRole="SMUrental" />
+          <Property Type="String" Name="audioFilePath" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="audioNarrator" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
-        <EntityType SearchString="SMUrental">
+        <EntityType Name="SMUrental">
           <Key>
-            <PropertyRef SearchString="id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" SearchString="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" SearchString="userId" Nullable="false" />
-          <Property Type="Int32" SearchString="bookId" Nullable="true" />
-          <Property Type="DateTime" SearchString="startDate" Nullable="false" Precision="3" />
-          <NavigationProperty SearchString="SMUbook" Relationship="RENTITModel.FK_SMUrentals_bookId" FromRole="SMUrental" ToRole="SMUbook" />
-          <NavigationProperty SearchString="SMUuser" Relationship="RENTITModel.FK_SMUrentals_userId" FromRole="SMUrental" ToRole="SMUuser" />
-          <Property Type="Int32" SearchString="mediaType" Nullable="false" DefaultValue="-1" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="Int32" Name="bookId" Nullable="true" />
+          <Property Type="DateTime" Name="startDate" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SMUbook" Relationship="RENTITModel.FK_SMUrentals_bookId" FromRole="SMUrental" ToRole="SMUbook" />
+          <NavigationProperty Name="SMUuser" Relationship="RENTITModel.FK_SMUrentals_userId" FromRole="SMUrental" ToRole="SMUuser" />
+          <Property Type="Int32" Name="mediaType" Nullable="false" DefaultValue="-1" />
         </EntityType>
-        <EntityType SearchString="SMUuser">
+        <EntityType Name="SMUuser">
           <Key>
-            <PropertyRef SearchString="id" />
+            <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" SearchString="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" SearchString="email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" SearchString="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" SearchString="password" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" SearchString="isAdmin" Nullable="false" />
-          <NavigationProperty SearchString="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_userId" FromRole="SMUuser" ToRole="SMUrental" />
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="isAdmin" Nullable="false" />
+          <NavigationProperty Name="SMUrentals" Relationship="RENTITModel.FK_SMUrentals_userId" FromRole="SMUuser" ToRole="SMUrental" />
         </EntityType>
-        <Association SearchString="FK_SMUrentals_bookId">
+        <Association Name="FK_SMUrentals_bookId">
           <End Type="RENTITModel.SMUbook" Role="SMUbook" Multiplicity="0..1" />
           <End Type="RENTITModel.SMUrental" Role="SMUrental" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SMUbook">
-              <PropertyRef SearchString="id" />
+              <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="SMUrental">
-              <PropertyRef SearchString="bookId" />
+              <PropertyRef Name="bookId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="FK_SMUrentals_userId">
+        <Association Name="FK_SMUrentals_userId">
           <End Type="RENTITModel.SMUuser" Role="SMUuser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="RENTITModel.SMUrental" Role="SMUrental" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SMUuser">
-              <PropertyRef SearchString="id" />
+              <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="SMUrental">
-              <PropertyRef SearchString="userId" />
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType SearchString="sysdiagram">
+        <EntityType Name="sysdiagram">
           <Key>
-            <PropertyRef SearchString="diagram_id" />
+            <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Type="String" SearchString="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" SearchString="principal_id" Nullable="false" />
-          <Property Type="Int32" SearchString="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" SearchString="version" />
-          <Property Type="Binary" SearchString="definition" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType SearchString="Channel">
+        <EntityType Name="Channel">
           <Key>
-            <PropertyRef SearchString="Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" SearchString="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty SearchString="Comments" Relationship="RENTITModel.ChannelComment" FromRole="Channel" ToRole="Comment" />
-          <NavigationProperty SearchString="ChannelOwner" Relationship="RENTITModel.ChannelUser" FromRole="Channel" ToRole="User" />
-          <Property Type="Int32" SearchString="UserId" Nullable="false" />
-          <NavigationProperty SearchString="Subscribers" Relationship="RENTITModel.ChannelUser1" FromRole="Channel" ToRole="User" />
-          <NavigationProperty SearchString="Genres" Relationship="RENTITModel.ChannelGenre" FromRole="Channel" ToRole="Genre" />
-          <NavigationProperty SearchString="Tracks" Relationship="RENTITModel.ChannelTrack" FromRole="Channel" ToRole="Track" />
-          <Property Type="String" SearchString="SearchString" Nullable="false" FixedLength="false" MaxLength="200" Unicode="true" />
-          <Property Type="String" SearchString="Description" Nullable="false" FixedLength="false" MaxLength="1000" Unicode="true" />
-          <Property Type="Double" SearchString="Rating" />
-          <Property Type="Int32" SearchString="Hits" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Comments" Relationship="RENTITModel.ChannelComment" FromRole="Channel" ToRole="Comment" />
+          <NavigationProperty Name="ChannelOwner" Relationship="RENTITModel.ChannelUser" FromRole="Channel" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="Subscribers" Relationship="RENTITModel.ChannelUser1" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Genres" Relationship="RENTITModel.ChannelGenre" FromRole="Channel" ToRole="Genre" />
+          <NavigationProperty Name="Tracks" Relationship="RENTITModel.ChannelTrack" FromRole="Channel" ToRole="Track" />
+          <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="200" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" FixedLength="false" MaxLength="1000" Unicode="true" />
+          <Property Type="Double" Name="Rating" />
+          <Property Type="Int32" Name="Hits" Nullable="true" />
         </EntityType>
-        <EntityType SearchString="Genre">
+        <EntityType Name="Genre">
           <Key>
-            <PropertyRef SearchString="Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" SearchString="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty SearchString="Channels" Relationship="RENTITModel.ChannelGenre" FromRole="Genre" ToRole="Channel" />
-          <Property Type="String" SearchString="SearchString" Nullable="false" FixedLength="false" MaxLength="200" Unicode="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Channels" Relationship="RENTITModel.ChannelGenre" FromRole="Genre" ToRole="Channel" />
+          <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="200" Unicode="true" />
         </EntityType>
-        <EntityType SearchString="Track">
+        <EntityType Name="Track">
           <Key>
-            <PropertyRef SearchString="Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" SearchString="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty SearchString="Votes" Relationship="RENTITModel.TrackVote" FromRole="Track" ToRole="Vote" />
-          <NavigationProperty SearchString="TrackPlays" Relationship="RENTITModel.TrackTrackPlay" FromRole="Track" ToRole="TrackPlay" />
-          <NavigationProperty SearchString="Channel" Relationship="RENTITModel.ChannelTrack" FromRole="Track" ToRole="Channel" />
-          <Property Type="Int32" SearchString="ChannelId" Nullable="false" />
-          <Property Type="String" SearchString="Path" Nullable="false" MaxLength="230" FixedLength="false" Unicode="true" />
-          <Property Type="String" SearchString="SearchString" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" SearchString="Artist" Nullable="false" FixedLength="false" MaxLength="100" Unicode="true" />
-          <Property Type="Int32" SearchString="Length" Nullable="false" />
-          <Property Type="Int32" SearchString="UpVotes" Nullable="false" />
-          <Property Type="Int32" SearchString="DownVotes" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Votes" Relationship="RENTITModel.TrackVote" FromRole="Track" ToRole="Vote" />
+          <NavigationProperty Name="TrackPlays" Relationship="RENTITModel.TrackTrackPlay" FromRole="Track" ToRole="TrackPlay" />
+          <NavigationProperty Name="Channel" Relationship="RENTITModel.ChannelTrack" FromRole="Track" ToRole="Channel" />
+          <Property Type="Int32" Name="ChannelId" Nullable="false" />
+          <Property Type="String" Name="Path" Nullable="false" MaxLength="230" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Artist" Nullable="false" FixedLength="false" MaxLength="100" Unicode="true" />
+          <Property Type="Int32" Name="Length" Nullable="false" />
+          <Property Type="Int32" Name="UpVotes" Nullable="false" />
+          <Property Type="Int32" Name="DownVotes" Nullable="false" />
         </EntityType>
-        <EntityType SearchString="Comment">
+        <EntityType Name="Comment">
           <Key>
-            <PropertyRef SearchString="ChannelId" />
-            <PropertyRef SearchString="UserId" />
+            <PropertyRef Name="ChannelId" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <NavigationProperty SearchString="Channel" Relationship="RENTITModel.ChannelComment" FromRole="Comment" ToRole="Channel" />
-          <Property Type="Int32" SearchString="ChannelId" Nullable="false" />
-          <NavigationProperty SearchString="User" Relationship="RENTITModel.CommentUser" FromRole="Comment" ToRole="User" />
-          <Property Type="Int32" SearchString="UserId" Nullable="false" />
-          <Property Type="DateTime" SearchString="Date" Nullable="false" Precision="3" />
-          <Property Type="String" SearchString="Content" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Channel" Relationship="RENTITModel.ChannelComment" FromRole="Comment" ToRole="Channel" />
+          <Property Type="Int32" Name="ChannelId" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RENTITModel.CommentUser" FromRole="Comment" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType SearchString="User">
+        <EntityType Name="User">
           <Key>
-            <PropertyRef SearchString="Id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" SearchString="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty SearchString="Comments" Relationship="RENTITModel.CommentUser" FromRole="User" ToRole="Comment" />
-          <NavigationProperty SearchString="Channels" Relationship="RENTITModel.ChannelUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty SearchString="SubscribedChannels" Relationship="RENTITModel.ChannelUser1" FromRole="User" ToRole="Channel" />
-          <NavigationProperty SearchString="Votes" Relationship="RENTITModel.UserVote" FromRole="User" ToRole="Vote" />
-          <Property Type="String" SearchString="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" SearchString="Password" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Type="String" SearchString="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Comments" Relationship="RENTITModel.CommentUser" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Channels" Relationship="RENTITModel.ChannelUser" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="SubscribedChannels" Relationship="RENTITModel.ChannelUser1" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="Votes" Relationship="RENTITModel.UserVote" FromRole="User" ToRole="Vote" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType SearchString="Vote" >
+        <EntityType Name="Vote" >
           <Key>
-            <PropertyRef SearchString="UserId" />
-            <PropertyRef SearchString="TrackId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="TrackId" />
           </Key>
-          <NavigationProperty SearchString="User" Relationship="RENTITModel.UserVote" FromRole="Vote" ToRole="User" />
-          <Property Type="Int32" SearchString="UserId" Nullable="false" />
-          <NavigationProperty SearchString="Track" Relationship="RENTITModel.TrackVote" FromRole="Vote" ToRole="Track" />
-          <Property Type="Int32" SearchString="TrackId" Nullable="false" />
-          <Property Type="Int32" SearchString="Value" Nullable="false" />
-          <Property Type="DateTime" SearchString="Date" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="RENTITModel.UserVote" FromRole="Vote" ToRole="User" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="Track" Relationship="RENTITModel.TrackVote" FromRole="Vote" ToRole="Track" />
+          <Property Type="Int32" Name="TrackId" Nullable="false" />
+          <Property Type="Int32" Name="Value" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType SearchString="TrackPlay" >
+        <EntityType Name="TrackPlay" >
           <Key>
-            <PropertyRef SearchString="TrackId" />
-            <PropertyRef SearchString="TimePlayed" />
+            <PropertyRef Name="TrackId" />
+            <PropertyRef Name="TimePlayed" />
           </Key>
-          <NavigationProperty SearchString="Track" Relationship="RENTITModel.TrackTrackPlay" FromRole="TrackPlay" ToRole="Track" />
-          <Property Type="Int32" SearchString="TrackId" Nullable="false" />
-          <Property Type="DateTime" SearchString="TimePlayed" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Track" Relationship="RENTITModel.TrackTrackPlay" FromRole="TrackPlay" ToRole="Track" />
+          <Property Type="Int32" Name="TrackId" Nullable="false" />
+          <Property Type="DateTime" Name="TimePlayed" Nullable="false" Precision="3" />
         </EntityType>
-        <Association SearchString="ChannelComment">
+        <Association Name="ChannelComment">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="1" />
           <End Type="RENTITModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Channel">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comment">
-              <PropertyRef SearchString="ChannelId" />
+              <PropertyRef Name="ChannelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="CommentUser">
+        <Association Name="CommentUser">
           <End Type="RENTITModel.Comment" Role="Comment" Multiplicity="*" />
           <End Type="RENTITModel.User" Role="User" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="User">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Comment">
-              <PropertyRef SearchString="UserId" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="ChannelUser">
+        <Association Name="ChannelUser">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
           <End Type="RENTITModel.User" Role="User" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="User">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Channel">
-              <PropertyRef SearchString="UserId" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="ChannelUser1">
+        <Association Name="ChannelUser1">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
           <End Type="RENTITModel.User" Role="User" Multiplicity="*" />
         </Association>
-        <Association SearchString="ChannelGenre">
+        <Association Name="ChannelGenre">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
           <End Type="RENTITModel.Genre" Role="Genre" Multiplicity="*" />
         </Association>
-        <Association SearchString="UserVote">
+        <Association Name="UserVote">
           <End Type="RENTITModel.User" Role="User" Multiplicity="1" />
           <End Type="RENTITModel.Vote" Role="Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Vote">
-              <PropertyRef SearchString="UserId" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="TrackVote">
+        <Association Name="TrackVote">
           <End Type="RENTITModel.Track" Role="Track" Multiplicity="1" />
           <End Type="RENTITModel.Vote" Role="Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Track">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Vote">
-              <PropertyRef SearchString="TrackId" />
+              <PropertyRef Name="TrackId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="TrackTrackPlay">
+        <Association Name="TrackTrackPlay">
           <End Type="RENTITModel.Track" Role="Track" Multiplicity="1" />
           <End Type="RENTITModel.TrackPlay" Role="TrackPlay" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Track">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="TrackPlay">
-              <PropertyRef SearchString="TrackId" />
+              <PropertyRef Name="TrackId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association SearchString="ChannelTrack">
+        <Association Name="ChannelTrack">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="1" />
           <End Type="RENTITModel.Track" Role="Track" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Channel">
-              <PropertyRef SearchString="Id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Track">
-              <PropertyRef SearchString="ChannelId" />
+              <PropertyRef Name="ChannelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -683,143 +683,143 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="RENTITModelStoreContainer" CdmEntityContainer="RENTIT21Entities">
-    <EntitySetMapping SearchString="SMUbooks">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.SMUbook)">
+    <EntitySetMapping Name="SMUbooks">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.SMUbook)">
         <MappingFragment StoreEntitySet="SMUbooks">
-          <ScalarProperty SearchString="id" ColumnSearchString="id" />
-          <ScalarProperty SearchString="title" ColumnSearchString="title" />
-          <ScalarProperty SearchString="author" ColumnSearchString="author" />
-          <ScalarProperty SearchString="description" ColumnSearchString="description" />
-          <ScalarProperty SearchString="genre" ColumnSearchString="genre" />
-          <ScalarProperty SearchString="price" ColumnSearchString="price" />
-          <ScalarProperty SearchString="dateAdded" ColumnSearchString="dateAdded" />
-          <ScalarProperty SearchString="PDFFilePath" ColumnSearchString="PDFFilePath" />
-          <ScalarProperty SearchString="imageFilePath" ColumnSearchString="imageFilePath" />
-          <ScalarProperty SearchString="hit" ColumnSearchString="hit" />
-          <ScalarProperty SearchString="audioFilePath" ColumnSearchString="audioFilePath" />
-          <ScalarProperty SearchString="audioNarrator" ColumnSearchString="audioNarrator" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="author" ColumnName="author" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="genre" ColumnName="genre" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+          <ScalarProperty Name="PDFFilePath" ColumnName="PDFFilePath" />
+          <ScalarProperty Name="imageFilePath" ColumnName="imageFilePath" />
+          <ScalarProperty Name="hit" ColumnName="hit" />
+          <ScalarProperty Name="audioFilePath" ColumnName="audioFilePath" />
+          <ScalarProperty Name="audioNarrator" ColumnName="audioNarrator" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="SMUrentals">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.SMUrental)">
+    <EntitySetMapping Name="SMUrentals">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.SMUrental)">
         <MappingFragment StoreEntitySet="SMUrentals">
-          <ScalarProperty SearchString="id" ColumnSearchString="id" />
-          <ScalarProperty SearchString="userId" ColumnSearchString="userId" />
-          <ScalarProperty SearchString="bookId" ColumnSearchString="bookId" />
-          <ScalarProperty SearchString="startDate" ColumnSearchString="startDate" />
-          <ScalarProperty SearchString="mediaType" ColumnSearchString="mediaType" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="bookId" ColumnName="bookId" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="mediaType" ColumnName="mediaType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="SMUusers">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.SMUuser)">
+    <EntitySetMapping Name="SMUusers">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.SMUuser)">
         <MappingFragment StoreEntitySet="SMUusers">
-          <ScalarProperty SearchString="id" ColumnSearchString="id" />
-          <ScalarProperty SearchString="email" ColumnSearchString="email" />
-          <ScalarProperty SearchString="username" ColumnSearchString="username" />
-          <ScalarProperty SearchString="password" ColumnSearchString="password" />
-          <ScalarProperty SearchString="isAdmin" ColumnSearchString="isAdmin" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="sysdiagrams">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.sysdiagram)">
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.sysdiagram)">
         <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty SearchString="diagram_id" ColumnSearchString="diagram_id" />
-          <ScalarProperty SearchString="name" ColumnSearchString="name" />
-          <ScalarProperty SearchString="principal_id" ColumnSearchString="principal_id" />
-          <ScalarProperty SearchString="version" ColumnSearchString="version" />
-          <ScalarProperty SearchString="definition" ColumnSearchString="definition" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Channels">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.Channel)">
+    <EntitySetMapping Name="Channels">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Channel)">
         <MappingFragment StoreEntitySet="Channels">
-          <ScalarProperty SearchString="Id" ColumnSearchString="Id" />
-          <ScalarProperty SearchString="UserId" ColumnSearchString="UserId" />
-          <ScalarProperty SearchString="SearchString" ColumnSearchString="SearchString" />
-          <ScalarProperty SearchString="Description" ColumnSearchString="Description" />
-          <ScalarProperty SearchString="Rating" ColumnSearchString="Rating" />
-          <ScalarProperty SearchString="Hits" ColumnSearchString="Hits" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Hits" ColumnName="Hits" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Genres">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.Genre)">
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Genre)">
         <MappingFragment StoreEntitySet="Genres">
-          <ScalarProperty SearchString="Id" ColumnSearchString="Id" />
-          <ScalarProperty SearchString="SearchString" ColumnSearchString="SearchString" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Tracks">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.Track)">
+    <EntitySetMapping Name="Tracks">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Track)">
         <MappingFragment StoreEntitySet="Tracks">
-          <ScalarProperty SearchString="Id" ColumnSearchString="Id" />
-          <ScalarProperty SearchString="ChannelId" ColumnSearchString="ChannelId" />
-          <ScalarProperty SearchString="Path" ColumnSearchString="Path" />
-          <ScalarProperty SearchString="SearchString" ColumnSearchString="SearchString" />
-          <ScalarProperty SearchString="Artist" ColumnSearchString="Artist" />
-          <ScalarProperty SearchString="Length" ColumnSearchString="Length" />
-          <ScalarProperty SearchString="UpVotes" ColumnSearchString="UpVotes" />
-          <ScalarProperty SearchString="DownVotes" ColumnSearchString="DownVotes" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Artist" ColumnName="Artist" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="UpVotes" ColumnName="UpVotes" />
+          <ScalarProperty Name="DownVotes" ColumnName="DownVotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Comments">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.Comment)">
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Comment)">
         <MappingFragment StoreEntitySet="Comments">
-          <ScalarProperty SearchString="ChannelId" ColumnSearchString="ChannelId" />
-          <ScalarProperty SearchString="UserId" ColumnSearchString="UserId" />
-          <ScalarProperty SearchString="Date" ColumnSearchString="Date" />
-          <ScalarProperty SearchString="Content" ColumnSearchString="Content" />
+          <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Users">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.User)">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.User)">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty SearchString="Id" ColumnSearchString="Id" />
-          <ScalarProperty SearchString="Username" ColumnSearchString="Username" />
-          <ScalarProperty SearchString="Password" ColumnSearchString="Password" />
-          <ScalarProperty SearchString="Email" ColumnSearchString="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="Votes">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.Vote)">
+    <EntitySetMapping Name="Votes">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Vote)">
         <MappingFragment StoreEntitySet="Votes">
-          <ScalarProperty SearchString="UserId" ColumnSearchString="UserId" />
-          <ScalarProperty SearchString="TrackId" ColumnSearchString="TrackId" />
-          <ScalarProperty SearchString="Value" ColumnSearchString="Value" />
-          <ScalarProperty SearchString="Date" ColumnSearchString="Date" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TrackId" ColumnName="TrackId" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping SearchString="TrackPlays">
-      <EntityTypeMapping TypeSearchString="IsTypeOf(RENTITModel.TrackPlay)">
+    <EntitySetMapping Name="TrackPlays">
+      <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.TrackPlay)">
         <MappingFragment StoreEntitySet="TrackPlays">
-          <ScalarProperty SearchString="TrackId" ColumnSearchString="TrackId" />
-          <ScalarProperty SearchString="TimePlayed" ColumnSearchString="TimePlayed" />
+          <ScalarProperty Name="TrackId" ColumnName="TrackId" />
+          <ScalarProperty Name="TimePlayed" ColumnName="TimePlayed" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping SearchString="ChannelUser1" TypeSearchString="RENTITModel.ChannelUser1" StoreEntitySet="ChannelUser1">
-      <EndProperty SearchString="Channel">
-        <ScalarProperty SearchString="Id" ColumnSearchString="SubscribedChannels_Id" />
+    <AssociationSetMapping Name="ChannelUser1" TypeName="RENTITModel.ChannelUser1" StoreEntitySet="ChannelUser1">
+      <EndProperty Name="Channel">
+        <ScalarProperty Name="Id" ColumnName="SubscribedChannels_Id" />
       </EndProperty>
-      <EndProperty SearchString="User">
-        <ScalarProperty SearchString="Id" ColumnSearchString="Subscribers_Id" />
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="Subscribers_Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping SearchString="ChannelGenre" TypeSearchString="RENTITModel.ChannelGenre" StoreEntitySet="ChannelGenre">
-      <EndProperty SearchString="Channel">
-        <ScalarProperty SearchString="Id" ColumnSearchString="Channels_Id" />
+    <AssociationSetMapping Name="ChannelGenre" TypeName="RENTITModel.ChannelGenre" StoreEntitySet="ChannelGenre">
+      <EndProperty Name="Channel">
+        <ScalarProperty Name="Id" ColumnName="Channels_Id" />
       </EndProperty>
-      <EndProperty SearchString="Genre">
-        <ScalarProperty SearchString="Id" ColumnSearchString="Genres_Id" />
+      <EndProperty Name="Genre">
+        <ScalarProperty Name="Id" ColumnName="Genres_Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
@@ -829,15 +829,15 @@
   <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <Connection>
       <DesignerInfoPropertySet>
-        <DesignerProperty SearchString="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
     </Connection>
     <Options>
       <DesignerInfoPropertySet>
-        <DesignerProperty SearchString="ValidateOnBuild" Value="true" />
-        <DesignerProperty SearchString="EnablePluralization" Value="True" />
-        <DesignerProperty SearchString="IncludeForeignKeysInModel" Value="True" />
-        <DesignerProperty SearchString="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

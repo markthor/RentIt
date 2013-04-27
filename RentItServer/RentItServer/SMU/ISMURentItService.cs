@@ -81,10 +81,10 @@ namespace RentItServer.SMU
         /// <summary>
         /// Searches for books containing the search string.
         /// </summary>
-        /// <param name="searchString">The search string.</param>
+        /// <param name="Name">The search string.</param>
         /// <returns>An array containing all books containing the search string</returns>
         [OperationContract]
-        Book[] SearchBooks(String searchString);
+        Book[] SearchBooks(String Name);
 
         //returns books with the specified genre.
         /// <summary>
