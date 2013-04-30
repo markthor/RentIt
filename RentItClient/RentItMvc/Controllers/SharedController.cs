@@ -12,5 +12,10 @@ namespace RentItMvc.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult AudioPlayer()
+        {
+            return PartialView();
+        }
     }
 }

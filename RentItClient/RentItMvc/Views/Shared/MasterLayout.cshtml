@@ -4,12 +4,9 @@
 
 <div class="row-fluid">
     <div class="span3">
-        @RenderSection("Left")
+        @Html.Action("AudioPlayer", "Shared")
     </div>
-    <div class="span6">
-        @RenderSection("Middle")
-    </div>
-    <div class="span3">
-        @RenderSection("Right")
+    <div class="span9">
+        @RenderBody()
     </div>
 </div>
