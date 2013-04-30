@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
+using TagLib;
 
 namespace RentItServer.ITU
 {
@@ -33,6 +34,9 @@ namespace RentItServer.ITU
         //The ternary search trie for users. Each username or email has an associated password as value
         private TernarySearchTrie<User> _userCache;
 
+        private int tempCounter;
+        private readonly object _dbLock = new object();
+
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
@@ -46,7 +50,7 @@ namespace RentItServer.ITU
             {
                 _channelCache[channel.Id] = channel;
             }
-            
+
             // Initialize user search tries
             IEnumerable<User> allUsers = _dao.GetAllUsers();
             foreach (User user in allUsers)
@@ -57,7 +61,7 @@ namespace RentItServer.ITU
 
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
-            
+
             // Initialize the channel organizer
             _channelOrganizer = ChannelOrganizer.GetInstance();
         }
@@ -79,7 +83,15 @@ namespace RentItServer.ITU
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public User Login(string usernameOrEmail, string password)
         {
-            return _userCache.Get(usernameOrEmail) ?? _dao.Login(usernameOrEmail, password);
+            User theUser = _userCache.Get(usernameOrEmail);
+            if (theUser == null)
+            {
+                lock (_dbLock)
+                {
+                    theUser = _dao.Login(usernameOrEmail, password);
+                }
+            }
+            return theUser;
         }
 
         /// <summary>
@@ -101,9 +113,12 @@ namespace RentItServer.ITU
 
             try
             {
-                User theUser = _dao.SignUp(username, password, email);
-                _userCache.Put(theUser.Username, theUser);
-                //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+                lock (_dbLock)
+                {
+                    User theUser = _dao.SignUp(username, password, email);
+                    _userCache.Put(theUser.Username, theUser);
+                    //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+                }
             }
             catch (Exception e)
             {
@@ -122,10 +137,13 @@ namespace RentItServer.ITU
         {
             try
             {
-                User theUser = _dao.GetUser(userId);
-                _dao.DeleteUser(userId);
-                _userCache.Put(theUser.Username, null);
-                _userCache.Put(theUser.Email, null);
+                lock (_dbLock)
+                {
+                    User theUser = _dao.GetUser(userId);
+                    _dao.DeleteUser(userId);
+                    _userCache.Put(theUser.Username, null);
+                    _userCache.Put(theUser.Email, null);
+                }
             }
             catch (Exception e)
             {
@@ -180,11 +198,11 @@ namespace RentItServer.ITU
             {
                 User theUser = _dao.GetUser(userId);
                 _dao.UpdateUser(userId, username, password);
-                _userCache.Put(theUser.Username, null);
-                _userCache.Put(theUser.Email, null);
+                if(theUser.Username != null) _userCache.Put(theUser.Username, null);
+                if(theUser.Email != null) _userCache.Put(theUser.Email, null);
                 User theUpdatedUser = _dao.GetUser(userId);
-                _userCache.Put(username, theUpdatedUser);
-                _userCache.Put(email, theUpdatedUser);
+                if(username != null) _userCache.Put(username, theUpdatedUser);
+                if(email != null) _userCache.Put(email, theUpdatedUser);
             }
             catch (Exception e)
             {
@@ -193,7 +211,7 @@ namespace RentItServer.ITU
                 throw;
             }
         }
-        
+
         /// <summary>
         /// Creates a channel.
         /// </summary>
@@ -214,13 +232,16 @@ namespace RentItServer.ITU
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
-                channel = _dao.CreateChannel(channelName, userId, description, genres);
-                _channelCache[channel.Id] = channel;
-                //_logger.AddEntry(logEntry + "Channel creation succeeded.");
+                lock (_dbLock)
+                {
+                    channel = _dao.CreateChannel(channelName, userId, description, genres);
+                    _channelCache[channel.Id] = channel;
+                    //_logger.AddEntry(logEntry + "Channel creation succeeded.");
+                }
             }
             catch (Exception e)
             {
-               if(_handler != null)
+                if (_handler != null)
                     _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
                 throw;
             }
@@ -239,18 +260,22 @@ namespace RentItServer.ITU
 
             try
             {
-                Channel channel = _dao.GetChannel(channelId);
-                string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
-                if (channel.UserId == userId)
+                lock (_dbLock)
                 {
-                    _dao.DeleteChannel(userId, channel);
-                    _channelCache[channelId] = null;
-                    //_logger.AddEntry(logEntry + "Deletion successful.");
-                }
-                else
-                {
-                    if (_handler != null)
-                        _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
+                    Channel channel = _dao.GetChannel(channelId);
+
+                    string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
+                    if (channel.UserId == userId)
+                    {
+                        _dao.DeleteChannel(userId, channel);
+                        _channelCache[channelId] = null;
+                        //_logger.AddEntry(logEntry + "Deletion successful.");
+                    }
+                    else
+                    {
+                        if (_handler != null)
+                            _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
+                    }
                 }
             }
             catch (Exception e)
@@ -275,7 +300,7 @@ namespace RentItServer.ITU
                 throw;
             }
         }
-        
+
         /// <summary>
         /// Gets a channel.
         /// </summary>
@@ -358,21 +383,33 @@ namespace RentItServer.ITU
             }
         }
 
-        public void UploadTrack(Track track, int userId, int channelId)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
         {
             // TODO possibly better with MemoryStream instead of Track
         }
 
-        public Track GetTrackInfo(int trackId)
+        //public Track GetTrackInfo(MemoryStream audioStream)
+        //{
+        //    try
+        //    {
+        //        int counter = tempCounter++;
+        //        _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.GenerateAudioFileName(counter), audioStream);
+        //        // Use external library
+        //        TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
+        //        string artist = audioFile.Tag.AlbumArtists.;
+        //    }
+        //}
+
+        public Track GetTrackInfo(int channelId, string trackname)
         {
             try
             {
-                return _dao.GetTrack(trackId);
+                return _dao.GetTrack(channelId, trackname);
             }
             catch (Exception e)
             {
                 if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfo deletion failed with exception [" + e + "]."));
+                    _handler(this, new RentItEventArgs("GetTrackInfoByTrackname deletion failed with exception [" + e + "]."));
                 throw;
             }
         }
@@ -392,7 +429,7 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if(_handler != null)
+                if (_handler != null)
                     _handler(this, new RentItEventArgs("Track deletion failed with exception [" + e + "]."));
                 throw;
             }
@@ -420,10 +457,12 @@ namespace RentItServer.ITU
 
         public IEnumerable<Track> GetTracks(int channelId, TrackSearchArgs args)
         {
-            try{
+            try
+            {
                 return _dao.GetTracksWithFilter(channelId, args);
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("GetTracks failed with exception [" + e + "]."));
                 throw;
@@ -438,10 +477,13 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void CreateComment(string comment, int userId, int channelId)
         {
-            _dao.CreateComment(comment, userId, channelId);
-            //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
-            if(_handler != null)
-                    _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
+            lock (_dbLock)
+            {
+                _dao.CreateComment(comment, userId, channelId);
+                //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
+            }
+            if (_handler != null)
+                _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
         }
 
         public void DeleteComment(int userId, int channelId, DateTime date)
@@ -457,7 +499,7 @@ namespace RentItServer.ITU
                 throw;
             }
         }
-        
+
         public Comment GetComment(int channelId, int userId, DateTime date)
         {
             throw new NotImplementedException();
@@ -475,8 +517,12 @@ namespace RentItServer.ITU
 
         public void Subscribe(int userId, int channelId)
         {
-            try{
-                _dao.Subscribe(userId, channelId);
+            try
+            {
+                lock (_dbLock)
+                {
+                    _dao.Subscribe(userId, channelId);
+                }
             }
             catch (Exception e)
             {
@@ -488,8 +534,12 @@ namespace RentItServer.ITU
 
         public void UnSubscribe(int userId, int channelId)
         {
-            try{
-                _dao.UnSubscribe(userId, channelId);
+            try
+            {
+                lock (_dbLock)
+                {
+                    _dao.UnSubscribe(userId, channelId);
+                }
             }
             catch (Exception e)
             {
@@ -507,8 +557,8 @@ namespace RentItServer.ITU
         private void LogAndThrowException(Exception e, String operationName)
         {
             //_logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
-            if(_handler != null)
-                    _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
+            if (_handler != null)
+                _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
             throw e;
         }
 

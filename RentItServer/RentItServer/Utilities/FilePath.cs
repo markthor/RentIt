@@ -63,6 +63,16 @@ namespace RentItServer.Utilities
             "Tracks" + Path.DirectorySeparatorChar);
 
         /// <summary>
+        /// The ITU temp path
+        /// </summary>
+        public static readonly FilePath ITUTempPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "Temp" + Path.DirectorySeparatorChar);
+
+        /// <summary>
         /// The ITU log path
         /// </summary>
         public static readonly FilePath ITULogPath = new FilePath(

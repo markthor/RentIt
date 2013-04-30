@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.ServiceModel;
 
 namespace RentItServer.ITU
@@ -135,13 +136,25 @@ namespace RentItServer.ITU
         [OperationContract]
         void CreateVote(int rating, int userId, int trackId);
 
+        [OperationContract]
+        void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo);
+
+        /// <summary>
+        /// Gets the track info associated with the track stream.
+        /// </summary>
+        /// <param name="audioStream">The audio stream.</param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream);
+
         /// <summary>
         /// Gets the track info associated with the track.
         /// </summary>
-        /// <param name="trackId">The track id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="trackname">The trackname.</param>
         /// <returns></returns>
         [OperationContract]
-        DatabaseWrapperObjects.Track GetTrackInfo(int trackId);
+        DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname);
         
         /// <summary>
         /// Removes the track.
