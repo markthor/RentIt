@@ -226,7 +226,7 @@ namespace RentItServer.ITU
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
             if (userId < 0) LogAndThrowException(new ArgumentException("userId was below 0"), "CreateChannel");
             if (description == null) LogAndThrowException(new ArgumentException("description"), "CreateChannel");
-            if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
+            //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
             Channel channel;
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
@@ -388,17 +388,46 @@ namespace RentItServer.ITU
             // TODO possibly better with MemoryStream instead of Track
         }
 
-        //public Track GetTrackInfo(MemoryStream audioStream)
-        //{
-        //    try
-        //    {
-        //        int counter = tempCounter++;
-        //        _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.GenerateAudioFileName(counter), audioStream);
-        //        // Use external library
-        //        TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
-        //        string artist = audioFile.Tag.AlbumArtists.;
-        //    }
-        //}
+        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        {
+            DatabaseWrapperObjects.Track theTrack = new DatabaseWrapperObjects.Track();
+            theTrack.Artist = "";
+            try
+            {
+                int counter = tempCounter++;
+                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.GenerateAudioFileName(counter), audioStream);
+                // Use external library
+                TagLib.File audioFile =
+                    TagLib.File.Create(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
+                string[] artists = audioFile.Tag.AlbumArtists;
+                foreach (string artist in artists)
+                {
+                    theTrack.Artist += artist + ", ";
+                }
+                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 3);
+                theTrack.DownVotes = 0;
+                theTrack.UpVotes = 0;
+                theTrack.Name = audioFile.Tag.Title;
+                theTrack.TrackPlays = new List<DatabaseWrapperObjects.TrackPlay>();
+                theTrack.Votes = new List<DatabaseWrapperObjects.Vote>();
+                theTrack.Length = audioFile.Properties.Duration.Milliseconds;
+                try
+                {
+                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
+                }
+                catch
+                {
+                    // It doesn't matter much
+                }
+                return theTrack;
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetTrackInfo failed with exception [" + e + "]."));
+                throw;
+            }
+        }
 
         public Track GetTrackInfo(int channelId, string trackname)
         {
