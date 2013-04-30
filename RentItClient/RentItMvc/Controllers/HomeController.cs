@@ -61,8 +61,8 @@ namespace RentItMvc.Controllers
                     channelList.Add(proxy.GetChannel(id));
                 }
             }
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
-            /*ChannelList list1 = new ChannelList();
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channelList);
+            //ChannelList list1 = new ChannelList();
             GuiChannel chan = new GuiChannel();
             chan.Id = 1;
             chan.Description = "A nice channel";
@@ -70,7 +70,8 @@ namespace RentItMvc.Controllers
             chan.Hits = 1000;
             chan.Upvotes = 100;
             chan.DownVotes = 10;
-            GuiChannel chan2 = new GuiChannel();
+            GuiChannelList.Add(chan);
+            /*GuiChannel chan2 = new GuiChannel();
             chan2.Id = 2;
             chan2.Description = "Vesy sfsefsef";
             chan2.Name = "Go Go Go Go";

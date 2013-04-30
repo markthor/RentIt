@@ -56,3 +56,34 @@
 audio {
     width: 100%;
 }
+
+#slider {
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    border-radius: 5px;
+    background-color: silver;
+    width: 75px;
+    height:10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+     -webkit-appearance: none;
+    border-radius: 10px;
+    background-color: #777;
+    width: 15px;
+    height: 15px;
+}
+
+#down {
+    margin-right: -5px;
+    margin-top: 2px;
+}
+
+#up {
+    margin-left: -2px;
+    margin-top: 2px;
+}
