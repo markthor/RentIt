@@ -9,6 +9,10 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class Track
     {
+        public Track()
+        {
+        }
+
         public Track(int id, string path, string name, string artist, int length,
                      int upVotes, int downVotes, List<Vote> votes, List<TrackPlay> trackPlays)
         {

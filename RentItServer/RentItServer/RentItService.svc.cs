@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -128,9 +129,25 @@ namespace RentItServer
             _controller.CreateVote(rating, userId, trackId);
         }
 
-        public ITU.DatabaseWrapperObjects.Track GetTrackInfo(int trackId)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
         {
-            Track theTrack = _controller.GetTrackInfo(trackId);
+            _controller.AddTrack(userId, channelId, audioStream, trackInfo);
+        }
+
+        /// <summary>
+        /// Gets the track info associated with the track stream.
+        /// </summary>
+        /// <param name="audioStream">The audio stream.</param>
+        /// <returns></returns>
+        public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
+        {
+            throw new NotImplementedException();
+//            _controller.GetTrackInfo(audioStream);
+        }
+
+        public ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname)
+        {
+            Track theTrack = _controller.GetTrackInfo(channelId, trackname);
             return theTrack.GetTrack();
         }
         

@@ -2,7 +2,7 @@
     ViewBag.Title = "ChannelList";
 }
 
-@model List<RentItMvc.Models.Channel>
+@model List<RentItMvc.Models.GuiChannel>
 
 <h1>List of channels</h1>
 <div class="row-fluid"> 
@@ -10,12 +10,14 @@
             <tr>  
                 <th>Name</th>  
                 <th>Description</th>  
-                <th>Rating</th>  
-                <th>Hits</th>  
+                <th><div style="text-align:center"><i class="icon-thumbs-up"></i></div></th>  
+                <th><div style="text-align:center"><i class="icon-thumbs-down"></i></div></th>  
+                <th><div style="text-align:center"><i class="icon-play"></i></div></th>
+                <th></th>
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new { userId = p.Id }))'">
+                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new {channelId = p.Id } ))'">
                     <td>
                         @p.Name
                     </td>
@@ -23,15 +25,31 @@
                         @p.Description
                     </td>  
                     <td>
-                        @p.Rating
+                        <div style="text-align:center">
+                            <span class="badge badge-success" >
+                                @p.Upvotes
+                            </span>
+                        </div>
                     </td>  
                     <td>
-                        @p.Hits
-                    </td> 
+                        <div style="text-align:center">
+                            <span class="badge badge-important" >
+                                @p.DownVotes
+                            </span>
+                        </div>
+                    </td>
                     <td>
-                        <a class="btn" href="/Home/Main">
-                            <i class="icon-play"></i>
-                        </a>
+                        <div style="text-align:center">
+                            <span class="badge badge-inverse" >
+                                @p.Hits
+                            </span>
+                        </div>
+                    </td> 
+                    
+                    <td>
+                        <a class="btn btn-small" href="/Home/Main"><i class="icon-play"></i></a>
+                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-up"></i></a>
+                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-down"></i></a>
                     </td> 
                 </tr>
             }

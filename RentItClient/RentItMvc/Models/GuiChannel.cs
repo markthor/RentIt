@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace RentItMvc.Models
 {
-    public class Channel
+    public class GuiChannel
     {
         [Required]
         [Display(Name = "Name")]
@@ -23,12 +23,16 @@ namespace RentItMvc.Models
         public string Description{ get; set; }
 
         [Required]
-        [Display(Name = "Rating")]
-        public double? Rating{ get; set; }
+        [Display(Name = "UpVotes")]
+        public double Upvotes{ get; set; }
+
+        [Required]
+        [Display(Name = "DownVotes")]
+        public double DownVotes { get; set; }
 
         [Required]
         [Display(Name = "Hits")]
-        public int? Hits{ get; set; } 
+        public int Hits{ get; set; } 
 
         [Required]
         [Display(Name = "OwnerId")]
