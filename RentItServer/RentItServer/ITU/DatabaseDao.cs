@@ -302,7 +302,8 @@ namespace RentItServer.ITU
                 {
                     Comments = new Collection<Comment>(),
                     Description = description,
-                    Genres = (genres == null? null:someGenres.ToList()),
+                    //TODO: MISSING! someGenres.ToList();
+                    Genres = new Collection<Genre>(),
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
