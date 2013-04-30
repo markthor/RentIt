@@ -1,12 +1,6 @@
-﻿@model RentItMvc.Models.Channel
+﻿@model RentItMvc.Models.GuiChannel
 
-@section Left
-{
-    
-}
 
-@section Middle
-{
 <fieldset>
     <legend style="text-align:center">
         <a class="btn" href="/Home/Main"><i class="icon-play"></i></a>
@@ -17,10 +11,10 @@
                 @Html.DisplayFor(model => model.Hits)
             </span>
             <span class="badge badge-success" >
-                @Html.DisplayFor(model => model.Hits)
+                @Html.DisplayFor(model => model.Upvotes)
             </span>
             <span class="badge badge-important" >
-                @Html.DisplayFor(model => model.Hits)
+                @Html.DisplayFor(model => model.DownVotes)
             </span>
         </div>
         <div class="display-field">
@@ -32,9 +26,3 @@
     </div>
 
 </fieldset>
-}
-
-@section Right
-{
-    
-}

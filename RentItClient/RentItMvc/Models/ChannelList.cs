@@ -8,6 +8,6 @@ namespace RentItMvc.Models
 {
     public class ChannelList
     {
-        public IEnumerable<Channel> Children { get; set; }
+        public IEnumerable<GuiChannel> Children { get; set; }
     }
 }
