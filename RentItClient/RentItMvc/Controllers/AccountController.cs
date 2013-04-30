@@ -13,6 +13,10 @@ namespace RentItMvc.Controllers
     {
         public ActionResult ChangePassword(Account account)
         {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.UpdateUser((int) Session["userId"], null, account.NewPassword, null);
+            }
             return Redirect("/");
         }
 
@@ -21,9 +25,6 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 User user = proxy.GetUser((int)Session["userId"]);
-                //User user = new User();
-                //user.Email = @"andreas.p.poulsen@gmail.com";
-                //user.Username = "Prechtig";
                 if (user != null)
                 {
                     Account acc = new Account();
@@ -42,11 +43,11 @@ namespace RentItMvc.Controllers
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    if (account.Password.Equals(account.ConfirmPassword))
+                    if (account.NewPassword.Equals(account.ConfirmPassword))
                     {
                         try
                         {
-                            User user = proxy.SignUp(account.Username, account.Email, account.Password);
+                            User user = proxy.SignUp(account.Username, account.Email, account.NewPassword);
                             Session["userId"] = user.Id;
                             Session["username"] = user.Username;
                         }
@@ -73,16 +74,22 @@ namespace RentItMvc.Controllers
         }
 
         [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult LogIn(string email, string password)
+        public ActionResult LogIn(string usernameOrEmail, string password)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                User user = proxy.Login(email, password);
-                Session["userId"] = user.Id;
-                Session["username"] = user.Username;
+                try
+                {
+                    User user = proxy.Login(usernameOrEmail, password);
+                    Session["userId"] = user.Id;
+                    Session["username"] = user.Username;
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", "Wrong username or password");
+                }
             }
-            return Redirect("/Home/Main");
+            return Redirect("/");
         }
 
         [HttpPost]

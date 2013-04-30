@@ -9,12 +9,19 @@ namespace RentItMvc.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-
         public ActionResult Index()
         {
-            return View();
+            int? userId = (int?) Session["userId"];
+            if (userId != null && userId > 0)
+            {
+                //User is logged in
+                return Redirect("/Home/Main");
+            }
+            else
+            {
+                //User is not logged in
+                return View();    
+            }
         }
 
         public ActionResult Main()

@@ -1,21 +1,27 @@
 ﻿@{
-    Layout = "~/Views/Shared/IndexLayout.cshtml";
+    Layout = "~/Views/Shared/BaseLayout.cshtml";
     Html.EnableClientValidation(true);
 }
 
 @model RentItMvc.Models.Account
 
-@section Left
-{
-    <h1>BlobFish radio</h1>    
-            <p class="subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Etiam est mauris, consequat vitae tincidunt ac, volutpat ornare sapien. 
-                Aliquam sit amet leo est, vitae feugiat metus. Morbi vitae nibh diam.</p>
-}
-
-@section Right
-{
-    @using (Html.BeginForm("SignUp", "Account", null, FormMethod.Post, new {@class = "form-horizontal"}))
+<div class="row-fluid">
+    <div class="span1">
+        
+    </div>
+    <div class="span5">
+        <h1>BlobFish radio</h1>    
+        <p class="subheading">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Etiam est mauris, consequat vitae tincidunt ac, volutpat ornare sapien. 
+            Aliquam sit amet leo est, vitae feugiat metus. Morbi vitae nibh diam.
+        </p>
+    </div>
+    <div class="span1">
+        
+    </div>
+    <div class="span5">
+        @using (Html.BeginForm("SignUp", "Account", null, FormMethod.Post, new {@class = "form-horizontal"}))
     {
         Html.AntiForgeryToken();
         Html.ValidationSummary(true);
@@ -43,10 +49,10 @@
             </div>
             <div class="signup-field">
                 <div class="input-field">
-                    @Html.TextBoxFor(acc => acc.Password, new {@class = "input-block-level", type = "password", required = "required", placeholder = "Create a password"})
+                    @Html.TextBoxFor(acc => acc.NewPassword, new {@class = "input-block-level", type = "password", required = "required", placeholder = "Create a password"})
                 </div>
                 <div class="error-field">
-                    @Html.ValidationMessageFor(acc => acc.Password, null, new {@class = "txt-error"})
+                    @Html.ValidationMessageFor(acc => acc.NewPassword, null, new {@class = "txt-error"})
                 </div>    
             </div>
             <div class="signup-field">
@@ -64,6 +70,5 @@
             </div>
         </div>
     }
-}
-
-
+    </div>
+</div>

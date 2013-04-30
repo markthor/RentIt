@@ -791,13 +791,13 @@ namespace RentItMvc.RentItService {
         
         private string[] Genresk__BackingFieldField;
         
-        private string Namek__BackingFieldField;
-        
         private int NumberOfCommentsk__BackingFieldField;
         
         private int NumberOfSubscriptionsk__BackingFieldField;
         
         private double Ratingk__BackingFieldField;
+        
+        private string SearchStringk__BackingFieldField;
         
         private string SortOptionk__BackingFieldField;
         
@@ -852,19 +852,6 @@ namespace RentItMvc.RentItService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Name>k__BackingField", IsRequired=true)]
-        public string Namek__BackingField {
-            get {
-                return this.Namek__BackingFieldField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Namek__BackingFieldField, value) != true)) {
-                    this.Namek__BackingFieldField = value;
-                    this.RaisePropertyChanged("Namek__BackingField");
-                }
-            }
-        }
-        
         [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfComments>k__BackingField", IsRequired=true)]
         public int NumberOfCommentsk__BackingField {
             get {
@@ -900,6 +887,19 @@ namespace RentItMvc.RentItService {
                 if ((this.Ratingk__BackingFieldField.Equals(value) != true)) {
                     this.Ratingk__BackingFieldField = value;
                     this.RaisePropertyChanged("Ratingk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
+        public string SearchStringk__BackingField {
+            get {
+                return this.SearchStringk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
+                    this.SearchStringk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SearchStringk__BackingField");
                 }
             }
         }
@@ -955,7 +955,7 @@ namespace RentItMvc.RentItService {
         
         private int EndIndexk__BackingFieldField;
         
-        private string Namek__BackingFieldField;
+        private string SearchStringk__BackingFieldField;
         
         private string SortOptionk__BackingFieldField;
         
@@ -1012,15 +1012,15 @@ namespace RentItMvc.RentItService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Name>k__BackingField", IsRequired=true)]
-        public string Namek__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
+        public string SearchStringk__BackingField {
             get {
-                return this.Namek__BackingFieldField;
+                return this.SearchStringk__BackingFieldField;
             }
             set {
-                if ((object.ReferenceEquals(this.Namek__BackingFieldField, value) != true)) {
-                    this.Namek__BackingFieldField = value;
-                    this.RaisePropertyChanged("Namek__BackingField");
+                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
+                    this.SearchStringk__BackingFieldField = value;
+                    this.RaisePropertyChanged("SearchStringk__BackingField");
                 }
             }
         }

@@ -6,10 +6,10 @@
       <xs:element name="_x003C_AmountPlayed_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_EndIndex_x003E_k__BackingField" type="xs:int" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" name="_x003C_Genres_x003E_k__BackingField" nillable="true" type="q1:ArrayOfstring" />
-      <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_NumberOfComments_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_NumberOfSubscriptions_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_Rating_x003E_k__BackingField" type="xs:double" />
+      <xs:element name="_x003C_SearchString_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_SortOption_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_StartIndex_x003E_k__BackingField" type="xs:int" />
     </xs:sequence>
@@ -20,7 +20,7 @@
       <xs:element name="_x003C_Artist_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_Downvotes_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_EndIndex_x003E_k__BackingField" type="xs:int" />
-      <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element name="_x003C_SearchString_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_SortOption_x003E_k__BackingField" nillable="true" type="xs:string" />
       <xs:element name="_x003C_StartIndex_x003E_k__BackingField" type="xs:int" />
       <xs:element name="_x003C_Upvotes_x003E_k__BackingField" type="xs:int" />

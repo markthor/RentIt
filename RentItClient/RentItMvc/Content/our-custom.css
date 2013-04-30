@@ -1,6 +1,12 @@
-﻿.input-field {
-    float: left;
-    padding-top: 5px;
+﻿.input-login {
+    margin-right: 5px;
+}
+
+.input-error-group {
+    margin-bottom: 20px
+}
+
+.input-field {
     line-height: 20px;
     width: 200px;
 }
@@ -31,11 +37,6 @@
     font-size: 12px;
 }
 
-.signup-field {
-    float: left;
-    margin-bottom: 10px;
-}
-
 .subheading {
     font-family: Helvetica Neue, Helvetica, Arial;
     font-size: 21px;
@@ -50,4 +51,8 @@
     position: fixed;
     bottom: 0;
     line-height: 40px
+}
+
+audio {
+    width: 100%;
 }

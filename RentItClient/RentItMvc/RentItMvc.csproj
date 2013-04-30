@@ -216,7 +216,6 @@
     <Content Include="Views\Home\ChannelList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
     <Content Include="Views\Home\SelectChannel.cshtml" />
-    <Content Include="Views\Shared\IndexLayout.cshtml" />
     <Content Include="Views\Shared\BaseLayout.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Shared\AudioPlayer.cshtml" />
