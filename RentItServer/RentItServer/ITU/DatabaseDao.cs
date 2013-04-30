@@ -291,17 +291,19 @@ namespace RentItServer.ITU
 
                 if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
 
+                
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
 
-                if (someGenres.Any() == false) throw new EmptyTableException("Genres");
+                if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
 
                 // Create the channel object
                 Channel theChannel = new Channel()
                 {
                     Comments = new Collection<Comment>(),
                     Description = description,
-                    Genres = someGenres.ToList(),
+                    //TODO: MISSING! someGenres.ToList();
+                    Genres = new Collection<Genre>(),
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
@@ -345,7 +347,7 @@ namespace RentItServer.ITU
                 var channels = from channel in context.Channels
                                where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
                                select channel;
-                //if(channels.Any() == true)  //TODO: throw exception here
+                if(channels.Any() == true)  throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }
         }
 
@@ -625,23 +627,49 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Gets the track associated with a channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="trackname">The trackname.</param>
+        /// <returns>
+        /// The track, or null if no track with trackname exists in channel
+        /// </returns>
+        /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
+        public Track GetTrack(int channelId, string trackname)
+        {
+            Track theTrack;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.Channels
+                               where channel.Id == channelId
+                               select channel;
+
+                if(channels.Any() == true) throw new ArgumentException("No channel with channelId ["+channelId+"]");
+                
+                Channel theChannel = channels.First();
+
+                theTrack = theChannel.Tracks.SingleOrDefault(t => t.Name.Equals(trackname));
+            }
+            return theTrack;
+        }
+
+        /// <summary>
         /// Gets the track.
         /// </summary>
         /// <param name="trackId">The track id.</param>
         /// <returns></returns>
-        /// <exception cref="System.Exception">No track found with id =  + trackId</exception>
+        /// <exception cref="System.ArgumentException">No track with trackId [ + trackId + ]</exception>
         public Track GetTrack(int trackId)
         {
             Track theTrack;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var tracks = from track in context.Tracks.Where(track => track.Id == trackId)
-                             select track;
+                var tracks = from track in context.Tracks
+                               where track.Id == trackId
+                               select track;
 
-                if (tracks.Any() == false)
-                {
-                    throw new Exception("No track found with id = " + trackId);
-                }
+                if (tracks.Any() == true) throw new ArgumentException("No track with trackId [" + trackId + "]");
+
                 theTrack = tracks.First();
             }
             return theTrack;
