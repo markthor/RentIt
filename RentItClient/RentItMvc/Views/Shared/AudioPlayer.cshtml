@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model RentItMvc.Models.Audio
+
 <!DOCTYPE html>
 
 <html>
@@ -11,31 +13,23 @@
         <script type="text/javascript" src="~/Scripts/custom.js"></script>
         <script type="text/javascript" src="~/Scripts/jquery-1.9.1.js"></script>
     </head>
-    <body onload="initPlayerControls()">
+    <body onload="initPlayer(@Model.Ogg, @Model.Mp3)">
         
 
         <div>
             <h2>AudioPlayer</h2>
-
-            <audio controls preload="auto">
-                <source src="http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree.ogg" type="audio/ogg"/>
-                <source src="http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree_64kb.mp3" type="audio/mpeg"/>
-                Your browser does not support the audio element.
-            </audio>
-        
-            <h2>HTML5 Audio Player</h2>
-            <audio id="player" preload="none">
-                <source id="ogg" src="http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree.ogg" type="audio/ogg" />
-                <source id="mp3" src="http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree_64kb.mp3" type="audio/mpeg"/>
+            <audio id="player" preload="auto">
+                <source id="ogg" src="" type="audio/ogg" />
+                <source id="mp3" src="" type="audio/mpeg"/>
             </audio>
             <div id="controls">
-                <button id="playStop" class="btn pull-left" onclick="playAudio()">
-                    <i id="playIcon" class="icon-play"></i>
-                </button>
+                <div id="playStop" class="pull-left" onclick="playAudio()">
+                    <i id="playIcon" class="icon-play icon-white"></i>
+                </div>
                 <div id="slider" class="pull-left">
-                    <i id="down" class="icon-volume-down"></i>
+                    <i id="down" class="icon-volume-down icon-white"></i>
                     <input id="slide" type="range" min="0.0" max="1.0" step="0.01" value="0.5" onchange="updateSlider(this.value)"/>
-                    <i id="up" class="icon-volume-up"></i>
+                    <i id="up" class="icon-volume-up icon-white"></i>
                 </div>
             </div>
         </div>

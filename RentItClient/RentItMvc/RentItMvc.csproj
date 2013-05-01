@@ -129,6 +129,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Audio.cs" />
     <Compile Include="Models\GuiChannel.cs" />
     <Compile Include="Models\ChannelList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,7 +153,7 @@
     <Content Include="Scripts\custom.js" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\our-custom.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

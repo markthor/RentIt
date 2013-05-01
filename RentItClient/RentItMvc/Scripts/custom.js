@@ -1,29 +1,18 @@
-﻿var controls;
-var player;
-var playstopButton;
-var volume = 0.8; //0 to 1
-var playIcon;
+﻿function initPlayer(ogg, mp3) {
+    //Prepent http:// to the link and set the ogg source
+    var _ogg = document.getElementById("ogg");
+    _ogg.src = "http://" + ogg;
 
-var _ogg = "http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree.ogg";
-var _mp3 = "http://ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree_64kb.mp3";
-
-function initPlayerControls() {
-    controls = document.getElementById("controls");
-    player = document.getElementById("player");
-    if (player.canPlayType) { //This browser supports HTML5 audio
-        
-        player.volume = volume;
-    }
+    //Prepent http:// to the link and set the mp3 source
+    var _mp3 = document.getElementById("mp3");
+    _mp3.src = "http://" + mp3;
 }
 
 function playAudio() {
-    //Set the volume
-    player.volume = volume;
-    
     //Retrieve the button and player
-    player = document.getElementById("player");
-    playstopButton = document.getElementById("playStop");
-
+    var player = document.getElementById("player");
+    var playstopButton = document.getElementById("playStop");
+    
     //Retrieve icons
     var playIcon = document.getElementById("playIcon");
     var stopIcon = document.getElementById("stopIcon");
@@ -31,34 +20,20 @@ function playAudio() {
     //Check which icon is present on the player
 
     if (playIcon != null) { //Player is not playing
-        //Remove all previous sources from the player
-        player.removeChild(document.getElementById("ogg"));
-        player.removeChild(document.getElementById("mp3"));
-
-        //Add the sources
-        var ogg = document.createElement("source");
-        ogg.setAttribute("id", "ogg");
-        ogg.setAttribute("src", _ogg);
-        ogg.setAttribute("type", "audio/ogg");
-        player.appendChild(ogg);
-        
-        var mp3 = document.createElement("source");
-        mp3.setAttribute("id", "mp3");
-        mp3.setAttribute("src", _mp3);
-        mp3.setAttribute("type", "audio/mp3");
-        player.appendChild(mp3);
-
-        //Start playing
-        player.play();
+        //Reload the player - effectivly rebuffering
+        player.load();
 
         //Create the stopIcon and append it to the button
         stopIcon = document.createElement("i");
         stopIcon.setAttribute("id", "stopIcon");
-        stopIcon.setAttribute("class", "icon-stop");
+        stopIcon.setAttribute("class", "icon-stop icon-white");
         playstopButton.appendChild(stopIcon);
 
         //Remove the playIcon
         playstopButton.removeChild(playIcon);
+        
+        //Start playing
+        player.play();
         
     } else { //Player is playing
         //Stop playing
@@ -67,7 +42,7 @@ function playAudio() {
         //Create the playIcon and append it to the button
         playIcon = document.createElement("i");
         playIcon.setAttribute("id", "playIcon");
-        playIcon.setAttribute("class", "icon-play");
+        playIcon.setAttribute("class", "icon-play icon-white");
         playstopButton.appendChild(playIcon);
         
         //Remove the stopIcon
@@ -77,7 +52,7 @@ function playAudio() {
 
 function updateSlider(newValue) {
     //Retrieve the player
-    player = document.getElementById("player");
+    var player = document.getElementById("player");
     
     //Set the volume
     player.volume = newValue;
