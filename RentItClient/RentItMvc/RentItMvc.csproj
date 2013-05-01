@@ -231,6 +231,8 @@
     <None Include="Service References\RentItService\RentItService7.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Home\MyChannels.cshtml" />
+    <Content Include="Views\Home\EditChannel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

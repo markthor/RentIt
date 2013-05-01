@@ -1,10 +1,12 @@
 ﻿@{
-    //ViewBag.Title = "ChannelList";
+    Layout = "~/Views/Shared/MasterLayout.cshtml";
+    ViewBag.Title = "MyChannels";
 }
 
 @model List<RentItMvc.Models.GuiChannel>
 
-<h1>@ViewBag.Title</h1>
+<h2>My Channels</h2>
+
 <div class="row-fluid"> 
         <table class="table table-hover">
             <tr>  
@@ -48,8 +50,9 @@
                     
                     <td>
                         <a class="btn btn-small" href="/Home/Main"><i class="icon-play"></i></a>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-up"></i></a>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-down"></i></a>
+                        <a class="btn btn-small" onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = p.Id } ))'">
+                            <i class="icon-pencil"></i>
+                        </a>                    
                     </td> 
                 </tr>
             }

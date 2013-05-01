@@ -50,7 +50,12 @@ namespace RentItMvc.Controllers
             return Redirect("/");
         }
 
-        public ActionResult ChannelList(List<Channel> theList)
+        public ActionResult EditChannel(int channelId)
+        { 
+            return PartialView();
+        }
+
+        public ActionResult GetFeaturedChannels()
         {
             List<Channel> channelList = new List<Channel>();
             using (RentItServiceClient proxy = new RentItServiceClient())
@@ -61,7 +66,15 @@ namespace RentItMvc.Controllers
                     channelList.Add(proxy.GetChannel(id));
                 }
             }
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channelList);
+            return ChannelList(channelList, "Featured Channels");
+        }
+
+        public ActionResult ChannelList(List<Channel> theList, string title)
+        {
+            ViewBag.title = title;
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
+            if(GuiChannelList == null)
+                GuiChannelList = new List<GuiChannel>();
             //ChannelList list1 = new ChannelList();
             GuiChannel chan = new GuiChannel();
             chan.Id = 1;
@@ -89,6 +102,21 @@ namespace RentItMvc.Controllers
             list2.Add(chan);
             list2.Add(chan2);
             list2.Add(chan3);*/
+            return PartialView(GuiChannelList);
+        }
+
+        public ActionResult MyChannels(int userId)
+        {
+            List<GuiChannel> GuiChannelList = new List<GuiChannel>();
+            //ChannelList list1 = new ChannelList();
+            GuiChannel chan = new GuiChannel();
+            chan.Id = 1;
+            chan.Description = "My private Channel";
+            chan.Name = "My channel";
+            chan.Hits = 1000;
+            chan.Upvotes = 100;
+            chan.DownVotes = 10;
+            GuiChannelList.Add(chan);
             return PartialView(GuiChannelList);
         }
     }
