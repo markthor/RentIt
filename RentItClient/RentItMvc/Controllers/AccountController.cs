@@ -74,13 +74,13 @@ namespace RentItMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(string usernameOrEmail, string password)
+        public ActionResult LogIn(string usernameOrEmail, string currentPassword)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 try
                 {
-                    User user = proxy.Login(usernameOrEmail, password);
+                    User user = proxy.Login(usernameOrEmail, currentPassword);
                     Session["userId"] = user.Id;
                     Session["username"] = user.Username;
                 }
