@@ -282,7 +282,7 @@ namespace RentItServer.ITU
             {
                 // Check that no channel with channelName already exists
                 var channels = from channel in context.Channels
-                               where channelName.Equals(channelName)
+                               where channel.Name.Equals(channelName)
                                select channel;
                 if (channels.Any() == true) throw new ArgumentException("Channel with channelname [" + channelName + "] already exists");
 
@@ -291,7 +291,6 @@ namespace RentItServer.ITU
                             select user;
 
                 if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
-
 
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
@@ -303,8 +302,7 @@ namespace RentItServer.ITU
                 {
                     Comments = new Collection<Comment>(),
                     Description = description,
-                    //TODO: MISSING! someGenres.ToList();
-                    Genres = new Collection<Genre>(),
+                    Genres = someGenres.ToList(),
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
@@ -342,12 +340,17 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 int channelId = theChannel.Id;
-                context.Channels.Remove(theChannel);
+                var channels = from channel in context.Channels
+                               where channel.Id == theChannel.Id && channel.ChannelOwner.Id == ownerId
+                               select channel;
+                if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
+                Channel theRawChannel = channels.First();
+                context.Channels.Remove(theRawChannel);
                 context.SaveChanges();
 
-                var channels = from channel in context.Channels
-                               where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
-                               select channel;
+                channels = from channel in context.Channels
+                           where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
+                           select channel;
                 if (channels.Any() == true) throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }
         }
@@ -442,13 +445,13 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Filters the with respect to the filter arguments: 
-        ///     filter.Name
-        ///     filter.AmountPlayed
-        ///     filter.Genres
-        ///     filter.NumberOfComments
-        ///     filter.NumberOfSubscriptions
-        ///     filter.SortOptions
+        /// Filters the with respect to the filter arguments:
+        /// filter.Name
+        /// filter.AmountPlayed
+        /// filter.Genres
+        /// filter.NumberOfComments
+        /// filter.NumberOfSubscriptions
+        /// filter.SortOptions
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>
@@ -521,15 +524,13 @@ namespace RentItServer.ITU
                             break;
                     }
                 }
-
-                // Execute the query before leaving "using" block
-                filteredChannels = channels.ToList();
+                filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
             }
 
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex);
+                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex + 1];
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex+1);
                 filteredChannels = new List<Channel>(range);
             }
             return filteredChannels;
