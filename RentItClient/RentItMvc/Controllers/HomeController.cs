@@ -29,10 +29,10 @@ namespace RentItMvc.Controllers
 
         public ActionResult Main()
         {
-            //if (Session["userId"] != null)
-            //{
+            if (Session["userId"] != null)
+            {
                 return View();    
-            //}
+            }
             return Redirect("/");
         }
 
