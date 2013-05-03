@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Text;
 
 namespace RentItServer.Utilities
 {
@@ -114,6 +116,35 @@ namespace RentItServer.Utilities
             if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
 
             return File.Exists(absolutePath);
+        }
+
+        public void WriteM3u(List<string> trackPaths, string filePath)
+        {
+            StringWriter sw = new StringWriter();
+            foreach (string s in trackPaths)
+            {
+                sw.Write(s + "\r\n");
+            }
+            string fileContent;
+            fileContent = sw.ToString();
+            fileContent = fileContent.TrimEnd('\r', '\n');
+            WriteFile(fileContent, filePath);
+        }
+
+        public void WriteFile(string content, string filePath)
+        {
+            FileStream fs = File.OpenWrite(filePath);
+            Byte[] bytes = GetBytes(content);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Flush();
+            fs.Close();
+        }
+
+        private byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
     }
 }

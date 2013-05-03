@@ -1,4 +1,6 @@
-﻿namespace RentItServer.Utilities
+﻿using System;
+
+namespace RentItServer.Utilities
 {
     /// <summary>
     /// This class is used to generate filenames for the different files that can be associated with a book.
@@ -45,9 +47,9 @@
         /// <returns>
         /// The filename of the audio uploaded by specified user belonging to the specified channel
         /// </returns>
-        public static string ItuGenerateAudioFileName(int userId, int channelId, string artist, int duration)
+        public static string ItuGenerateAudioFileName(int trackId)
         {
-            return string.Format("Audio_[{0}][{1}][{2}]_{3}.mp3", userId, channelId, artist, duration);
+            return (Convert.ToString(trackId) + ".mp3");
         }
     }
 }
