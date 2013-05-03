@@ -20,6 +20,26 @@ namespace RentItServer.Utilities
 
         private readonly string _absolutePath;
 
+        public Logger(string absolutePath)
+        {
+            _absolutePath = absolutePath;
+            String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            Directory.CreateDirectory(directory);
+            if (File.Exists(absolutePath) == false)
+            {
+                File.Create(absolutePath);
+            }
+        }
+
+        public void AddEntry(string entry)
+        {
+            lock (_entryLock)
+            {
+                string timeStamp = "[" + DateTime.UtcNow.ToString(CultureInfo.InvariantCulture) + "] ";
+                File.AppendAllText(_absolutePath, timeStamp + entry + Environment.NewLine);
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
@@ -28,22 +48,22 @@ namespace RentItServer.Utilities
         {
             String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
             Directory.CreateDirectory(directory);
-            //if (File.Exists(absolutePath))
-            //{
+            if (File.Exists(absolutePath) == false)
+            {
                 File.Create(absolutePath);
-            //}
+            }
             this._absolutePath = absolutePath;
             handler += AddEntry;
             // Logging thread. Used in order to support asyncrhonous writing of entries
-            //new Task(() =>
-            //{
-            //    string logEntry;
-            //    while (true)
-            //    {
-            //        logEntry = _taskCollection.Take();
-            //        File.AppendAllText(absolutePath, logEntry);
-            //    }
-            //}).Start();
+            new Task(() =>
+            {
+                string logEntry;
+                while (true)
+                {
+                    logEntry = _taskCollection.Take();
+                    File.AppendAllText(absolutePath, logEntry);
+                }
+            }).Start();
         }
 
         /// <summary>
@@ -63,7 +83,7 @@ namespace RentItServer.Utilities
             {
                 string timeStamp = "[" + DateTime.UtcNow.ToString(CultureInfo.InvariantCulture) + "] ";
                 //File.AppendAllText(_absolutePath, timeStamp + args.Entry + Environment.NewLine); 
-                //_taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
+                _taskCollection.Add(timeStamp + args.Entry + Environment.NewLine);
             }
         }
     }

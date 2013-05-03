@@ -129,6 +129,13 @@ namespace RentItServer
             _controller.CreateVote(rating, userId, trackId);
         }
 
+        /// <summary>
+        /// Adds the track.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="audioStream">The audio stream.</param>
+        /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
         public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
         {
             _controller.AddTrack(userId, channelId, audioStream, trackInfo);
@@ -141,10 +148,15 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
         {
-            throw new NotImplementedException();
-//            _controller.GetTrackInfo(audioStream);
+            return _controller.GetTrackInfo(audioStream).GetTrack();
         }
 
+        /// <summary>
+        /// Gets the track info associated with the track.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="trackname">The trackname.</param>
+        /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname)
         {
             Track theTrack = _controller.GetTrackInfo(channelId, trackname);
