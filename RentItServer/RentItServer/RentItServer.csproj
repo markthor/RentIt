@@ -113,6 +113,7 @@
     <Compile Include="ITU\DatabaseWrapperObjects\Vote.cs" />
     <Compile Include="ITU\Search\UserStruct.cs" />
     <Compile Include="ITU\TrackSearchArgs.cs" />
+    <Compile Include="ITU\XMLGenerator.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>

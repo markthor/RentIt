@@ -17,11 +17,11 @@ namespace RentItMvc.Controllers
         public ActionResult AudioPlayer()
         {
             Audio audio = new Audio();
-            audio.Ogg = "'radio.reaper.fm/stream/'";
-            audio.Mp3 = "'radio.reaper.fm/stream/'";
-            //audio.Ogg = "'ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree.ogg'";
-            //audio.Mp3 = "'ia600302.us.archive.org/17/items/1920sPop/BestThingsInLifeAreFree_64kb.mp3'";
-            return PartialView(audio);
+            //audio.Ogg = "'radio.reaper.fm/stream/'";
+            //audio.Mp3 = "'radio.reaper.fm/stream/'";
+            audio.Ogg = "'rentit.itu.dk:27000/stream'";
+            audio.Mp3 = "'rentit.itu.dk:27000/stream'";
+            return View(audio);
         }
     }
 }

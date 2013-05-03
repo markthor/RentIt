@@ -53,10 +53,6 @@
     line-height: 40px
 }
 
-audio {
-    width: 100%;
-}
-
 input[type=range] {
     -webkit-appearance: none;
     border-radius: 5px;
@@ -100,6 +96,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #controls {
+    margin-left: auto;
+    margin-right: auto;
     background-color: #424242;
     width: 165px;
     height: 28px;
