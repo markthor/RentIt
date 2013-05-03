@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using RentItMvc.Models;
 using RentItMvc.RentItService;
@@ -28,10 +29,10 @@ namespace RentItMvc.Controllers
 
         public ActionResult Main()
         {
-            //if (Session["userId"] != null)
-            //{
+            if (Session["userId"] != null)
+            {
                 return View();    
-            //}
+            }
             return Redirect("/");
         }
 
@@ -65,23 +66,26 @@ namespace RentItMvc.Controllers
             //using (RentItServiceClient proxy = new RentItServiceClient())
             //{
                 //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
-                RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
-                chan.Name = @"Cyperchannel";
-                chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
-                chan.Hits = 1024;
-                chan.Upvotes = 100;
-                chan.DownVotes = 12;
-                chan.Tracks = new List<GuiTrack>();
-                GuiTrack t1 = new GuiTrack();
-                t1.TrackName = "track1";
-                GuiTrack t2 = new GuiTrack();
-                t2.TrackName = "track2";
-                chan.Tracks.Add(t1);
-                chan.Tracks.Add(t2);
-                if (chan != null)
-                {
-                    return View(chan);
-                }
+            RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
+            chan.Name = @"Cyperchannel";
+            chan.Id = 1;
+            chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
+            chan.Hits = 1024;
+            chan.Upvotes = 100;
+            chan.DownVotes = 12;
+            chan.Tracks = new List<GuiTrack>();
+            GuiTrack t1 = new GuiTrack();
+            t1.TrackName = "track1";
+            t1.Id = 1;
+            GuiTrack t2 = new GuiTrack();
+            t2.TrackName = "track2";
+            t1.Id = 2;
+            chan.Tracks.Add(t1);
+            chan.Tracks.Add(t2);
+            if (chan != null)
+            {
+                return View(chan);
+            }
             //}
             return Redirect("/");
         }
@@ -102,11 +106,23 @@ namespace RentItMvc.Controllers
 
         public ActionResult ChannelList(List<Channel> theList, string title)
         {
+            Channel[] channels;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
+                    {
+                        StartIndexk__BackingField = 0,
+                        EndIndexk__BackingField = 10
+                    };
+                channels = proxy.GetChannels(searchArgs);
+            }
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
+            //List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
             if(GuiChannelList == null)
                 GuiChannelList = new List<GuiChannel>();
             //ChannelList list1 = new ChannelList();
+            /*
             GuiChannel chan = new GuiChannel();
             chan.Id = 1;
             chan.Description = "A nice channel";
@@ -114,7 +130,7 @@ namespace RentItMvc.Controllers
             chan.Hits = 1000;
             chan.Upvotes = 100;
             chan.DownVotes = 10;
-            GuiChannelList.Add(chan);
+            GuiChannelList.Add(chan);*/
             /*GuiChannel chan2 = new GuiChannel();
             chan2.Id = 2;
             chan2.Description = "Vesy sfsefsef";
@@ -149,6 +165,31 @@ namespace RentItMvc.Controllers
             chan.DownVotes = 10;
             GuiChannelList.Add(chan);
             return PartialView(GuiChannelList);
+        }
+
+        public ActionResult DeleteTrack(int trackId)
+        {
+            return EditChannel(trackId);
+        }
+
+        public ActionResult AddTrack(HttpPostedFileBase file, int modelId, int userId)
+        {
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+                // extract only the fielname
+                var fileName = Path.GetFileName(file.FileName);
+                // store the file inside ~/App_Data/uploads folder             
+                Stream stream = file.InputStream;
+                MemoryStream memory = new MemoryStream();
+                stream.CopyTo(memory);
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    Track chan = proxy.GetTrackInfoByStream(memory);
+                }
+            }
+            // redirect back to the index action to show the form once again
+            return RedirectToAction("Index"); 
         }
     }
 }

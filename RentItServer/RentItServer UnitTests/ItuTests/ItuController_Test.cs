@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
 using RentItServer.ITU;
@@ -9,24 +11,33 @@ namespace RentItServer_UnitTests.ItuTests
     public class ItuController_Test
     {
         private DatabaseDao _dao = DatabaseDao.GetInstance();
-        
+
         private const string testname = "TestDummy9000";
         private const string testmail = "TestDummy@9000.gg";
         private const string testpw = "TestDummyPassword9000";
         private int testId = int.MaxValue;
 
+        private const string testchannelname = "TestDummyChannel9000";
+        private const string testchanneldescr = "TestDummyChannel9000Description";
+        private readonly List<string> testchannelnames = new List<string>();
+        private readonly List<string> testchanneldescrs = new List<string>();
+        private readonly List<Channel> testchannels = new List<Channel>();
+            
         [TestCleanup]
         public void Cleanup()
         {
+            foreach (Channel channel in testchannels)
+            {
+                _dao.DeleteChannel(testId, channel);
+            } 
             if (testId != int.MaxValue)
             {
                 _dao.DeleteUser(testId);
                 testId = int.MaxValue;
             }
-            
         }
 
-        #region Controller_Signup_Parameter_Test
+        #region Controller_Signup
 
         [TestMethod]
         public void Controller_SignUp_Parameter_NullNullNull()
@@ -249,8 +260,8 @@ namespace RentItServer_UnitTests.ItuTests
             Assert.AreEqual(testmail, user.Email);
             Assert.AreEqual(testpw, user.Password);
         }
-#endregion
-        #region Controller_Login_Parameter_Test
+        #endregion
+        #region Controller_Login
         [TestMethod]
         public void Controller_Login_Parameter_NullNull()
         {
@@ -384,13 +395,136 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         #endregion
-        #region Controller_DeleteUser_Parameter_Test
+        #region Controller_DeleteUser
         [TestMethod]
-        public void Controller_DeleteUser_Parameter_Null()
+        public void Controller_DeleteUser_Parameter_Neg()
         {
             Controller controller = Controller.GetInstance();
             User user = _dao.SignUp(testname, testmail, testpw);
-            controller.DeleteUser(null);
+            testId = user.Id;
+            try
+            {
+                controller.DeleteUser(-1);
+                Assert.Fail("No exception was thrown");
+            }
+            catch (Exception)
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteUser_Parameter_MaxInt()
+        {
+            Controller controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.DeleteUser(int.MaxValue);
+                Assert.Fail("No exception was thrown");
+            }
+            catch (Exception)
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteUser_Parameter_MinInt()
+        {
+            Controller controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.DeleteUser(int.MinValue);
+                Assert.Fail("No exception was thrown");
+            }
+            catch (Exception)
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteUser_Parameter_Valid()
+        {
+            Controller controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.DeleteUser(testId);
+                testId = int.MaxValue;
+            }
+            catch (Exception)
+            {
+                Assert.Fail("An exception was thrown");
+            }
+        }
+        #endregion
+
+        #region Controller_GetChannelsWithFilter
+        [TestMethod]
+        public void Controller_GetChannelsWithFilter_Parameter_Null()
+        {
+            Controller controller = Controller.GetInstance();
+            try
+            {
+                controller.GetChannels(null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_GetChannelsWithFilter_Parameter_Empty()
+        {
+            Controller controller = Controller.GetInstance();
+            try
+            {
+                controller.GetChannels(new ChannelSearchArgs());
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelsWithFilter_Parameter_Interval()
+        {
+            Controller controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            int interval = 10;
+            for (int i = 0; i < interval; i++)
+            {
+                testchannelnames.Add(testchannelname + i);
+                testchanneldescrs.Add(testchanneldescr + i);
+            } 
+            try
+            {
+                Channel channel = null;
+                for (int i = 0; i < interval; i++)
+                {
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
+                    testchannels.Add(channel);
+                } 
+                IEnumerable<Channel> channels = controller.GetChannels(new ChannelSearchArgs()
+                    {
+                        StartIndex = 0,
+                        EndIndex = interval
+                    });
+
+                List<Channel> theChannels = new List<Channel>(channels);
+                Assert.IsTrue(theChannels.Count >= interval);
+            }
+            catch
+            {
+                Cleanup();
+                Assert.Fail("An exception was raised");
+            }
         }
         #endregion
     }

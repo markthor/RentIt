@@ -19,7 +19,7 @@ namespace RentItServer.ITU
         /// <param name="cId">Channel id</param>
         /// <param name="relativeFilePath">The absolute filePath of the file to be played</param>
         /// <returns>An xml config file as string</returns>
-        public static string GenerateConfig(int cId, FilePath filePath)
+        public static string GenerateConfig(int cId, string filePath)
         {
             string Url = Controller._defaultUrl + Convert.ToString(cId) + Controller._defaultStreamExtension;
             XmlDocument doc = LoadDefaultXmlBase();
