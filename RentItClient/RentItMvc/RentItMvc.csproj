@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -206,7 +207,7 @@
     <Content Include="Views\Home\SelectChannel.cshtml" />
     <Content Include="Views\Shared\BaseLayout.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Shared\AudioPlayer.cshtml" />
+    <Content Include="Views\Audio\AudioPlayer.cshtml" />
     <None Include="Service References\RentItService\RentItService.wsdl" />
     <None Include="Service References\RentItService\RentItService.xsd">
       <SubType>Designer</SubType>
@@ -234,6 +235,7 @@
     </None>
     <Content Include="Views\Home\MyChannels.cshtml" />
     <Content Include="Views\Home\EditChannel.cshtml" />
+    <Content Include="Views\Audio\LastTracks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

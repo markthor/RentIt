@@ -80,10 +80,10 @@ namespace RentItMvc.Controllers
             {
                 try
                 {
-                    User user = new User();
-                    user.Id = 1;
-                    user.Username = "gogogo";
-                    //User user = proxy.Login(usernameOrEmail, currentPassword);
+                    //User user = new User();
+                    //user.Id = 1;
+                    //user.Username = "gogogo";
+                    User user = proxy.Login(usernameOrEmail, currentPassword);
                     Session["userId"] = user.Id;
                     Session["username"] = user.Username;
                 }

@@ -102,11 +102,23 @@ namespace RentItMvc.Controllers
 
         public ActionResult ChannelList(List<Channel> theList, string title)
         {
+            Channel[] channels;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
+                    {
+                        StartIndexk__BackingField = 0,
+                        EndIndexk__BackingField = 10
+                    };
+                channels = proxy.GetChannels(searchArgs);
+            }
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
+            //List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
             if(GuiChannelList == null)
                 GuiChannelList = new List<GuiChannel>();
             //ChannelList list1 = new ChannelList();
+            /*
             GuiChannel chan = new GuiChannel();
             chan.Id = 1;
             chan.Description = "A nice channel";
@@ -114,7 +126,7 @@ namespace RentItMvc.Controllers
             chan.Hits = 1000;
             chan.Upvotes = 100;
             chan.DownVotes = 10;
-            GuiChannelList.Add(chan);
+            GuiChannelList.Add(chan);*/
             /*GuiChannel chan2 = new GuiChannel();
             chan2.Id = 2;
             chan2.Description = "Vesy sfsefsef";
