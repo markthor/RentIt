@@ -31,6 +31,8 @@ namespace RentItServer.ITU
         private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
+        //The streamhandler
+        private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
         private TernarySearchTrie<User> _userCache;
 
@@ -64,6 +66,10 @@ namespace RentItServer.ITU
 
             // Initialize the channel organizer
             _channelOrganizer = ChannelOrganizer.GetInstance();
+
+            //Initialize the streamhandler
+            _streamHandler = StreamHandler.GetInstance();
+            _streamHandler.ProcessOutputData += _streamHandler_ProcessOutputData;
         }
 
         /// <summary>
@@ -73,6 +79,33 @@ namespace RentItServer.ITU
         public static Controller GetInstance()
         {
             return _instance ?? (_instance = new Controller());
+        }
+
+
+        public void Run(int channelId)
+        {
+            string trackPath = GetNextTrackPath(channelId);
+            _streamHandler.StartStream(channelId, trackPath);
+        }
+
+        private string GetNextTrackPath(int channelId)
+        {
+            string trackPath;
+
+            List<Track> tracks = _dao.GetTrackList(channelId);
+            List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
+            int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
+
+            trackPath = _dao.GetTrack(tId).Path;
+
+            return trackPath;
+        }
+
+        private void _streamHandler_ProcessOutputData(object obj)
+        {
+            EzProcess p = (EzProcess)obj;
+            string trackPath = GetNextTrackPath(p.ChannelId);
+            _streamHandler.NextTrack(p, trackPath);
         }
 
         /// <summary>
@@ -93,6 +126,7 @@ namespace RentItServer.ITU
             }
             return theUser;
         }
+
 
         /// <summary>
         /// Creates the user.
