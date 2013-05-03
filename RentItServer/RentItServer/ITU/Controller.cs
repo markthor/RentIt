@@ -33,6 +33,11 @@ namespace RentItServer.ITU
         private readonly Dictionary<int, Channel> _channelCache;
         //The ternary search trie for users. Each username or email has an associated password as value
         private TernarySearchTrie<User> _userCache;
+        //The url properties of the stream
+        public static int _defaultPort = 27000;
+        public static string _defaultIp = "localhost";
+        public static string _defaultStreamExtension = ".ogg";
+        public static string _defaultUrl = "http://" + _defaultIp + ":" + _defaultPort + "/";
 
         private int tempCounter;
         private readonly object _dbLock = new object();

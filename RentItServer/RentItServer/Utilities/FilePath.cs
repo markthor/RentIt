@@ -13,6 +13,16 @@ namespace RentItServer.Utilities
         private readonly string _path;
 
         /// <summary>
+        /// The channel config files for ezstream
+        /// </summary>
+        public static readonly FilePath ITUChannelConfigPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "ChannelConfig" + Path.DirectorySeparatorChar);
+
+        /// <summary>
         /// The SMU audio path
         /// </summary>
         public static readonly FilePath SMUAudioPath = new FilePath(
