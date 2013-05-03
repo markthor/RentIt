@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using RentItServer.ITU.Exceptions;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
 using TagLib;
@@ -65,8 +66,8 @@ namespace RentItServer.ITU
             }
 
             // Initialize the logger
-            //_logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
-            _logger = new Logger(FilePath.ITULogPath + LogFileName);
+            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
             // Initialize the channel organizer
             _channelOrganizer = ChannelOrganizer.GetInstance();
@@ -89,11 +90,19 @@ namespace RentItServer.ITU
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public User Login(string usernameOrEmail, string password)
         {
+            if(usernameOrEmail == null) LogAndThrowException(new ArgumentNullException("usernameOrEmail"), "Login");
+            if(usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
+            if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
+            if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
+
             User theUser = null;
             try
             {
-                theUser = _userCache.Get(usernameOrEmail);
-                if (theUser == null)
+                try
+                {
+                    theUser = _userCache.Get(usernameOrEmail);
+                }
+                catch (NullValueException)
                 {
                     lock (_dbLock)
                     {
@@ -128,12 +137,15 @@ namespace RentItServer.ITU
 
             try
             {
+                User theUser = null;
                 lock (_dbLock)
                 {
-                    User theUser = _dao.SignUp(username, password, email);
+                    theUser = _dao.SignUp(username, email, password);
                     _userCache.Put(theUser.Username, theUser);
+                    _userCache.Put(theUser.Email, theUser);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
+                return theUser;
             }
             catch (Exception e)
             {
@@ -142,7 +154,6 @@ namespace RentItServer.ITU
                 _logger.AddEntry(string.Format("User creation failed with exception [{0}]. Local variables: username = {1}, email = {2}, password = {3}", e, username, email, password));
                 throw;
             }
-            return null;
         }
 
         /// <summary>
