@@ -8,6 +8,13 @@
 <h2>My Channels</h2>
 
 <div class="row-fluid"> 
+    <div class="control-group">
+        <div class="controls">
+            <a class="btn btn-small" onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = -1 } ))'">
+                Create Channel
+            </a>
+        </div>
+    </div>
         <table class="table table-hover">
             <tr>  
                 <th>Name</th>  
@@ -19,7 +26,7 @@
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new {channelId = p.Id } ))'">
+                <tr onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = p.Id } ))'">
                     <td>
                         @p.Name
                     </td>
@@ -49,10 +56,7 @@
                     </td> 
                     
                     <td>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-play"></i></a>
-                        <a class="btn btn-small" onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = p.Id } ))'">
-                            <i class="icon-pencil"></i>
-                        </a>                    
+                        <a class="btn btn-small" href="/Home/Main"><i class="icon-play"></i></a>                   
                     </td> 
                 </tr>
             }
