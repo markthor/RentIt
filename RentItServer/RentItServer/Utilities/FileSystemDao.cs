@@ -118,6 +118,11 @@ namespace RentItServer.Utilities
             return File.Exists(absolutePath);
         }
 
+        /// <summary>
+        /// Writes an m3u file with the track paths as content. Can overwrite.
+        /// </summary>
+        /// <param name="trackPaths">List of the track paths</param>
+        /// <param name="filePath">The path of the file to write to</param>
         public void WriteM3u(List<string> trackPaths, string filePath)
         {
             StringWriter sw = new StringWriter();
@@ -131,8 +136,17 @@ namespace RentItServer.Utilities
             WriteFile(fileContent, filePath);
         }
 
+        /// <summary>
+        /// Writes the specified string to a file at the absolute file path. Can overwrite.
+        /// </summary>
+        /// <param name="path">The path to the directory in which the file should be placed with the file name</param>
+        /// <param name="content">The string containing the content of the file</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Path was null
+        /// </exception>
         public void WriteFile(string content, string filePath)
         {
+            if (filePath == null) throw new ArgumentNullException("absolutePath");
             FileStream fs = File.OpenWrite(filePath);
             Byte[] bytes = GetBytes(content);
             fs.Write(bytes, 0, bytes.Length);
