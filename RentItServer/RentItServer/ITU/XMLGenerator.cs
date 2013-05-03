@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Xml.Serialization;
 using System.Xml;
 using RentItServer.Utilities;
@@ -21,7 +19,7 @@ namespace RentItServer.ITU
         /// <param name="cId">Channel id</param>
         /// <param name="relativeFilePath">The absolute filePath of the file to be played</param>
         /// <returns>An xml config file as string</returns>
-        public static string GenerateConfig(int cId, string filePath)
+        public static string GenerateConfig(int cId, FilePath filePath)
         {
             string Url = Controller._defaultUrl + Convert.ToString(cId) + Controller._defaultStreamExtension;
             XmlDocument doc = LoadDefaultXmlBase();
@@ -32,7 +30,7 @@ namespace RentItServer.ITU
 
             XmlNodeList fileNameNodeList = doc.GetElementsByTagName("filename");
             XmlNode fileNameNode = fileNameNodeList[0];
-            fileNameNode.InnerText = filePath;
+            fileNameNode.InnerText = filePath.ToString();
 
             StringWriter stringWriter = new StringWriter();
             XmlTextWriter xmlTextWriter = new XmlTextWriter(stringWriter);
