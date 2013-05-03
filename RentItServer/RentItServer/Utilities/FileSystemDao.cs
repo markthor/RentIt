@@ -30,7 +30,7 @@ namespace RentItServer.Utilities
         }
 
         /// <summary>
-        /// Writes the specified trackStream to a file at the path relative to the root directory.
+        /// Writes the specified stream to a file at the path relative to the root directory.
         /// </summary>
         /// <param name="path">The path to the directory in which the file should be placed</param>
         /// <param name="filename">The name of the file</param>
