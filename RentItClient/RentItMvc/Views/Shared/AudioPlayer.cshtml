@@ -12,15 +12,15 @@
         <title>AudioPlayer</title>
         <script type="text/javascript" src="~/Scripts/custom.js"></script>
         <script type="text/javascript" src="~/Scripts/jquery-1.9.1.js"></script>
+        <link rel="stylesheet" type="text/css" href="~/Content/custom.css"/>
+        <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css"/>
     </head>
     <body onload="initPlayer(@Model.Ogg, @Model.Mp3)">
-        
-
-        <div>
-            <h2>AudioPlayer</h2>
+        <div id="audioPlayer">
+            <h2 style="text-align: center">AudioPlayer</h2>
             <audio id="player" preload="auto">
-                <source id="ogg" src="" type="audio/ogg" />
-                <source id="mp3" src="" type="audio/mpeg"/>
+                <source id="ogg" type="audio/ogg" />
+                <source id="mp3" type="audio/mpeg"/>
             </audio>
             <div id="controls">
                 <div id="playStop" class="pull-left" onclick="playAudio()">

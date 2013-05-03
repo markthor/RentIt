@@ -57,3 +57,7 @@ function updateSlider(newValue) {
     //Set the volume
     player.volume = newValue;
 }
+
+function openPlayer() {
+    window.open('http://localhost:49932/Shared/AudioPlayer', 'playerWindow', 'width = 200, height = 400, left = 100, right = 100');
+}

@@ -318,8 +318,8 @@ namespace RentItServer.SMU
         /// <param name="narrator">The narrator.</param>
         public void UploadAudio(int bookId, MemoryStream mp3, string narrator)
         {
-            _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.GenerateAudioFileName(bookId), mp3);
-            _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.GenerateAudioFileName(bookId), narrator);
+            _fileSystemHandler.WriteFile(FilePath.SMUAudioPath, FileName.SmuGenerateAudioFileName(bookId), mp3);
+            _dao.AddAudio(bookId, FilePath.SMUAudioPath.GetPath() + FileName.SmuGenerateAudioFileName(bookId), narrator);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace RentItServer.SMU
         /// <param name="pdf">The PDF.</param>
         public void UploadPDF(int bookId, MemoryStream pdf)
         {
-            string filename = FileName.GeneratePdfFileName(bookId);
+            string filename = FileName.SmuGeneratePdfFileName(bookId);
             _fileSystemHandler.WriteFile(FilePath.SMUPdfPath, filename, pdf);
             string fullPath = string.Concat(FilePath.SMUPdfPath.GetPath(), filename);
             _dao.AddPdf(bookId, fullPath);
@@ -374,7 +374,7 @@ namespace RentItServer.SMU
         /// <param name="image">Memorystream containing image</param>
         private void SaveImage(int bookId, MemoryStream image)
         {
-            string filename = FileName.GenerateImageFileName(bookId);
+            string filename = FileName.SmuGenerateImageFileName(bookId);
             _fileSystemHandler.WriteFile(FilePath.SMUImagePath, filename, image);
             string fullPath = string.Concat(FilePath.SMUImagePath.GetPath(), filename);
             _dao.AddImage(bookId, fullPath);
