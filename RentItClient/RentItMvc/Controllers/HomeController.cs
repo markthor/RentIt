@@ -31,11 +31,13 @@ namespace RentItMvc.Controllers
             return View();
         }
 
+       
+
         public ActionResult SelectChannel(int channelId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                RentItService.Channel serviceChan = proxy.GetChannel(channelId);
+                //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
                 RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
                 chan.Name = @"Cyperchannel";
                 chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
