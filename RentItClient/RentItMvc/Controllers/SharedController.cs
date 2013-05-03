@@ -21,7 +21,7 @@ namespace RentItMvc.Controllers
             //audio.Mp3 = "'radio.reaper.fm/stream/'";
             audio.Ogg = "'rentit.itu.dk:27000/stream'";
             audio.Mp3 = "'rentit.itu.dk:27000/stream'";
-            return PartialView(audio);
+            return View(audio);
         }
     }
 }
