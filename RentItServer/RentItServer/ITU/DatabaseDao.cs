@@ -54,14 +54,14 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var users = from u in context.Users
-                            where u.Username == username
+                            where u.Username.Equals(username)
                             select u;
                 if (users.Any())
                 {
                     throw new ArgumentException("Username is already taken.");
                 }
                 users = from u in context.Users
-                        where u.Email == email
+                        where u.Email.Equals(email)
                         select u;
                 if (users.Any())
                 {
@@ -101,17 +101,18 @@ namespace RentItServer.ITU
 
         public void Subscribe(int userId, int channelId)
         {
-            using (RENTIT21Entities context = new RENTIT21Entities()){
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
                 var users = from user in context.Users
                             where user.Id == userId
                             select user;
-                if(users.Any() == false)    throw new ArgumentException("No user with userId ["+userId+"]");
+                if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
 
                 var channels = from channel in context.Channels
                                where channel.Id == channelId
                                select channel;
 
-                if(channels.Any() == false) throw new ArgumentException("No channel with channelId ["+channelId+"]");
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
 
                 User theUser = users.First();
                 Channel theChannel = channels.First();
@@ -291,7 +292,7 @@ namespace RentItServer.ITU
 
                 if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
 
-                
+
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
 
@@ -347,7 +348,7 @@ namespace RentItServer.ITU
                 var channels = from channel in context.Channels
                                where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
                                select channel;
-                if(channels.Any() == true)  throw new Exception("End of DeleteChannel, but channel entry is still in database");
+                if (channels.Any() == true) throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }
         }
 
@@ -432,10 +433,12 @@ namespace RentItServer.ITU
             {
                 var channels = from channel in context.Channels select channel;
 
-                // Execute the query before leaving "using" block
-                allChannels = channels.ToList();
+                if (channels.Any() == false)
+                {
+                    return new List<Channel>();
+                }
+                return channels.ToList();
             }
-            return allChannels;
         }
 
         /// <summary>
@@ -644,8 +647,8 @@ namespace RentItServer.ITU
                                where channel.Id == channelId
                                select channel;
 
-                if(channels.Any() == true) throw new ArgumentException("No channel with channelId ["+channelId+"]");
-                
+                if (channels.Any() == true) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
                 Channel theChannel = channels.First();
 
                 theTrack = theChannel.Tracks.SingleOrDefault(t => t.Name.Equals(trackname));
@@ -665,8 +668,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var tracks = from track in context.Tracks
-                               where track.Id == trackId
-                               select track;
+                             where track.Id == trackId
+                             select track;
 
                 if (tracks.Any() == true) throw new ArgumentException("No track with trackId [" + trackId + "]");
 

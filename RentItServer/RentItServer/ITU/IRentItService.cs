@@ -136,6 +136,13 @@ namespace RentItServer.ITU
         [OperationContract]
         void CreateVote(int rating, int userId, int trackId);
 
+        /// <summary>
+        /// Adds the track.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="audioStream">The audio stream.</param>
+        /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
         [OperationContract]
         void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo);
 

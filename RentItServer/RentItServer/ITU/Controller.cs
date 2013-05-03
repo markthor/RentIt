@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using RentItServer.ITU.Exceptions;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
 using TagLib;
@@ -35,6 +36,11 @@ namespace RentItServer.ITU
         private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
         private TernarySearchTrie<User> _userCache;
+        //The url properties of the stream
+        public static int _defaultPort = 27000;
+        public static string _defaultIp = "localhost";
+        public static string _defaultStreamExtension = ".ogg";
+        public static string _defaultUrl = "http://" + _defaultIp + ":" + _defaultPort + "/";
 
         private int tempCounter;
         private readonly object _dbLock = new object();
@@ -63,6 +69,7 @@ namespace RentItServer.ITU
 
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
             // Initialize the channel organizer
             _channelOrganizer = ChannelOrganizer.GetInstance();
@@ -116,15 +123,32 @@ namespace RentItServer.ITU
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public User Login(string usernameOrEmail, string password)
         {
-            User theUser = _userCache.Get(usernameOrEmail);
-            if (theUser == null)
+            if(usernameOrEmail == null) LogAndThrowException(new ArgumentNullException("usernameOrEmail"), "Login");
+            if(usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
+            if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
+            if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
+
+            User theUser = null;
+            try
             {
-                lock (_dbLock)
+                try
                 {
-                    theUser = _dao.Login(usernameOrEmail, password);
+                    theUser = _userCache.Get(usernameOrEmail);
                 }
+                catch (NullValueException)
+                {
+                    lock (_dbLock)
+                    {
+                        theUser = _dao.Login(usernameOrEmail, password);
+                    }
+                }
+                return theUser;
             }
-            return theUser;
+            catch (Exception e)
+            {
+                _logger.AddEntry("Login failed with exception ["+e+"]. Local variables: usernameOrEmail = "+usernameOrEmail+", password = " + password+", theUser = " + theUser);
+                throw;
+            }
         }
 
 
@@ -147,20 +171,23 @@ namespace RentItServer.ITU
 
             try
             {
+                User theUser = null;
                 lock (_dbLock)
                 {
-                    User theUser = _dao.SignUp(username, password, email);
+                    theUser = _dao.SignUp(username, email, password);
                     _userCache.Put(theUser.Username, theUser);
-                    //_logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+                    _userCache.Put(theUser.Email, theUser);
+                    _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
+                return theUser;
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("User creation failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("User creation failed with exception [{0}]. Local variables: username = {1}, email = {2}, password = {3}", e, username, email, password));
                 throw;
             }
-            return null;
         }
 
         /// <summary>
@@ -169,20 +196,26 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         public void DeleteUser(int userId)
         {
+            User theUser = null;
             try
             {
                 lock (_dbLock)
                 {
-                    User theUser = _dao.GetUser(userId);
+                    theUser = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
                     _userCache.Put(theUser.Username, null);
                     _userCache.Put(theUser.Email, null);
+                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, theUser));
                 }
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("User deletion failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("User deletion failed with exception [" + e + "]."));
+                _logger.AddEntry(
+                    string.Format(
+                        "User deletion failed with exception [{0}]. Local variables: userId = {1}, theUser = {2}.", e,
+                        userId, theUser));
                 throw;
             }
         }
@@ -195,8 +228,9 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Get user failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("Get user failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("GetUser failed with exception [{0}]. Local variables: userId = {1}.", e, userId));
                 throw;
             }
         }
@@ -216,32 +250,37 @@ namespace RentItServer.ITU
                 {
                     userIds.Add(user.Id);
                 }
+                _logger.AddEntry("GetAllUserIds succeeded.");
                 return userIds;
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("GetAllUserIds failed with exception [{0}].", e));
                 throw;
             }
         }
 
         public void UpdateUser(int userId, string username, string password, string email)
         {
+            User theUser = null;
+            User theUpdatedUser = null;
             try
             {
-                User theUser = _dao.GetUser(userId);
+                theUser = _dao.GetUser(userId);
                 _dao.UpdateUser(userId, username, password);
-                if(theUser.Username != null) _userCache.Put(theUser.Username, null);
-                if(theUser.Email != null) _userCache.Put(theUser.Email, null);
-                User theUpdatedUser = _dao.GetUser(userId);
-                if(username != null) _userCache.Put(username, theUpdatedUser);
-                if(email != null) _userCache.Put(email, theUpdatedUser);
+                if (theUser.Username != null) _userCache.Put(theUser.Username, null);
+                if (theUser.Email != null) _userCache.Put(theUser.Email, null);
+                theUpdatedUser = _dao.GetUser(userId);
+                if (username != null) _userCache.Put(username, theUpdatedUser);
+                if (email != null) _userCache.Put(email, theUpdatedUser);
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, theUser = {5}, theUpdatedUser = {6}", userId, username, password, email, theUser, theUpdatedUser));
                 throw;
             }
         }
@@ -262,7 +301,7 @@ namespace RentItServer.ITU
             if (description == null) LogAndThrowException(new ArgumentException("description"), "CreateChannel");
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
-            Channel channel;
+            Channel channel = null;
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
@@ -270,13 +309,14 @@ namespace RentItServer.ITU
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
                     _channelCache[channel.Id] = channel;
-                    //_logger.AddEntry(logEntry + "Channel creation succeeded.");
+                    _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
+                _logger.AddEntry("ChannelCreation failed with exception [{0}]. logEntry = " + logEntry + ". Local variable: channel = " + channel+".");
                 throw;
             }
             return channel.Id;
@@ -292,30 +332,33 @@ namespace RentItServer.ITU
             if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
 
+            Channel channel = null;
             try
             {
                 lock (_dbLock)
                 {
-                    Channel channel = _dao.GetChannel(channelId);
+                    channel = _dao.GetChannel(channelId);
 
                     string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
                     if (channel.UserId == userId)
                     {
                         _dao.DeleteChannel(userId, channel);
                         _channelCache[channelId] = null;
-                        //_logger.AddEntry(logEntry + "Deletion successful.");
+                        _logger.AddEntry(logEntry + "Deletion successful.");
                     }
                     else
                     {
-                        if (_handler != null)
-                            _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
+                        //if (_handler != null)
+                        //    _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
+                        _logger.AddEntry(logEntry + "Deletion failed. Request comes from a user other than channel owner.");
                     }
                 }
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Channel deletion failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("Channel deletion failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("DeleteChannel failed with exception [{0}]. Local variables: userId = {1}, channelId = {2}, channel = {3}", e, userId, channelId, channel));
                 throw;
             }
         }
@@ -329,8 +372,9 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Update channel failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("Update channel failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("Update channel failed with exception [{0}]. Local variables: channelId = {1}, ownerId = {2}, channelName = {3}, description = {4}, hits = {5}, rating = {6}.", e, channelId, ownerId, channelName, description, hits, rating));
                 throw;
             }
         }
@@ -383,8 +427,9 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetChannelIds failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("GetChannelIds failed with exception [" + e + "]."));
+                LogAndThrowException(e, "GetAllChannelIds");
                 throw;
             }
         }
@@ -397,8 +442,16 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetChannels failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("GetChannels failed with exception [" + e + "]."));
+                string entry = string.Format("GetChannels failed with exception [{0}]. Local variables: args = {1}", e, args);
+                if (args != null)
+                    entry =
+                        string.Format(
+                            "{0}, args.AmountPlayed = {1}, args.Genres = {2}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.Rating = {5}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
+                            entry, args.AmountPlayed, args.Genres, args.NumberOfComments, args.NumberOfSubscriptions,
+                            args.Rating, args.SearchString, args.SortOption, args.StartIndex, args.EndIndex);
+                _logger.AddEntry(entry);
                 throw;
             }
         }
@@ -411,28 +464,43 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("CreateVote failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("CreateVote failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("CreateVote failed with exception [{0}]. Local variables: rating = {1}, userId = {2}, trackId = {3}.", e, rating, userId, trackId));
                 throw;
             }
         }
 
         public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
         {
-            // TODO possibly better with MemoryStream instead of Track
+            try
+            {
+                string relativePath = FileName.ItuGenerateAudioFileName(userId, channelId, trackInfo.Artist,
+                                                                        trackInfo.Length);
+                _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
+                _dao.CreateTrackEntry(channelId, FilePath.ITUTrackPath + relativePath, trackInfo.Name, trackInfo.Artist,
+                                      trackInfo.Length,
+                                      trackInfo.UpVotes, trackInfo.DownVotes);
+            }
+            catch (Exception e)
+            {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("AddTrack failed with exception [" + e + "]."));
+                throw;
+            }
         }
 
-        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        public Track GetTrackInfo(MemoryStream audioStream)
         {
-            DatabaseWrapperObjects.Track theTrack = new DatabaseWrapperObjects.Track();
+            Track theTrack = new Track();
             theTrack.Artist = "";
             try
             {
                 int counter = tempCounter++;
-                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.GenerateAudioFileName(counter), audioStream);
+                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.SmuGenerateAudioFileName(counter), audioStream);
                 // Use external library
                 TagLib.File audioFile =
-                    TagLib.File.Create(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
+                    TagLib.File.Create(FilePath.ITUTempPath + FileName.SmuGenerateAudioFileName(counter));
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -442,12 +510,12 @@ namespace RentItServer.ITU
                 theTrack.DownVotes = 0;
                 theTrack.UpVotes = 0;
                 theTrack.Name = audioFile.Tag.Title;
-                theTrack.TrackPlays = new List<DatabaseWrapperObjects.TrackPlay>();
-                theTrack.Votes = new List<DatabaseWrapperObjects.Vote>();
+                theTrack.TrackPlays = new List<TrackPlay>();
+                theTrack.Votes = new List<Vote>();
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
                 try
                 {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.GenerateAudioFileName(counter));
+                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.SmuGenerateAudioFileName(counter));
                 }
                 catch
                 {
@@ -589,8 +657,9 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Subscribe failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("Subscribe failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("Subscribe failed with exception [{0}]. Local variables: userId = {1}, channelId = {2}", e, userId, channelId));
                 throw;
             }
         }
@@ -606,8 +675,9 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("UnSubscribe failed with exception [" + e + "]."));
+                //if (_handler != null)
+                //    _handler(this, new RentItEventArgs("UnSubscribe failed with exception [" + e + "]."));
+                _logger.AddEntry(string.Format("Unsubscribe failed with exception [{0}]. Local variables: userId = {1}, channelId = {2}", e, userId, channelId));
                 throw;
             }
         }
@@ -619,9 +689,9 @@ namespace RentItServer.ITU
         /// <param name="operationName">Name of the operation.</param>
         private void LogAndThrowException(Exception e, String operationName)
         {
-            //_logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
-            if (_handler != null)
-                _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
+            _logger.AddEntry("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "].");
+            //if (_handler != null)
+            //    _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
             throw e;
         }
 

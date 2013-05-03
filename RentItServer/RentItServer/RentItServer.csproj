@@ -116,6 +116,7 @@
     </Compile>
     <Compile Include="ITU\Search\UserStruct.cs" />
     <Compile Include="ITU\TrackSearchArgs.cs" />
+    <Compile Include="ITU\XMLGenerator.cs" />
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="ITU\StreamHandler.cs" />
     <Compile Include="sysdiagram.cs">
