@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Xml.Serialization;
 using System.Xml;
 using RentItServer.Utilities;
@@ -32,7 +30,7 @@ namespace RentItServer.ITU
 
             XmlNodeList fileNameNodeList = doc.GetElementsByTagName("filename");
             XmlNode fileNameNode = fileNameNodeList[0];
-            fileNameNode.InnerText = filePath;
+            fileNameNode.InnerText = filePath.ToString();
 
             StringWriter stringWriter = new StringWriter();
             XmlTextWriter xmlTextWriter = new XmlTextWriter(stringWriter);

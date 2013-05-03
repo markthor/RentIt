@@ -13,15 +13,5 @@ namespace RentItMvc.Controllers
         {
             return PartialView();
         }
-
-        public ActionResult AudioPlayer()
-        {
-            Audio audio = new Audio();
-            //audio.Ogg = "'radio.reaper.fm/stream/'";
-            //audio.Mp3 = "'radio.reaper.fm/stream/'";
-            audio.Ogg = "'rentit.itu.dk:27000/stream'";
-            audio.Mp3 = "'rentit.itu.dk:27000/stream'";
-            return View(audio);
-        }
     }
 }

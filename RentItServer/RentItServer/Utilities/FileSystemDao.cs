@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Text;
 
 namespace RentItServer.Utilities
 {
@@ -114,6 +116,49 @@ namespace RentItServer.Utilities
             if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
 
             return File.Exists(absolutePath);
+        }
+
+        /// <summary>
+        /// Writes an m3u file with the track paths as content. Can overwrite.
+        /// </summary>
+        /// <param name="trackPaths">List of the track paths</param>
+        /// <param name="filePath">The path of the file to write to</param>
+        public void WriteM3u(List<string> trackPaths, string filePath)
+        {
+            StringWriter sw = new StringWriter();
+            foreach (string s in trackPaths)
+            {
+                sw.Write(s + "\r\n");
+            }
+            string fileContent;
+            fileContent = sw.ToString();
+            fileContent = fileContent.TrimEnd('\r', '\n');
+            WriteFile(fileContent, filePath);
+        }
+
+        /// <summary>
+        /// Writes the specified string to a file at the absolute file path. Can overwrite.
+        /// </summary>
+        /// <param name="path">The path to the directory in which the file should be placed with the file name</param>
+        /// <param name="content">The string containing the content of the file</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Path was null
+        /// </exception>
+        public void WriteFile(string content, string filePath)
+        {
+            if (filePath == null) throw new ArgumentNullException("absolutePath");
+            FileStream fs = File.OpenWrite(filePath);
+            Byte[] bytes = GetBytes(content);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Flush();
+            fs.Close();
+        }
+
+        private byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
     }
 }

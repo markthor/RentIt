@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "EditChannel";
+    ViewBag.Id = Model.Id;
 }
 
 @model RentItMvc.Models.GuiChannel
@@ -20,12 +21,12 @@
             @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description})        
         </div>
     </div>
-    <div class="signup-field">
         <div class="input-block-level" style="width:400px">
             <h5>Track List</h5>
             <table class="table table-hover">
                     <tr>  
-                        <th>Name</th>  
+                        <th>Name</th> 
+                        <th>Actions</th> 
                     </tr> 
                     @foreach (var t in Model.Tracks)
                     { 
@@ -34,13 +35,19 @@
                                 @t.TrackName
                             </td>
                             <td>
-                                <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new {trackId = t.Id } ))'">
+                                <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {trackId = t.Id } ))'">
                                     <i class="icon-remove-circle"></i>
-                                </button>                   
+                                </button>                    
                             </td>
                         </tr>
                     }
             </table>
         </div>
-    </div>
+        <div class="signup-field">
+            @using (Html.BeginForm("AddTrack", "Home", new { modelId = Model.Id, userId = Session["userId"] }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            { 
+                <input type="file" name="file" />
+                <input type="submit" value="OK" />
+            }
+        </div>
 </div>
