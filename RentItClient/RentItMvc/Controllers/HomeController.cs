@@ -31,7 +31,6 @@ namespace RentItMvc.Controllers
             return View();
         }
 
-       
 
         public ActionResult SelectChannel(int channelId)
         {
@@ -52,9 +51,35 @@ namespace RentItMvc.Controllers
             return Redirect("/");
         }
 
+        /// <summary>
+        /// Open site that enables user to edit a channel. Is also used for creating a channel
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
         public ActionResult EditChannel(int channelId)
-        { 
-            return PartialView();
+        {
+            //using (RentItServiceClient proxy = new RentItServiceClient())
+            //{
+                //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
+                RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
+                chan.Name = @"Cyperchannel";
+                chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
+                chan.Hits = 1024;
+                chan.Upvotes = 100;
+                chan.DownVotes = 12;
+                chan.Tracks = new List<GuiTrack>();
+                GuiTrack t1 = new GuiTrack();
+                t1.TrackName = "track1";
+                GuiTrack t2 = new GuiTrack();
+                t2.TrackName = "track2";
+                chan.Tracks.Add(t1);
+                chan.Tracks.Add(t2);
+                if (chan != null)
+                {
+                    return View(chan);
+                }
+            //}
+            return Redirect("/");
         }
 
         public ActionResult GetFeaturedChannels()

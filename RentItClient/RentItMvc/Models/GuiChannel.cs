@@ -38,16 +38,9 @@ namespace RentItMvc.Models
         [Display(Name = "OwnerId")]
         public int OwnerId{ get; set; }
 
-        /**[Required]
-        [Display(Name = "Comments")]
-        public List<Comment> Comments { get; set; }
-        
-
         [Required]
-        [Display(Name = "Name")]
-        public List<Subscriber> Subscribers{ get; set; }
+        [Display(Name = "TrackList")]
+        public List<GuiTrack> Tracks { get; set; }
         
-        public List<Genre> Genres{ get; set; }
-        public List<Track> Tracks { get; set; }**/
     }
 }
