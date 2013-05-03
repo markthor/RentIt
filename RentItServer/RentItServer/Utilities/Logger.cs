@@ -20,6 +20,25 @@ namespace RentItServer.Utilities
 
         private readonly string _absolutePath;
 
+        public Logger(string absolutePath)
+        {
+            String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            Directory.CreateDirectory(directory);
+            if (File.Exists(absolutePath))
+            {
+                File.Create(absolutePath);
+            }
+        }
+
+        public void AddEntry(string entry)
+        {
+            lock (_entryLock)
+            {
+                string timeStamp = "[" + DateTime.UtcNow.ToString(CultureInfo.InvariantCulture) + "] ";
+                File.AppendAllText(_absolutePath, timeStamp + entry + Environment.NewLine);
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the Logger class.
         /// </summary>
@@ -30,7 +49,7 @@ namespace RentItServer.Utilities
             Directory.CreateDirectory(directory);
             //if (File.Exists(absolutePath))
             //{
-                File.Create(absolutePath);
+            File.Create(absolutePath);
             //}
             this._absolutePath = absolutePath;
             handler += AddEntry;
