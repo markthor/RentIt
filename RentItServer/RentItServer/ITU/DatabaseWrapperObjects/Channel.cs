@@ -44,5 +44,16 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public List<Genre> Genres { get; set; }
         [DataMember]
         public List<Track> Tracks { get; set; }
+
+        public static Channel[] GetChannels(IEnumerable<RentItServer.Channel> channels)
+        {
+            if (channels == null) return null;
+            List<Channel> convertedChannels = new List<Channel>();
+            foreach (RentItServer.Channel channel in channels)
+            {
+                convertedChannels.Add(channel.GetChannel());
+            }
+            return convertedChannels.ToArray();
+        }
     }
 }

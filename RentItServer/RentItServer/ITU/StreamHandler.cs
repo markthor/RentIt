@@ -33,11 +33,11 @@ namespace RentItServer.ITU
             return _instance;
         }
 
-        public void StartStream(int channelId, string trackPath)
+        public void StartStream(int channelId, string trackName)
         {
             throw new NotImplementedException();
             string xml;
-            //xml = XMLGenerator.GenerateEzConfig(channelId, trackPath)
+            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath + trackName);
             FileSystemDao.GetInstance().WriteEzConfig(channelId, xml);
 
             //get ezstream path

@@ -91,28 +91,30 @@ namespace RentItServer.ITU
 
         public void Run(int channelId)
         {
-            string trackPath = GetNextTrackPath(channelId);
-            _streamHandler.StartStream(channelId, trackPath);
+            Track track = GetNextTrack(channelId);
+            string fileName = track.Id.ToString() + ".mp3";
+            _streamHandler.StartStream(channelId, fileName);
         }
 
-        private string GetNextTrackPath(int channelId)
+        private Track GetNextTrack(int channelId)
         {
-            string trackPath;
+            Track track;
 
             List<Track> tracks = _dao.GetTrackList(channelId);
             List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
             int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
 
-            trackPath = _dao.GetTrack(tId).Path;
+            track = _dao.GetTrack(tId);
 
-            return trackPath;
+            return track;
         }
 
         private void _streamHandler_ProcessOutputData(object obj)
         {
             EzProcess p = (EzProcess)obj;
-            string trackPath = GetNextTrackPath(p.ChannelId);
-            _streamHandler.NextTrack(p, trackPath);
+            Track track = GetNextTrack(p.ChannelId);
+            string fileName = track.Id.ToString() + ".mp3";
+            _streamHandler.NextTrack(p, fileName);
         }
 
         /// <summary>

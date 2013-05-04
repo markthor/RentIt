@@ -115,13 +115,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
-            IEnumerable<Channel> theRawChannels = _controller.GetChannels(args);
-            List<ITU.DatabaseWrapperObjects.Channel> theChannels = new List<ITU.DatabaseWrapperObjects.Channel>();
-            foreach (Channel channel in theRawChannels)
-            {
-                theChannels.Add(channel.GetChannel());
-            }
-            return theChannels.ToArray();
+            return ITU.DatabaseWrapperObjects.Channel.GetChannels(_controller.GetChannels(args));
         }
         
         public void CreateVote(int rating, int userId, int trackId)
