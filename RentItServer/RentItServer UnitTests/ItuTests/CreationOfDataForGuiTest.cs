@@ -14,7 +14,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             string genreName1 = "Electro";
             string genreName2 = "Heavy Metal";
-            User u = Controller.GetInstance().SignUp("Prechtig", "andreas.p.poulsen@gmail.com", "test");
+            RentItServer.ITU.DatabaseWrapperObjects.User u = Controller.GetInstance().SignUp("Prechtig", "andreas.p.poulsen@gmail.com", "test");
             Controller.GetInstance().CreateGenre(genreName1);
             Controller.GetInstance().CreateGenre(genreName2);
             int channelId1 = Controller.GetInstance().CreateChannel("Nightly Psychoactive Electro Hits", u.Id, "Sick channel with groovy beats", new List<string>() { genreName1 });
