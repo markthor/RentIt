@@ -511,14 +511,13 @@ namespace RentItServer_UnitTests.ItuTests
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
                     testchannels.Add(channel);
                 } 
-                IEnumerable<Channel> channels = controller.GetChannels(new ChannelSearchArgs()
+                RentItServer.ITU.DatabaseWrapperObjects.Channel[] channels = controller.GetChannels(new ChannelSearchArgs()
                     {
                         StartIndex = 0,
                         EndIndex = interval
                     });
 
-                List<Channel> theChannels = new List<Channel>(channels);
-                Assert.IsTrue(theChannels.Count >= interval);
+                Assert.IsTrue(channels.Length >= interval);
             }
             catch
             {

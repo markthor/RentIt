@@ -304,5 +304,19 @@ namespace RentItServer.ITU
         /// <returns>Returns the port which the client should connect to</returns>
         [OperationContract]
         int ListenToChannel(int channelId);
+
+        /// <summary>
+        /// Starts the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        [OperationContract]
+        void startChannel(int cId);
+
+        /// <summary>
+        /// Stops the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        [OperationContract]
+        void stopChannel(int cId);
     }
 }
