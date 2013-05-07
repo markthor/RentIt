@@ -50,8 +50,11 @@ namespace RentItServer.ITU
         {
             if (!IsChannelRunning(channelId))
             {
-
                 Track track = GetNextTrack(channelId);
+                if (track != null) // no tracks on channel
+                {
+                    return;
+                }
                 string fileName = track.Id.ToString() + ".mp3";
 
                 string xml;
@@ -70,6 +73,7 @@ namespace RentItServer.ITU
                 p.OutputDataReceived += p_OutputDataReceived;
 
                 runningChannelIds.Add(channelId, p);
+                AddTrackPlay(track);
             }
             else
             {
@@ -83,6 +87,8 @@ namespace RentItServer.ITU
             Track track = GetNextTrack(p.ChannelId);
             string fileName = track.Id.ToString() + ".mp3";
             NextTrack(p, fileName);
+
+            AddTrackPlay(track);
         }
 
         private void NextTrack(EzProcess p, string fileName)
@@ -100,6 +106,10 @@ namespace RentItServer.ITU
             Track track;
 
             List<Track> tracks = _dao.GetTrackList(channelId); // check that there are tracks on the channel!
+            if(!tracks.Any())//no tracks on channel
+            {
+                throw new NoTracksOnChannelException("There are no tracks associated with the channel");
+            }
             List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
             int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
 
@@ -117,11 +127,8 @@ namespace RentItServer.ITU
                     return true;
                 }
             }
-            catch (KeyNotFoundException)
-            {
-                return false;
-            }
-            return false;
+            catch (KeyNotFoundException){ }
+            throw new ChannelRunningException("The channel is already running");
         }
 
         public void StopStream(int channelId)
@@ -132,6 +139,29 @@ namespace RentItServer.ITU
                 p.Close();
                 runningChannelIds.Remove(channelId);
             }
+            else
+            {
+                throw new ChannelRunningException("The channel is not running");
+            }
         }
+
+        private void AddTrackPlay(Track track)
+        {
+            _dao.AddTrackPlay(track);
+        }
+    }
+
+    class NoTracksOnChannelException : Exception
+    {
+        public NoTracksOnChannelException(string message)
+            : base(message)
+        { }
+    }
+
+    class ChannelRunningException : Exception
+    {
+        public ChannelRunningException(string message)
+            : base(message)
+        { }
     }
 }

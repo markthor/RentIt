@@ -544,13 +544,20 @@ namespace RentItServer.ITU
             }
 
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
-            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
+            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex + 1];
                 if (filter.StartIndex < 0)
                 {   // Avoid OutOfBoundsException
                     filter.StartIndex = 0;
                 }
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex + 1);
+                if (filter.EndIndex < filteredChannels.Count)
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
+                }
+                else
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
+                }
                 filteredChannels = new List<Channel>(range);
             }
             return filteredChannels;
@@ -1115,6 +1122,15 @@ namespace RentItServer.ITU
                 }
 
                 proxy.SaveChanges();
+            }
+        }
+
+        public void AddTrackPlay(Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                context.TrackPlays.Add(new TrackPlay(track.Id, DateTime.UtcNow));
+
             }
         }
     }

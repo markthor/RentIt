@@ -726,5 +726,15 @@ namespace RentItServer.ITU
         {
             return _dao.IsUsernameAvailable(username);
         }
+
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
+        {
+            return new ChannelSearchArgs();
+        }
+
+        public TrackSearchArgs GetDefaultTrackSearchArgs()
+        {
+            return new TrackSearchArgs();
+        }
     }
 }

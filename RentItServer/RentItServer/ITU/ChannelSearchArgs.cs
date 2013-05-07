@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace RentItServer.ITU
@@ -35,6 +36,7 @@ namespace RentItServer.ITU
         /// The search string. Default is an empty string
         /// </value>
         [DataMember]
+        [DefaultValueAttribute("")]
         public string SearchString { get; set; }
         /// <summary>
         /// Gets the genres to include in search.
@@ -43,6 +45,7 @@ namespace RentItServer.ITU
         /// The genres to include in search. Default is an emoty string array
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(new string[] { "jazz" })]
         public string[] Genres { get; set; }
         /// <summary>
         /// Gets the amount played filter.
@@ -51,6 +54,7 @@ namespace RentItServer.ITU
         /// The amount played. Default is -1
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public int AmountPlayed { get; set; }
         /// <summary>
         /// Gets the number of subscriptions filter.
@@ -59,6 +63,7 @@ namespace RentItServer.ITU
         /// The number of subscriptions. Default is -1
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public int NumberOfSubscriptions { get; set; }
         /// <summary>
         /// Gets the number of comments to filter.
@@ -67,6 +72,7 @@ namespace RentItServer.ITU
         /// The number of comments. Default is -1
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public int NumberOfComments { get; set; }
         /// <summary>
         /// Gets the sort option filter.
@@ -75,6 +81,7 @@ namespace RentItServer.ITU
         /// The channels rating. Default is -1
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public double Rating { get; set; }
         /// <summary>
         /// Gets the start index.
@@ -83,6 +90,7 @@ namespace RentItServer.ITU
         /// The start index.
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public int StartIndex { get; set; }
         /// <summary>
         /// Gets the end index.
@@ -91,6 +99,7 @@ namespace RentItServer.ITU
         /// The end index.
         /// </value>
         [DataMember]
+        [DefaultValueAttribute(-1)]
         public int EndIndex { get; set; }
 
         /// <summary>
@@ -100,6 +109,7 @@ namespace RentItServer.ITU
         /// The sort option.
         /// </value>
         [DataMember]
+        [DefaultValueAttribute("")]
         public string SortOption { get; set; }
 
         public ChannelSearchArgs()
