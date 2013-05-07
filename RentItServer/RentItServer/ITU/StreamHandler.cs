@@ -14,11 +14,17 @@ namespace RentItServer.ITU
         private static StreamHandler _instance;
         //FileSystemHandler
         private static FileSystemDao _fileSystemHandler;
+        //List of ids of running channels;
+        private List<int> _runningChannelIds;
 
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
-        private StreamHandler() { _fileSystemHandler = FileSystemDao.GetInstance(); }
+        private StreamHandler()
+        {
+            _fileSystemHandler = FileSystemDao.GetInstance();
+            _runningChannelIds = new List<int>();
+        }
 
         /// <summary>
         /// Accessor method to access the only instance of the class
