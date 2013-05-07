@@ -19,7 +19,7 @@ namespace RentItServer.ITU
         private static DatabaseDao _dao;
 
         //List of ids of running channels;
-        private List<int> _runningChannelIds;
+        private Dictionary<int, EzProcess> runningChannelIds;
 
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace RentItServer.ITU
         {
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
-            _runningChannelIds = new List<int>();
+            runningChannelIds = new Dictionary<int, EzProcess>();
         }
 
 
@@ -48,23 +48,33 @@ namespace RentItServer.ITU
 
         public void StartStream(int channelId)
         {
-            Track track = GetNextTrack(channelId);
-            string fileName = track.Id.ToString() + ".mp3";
+            if (!IsChannelRunning(channelId))
+            {
 
-            string xml;
-            string xmlFilePath;
-            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
-            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-            FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                Track track = GetNextTrack(channelId);
+                string fileName = track.Id.ToString() + ".mp3";
 
-            //get config path
-            string configPath = FilePath.ITUChannelConfigPath.GetPath();
-            string arguments = "-c " + xmlFilePath;
-            EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
-            p.Start();
-            
-            //Listen for when a new song starts
-            p.OutputDataReceived += p_OutputDataReceived;
+                string xml;
+                string xmlFilePath;
+                xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+
+                //get config path
+                string configPath = FilePath.ITUChannelConfigPath.GetPath();
+                string arguments = "-c " + xmlFilePath;
+                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
+                p.Start();
+
+                //Listen for when a new song starts
+                p.OutputDataReceived += p_OutputDataReceived;
+
+                runningChannelIds.Add(channelId, p);
+            }
+            else
+            {
+                //channel is running
+            }
         }
 
         private void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -75,8 +85,9 @@ namespace RentItServer.ITU
             NextTrack(p, fileName);
         }
 
-        private void NextTrack(EzProcess p, string trackPath)
+        private void NextTrack(EzProcess p, string fileName)
         {
+            string trackPath = FilePath.ITUM3uPath + fileName;
             FileSystemDao.GetInstance().WriteM3u(new List<string>() {trackPath}, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
 
             string command = "killall -HUP ezstream";
@@ -95,6 +106,32 @@ namespace RentItServer.ITU
             track = _dao.GetTrack(tId);
 
             return track;
+        }
+
+        private bool IsChannelRunning(int channelId)
+        {
+            try
+            {
+                if (runningChannelIds[channelId] != null)
+                {
+                    return true;
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public void StopStream(int channelId)
+        {
+            if (IsChannelRunning(channelId))
+            {
+                EzProcess p = runningChannelIds[channelId];
+                p.Close();
+                runningChannelIds.Remove(channelId);
+            }
         }
     }
 }

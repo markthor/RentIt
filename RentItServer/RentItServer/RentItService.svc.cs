@@ -262,7 +262,7 @@ namespace RentItServer
         /// <param name="cId">The id of the channel</param>
         public void startChannel(int cId)
         {
-            throw new NotImplementedException();
+            _controller.StartChannelStream(cId);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace RentItServer
         /// <param name="cId">The id of the channel</param>
         public void stopChannel(int cId)
         {
-            throw new NotImplementedException();
+            _controller.StopChannelStream(cId);
         }
     }
 }
