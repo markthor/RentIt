@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using RentItServer.ITU.Exceptions;
 
@@ -462,7 +463,15 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
-                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
+                //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
+
+                var channels = context.Channels
+                            .Where(channel => channel.Name.StartsWith(filter.SearchString))
+                            .Include(channel => channel.ChannelOwner)
+                            .Include(channel => channel.Comments)
+                            .Include(channel => channel.Subscribers)
+                            .Include(channel => channel.Genres)
+                            .Include(channel => channel.Tracks);
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter

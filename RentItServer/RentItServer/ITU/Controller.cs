@@ -436,11 +436,12 @@ namespace RentItServer.ITU
             }
         }
 
-        public IEnumerable<Channel> GetChannels(ChannelSearchArgs args)
+        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
             {
-                return _dao.GetChannelsWithFilter(args);
+                return ITU.DatabaseWrapperObjects.Channel.GetChannels(_dao.GetChannelsWithFilter(args));
+                //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)
             {

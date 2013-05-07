@@ -115,7 +115,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
-            return ITU.DatabaseWrapperObjects.Channel.GetChannels(_controller.GetChannels(args));
+            return _controller.GetChannels(args);
         }
         
         public void CreateVote(int rating, int userId, int trackId)
