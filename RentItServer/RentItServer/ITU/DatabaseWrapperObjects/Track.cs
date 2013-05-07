@@ -44,6 +44,17 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         [DataMember]
         public List<Vote> Votes { get; set; }
         [DataMember]
-        public List<TrackPlay> TrackPlays { get; set; } 
+        public List<TrackPlay> TrackPlays { get; set; }
+
+        public static Track[] GetTracks(IEnumerable<RentItServer.Track> tracks)
+        {
+            if (tracks == null) return null;
+            List<Track> convertedTracks = new List<Track>();
+            foreach (RentItServer.Track track in tracks)
+            {
+                convertedTracks.Add(track.GetTrack());
+            }
+            return convertedTracks.ToArray();
+        }
     }
 }
