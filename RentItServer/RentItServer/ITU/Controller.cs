@@ -76,7 +76,6 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
-            _streamHandler.ProcessOutputData += _streamHandler_ProcessOutputData;
         }
 
         /// <summary>
@@ -89,32 +88,9 @@ namespace RentItServer.ITU
         }
 
 
-        public void Run(int channelId)
+        public void StartChannelStream(int channelId)
         {
-            Track track = GetNextTrack(channelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.StartStream(channelId, fileName);
-        }
-
-        private Track GetNextTrack(int channelId)
-        {
-            Track track;
-
-            List<Track> tracks = _dao.GetTrackList(channelId);
-            List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
-            int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
-
-            track = _dao.GetTrack(tId);
-
-            return track;
-        }
-
-        private void _streamHandler_ProcessOutputData(object obj)
-        {
-            EzProcess p = (EzProcess)obj;
-            Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.NextTrack(p, fileName);
+            _streamHandler.StartStream(channelId);
         }
 
         /// <summary>
