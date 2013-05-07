@@ -477,8 +477,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                string relativePath = FileName.ItuGenerateAudioFileName(userId, channelId, trackInfo.Artist,
-                                                                        trackInfo.Length);
+                string relativePath = FileName.ItuGenerateAudioFileName(trackInfo.Id);
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
                 _dao.CreateTrackEntry(channelId, FilePath.ITUTrackPath + relativePath, trackInfo.Name, trackInfo.Artist,
                                       trackInfo.Length,

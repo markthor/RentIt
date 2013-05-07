@@ -38,7 +38,7 @@ namespace RentItServer.ITU
             throw new NotImplementedException();
             string xml;
             xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath + trackName);
-            FileSystemDao.GetInstance().WriteEzConfig(channelId, xml);
+            //FileSystemDao.GetInstance().WriteEzConfig(channelId, xml);
 
             //get ezstream path
             string ezStreamPath = "";
@@ -62,7 +62,7 @@ namespace RentItServer.ITU
         public void NextTrack(EzProcess p, string trackPath)
         {
             //generate m3u
-            _fileSystemHandler.GenerateM3U(new List<string>() { trackPath });
+            //_fileSystemHandler.GenerateM3U(new List<string>() { trackPath });
 
             //
             string command = "killall -HUP ezstream";
