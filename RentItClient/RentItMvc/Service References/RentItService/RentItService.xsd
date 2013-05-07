@@ -443,4 +443,28 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetDefaultChannelSearchArgs">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDefaultChannelSearchArgsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetDefaultChannelSearchArgsResult" nillable="true" type="q19:ChannelSearchArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDefaultTrackSearchArgs">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDefaultTrackSearchArgsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetDefaultTrackSearchArgsResult" nillable="true" type="q20:TrackSearchArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

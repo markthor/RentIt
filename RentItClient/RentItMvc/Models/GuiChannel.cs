@@ -20,7 +20,8 @@ namespace RentItMvc.Models
                 guiChannel.Id = channel.Id;
                 guiChannel.Description = channel.Description;
                 guiChannel.OwnerId = channel.Owner.Id;
-                guiChannel.Hits = channel.Hits != null ? channel.Hits.Value : 0;    
+                guiChannel.Hits = channel.Hits != null ? channel.Hits.Value : 0;
+                guiChannel.StreamUri = channel.StreamUri;
             }
             return guiChannel;
         }
@@ -56,5 +57,7 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "TrackList")]
         public List<GuiTrack> Tracks { get; set; }
+
+        public string StreamUri { get; set; }
     }
 }

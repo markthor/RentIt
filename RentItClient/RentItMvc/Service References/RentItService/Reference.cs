@@ -124,6 +124,9 @@ namespace RentItMvc.RentItService {
         private System.Nullable<double> RatingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StreamUriField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private RentItMvc.RentItService.User[] SubscribersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -239,6 +242,19 @@ namespace RentItMvc.RentItService {
                 if ((this.RatingField.Equals(value) != true)) {
                     this.RatingField = value;
                     this.RaisePropertyChanged("Rating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StreamUri {
+            get {
+                return this.StreamUriField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StreamUriField, value) != true)) {
+                    this.StreamUriField = value;
+                    this.RaisePropertyChanged("StreamUri");
                 }
             }
         }
@@ -958,19 +974,26 @@ namespace RentItMvc.RentItService {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private string Artistk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ArtistField;
         
-        private int Downvotesk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DownvotesField;
         
-        private int EndIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int EndIndexField;
         
-        private string SearchStringk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SearchStringField;
         
-        private string SortOptionk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SortOptionField;
         
-        private int StartIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StartIndexField;
         
-        private int Upvotesk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UpvotesField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -982,93 +1005,93 @@ namespace RentItMvc.RentItService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Artist>k__BackingField", IsRequired=true)]
-        public string Artistk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Artist {
             get {
-                return this.Artistk__BackingFieldField;
+                return this.ArtistField;
             }
             set {
-                if ((object.ReferenceEquals(this.Artistk__BackingFieldField, value) != true)) {
-                    this.Artistk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Artistk__BackingField");
+                if ((object.ReferenceEquals(this.ArtistField, value) != true)) {
+                    this.ArtistField = value;
+                    this.RaisePropertyChanged("Artist");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Downvotes>k__BackingField", IsRequired=true)]
-        public int Downvotesk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Downvotes {
             get {
-                return this.Downvotesk__BackingFieldField;
+                return this.DownvotesField;
             }
             set {
-                if ((this.Downvotesk__BackingFieldField.Equals(value) != true)) {
-                    this.Downvotesk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Downvotesk__BackingField");
+                if ((this.DownvotesField.Equals(value) != true)) {
+                    this.DownvotesField = value;
+                    this.RaisePropertyChanged("Downvotes");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
-        public int EndIndexk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int EndIndex {
             get {
-                return this.EndIndexk__BackingFieldField;
+                return this.EndIndexField;
             }
             set {
-                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.EndIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                if ((this.EndIndexField.Equals(value) != true)) {
+                    this.EndIndexField = value;
+                    this.RaisePropertyChanged("EndIndex");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
-        public string SearchStringk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SearchString {
             get {
-                return this.SearchStringk__BackingFieldField;
+                return this.SearchStringField;
             }
             set {
-                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
-                    this.SearchStringk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SearchStringk__BackingField");
+                if ((object.ReferenceEquals(this.SearchStringField, value) != true)) {
+                    this.SearchStringField = value;
+                    this.RaisePropertyChanged("SearchString");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
-        public string SortOptionk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SortOption {
             get {
-                return this.SortOptionk__BackingFieldField;
+                return this.SortOptionField;
             }
             set {
-                if ((object.ReferenceEquals(this.SortOptionk__BackingFieldField, value) != true)) {
-                    this.SortOptionk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SortOptionk__BackingField");
+                if ((object.ReferenceEquals(this.SortOptionField, value) != true)) {
+                    this.SortOptionField = value;
+                    this.RaisePropertyChanged("SortOption");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
-        public int StartIndexk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int StartIndex {
             get {
-                return this.StartIndexk__BackingFieldField;
+                return this.StartIndexField;
             }
             set {
-                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.StartIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                if ((this.StartIndexField.Equals(value) != true)) {
+                    this.StartIndexField = value;
+                    this.RaisePropertyChanged("StartIndex");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Upvotes>k__BackingField", IsRequired=true)]
-        public int Upvotesk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Upvotes {
             get {
-                return this.Upvotesk__BackingFieldField;
+                return this.UpvotesField;
             }
             set {
-                if ((this.Upvotesk__BackingFieldField.Equals(value) != true)) {
-                    this.Upvotesk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Upvotesk__BackingField");
+                if ((this.UpvotesField.Equals(value) != true)) {
+                    this.UpvotesField = value;
+                    this.RaisePropertyChanged("Upvotes");
                 }
             }
         }
@@ -1322,6 +1345,9 @@ namespace RentItMvc.RentItService {
         private System.Nullable<double> RatingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StreamUriField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private RentItMvc.RentItService.User1[] SubscribersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1440,6 +1466,19 @@ namespace RentItMvc.RentItService {
                 if ((this.RatingField.Equals(value) != true)) {
                     this.RatingField = value;
                     this.RaisePropertyChanged("Rating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StreamUri {
+            get {
+                return this.StreamUriField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StreamUriField, value) != true)) {
+                    this.StreamUriField = value;
+                    this.RaisePropertyChanged("StreamUri");
                 }
             }
         }
@@ -2240,6 +2279,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/stopChannel", ReplyAction="http://tempuri.org/IRentItService/stopChannelResponse")]
         System.Threading.Tasks.Task stopChannelAsync(int cId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgsResponse")]
+        RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.ChannelSearchArgs> GetDefaultChannelSearchArgsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgsResponse")]
+        RentItMvc.RentItService.TrackSearchArgs GetDefaultTrackSearchArgs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.TrackSearchArgs> GetDefaultTrackSearchArgsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2515,6 +2566,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task stopChannelAsync(int cId) {
             return base.Channel.stopChannelAsync(cId);
+        }
+        
+        public RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs() {
+            return base.Channel.GetDefaultChannelSearchArgs();
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.ChannelSearchArgs> GetDefaultChannelSearchArgsAsync() {
+            return base.Channel.GetDefaultChannelSearchArgsAsync();
+        }
+        
+        public RentItMvc.RentItService.TrackSearchArgs GetDefaultTrackSearchArgs() {
+            return base.Channel.GetDefaultTrackSearchArgs();
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.TrackSearchArgs> GetDefaultTrackSearchArgsAsync() {
+            return base.Channel.GetDefaultTrackSearchArgsAsync();
         }
     }
 }
