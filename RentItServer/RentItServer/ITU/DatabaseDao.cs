@@ -492,10 +492,10 @@ namespace RentItServer.ITU
                 {   // Apply specific sort order
                     switch (filter.SortOption)
                     {
-                        case ChannelSearchArgs.AmountPlayedAsc:
+                        case ChannelSearchArgs.HitsAsc:
                             channels = from channel in channels orderby channel.Hits ascending select channel;
                             break;
-                        case ChannelSearchArgs.AmountPlayedDesc:
+                        case ChannelSearchArgs.HitsDesc:
                             channels = from channel in channels orderby channel.Hits descending select channel;
                             break;
                         case ChannelSearchArgs.NameAsc:
@@ -530,7 +530,11 @@ namespace RentItServer.ITU
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex + 1];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex+1);
+                if (filter.StartIndex < 0)
+                {   // Avoid OutOfBoundsException
+                    filter.StartIndex = 0;
+                }
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex + 1);
                 filteredChannels = new List<Channel>(range);
             }
             return filteredChannels;

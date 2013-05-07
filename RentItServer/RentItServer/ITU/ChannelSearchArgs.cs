@@ -7,8 +7,8 @@ namespace RentItServer.ITU
     {
         public const string NameDesc = "nam desc";
         public const string NameAsc = "nam asc";
-        public const string AmountPlayedDesc = "ap desc";
-        public const string AmountPlayedAsc = "ap asc";
+        public const string HitsDesc = "ap desc";
+        public const string HitsAsc = "ap asc";
         public const string SubscriptionsDesc = "sub desc";
         public const string SubscriptionsAsc = "sub asc";
         public const string NumberOfCommentsDesc = "com desc";
