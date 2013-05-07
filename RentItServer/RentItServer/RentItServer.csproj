@@ -115,7 +115,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ITU\Search\UserStruct.cs" />
-    <Compile Include="ITU\Test.cs" />
     <Compile Include="ITU\TrackSearchArgs.cs" />
     <Compile Include="ITU\XMLGenerator.cs" />
     <Compile Include="SMU\Rental.cs" />
