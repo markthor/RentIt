@@ -373,7 +373,7 @@ namespace RentItServer.ITU
         /// or
         /// No user with user id [ + ownerId + ]
         /// </exception>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -397,6 +397,7 @@ namespace RentItServer.ITU
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
+                if (streamUri != null) theChannel.StreamUri = streamUri;
 
                 context.SaveChanges();
             }
