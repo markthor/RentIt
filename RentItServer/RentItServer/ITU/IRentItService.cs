@@ -318,5 +318,19 @@ namespace RentItServer.ITU
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
         void stopChannel(int cId);
+
+        /// <summary>
+        /// Gets a channel search args object with all fields having default values.
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        ChannelSearchArgs GetDefaultSearchArgs();
+
+        /// <summary>
+        /// Gets a track search args object with all fields having default values.
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        TrackSearchArgs GetDefaultTrackSearchArgs();
     }
 }

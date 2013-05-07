@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace RentItServer.ITU
 {
     [Serializable]
+    [DataContract]
     public class TrackSearchArgs
     {
+        [DataMember]
         public const string NameDesc = "nam desc";
+        [DataMember]
         public const string NameAsc = "nam asc";
+        [DataMember]
         public const string ArtistDesc = "art desc";
+        [DataMember]
         public const string ArtistAsc = "art asc";
+        [DataMember]
         public const string UpvotesDesc = "upvot desc";
+        [DataMember]
         public const string UpvotesAsc = "upvot asc";
+        [DataMember]
         public const string DownvotesDesc = "downvot desc";
+        [DataMember]
         public const string DownvotesAsc = "downvot asc";
 
         /// <summary>
@@ -23,7 +33,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The search string.
         /// </value>
-        public string SearchString { get; private set; }
+        [DataMember]
+        public string SearchString { get; set; }
 
         /// <summary>
         /// Gets the artist.
@@ -31,7 +42,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The artist.
         /// </value>
-        public string Artist { get; private set; }
+        [DataMember]
+        public string Artist { get; set; }
 
         /// <summary>
         /// Gets the upvotes.
@@ -39,7 +51,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The upvotes.
         /// </value>
-        public int Upvotes { get; private set; }
+        [DataMember]
+        public int Upvotes { get; set; }
 
         /// <summary>
         /// Gets the downvotes.
@@ -47,7 +60,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The downvotes.
         /// </value>
-        public int Downvotes { get; private set; }
+        [DataMember]
+        public int Downvotes { get; set; }
 
         /// <summary>
         /// Gets the start index.
@@ -55,7 +69,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The start index.
         /// </value>
-        public int StartIndex { get; private set; }
+        [DataMember]
+        public int StartIndex { get; set; }
         
         /// <summary>
         /// Gets the end index.
@@ -63,7 +78,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The end index.
         /// </value>
-        public int EndIndex { get; private set; }
+        [DataMember]
+        public int EndIndex { get; set; }
         
         /// <summary>
         /// Gets the sort option. Must be one of the const fields of this class
@@ -71,7 +87,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The sort option.
         /// </value>
-        public string SortOption { get; private set; }
+        [DataMember]
+        public string SortOption { get; set; }
 
         public TrackSearchArgs()
         {
