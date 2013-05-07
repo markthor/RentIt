@@ -61,12 +61,8 @@ namespace RentItServer.ITU
 
         public void NextTrack(EzProcess p, string trackPath)
         {
-            //generate m3u
-            List<string> list = new List<string>();
             FileSystemDao.GetInstance().WriteM3u(new List<string>() {trackPath}, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
-            //_fileSystemHandler.GenerateM3U(new List<string>() { trackPath });
 
-            //
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
             p.StandardInput.Flush();

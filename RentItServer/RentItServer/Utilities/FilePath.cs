@@ -35,7 +35,7 @@ namespace RentItServer.Utilities
         /// <summary>
         /// The M3u files refered in the config files.
         /// </summary>
-        public static readonly FilePath ITUEzStreamPath = new FilePath(
+        public static readonly FilePath ITUM3uPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
             "Rentit21Files" + Path.DirectorySeparatorChar +
