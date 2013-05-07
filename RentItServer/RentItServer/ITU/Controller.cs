@@ -39,9 +39,9 @@ namespace RentItServer.ITU
         private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
-        public static string _defaultIp = "localhost";
+        public static string _defaultUri = "rentit.itu.dk";
         public static string _defaultStreamExtension = ".ogg";
-        public static string _defaultUrl = "http://" + _defaultIp + ":" + _defaultPort + "/";
+        public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         private int tempCounter;
         private readonly object _dbLock = new object();
@@ -292,6 +292,7 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
+                    _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
                     _channelCache[channel.Id] = channel;
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
@@ -304,6 +305,30 @@ namespace RentItServer.ITU
                 throw;
             }
             return channel.Id;
+        }
+
+        /// <summary>
+        /// Creates a genre with the name.
+        /// </summary>
+        /// <param name="genreName">The name of the genre.</param>
+        public void CreateGenre(string genreName)
+        {
+            if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
+            string logEntry = "Genre with name: " + " [" + genreName + "] has been created." ;
+            
+            try
+            {
+                lock (_dbLock)
+                {
+                    _dao.CreateGenre(genreName);
+                    _logger.AddEntry(logEntry + "Genre creation succeeded.");
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("GenreCreation failed with exception [{0}]. logEntry = " + logEntry + ".");
+                throw;
+            }
         }
 
         /// <summary>
@@ -352,7 +377,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null);
             }
             catch (Exception e)
             {
@@ -435,7 +460,7 @@ namespace RentItServer.ITU
                         string.Format(
                             "{0}, args.AmountPlayed = {1}, args.Genres = {2}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.Rating = {5}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
                             entry, args.AmountPlayed, args.Genres, args.NumberOfComments, args.NumberOfSubscriptions,
-                            args.Rating, args.SearchString, args.SortOption, args.StartIndex, args.EndIndex);
+                            args.Rating, args.SearchString.Equals("") ? "\"\"" : args.SearchString, args.SortOption.Equals("") ? "\"\"" : args.SortOption, args.StartIndex, args.EndIndex);
                 _logger.AddEntry(entry);
                 throw;
             }
@@ -701,6 +726,16 @@ namespace RentItServer.ITU
         public bool IsUsernameAvailable(string username)
         {
             return _dao.IsUsernameAvailable(username);
+        }
+
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
+        {
+            return new ChannelSearchArgs();
+        }
+
+        public TrackSearchArgs GetDefaultTrackSearchArgs()
+        {
+            return new TrackSearchArgs();
         }
     }
 }

@@ -273,5 +273,15 @@ namespace RentItServer
         {
             _controller.StopChannelStream(cId);
         }
+
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
+        {
+            return _controller.GetDefaultChannelSearchArgs();
+        }
+
+        public TrackSearchArgs GetDefaultTrackSearchArgs()
+        {
+            return _controller.GetDefaultTrackSearchArgs();
+        }
     }
 }

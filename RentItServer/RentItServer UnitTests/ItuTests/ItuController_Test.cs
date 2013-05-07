@@ -22,6 +22,7 @@ namespace RentItServer_UnitTests.ItuTests
         private readonly List<string> testchannelnames = new List<string>();
         private readonly List<string> testchanneldescrs = new List<string>();
         private readonly List<Channel> testchannels = new List<Channel>();
+
         private const int interval = 3;
 
         private Controller controller;
@@ -41,15 +42,16 @@ namespace RentItServer_UnitTests.ItuTests
         [TestCleanup]
         public void Cleanup()
         {
-            foreach (Channel channel in testchannels)
-            {
-                _dao.DeleteChannel(testId, channel);
-            } 
-            if (testId != int.MaxValue)
-            {
-                _dao.DeleteUser(testId);
-                testId = int.MaxValue;
-            }
+            DatabaseDao.GetInstance().DeleteDatabaseData();
+        }
+
+        /// <summary>
+        /// Deletes all tuples in SMU database.
+        /// </summary>
+        [ClassCleanup]
+        public static void CleanDataBaseFinish()
+        {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
         #region Controller_Signup
@@ -494,9 +496,15 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_Default()
         {
             controller = Controller.GetInstance();
+
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.StartIndex = 0;
+            csa.EndIndex = 10;
+
             try
             {
-                controller.GetChannels(new ChannelSearchArgs());
+                controller.GetChannels(csa);
+                //controller.GetChannels(new ChannelSearchArgs());
             }
             catch
             {

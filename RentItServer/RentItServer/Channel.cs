@@ -28,6 +28,7 @@ namespace RentItServer
         public string Description { get; set; }
         public Nullable<double> Rating { get; set; }
         public Nullable<int> Hits { get; set; }
+        public string StreamUri { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual User ChannelOwner { get; set; }
