@@ -67,11 +67,6 @@
     <Compile Include="ItuTests\CreationOfDataForGuiTest.cs" />
     <Compile Include="ItuTests\ItuController_Test.cs" />
     <Compile Include="ItuTests\StreamHandlerTest.cs" />
-    <Compile Include="Service References\ITUServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="UtilityTests\FileSystemHandler_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">
@@ -102,31 +97,6 @@
     <None Include="Properties\DataSources\RentItServer.SMU.Rental.datasource" />
     <None Include="Properties\DataSources\RentItServer.SMU.User.datasource" />
     <None Include="Properties\DataSources\RentItServer.User.datasource" />
-    <None Include="Service References\ITUServiceReference\RentItService.wsdl" />
-    <None Include="Service References\ITUServiceReference\RentItService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ITUServiceReference\RentItService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference1\SMURentItService.disco" />
     <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
     <None Include="Service References\ServiceReference1\configuration.svcinfo" />
@@ -135,13 +105,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Test Files\testimage.jpg" />
-    <None Include="Service References\ITUServiceReference\RentItService.disco" />
-    <None Include="Service References\ITUServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\ITUServiceReference\configuration.svcinfo" />
-    <None Include="Service References\ITUServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Web.config" />
     <None Include="Service References\ServiceReference1\SMURentItService.wsdl" />
     <None Include="Service References\ServiceReference1\SMURentItService1.xsd">
@@ -177,7 +140,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ITUServiceReference\" />
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>

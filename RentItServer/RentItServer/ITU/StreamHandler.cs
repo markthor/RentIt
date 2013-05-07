@@ -110,6 +110,7 @@ namespace RentItServer.ITU
             {
                 throw new NoTracksOnChannelException("There are no tracks associated with the channel");
             }
+            throw new Exception("asdasdasd");
             List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
             int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
 
