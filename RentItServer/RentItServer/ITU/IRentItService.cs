@@ -324,7 +324,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        ChannelSearchArgs GetDefaultSearchArgs();
+        ChannelSearchArgs GetDefaultChannelSearchArgs();
 
         /// <summary>
         /// Gets a track search args object with all fields having default values.
