@@ -75,9 +75,9 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track);
             }
-            else
+            else //channel is already running
             {
-                //channel is running
+                throw new ChannelRunningException("The channel is already running");
             }
         }
 
@@ -127,8 +127,8 @@ namespace RentItServer.ITU
                     return true;
                 }
             }
-            catch (KeyNotFoundException){ }
-            throw new ChannelRunningException("The channel is already running");
+            catch (KeyNotFoundException) { }
+            return false;
         }
 
         public void StopStream(int channelId)
