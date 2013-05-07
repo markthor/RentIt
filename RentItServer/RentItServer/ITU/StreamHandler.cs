@@ -37,15 +37,15 @@ namespace RentItServer.ITU
         {
             throw new NotImplementedException();
             string xml;
-            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath + trackName);
-            //FileSystemDao.GetInstance().WriteEzConfig(channelId, xml);
+            string xmlFilePath;
+            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + trackName);
+            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+            FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
-            //get ezstream path
-            string ezStreamPath = "";
             //get config path
-            string configPath = "";
-            string arguments = "-c " + configPath;
-            EzProcess p = new EzProcess(channelId, ezStreamPath, arguments);
+            string configPath = FilePath.ITUChannelConfigPath.GetPath();
+            string arguments = "-c " + xmlFilePath;
+            EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
             p.Start();
             
             //Listen for when a new song starts
@@ -61,10 +61,8 @@ namespace RentItServer.ITU
 
         public void NextTrack(EzProcess p, string trackPath)
         {
-            //generate m3u
-            //_fileSystemHandler.GenerateM3U(new List<string>() { trackPath });
+            FileSystemDao.GetInstance().WriteM3u(new List<string>() {trackPath}, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
 
-            //
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
             p.StandardInput.Flush();

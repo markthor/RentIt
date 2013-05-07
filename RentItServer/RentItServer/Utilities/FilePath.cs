@@ -23,6 +23,26 @@ namespace RentItServer.Utilities
             "ChannelConfig" + Path.DirectorySeparatorChar);
 
         /// <summary>
+        /// The executable ezstream files
+        /// </summary>
+        public static readonly FilePath ITUEzStreamPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "EzStream" + Path.DirectorySeparatorChar);
+
+        /// <summary>
+        /// The M3u files refered in the config files.
+        /// </summary>
+        public static readonly FilePath ITUM3uPath = new FilePath(
+            "C:" + Path.DirectorySeparatorChar +
+            "RentItServices" + Path.DirectorySeparatorChar +
+            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "ITU" + Path.DirectorySeparatorChar +
+            "M3u" + Path.DirectorySeparatorChar);
+
+        /// <summary>
         /// The SMU audio path
         /// </summary>
         public static readonly FilePath SMUAudioPath = new FilePath(

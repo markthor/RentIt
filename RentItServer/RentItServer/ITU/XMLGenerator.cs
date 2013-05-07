@@ -42,10 +42,17 @@ namespace RentItServer.ITU
         {
             if (_defaultXmlBase == null)
             {
-                XmlDocument doc = new XmlDocument();
-                Stream s = File.OpenRead(FilePath.ITUChannelConfigPath.ToString() + _configFileName);
-                doc.Load(s);
-                _defaultXmlBase = doc;
+                try
+                {
+                    XmlDocument doc = new XmlDocument();
+                    Stream s = File.OpenRead(FilePath.ITUChannelConfigPath.GetPath() + _configFileName);
+                    doc.Load(s);
+                    _defaultXmlBase = doc;
+                }
+                catch (FileNotFoundException e)
+                {
+                    throw new FileNotFoundException("The default xml config file named " + _configFileName + " does not exist in " + FilePath.ITUChannelConfigPath.GetPath());
+                }
             }
             return _defaultXmlBase;
         }
