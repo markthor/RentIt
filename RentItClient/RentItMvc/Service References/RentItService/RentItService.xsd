@@ -419,4 +419,28 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="startChannel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="startChannelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="stopChannel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="stopChannelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -411,8 +411,15 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
-                               select channel;
+                var channels = context.Channels
+                            .Where(channel => channel.Id == channelId)
+                            .Include(channel => channel.ChannelOwner)
+                            .Include(channel => channel.Comments)
+                            .Include(channel => channel.Subscribers)
+                            .Include(channel => channel.Genres)
+                            .Include(channel => channel.Tracks);
+                //var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
+                //               select channel;
 
                 if (channels.Any() == false)
                 {   // No channel with matching id

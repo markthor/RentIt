@@ -10,6 +10,21 @@ namespace RentItMvc.Models
 {
     public class GuiChannel
     {
+        public static GuiChannel GuiChannelFactory(RentItService.Channel channel)
+        {
+            GuiChannel guiChannel = null;
+            if (channel != null)
+            {
+                guiChannel = new GuiChannel();
+                guiChannel.Name = channel.Name;
+                guiChannel.Id = channel.Id;
+                guiChannel.Description = channel.Description;
+                guiChannel.OwnerId = channel.Owner.Id;
+                guiChannel.Hits = channel.Hits != null ? channel.Hits.Value : 0;    
+            }
+            return guiChannel;
+        }
+
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
@@ -41,6 +56,5 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "TrackList")]
         public List<GuiTrack> Tracks { get; set; }
-        
     }
 }
