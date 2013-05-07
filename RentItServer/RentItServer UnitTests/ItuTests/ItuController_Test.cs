@@ -22,19 +22,20 @@ namespace RentItServer_UnitTests.ItuTests
         private readonly List<string> testchannelnames = new List<string>();
         private readonly List<string> testchanneldescrs = new List<string>();
         private readonly List<Channel> testchannels = new List<Channel>();
-            
+
         [TestCleanup]
         public void Cleanup()
         {
-            foreach (Channel channel in testchannels)
-            {
-                _dao.DeleteChannel(testId, channel);
-            } 
-            if (testId != int.MaxValue)
-            {
-                _dao.DeleteUser(testId);
-                testId = int.MaxValue;
-            }
+            DatabaseDao.GetInstance().DeleteDatabaseData();
+        }
+
+        /// <summary>
+        /// Deletes all tuples in SMU database.
+        /// </summary>
+        [ClassCleanup]
+        public static void CleanDataBaseFinish()
+        {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
         #region Controller_Signup
@@ -491,6 +492,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.Fail("An exception was raised");
             }
         }
+
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_Interval()
         {

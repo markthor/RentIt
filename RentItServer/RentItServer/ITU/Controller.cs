@@ -301,6 +301,30 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Creates a genre with the name.
+        /// </summary>
+        /// <param name="genreName">The name of the genre.</param>
+        public void CreateGenre(string genreName)
+        {
+            if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
+            string logEntry = "Genre with name: " + " [" + genreName + "] has been created." ;
+            
+            try
+            {
+                lock (_dbLock)
+                {
+                    _dao.CreateGenre(genreName);
+                    _logger.AddEntry(logEntry + "Genre creation succeeded.");
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("GenreCreation failed with exception [{0}]. logEntry = " + logEntry + ".");
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Deletes the channel.
         /// </summary>
         /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>

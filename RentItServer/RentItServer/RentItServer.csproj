@@ -111,7 +111,9 @@
     <Compile Include="ITU\DatabaseWrapperObjects\TrackPlay.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\User.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Vote.cs" />
-    <Compile Include="ITU\EzProcess.cs" />
+    <Compile Include="ITU\EzProcess.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ITU\Search\UserStruct.cs" />
     <Compile Include="ITU\TrackSearchArgs.cs" />
     <Compile Include="ITU\XMLGenerator.cs" />
