@@ -59,7 +59,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(null, null, null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(null, null, null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentNullException)
@@ -74,7 +74,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", null, null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", null, null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -89,7 +89,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(null, "", null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(null, "", null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -104,7 +104,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(null, null, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(null, null, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -119,7 +119,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", "", null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", "", null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -134,7 +134,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(null, "", "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(null, "", "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentNullException)
@@ -149,7 +149,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(null, "", "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(null, "", "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -164,7 +164,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", "", "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", "", "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -179,7 +179,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(testname, "", "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testname, "", "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -194,7 +194,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", testmail, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", testmail, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -209,7 +209,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", "", testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", "", testpw);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -224,7 +224,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(testname, testmail, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testname, testmail, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -239,7 +239,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp("", testmail, testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp("", testmail, testpw);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -254,7 +254,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.SignUp(testname, "", testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testname, "", testpw);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -267,12 +267,11 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_SignUp_Parameter_ValidValidValid()
         {
             controller = Controller.GetInstance();
-            User user = controller.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testname, testmail, testpw);
             testId = user.Id;
             Assert.IsNotNull(user);
             Assert.AreEqual(testname, user.Username);
             Assert.AreEqual(testmail, user.Email);
-            Assert.AreEqual(testpw, user.Password);
         }
         #endregion
         #region Controller_Login
@@ -282,7 +281,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(null, null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(null, null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentNullException)
@@ -297,7 +296,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login("", null);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login("", null);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -312,7 +311,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(null, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(null, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentNullException)
@@ -327,7 +326,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login("", "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login("", "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -342,7 +341,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(testname, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(testname, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -357,7 +356,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(testmail, "");
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(testmail, "");
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -372,7 +371,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login("", testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login("", testpw);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -387,7 +386,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(testname, testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(testname, testpw);
             }
             catch (ArgumentException)
             {
@@ -401,7 +400,7 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
             try
             {
-                User user = controller.Login(testmail, testpw);
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.Login(testmail, testpw);
             }
             catch (ArgumentException)
             {
@@ -518,15 +517,15 @@ namespace RentItServer_UnitTests.ItuTests
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(new ChannelSearchArgs()
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(new ChannelSearchArgs()
                 {
                     SearchString = testchannelname
                 });
 
-                List<Channel> theChannels = new List<Channel>(channels);
-                foreach(Channel aChannel in theChannels)
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
+                foreach (RentItServer.ITU.DatabaseWrapperObjects.Channel aChannel in theChannels)
                 {
-                    Assert.IsTrue(aChannel.ChannelOwner.Id == testId);
+                    Assert.IsTrue(aChannel.Owner.Id == testId);
                 }
             }
             catch
@@ -577,13 +576,13 @@ namespace RentItServer_UnitTests.ItuTests
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(new ChannelSearchArgs()
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(new ChannelSearchArgs()
                 {
                     StartIndex = -interval,
                     EndIndex = interval
                 });
 
-                List<Channel> theChannels = new List<Channel>(channels);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
             }
             catch
@@ -610,8 +609,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args); 
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
@@ -641,8 +640,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
@@ -672,8 +671,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
@@ -703,8 +702,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
@@ -734,8 +733,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
@@ -765,8 +764,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
@@ -796,8 +795,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
@@ -827,8 +826,8 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<Channel> channels = controller.GetChannels(args);
-                List<Channel> theChannels = new List<Channel>(channels);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
@@ -850,6 +849,23 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(-1, null, null, null);
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosNullNullNull()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, null, null);
                 User updatedUser = _dao.GetUser(user.Id);
                 Assert.IsTrue(user.Username.Equals(updatedUser.Username));
                 Assert.IsTrue(user.Email.Equals(updatedUser.Email));
@@ -861,25 +877,142 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.Fail("An exception was thrown");
             }
         }
-        //[TestMethod]
-        //public void Controller_UpdateUser_Parameter_NegEmptyNullNull()
-        //{
-        //    controller = Controller.GetInstance();
-        //    User user = _dao.SignUp(testname, testmail, testpw);
-        //    try
-        //    {
-        //        controller.UpdateUser(-1, "", null, null);
-        //        User updatedUser = _dao.GetUser(user.Id);
-        //        Assert.IsTrue(user.Username.Equals(updatedUser.Username));
-        //        Assert.IsTrue(user.Email.Equals(updatedUser.Email));
-        //        Assert.IsTrue(user.Password.Equals(updatedUser.Password));
-        //    }
-        //    catch
-        //    {
-        //        Cleanup();
-        //        Assert.Fail("An exception was thrown");
-        //    }
-        //}
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosEmptyNullNull()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, "", null, null);
+                Cleanup();
+                Assert.Fail("An exception was thrown"); 
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosNullEmptyNull()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, "", null);
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosNullNullEmpty()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, null, "");
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosEmptyEmptyNull()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, "", "", null);
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosNullEmptyEmpty()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, "", "");
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosEmptyNullEmpty()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, "", "");
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosEmptyEmptyEmpty()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, "", "", "");
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_Parameter_PosNullNullValid()
+        {
+            controller = Controller.GetInstance();
+            User user = _dao.SignUp(testname, testmail, testpw);
+            testId = user.Id;
+            try
+            {
+                controller.UpdateUser(testId, null, null, testpw);
+                Cleanup();
+                Assert.Fail("An exception was thrown");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
         #endregion
     }
 }
