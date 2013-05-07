@@ -18,5 +18,9 @@ namespace RentItServer
         public System.DateTime TimePlayed { get; set; }
     
         public virtual Track Track { get; set; }
+
+        public TrackPlay()
+        {
+        }
     }
 }

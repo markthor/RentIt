@@ -1005,7 +1005,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         /// <returns>All TrackPlays associated with the channel</returns>
         /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
-        internal List<TrackPlay> GetTrackPlays(int channelId)
+        public List<TrackPlay> GetTrackPlays(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
