@@ -109,14 +109,9 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
-                    {
-                        StartIndex = 0,
-                        EndIndex = 1,
-                        Genres = new string[] { "jazz" },
-                        SearchString = "Channel",
-                        SortOption = "nam desc"
-                    };
+                ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
+                searchArgs.StartIndex = 0;
+                searchArgs.EndIndex = 10;
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
