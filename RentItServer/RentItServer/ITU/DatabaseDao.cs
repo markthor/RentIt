@@ -700,7 +700,7 @@ namespace RentItServer.ITU
                              where track.Id == trackId
                              select track;
 
-                if (tracks.Any() == true) throw new ArgumentException("No track with trackId [" + trackId + "]");
+                if (tracks.Any() == false) throw new ArgumentException("No track with trackId [" + trackId + "]");
 
                 theTrack = tracks.First();
             }
