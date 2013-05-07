@@ -106,17 +106,18 @@ namespace RentItMvc.Controllers
 
         public ActionResult ChannelList(List<Channel> theList, string title)
         {
-            Channel[] channels;
+            RentItServer.ITU.DatabaseWrapperObjects.Channel[] channels;
+            RentItServer.ITU.Controller controller = RentItServer.ITU.Controller.GetInstance();
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
+                RentItServer.ITU.ChannelSearchArgs searchArgs = new RentItServer.ITU.ChannelSearchArgs()
                     {
-                        StartIndexk__BackingField = 0,
-                        EndIndexk__BackingField = 10
+                        StartIndex = 0,
+                        EndIndex = 1
                     };
-                channels = proxy.GetChannels(searchArgs);
+                channels = controller.GetChannels(searchArgs);
             }
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
+            List<GuiChannel> GuiChannelList = null;// GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;
             //List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
             if(GuiChannelList == null)
