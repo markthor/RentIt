@@ -785,23 +785,32 @@ namespace RentItMvc.RentItService {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private int AmountPlayedk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AmountPlayedField;
         
-        private int EndIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int EndIndexField;
         
-        private string[] Genresk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] GenresField;
         
-        private int NumberOfCommentsk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberOfCommentsField;
         
-        private int NumberOfSubscriptionsk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberOfSubscriptionsField;
         
-        private double Ratingk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double RatingField;
         
-        private string SearchStringk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SearchStringField;
         
-        private string SortOptionk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SortOptionField;
         
-        private int StartIndexk__BackingFieldField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int StartIndexField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -813,119 +822,119 @@ namespace RentItMvc.RentItService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<AmountPlayed>k__BackingField", IsRequired=true)]
-        public int AmountPlayedk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AmountPlayed {
             get {
-                return this.AmountPlayedk__BackingFieldField;
+                return this.AmountPlayedField;
             }
             set {
-                if ((this.AmountPlayedk__BackingFieldField.Equals(value) != true)) {
-                    this.AmountPlayedk__BackingFieldField = value;
-                    this.RaisePropertyChanged("AmountPlayedk__BackingField");
+                if ((this.AmountPlayedField.Equals(value) != true)) {
+                    this.AmountPlayedField = value;
+                    this.RaisePropertyChanged("AmountPlayed");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<EndIndex>k__BackingField", IsRequired=true)]
-        public int EndIndexk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int EndIndex {
             get {
-                return this.EndIndexk__BackingFieldField;
+                return this.EndIndexField;
             }
             set {
-                if ((this.EndIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.EndIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("EndIndexk__BackingField");
+                if ((this.EndIndexField.Equals(value) != true)) {
+                    this.EndIndexField = value;
+                    this.RaisePropertyChanged("EndIndex");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Genres>k__BackingField", IsRequired=true)]
-        public string[] Genresk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Genres {
             get {
-                return this.Genresk__BackingFieldField;
+                return this.GenresField;
             }
             set {
-                if ((object.ReferenceEquals(this.Genresk__BackingFieldField, value) != true)) {
-                    this.Genresk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Genresk__BackingField");
+                if ((object.ReferenceEquals(this.GenresField, value) != true)) {
+                    this.GenresField = value;
+                    this.RaisePropertyChanged("Genres");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfComments>k__BackingField", IsRequired=true)]
-        public int NumberOfCommentsk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberOfComments {
             get {
-                return this.NumberOfCommentsk__BackingFieldField;
+                return this.NumberOfCommentsField;
             }
             set {
-                if ((this.NumberOfCommentsk__BackingFieldField.Equals(value) != true)) {
-                    this.NumberOfCommentsk__BackingFieldField = value;
-                    this.RaisePropertyChanged("NumberOfCommentsk__BackingField");
+                if ((this.NumberOfCommentsField.Equals(value) != true)) {
+                    this.NumberOfCommentsField = value;
+                    this.RaisePropertyChanged("NumberOfComments");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<NumberOfSubscriptions>k__BackingField", IsRequired=true)]
-        public int NumberOfSubscriptionsk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberOfSubscriptions {
             get {
-                return this.NumberOfSubscriptionsk__BackingFieldField;
+                return this.NumberOfSubscriptionsField;
             }
             set {
-                if ((this.NumberOfSubscriptionsk__BackingFieldField.Equals(value) != true)) {
-                    this.NumberOfSubscriptionsk__BackingFieldField = value;
-                    this.RaisePropertyChanged("NumberOfSubscriptionsk__BackingField");
+                if ((this.NumberOfSubscriptionsField.Equals(value) != true)) {
+                    this.NumberOfSubscriptionsField = value;
+                    this.RaisePropertyChanged("NumberOfSubscriptions");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<Rating>k__BackingField", IsRequired=true)]
-        public double Ratingk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Rating {
             get {
-                return this.Ratingk__BackingFieldField;
+                return this.RatingField;
             }
             set {
-                if ((this.Ratingk__BackingFieldField.Equals(value) != true)) {
-                    this.Ratingk__BackingFieldField = value;
-                    this.RaisePropertyChanged("Ratingk__BackingField");
+                if ((this.RatingField.Equals(value) != true)) {
+                    this.RatingField = value;
+                    this.RaisePropertyChanged("Rating");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SearchString>k__BackingField", IsRequired=true)]
-        public string SearchStringk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SearchString {
             get {
-                return this.SearchStringk__BackingFieldField;
+                return this.SearchStringField;
             }
             set {
-                if ((object.ReferenceEquals(this.SearchStringk__BackingFieldField, value) != true)) {
-                    this.SearchStringk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SearchStringk__BackingField");
+                if ((object.ReferenceEquals(this.SearchStringField, value) != true)) {
+                    this.SearchStringField = value;
+                    this.RaisePropertyChanged("SearchString");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<SortOption>k__BackingField", IsRequired=true)]
-        public string SortOptionk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SortOption {
             get {
-                return this.SortOptionk__BackingFieldField;
+                return this.SortOptionField;
             }
             set {
-                if ((object.ReferenceEquals(this.SortOptionk__BackingFieldField, value) != true)) {
-                    this.SortOptionk__BackingFieldField = value;
-                    this.RaisePropertyChanged("SortOptionk__BackingField");
+                if ((object.ReferenceEquals(this.SortOptionField, value) != true)) {
+                    this.SortOptionField = value;
+                    this.RaisePropertyChanged("SortOption");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Name="<StartIndex>k__BackingField", IsRequired=true)]
-        public int StartIndexk__BackingField {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int StartIndex {
             get {
-                return this.StartIndexk__BackingFieldField;
+                return this.StartIndexField;
             }
             set {
-                if ((this.StartIndexk__BackingFieldField.Equals(value) != true)) {
-                    this.StartIndexk__BackingFieldField = value;
-                    this.RaisePropertyChanged("StartIndexk__BackingField");
+                if ((this.StartIndexField.Equals(value) != true)) {
+                    this.StartIndexField = value;
+                    this.RaisePropertyChanged("StartIndex");
                 }
             }
         }
@@ -2219,6 +2228,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
         System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/startChannel", ReplyAction="http://tempuri.org/IRentItService/startChannelResponse")]
+        void startChannel(int cId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/startChannel", ReplyAction="http://tempuri.org/IRentItService/startChannelResponse")]
+        System.Threading.Tasks.Task startChannelAsync(int cId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/stopChannel", ReplyAction="http://tempuri.org/IRentItService/stopChannelResponse")]
+        void stopChannel(int cId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/stopChannel", ReplyAction="http://tempuri.org/IRentItService/stopChannelResponse")]
+        System.Threading.Tasks.Task stopChannelAsync(int cId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2478,6 +2499,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId) {
             return base.Channel.ListenToChannelAsync(channelId);
+        }
+        
+        public void startChannel(int cId) {
+            base.Channel.startChannel(cId);
+        }
+        
+        public System.Threading.Tasks.Task startChannelAsync(int cId) {
+            return base.Channel.startChannelAsync(cId);
+        }
+        
+        public void stopChannel(int cId) {
+            base.Channel.stopChannel(cId);
+        }
+        
+        public System.Threading.Tasks.Task stopChannelAsync(int cId) {
+            return base.Channel.stopChannelAsync(cId);
         }
     }
 }

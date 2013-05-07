@@ -17,8 +17,9 @@
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new {channelId = p.Id } ))'">
+                <tr>
                     <td>
+                        @Html.ActionLink(@p.Name, "SelectChannel", "Home", new { channelId = p.Id }, null)
                         @p.Name
                     </td>
                     <td>

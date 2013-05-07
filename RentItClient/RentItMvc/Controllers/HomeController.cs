@@ -41,13 +41,13 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
-                RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
-                chan.Name = @"Cyperchannel";
+                RentItService.Channel serviceChan = proxy.GetChannel(channelId);
+                GuiChannel chan = GuiChannel.GuiChannelFactory(serviceChan);
+                /*chan.Name = @"Cyperchannel";
                 chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
                 chan.Hits = 1024;
                 chan.Upvotes = 100;
-                chan.DownVotes = 12;
+                chan.DownVotes = 12;*/
                 if (chan != null)
                 {   
                     return View(chan);
@@ -106,18 +106,20 @@ namespace RentItMvc.Controllers
 
         public ActionResult ChannelList(List<Channel> theList, string title)
         {
-            RentItServer.ITU.DatabaseWrapperObjects.Channel[] channels;
-            RentItServer.ITU.Controller controller = RentItServer.ITU.Controller.GetInstance();
+            Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                RentItServer.ITU.ChannelSearchArgs searchArgs = new RentItServer.ITU.ChannelSearchArgs()
+                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
                     {
                         StartIndex = 0,
-                        EndIndex = 1
+                        EndIndex = 1,
+                        Genres = new string[] { "jazz" },
+                        SearchString = "Channel",
+                        SortOption = "nam desc"
                     };
-                channels = controller.GetChannels(searchArgs);
+                channels = proxy.GetChannels(searchArgs);
             }
-            List<GuiChannel> GuiChannelList = null;// GuiClassConverter.ConvertChannelList(channels.ToList());
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;
             //List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(theList);
             if(GuiChannelList == null)

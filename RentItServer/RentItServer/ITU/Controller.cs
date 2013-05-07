@@ -372,10 +372,10 @@ namespace RentItServer.ITU
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
 
-            if (_channelCache[channelId] != null)
+            /*if (_channelCache[channelId] != null)
             {   // Attempt to use cache first
                 return _channelCache[channelId].GetChannel();
-            }
+            }*/
 
             // cache might be outdated, query the database to be sure.
             Channel channel = _dao.GetChannel(channelId);
