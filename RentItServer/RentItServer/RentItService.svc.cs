@@ -115,7 +115,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
-            return ITU.DatabaseWrapperObjects.Channel.GetChannels(_controller.GetChannels(args));
+            return _controller.GetChannels(args);
         }
         
         public void CreateVote(int rating, int userId, int trackId)
@@ -265,6 +265,24 @@ namespace RentItServer
         public int ListenToChannel(int channelId)
         {
             return _controller.ListenToChannel(channelId);
+        }
+
+        /// <summary>
+        /// Starts the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void startChannel(int cId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Stops the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void stopChannel(int cId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

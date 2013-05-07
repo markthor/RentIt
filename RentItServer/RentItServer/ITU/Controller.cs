@@ -76,7 +76,6 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
-            _streamHandler.ProcessOutputData += _streamHandler_ProcessOutputData;
         }
 
         /// <summary>
@@ -89,32 +88,9 @@ namespace RentItServer.ITU
         }
 
 
-        public void Run(int channelId)
+        public void StartChannelStream(int channelId)
         {
-            Track track = GetNextTrack(channelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.StartStream(channelId, fileName);
-        }
-
-        private Track GetNextTrack(int channelId)
-        {
-            Track track;
-
-            List<Track> tracks = _dao.GetTrackList(channelId);
-            List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
-            int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
-
-            track = _dao.GetTrack(tId);
-
-            return track;
-        }
-
-        private void _streamHandler_ProcessOutputData(object obj)
-        {
-            EzProcess p = (EzProcess)obj;
-            Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.NextTrack(p, fileName);
+            _streamHandler.StartStream(channelId);
         }
 
         /// <summary>
@@ -436,11 +412,12 @@ namespace RentItServer.ITU
             }
         }
 
-        public IEnumerable<Channel> GetChannels(ChannelSearchArgs args)
+        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
             {
-                return _dao.GetChannelsWithFilter(args);
+                return ITU.DatabaseWrapperObjects.Channel.GetChannels(_dao.GetChannelsWithFilter(args));
+                //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)
             {
@@ -477,8 +454,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                string relativePath = FileName.ItuGenerateAudioFileName(userId, channelId, trackInfo.Artist,
-                                                                        trackInfo.Length);
+                string relativePath = FileName.ItuGenerateAudioFileName(trackInfo.Id);
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
                 _dao.CreateTrackEntry(channelId, FilePath.ITUTrackPath + relativePath, trackInfo.Name, trackInfo.Artist,
                                       trackInfo.Length,
