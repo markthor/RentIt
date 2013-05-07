@@ -274,7 +274,7 @@ namespace RentItServer
             _controller.StopChannelStream(cId);
         }
 
-        public ChannelSearchArgs GetDefaultSearchArgs()
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
             return _controller.GetDefaultChannelSearchArgs();
         }

@@ -545,7 +545,7 @@ namespace RentItServer.ITU
 
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex + 1];
+                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
                 if (filter.StartIndex < 0)
                 {   // Avoid OutOfBoundsException
                     filter.StartIndex = 0;
@@ -560,7 +560,7 @@ namespace RentItServer.ITU
                 }
                 filteredChannels = new List<Channel>(range);
             }
-            return filteredChannels;
+            return filteredChannels.Where(channel => channel != null).ToList();
         }
 
         /// <summary>

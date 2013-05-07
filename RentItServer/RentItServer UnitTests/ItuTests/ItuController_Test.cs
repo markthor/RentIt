@@ -496,9 +496,15 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_Default()
         {
             controller = Controller.GetInstance();
+
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.StartIndex = 0;
+            csa.EndIndex = 10;
+
             try
             {
-                controller.GetChannels(new ChannelSearchArgs());
+                controller.GetChannels(csa);
+                //controller.GetChannels(new ChannelSearchArgs());
             }
             catch
             {
