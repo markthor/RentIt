@@ -1,19 +1,31 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace RentItServer.ITU
 {
     [Serializable]
+    [DataContract]
     public class ChannelSearchArgs
     {
+        [DataMember]
         public const string NameDesc = "nam desc";
+        [DataMember]
         public const string NameAsc = "nam asc";
-        public const string AmountPlayedDesc = "ap desc";
-        public const string AmountPlayedAsc = "ap asc";
+        [DataMember]
+        public const string HitsDesc = "ap desc";
+        [DataMember]
+        public const string HitsAsc = "ap asc";
+        [DataMember]
         public const string SubscriptionsDesc = "sub desc";
+        [DataMember]
         public const string SubscriptionsAsc = "sub asc";
+        [DataMember]
         public const string NumberOfCommentsDesc = "com desc";
+        [DataMember]
         public const string NumberOfCommentsAsc = "com asc";
+        [DataMember]
         public const string RatingDesc = "rat desc";
+        [DataMember]
         public const string RatingAsc = "rat asc";
 
         /// <summary>
@@ -22,6 +34,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The search string. Default is an empty string
         /// </value>
+        [DataMember]
         public string SearchString { get; set; }
         /// <summary>
         /// Gets the genres to include in search.
@@ -29,6 +42,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The genres to include in search. Default is an emoty string array
         /// </value>
+        [DataMember]
         public string[] Genres { get; set; }
         /// <summary>
         /// Gets the amount played filter.
@@ -36,6 +50,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The amount played. Default is -1
         /// </value>
+        [DataMember]
         public int AmountPlayed { get; set; }
         /// <summary>
         /// Gets the number of subscriptions filter.
@@ -43,6 +58,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The number of subscriptions. Default is -1
         /// </value>
+        [DataMember]
         public int NumberOfSubscriptions { get; set; }
         /// <summary>
         /// Gets the number of comments to filter.
@@ -50,6 +66,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The number of comments. Default is -1
         /// </value>
+        [DataMember]
         public int NumberOfComments { get; set; }
         /// <summary>
         /// Gets the sort option filter.
@@ -57,6 +74,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The channels rating. Default is -1
         /// </value>
+        [DataMember]
         public double Rating { get; set; }
         /// <summary>
         /// Gets the start index.
@@ -64,6 +82,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The start index.
         /// </value>
+        [DataMember]
         public int StartIndex { get; set; }
         /// <summary>
         /// Gets the end index.
@@ -71,6 +90,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The end index.
         /// </value>
+        [DataMember]
         public int EndIndex { get; set; }
 
         /// <summary>
@@ -79,6 +99,7 @@ namespace RentItServer.ITU
         /// <value>
         /// The sort option.
         /// </value>
+        [DataMember]
         public string SortOption { get; set; }
 
         public ChannelSearchArgs()
