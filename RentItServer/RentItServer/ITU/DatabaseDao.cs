@@ -1026,5 +1026,13 @@ namespace RentItServer.ITU
                 return !users.Any();
             }
         }
+
+        public void AddTrackPlay(Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                context.TrackPlays.Add(new TrackPlay(track.Id, DateTime.UtcNow));
+            }
+        }
     }
 }
