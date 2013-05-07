@@ -266,5 +266,23 @@ namespace RentItServer
         {
             return _controller.ListenToChannel(channelId);
         }
+
+        /// <summary>
+        /// Starts the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void startChannel(int cId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Stops the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void stopChannel(int cId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
