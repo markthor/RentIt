@@ -849,6 +849,27 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Creates a genre with the name.
+        /// </summary>
+        /// <param name="genreName">The name of the genre.</param>
+        public void CreateGenre(string genreName)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from g in context.Genres
+                               where g.Name == genreName
+                               select g;
+
+                if (genres.Any()) throw new ArgumentException("A genre with the name already exists");
+
+                Genre genre = new Genre();
+                genre.Name = genreName;
+                context.Genres.Add(genre);
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Deletes the comment.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -1045,11 +1066,71 @@ namespace RentItServer.ITU
             }
         }
 
+        public void DeleteDatabaseData()
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                //Delete all users
+                var users = proxy.Users;
+                foreach (User u in users)
+                {
+                    proxy.Users.Remove(u);
+                }
+
+                //Delete all channels
+                var channels = proxy.Channels;
+                foreach (Channel c in channels)
+                {
+                    proxy.Channels.Remove(c);
+                }
+
+                //Delete all genres
+                var genres = proxy.Genres;
+                foreach (Genre g in genres)
+                {
+                    proxy.Genres.Remove(g);
+                }
+
+                //Delete all tracks
+                var tracks = proxy.Tracks;
+                foreach (Track t in tracks)
+                {
+                    proxy.Tracks.Remove(t);
+                }
+
+                //Delete all trackPlays
+                var trackPlays = proxy.TrackPlays;
+                if (trackPlays.Any())
+                {
+                    foreach (TrackPlay tp in trackPlays)
+                    {
+                        proxy.TrackPlays.Remove(tp);
+                    }
+                }
+                //Delete all comments
+                var comments = proxy.Comments;
+                foreach (Comment c in comments)
+                {
+                    proxy.Comments.Remove(c);
+                }
+
+                //Delete all votes
+                var votes = proxy.Votes;
+                foreach (Vote v in votes)
+                {
+                    proxy.Votes.Remove(v);
+                }
+
+                proxy.SaveChanges();
+            }
+        }
+
         public void AddTrackPlay(Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 context.TrackPlays.Add(new TrackPlay(track.Id, DateTime.UtcNow));
+
             }
         }
     }

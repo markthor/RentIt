@@ -1,32 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using RentItServer.ITU;
-using RentItServer.ITU.DatabaseWrapperObjects;
 using RentItServer;
 
 namespace RentItServer_UnitTests.ItuTests
 {
     [TestClass]
-    public class StreamHandlerTest
+    public class CreationOfDataForGuiTest
     {
-        [TestCleanup]
-        public void Cleanup()
-        {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
-        }
-
-        /// <summary>
-        /// Deletes all tuples in SMU database.
-        /// </summary>
-        [TestInitialize]
-        public void CleanDataBaseFinish()
-        {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
-        }
-
         [TestMethod]
-        public void TestStartStream()
+        public void CreateUsersAndChannels()
         {
             string genreName1 = "Electro";
             string genreName2 = "Heavy Metal";
@@ -35,9 +19,9 @@ namespace RentItServer_UnitTests.ItuTests
             Controller.GetInstance().CreateGenre(genreName2);
             int channelId1 = Controller.GetInstance().CreateChannel("Nightly Psychoactive Electro Hits", u.Id, "Sick channel with groovy beats", new List<string>() { genreName1 });
             int channelId2 = Controller.GetInstance().CreateChannel("Hard Hitting Iron Bass", u.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
-            DatabaseDao.GetInstance().CreateTrackEntry(channelId1, "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3", "test", "temp0", 50, 0, 0);
-            StreamHandler.GetInstance().StartStream(channelId1);
-        
+            int channelId3 = Controller.GetInstance().CreateChannel("Nine Inch Nails", u.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
+            int channelId4 = Controller.GetInstance().CreateChannel("Wrecking Balls", u.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
+            int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", u.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
         }
     }
 }
