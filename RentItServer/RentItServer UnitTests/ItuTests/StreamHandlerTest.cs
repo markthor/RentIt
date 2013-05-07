@@ -40,9 +40,11 @@ namespace RentItServer_UnitTests.ItuTests
 
             using (ITUServiceReference.RentItServiceClient proxy = new ITUServiceReference.RentItServiceClient())
             {
-                proxy.Login("andreas.p.poulsen@gmail.com", "test");
+                proxy.startChannel(channelId1);
             }
 
         }
+
+
     }
 }
