@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using RentItServer.ITU.Exceptions;
 
@@ -372,7 +373,7 @@ namespace RentItServer.ITU
         /// or
         /// No user with user id [ + ownerId + ]
         /// </exception>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -396,6 +397,7 @@ namespace RentItServer.ITU
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
+                if (streamUri != null) theChannel.StreamUri = streamUri;
 
                 context.SaveChanges();
             }
@@ -410,8 +412,15 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
-                               select channel;
+                var channels = context.Channels
+                            .Where(channel => channel.Id == channelId)
+                            .Include(channel => channel.ChannelOwner)
+                            .Include(channel => channel.Comments)
+                            .Include(channel => channel.Subscribers)
+                            .Include(channel => channel.Genres)
+                            .Include(channel => channel.Tracks);
+                //var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
+                //               select channel;
 
                 if (channels.Any() == false)
                 {   // No channel with matching id
@@ -462,7 +471,15 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
-                var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
+                //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
+
+                var channels = context.Channels
+                            .Where(channel => channel.Name.StartsWith(filter.SearchString))
+                            .Include(channel => channel.ChannelOwner)
+                            .Include(channel => channel.Comments)
+                            .Include(channel => channel.Subscribers)
+                            .Include(channel => channel.Genres)
+                            .Include(channel => channel.Tracks);
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -492,10 +509,10 @@ namespace RentItServer.ITU
                 {   // Apply specific sort order
                     switch (filter.SortOption)
                     {
-                        case ChannelSearchArgs.AmountPlayedAsc:
+                        case ChannelSearchArgs.HitsAsc:
                             channels = from channel in channels orderby channel.Hits ascending select channel;
                             break;
-                        case ChannelSearchArgs.AmountPlayedDesc:
+                        case ChannelSearchArgs.HitsDesc:
                             channels = from channel in channels orderby channel.Hits descending select channel;
                             break;
                         case ChannelSearchArgs.NameAsc:
@@ -528,12 +545,23 @@ namespace RentItServer.ITU
             }
 
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
-            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex]
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex + 1];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex+1);
+            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
+                if (filter.StartIndex < 0)
+                {   // Avoid OutOfBoundsException
+                    filter.StartIndex = 0;
+                }
+                if (filter.EndIndex < filteredChannels.Count)
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
+                }
+                else
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
+                }
                 filteredChannels = new List<Channel>(range);
             }
-            return filteredChannels;
+            return filteredChannels.Where(channel => channel != null).ToList();
         }
 
         /// <summary>
@@ -672,7 +700,7 @@ namespace RentItServer.ITU
                              where track.Id == trackId
                              select track;
 
-                if (tracks.Any() == true) throw new ArgumentException("No track with trackId [" + trackId + "]");
+                if (tracks.Any() == false) throw new ArgumentException("No track with trackId [" + trackId + "]");
 
                 theTrack = tracks.First();
             }
@@ -822,6 +850,27 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Creates a genre with the name.
+        /// </summary>
+        /// <param name="genreName">The name of the genre.</param>
+        public void CreateGenre(string genreName)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from g in context.Genres
+                               where g.Name == genreName
+                               select g;
+
+                if (genres.Any()) throw new ArgumentException("A genre with the name already exists");
+
+                Genre genre = new Genre();
+                genre.Name = genreName;
+                context.Genres.Add(genre);
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Deletes the comment.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -957,7 +1006,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         /// <returns>All TrackPlays associated with the channel</returns>
         /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
-        internal List<TrackPlay> GetTrackPlays(int channelId)
+        public List<TrackPlay> GetTrackPlays(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -1015,6 +1064,74 @@ namespace RentItServer.ITU
                             where u.Username == username
                             select u;
                 return !users.Any();
+            }
+        }
+
+        public void DeleteDatabaseData()
+        {
+            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            {
+                //Delete all users
+                var users = proxy.Users;
+                foreach (User u in users)
+                {
+                    proxy.Users.Remove(u);
+                }
+
+                //Delete all channels
+                var channels = proxy.Channels;
+                foreach (Channel c in channels)
+                {
+                    proxy.Channels.Remove(c);
+                }
+
+                //Delete all genres
+                var genres = proxy.Genres;
+                foreach (Genre g in genres)
+                {
+                    proxy.Genres.Remove(g);
+                }
+
+                //Delete all tracks
+                var tracks = proxy.Tracks;
+                foreach (Track t in tracks)
+                {
+                    proxy.Tracks.Remove(t);
+                }
+
+                //Delete all trackPlays
+                var trackPlays = proxy.TrackPlays;
+                if (trackPlays.Any())
+                {
+                    foreach (TrackPlay tp in trackPlays)
+                    {
+                        proxy.TrackPlays.Remove(tp);
+                    }
+                }
+                //Delete all comments
+                var comments = proxy.Comments;
+                foreach (Comment c in comments)
+                {
+                    proxy.Comments.Remove(c);
+                }
+
+                //Delete all votes
+                var votes = proxy.Votes;
+                foreach (Vote v in votes)
+                {
+                    proxy.Votes.Remove(v);
+                }
+
+                proxy.SaveChanges();
+            }
+        }
+
+        public void AddTrackPlay(Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                context.TrackPlays.Add(new TrackPlay(track.Id, DateTime.UtcNow));
+
             }
         }
     }

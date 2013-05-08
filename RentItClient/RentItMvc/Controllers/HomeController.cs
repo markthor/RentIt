@@ -41,13 +41,13 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
-                RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
-                chan.Name = @"Cyperchannel";
+                RentItService.Channel serviceChan = proxy.GetChannel(channelId);
+                GuiChannel chan = GuiChannel.GuiChannelFactory(serviceChan);
+                /*chan.Name = @"Cyperchannel";
                 chan.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non metus condimentum dolor molestie egestas. Phasellus ac fermentum augue. Fusce sem massa, pharetra quis dictum tempus, tempor ut lectus. Sed quis mauris felis. Vestibulum sed libero turpis, vel sagittis odio. Fusce pharetra purus quis neque aliquet quis tempus diam varius. Donec orci elit, cursus in consequat sed, hendrerit semper libero. Morbi id augue nulla, a blandit ligula. ";
                 chan.Hits = 1024;
                 chan.Upvotes = 100;
-                chan.DownVotes = 12;
+                chan.DownVotes = 12;*/
                 if (chan != null)
                 {   
                     return View(chan);
@@ -111,18 +111,10 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                ChannelSearchArgs searchArgs = new ChannelSearchArgs()
-                    {
-                        StartIndexk__BackingField = 0,
-                        EndIndexk__BackingField = 10                     
-                    };
-                try
-                {
-                    channels = proxy.GetChannels(searchArgs);
-                }
-                catch (Exception) {
-                    return PartialView(new List<GuiChannel>());
-                }
+                ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
+                searchArgs.StartIndex = 0;
+                searchArgs.EndIndex = 10;
+                channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;

@@ -17,8 +17,9 @@
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("SelectChannel", "Home", new {channelId = p.Id } ))'">
+                <tr>
                     <td>
+                        @Html.ActionLink(@p.Name, "SelectChannel", "Home", new { channelId = p.Id }, null)
                         @p.Name
                     </td>
                     <td>
@@ -47,14 +48,10 @@
                     </td> 
                     
                     <td>
-                        <button class="btn btn-small" onclick="openPlayer()">
+                        <button class="btn btn-small" value="@p.StreamUri" onclick="openPlayer(this.value)">
                             <i class="icon-play"></i>
                         </button>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-play"></i></a>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-up"></i></a>
-                        <a class="btn btn-small" href="/Home/Main"><i class="icon-thumbs-down"></i></a>
-                        <button onclick="openPlayer()">Popup</button>
-                    </td> 
+                    </td>
                 </tr>
             }
             

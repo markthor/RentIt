@@ -39,33 +39,30 @@ namespace RentItMvc.Controllers
         [HttpPost]
         public ActionResult SignUp(Account account)
         {
-            if (ModelState.IsValid)
+            using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                using (RentItServiceClient proxy = new RentItServiceClient())
+                if (account.NewPassword.Equals(account.ConfirmPassword))
                 {
-                    if (account.NewPassword.Equals(account.ConfirmPassword))
+                    try
                     {
-                        try
+                        User user = proxy.SignUp(account.Username, account.Email, account.NewPassword);
+                        Session["userId"] = user.Id;
+                        Session["username"] = user.Username;
+                    }
+                    catch (Exception e)
+                    {
+                        string message = e.Message;
+                        if (message.StartsWith("Username"))
                         {
-                            User user = proxy.SignUp(account.Username, account.Email, account.NewPassword);
-                            Session["userId"] = user.Id;
-                            Session["username"] = user.Username;
+                            ModelState.AddModelError("Username", message);
                         }
-                        catch (Exception e)
+                        else if (message.StartsWith("Email"))
                         {
-                            string message = e.Message;
-                            if (message.StartsWith("Username"))
-                            {
-                                ModelState.AddModelError("Username", message);
-                            }
-                            else if (message.StartsWith("Email"))
-                            {
-                                ModelState.AddModelError("Email", message);
-                            }
-                            else
-                            {
-                                throw e;
-                            }
+                            ModelState.AddModelError("Email", message);
+                        }
+                        else
+                        {
+                            throw e;
                         }
                     }
                 }
@@ -80,9 +77,6 @@ namespace RentItMvc.Controllers
             {
                 try
                 {
-                    //User user = new User();
-                    //user.Id = 1;
-                    //user.Username = "gogogo";
                     User user = proxy.Login(usernameOrEmail, currentPassword);
                     Session["userId"] = user.Id;
                     Session["username"] = user.Username;

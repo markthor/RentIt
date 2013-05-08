@@ -1,0 +1,26 @@
+Til os specifikt.
+- Target analysis: en masse gode overvejelser, men der bliver ikke fulgt op på dem senere i rapporten. Eksemplevis: "as a result of the disussion in our target analysis we have chosen to focus on blablabla and blablabla". På en eller anden måde konkludere på de overvejelser der gøres
+- I diagrammer: lav en kort legend over de forskellige elementer (det kan godt være det er standardiseret, men der kan stadig være små afvigelser)
+- Det ville være en god idé at have et afsnit hvor der kort diskuteres hvorfor vi har valgt netop de teknologier vi har. Eks. wpf vs asp, silverlight vs det vi bruger i stedet etc etc.
+- Glossary: overflødig da det er ting man egentlig godt ved lige pt.
+- Diagrammer og figurer der ikke direkte er nødvendige for forståelsen af programmet bør flyttes til appendiks. Dvs. at kun diagrammer/figurer der beskriver essentielle dele af programmet bør være i rapporten, resten bør være i appendiks. Alle diagrammer/figurer skal beskrives, de skal aldrig stå alene.
+
+Generelt.
+- Lav en kort introduktion til hvert afsnit der forklarer hvad handler det om og hvad er formålet med det.
+- Angående beskrivelse af hvilke teknologier vi har valgt vs andre, så gør det kun med de væsentligste, og ikke med alle.
+- Beskriv i starten tydeligt hvad det er for et system i beskriver og har lavet. (det har vi muligvis allerede)
+- Vær sikker på at vi kan teste vores system op imod vores krav.
+- Hvis vi har tekst der bliver snørklet eller rodet, kan det være en indikation på at der måske skal være et diagram tilknyttet.
+- Det vil styrke rapporten at skrive hvordan processen har forløbet, om vi har brugt scrum eller noget andet. Beskriv vores måde at have lavet projektet på.
+- Numerer kravene, så i kan referere til dem i forbindelse med f.eks. designvalg eller test.
+- Vi kan sagtens lave konklusioner undervejs. En vigtig ting er i hvert fald at der til diskussioner skal følge en konklusion.
+- (I introduktionen for hvert afsnit, kan man godt lave mindre konklusioner og så gøre det klart at konklusionen er underbygget af resten af afsnittets indhold)
+- Anyalyser gerne selv vores datamodel og andre essentielle dele (f.eks. klassediagram eller andet angående programmets struktur)
+- I test afsnittet så gør gerne klart hvilke tests der er koblet til hvilke krav
+- Vi må meget gerne skrive om fejl vi har fundet og rettet, og hvis relevant sammen med en beskrivelse af hvorfor det var en fejl og/eller hvad det blev rettet til.
+
+SMU samarbejde. 
+- Brug meget gerne eksempler på hvad der er sket. Husk belæg for eventuelle påstande. Uddyb gerne hvad de forskellige ting har betydet for os. F.eks. hvis det har været casual, hvad har det så gjort for os og for projektet at tonen har været meget casual?
+- Prøv også at sætte os ind i hvordan det var for dem og prøv at beskrive processen lidt fra deres side i stedet for kun vores side
+- Prøv også at reflektere over hvad vi selv kunne have gjort for at det få det til at gå bedre
+- Referer ikke til smu gruppen kun som "smu", hvis vi virkelig vil, så gør det klart endten i glossary eller helt i starten

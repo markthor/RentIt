@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -38,9 +39,9 @@ namespace RentItServer.ITU
         private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
-        public static string _defaultIp = "localhost";
+        public static string _defaultUri = "http://rentit.itu.dk";
         public static string _defaultStreamExtension = ".ogg";
-        public static string _defaultUrl = "http://" + _defaultIp + ":" + _defaultPort + "/";
+        public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         private int tempCounter;
         private readonly object _dbLock = new object();
@@ -76,7 +77,6 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
-            _streamHandler.ProcessOutputData += _streamHandler_ProcessOutputData;
         }
 
         /// <summary>
@@ -89,32 +89,14 @@ namespace RentItServer.ITU
         }
 
 
-        public void Run(int channelId)
+        public void StartChannelStream(int channelId)
         {
-            Track track = GetNextTrack(channelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.StartStream(channelId, fileName);
+            _streamHandler.StartStream(channelId);
         }
 
-        private Track GetNextTrack(int channelId)
+        public void StopChannelStream(int channelId)
         {
-            Track track;
-
-            List<Track> tracks = _dao.GetTrackList(channelId);
-            List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
-            int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
-
-            track = _dao.GetTrack(tId);
-
-            return track;
-        }
-
-        private void _streamHandler_ProcessOutputData(object obj)
-        {
-            EzProcess p = (EzProcess)obj;
-            Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            _streamHandler.NextTrack(p, fileName);
+            _streamHandler.StopStream(channelId);
         }
 
         /// <summary>
@@ -123,7 +105,7 @@ namespace RentItServer.ITU
         /// <param name="usernameOrEmail">The username or email of the user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
-        public User Login(string usernameOrEmail, string password)
+        public DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
         {
             if(usernameOrEmail == null) LogAndThrowException(new ArgumentNullException("usernameOrEmail"), "Login");
             if(usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
@@ -144,7 +126,7 @@ namespace RentItServer.ITU
                         theUser = _dao.Login(usernameOrEmail, password);
                     }
                 }
-                return theUser;
+                return theUser.GetUser();
             }
             catch (Exception e)
             {
@@ -161,7 +143,7 @@ namespace RentItServer.ITU
         /// <param name="password">The password for the user.</param>
         /// <param name="email">The email associated with user.</param>
         /// <returns>The id of the created user.</returns>
-        public User SignUp(string username, string email, string password)
+        public DatabaseWrapperObjects.User SignUp(string username, string email, string password)
         {
             if (username == null) LogAndThrowException(new ArgumentNullException("username"), "CreateUser");
             if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "CreateUser");
@@ -181,7 +163,7 @@ namespace RentItServer.ITU
                     _userCache.Put(theUser.Email, theUser);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
-                return theUser;
+                return theUser.GetUser();
             }
             catch (Exception e)
             {
@@ -222,11 +204,11 @@ namespace RentItServer.ITU
             }
         }
 
-        public User GetUser(int userId)
+        public DatabaseWrapperObjects.User GetUser(int userId)
         {
             try
             {
-                return _dao.GetUser(userId);
+                return _dao.GetUser(userId).GetUser();
             }
             catch (Exception e)
             {
@@ -310,6 +292,7 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
+                    _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
                     _channelCache[channel.Id] = channel;
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
@@ -322,6 +305,30 @@ namespace RentItServer.ITU
                 throw;
             }
             return channel.Id;
+        }
+
+        /// <summary>
+        /// Creates a genre with the name.
+        /// </summary>
+        /// <param name="genreName">The name of the genre.</param>
+        public void CreateGenre(string genreName)
+        {
+            if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
+            string logEntry = "Genre with name: " + " [" + genreName + "] has been created." ;
+            
+            try
+            {
+                lock (_dbLock)
+                {
+                    _dao.CreateGenre(genreName);
+                    _logger.AddEntry(logEntry + "Genre creation succeeded.");
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("GenreCreation failed with exception [{0}]. logEntry = " + logEntry + ".");
+                throw;
+            }
         }
 
         /// <summary>
@@ -370,7 +377,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null);
             }
             catch (Exception e)
             {
@@ -386,14 +393,14 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
         /// <returns>The channel matching the given id.</returns>
-        public Channel GetChannel(int channelId)
+        public DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
 
-            if (_channelCache[channelId] != null)
+            /*if (_channelCache[channelId] != null)
             {   // Attempt to use cache first
-                return _channelCache[channelId];
-            }
+                return _channelCache[channelId].GetChannel();
+            }*/
 
             // cache might be outdated, query the database to be sure.
             Channel channel = _dao.GetChannel(channelId);
@@ -407,7 +414,7 @@ namespace RentItServer.ITU
                 LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
             }
 
-            return channel;
+            return channel.GetChannel();
         }
 
         /// <summary>
@@ -436,11 +443,12 @@ namespace RentItServer.ITU
             }
         }
 
-        public IEnumerable<Channel> GetChannels(ChannelSearchArgs args)
+        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
             {
-                return _dao.GetChannelsWithFilter(args);
+                return ITU.DatabaseWrapperObjects.Channel.GetChannels(_dao.GetChannelsWithFilter(args));
+                //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)
             {
@@ -452,7 +460,7 @@ namespace RentItServer.ITU
                         string.Format(
                             "{0}, args.AmountPlayed = {1}, args.Genres = {2}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.Rating = {5}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
                             entry, args.AmountPlayed, args.Genres, args.NumberOfComments, args.NumberOfSubscriptions,
-                            args.Rating, args.SearchString, args.SortOption, args.StartIndex, args.EndIndex);
+                            args.Rating, args.SearchString.Equals("") ? "\"\"" : args.SearchString, args.SortOption.Equals("") ? "\"\"" : args.SortOption, args.StartIndex, args.EndIndex);
                 _logger.AddEntry(entry);
                 throw;
             }
@@ -477,12 +485,17 @@ namespace RentItServer.ITU
         {
             try
             {
-                string relativePath = FileName.ItuGenerateAudioFileName(userId, channelId, trackInfo.Artist,
-                                                                        trackInfo.Length);
-                _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
-                _dao.CreateTrackEntry(channelId, FilePath.ITUTrackPath + relativePath, trackInfo.Name, trackInfo.Artist,
-                                      trackInfo.Length,
-                                      trackInfo.UpVotes, trackInfo.DownVotes);
+                _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
+                string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
+                try
+                {
+                    _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
+                }
+                catch
+                {
+                    _dao.DeleteTrackEntry(trackInfo);
+                    throw new Exception("Exception occured when trying to write file to filesystem.");
+                }
             }
             catch (Exception e)
             {
@@ -492,7 +505,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public Track GetTrackInfo(MemoryStream audioStream)
+        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
             Track theTrack = new Track();
             theTrack.Artist = "";
@@ -523,7 +536,7 @@ namespace RentItServer.ITU
                 {
                     // It doesn't matter much
                 }
-                return theTrack;
+                return theTrack.GetTrack();
             }
             catch (Exception e)
             {
@@ -533,11 +546,11 @@ namespace RentItServer.ITU
             }
         }
 
-        public Track GetTrackInfo(int channelId, string trackname)
+        public DatabaseWrapperObjects.Track GetTrackInfo(int channelId, string trackname)
         {
             try
             {
-                return _dao.GetTrack(channelId, trackname);
+                return _dao.GetTrack(channelId, trackname).GetTrack();
             }
             catch (Exception e)
             {
@@ -588,11 +601,12 @@ namespace RentItServer.ITU
             }
         }
 
-        public IEnumerable<Track> GetTracks(int channelId, TrackSearchArgs args)
+        public IEnumerable<ITU.DatabaseWrapperObjects.Track> GetTracks(int channelId, TrackSearchArgs args)
         {
             try
             {
-                return _dao.GetTracksWithFilter(channelId, args);
+                IEnumerable<Track> tracks = _dao.GetTracksWithFilter(channelId, args);
+                return ITU.DatabaseWrapperObjects.Track.GetTracks(tracks);
             }
             catch (Exception e)
             {
@@ -633,19 +647,20 @@ namespace RentItServer.ITU
             }
         }
 
-        public Comment GetComment(int channelId, int userId, DateTime date)
+        public DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public Comment[] GetComments(int? channelId, int? userId, int fromInclusive, int toExclusive)
+        public DatabaseWrapperObjects.Comment[] GetComments(int? channelId, int? userId, int fromInclusive, int toExclusive)
         {
             throw new NotImplementedException();
         }
 
-        public Comment GetComment(int commentId)
+        public DatabaseWrapperObjects.Comment GetComment(int commentId)
         {
-            return new Comment();
+            throw new NotImplementedException();
+            //return new DatabaseWrapperObjects.Comment();
         }
 
         public void Subscribe(int userId, int channelId)
@@ -711,6 +726,16 @@ namespace RentItServer.ITU
         public bool IsUsernameAvailable(string username)
         {
             return _dao.IsUsernameAvailable(username);
+        }
+
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
+        {
+            return new ChannelSearchArgs();
+        }
+
+        public TrackSearchArgs GetDefaultTrackSearchArgs()
+        {
+            return new TrackSearchArgs();
         }
     }
 }

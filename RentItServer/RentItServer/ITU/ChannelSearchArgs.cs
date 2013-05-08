@@ -1,19 +1,32 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace RentItServer.ITU
 {
     [Serializable]
+    [DataContract]
     public class ChannelSearchArgs
     {
+        [DataMember]
         public const string NameDesc = "nam desc";
+        [DataMember]
         public const string NameAsc = "nam asc";
-        public const string AmountPlayedDesc = "ap desc";
-        public const string AmountPlayedAsc = "ap asc";
+        [DataMember]
+        public const string HitsDesc = "ap desc";
+        [DataMember]
+        public const string HitsAsc = "ap asc";
+        [DataMember]
         public const string SubscriptionsDesc = "sub desc";
+        [DataMember]
         public const string SubscriptionsAsc = "sub asc";
+        [DataMember]
         public const string NumberOfCommentsDesc = "com desc";
+        [DataMember]
         public const string NumberOfCommentsAsc = "com asc";
+        [DataMember]
         public const string RatingDesc = "rat desc";
+        [DataMember]
         public const string RatingAsc = "rat asc";
 
         /// <summary>
@@ -22,6 +35,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The search string. Default is an empty string
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute("")]
         public string SearchString { get; set; }
         /// <summary>
         /// Gets the genres to include in search.
@@ -29,6 +44,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The genres to include in search. Default is an emoty string array
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(new string[] { "jazz" })]
         public string[] Genres { get; set; }
         /// <summary>
         /// Gets the amount played filter.
@@ -36,6 +53,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The amount played. Default is -1
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public int AmountPlayed { get; set; }
         /// <summary>
         /// Gets the number of subscriptions filter.
@@ -43,6 +62,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The number of subscriptions. Default is -1
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public int NumberOfSubscriptions { get; set; }
         /// <summary>
         /// Gets the number of comments to filter.
@@ -50,6 +71,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The number of comments. Default is -1
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public int NumberOfComments { get; set; }
         /// <summary>
         /// Gets the sort option filter.
@@ -57,6 +80,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The channels rating. Default is -1
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public double Rating { get; set; }
         /// <summary>
         /// Gets the start index.
@@ -64,6 +89,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The start index.
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public int StartIndex { get; set; }
         /// <summary>
         /// Gets the end index.
@@ -71,6 +98,8 @@ namespace RentItServer.ITU
         /// <value>
         /// The end index.
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
         public int EndIndex { get; set; }
 
         /// <summary>
@@ -79,12 +108,14 @@ namespace RentItServer.ITU
         /// <value>
         /// The sort option.
         /// </value>
+        [DataMember]
+        [DefaultValueAttribute("")]
         public string SortOption { get; set; }
 
         public ChannelSearchArgs()
         {
             SearchString = "";
-            Genres = new string[] {"jazz" };
+            Genres = new string[] {};
             AmountPlayed = -1;
             NumberOfSubscriptions = -1;
             NumberOfComments = -1;

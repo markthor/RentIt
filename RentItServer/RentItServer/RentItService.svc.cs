@@ -30,8 +30,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
         {
-            User theUser = _controller.Login(usernameOrEmail, password);
-            return theUser.GetUser();
+            return _controller.Login(usernameOrEmail, password);
         }
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User SignUp(string usernameOrEmail, string email, string password)
         {
-            User theUser = _controller.SignUp(usernameOrEmail, email, password);
-            return theUser.GetUser();
+            return _controller.SignUp(usernameOrEmail, email, password);
         }
 
         /// <summary>
@@ -67,8 +65,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User GetUser(int userId)
         {
-            User theUser = _controller.GetUser(userId);
-            return theUser.GetUser();
+            return _controller.GetUser(userId);
         }
 
         public bool IsCorrectPassword(int userId, string password)
@@ -104,8 +101,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
-            Channel theChannel = _controller.GetChannel(channelId);
-            return theChannel.GetChannel();
+            return _controller.GetChannel(channelId);
         }
 
         public int[] GetAllChannelIds()
@@ -115,7 +111,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
-            return ITU.DatabaseWrapperObjects.Channel.GetChannels(_controller.GetChannels(args));
+            return _controller.GetChannels(args);
         }
         
         public void CreateVote(int rating, int userId, int trackId)
@@ -142,7 +138,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
         {
-            return _controller.GetTrackInfo(audioStream).GetTrack();
+            return _controller.GetTrackInfo(audioStream);
         }
 
         /// <summary>
@@ -153,8 +149,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname)
         {
-            Track theTrack = _controller.GetTrackInfo(channelId, trackname);
-            return theTrack.GetTrack();
+            return _controller.GetTrackInfo(channelId, trackname);
         }
         
         public void RemoveTrack(int userId, int trackId)
@@ -169,13 +164,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)
         {
-            IEnumerable<Track> theRawTracks = _controller.GetTracks(channelId, args);
-            List<ITU.DatabaseWrapperObjects.Track> theTracks = new List<ITU.DatabaseWrapperObjects.Track>();
-            foreach (Track track in theRawTracks)
-            {
-                theTracks.Add(track.GetTrack());
-            }
-            return theTracks.ToArray();
+            return  _controller.GetTracks(channelId, args).ToArray();
         }
 
         public void CreateComment(string comment, int userId, int channelId)
@@ -265,6 +254,34 @@ namespace RentItServer
         public int ListenToChannel(int channelId)
         {
             return _controller.ListenToChannel(channelId);
+        }
+
+        /// <summary>
+        /// Starts the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void startChannel(int cId)
+        {
+            _controller.StartChannelStream(cId);
+        }
+
+        /// <summary>
+        /// Stops the channel stream.
+        /// </summary>
+        /// <param name="cId">The id of the channel</param>
+        public void stopChannel(int cId)
+        {
+            _controller.StopChannelStream(cId);
+        }
+
+        public ChannelSearchArgs GetDefaultChannelSearchArgs()
+        {
+            return _controller.GetDefaultChannelSearchArgs();
+        }
+
+        public TrackSearchArgs GetDefaultTrackSearchArgs()
+        {
+            return _controller.GetDefaultTrackSearchArgs();
         }
     }
 }

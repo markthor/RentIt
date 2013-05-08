@@ -18,7 +18,6 @@
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:User" />
       <xs:element minOccurs="0" name="Rating" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="StreamUri" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Subscribers" nillable="true" type="tns:ArrayOfUser" />
       <xs:element minOccurs="0" name="Tracks" nillable="true" type="tns:ArrayOfTrack" />
     </xs:sequence>

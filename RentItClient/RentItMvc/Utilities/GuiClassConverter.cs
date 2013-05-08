@@ -18,12 +18,12 @@ namespace RentItMvc.Utilities
                 {
                     GuiChannel chan = new GuiChannel();
                     chan.Id = c.Id;
-                    if(chan.Description != null)
-                        chan.Description = c.Description;
+                    chan.Description = c.Description;
                     if(c.Hits != null)
                         chan.Hits = c.Hits.Value;
-                    if (c.Name != null)
-                        chan.Name = c.Name;
+                    chan.Name = c.Name;
+                    chan.StreamUri = c.StreamUri;
+                    returnList.Add(chan);
                 }
 
                 return returnList;
