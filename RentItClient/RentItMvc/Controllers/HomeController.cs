@@ -61,11 +61,13 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public ActionResult EditChannel(int channelId)
+        public ActionResult EditChannel(int channelId, int userId)
         {
             //using (RentItServiceClient proxy = new RentItServiceClient())
             //{
                 //RentItService.Channel serviceChan = proxy.GetChannel(channelId);
+            ViewBag.Id = 1;
+            ViewBag.User = userId;
             RentItMvc.Models.GuiChannel chan = new RentItMvc.Models.GuiChannel();
             chan.Name = @"Cyperchannel";
             chan.Id = 1;
@@ -112,9 +114,15 @@ namespace RentItMvc.Controllers
                 ChannelSearchArgs searchArgs = new ChannelSearchArgs()
                     {
                         StartIndexk__BackingField = 0,
-                        EndIndexk__BackingField = 10
+                        EndIndexk__BackingField = 10                     
                     };
-                channels = proxy.GetChannels(searchArgs);
+                try
+                {
+                    channels = proxy.GetChannels(searchArgs);
+                }
+                catch (Exception) {
+                    return PartialView(new List<GuiChannel>());
+                }
             }
             List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             ViewBag.title = title;
@@ -167,9 +175,9 @@ namespace RentItMvc.Controllers
             return PartialView(GuiChannelList);
         }
 
-        public ActionResult DeleteTrack(int trackId)
+        public ActionResult DeleteTrack(int userId, int channelId)
         {
-            return EditChannel(trackId);
+            return EditChannel(userId, channelId);
         }
 
         public ActionResult AddTrack(HttpPostedFileBase file, int modelId, int userId)
