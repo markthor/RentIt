@@ -31,6 +31,12 @@ namespace RentItServer_UnitTests.ItuTests
             DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
+        [TestInitialize]
+        public void CleanupStart()
+        {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
+        }
+
         #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
@@ -64,13 +70,15 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void TestAddTrackPlay()
+        public void TestGetTrackPlays()
         {
             User u = _dao.SignUp("Prechtig", "andreas.p.poulsen@gmail.com", "test");
             _dao.CreateGenre("Electro");
             Channel c = _dao.CreateChannel("heh", u.Id, "hehe", new List<string>() { "Electro" });
             Track t = _dao.CreateTrackEntry(c.Id, "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3", "test", "test", 50, 0, 0);
             _dao.AddTrackPlay(t);
+            List<TrackPlay> tps = _dao.GetTrackPlays(c.Id);
+
         }
     }
 }

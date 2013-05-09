@@ -39,9 +39,9 @@ namespace RentItServer.ITU
         private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
-        public static string _defaultIp = "localhost";
+        public static string _defaultUri = "http://rentit.itu.dk";
         public static string _defaultStreamExtension = ".ogg";
-        public static string _defaultUrl = "http://" + _defaultIp + ":" + _defaultPort + "/";
+        public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         private int tempCounter;
         private readonly object _dbLock = new object();
@@ -292,6 +292,7 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
+                    _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
                     _channelCache[channel.Id] = channel;
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
@@ -376,7 +377,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null);
             }
             catch (Exception e)
             {

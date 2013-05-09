@@ -22,6 +22,7 @@ namespace RentItMvc.Utilities
                     if(c.Hits != null)
                         chan.Hits = c.Hits.Value;
                     chan.Name = c.Name;
+                    chan.StreamUri = c.StreamUri;
                     returnList.Add(chan);
                 }
 

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "EditChannel";
-    ViewBag.Id = Model.Id;
+    //ViewBag.Id = Model.Id;
 }
 
 @model RentItMvc.Models.GuiChannel
@@ -35,7 +35,7 @@
                                 @t.TrackName
                             </td>
                             <td>
-                                <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {trackId = t.Id } ))'">
+                                <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {channelId = Model.Id, userId = Session["UserId"]} ))'">
                                     <i class="icon-remove-circle"></i>
                                 </button>                    
                             </td>

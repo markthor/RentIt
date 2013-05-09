@@ -373,7 +373,7 @@ namespace RentItServer.ITU
         /// or
         /// No user with user id [ + ownerId + ]
         /// </exception>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -397,6 +397,7 @@ namespace RentItServer.ITU
                 if (description != null) theChannel.Description = description;
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
+                if (streamUri != null) theChannel.StreamUri = streamUri;
 
                 context.SaveChanges();
             }
@@ -699,7 +700,7 @@ namespace RentItServer.ITU
                              where track.Id == trackId
                              select track;
 
-                if (tracks.Any() == true) throw new ArgumentException("No track with trackId [" + trackId + "]");
+                if (tracks.Any() == false) throw new ArgumentException("No track with trackId [" + trackId + "]");
 
                 theTrack = tracks.First();
             }
@@ -1005,7 +1006,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         /// <returns>All TrackPlays associated with the channel</returns>
         /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
-        internal List<TrackPlay> GetTrackPlays(int channelId)
+        public List<TrackPlay> GetTrackPlays(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {

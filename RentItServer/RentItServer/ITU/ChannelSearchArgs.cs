@@ -115,7 +115,7 @@ namespace RentItServer.ITU
         public ChannelSearchArgs()
         {
             SearchString = "";
-            Genres = new string[] {"jazz" };
+            Genres = new string[] {};
             AmountPlayed = -1;
             NumberOfSubscriptions = -1;
             NumberOfComments = -1;

@@ -10,7 +10,7 @@
 <div class="row-fluid"> 
     <div class="control-group">
         <div class="controls">
-            <a class="btn btn-small" onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = -1 } ))'">
+            <a class="btn btn-small" onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = -1 , userId = Session["UserId"]} ))'">
                 Create Channel
             </a>
         </div>
@@ -26,7 +26,7 @@
               </tr> 
             @foreach (var p in Model)
             {
-                <tr onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = p.Id } ))'">
+                <tr onclick="location.href ='@(Url.Action("EditChannel", "Home", new {channelId = p.Id, userId = Session["UserId"] } ))'">
                     <td>
                         @p.Name
                     </td>
