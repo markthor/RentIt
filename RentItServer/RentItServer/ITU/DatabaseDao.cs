@@ -683,7 +683,7 @@ namespace RentItServer.ITU
                                where channel.Id == channelId
                                select channel;
 
-                if (channels.Any() == true) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
 
                 Channel theChannel = channels.First();
 
