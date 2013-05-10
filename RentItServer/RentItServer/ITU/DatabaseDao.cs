@@ -775,7 +775,7 @@ namespace RentItServer.ITU
         /// Removes the track.
         /// </summary>
         /// <param name="track">The track.</param>
-        public void DeleteTrackEntry(Track track)
+        public void DeleteTrackEntry(RentItServer.ITU.DatabaseWrapperObjects.Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
