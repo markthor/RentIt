@@ -61,7 +61,7 @@ namespace RentItServer.ITU
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is not running");
                 Track track = GetNextTrack(channelId);
-                if (track != null) // no tracks on channel
+                if (track == null) // no tracks on channel
                 {
                     _logger.AddEntry("Channel with id: " + channelId + " has no tracks"); 
                     return; //notracks on channel exception
