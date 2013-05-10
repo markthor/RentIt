@@ -83,14 +83,16 @@ namespace RentItServer.ITU
                 //get config path
                 string configPath = FilePath.ITUChannelConfigPath.GetPath();
                 string arguments = "-c " + xmlFilePath;
+                _logger.AddEntry("Arguments: " + arguments);
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
                 p.Start();
+                _logger.AddEntry("Process start");
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
 
                 runningChannelIds.Add(channelId, p);
-                AddTrackPlay(track);
+                AddTrackPlay(track); // should this call be here
             }
             else //channel is already running
             {
@@ -100,6 +102,7 @@ namespace RentItServer.ITU
 
         private void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
+            _logger.AddEntry("Process has given output data");
             EzProcess p = (EzProcess)sender;
             Track track = GetNextTrack(p.ChannelId);
             string fileName = track.Id.ToString() + ".mp3";
