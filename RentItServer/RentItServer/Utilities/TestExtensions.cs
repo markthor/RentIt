@@ -48,7 +48,7 @@ namespace RentItServer.Utilities
             t.DownVotes = 0;
             t.ChannelId = channelId1;
             t.Path = "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3";
-            Controller.GetInstance().AddTrack(u1.Id, channelId1, new System.IO.MemoryStream(), t);
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t);
             _testTrack = t;
             _testChannelId = channelId1;
         }
