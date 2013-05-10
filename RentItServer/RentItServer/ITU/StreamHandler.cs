@@ -72,7 +72,7 @@ namespace RentItServer.ITU
                 string fileName = track.Id.ToString() + ".mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
-
+                GenerateM3u(channelId, fileName); // generate m3u
                 string m3uFileName;
                 m3uFileName = channelId + ".m3u";
 
@@ -98,6 +98,8 @@ namespace RentItServer.ITU
 
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
+
+                SetNextTrack(p);
             }
             else //channel is already running
             {
@@ -109,21 +111,22 @@ namespace RentItServer.ITU
         {
             _logger.AddEntry("Process has given output data");
             EzProcess p = (EzProcess)sender;
-            Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            NextTrack(p, fileName);
 
-            AddTrackPlay(track);
+            SetNextTrack(p);
         }
 
-        private void NextTrack(EzProcess p, string fileName)
+        private void SetNextTrack(EzProcess p)
         {
-            string trackPath = FilePath.ITUM3uPath + fileName;
-            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
+            Track track = GetNextTrack(p.ChannelId);
+            string fileName = track.Id.ToString() + ".mp3";
+
+            GenerateM3u(p.ChannelId, fileName);
 
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
             p.StandardInput.Flush();
+
+            AddTrackPlay(track);
         }
 
         private Track GetNextTrack(int channelId)
@@ -174,6 +177,12 @@ namespace RentItServer.ITU
         private void AddTrackPlay(Track track)
         {
             _dao.AddTrackPlay(track);
+        }
+
+        private void GenerateM3u(int channelId, string fileName)
+        {
+            string trackPath = FilePath.ITUTrackPath.GetPath() + fileName;
+            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
         }
     }
 
