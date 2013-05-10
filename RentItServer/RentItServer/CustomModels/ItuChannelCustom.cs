@@ -9,8 +9,7 @@ namespace RentItServer
     {
         public ITU.DatabaseWrapperObjects.Channel GetChannel()
         {
-            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId,
-                                   GetComments(), GetSubcribers(), GetGenres(), GetTracks(), StreamUri);
+            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId, StreamUri);
         }
 
         private List<ITU.DatabaseWrapperObjects.Comment> GetComments()

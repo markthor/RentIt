@@ -144,7 +144,7 @@ namespace RentItServer.ITU
         /// <param name="audioStream">The audio stream.</param>
         /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
         [OperationContract]
-        void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo);
+        void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo);
 
         /// <summary>
         /// Gets the track info associated with the track stream.

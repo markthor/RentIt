@@ -23,7 +23,7 @@ namespace RentItServer.Utilities
         public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser1;
         //The second user created the last time the database was populated.
         public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser2;
-        public static Track _testTrack;
+        public static ITU.DatabaseWrapperObjects.Track _testTrack;
 
         /// <summary>
         /// Adds instances of different entities to test.

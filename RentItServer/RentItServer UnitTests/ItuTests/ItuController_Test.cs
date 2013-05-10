@@ -1163,13 +1163,13 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UnSubscribe_Parameter_ValidValid()
         {
             RentItServer.ITU.DatabaseWrapperObjects.Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId);
-            if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == true)
+            if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == true)
             {
                 Assert.Fail("test user is already subscribed");
             }
             _dao.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
             theChannel = _dao.GetChannel(TestExtensions._testChannelId);
-            if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == false)
+            if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == false)
             {
                 Assert.Fail("test user was not subscribed before test");
             }
@@ -1177,7 +1177,7 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 controller.UnSubscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
                 theChannel = _dao.GetChannel(TestExtensions._testChannelId);
-                if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == true)
+                if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == true)
                 {
                     Assert.Fail("test user was not unsubscribed");
                 }

@@ -31,11 +31,11 @@ namespace RentItServer.ITU
         //The channel organizer
         private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
-        private readonly Dictionary<int, DatabaseWrapperObjects.Channel> _channelCache;
+        private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
-        private TernarySearchTrie<DatabaseWrapperObjects.User> _userCache;
+        private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
@@ -50,18 +50,18 @@ namespace RentItServer.ITU
         /// </summary>
         private Controller()
         {
-            _channelCache = new Dictionary<int, DatabaseWrapperObjects.Channel>();
-            _userCache = new TernarySearchTrie<DatabaseWrapperObjects.User>();
+            _channelCache = new Dictionary<int, Channel>();
+            _userCache = new TernarySearchTrie<User>();
             // Initialize channel search trie
-            IEnumerable<DatabaseWrapperObjects.Channel> allChannels = _dao.GetAllChannels();
-            foreach (DatabaseWrapperObjects.Channel channel in allChannels)
+            IEnumerable<Channel> allChannels = _dao.GetAllChannels();
+            foreach (Channel channel in allChannels)
             {
                 _channelCache[channel.Id] = channel;
             }
 
             // Initialize user search tries
-            IEnumerable<DatabaseWrapperObjects.User> allUsers = _dao.GetAllUsers();
-            foreach (DatabaseWrapperObjects.User user in allUsers)
+            IEnumerable<User> allUsers = _dao.GetAllUsers();
+            foreach (User user in allUsers)
             {
                 _userCache.Put(user.Email, user);
                 _userCache.Put(user.Email, user);
@@ -112,7 +112,7 @@ namespace RentItServer.ITU
             if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
             if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
 
-            DatabaseWrapperObjects.User user = null;
+            User user = null;
             try
             {
                 /*try
@@ -127,7 +127,7 @@ namespace RentItServer.ITU
                     }
                 }*/
                 user = _dao.Login(usernameOrEmail, password);
-                return user;
+                return user.GetUser();
             }
             catch (Exception e)
             {
@@ -156,7 +156,7 @@ namespace RentItServer.ITU
 
             try
             {
-                DatabaseWrapperObjects.User user = null;
+                User user = null;
                 lock (_dbLock)
                 {
                     user = _dao.SignUp(username, email, password);
@@ -164,7 +164,7 @@ namespace RentItServer.ITU
                     _userCache.Put(user.Email, user);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
-                return user;
+                return user.GetUser();
             }
             catch (Exception e)
             {
@@ -181,7 +181,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         public void DeleteUser(int userId)
         {
-            DatabaseWrapperObjects.User user = null;
+            User user = null;
             try
             {
                 lock (_dbLock)
@@ -209,7 +209,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                return _dao.GetUser(userId);
+                return _dao.GetUser(userId).GetUser();
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace RentItServer.ITU
             {
                 List<int> userIds = new List<int>();
                 var allUsers = _dao.GetAllUsers();
-                foreach (DatabaseWrapperObjects.User user in allUsers)
+                foreach (User user in allUsers)
                 {
                     userIds.Add(user.Id);
                 }
@@ -249,8 +249,8 @@ namespace RentItServer.ITU
 
         public void UpdateUser(int userId, string username, string password, string email)
         {
-            DatabaseWrapperObjects.User user = null;
-            DatabaseWrapperObjects.User updatedUser = null;
+            User user = null;
+            User updatedUser = null;
             try
             {
                 user = _dao.GetUser(userId);
@@ -286,7 +286,7 @@ namespace RentItServer.ITU
             if (description == null) LogAndThrowException(new ArgumentException("description"), "CreateChannel");
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
-            DatabaseWrapperObjects.Channel channel = null;
+            Channel channel = null;
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
@@ -342,7 +342,7 @@ namespace RentItServer.ITU
             if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
 
-            DatabaseWrapperObjects.Channel channel = null;
+            Channel channel = null;
             try
             {
                 lock (_dbLock)
@@ -350,9 +350,9 @@ namespace RentItServer.ITU
                     channel = _dao.GetChannel(channelId);
 
                     string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
-                    if (channel.OwnerId == userId)
+                    if (channel.UserId == userId)
                     {
-                        _dao.DeleteChannel(userId, channel);
+                        _dao.DeleteChannel(userId, channel.GetChannel());
                         _channelCache[channelId] = null;
                         _logger.AddEntry(logEntry + "Deletion successful.");
                     }
@@ -404,7 +404,7 @@ namespace RentItServer.ITU
             }*/
 
             // cache might be outdated, query the database to be sure.
-            DatabaseWrapperObjects.Channel channel = _dao.GetChannel(channelId);
+            Channel channel = _dao.GetChannel(channelId);
             if (channel != null)
             {
                 // channel was found in the database, adding to cache
@@ -415,7 +415,7 @@ namespace RentItServer.ITU
                 LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
             }
 
-            return channel;
+            return channel.GetChannel();
         }
 
         /// <summary>
@@ -428,8 +428,8 @@ namespace RentItServer.ITU
             try
             {
                 List<int> allChannelIds = new List<int>();
-                IEnumerable<DatabaseWrapperObjects.Channel> channels = _dao.GetAllChannels();
-                foreach (DatabaseWrapperObjects.Channel channel in channels)
+                IEnumerable<Channel> channels = _dao.GetAllChannels();
+                foreach (Channel channel in channels)
                 {
                     allChannelIds.Add(channel.Id);
                 }
@@ -448,7 +448,13 @@ namespace RentItServer.ITU
         {
             try
             {
-                return _dao.GetChannelsWithFilter(args).ToArray();
+                List<DatabaseWrapperObjects.Channel> theChannels = new List<DatabaseWrapperObjects.Channel>();
+                IEnumerable<Channel> channels = _dao.GetChannelsWithFilter(args);
+                foreach (Channel c in channels)
+                {
+                    theChannels.Add(c.GetChannel());
+                }
+                return theChannels.ToArray();
                 //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)
@@ -570,7 +576,7 @@ namespace RentItServer.ITU
                 Track track = _dao.GetTrack(trackId);
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
 
-                _dao.DeleteTrackEntry(track);
+                _dao.DeleteTrackEntry(track.GetTrack());
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)

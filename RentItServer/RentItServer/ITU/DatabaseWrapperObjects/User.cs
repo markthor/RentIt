@@ -9,13 +9,11 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class User
     {
-        public User(int id, string username, string email, ICollection<Channel> channels, ICollection<Channel> subscribedChannels)
+        public User(int id, string username, string email)
         {
             Id = id;
             Username = username;
             Email = email;
-            Channels = channels;
-            SubscribedChannels = subscribedChannels;
         }
 
         [DataMember]
@@ -24,9 +22,5 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public string Username { get; set; }
         [DataMember]
         public string Email { get; set; }
-        [DataMember]
-        public ICollection<Channel> Channels = new HashSet<Channel>();
-        [DataMember]
-        public ICollection<Channel> SubscribedChannels = new HashSet<Channel>();
     }
 }
