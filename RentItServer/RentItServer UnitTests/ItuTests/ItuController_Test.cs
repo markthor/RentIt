@@ -526,7 +526,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     testchannels.Add(channel);
                 }
                 ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
