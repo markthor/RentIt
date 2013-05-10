@@ -472,14 +472,16 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
                 //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
-
+                
                 var channels = context.Channels
                             .Where(channel => channel.Name.StartsWith(filter.SearchString))
                             .Include(channel => channel.ChannelOwner)
                             .Include(channel => channel.Comments)
                             .Include(channel => channel.Subscribers)
                             .Include(channel => channel.Genres)
-                            .Include(channel => channel.Tracks);
+                            .Include(channel => channel.Tracks.Select(track => track.Channel))
+                            .Include(channel => channel.Tracks.Select(track => track.TrackPlays))
+                            .Include(channel => channel.Tracks.Select(track => track.Votes));
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -561,7 +563,12 @@ namespace RentItServer.ITU
                 }
                 filteredChannels = new List<Channel>(range);
             }
-            return filteredChannels.Where(channel => channel != null).ToList();
+            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
+            foreach (Channel c in filteredChannels)
+            {
+                c.Tracks = c.Tracks.ToList();
+            }
+            return filteredChannels;
         }
 
         /// <summary>
@@ -676,7 +683,7 @@ namespace RentItServer.ITU
                                where channel.Id == channelId
                                select channel;
 
-                if (channels.Any() == true) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
 
                 Channel theChannel = channels.First();
 
