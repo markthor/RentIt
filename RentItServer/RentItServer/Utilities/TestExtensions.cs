@@ -11,14 +11,14 @@ namespace RentItServer.Utilities
     {
         //Id of the first channel created the last time the database was populated.
         public static int _testChannelId;
-        public static string _user1name = "Prechtig";
-        public static string _user2name = "TestMan Jr";
-        public static string _user1email = "andreas.p.poulsen@gmail.com";
-        public static string _user2email = "test";
-        public static string _userpassword = "test";
-        public static string genreName1 = "Electro";
-        public static string genreName2 = "Heavy Metal";
-        public static string genreName3 = "Jazz";
+        public const string _user1name = "Prechtig";
+        public const string _user2name = "TestMan Jr";
+        public const string _user1email = "andreas.p.poulsen@gmail.com";
+        public const string _user2email = "test";
+        public const string _userpassword = "test";
+        public const string genreName1 = "Electro";
+        public const string genreName2 = "Heavy Metal";
+        public const string genreName3 = "Jazz";
         //The first user created the last time the database was populated.
         public static User _testUser1;
         //The second user created the last time the database was populated.
