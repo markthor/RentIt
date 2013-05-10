@@ -8,7 +8,7 @@ using RentItServer.Utilities;
 namespace RentItServer_UnitTests.ItuTests
 {
     [TestClass]
-    public class StreamHandlerTest
+    public class StreamHandler_Test
     {
         [ClassInitialize]
         public static void Populate(TestContext tc)
@@ -18,7 +18,7 @@ namespace RentItServer_UnitTests.ItuTests
         }
         
         [TestMethod]
-        public void TestStartStream()
+        public void StartStream_Test()
         {
             using (ITUServiceReference.RentItServiceClient proxy = new ITUServiceReference.RentItServiceClient())
             {

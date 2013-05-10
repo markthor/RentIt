@@ -482,7 +482,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, RentItServer.ITU.DatabaseWrapperObjects.Track trackInfo)
         {
             try
             {

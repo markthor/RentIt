@@ -40,7 +40,7 @@ namespace RentItServer_UnitTests
         }
 
         [TestMethod]
-        public void TrackPrioritizer_GetNextTrackIdEmptyPlaysList()
+        public void TrackPrioritizer_GetNextTrackId_EmptyPlaysList()
         {
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
@@ -53,5 +53,16 @@ namespace RentItServer_UnitTests
             int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
             Assert.AreNotEqual(0, result);
         }
+
+        [TestMethod]
+        public void TrackPrioritizer_GetNextTrackIdEmptyPlaysList_OneTrack()
+        {
+            List<Track> testTracks = new List<Track>();
+            testTracks.Add(new Track(1, 10, 2));
+            List<TrackPlay> testPlays = new List<TrackPlay>();
+            int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
+            Assert.AreNotEqual(0, result);
+        }
+
     }
 }
