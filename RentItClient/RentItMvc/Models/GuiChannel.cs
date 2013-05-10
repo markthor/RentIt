@@ -19,7 +19,7 @@ namespace RentItMvc.Models
                 guiChannel.Name = channel.Name;
                 guiChannel.Id = channel.Id;
                 guiChannel.Description = channel.Description;
-                guiChannel.OwnerId = channel.Owner.Id;
+                guiChannel.OwnerId = channel.OwnerId;
                 guiChannel.Hits = channel.Hits != null ? channel.Hits.Value : 0;
                 guiChannel.StreamUri = channel.StreamUri;
             }
