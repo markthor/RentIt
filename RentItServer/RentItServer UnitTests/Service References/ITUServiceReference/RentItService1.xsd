@@ -2,12 +2,20 @@
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="User">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Channels" nillable="true" type="tns:ArrayOfChannel" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscribedChannels" nillable="true" type="tns:ArrayOfChannel" />
       <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfChannel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Channel" nillable="true" type="tns:Channel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChannel" nillable="true" type="tns:ArrayOfChannel" />
   <xs:complexType name="Channel">
     <xs:sequence>
       <xs:element minOccurs="0" name="Comments" nillable="true" type="tns:ArrayOfComment" />
@@ -18,6 +26,7 @@
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:User" />
       <xs:element minOccurs="0" name="Rating" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="StreamUri" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Subscribers" nillable="true" type="tns:ArrayOfUser" />
       <xs:element minOccurs="0" name="Tracks" nillable="true" type="tns:ArrayOfTrack" />
     </xs:sequence>
@@ -106,10 +115,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Vote" nillable="true" type="tns:Vote" />
-  <xs:complexType name="ArrayOfChannel">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Channel" nillable="true" type="tns:Channel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfChannel" nillable="true" type="tns:ArrayOfChannel" />
 </xs:schema>

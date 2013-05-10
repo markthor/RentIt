@@ -11,7 +11,7 @@ namespace RentItServer_UnitTests.ItuTests
     [TestClass]
     public class StreamHandlerTest
     {
-        /*
+        
         [TestCleanup]
         public void Cleanup()
         {
@@ -26,7 +26,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
         }
-        */
+        
         [TestMethod]
         public void TestStartStream()
         {
