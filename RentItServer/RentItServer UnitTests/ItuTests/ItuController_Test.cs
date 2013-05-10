@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
 using RentItServer.ITU;
+using RentItServer.Utilities;
 using RentItServer_UnitTests.ItuTests;
 
 namespace RentItServer_UnitTests.ItuTests
@@ -13,9 +14,9 @@ namespace RentItServer_UnitTests.ItuTests
     {
         private DatabaseDao _dao = DatabaseDao.GetInstance();
 
-        private const string testname = "TestDummy9000";
-        private const string testmail = "TestDummy@9000.gg";
-        private const string testpw = "TestDummyPassword9000";
+        private const string testname = TestExtensions._user2name;
+        private const string testmail = TestExtensions._user2email;
+        private const string testpw = TestExtensions._userpassword;
         private int testId = int.MaxValue;
 
         private const string testchannelname = "TestDummyChannel9000";
@@ -525,7 +526,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     testchannels.Add(channel);
                 }
                 ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();

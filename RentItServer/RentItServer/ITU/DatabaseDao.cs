@@ -468,13 +468,9 @@ namespace RentItServer.ITU
             {   // get all channels that starts with filter.Name
                 //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
-                var channels = context.Channels
-                            .Where(channel => channel.Name.StartsWith(filter.SearchString))
-                            .Include(channel => channel.ChannelOwner)
-                            .Include(channel => channel.Comments)
-                            .Include(channel => channel.Subscribers)
-                            .Include(channel => channel.Genres)
-                            .Include(channel => channel.Tracks);
+                var channels = from c in context.Channels
+                               where c.Name.StartsWith(filter.SearchString)
+                               select c;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -672,7 +668,7 @@ namespace RentItServer.ITU
                                where channel.Id == channelId
                                select channel;
 
-                if (channels.Any() == true) throw new ArgumentException("No channel with channelId [" + channelId + "]");
+                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
 
                 Channel theChannel = channels.First();
 
