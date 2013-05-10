@@ -7,6 +7,7 @@ using System.Linq;
 using RentItServer.ITU.Exceptions;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
+using TagLib;
 
 namespace RentItServer.ITU
 {
@@ -511,10 +512,10 @@ namespace RentItServer.ITU
             try
             {
                 int counter = tempCounter++;
-                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
+                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.SmuGenerateAudioFileName(counter), audioStream);
                 // Use external library
                 TagLib.File audioFile =
-                    TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                    TagLib.File.Create(FilePath.ITUTempPath + FileName.SmuGenerateAudioFileName(counter));
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -529,7 +530,7 @@ namespace RentItServer.ITU
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
                 try
                 {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.SmuGenerateAudioFileName(counter));
                 }
                 catch
                 {
