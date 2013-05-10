@@ -55,28 +55,28 @@ namespace RentItServer.ITU
 
         public void StartStream(int channelId)
         {
-            _logger.AddEntry("Start Stream start");
+            //_logger.AddEntry("Start Stream start");
 
             if (!IsChannelRunning(channelId))
             {
-                _logger.AddEntry("Channel with id: " + channelId + " is not running");
+                //_logger.AddEntry("Channel with id: " + channelId + " is not running");
                 Track track = GetNextTrack(channelId);
                 if (track != null) // no tracks on channel
                 {
                     return;
                 }
 
-                _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
+               // _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
 
                 string fileName = track.Id.ToString() + ".mp3";
-                _logger.AddEntry("Track filename: " + fileName);
+                //_logger.AddEntry("Track filename: " + fileName);
 
                 string xml;
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
-                _logger.AddEntry("channel config xml: " + xml);
+                //_logger.AddEntry("channel config xml: " + xml);
                 xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-                _logger.AddEntry("xml file path: " + xmlFilePath);
+                //_logger.AddEntry("xml file path: " + xmlFilePath);
                 FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 //get config path
