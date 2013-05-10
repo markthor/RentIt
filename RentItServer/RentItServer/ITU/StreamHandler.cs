@@ -34,7 +34,7 @@ namespace RentItServer.ITU
             runningChannelIds = new Dictionary<int, EzProcess>();
         }
 
-        private void AddLogger(Logger logger)
+        public void AddLogger(Logger logger)
         {
             _logger = logger;
         }
@@ -55,28 +55,29 @@ namespace RentItServer.ITU
 
         public void StartStream(int channelId)
         {
-            //_logger.AddEntry("Start Stream start");
+            _logger.AddEntry("Start Stream start");
 
             if (!IsChannelRunning(channelId))
             {
-                //_logger.AddEntry("Channel with id: " + channelId + " is not running");
+                _logger.AddEntry("Channel with id: " + channelId + " is not running");
                 Track track = GetNextTrack(channelId);
                 if (track != null) // no tracks on channel
                 {
-                    return;
+                    _logger.AddEntry("Channel with id: " + channelId + " has no tracks"); 
+                    return; //notracks on channel exception
                 }
 
-               // _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
+                _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
 
                 string fileName = track.Id.ToString() + ".mp3";
-                //_logger.AddEntry("Track filename: " + fileName);
+                _logger.AddEntry("Track filename: " + fileName);
 
                 string xml;
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
-                //_logger.AddEntry("channel config xml: " + xml);
+                _logger.AddEntry("channel config xml: " + xml);
                 xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-                //_logger.AddEntry("xml file path: " + xmlFilePath);
+                _logger.AddEntry("xml file path: " + xmlFilePath);
                 FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 //get config path
@@ -110,7 +111,7 @@ namespace RentItServer.ITU
         private void NextTrack(EzProcess p, string fileName)
         {
             string trackPath = FilePath.ITUM3uPath + fileName;
-            FileSystemDao.GetInstance().WriteM3u(new List<string>() {trackPath}, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
+            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
 
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
@@ -122,11 +123,11 @@ namespace RentItServer.ITU
             Track track;
 
             List<Track> tracks = _dao.GetTrackList(channelId); // check that there are tracks on the channel!
-            if(!tracks.Any())//no tracks on channel
+            if (!tracks.Any())//no tracks on channel
             {
                 throw new NoTracksOnChannelException("There are no tracks associated with the channel");
             }
-            throw new Exception("asdasdasd");
+
             List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
             int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
 
