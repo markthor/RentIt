@@ -11,7 +11,7 @@ namespace RentItServer_UnitTests.ItuTests
     [TestClass]
     public class StreamHandlerTest
     {
-        /*
+        
         [TestCleanup]
         public void Cleanup()
         {
@@ -26,27 +26,25 @@ namespace RentItServer_UnitTests.ItuTests
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
         }
-        */
+        
         [TestMethod]
         public void TestStartStream()
         {
             string genreName1 = "random";
-            string genreName2 = "random2";
-            RentItServer.ITU.DatabaseWrapperObjects.User u = Controller.GetInstance().SignUp("sickdude", "heftighund@gmail.com", "tripledog");
+            string genreName2 = "random1";
+            RentItServer.ITU.DatabaseWrapperObjects.User u = Controller.GetInstance().SignUp("test", "test@gmail.com", "test");
             Controller.GetInstance().CreateGenre(genreName1);
             Controller.GetInstance().CreateGenre(genreName2);
             int channelId1 = Controller.GetInstance().CreateChannel("hehe", u.Id, "Sick channel with groovy beats", new List<string>() { genreName1 });
             int channelId2 = Controller.GetInstance().CreateChannel("hoho", u.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
-            /*
+            
             DatabaseDao.GetInstance().CreateTrackEntry(channelId1, "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3", "test", "temp0", 50, 0, 0);
+            
 
             using (ITUServiceReference.RentItServiceClient proxy = new ITUServiceReference.RentItServiceClient())
             {
                 proxy.startChannel(channelId1);
             }
-            */
         }
-
-
     }
 }

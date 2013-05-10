@@ -4,6 +4,7 @@ using System.IO;
 using RentItServer;
 using RentItServer.ITU;
 using RentItServer.Utilities;
+using RentItServer_UnitTests.ItuTests;
 
 namespace RentItServer_UnitTests
 {
