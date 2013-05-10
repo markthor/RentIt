@@ -1158,7 +1158,7 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_UnSubscribe_Parameter_ValidValid()
         {
-            Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+            RentItServer.ITU.DatabaseWrapperObjects.Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId);
             if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == true)
             {
                 Assert.Fail("test user is already subscribed");
