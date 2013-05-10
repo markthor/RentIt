@@ -39,7 +39,7 @@ namespace RentItServer.ITU
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
-        public static string _defaultStreamExtension = ".ogg";
+        public static string _defaultStreamExtension = "";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         private int tempCounter;
