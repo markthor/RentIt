@@ -23,7 +23,7 @@ namespace RentItServer_UnitTests.ItuTests
         private const string testchanneldescr = "TestDummyChannel9000Description";
         private readonly List<string> testchannelnames = new List<string>();
         private readonly List<string> testchanneldescrs = new List<string>();
-        private readonly List<Channel> testchannels = new List<Channel>();
+        private readonly List<RentItServer.ITU.DatabaseWrapperObjects.Channel> testchannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>();
 
         private const int interval = 3;
 
@@ -523,7 +523,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
@@ -553,7 +553,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
@@ -580,7 +580,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -609,7 +609,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -638,7 +638,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -667,7 +667,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -696,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -725,7 +725,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -754,7 +754,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -783,7 +783,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -812,7 +812,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -1007,8 +1007,187 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         #endregion
+
         #region Controller_AddTrack
         #endregion
 
+        #region Controller_Subscribe
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_NegNeg()
+        {
+            try
+            {
+                controller.Subscribe(-1, -1);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_NegZero()
+        {
+            try
+            {
+                controller.Subscribe(-1, 0);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroNeg()
+        {
+            try
+            {
+                controller.Subscribe(0, -1);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroZero()
+        {
+            try
+            {
+                controller.Subscribe(0, 0);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_PosZero()
+        {
+            try
+            {
+                controller.Subscribe(TestExtensions._testUser2.Id, 0);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroPos()
+        {
+            try
+            {
+                controller.Subscribe(0, TestExtensions._testChannelId);
+                Cleanup();
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_PosPos()
+        {
+            try
+            {
+                controller.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
+            }
+            catch
+            {
+                Cleanup();
+                Assert.Fail("An exception was raised.");
+            }
+        }
+#endregion
+        #region Controller_UnSubscribe
+        [TestMethod]
+        public void Controller_UnSubscribe_Parameter_InvalidInvalid()
+        {
+            try
+            {
+                controller.UnSubscribe(-1, -1);
+                Cleanup();
+                Assert.Fail("An exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UnSubscribe_Parameter_InvalidValid()
+        {
+            try
+            {
+                controller.UnSubscribe(-1, TestExtensions._testChannelId);
+                Cleanup();
+                Assert.Fail("An exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UnSubscribe_Parameter_ValidInvalid()
+        {
+            try
+            {
+                controller.UnSubscribe(TestExtensions._testUser2.Id, -1);
+                Cleanup();
+                Assert.Fail("An exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_UnSubscribe_Parameter_ValidValid()
+        {
+            RentItServer.ITU.DatabaseWrapperObjects.Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+            if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == true)
+            {
+                Assert.Fail("test user is already subscribed");
+            }
+            _dao.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
+            theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+            if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == false)
+            {
+                Assert.Fail("test user was not subscribed before test");
+            }
+            try
+            {
+                controller.UnSubscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
+                theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+                if (theChannel.Subscribers.Contains(TestExtensions._testUser2) == true)
+                {
+                    Assert.Fail("test user was not unsubscribed");
+                }
+            }
+            catch
+            {
+                Cleanup();
+                Assert.Fail("An exception was raised");
+            }
+        }
+        #endregion
     }
 }

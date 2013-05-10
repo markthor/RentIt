@@ -61,7 +61,7 @@ namespace RentItServer.ITU
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is not running");
                 Track track = GetNextTrack(channelId);
-                if (track != null) // no tracks on channel
+                if (track == null) // no tracks on channel
                 {
                     _logger.AddEntry("Channel with id: " + channelId + " has no tracks"); 
                     return; //notracks on channel exception
@@ -72,9 +72,14 @@ namespace RentItServer.ITU
                 string fileName = track.Id.ToString() + ".mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
+                GenerateM3u(channelId, fileName); // generate m3u
+                string m3uFileName;
+                m3uFileName = channelId + ".m3u";
+
+
                 string xml;
                 string xmlFilePath;
-                xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
+                xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
                 _logger.AddEntry("channel config xml: " + xml);
                 xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
@@ -83,14 +88,18 @@ namespace RentItServer.ITU
                 //get config path
                 string configPath = FilePath.ITUChannelConfigPath.GetPath();
                 string arguments = "-c " + xmlFilePath;
+                _logger.AddEntry("Arguments: " + arguments);
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
                 p.Start();
+                _logger.AddEntry("Process start");
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
 
                 runningChannelIds.Add(channelId, p);
-                AddTrackPlay(track);
+                AddTrackPlay(track); // should this call be here
+
+                SetNextTrack(p);
             }
             else //channel is already running
             {
@@ -100,22 +109,24 @@ namespace RentItServer.ITU
 
         private void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
+            _logger.AddEntry("Process has given output data");
             EzProcess p = (EzProcess)sender;
-            Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
-            NextTrack(p, fileName);
 
-            AddTrackPlay(track);
+            SetNextTrack(p);
         }
 
-        private void NextTrack(EzProcess p, string fileName)
+        private void SetNextTrack(EzProcess p)
         {
-            string trackPath = FilePath.ITUM3uPath + fileName;
-            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + p.ChannelId.ToString());
+            Track track = GetNextTrack(p.ChannelId);
+            string fileName = track.Id.ToString() + ".mp3";
+
+            GenerateM3u(p.ChannelId, fileName);
 
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
             p.StandardInput.Flush();
+
+            AddTrackPlay(track);
         }
 
         private Track GetNextTrack(int channelId)
@@ -166,6 +177,12 @@ namespace RentItServer.ITU
         private void AddTrackPlay(Track track)
         {
             _dao.AddTrackPlay(track);
+        }
+
+        private void GenerateM3u(int channelId, string fileName)
+        {
+            string trackPath = FilePath.ITUTrackPath.GetPath() + fileName;
+            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
         }
     }
 
