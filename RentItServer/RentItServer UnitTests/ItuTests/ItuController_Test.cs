@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
 using RentItServer.ITU;
+using RentItServer_UnitTests.ItuTests;
 
 namespace RentItServer_UnitTests.ItuTests
 {
@@ -36,13 +37,17 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 testchannelnames.Add(testchannelname + i);
                 testchanneldescrs.Add(testchanneldescr + i);
-            }
+            } 
+            CreationOfDataForGuiTest wtf = new CreationOfDataForGuiTest();
+            wtf.CreateUsersAndChannels();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
+            CreationOfDataForGuiTest wtf = new CreationOfDataForGuiTest();
+            wtf.CreateUsersAndChannels();
         }
 
         /// <summary>
@@ -498,8 +503,6 @@ namespace RentItServer_UnitTests.ItuTests
             controller = Controller.GetInstance();
 
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.StartIndex = 0;
-            csa.EndIndex = 10;
 
             try
             {
@@ -525,10 +528,9 @@ namespace RentItServer_UnitTests.ItuTests
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(new ChannelSearchArgs()
-                {
-                    SearchString = testchannelname
-                });
+                ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+                csa.SearchString = testchannelname;
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
 
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 foreach (RentItServer.ITU.DatabaseWrapperObjects.Channel aChannel in theChannels)
@@ -536,10 +538,10 @@ namespace RentItServer_UnitTests.ItuTests
                     Assert.IsTrue(aChannel.Owner.Id == testId);
                 }
             }
-            catch
+            catch(Exception e)
             {
                 Cleanup();
-                Assert.Fail("An exception was raised");
+                Assert.Fail("An exception was raised. " + e);
             }
         }
 
@@ -555,12 +557,11 @@ namespace RentItServer_UnitTests.ItuTests
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
                     testchannels.Add(channel);
-                } 
-                RentItServer.ITU.DatabaseWrapperObjects.Channel[] channels = controller.GetChannels(new ChannelSearchArgs()
-                    {
-                        StartIndex = 0,
-                        EndIndex = interval
-                    });
+                }
+                ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+                csa.StartIndex = 0;
+                csa.EndIndex = interval;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel[] channels = controller.GetChannels(csa);
 
                 Assert.IsTrue(channels.Length >= interval);
             }
@@ -584,11 +585,10 @@ namespace RentItServer_UnitTests.ItuTests
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(new ChannelSearchArgs()
-                {
-                    StartIndex = -interval,
-                    EndIndex = interval
-                });
+                ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+                csa.StartIndex = -interval;
+                csa.EndIndex = interval;
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
 
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
@@ -604,10 +604,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortHitsDescending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-                {
-                    SortOption = ChannelSearchArgs.HitsDesc
-                };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.HitsDesc;
             try
             {
                 Channel channel = null;
@@ -617,7 +615,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -635,10 +633,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortHitsAscending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.HitsAsc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.HitsAsc;
             try
             {
                 Channel channel = null;
@@ -648,7 +644,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -666,10 +662,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortNumberOfCommentsDescending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.NumberOfCommentsDesc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
             try
             {
                 Channel channel = null;
@@ -679,7 +673,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -697,10 +691,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortNumberOfCommentsAscending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.NumberOfCommentsAsc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
             try
             {
                 Channel channel = null;
@@ -710,7 +702,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -728,10 +720,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortRatingDescending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.RatingDesc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.RatingDesc;
             try
             {
                 Channel channel = null;
@@ -741,7 +731,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -759,10 +749,8 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_GetChannelsWithFilter_Parameter_SortRatingAscending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.RatingAsc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.RatingAsc;
             try
             {
                 Channel channel = null;
@@ -772,7 +760,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -787,13 +775,11 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_GetChannelsWithFilter_Parameter_SortDescriptionsDescending()
+        public void Controller_GetChannelsWithFilter_Parameter_SortSubscriptionsDescending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.SubscriptionsDesc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
             try
             {
                 Channel channel = null;
@@ -803,7 +789,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
@@ -818,13 +804,11 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_GetChannelsWithFilter_Parameter_SortDescriptionsAscending()
+        public void Controller_GetChannelsWithFilter_Parameter_SortSubscriptionsAscending()
         {
             controller = Controller.GetInstance();
-            ChannelSearchArgs args = new ChannelSearchArgs()
-            {
-                SortOption = ChannelSearchArgs.SubscriptionsAsc
-            };
+            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
+            csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
             try
             {
                 Channel channel = null;
@@ -834,7 +818,7 @@ namespace RentItServer_UnitTests.ItuTests
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(args);
+                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
