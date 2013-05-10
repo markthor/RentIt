@@ -72,9 +72,14 @@ namespace RentItServer.ITU
                 string fileName = track.Id.ToString() + ".mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
+
+                string m3uFileName;
+                m3uFileName = channelId + ".m3u";
+
+
                 string xml;
                 string xmlFilePath;
-                xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUTrackPath.GetPath() + fileName);
+                xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
                 _logger.AddEntry("channel config xml: " + xml);
                 xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
