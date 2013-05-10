@@ -21,8 +21,6 @@ namespace RentItServer.ITU
         //List of ids of running channels;
         private Dictionary<int, EzProcess> runningChannelIds;
 
-        //The logger
-        private Logger _logger;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -32,11 +30,6 @@ namespace RentItServer.ITU
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
-        }
-
-        private void AddLogger(Logger logger)
-        {
-            _logger = logger;
         }
 
 
@@ -56,7 +49,6 @@ namespace RentItServer.ITU
         public void StartStream(int channelId)
         {
             //_logger.AddEntry("Start Stream start");
-
             if (!IsChannelRunning(channelId))
             {
                 //_logger.AddEntry("Channel with id: " + channelId + " is not running");
@@ -65,9 +57,7 @@ namespace RentItServer.ITU
                 {
                     return;
                 }
-
                // _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
-
                 string fileName = track.Id.ToString() + ".mp3";
                 //_logger.AddEntry("Track filename: " + fileName);
 
@@ -126,7 +116,6 @@ namespace RentItServer.ITU
             {
                 throw new NoTracksOnChannelException("There are no tracks associated with the channel");
             }
-            throw new Exception("asdasdasd");
             List<TrackPlay> plays = _dao.GetTrackPlays(channelId);
             int tId = TrackPrioritizer.GetInstance().GetNextTrackId(tracks, plays);
 
