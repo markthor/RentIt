@@ -420,7 +420,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_DeleteUser_Parameter_Neg()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -436,7 +436,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_DeleteUser_Parameter_MaxInt()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -452,7 +452,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_DeleteUser_Parameter_MinInt()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -468,7 +468,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_DeleteUser_Parameter_Valid()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -518,7 +518,7 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Behavior_ProperOwner()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -535,7 +535,7 @@ namespace RentItServer_UnitTests.ItuTests
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 foreach (RentItServer.ITU.DatabaseWrapperObjects.Channel aChannel in theChannels)
                 {
-                    Assert.IsTrue(aChannel.Owner.Id == testId);
+                    Assert.IsTrue(aChannel.OwnerId == testId);
                 }
             }
             catch(Exception e)
@@ -548,7 +548,7 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_PositiveInterval()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -575,7 +575,7 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_NegativeInterval()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -837,7 +837,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_NegNullNullNull()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             try
             {
                 controller.UpdateUser(-1, null, null, null);
@@ -853,15 +853,15 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosNullNullNull()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
                 controller.UpdateUser(testId, null, null, null);
-                User updatedUser = _dao.GetUser(user.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.User updatedUser = _dao.GetUser(user.Id);
                 Assert.IsTrue(user.Username.Equals(updatedUser.Username));
                 Assert.IsTrue(user.Email.Equals(updatedUser.Email));
-                Assert.IsTrue(user.Password.Equals(updatedUser.Password));
+                //Assert.IsTrue(user.Password.Equals(updatedUser.Password));
             }
             catch
             {
@@ -873,7 +873,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosEmptyNullNull()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -890,7 +890,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosNullEmptyNull()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -907,7 +907,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosNullNullEmpty()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -924,7 +924,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosEmptyEmptyNull()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -941,7 +941,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosNullEmptyEmpty()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -958,7 +958,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosEmptyNullEmpty()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -975,7 +975,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosEmptyEmptyEmpty()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {
@@ -992,7 +992,7 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UpdateUser_Parameter_PosNullNullValid()
         {
             controller = Controller.GetInstance();
-            User user = _dao.SignUp(testname, testmail, testpw);
+            RentItServer.ITU.DatabaseWrapperObjects.User user = _dao.SignUp(testname, testmail, testpw);
             testId = user.Id;
             try
             {

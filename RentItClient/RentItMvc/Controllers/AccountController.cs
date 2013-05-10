@@ -81,6 +81,7 @@ namespace RentItMvc.Controllers
                     Session["userId"] = user.Id;
                     Session["username"] = user.Username;
                 }
+                
                 catch (Exception e)
                 {
                     ModelState.AddModelError("", "Wrong username or password");

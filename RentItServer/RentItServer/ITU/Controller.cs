@@ -36,7 +36,7 @@ namespace RentItServer.ITU
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
-        private TernarySearchTrie<User> _userCache;
+        private TernarySearchTrie<DatabaseWrapperObjects.User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
@@ -52,7 +52,7 @@ namespace RentItServer.ITU
         private Controller()
         {
             _channelCache = new Dictionary<int, Channel>();
-            _userCache = new TernarySearchTrie<User>();
+            _userCache = new TernarySearchTrie<DatabaseWrapperObjects.User>();
             // Initialize channel search trie
             IEnumerable<Channel> allChannels = _dao.GetAllChannels();
             foreach (Channel channel in allChannels)
@@ -61,8 +61,8 @@ namespace RentItServer.ITU
             }
 
             // Initialize user search tries
-            IEnumerable<User> allUsers = _dao.GetAllUsers();
-            foreach (User user in allUsers)
+            IEnumerable<DatabaseWrapperObjects.User> allUsers = _dao.GetAllUsers();
+            foreach (DatabaseWrapperObjects.User user in allUsers)
             {
                 _userCache.Put(user.Email, user);
                 _userCache.Put(user.Email, user);
@@ -112,25 +112,26 @@ namespace RentItServer.ITU
             if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
             if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
 
-            User theUser = null;
+            DatabaseWrapperObjects.User user = null;
             try
             {
-                try
+                /*try
                 {
-                    theUser = _userCache.Get(usernameOrEmail);
+                    user = _userCache.Get(usernameOrEmail).GetUser();
                 }
                 catch (NullValueException)
                 {
                     lock (_dbLock)
                     {
-                        theUser = _dao.Login(usernameOrEmail, password);
+                        user = _dao.Login(usernameOrEmail, password);
                     }
-                }
-                return theUser.GetUser();
+                }*/
+                user = _dao.Login(usernameOrEmail, password);
+                return user;
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Login failed with exception ["+e+"]. Local variables: usernameOrEmail = "+usernameOrEmail+", password = " + password+", theUser = " + theUser);
+                _logger.AddEntry("Login failed with exception [" + e + "]. Local variables: usernameOrEmail = " + usernameOrEmail + ", password = " + password + ", user = " + user);
                 throw;
             }
         }
@@ -155,15 +156,15 @@ namespace RentItServer.ITU
 
             try
             {
-                User theUser = null;
+                DatabaseWrapperObjects.User user = null;
                 lock (_dbLock)
                 {
-                    theUser = _dao.SignUp(username, email, password);
-                    _userCache.Put(theUser.Username, theUser);
-                    _userCache.Put(theUser.Email, theUser);
+                    user = _dao.SignUp(username, email, password);
+                    _userCache.Put(user.Username, user);
+                    _userCache.Put(user.Email, user);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
-                return theUser.GetUser();
+                return user;
             }
             catch (Exception e)
             {
@@ -180,16 +181,16 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         public void DeleteUser(int userId)
         {
-            User theUser = null;
+            DatabaseWrapperObjects.User user = null;
             try
             {
                 lock (_dbLock)
                 {
-                    theUser = _dao.GetUser(userId);
+                    user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
-                    _userCache.Put(theUser.Username, null);
-                    _userCache.Put(theUser.Email, null);
-                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, theUser));
+                    _userCache.Put(user.Username, null);
+                    _userCache.Put(user.Email, null);
+                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
                 }
             }
             catch (Exception e)
@@ -199,7 +200,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry(
                     string.Format(
                         "User deletion failed with exception [{0}]. Local variables: userId = {1}, theUser = {2}.", e,
-                        userId, theUser));
+                        userId, user));
                 throw;
             }
         }
@@ -208,7 +209,7 @@ namespace RentItServer.ITU
         {
             try
             {
-                return _dao.GetUser(userId).GetUser();
+                return _dao.GetUser(userId);
             }
             catch (Exception e)
             {
@@ -230,7 +231,7 @@ namespace RentItServer.ITU
             {
                 List<int> userIds = new List<int>();
                 var allUsers = _dao.GetAllUsers();
-                foreach (User user in allUsers)
+                foreach (DatabaseWrapperObjects.User user in allUsers)
                 {
                     userIds.Add(user.Id);
                 }
@@ -248,23 +249,23 @@ namespace RentItServer.ITU
 
         public void UpdateUser(int userId, string username, string password, string email)
         {
-            User theUser = null;
-            User theUpdatedUser = null;
+            DatabaseWrapperObjects.User user = null;
+            DatabaseWrapperObjects.User updatedUser = null;
             try
             {
-                theUser = _dao.GetUser(userId);
+                user = _dao.GetUser(userId);
                 _dao.UpdateUser(userId, username, password);
-                if (theUser.Username != null) _userCache.Put(theUser.Username, null);
-                if (theUser.Email != null) _userCache.Put(theUser.Email, null);
-                theUpdatedUser = _dao.GetUser(userId);
-                if (username != null) _userCache.Put(username, theUpdatedUser);
-                if (email != null) _userCache.Put(email, theUpdatedUser);
+                if (user.Username != null) _userCache.Put(user.Username, null);
+                if (user.Email != null) _userCache.Put(user.Email, null);
+                updatedUser = _dao.GetUser(userId);
+                if (username != null) _userCache.Put(username, updatedUser);
+                if (email != null) _userCache.Put(email, updatedUser);
             }
             catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, theUser = {5}, theUpdatedUser = {6}", userId, username, password, email, theUser, theUpdatedUser));
+                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", userId, username, password, email, user, updatedUser));
                 throw;
             }
         }
@@ -443,11 +444,11 @@ namespace RentItServer.ITU
             }
         }
 
-        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
+        public DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
             {
-                return ITU.DatabaseWrapperObjects.Channel.GetChannels(_dao.GetChannelsWithFilter(args));
+                return _dao.GetChannelsWithFilter(args).ToArray();
                 //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)

@@ -26,7 +26,7 @@ namespace RentItServer.ITU
             return _instance ?? (_instance = new DatabaseDao());
         }
 
-        public User Login(string usernameOrEmail, string password)
+        public DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -34,12 +34,7 @@ namespace RentItServer.ITU
                             where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
                                    u.Password.Equals(password)
                             select u;
-                if (!users.Any())
-                {
-                    return null;
-                }
-                return users.First();
-
+                return users.First().GetUser();
             }
         }
 
@@ -50,7 +45,7 @@ namespace RentItServer.ITU
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
         /// <returns>The id of the user.</returns>
-        public User SignUp(string username, string email, string password)
+        public DatabaseWrapperObjects.User SignUp(string username, string email, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -81,7 +76,7 @@ namespace RentItServer.ITU
                     };
                 context.Users.Add(user);
                 context.SaveChanges();
-                return user;
+                return user.GetUser();
             }
         }
 
@@ -189,7 +184,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <returns>The user</returns>
         /// <exception cref="System.ArgumentException">No user with user id [ + userId + ]</exception>
-        public User GetUser(int userId)
+        public DatabaseWrapperObjects.User GetUser(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -198,7 +193,7 @@ namespace RentItServer.ITU
                             select user;
                 if (users.Any() == false) throw new ArgumentException("No user with user id [" + userId + "]");
 
-                return users.First();
+                return users.First().GetUser();
             }
         }
 
@@ -206,14 +201,14 @@ namespace RentItServer.ITU
         /// Gets all users in the database
         /// </summary>
         /// <returns>The users</returns>
-        public List<User> GetAllUsers()
+        public List<DatabaseWrapperObjects.User> GetAllUsers()
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var users = from user in context.Users
                             select user;
 
-                return users.ToList();
+                return User.GetUsers(users.ToList());
             }
         }
 
@@ -466,7 +461,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// Channel ids of the channels matching the filter.
         /// </returns>
-        public List<Channel> GetChannelsWithFilter(ChannelSearchArgs filter)
+        public List<DatabaseWrapperObjects.Channel> GetChannelsWithFilter(ChannelSearchArgs filter)
         {
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -561,7 +556,8 @@ namespace RentItServer.ITU
                 }
                 filteredChannels = new List<Channel>(range);
             }
-            return filteredChannels.Where(channel => channel != null).ToList();
+            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
+            return Channel.GetChannels(filteredChannels);
         }
 
         /// <summary>
