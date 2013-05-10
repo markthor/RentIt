@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using RentItServer;
 using RentItServer.ITU;
+using RentItServer.Utilities;
 using RentItServer_UnitTests.ItuTests;
 
 namespace RentItServer_UnitTests
@@ -10,6 +11,20 @@ namespace RentItServer_UnitTests
     [TestClass]
     public class FileSystemHandler_Test
     {
+        [TestMethod]
+        public void FileSystemDao_WriteFile_Test()
+        {
+            FileSystemDao.GetInstance().WriteFile("test", "C:\\RentItServices\\test.txt");
+            try
+            {
+                FileSystemDao.GetInstance().ReadFile("C:\\RentItServices\\test.txt");
+            }
+            catch (FileNotFoundException e)
+            {
+                Assert.Fail();
+            }
+        }
+
         /*[TestMethod]
         public void FileSystemHandler_Write()
         {
