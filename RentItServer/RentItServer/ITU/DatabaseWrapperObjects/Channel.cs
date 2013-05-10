@@ -9,7 +9,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class Channel
     {
-        public Channel(int id, string name, string description, double? rating, int? hits, User owner,
+        public Channel(int id, string name, string description, double? rating, int? hits, int ownerId,
                        List<Comment> comments, List<User> subscribers, List<Genre> genres, List<Track> tracks, string streamUri)
         {
             Id = id;
@@ -17,7 +17,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Description = description;
             Rating = rating;
             Hits = hits;
-            Owner = owner;
+            OwnerId = ownerId;
             Comments = comments;
             Subscribers = subscribers;
             Genres = genres;
@@ -36,7 +36,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         [DataMember]
         public int? Hits { get; set; }
         [DataMember]
-        public User Owner { get; set; }
+        public int OwnerId { get; set; }
         [DataMember]
         public List<Comment> Comments { get; set; }
         [DataMember]
@@ -47,16 +47,5 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public List<Track> Tracks { get; set; }
         [DataMember]
         public string StreamUri { get; set; }
-
-        public static Channel[] GetChannels(IEnumerable<RentItServer.Channel> channels)
-        {
-            if (channels == null) return null;
-            List<Channel> convertedChannels = new List<Channel>();
-            foreach (RentItServer.Channel channel in channels)
-            {
-                convertedChannels.Add(channel.GetChannel());
-            }
-            return convertedChannels.ToArray();
-        }
     }
 }
