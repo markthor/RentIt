@@ -23,7 +23,7 @@ namespace RentItServer_UnitTests.ItuTests
         private const string testchanneldescr = "TestDummyChannel9000Description";
         private readonly List<string> testchannelnames = new List<string>();
         private readonly List<string> testchanneldescrs = new List<string>();
-        private readonly List<Channel> testchannels = new List<Channel>();
+        private readonly List<RentItServer.ITU.DatabaseWrapperObjects.Channel> testchannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>();
 
         private const int interval = 3;
 
@@ -523,7 +523,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
@@ -553,7 +553,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
@@ -580,7 +580,7 @@ namespace RentItServer_UnitTests.ItuTests
             testId = user.Id;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -609,7 +609,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -638,7 +638,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -667,7 +667,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -696,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -725,7 +725,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -754,7 +754,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -783,7 +783,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
@@ -812,7 +812,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
             try
             {
-                Channel channel = null;
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
                     channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });

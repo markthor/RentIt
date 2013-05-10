@@ -31,7 +31,7 @@ namespace RentItServer.ITU
         //The channel organizer
         private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
-        private readonly Dictionary<int, Channel> _channelCache;
+        private readonly Dictionary<int, DatabaseWrapperObjects.Channel> _channelCache;
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
@@ -50,11 +50,11 @@ namespace RentItServer.ITU
         /// </summary>
         private Controller()
         {
-            _channelCache = new Dictionary<int, Channel>();
+            _channelCache = new Dictionary<int, DatabaseWrapperObjects.Channel>();
             _userCache = new TernarySearchTrie<DatabaseWrapperObjects.User>();
             // Initialize channel search trie
-            IEnumerable<Channel> allChannels = _dao.GetAllChannels();
-            foreach (Channel channel in allChannels)
+            IEnumerable<DatabaseWrapperObjects.Channel> allChannels = _dao.GetAllChannels();
+            foreach (DatabaseWrapperObjects.Channel channel in allChannels)
             {
                 _channelCache[channel.Id] = channel;
             }
@@ -286,7 +286,7 @@ namespace RentItServer.ITU
             if (description == null) LogAndThrowException(new ArgumentException("description"), "CreateChannel");
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
-            Channel channel = null;
+            DatabaseWrapperObjects.Channel channel = null;
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
@@ -342,7 +342,7 @@ namespace RentItServer.ITU
             if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
 
-            Channel channel = null;
+            DatabaseWrapperObjects.Channel channel = null;
             try
             {
                 lock (_dbLock)
@@ -350,7 +350,7 @@ namespace RentItServer.ITU
                     channel = _dao.GetChannel(channelId);
 
                     string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
-                    if (channel.UserId == userId)
+                    if (channel.OwnerId == userId)
                     {
                         _dao.DeleteChannel(userId, channel);
                         _channelCache[channelId] = null;
@@ -404,7 +404,7 @@ namespace RentItServer.ITU
             }*/
 
             // cache might be outdated, query the database to be sure.
-            Channel channel = _dao.GetChannel(channelId);
+            DatabaseWrapperObjects.Channel channel = _dao.GetChannel(channelId);
             if (channel != null)
             {
                 // channel was found in the database, adding to cache
@@ -415,7 +415,7 @@ namespace RentItServer.ITU
                 LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
             }
 
-            return channel.GetChannel();
+            return channel;
         }
 
         /// <summary>
@@ -428,8 +428,8 @@ namespace RentItServer.ITU
             try
             {
                 List<int> allChannelIds = new List<int>();
-                IEnumerable<Channel> channels = _dao.GetAllChannels();
-                foreach (Channel channel in channels)
+                IEnumerable<DatabaseWrapperObjects.Channel> channels = _dao.GetAllChannels();
+                foreach (DatabaseWrapperObjects.Channel channel in channels)
                 {
                     allChannelIds.Add(channel.Id);
                 }

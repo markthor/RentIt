@@ -272,7 +272,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The created channel.</returns>
-        public Channel CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
+        public DatabaseWrapperObjects.Channel CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -322,7 +322,7 @@ namespace RentItServer.ITU
                 {   // The channel does not exist in the database, either something fucked up or another thread removed it already.
                     throw new Exception("Channel got created and saved in the database but is not in the database.... O.ô.");
                 }
-                return theChannel;
+                return theChannel.GetChannel();
             }
         }
 
@@ -331,22 +331,22 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="ownerId">The owner id.</param>
         /// <param name="theChannel">The channel.</param>
-        public void DeleteChannel(int ownerId, Channel theChannel)
+        public void DeleteChannel(int ownerId, DatabaseWrapperObjects.Channel channel)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                int channelId = theChannel.Id;
-                var channels = from channel in context.Channels
-                               where channel.Id == theChannel.Id && channel.ChannelOwner.Id == ownerId
-                               select channel;
+                int channelId = channel.Id;
+                var channels = from c in context.Channels
+                               where c.Id == channel.Id && c.ChannelOwner.Id == ownerId
+                               select c;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
-                Channel theRawChannel = channels.First();
-                context.Channels.Remove(theRawChannel);
+                Channel dbChannel = channels.First();
+                context.Channels.Remove(dbChannel);
                 context.SaveChanges();
 
-                channels = from channel in context.Channels
-                           where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
-                           select channel;
+                channels = from c in context.Channels
+                           where c.ChannelOwner.Id == ownerId && c.Id == channelId
+                           select c;
                 if (channels.Any() == true) throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }
         }
@@ -403,20 +403,14 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <returns>The channel</returns>
-        public Channel GetChannel(int channelId)
+        public DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = context.Channels
-                            .Where(channel => channel.Id == channelId)
-                            .Include(channel => channel.ChannelOwner)
-                            .Include(channel => channel.Comments)
-                            .Include(channel => channel.Subscribers)
-                            .Include(channel => channel.Genres)
-                            .Include(channel => channel.Tracks);
-                //var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
-                //               select channel;
-
+                var channels = from c in context.Channels
+                               where c.Id == channelId
+                               select c;
+                
                 if (channels.Any() == false)
                 {   // No channel with matching id
                     return null;
@@ -425,7 +419,7 @@ namespace RentItServer.ITU
                 {
                     // Da fuk?
                 }
-                return channels.First();
+                return channels.First().GetChannel();
             }
         }
 
@@ -433,7 +427,7 @@ namespace RentItServer.ITU
         /// Gets all channels.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Channel> GetAllChannels()
+        public IEnumerable<DatabaseWrapperObjects.Channel> GetAllChannels()
         {
             IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -442,9 +436,9 @@ namespace RentItServer.ITU
 
                 if (channels.Any() == false)
                 {
-                    return new List<Channel>();
+                    return new List<DatabaseWrapperObjects.Channel>();
                 }
-                return channels.ToList();
+                return Channel.GetChannels(channels.ToList());
             }
         }
 
