@@ -1007,5 +1007,89 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         #endregion
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_NegNeg()
+        {
+            try
+            {
+                controller.Subscribe(-1, -1);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_NegZero()
+        {
+            try
+            {
+                controller.Subscribe(-1, 0);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroNeg()
+        {
+            try
+            {
+                controller.Subscribe(0, -1);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroZero()
+        {
+            try
+            {
+                controller.Subscribe(0, 0);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_PosZero()
+        {
+            try
+            {
+                controller.Subscribe(TestExtensions._testUser2.Id, 0);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_Subscribe_Parameter_ZeroPos()
+        {
+            try
+            {
+                controller.Subscribe(0, 0);
+                Assert.Fail("No exception was raised.");
+            }
+            catch
+            {
+                // this is good
+            }
+        }
     }
 }

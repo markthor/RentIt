@@ -76,6 +76,7 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
+            _streamHandler.AddLogger(_logger);
         }
 
         /// <summary>
@@ -514,8 +515,7 @@ namespace RentItServer.ITU
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                TagLib.File audioFile =
-                    TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
