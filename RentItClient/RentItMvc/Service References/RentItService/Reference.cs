@@ -23,10 +23,16 @@ namespace RentItMvc.RentItService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItMvc.RentItService.Channel[] ChannelsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RentItMvc.RentItService.Channel[] SubscribedChannelsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsernameField;
@@ -38,6 +44,19 @@ namespace RentItMvc.RentItService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItMvc.RentItService.Channel[] Channels {
+            get {
+                return this.ChannelsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChannelsField, value) != true)) {
+                    this.ChannelsField = value;
+                    this.RaisePropertyChanged("Channels");
+                }
             }
         }
         
@@ -63,6 +82,19 @@ namespace RentItMvc.RentItService {
                 if ((this.IdField.Equals(value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RentItMvc.RentItService.Channel[] SubscribedChannels {
+            get {
+                return this.SubscribedChannelsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubscribedChannelsField, value) != true)) {
+                    this.SubscribedChannelsField = value;
+                    this.RaisePropertyChanged("SubscribedChannels");
                 }
             }
         }
@@ -118,7 +150,7 @@ namespace RentItMvc.RentItService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private RentItMvc.RentItService.User OwnerField;
+        private int OwnerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> RatingField;
@@ -221,14 +253,14 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public RentItMvc.RentItService.User Owner {
+        public int OwnerId {
             get {
-                return this.OwnerField;
+                return this.OwnerIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.OwnerField, value) != true)) {
-                    this.OwnerField = value;
-                    this.RaisePropertyChanged("Owner");
+                if ((this.OwnerIdField.Equals(value) != true)) {
+                    this.OwnerIdField = value;
+                    this.RaisePropertyChanged("OwnerId");
                 }
             }
         }

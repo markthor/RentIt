@@ -24,7 +24,7 @@
       <xs:element minOccurs="0" name="Hits" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="OwnerId" type="xs:int" />
       <xs:element minOccurs="0" name="Rating" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="StreamUri" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Subscribers" nillable="true" type="tns:ArrayOfUser" />
