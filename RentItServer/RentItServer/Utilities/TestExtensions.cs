@@ -20,9 +20,9 @@ namespace RentItServer.Utilities
         public const string genreName2 = "Heavy Metal";
         public const string genreName3 = "Jazz";
         //The first user created the last time the database was populated.
-        public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser1;
+        public static ITU.DatabaseWrapperObjects.User _testUser1;
         //The second user created the last time the database was populated.
-        public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser2;
+        public static ITU.DatabaseWrapperObjects.User _testUser2;
         public static ITU.DatabaseWrapperObjects.Track _testTrack;
 
         /// <summary>
