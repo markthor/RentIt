@@ -209,6 +209,18 @@
   <wsdl:message name="IRentItService_GetDefaultTrackSearchArgs_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultTrackSearchArgsResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_GetCreatedChannels_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCreatedChannels" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetCreatedChannels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCreatedChannelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetSubscribedChannels_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscribedChannels" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetSubscribedChannels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscribedChannelsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
@@ -341,6 +353,14 @@
     <wsdl:operation name="GetDefaultTrackSearchArgs">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs" message="tns:IRentItService_GetDefaultTrackSearchArgs_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgsResponse" message="tns:IRentItService_GetDefaultTrackSearchArgs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreatedChannels">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetCreatedChannels" message="tns:IRentItService_GetCreatedChannels_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetCreatedChannelsResponse" message="tns:IRentItService_GetCreatedChannels_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscribedChannels">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetSubscribedChannels" message="tns:IRentItService_GetSubscribedChannels_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetSubscribedChannelsResponse" message="tns:IRentItService_GetSubscribedChannels_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -635,6 +655,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetDefaultTrackSearchArgs">
       <soap:operation soapAction="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCreatedChannels">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetCreatedChannels" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscribedChannels">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetSubscribedChannels" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

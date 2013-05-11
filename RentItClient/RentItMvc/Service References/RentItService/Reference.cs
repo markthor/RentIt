@@ -1012,6 +1012,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgsResponse")]
         System.Threading.Tasks.Task<RentItMvc.RentItService.TrackSearchArgs> GetDefaultTrackSearchArgsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCreatedChannels", ReplyAction="http://tempuri.org/IRentItService/GetCreatedChannelsResponse")]
+        RentItMvc.RentItService.Channel[] GetCreatedChannels(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCreatedChannels", ReplyAction="http://tempuri.org/IRentItService/GetCreatedChannelsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetCreatedChannelsAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscribedChannels", ReplyAction="http://tempuri.org/IRentItService/GetSubscribedChannelsResponse")]
+        RentItMvc.RentItService.Channel[] GetSubscribedChannels(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscribedChannels", ReplyAction="http://tempuri.org/IRentItService/GetSubscribedChannelsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetSubscribedChannelsAsync(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1303,6 +1315,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<RentItMvc.RentItService.TrackSearchArgs> GetDefaultTrackSearchArgsAsync() {
             return base.Channel.GetDefaultTrackSearchArgsAsync();
+        }
+        
+        public RentItMvc.RentItService.Channel[] GetCreatedChannels(int userId) {
+            return base.Channel.GetCreatedChannels(userId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetCreatedChannelsAsync(int userId) {
+            return base.Channel.GetCreatedChannelsAsync(userId);
+        }
+        
+        public RentItMvc.RentItService.Channel[] GetSubscribedChannels(int userId) {
+            return base.Channel.GetSubscribedChannels(userId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetSubscribedChannelsAsync(int userId) {
+            return base.Channel.GetSubscribedChannelsAsync(userId);
         }
     }
 }

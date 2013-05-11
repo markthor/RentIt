@@ -466,4 +466,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetCreatedChannels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCreatedChannelsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetCreatedChannelsResult" nillable="true" type="q21:ArrayOfChannel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscribedChannels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscribedChannelsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetSubscribedChannelsResult" nillable="true" type="q22:ArrayOfChannel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

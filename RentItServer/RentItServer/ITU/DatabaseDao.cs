@@ -1129,7 +1129,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public List<Channel> GetChannels(int userId)
+        public List<Channel> GetCreatedChannels(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {

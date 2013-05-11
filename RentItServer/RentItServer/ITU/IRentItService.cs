@@ -339,7 +339,7 @@ namespace RentItServer.ITU
         /// <param name="userId"></param>
         /// <returns></returns>
         [OperationContract]
-        DatabaseWrapperObjects.Channel[] GetChannels(int userId);
+        DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId);
 
         /// <summary>
         /// Gets the channels this user is subscribed to

@@ -123,7 +123,7 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channels = proxy.GetUser(userId);
+                channels = proxy.GetCreatedChannels(userId);
             }
             List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             return PartialView(guiChannelList);

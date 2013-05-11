@@ -278,9 +278,9 @@ namespace RentItServer
             return _controller.GetDefaultTrackSearchArgs();
         }
 
-        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(int userId)
+        public ITU.DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId)
         {
-            return Channel.GetChannels(_controller.GetChannels(userId)).ToArray();
+            return Channel.GetChannels(_controller.GetCreatedChannels(userId)).ToArray();
         }
 
         public ITU.DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId)

@@ -738,9 +738,9 @@ namespace RentItServer.ITU
             return new TrackSearchArgs();
         }
 
-        public List<Channel> GetChannels(int userId)
+        public List<Channel> GetCreatedChannels(int userId)
         {
-            return _dao.GetChannels(userId);
+            return _dao.GetCreatedChannels(userId);
         }
 
         public List<Channel> GetSubscribedChannels(int userId)

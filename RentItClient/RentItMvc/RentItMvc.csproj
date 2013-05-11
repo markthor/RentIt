@@ -177,28 +177,28 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Channel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.ChannelSearchArgs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Comment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.ChannelSearchArgs.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackSearchArgs.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\RentItService\RentItService.disco" />
-    <None Include="Service References\RentItService\configuration91.svcinfo" />
-    <None Include="Service References\RentItService\configuration.svcinfo" />
-    <None Include="Service References\RentItService\Reference.svcmap">
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RentItService\RentItService.disco" />
+    <Content Include="Service References\RentItService\configuration91.svcinfo" />
+    <Content Include="Service References\RentItService\configuration.svcinfo" />
+    <Content Include="Service References\RentItService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -215,7 +215,10 @@
     <Content Include="Views\Shared\BaseLayout.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
-    <None Include="Service References\RentItService\RentItService.wsdl" />
+    <Content Include="Views\Home\MyChannels.cshtml" />
+    <Content Include="Views\Home\EditChannel.cshtml" />
+    <Content Include="Views\Audio\LastTracks.cshtml" />
+    <Content Include="Service References\RentItService\RentItService.wsdl" />
     <None Include="Service References\RentItService\RentItService.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -228,18 +231,15 @@
     <None Include="Service References\RentItService\RentItService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\RentItService\RentItService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\RentItService\RentItService5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RentItService\RentItService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Views\Home\MyChannels.cshtml" />
-    <Content Include="Views\Home\EditChannel.cshtml" />
-    <Content Include="Views\Audio\LastTracks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
