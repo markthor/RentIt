@@ -1128,5 +1128,32 @@ namespace RentItServer.ITU
 
             }
         }
+
+        public List<Channel> GetChannels(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                               where c.ChannelOwner.Id == userId
+                               select c;
+                return channels.ToList();
+            }
+        }
+
+        public List<Channel> GetSubscribedChannels(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Id == userId
+                            select u;
+                if (!users.Any())
+                    return new List<Channel>();
+                var channels = from c in context.Channels
+                               where c.Subscribers.Contains(users.First())
+                               select c;
+                return channels.ToList();
+            }
+        }
     }
 }

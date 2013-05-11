@@ -228,9 +228,6 @@
     <None Include="Service References\RentItService\RentItService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\RentItService\RentItService5.xsd">
       <SubType>Designer</SubType>
     </None>

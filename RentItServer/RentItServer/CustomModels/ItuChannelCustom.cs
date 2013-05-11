@@ -52,9 +52,9 @@ namespace RentItServer
             return tracks;
         }
 
-        public static List<ITU.DatabaseWrapperObjects.Channel> GetChannels(List<Channel> channels)
+        public static List<ITU.DatabaseWrapperObjects.Channel> GetChannels(IEnumerable<Channel> channels)
         {
-            List<ITU.DatabaseWrapperObjects.Channel> convertedChannels = new List<ITU.DatabaseWrapperObjects.Channel>(channels.Count);
+            List<ITU.DatabaseWrapperObjects.Channel> convertedChannels = new List<ITU.DatabaseWrapperObjects.Channel>();
             foreach(Channel channel in channels)
             {
                 convertedChannels.Add(channel.GetChannel());

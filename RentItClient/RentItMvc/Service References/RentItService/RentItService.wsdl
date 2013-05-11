@@ -9,7 +9,6 @@
       <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
       <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IRentItService_Login_InputMessage">

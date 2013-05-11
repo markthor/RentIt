@@ -27,7 +27,6 @@
     <MetadataFile FileName="RentItService1.xsd" MetadataType="Schema" ID="37a5dee7-dd34-4569-b589-0997a43df979" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd2" />
     <MetadataFile FileName="RentItService2.xsd" MetadataType="Schema" ID="bcd51f20-035b-4a37-8b38-82f17f13e160" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" />
     <MetadataFile FileName="RentItService3.xsd" MetadataType="Schema" ID="c166cec9-1e33-4a60-98f8-207ecec1f496" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd6" />
-    <MetadataFile FileName="RentItService4.xsd" MetadataType="Schema" ID="4051d5e1-3b99-4917-b425-065087a8eedb" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd7" />
     <MetadataFile FileName="RentItService.wsdl" MetadataType="Wsdl" ID="2925d7b2-daa2-47d8-bfe8-e3f65b00b024" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?wsdl" />
     <MetadataFile FileName="RentItService5.xsd" MetadataType="Schema" ID="e4ee8316-4d5a-4c9d-9bf6-13d3bb16360a" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd1" />
     <MetadataFile FileName="RentItService6.xsd" MetadataType="Schema" ID="4220d26b-8bfd-401c-9312-d058e00660dd" SourceId="1" SourceUrl="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" />

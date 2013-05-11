@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
+
 using RentItServer.ITU;
-using RentItServer.SMU;
 
 namespace RentItServer
 {
@@ -282,6 +276,16 @@ namespace RentItServer
         public TrackSearchArgs GetDefaultTrackSearchArgs()
         {
             return _controller.GetDefaultTrackSearchArgs();
+        }
+
+        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(int userId)
+        {
+            return Channel.GetChannels(_controller.GetChannels(userId)).ToArray();
+        }
+
+        public ITU.DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId)
+        {
+            return Channel.GetChannels(_controller.GetSubscribedChannels(userId)).ToArray();
         }
     }
 }

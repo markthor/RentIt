@@ -4,7 +4,6 @@
   <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
   <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
-  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/RentItServer" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -211,7 +210,7 @@
         <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="audioStream" nillable="true" type="q10:MemoryStream" />
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RentItServer" minOccurs="0" name="trackInfo" nillable="true" type="q11:Track" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="trackInfo" nillable="true" type="q11:Track" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
