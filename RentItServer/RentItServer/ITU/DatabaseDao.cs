@@ -291,7 +291,7 @@ namespace RentItServer.ITU
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
 
-                if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
+                //if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
 
                 // Create the channel object
                 Channel theChannel = new Channel()

@@ -58,18 +58,24 @@ namespace RentItMvc.Controllers
         /// <returns></returns>
         public ActionResult EditChannel(int channelId, int userId)
         {
-            Channel chan;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                chan = proxy.GetChannel(channelId);
-            }
-            GuiChannel channel = GuiClassConverter.ConvertChannel(chan);
-            if (chan != null)
-            {
+                Channel chan = proxy.GetChannel(channelId);
+                GuiChannel channel = GuiClassConverter.ConvertChannel(chan);
                 return View(channel);
             }
+        }
 
-            return Redirect("/");
+        public ActionResult CreateChannel(string channelName, int userId)
+        {
+            int channelId;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                channelId = proxy.CreateChannel(channelName, userId, "", new string[0]);
+            }
+            int routeChannelId = channelId;
+            int routeUserId = userId;
+            return RedirectToAction("EditChannel", new { channelId = routeChannelId, userId = routeUserId });
         }
 
         /// <summary>
