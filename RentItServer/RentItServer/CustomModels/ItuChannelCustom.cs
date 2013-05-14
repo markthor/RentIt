@@ -9,8 +9,7 @@ namespace RentItServer
     {
         public ITU.DatabaseWrapperObjects.Channel GetChannel()
         {
-            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId,
-                                   GetComments(), GetSubcribers(), GetGenres(), GetTracks(), StreamUri);
+            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId, StreamUri);
         }
 
         private List<ITU.DatabaseWrapperObjects.Comment> GetComments()
@@ -53,9 +52,9 @@ namespace RentItServer
             return tracks;
         }
 
-        public static List<ITU.DatabaseWrapperObjects.Channel> GetChannels(List<Channel> channels)
+        public static List<ITU.DatabaseWrapperObjects.Channel> GetChannels(IEnumerable<Channel> channels)
         {
-            List<ITU.DatabaseWrapperObjects.Channel> convertedChannels = new List<ITU.DatabaseWrapperObjects.Channel>(channels.Count);
+            List<ITU.DatabaseWrapperObjects.Channel> convertedChannels = new List<ITU.DatabaseWrapperObjects.Channel>();
             foreach(Channel channel in channels)
             {
                 convertedChannels.Add(channel.GetChannel());

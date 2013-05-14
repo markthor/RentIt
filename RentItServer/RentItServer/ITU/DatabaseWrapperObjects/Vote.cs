@@ -13,8 +13,8 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         {
             Value = value;
             VoteTime = voteTime;
-            User = user;
-            Track = track;
+            UserId = user.Id;
+            TrackId = track.Id;
         }
 
         [DataMember]
@@ -22,8 +22,8 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         [DataMember]
         public DateTime VoteTime { get; set; }
         [DataMember]
-        public User User { get; set; }
+        public int UserId { get; set; }
         [DataMember]
-        public Track Track { get; set; }
+        public int TrackId { get; set; }
     }
 }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
+
 using RentItServer.ITU;
-using RentItServer.SMU;
 
 namespace RentItServer
 {
@@ -126,7 +120,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         /// <param name="audioStream">The audio stream.</param>
         /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo)
         {
             _controller.AddTrack(userId, channelId, audioStream, trackInfo);
         }
@@ -282,6 +276,16 @@ namespace RentItServer
         public TrackSearchArgs GetDefaultTrackSearchArgs()
         {
             return _controller.GetDefaultTrackSearchArgs();
+        }
+
+        public ITU.DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId)
+        {
+            return Channel.GetChannels(_controller.GetCreatedChannels(userId)).ToArray();
+        }
+
+        public ITU.DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId)
+        {
+            return Channel.GetChannels(_controller.GetSubscribedChannels(userId)).ToArray();
         }
     }
 }

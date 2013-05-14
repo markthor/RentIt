@@ -14,8 +14,8 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Id = id;
             PostTime = postTime;
             Content = content;
-            Channel = channel;
-            User = user;
+            ChannelId = channel.Id;
+            UserId = user.Id;
         }
 
         [DataMember]
@@ -25,8 +25,8 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         [DataMember]
         public string Content { get; set; }
         [DataMember]
-        public Channel Channel { get; set; }
+        public int ChannelId { get; set; }
         [DataMember]
-        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

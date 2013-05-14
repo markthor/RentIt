@@ -144,7 +144,7 @@ namespace RentItServer.ITU
         /// <param name="audioStream">The audio stream.</param>
         /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
         [OperationContract]
-        void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo);
+        void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo);
 
         /// <summary>
         /// Gets the track info associated with the track stream.
@@ -332,5 +332,21 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         TrackSearchArgs GetDefaultTrackSearchArgs();
+
+        /// <summary>
+        /// Gets the channels created by the user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId);
+
+        /// <summary>
+        /// Gets the channels this user is subscribed to
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId);
     }
 }

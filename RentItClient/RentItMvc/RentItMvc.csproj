@@ -177,19 +177,19 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Channel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.ChannelSearchArgs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Comment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.ChannelSearchArgs.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackSearchArgs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\RentItService\RentItService.disco" />
@@ -215,6 +215,9 @@
     <Content Include="Views\Shared\BaseLayout.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
+    <Content Include="Views\Home\MyChannels.cshtml" />
+    <Content Include="Views\Home\EditChannel.cshtml" />
+    <Content Include="Views\Audio\LastTracks.cshtml" />
     <None Include="Service References\RentItService\RentItService.wsdl" />
     <None Include="Service References\RentItService\RentItService.xsd">
       <SubType>Designer</SubType>
@@ -237,12 +240,6 @@
     <None Include="Service References\RentItService\RentItService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Views\Home\MyChannels.cshtml" />
-    <Content Include="Views\Home\EditChannel.cshtml" />
-    <Content Include="Views\Audio\LastTracks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
