@@ -118,7 +118,7 @@ namespace RentItServer.ITU
 
                 //SetNextTrack(p);
 
-                _logger.AddEntry(p.ProcessName + " - " + p.ExitTime + " - " + p.MachineName + " - " + p.StartTime + " - ");
+                _logger.AddEntry(p.ProcessName + " - " + p.HasExited + " - " + p.MachineName + " - " + p.StartTime + " - ");
             }
             else //channel is already running
             {
