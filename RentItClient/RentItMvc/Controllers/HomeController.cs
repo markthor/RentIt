@@ -27,16 +27,6 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public ActionResult Main()
-        {
-            if (Session["userId"] != null)
-            {
-                return View();
-            }
-            return Redirect("/");
-        }
-
-
         public ActionResult SelectChannel(int channelId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
@@ -179,7 +169,6 @@ namespace RentItMvc.Controllers
                 track.Name = trackName;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    //Track chan = proxy.GetTrackInfoByStream(memory);
                     proxy.AddTrack(userId, channelId, memory, track);
                 }
             }
@@ -187,8 +176,9 @@ namespace RentItMvc.Controllers
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
 
-        public PartialViewResult AddTrackForm()
+        public PartialViewResult AddTrackForm(int channelId)
         {
+            Session["ChannelId"] = channelId;
             return PartialView(new GuiTrack());
         }
     }
