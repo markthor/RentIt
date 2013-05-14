@@ -69,7 +69,8 @@ namespace RentItServer.ITU
 
                 _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
 
-                string fileName = track.Id.ToString() + ".mp3";
+                //string fileName = track.Id.ToString() + ".mp3";
+                string fileName = "a.mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
                 //Writes an m3u playlist to the filesystem.
