@@ -47,5 +47,17 @@ namespace RentItMvc.Controllers
                 return Json("The current password is wrong.", JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult IsChannelNameAvailable(string channelName)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                if (proxy.IsChannelNameAvailable(channelName))
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                return Json("The name is already in use.", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

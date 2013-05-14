@@ -41,6 +41,7 @@ namespace RentItMvc.Models
 
         [Required]
         [Display(Name = "Name")]
+        [Remote("IsChannelNameAvailable", "Validation")]
         public string Name { get; set; }
 
         [Required]

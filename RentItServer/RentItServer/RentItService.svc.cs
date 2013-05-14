@@ -287,5 +287,10 @@ namespace RentItServer
         {
             return Channel.GetChannels(_controller.GetSubscribedChannels(userId)).ToArray();
         }
+
+        public bool IsChannelNameAvailable(string channelName)
+        {
+            return _controller.IsChannelNameAvailable(channelName);
+        }
     }
 }
