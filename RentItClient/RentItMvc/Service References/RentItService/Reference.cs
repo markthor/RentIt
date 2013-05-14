@@ -1024,6 +1024,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscribedChannels", ReplyAction="http://tempuri.org/IRentItService/GetSubscribedChannelsResponse")]
         System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetSubscribedChannelsAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackByChannelId", ReplyAction="http://tempuri.org/IRentItService/GetTrackByChannelIdResponse")]
+        RentItMvc.RentItService.Track[] GetTrackByChannelId(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackByChannelId", ReplyAction="http://tempuri.org/IRentItService/GetTrackByChannelIdResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTrackByChannelIdAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
+        bool IsChannelNameAvailable(string channelName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
+        System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1331,6 +1343,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<RentItMvc.RentItService.Channel[]> GetSubscribedChannelsAsync(int userId) {
             return base.Channel.GetSubscribedChannelsAsync(userId);
+        }
+        
+        public RentItMvc.RentItService.Track[] GetTrackByChannelId(int channelId) {
+            return base.Channel.GetTrackByChannelId(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTrackByChannelIdAsync(int channelId) {
+            return base.Channel.GetTrackByChannelIdAsync(channelId);
+        }
+        
+        public bool IsChannelNameAvailable(string channelName) {
+            return base.Channel.IsChannelNameAvailable(channelName);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName) {
+            return base.Channel.IsChannelNameAvailableAsync(channelName);
         }
     }
 }
