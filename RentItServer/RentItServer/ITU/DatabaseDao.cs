@@ -34,6 +34,7 @@ namespace RentItServer.ITU
                             where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
                                    u.Password.Equals(password)
                             select u;
+                if (!users.Any()) return null;
                 return users.First();
             }
         }
@@ -1166,6 +1167,17 @@ namespace RentItServer.ITU
                 if (!tracks.Any())
                     return new List<Track>();
                 return tracks.ToList();
+            }
+        }
+
+        public bool IsChannelNameAvailable(string channelName)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                               where c.Name.Equals(channelName)
+                               select c;
+                return !channels.Any();
             }
         }
     }

@@ -292,5 +292,10 @@ namespace RentItServer
         {
             return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
         }
+
+            public bool IsChannelNameAvailable(string channelName)
+        {
+            return _controller.IsChannelNameAvailable(channelName);
+        }
     }
 }

@@ -752,5 +752,10 @@ namespace RentItServer.ITU
         {
             return _dao.GetTracksByChannelId(channelId);
         }
+
+        public bool IsChannelNameAvailable(string channelName)
+        {
+            return _dao.IsChannelNameAvailable(channelName);
+        }
     }
 }

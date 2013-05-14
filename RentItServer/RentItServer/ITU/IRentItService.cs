@@ -356,5 +356,8 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId);
+        
+        [OperationContract]
+        bool IsChannelNameAvailable(string channelName);
     }
 }
