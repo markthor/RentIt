@@ -52,7 +52,10 @@ namespace RentItServer.ITU
             }
             return _instance;
         }
-
+        /// <summary>
+        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
+        /// </summary>
+        /// <param name="channelId">Channel id of the channel to be started</param>
         public void StartStream(int channelId)
         {
             _logger.AddEntry("Start Stream start");
@@ -83,9 +86,10 @@ namespace RentItServer.ITU
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
                 _logger.AddEntry("channel config xml: " + xml);
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
-                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
@@ -112,7 +116,7 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                SetNextTrack(p);
+                //SetNextTrack(p);
             }
             else //channel is already running
             {
@@ -173,6 +177,10 @@ namespace RentItServer.ITU
             return false;
         }
 
+        /// <summary>
+        /// Stops the stream of a channel and sets it is not running.
+        /// </summary>
+        /// <param name="channelId">The id of the channel to be stopped</param>
         public void StopStream(int channelId)
         {
             if (IsChannelRunning(channelId))
