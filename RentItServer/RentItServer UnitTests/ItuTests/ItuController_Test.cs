@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
 using RentItServer.ITU;
-using RentItServer.Utilities;
+using RentItServer_UnitTests.ItuTestUtilities;
 using RentItServer_UnitTests.ItuTests;
 
 namespace RentItServer_UnitTests.ItuTests

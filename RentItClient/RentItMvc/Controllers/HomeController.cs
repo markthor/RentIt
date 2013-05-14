@@ -66,12 +66,17 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public ActionResult CreateChannel(string channelName, int userId)
+        public PartialViewResult CreateChannelForm()
+        {
+            return PartialView(new GuiChannel());
+        }
+
+        public ActionResult CreateChannel(GuiChannel channel, int userId)
         {
             int channelId;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channelId = proxy.CreateChannel(channelName, userId, "", new string[0]);
+                channelId = proxy.CreateChannel(channel.Name, userId, "", new string[0]);
             }
             int routeChannelId = channelId;
             int routeUserId = userId;

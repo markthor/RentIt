@@ -72,11 +72,12 @@ namespace RentItServer.ITU
                 string fileName = track.Id.ToString() + ".mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
+                //Writes an m3u playlist to the filesystem.
                 GenerateM3u(channelId, fileName); // generate m3u
                 string m3uFileName;
                 m3uFileName = channelId + ".m3u";
 
-
+                //Writes an xml config file for ezstream.
                 string xml;
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);

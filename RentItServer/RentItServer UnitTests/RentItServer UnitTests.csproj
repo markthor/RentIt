@@ -68,6 +68,7 @@
     <Compile Include="ItuTests\ItuController_Test.cs" />
     <Compile Include="ItuTests\ItuDao_Test.cs" />
     <Compile Include="ItuTests\StreamHandler_Test.cs" />
+    <Compile Include="ItuTestUtilities\TestExtensions.cs" />
     <Compile Include="Service References\ITUServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -192,6 +193,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

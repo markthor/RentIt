@@ -239,6 +239,7 @@
     <None Include="Service References\RentItService\RentItService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Home\CreateChannelForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -40,10 +40,7 @@ namespace RentItMvc.Utilities
                 chan.Hits = c.Hits.Value;
             chan.Name = c.Name;
             chan.StreamUri = c.StreamUri;
-            List<GuiTrack> tracks = new List<GuiTrack>();
-            //foreach (Track t in c.)
-            //    tracks.Add(ConvertTrack(t));
-            chan.Tracks = tracks;
+            chan.Tracks = new List<GuiTrack>();
             return chan;
         }
 
