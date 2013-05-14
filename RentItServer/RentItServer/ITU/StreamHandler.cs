@@ -93,20 +93,22 @@ namespace RentItServer.ITU
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
-
+                
 
                 
 
                 string ezpath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe";
-                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", ezpath + " " + arguments);
-                startInfo.RedirectStandardInput = true;
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezpath + " " + arguments);
+                //startInfo.RedirectStandardInput = true;
                 startInfo.RedirectStandardOutput = true;
                 startInfo.UseShellExecute = false;
                 startInfo.CreateNoWindow = true;
-
+                _logger.AddEntry("tsartinfo ready");
                 EzProcess p = new EzProcess(channelId);
                 p.StartInfo = startInfo;
+                _logger.AddEntry("startinfo sat");
                 p.Start();
+                _logger.AddEntry("Process running");
 
 
 
