@@ -6,7 +6,7 @@
 }
 
 <div class="signup-field">
-    @using (Html.BeginForm("AddTrack", "Home", new { channelId = Model.Id, userId = Session["userId"], trackName = Model.TrackName, artistName = Model.ArtistName  }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddTrack", "Home", new { channelId = Session["ChannelId"], userId = Session["userId"], trackName = Model.TrackName, artistName = Model.ArtistName  }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     { 
         <div class="input-field">
             @Html.TextBoxFor(t => Model.ArtistName, new { placeholder = "Artist name" });

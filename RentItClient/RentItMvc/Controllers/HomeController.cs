@@ -183,8 +183,9 @@ namespace RentItMvc.Controllers
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
 
-        public PartialViewResult AddTrackForm()
+        public PartialViewResult AddTrackForm(int channelId)
         {
+            Session["ChannelId"] = channelId;
             return PartialView(new GuiTrack());
         }
     }

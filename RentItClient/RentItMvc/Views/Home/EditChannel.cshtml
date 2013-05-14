@@ -42,5 +42,5 @@
                     }
             </table>
         </div>
-        @Html.Action("AddTrackForm", "Home");
+        @Html.Action("AddTrackForm", "Home", new { channelId = Model.Id } );
 </div>
