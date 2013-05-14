@@ -126,7 +126,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         /// <param name="audioStream">The audio stream.</param>
         /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo)
         {
             _controller.AddTrack(userId, channelId, audioStream, trackInfo);
         }

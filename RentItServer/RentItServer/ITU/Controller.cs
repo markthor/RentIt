@@ -39,7 +39,7 @@ namespace RentItServer.ITU
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
-        public static string _defaultStreamExtension = ".ogg";
+        public static string _defaultStreamExtension = "";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         private int tempCounter;
@@ -76,6 +76,7 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
+            _streamHandler.AddLogger(_logger);
         }
 
         /// <summary>
@@ -111,25 +112,26 @@ namespace RentItServer.ITU
             if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
             if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
 
-            User theUser = null;
+            User user = null;
             try
             {
-                try
+                /*try
                 {
-                    theUser = _userCache.Get(usernameOrEmail);
+                    user = _userCache.Get(usernameOrEmail).GetUser();
                 }
                 catch (NullValueException)
                 {
                     lock (_dbLock)
                     {
-                        theUser = _dao.Login(usernameOrEmail, password);
+                        user = _dao.Login(usernameOrEmail, password);
                     }
-                }
-                return theUser.GetUser();
+                }*/
+                user = _dao.Login(usernameOrEmail, password);
+                return user.GetUser();
             }
             catch (Exception e)
             {
-                _logger.AddEntry("Login failed with exception ["+e+"]. Local variables: usernameOrEmail = "+usernameOrEmail+", password = " + password+", theUser = " + theUser);
+                _logger.AddEntry("Login failed with exception [" + e + "]. Local variables: usernameOrEmail = " + usernameOrEmail + ", password = " + password + ", user = " + user);
                 throw;
             }
         }
@@ -154,15 +156,15 @@ namespace RentItServer.ITU
 
             try
             {
-                User theUser = null;
+                User user = null;
                 lock (_dbLock)
                 {
-                    theUser = _dao.SignUp(username, email, password);
-                    _userCache.Put(theUser.Username, theUser);
-                    _userCache.Put(theUser.Email, theUser);
+                    user = _dao.SignUp(username, email, password);
+                    _userCache.Put(user.Username, user);
+                    _userCache.Put(user.Email, user);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
-                return theUser.GetUser();
+                return user.GetUser();
             }
             catch (Exception e)
             {
@@ -179,16 +181,16 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         public void DeleteUser(int userId)
         {
-            User theUser = null;
+            User user = null;
             try
             {
                 lock (_dbLock)
                 {
-                    theUser = _dao.GetUser(userId);
+                    user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
-                    _userCache.Put(theUser.Username, null);
-                    _userCache.Put(theUser.Email, null);
-                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, theUser));
+                    _userCache.Put(user.Username, null);
+                    _userCache.Put(user.Email, null);
+                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
                 }
             }
             catch (Exception e)
@@ -198,7 +200,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry(
                     string.Format(
                         "User deletion failed with exception [{0}]. Local variables: userId = {1}, theUser = {2}.", e,
-                        userId, theUser));
+                        userId, user));
                 throw;
             }
         }
@@ -247,23 +249,23 @@ namespace RentItServer.ITU
 
         public void UpdateUser(int userId, string username, string password, string email)
         {
-            User theUser = null;
-            User theUpdatedUser = null;
+            User user = null;
+            User updatedUser = null;
             try
             {
-                theUser = _dao.GetUser(userId);
+                user = _dao.GetUser(userId);
                 _dao.UpdateUser(userId, username, password);
-                if (theUser.Username != null) _userCache.Put(theUser.Username, null);
-                if (theUser.Email != null) _userCache.Put(theUser.Email, null);
-                theUpdatedUser = _dao.GetUser(userId);
-                if (username != null) _userCache.Put(username, theUpdatedUser);
-                if (email != null) _userCache.Put(email, theUpdatedUser);
+                if (user.Username != null) _userCache.Put(user.Username, null);
+                if (user.Email != null) _userCache.Put(user.Email, null);
+                updatedUser = _dao.GetUser(userId);
+                if (username != null) _userCache.Put(username, updatedUser);
+                if (email != null) _userCache.Put(email, updatedUser);
             }
             catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, theUser = {5}, theUpdatedUser = {6}", userId, username, password, email, theUser, theUpdatedUser));
+                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", userId, username, password, email, user, updatedUser));
                 throw;
             }
         }
@@ -350,7 +352,7 @@ namespace RentItServer.ITU
                     string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
                     if (channel.UserId == userId)
                     {
-                        _dao.DeleteChannel(userId, channel);
+                        _dao.DeleteChannel(userId, channel.GetChannel());
                         _channelCache[channelId] = null;
                         _logger.AddEntry(logEntry + "Deletion successful.");
                     }
@@ -442,11 +444,17 @@ namespace RentItServer.ITU
             }
         }
 
-        public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
+        public DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
             {
-                return ITU.DatabaseWrapperObjects.Channel.GetChannels(_dao.GetChannelsWithFilter(args));
+                List<DatabaseWrapperObjects.Channel> theChannels = new List<DatabaseWrapperObjects.Channel>();
+                IEnumerable<Channel> channels = _dao.GetChannelsWithFilter(args);
+                foreach (Channel c in channels)
+                {
+                    theChannels.Add(c.GetChannel());
+                }
+                return theChannels.ToArray();
                 //return _dao.GetChannelsWithFilter(args);
             }
             catch (Exception e)
@@ -480,7 +488,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, RentItServer.ITU.DatabaseWrapperObjects.Track trackInfo)
         {
             try
             {
@@ -513,8 +521,7 @@ namespace RentItServer.ITU
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                TagLib.File audioFile =
-                    TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -569,7 +576,7 @@ namespace RentItServer.ITU
                 Track track = _dao.GetTrack(trackId);
                 string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
 
-                _dao.DeleteTrackEntry(track);
+                _dao.DeleteTrackEntry(track.GetTrack());
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)

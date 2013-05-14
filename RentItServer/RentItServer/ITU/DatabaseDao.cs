@@ -34,12 +34,7 @@ namespace RentItServer.ITU
                             where (u.Username.Equals(usernameOrEmail) || u.Email.Equals(usernameOrEmail)) &&
                                    u.Password.Equals(password)
                             select u;
-                if (!users.Any())
-                {
-                    return null;
-                }
                 return users.First();
-
             }
         }
 
@@ -336,22 +331,22 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="ownerId">The owner id.</param>
         /// <param name="theChannel">The channel.</param>
-        public void DeleteChannel(int ownerId, Channel theChannel)
+        public void DeleteChannel(int ownerId, DatabaseWrapperObjects.Channel channel)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                int channelId = theChannel.Id;
-                var channels = from channel in context.Channels
-                               where channel.Id == theChannel.Id && channel.ChannelOwner.Id == ownerId
-                               select channel;
+                int channelId = channel.Id;
+                var channels = from c in context.Channels
+                               where c.Id == channel.Id && c.ChannelOwner.Id == ownerId
+                               select c;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
-                Channel theRawChannel = channels.First();
-                context.Channels.Remove(theRawChannel);
+                Channel dbChannel = channels.First();
+                context.Channels.Remove(dbChannel);
                 context.SaveChanges();
 
-                channels = from channel in context.Channels
-                           where channel.ChannelOwner.Id == ownerId && channel.Id == channelId
-                           select channel;
+                channels = from c in context.Channels
+                           where c.ChannelOwner.Id == ownerId && c.Id == channelId
+                           select c;
                 if (channels.Any() == true) throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }
         }
@@ -412,16 +407,10 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = context.Channels
-                            .Where(channel => channel.Id == channelId)
-                            .Include(channel => channel.ChannelOwner)
-                            .Include(channel => channel.Comments)
-                            .Include(channel => channel.Subscribers)
-                            .Include(channel => channel.Genres)
-                            .Include(channel => channel.Tracks);
-                //var channels = from channel in context.Channels.Where(channel => channel.Id == channelId)
-                //               select channel;
-
+                var channels = from c in context.Channels
+                               where c.Id == channelId
+                               select c;
+                
                 if (channels.Any() == false)
                 {   // No channel with matching id
                     return null;
@@ -472,16 +461,10 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
                 //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
-                
-                var channels = context.Channels
-                            .Where(channel => channel.Name.StartsWith(filter.SearchString))
-                            .Include(channel => channel.ChannelOwner)
-                            .Include(channel => channel.Comments)
-                            .Include(channel => channel.Subscribers)
-                            .Include(channel => channel.Genres)
-                            .Include(channel => channel.Tracks.Select(track => track.Channel))
-                            .Include(channel => channel.Tracks.Select(track => track.TrackPlays))
-                            .Include(channel => channel.Tracks.Select(track => track.Votes));
+
+                var channels = from c in context.Channels
+                               where c.Name.StartsWith(filter.SearchString)
+                               select c;
 
                 if (filter.AmountPlayed > -1)
                 {   // Apply amount played filter
@@ -544,31 +527,27 @@ namespace RentItServer.ITU
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
-            }
 
-            if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
-            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                if (filter.StartIndex < 0)
-                {   // Avoid OutOfBoundsException
-                    filter.StartIndex = 0;
+                if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
+                {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                    Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
+                    if (filter.StartIndex < 0)
+                    {   // Avoid OutOfBoundsException
+                        filter.StartIndex = 0;
+                    }
+                    if (filter.EndIndex < filteredChannels.Count)
+                    {
+                        filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
+                    }
+                    else
+                    {
+                        filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
+                    }
+                    filteredChannels = new List<Channel>(range);
                 }
-                if (filter.EndIndex < filteredChannels.Count)
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
-                }
-                else
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
-                }
-                filteredChannels = new List<Channel>(range);
+                filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
+                return filteredChannels;
             }
-            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
-            foreach (Channel c in filteredChannels)
-            {
-                c.Tracks = c.Tracks.ToList();
-            }
-            return filteredChannels;
         }
 
         /// <summary>
@@ -790,7 +769,7 @@ namespace RentItServer.ITU
         /// Removes the track.
         /// </summary>
         /// <param name="track">The track.</param>
-        public void DeleteTrackEntry(Track track)
+        public void DeleteTrackEntry(ITU.DatabaseWrapperObjects.Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -798,14 +777,22 @@ namespace RentItServer.ITU
                                where channel.Id == track.ChannelId
                                select channel;
 
+                var tracks = from atrack in context.Tracks
+                             where atrack.Id == track.Id
+                             select atrack;
+
+                if (tracks.Any() == false) throw new ArgumentException("The track entry is not in the database");
+
+                Track theTrack = tracks.First();
+
                 // If the track is associated with a channel, remove it from the channel as well
                 if (channels.Any() == true)
                 {
                     Channel theChannel = channels.First();
-                    theChannel.Tracks.Remove(track);
+                    theChannel.Tracks.Remove(theTrack);
                 }
 
-                context.Tracks.Remove(track);
+                context.Tracks.Remove(theTrack);
                 context.SaveChanges();
             }
         }

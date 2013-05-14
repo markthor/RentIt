@@ -10,7 +10,17 @@ namespace RentItServer
     {
         public ITU.DatabaseWrapperObjects.User GetUser()
         {
-            return new ITU.DatabaseWrapperObjects.User(Id, Username, Email, ITU.DatabaseWrapperObjects.Channel.GetChannels(Channels), ITU.DatabaseWrapperObjects.Channel.GetChannels(SubscribedChannels));
+            return new ITU.DatabaseWrapperObjects.User(Id, Username, Email);
+        }
+
+        public static List<ITU.DatabaseWrapperObjects.User> GetUsers(List<User> users)
+        {
+            List<ITU.DatabaseWrapperObjects.User> convertedUsers = new List<ITU.DatabaseWrapperObjects.User>(users.Count);
+            foreach (User u in users)
+            {
+                convertedUsers.Add(u.GetUser());
+            }
+            return convertedUsers;
         }
     }
 }

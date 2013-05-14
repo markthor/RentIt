@@ -19,6 +19,12 @@ namespace RentItMvc.Utilities
                     GuiChannel chan = new GuiChannel();
                     chan.Id = c.Id;
                     chan.Description = c.Description;
+                    if (c.Tracks != null)
+                        chan.Tracks = c.Tracks;
+                    else
+                    {
+                        
+                    }
                     if(c.Hits != null)
                         chan.Hits = c.Hits.Value;
                     chan.Name = c.Name;

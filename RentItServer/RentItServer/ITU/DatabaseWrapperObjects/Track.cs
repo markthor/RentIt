@@ -14,7 +14,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         }
 
         public Track(int id, string path, string name, string artist, int length,
-                     int upVotes, int downVotes, List<Vote> votes, List<TrackPlay> trackPlays)
+                     int upVotes, int downVotes, int channelId)
         {
             Id = id;
             Path = path;
@@ -23,8 +23,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Length = length;
             UpVotes = upVotes;
             DownVotes = downVotes;
-            Votes = votes;
-            TrackPlays = trackPlays;
+            ChannelId = channelId;
         }
 
         [DataMember]
@@ -41,11 +40,10 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public int UpVotes { get; set; }
         [DataMember]
         public int DownVotes { get; set; }
-        [DataMember]
-        public List<Vote> Votes { get; set; }
-        [DataMember]
-        public List<TrackPlay> TrackPlays { get; set; }
 
+        [DataMember]
+        public int ChannelId { get; set; }
+    
         public static Track[] GetTracks(IEnumerable<RentItServer.Track> tracks)
         {
             if (tracks == null) return null;

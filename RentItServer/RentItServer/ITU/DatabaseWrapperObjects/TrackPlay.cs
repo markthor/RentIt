@@ -12,12 +12,12 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public TrackPlay(DateTime timePlayed, Track track)
         {
             TimePlayed = timePlayed;
-            Track = track;
+            TrackId = track.Id;
         }
 
         [DataMember]
         public DateTime TimePlayed { get; set; }
         [DataMember]
-        public Track Track { get; set; }
+        public int TrackId { get; set; }
     }
 }
