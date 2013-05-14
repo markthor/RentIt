@@ -88,19 +88,23 @@ namespace RentItServer.ITU
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
+                
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+                p.StartInfo.UseShellExecute = false;
+                //p.StartInfo.UserName = "rentit21";
+                //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 _logger.AddEntry("Process created");
                 p.Start();
                 _logger.AddEntry("Process started");
 
                 //Listen for when a new song starts
-                p.OutputDataReceived += p_OutputDataReceived;
+                //p.OutputDataReceived += p_OutputDataReceived;
 
-                runningChannelIds.Add(channelId, p);
+                //runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                SetNextTrack(p);
+                //SetNextTrack(p);
             }
             else //channel is already running
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using RentItMvc.Models;
 using RentItMvc.RentItService;
 
 namespace RentItMvc.Controllers
@@ -48,11 +49,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsChannelNameAvailable(string channelName)
+        public JsonResult IsChannelNameAvailable(GuiChannel channel)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsChannelNameAvailable(channelName))
+                if (proxy.IsChannelNameAvailable(channel.Name))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }

@@ -40,10 +40,14 @@ namespace RentItMvc.Utilities
                 chan.Hits = c.Hits.Value;
             chan.Name = c.Name;
             chan.StreamUri = c.StreamUri;
-            List<GuiTrack> tracks = new List<GuiTrack>();
-            //foreach (Track t in c.)
-            //    tracks.Add(ConvertTrack(t));
-            chan.Tracks = tracks;
+            chan.Tracks = new List<GuiTrack>();
+            //Calls the webservice and recieves an array of the tracks asossiated with the channel
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                Track[] tracks = proxy.GetTrackByChannelId(c.Id);
+                foreach (Track t in tracks)
+                    chan.Tracks.Add(ConvertTrack(t));
+            }
             return chan;
         }
 

@@ -10,13 +10,7 @@
 <div class="row-fluid"> 
     <div>
         <div>
-            @using(@Html.BeginForm("CreateChannel", "Home", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-inline" }))
-            {
-                @Html.TextBox("channelName", "", new { @class = "input", required = "required", placeholder = "Channel name"})
-                <button class="btn" type="submit">
-                    Create new channel
-                </button>
-            }
+            @Html.Action("CreateChannelForm", "Home")
         </div>
     </div>
         <table class="table table-hover">
