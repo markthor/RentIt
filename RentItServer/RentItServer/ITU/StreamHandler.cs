@@ -86,18 +86,37 @@ namespace RentItServer.ITU
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
                 _logger.AddEntry("channel config xml: " + xml);
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
-                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
                 
-                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+
+                
+
+                string ezpath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe";
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezpath + " " + arguments);
+                //startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.UseShellExecute = false;
+                startInfo.CreateNoWindow = true;
+                _logger.AddEntry("tsartinfo ready");
+                EzProcess p = new EzProcess(channelId);
+                p.StartInfo = startInfo;
+                _logger.AddEntry("startinfo sat");
+                p.Start();
+                _logger.AddEntry("Process running");
+
+
+
+                /*EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
                 _logger.AddEntry("Process created");
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardInput = true;
-                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardOutput = true;*/
                 //p.StartInfo.
                 //p.StartInfo.UserName = "rentit21";
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
@@ -115,7 +134,8 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                SetNextTrack(p);
+                //SetNextTrack(p);
+
             }
             else //channel is already running
             {

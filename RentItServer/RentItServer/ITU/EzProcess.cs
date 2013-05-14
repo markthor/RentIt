@@ -8,10 +8,15 @@ namespace RentItServer.ITU
 {
     public class EzProcess : Process
     {
-        public EzProcess(int channelId, string ezStreamPath, string arguments)
+        /*public EzProcess(int channelId, string ezStreamPath, string arguments)
         {
             StartInfo.FileName = ezStreamPath;
             StartInfo.Arguments = arguments;
+            ChannelId = channelId;
+        }*/
+
+        public EzProcess(int channelId)
+        {
             ChannelId = channelId;
         }
 

@@ -27,16 +27,6 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public ActionResult Main()
-        {
-            if (Session["userId"] != null)
-            {
-                return View();
-            }
-            return Redirect("/");
-        }
-
-
         public ActionResult SelectChannel(int channelId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
@@ -163,7 +153,7 @@ namespace RentItMvc.Controllers
         /// <param name="modelId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int userId)
+        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int userId, string trackName, string artistName)
         {
             // Verify that the user selected a file
             if (file != null && file.ContentLength > 0)
@@ -174,13 +164,24 @@ namespace RentItMvc.Controllers
                 Stream stream = file.InputStream;
                 MemoryStream memory = new MemoryStream();
                 stream.CopyTo(memory);
+                Track track = new Track();
+                track.Artist = artistName;
+                track.Name = trackName;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    Track chan = proxy.GetTrackInfoByStream(memory);
+                    proxy.AddTrack(userId, channelId, memory, track);
                 }
             }
             // redirect back to the index action to show the form once again
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
+
+        public PartialViewResult AddTrackForm(int channelId)
+        {
+            Session["ChannelId"] = channelId;
+            return PartialView(new GuiTrack());
+        }
     }
+
+   
 }

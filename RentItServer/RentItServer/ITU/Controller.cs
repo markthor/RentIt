@@ -127,6 +127,7 @@ namespace RentItServer.ITU
                     }
                 }*/
                 user = _dao.Login(usernameOrEmail, password);
+                _logger.AddEntry("Login succeeded. Local variables: usernameOrEmail = " + usernameOrEmail + ", password = " + password);
                 return user.GetUser();
             }
             catch (Exception e)
@@ -482,7 +483,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, RentItServer.ITU.DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, DatabaseWrapperObjects.Track trackInfo)
         {
             try
             {
@@ -508,18 +509,18 @@ namespace RentItServer.ITU
 
         public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
-            if (_handler != null)
-                _handler(this, new RentItEventArgs("GetTrackInfo starting. Stream length: " + audioStream.Length));
             Track theTrack = new Track();
             theTrack.Artist = "";
             try
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfo entered try block"));
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                //TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                FileStream audioFile = File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                theTrack.Artist = "Drezz";
+                theTrack.Name = "Mikkels coke eventyr part 2";
+                /*
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -532,9 +533,10 @@ namespace RentItServer.ITU
                 theTrack.TrackPlays = new List<TrackPlay>();
                 theTrack.Votes = new List<Vote>();
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
+                */
                 try
                 {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
                 }
                 catch
                 {

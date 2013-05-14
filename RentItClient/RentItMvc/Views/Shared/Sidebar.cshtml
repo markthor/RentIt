@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Sidebar";
+}
+
+<ul class="nav nav-list">
+    <li class="nav-header">
+        Channel
+    </li>
+    <li>
+        <a href="/Home/Mychannels/?userId=@Session["userId"]">My channels</a>
+    </li>
+    <li>
+        <a href="#">My subscriptions</a>
+    </li>
+    <li>
+        <a href="#">Create channel</a>
+    </li>
+</ul>

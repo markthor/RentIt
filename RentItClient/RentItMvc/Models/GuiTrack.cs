@@ -14,6 +14,10 @@ namespace RentItMvc.Models
         public string TrackName { get; set; }
 
         [Required]
+        [Display(Name = "ArtistName")]
+        public string ArtistName { get; set; }
+
+        [Required]
         [Display(Name = "Id")]
         public int Id { get; set; }
     }

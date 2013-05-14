@@ -240,6 +240,8 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Home\CreateChannelForm.cshtml" />
+    <Content Include="Views\Home\AddTrackForm.cshtml" />
+    <Content Include="Views\Shared\Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
