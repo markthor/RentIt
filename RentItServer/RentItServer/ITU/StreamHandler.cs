@@ -72,11 +72,12 @@ namespace RentItServer.ITU
                 string fileName = track.Id.ToString() + ".mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
+                //Writes an m3u playlist to the filesystem.
                 GenerateM3u(channelId, fileName); // generate m3u
                 string m3uFileName;
                 m3uFileName = channelId + ".m3u";
 
-
+                //Writes an xml config file for ezstream.
                 string xml;
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
@@ -85,8 +86,6 @@ namespace RentItServer.ITU
                 _logger.AddEntry("xml file path: " + xmlFilePath);
                 FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
-                //get config path
-                string configPath = FilePath.ITUChannelConfigPath.GetPath();
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
