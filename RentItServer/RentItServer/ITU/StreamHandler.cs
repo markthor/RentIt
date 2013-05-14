@@ -89,7 +89,7 @@ namespace RentItServer.ITU
                 //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
                 xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
-                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
