@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using RentItMvc.Models;
+using RentItMvc.RentItService;
 
 namespace RentItMvc.Controllers
 {
     public class SearchController : Controller
     {
-        //
-        // GET: /Search/
-
         public ActionResult Search(string searchArgs)
         {
-            return Redirect("/");
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                ChannelSearchArgs channelSearchArgs = proxy.GetDefaultChannelSearchArgs();
+                channelSearchArgs.SearchString = searchArgs;
+                TempData["ChannelArray"] = proxy.GetChannels(channelSearchArgs);
+                return RedirectToAction("ChannelList", "Home", new { title = "Results" });
+            }
         }
-
     }
 }

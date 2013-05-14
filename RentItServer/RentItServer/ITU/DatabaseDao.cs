@@ -464,7 +464,7 @@ namespace RentItServer.ITU
                 //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
                 var channels = from c in context.Channels
-                               where c.Name.StartsWith(filter.SearchString)
+                               where c.Name.Contains(filter.SearchString)
                                select c;
 
                 if (filter.AmountPlayed > -1)

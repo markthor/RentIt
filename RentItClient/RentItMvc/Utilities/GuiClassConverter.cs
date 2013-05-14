@@ -9,12 +9,12 @@ namespace RentItMvc.Utilities
 {
     public static class GuiClassConverter
     {
-        public static List<GuiChannel> ConvertChannelList(List<Channel> list)
+        public static List<GuiChannel> ConvertChannelList(Channel[] channels)
         {
             List<GuiChannel> returnList = new List<GuiChannel>();
-            if (list != null)
+            if (channels != null)
             {
-                foreach (Channel c in list)
+                foreach (Channel c in channels)
                 {
                     GuiChannel chan = new GuiChannel();
                     chan.Id = c.Id;
@@ -23,12 +23,11 @@ namespace RentItMvc.Utilities
                         chan.Hits = c.Hits.Value;
                     chan.Name = c.Name;
                     chan.StreamUri = c.StreamUri;
+                    chan.OwnerId = c.OwnerId;
                     returnList.Add(chan);
                 }
-
-                return returnList;
             }
-            return null;
+            return returnList;
         }
 
         public static GuiChannel ConvertChannel(Channel c)
@@ -41,6 +40,7 @@ namespace RentItMvc.Utilities
             chan.Name = c.Name;
             chan.StreamUri = c.StreamUri;
             chan.Tracks = new List<GuiTrack>();
+            chan.OwnerId = c.OwnerId;
             //Calls the webservice and recieves an array of the tracks asossiated with the channel
             using (RentItServiceClient proxy = new RentItServiceClient())
             {

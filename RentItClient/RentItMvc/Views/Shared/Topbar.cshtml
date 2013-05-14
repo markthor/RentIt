@@ -20,9 +20,9 @@
     @if (this.Session["userId"] != null && (int)this.Session["userId"] > 0)
     {
         <!--User is logged in-->
-        using (@Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "navbar-form pull-left" }))
+        using (@Html.BeginForm("SearchResult", "Home", FormMethod.Post, new { @class = "navbar-form pull-left" }))
         {
-            @Html.TextBox("SearchArgs", null, new { @class = "span3", placeholder = "Search for ..." })
+            @Html.TextBox("searchArgs", null, new { @class = "span3", placeholder = "Search for ..." })
             <button class="btn btn-primary" type="submit">
                 <i class="icon-search icon-white"></i>
             </button>    

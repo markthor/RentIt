@@ -24,5 +24,10 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Description)
     </div>
+    
+    @if (Model.OwnerId == (int) @Session["userId"] )
+    {
+        @Html.ActionLink("Edit channel", "EditChannel", "Home", new { channelId = Model.Id, userId = @Session["userId"] }, new { @class = "btn btn-warning" })
+    }
 
 </fieldset>
