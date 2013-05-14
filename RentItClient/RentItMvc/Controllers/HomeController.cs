@@ -163,7 +163,7 @@ namespace RentItMvc.Controllers
         /// <param name="modelId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int userId)
+        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int userId, string trackName, string artistName)
         {
             // Verify that the user selected a file
             if (file != null && file.ContentLength > 0)
