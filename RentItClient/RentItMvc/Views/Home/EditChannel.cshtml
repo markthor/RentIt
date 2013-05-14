@@ -6,17 +6,17 @@
 @model RentItMvc.Models.GuiChannel
 
 
-<h2>EditChannel</h2>
+<h2>Edit Channel</h2>
 
 <div class="row-fluid">
      <div class="signup-field">
-        <h5>Channel name</h5>
+        <h5>Name</h5>
         <div class="input-field">  
             @Html.TextBoxFor(model => model.Name, new {@class = "input-block-level", type = "text", required = "required", placeholder = Model.Name})
         </div>
     </div>
     <div class="signup-field">
-        <h5>Channel Description</h5>
+        <h5>Description</h5>
         <div style="width: 400px">
             @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description})        
         </div>

@@ -291,7 +291,7 @@ namespace RentItServer.ITU
                 var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
                                  select genre;
 
-                if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
+                //if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
 
                 // Create the channel object
                 Channel theChannel = new Channel()
@@ -1126,6 +1126,33 @@ namespace RentItServer.ITU
             {
                 context.TrackPlays.Add(new TrackPlay(track.Id, DateTime.UtcNow));
 
+            }
+        }
+
+        public List<Channel> GetCreatedChannels(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                               where c.ChannelOwner.Id == userId
+                               select c;
+                return channels.ToList();
+            }
+        }
+
+        public List<Channel> GetSubscribedChannels(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var users = from u in context.Users
+                            where u.Id == userId
+                            select u;
+                if (!users.Any())
+                    return new List<Channel>();
+                var channels = from c in context.Channels
+                               where c.Subscribers.Contains(users.First())
+                               select c;
+                return channels.ToList();
             }
         }
     }

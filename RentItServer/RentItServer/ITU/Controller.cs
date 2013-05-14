@@ -448,14 +448,8 @@ namespace RentItServer.ITU
         {
             try
             {
-                List<DatabaseWrapperObjects.Channel> theChannels = new List<DatabaseWrapperObjects.Channel>();
                 IEnumerable<Channel> channels = _dao.GetChannelsWithFilter(args);
-                foreach (Channel c in channels)
-                {
-                    theChannels.Add(c.GetChannel());
-                }
-                return theChannels.ToArray();
-                //return _dao.GetChannelsWithFilter(args);
+                return Channel.GetChannels(channels).ToArray();
             }
             catch (Exception e)
             {
@@ -742,6 +736,16 @@ namespace RentItServer.ITU
         public TrackSearchArgs GetDefaultTrackSearchArgs()
         {
             return new TrackSearchArgs();
+        }
+
+        public List<Channel> GetCreatedChannels(int userId)
+        {
+            return _dao.GetCreatedChannels(userId);
+        }
+
+        public List<Channel> GetSubscribedChannels(int userId)
+        {
+            return _dao.GetSubscribedChannels(userId);
         }
     }
 }

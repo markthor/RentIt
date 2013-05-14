@@ -10,6 +10,19 @@ namespace RentItMvc.Models
 {
     public class GuiChannel
     {
+        public GuiChannel()
+        {
+            Name = "";
+            Id = -1;
+            Description = "";
+            Upvotes = 0;
+            DownVotes = 0;
+            Hits = 0;
+            OwnerId = -1;
+            Tracks = new List<GuiTrack>();
+            StreamUri = "";
+        }
+
         public static GuiChannel GuiChannelFactory(RentItService.Channel channel)
         {
             GuiChannel guiChannel = null;

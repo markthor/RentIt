@@ -332,5 +332,21 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         TrackSearchArgs GetDefaultTrackSearchArgs();
+
+        /// <summary>
+        /// Gets the channels created by the user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId);
+
+        /// <summary>
+        /// Gets the channels this user is subscribed to
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId);
     }
 }
