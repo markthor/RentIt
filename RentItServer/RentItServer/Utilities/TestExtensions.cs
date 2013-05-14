@@ -40,7 +40,6 @@ namespace RentItServer.Utilities
             int channelId3 = Controller.GetInstance().CreateChannel("Nine Inch Nails", _testUser1.Id, "Soft rock for your soul.", new List<string>() { genreName2 });
             int channelId4 = Controller.GetInstance().CreateChannel("Wrecking Balls", _testUser1.Id, "Not for kids.", new List<string>() { genreName3 });
             int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", _testUser1.Id, "No description for you.", new List<string>() { genreName2 });
-            //Controller.GetInstance().Subscribe(_testUser2.Id, channelId1);
             RentItServer.ITU.DatabaseWrapperObjects.Track t = new RentItServer.ITU.DatabaseWrapperObjects.Track();
             t.Artist = "Kiss";
             t.Name = "Heaven's On Fire";
