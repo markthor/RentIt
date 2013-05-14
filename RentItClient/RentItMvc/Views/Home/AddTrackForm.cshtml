@@ -9,13 +9,13 @@
     @using (Html.BeginForm("AddTrack", "Home", new { channelId = Model.Id, userId = Session["userId"], trackName = Model.TrackName, artistName = Model.ArtistName  }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     { 
         <div class="input-field">
-            @Html.TextBoxFor(t => Model.ArtistName, "artistName");
+            @Html.TextBoxFor(t => Model.ArtistName, new { placeholder = "Artist name" });
         </div>  
         <div class="input-field">
-            @Html.TextBoxFor(t => Model.TrackName, "trackName");
+            @Html.TextBoxFor(t => Model.TrackName, new { placeholder = "Track name" });
         </div>  
         <input type="file" name="file" id="file"/>
         <input type="submit" value="OK" />                                     
     }
-    </div>
+</div>
 
