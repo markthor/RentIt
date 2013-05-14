@@ -129,5 +129,10 @@ namespace RentItServer.Utilities
         {
             return _path;
         }
+
+        public override string ToString()
+        {
+            return _path;
+        }
     }
 }

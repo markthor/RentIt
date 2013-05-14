@@ -509,17 +509,14 @@ namespace RentItServer.ITU
 
         public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
-            _logger.AddEntry("GetTrackInfo starting. Stream length: " + audioStream.Length);
             Track theTrack = new Track();
             theTrack.Artist = "";
             try
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfo entered try block"));
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -534,7 +531,7 @@ namespace RentItServer.ITU
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
                 try
                 {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath + FileName.ItuGenerateAudioFileName(counter));
+                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
                 }
                 catch
                 {
