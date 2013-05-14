@@ -287,5 +287,10 @@ namespace RentItServer
         {
             return Channel.GetChannels(_controller.GetSubscribedChannels(userId)).ToArray();
         }
+
+        public ITU.DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId)
+        {
+            return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
+        }
     }
 }

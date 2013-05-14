@@ -348,5 +348,13 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId);
+
+        /// <summary>
+        /// Gets the track assosiated with a channel
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId);
     }
 }
