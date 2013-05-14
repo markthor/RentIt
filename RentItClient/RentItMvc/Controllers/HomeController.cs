@@ -181,7 +181,15 @@ namespace RentItMvc.Controllers
             Session["ChannelId"] = channelId;
             return PartialView(new GuiTrack());
         }
-    }
 
-   
+        public ActionResult SaveEditChannel(GuiChannel channel, int channelId, int ownerId)
+        {
+            //channelId = Model.Id, ownerId = Model.OwnerId, name = Model.Name, description = Model.Description
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.UpdateChannel(channelId, ownerId, channel.Name, channel.Description, 0.0, 0.0);
+            }
+            return RedirectToAction("MyChannels", "Home", new { userId = ownerId });
+        }
+    }
 }

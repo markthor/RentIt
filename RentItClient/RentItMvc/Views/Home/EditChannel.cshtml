@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "EditChannel";
-    //ViewBag.Id = Model.Id;
+    Html.EnableClientValidation(false);
 }
 
 @model RentItMvc.Models.GuiChannel
@@ -8,39 +8,41 @@
 <h2>Edit Channel</h2>
 
 <div class="row-fluid">
-     <div class="signup-field">
-        <h5>Name</h5>
-        <div class="input-field">  
-            @Html.TextBoxFor(model => model.Name, new {@class = "input-block-level", type = "text", required = "required", placeholder = Model.Name})
-        </div>
-    </div>
-    <div class="signup-field">
-        <h5>Description</h5>
-        <div style="width: 400px">
-            @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description})        
-        </div>
-    </div>
-        <div class="input-block-level" style="width:400px">
+    <div style="width: 400px">
+        @using (Html.BeginForm("SaveEditChannel", "Home", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
+        {
+            <h5>Name</h5>
+            <div class="input-block-level">  
+                @Html.TextBoxFor(model => model.Name, new {@class = "input-block-level", type = "text", required = "required", placeholder = Model.Name})
+            </div>
+            <h5>Description</h5>
+            <div class="input-block-level">
+                @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description})        
+            </div>
+            <button class="btn">Save changes</button>
+        }
+            <div class="input-block-level">
             <h5>Track List</h5>
             <table class="table table-hover">
-                    <tr>  
-                        <th>Name</th> 
-                        <th>Actions</th> 
-                    </tr> 
-                    @foreach (var t in Model.Tracks)
-                    { 
-                        <tr>
-                            <td>
-                                @t.TrackName
-                            </td>
-                            <td>
-                                <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {channelId = Model.Id, userId = Session["UserId"], trackId = t.Id} ))'">
-                                    <i class="icon-remove-circle"></i>
-                                </button>                    
-                            </td>
-                        </tr>
-                    }
+                <tr>  
+                    <th>Name</th> 
+                    <th>Actions</th> 
+                </tr> 
+                @foreach (var t in Model.Tracks)
+                { 
+                    <tr>
+                        <td>
+                            @t.TrackName
+                        </td>
+                        <td>
+                            <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {channelId = Model.Id, userId = Session["UserId"], trackId = t.Id} ))'">
+                                <i class="icon-remove-circle"></i>
+                            </button>                    
+                        </td>
+                    </tr>
+                }
             </table>
         </div>
-        @Html.Action("AddTrackForm", "Home", new { channelId = Model.Id } );
+    </div>
+    @Html.Action("AddTrackForm", "Home", new { channelId = Model.Id } )
 </div>
