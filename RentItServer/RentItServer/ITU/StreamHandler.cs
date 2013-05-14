@@ -112,7 +112,7 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                SetNextTrack(p);
+                //SetNextTrack(p);
             }
             else //channel is already running
             {
