@@ -92,12 +92,18 @@ namespace RentItServer.ITU
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
                 _logger.AddEntry("Process created");
                 p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardInput = true;
+                p.StartInfo.RedirectStandardOutput = true;
+                //p.StartInfo.
                 //p.StartInfo.UserName = "rentit21";
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 _logger.AddEntry("Process not using shell");
                 p.Start();
                 _logger.AddEntry("Process started");
+
+                System.IO.StreamWriter wr = p.StandardInput;
+                System.IO.StreamReader rr = p.StandardOutput;
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
