@@ -52,7 +52,10 @@ namespace RentItServer.ITU
             }
             return _instance;
         }
-
+        /// <summary>
+        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
+        /// </summary>
+        /// <param name="channelId">Channel id of the channel to be started</param>
         public void StartStream(int channelId)
         {
             _logger.AddEntry("Start Stream start");
@@ -173,6 +176,10 @@ namespace RentItServer.ITU
             return false;
         }
 
+        /// <summary>
+        /// Stops the stream of a channel and sets it is not running.
+        /// </summary>
+        /// <param name="channelId">The id of the channel to be stopped</param>
         public void StopStream(int channelId)
         {
             if (IsChannelRunning(channelId))

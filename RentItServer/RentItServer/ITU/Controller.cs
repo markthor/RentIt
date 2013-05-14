@@ -127,6 +127,7 @@ namespace RentItServer.ITU
                     }
                 }*/
                 user = _dao.Login(usernameOrEmail, password);
+                _logger.AddEntry("Login succeeded. Local variables: usernameOrEmail = " + usernameOrEmail + ", password = " + password);
                 return user.GetUser();
             }
             catch (Exception e)
@@ -508,10 +509,13 @@ namespace RentItServer.ITU
 
         public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
+            _logger.AddEntry("GetTrackInfo starting. Stream length: " + audioStream.Length);
             Track theTrack = new Track();
             theTrack.Artist = "";
             try
             {
+                if (_handler != null)
+                    _handler(this, new RentItEventArgs("GetTrackInfo entered try block"));
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
