@@ -348,5 +348,8 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId);
+
+        [OperationContract]
+        bool IsChannelNameAvailable(string channelName);
     }
 }
