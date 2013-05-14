@@ -83,34 +83,41 @@ namespace RentItServer.ITU
                 string m3uFileName;
                 m3uFileName = channelId + ".m3u";
 
-                //Writes an xml config file for ezstream.
+                //Generate the xml for the config file
                 string xml;
-                string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
-                _logger.AddEntry("channel config xml: " + xml);
-                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml";
-                _logger.AddEntry("xml file path: " + xmlFilePath);
-                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                _logger.AddEntry("Config file generated for channel with id: " + channelId);
+                //Create the xmlFilePath
+                string xmlFilePath;
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml"; test!!
+
+                //Write the config file to the system
+                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
                 
 
-                
-
-                string ezpath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe";
-                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezpath + " " + arguments);
-                //startInfo.RedirectStandardInput = true;
+                //Start set up the process
+                //Path to ezstream executable
+                string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
+                //Start set up process info
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
+                //startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
+                //In order to redirect the standard input for ezstream into this program
                 startInfo.RedirectStandardOutput = true;
+                //Default is true, it should be false for ezstream
                 startInfo.UseShellExecute = false;
+                //It should not create a new window for the ezstream process
                 startInfo.CreateNoWindow = true;
-                _logger.AddEntry("tsartinfo ready");
+
+                //Create the process
                 EzProcess p = new EzProcess(channelId);
                 p.StartInfo = startInfo;
-                _logger.AddEntry("startinfo sat");
+                _logger.AddEntry("Process created for channel with id: " + channelId);
                 p.Start();
-                _logger.AddEntry("Process running");
+                _logger.AddEntry("Process started for channel with id: " + channelId);
 
 
 
@@ -124,21 +131,22 @@ namespace RentItServer.ITU
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 //p.Start();
-                _logger.AddEntry("Process started");
+                //_logger.AddEntry("Process started");
 
-                //System.IO.StreamWriter wr = p.StandardInput;
-                //System.IO.StreamReader rr = p.StandardOutput;
+                //System.IO.StreamWriter wr = p.StandardInput; TEST!!
+                //System.IO.StreamReader rr = p.StandardOutput; TEST!!
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
 
+                //Add this process to the dictionary with running channels
                 runningChannelIds.Add(channelId, p);
-                AddTrackPlay(track); // should this call be here
+                AddTrackPlay(track); // should this call be here??????????
 
 
                 _logger.AddEntry(p.StandardOutput.ReadToEnd());
 
-                //SetNextTrack(p);
+                //SetNextTrack(p); FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
             }
             else //channel is already running
             {

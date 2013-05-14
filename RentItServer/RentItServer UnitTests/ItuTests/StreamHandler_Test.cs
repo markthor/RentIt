@@ -20,8 +20,6 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void StartStream_Test()
         {
-
-
             using (ITUServiceReference.RentItServiceClient proxy = new ITUServiceReference.RentItServiceClient())
             {
                 //proxy.Login("Prechtig", "tesat");
