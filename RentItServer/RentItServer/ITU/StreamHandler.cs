@@ -86,7 +86,8 @@ namespace RentItServer.ITU
                 string xmlFilePath;
                 xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + m3uFileName);
                 _logger.AddEntry("channel config xml: " + xml);
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "config.xml";
                 _logger.AddEntry("xml file path: " + xmlFilePath);
                 FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
