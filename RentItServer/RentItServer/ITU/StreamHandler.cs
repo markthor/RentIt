@@ -72,7 +72,8 @@ namespace RentItServer.ITU
 
                 _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
 
-                string fileName = track.Id.ToString() + ".mp3";
+                //string fileName = track.Id.ToString() + ".mp3";
+                string fileName = "a.mp3";
                 _logger.AddEntry("Track filename: " + fileName);
 
                 //Writes an m3u playlist to the filesystem.
@@ -93,21 +94,28 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Arguments: " + arguments);
                 
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+                _logger.AddEntry("Process created");
                 p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardInput = true;
+                p.StartInfo.RedirectStandardOutput = true;
+                //p.StartInfo.
                 //p.StartInfo.UserName = "rentit21";
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
-                _logger.AddEntry("Process created");
+                _logger.AddEntry("Process not using shell");
                 p.Start();
                 _logger.AddEntry("Process started");
 
-                //Listen for when a new song starts
-                //p.OutputDataReceived += p_OutputDataReceived;
+                System.IO.StreamWriter wr = p.StandardInput;
+                System.IO.StreamReader rr = p.StandardOutput;
 
-                //runningChannelIds.Add(channelId, p);
+                //Listen for when a new song starts
+                p.OutputDataReceived += p_OutputDataReceived;
+
+                runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                //SetNextTrack(p);
+                SetNextTrack(p);
             }
             else //channel is already running
             {
