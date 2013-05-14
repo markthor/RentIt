@@ -111,7 +111,7 @@ namespace RentItServer.ITU
                 string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "//c " + ezPath + " " + arguments);
-                //startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
+                startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
                 //In order to redirect the standard input for ezstream into this program
                 startInfo.RedirectStandardOutput = true;
                 //Default is true, it should be false for ezstream
