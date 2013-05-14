@@ -208,7 +208,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Home\Main.cshtml" />
     <Content Include="Views\Home\ChannelList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
     <Content Include="Views\Home\SelectChannel.cshtml" />

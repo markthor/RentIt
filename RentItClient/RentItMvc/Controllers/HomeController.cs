@@ -18,7 +18,7 @@ namespace RentItMvc.Controllers
             if (userId != null && userId > 0)
             {
                 //User is logged in
-                return Redirect("/Home/Main");
+                return RedirectToAction("FeaturedChannels");
             }
             else
             {
@@ -82,18 +82,25 @@ namespace RentItMvc.Controllers
         /// Returns a list of most popular or highlighted channels
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetFeaturedChannels()
+        public ActionResult FeaturedChannels()
         {
-            List<Channel> channelList = new List<Channel>();
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            Channel[] channels;
+            try
             {
-                int[] chanIds = proxy.GetAllChannelIds();
-                foreach (int id in chanIds)
+                using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    channelList.Add(proxy.GetChannel(id));
+                    ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
+                    searchArgs.StartIndex = 0;
+                    searchArgs.EndIndex = 10;
+                    channels = proxy.GetChannels(searchArgs);
                 }
             }
-            return RedirectToAction("ChannelList", new { title = "Featured Channels", theList = channelList });
+            catch (Exception)
+            { 
+                channels = new Channel[0];
+            }
+            TempData["ChannelArray"] = channels;
+            return RedirectToAction("ChannelList", new { title = "Featured Channels" });
         }
 
         /// <summary>
@@ -102,21 +109,14 @@ namespace RentItMvc.Controllers
         /// <param name="theList"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public ActionResult ChannelList(List<Channel> theList, string title)
+        public ActionResult ChannelList(string title)
         {
-            Channel[] channels;
-            using (RentItServiceClient proxy = new RentItServiceClient())
-            {
-                ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
-                searchArgs.StartIndex = 0;
-                searchArgs.EndIndex = 10;
-                channels = proxy.GetChannels(searchArgs);
-            }
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
+            Channel[] arr = (Channel[])TempData["ChannelArray"];
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(arr.ToList());
             ViewBag.title = title;
             if (GuiChannelList == null)
                 GuiChannelList = new List<GuiChannel>();
-            return PartialView(GuiChannelList);
+            return View(GuiChannelList);
         }
 
         /// <summary>
@@ -129,7 +129,8 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channels = proxy.GetCreatedChannels(userId);
+                User user = proxy.GetUser(userId);
+                channels = proxy.GetCreatedChannels(userId);            
             }
             List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
             return PartialView(guiChannelList);
@@ -141,8 +142,12 @@ namespace RentItMvc.Controllers
         /// <param name="userId"></param>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public ActionResult DeleteTrack(int userId, int channelId)
+        public ActionResult DeleteTrack(int userId, int channelId, int trackId)
         {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.RemoveTrack(userId, trackId);
+            }
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
 
@@ -153,7 +158,7 @@ namespace RentItMvc.Controllers
         /// <param name="modelId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public ActionResult AddTrack(HttpPostedFileBase file, int modelId, int userId)
+        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int userId)
         {
             // Verify that the user selected a file
             if (file != null && file.ContentLength > 0)
@@ -170,7 +175,7 @@ namespace RentItMvc.Controllers
                 }
             }
             // redirect back to the index action to show the form once again
-            return RedirectToAction("Index");
+            return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
     }
 }
