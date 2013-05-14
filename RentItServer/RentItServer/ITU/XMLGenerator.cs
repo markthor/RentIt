@@ -62,7 +62,7 @@ namespace RentItServer.ITU
         public static string GenerateConfig(int cId, string filePath)
         {
             string startElement = "ezstream";
-            string Url = Controller._defaultUrl + Convert.ToString(cId) + Controller._defaultStreamExtension;
+            string url = Controller._defaultUrl + Convert.ToString(cId) + Controller._defaultStreamExtension;
             string sourcepassword = "hackme";
             string format = "MP3";
             string filename = filePath;
