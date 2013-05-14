@@ -126,11 +126,22 @@ namespace RentItMvc.Controllers
         public ActionResult ChannelList(string title)
         {
             Channel[] arr = (Channel[])TempData["ChannelArray"];
-            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(arr.ToList());
+            List<GuiChannel> GuiChannelList = GuiClassConverter.ConvertChannelList(arr);
             ViewBag.title = title;
-            if (GuiChannelList == null)
-                GuiChannelList = new List<GuiChannel>();
             return View(GuiChannelList);
+        }
+
+        public ActionResult SearchResult(string searchArgs)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                ChannelSearchArgs channelSearchArgs = proxy.GetDefaultChannelSearchArgs();
+                channelSearchArgs.SearchString = searchArgs;
+                Channel[] channels = proxy.GetChannels(channelSearchArgs);
+                List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+                ViewBag.Title = "Search results";
+                return View("ChannelList", guiChannels);
+            }
         }
 
         /// <summary>
@@ -146,7 +157,7 @@ namespace RentItMvc.Controllers
                 User user = proxy.GetUser(userId);
                 channels = proxy.GetCreatedChannels(userId);            
             }
-            List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels.ToList());
+            List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels);
             return PartialView(guiChannelList);
         }
 
