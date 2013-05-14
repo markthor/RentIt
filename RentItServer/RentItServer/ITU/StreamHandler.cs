@@ -58,23 +58,23 @@ namespace RentItServer.ITU
         /// <param name="channelId">Channel id of the channel to be started</param>
         public void StartStream(int channelId)
         {
-            _logger.AddEntry("Start Stream start");
+            
 
-            if (!IsChannelRunning(channelId))
+            if (!IsChannelRunning(channelId)) // Check if stream is already running
             {
-                _logger.AddEntry("Channel with id: " + channelId + " is not running");
+                _logger.AddEntry("Start Stream - ChannelId: " + channelId);
                 Track track = GetNextTrack(channelId);
                 if (track == null) // no tracks on channel
                 {
-                    _logger.AddEntry("Channel with id: " + channelId + " has no tracks"); 
-                    return; //notracks on channel exception
+                    _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
+                    throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
                 }
 
-                _logger.AddEntry("Next track name " + track.Name + " and id " + track.Id);
+                _logger.AddEntry("Next track name: " + track.Name + " and id: " + track.Id + " for channel with id: " + channelId);
 
-                //string fileName = track.Id.ToString() + ".mp3";
-                string fileName = "a.mp3";
-                _logger.AddEntry("Track filename: " + fileName);
+                string fileName = track.Id.ToString() + ".mp3";
+                //string fileName = "a.mp3"; til test!
+                _logger.AddEntry("Next track filename: " + fileName + " for channel with id: " + channelId);
 
                 //Writes an m3u playlist to the filesystem.
                 GenerateM3u(channelId, fileName); // generate m3u
@@ -121,7 +121,6 @@ namespace RentItServer.ITU
                 //p.StartInfo.UserName = "rentit21";
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
-                _logger.AddEntry("Process not using shell");
                 //p.Start();
                 _logger.AddEntry("Process started");
 
@@ -138,7 +137,6 @@ namespace RentItServer.ITU
                 _logger.AddEntry(p.StandardOutput.ReadToEnd());
 
                 //SetNextTrack(p);
-
             }
             else //channel is already running
             {
