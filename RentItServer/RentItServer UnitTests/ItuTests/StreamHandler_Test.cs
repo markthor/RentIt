@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer.ITU;
 using RentItServer.ITU.DatabaseWrapperObjects;
-using RentItServer.Utilities;
+using RentItServer_UnitTests.ItuTestUtilities;
 
 namespace RentItServer_UnitTests.ItuTests
 {

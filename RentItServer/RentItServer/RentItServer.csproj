@@ -184,7 +184,6 @@
     <Compile Include="User.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\TestExtensions.cs" />
     <Compile Include="Vote.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

@@ -1157,6 +1157,19 @@ namespace RentItServer.ITU
             }
         }
 
+        public List<Track> GetTracksByChannelId(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var tracks = from t in context.Tracks
+                            where t.ChannelId == channelId
+                            select t;
+                if (!tracks.Any())
+                    return new List<Track>();
+                return tracks.ToList();
+            }
+        }
+
         public bool IsChannelNameAvailable(string channelName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
