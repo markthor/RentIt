@@ -23,22 +23,6 @@ namespace RentItMvc.Models
             StreamUri = "";
         }
 
-        public static GuiChannel GuiChannelFactory(RentItService.Channel channel)
-        {
-            GuiChannel guiChannel = null;
-            if (channel != null)
-            {
-                guiChannel = new GuiChannel();
-                guiChannel.Name = channel.Name;
-                guiChannel.Id = channel.Id;
-                guiChannel.Description = channel.Description;
-                guiChannel.OwnerId = channel.OwnerId;
-                guiChannel.Hits = channel.Hits != null ? channel.Hits.Value : 0;
-                guiChannel.StreamUri = channel.StreamUri;
-            }
-            return guiChannel;
-        }
-
         [Required]
         [Display(Name = "Name")]
         [Remote("IsChannelNameAvailable", "Validation")]

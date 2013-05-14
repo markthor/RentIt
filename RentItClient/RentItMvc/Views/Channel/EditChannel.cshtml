@@ -9,7 +9,7 @@
 
 <div class="row-fluid">
     <div style="width: 400px">
-        @using (Html.BeginForm("SaveEditChannel", "Home", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
+        @using (Html.BeginForm("SaveEditChannel", "Channel", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
         {
             <h5>Name</h5>
             <div class="input-block-level">  
@@ -35,7 +35,7 @@
                             @t.TrackName
                         </td>
                         <td>
-                            <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Home", new {channelId = Model.Id, userId = Session["UserId"], trackId = t.Id} ))'">
+                            <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new {channelId = Model.Id, userId = Session["UserId"], trackId = t.Id} ))'">
                                 <i class="icon-remove-circle"></i>
                             </button>                    
                         </td>
@@ -44,5 +44,5 @@
             </table>
         </div>
     </div>
-    @Html.Action("AddTrackForm", "Home", new { channelId = Model.Id } )
+    @Html.Action("AddTrackForm", "Track", new { channelId = Model.Id } )
 </div>

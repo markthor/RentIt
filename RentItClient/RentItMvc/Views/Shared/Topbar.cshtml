@@ -17,10 +17,10 @@
 </head>
 <body>
     <a class="brand" style="margin-right: 225px" href="/" title="Home">@ViewBag.Title</a>
-    @if (this.Session["userId"] != null && (int)this.Session["userId"] > 0)
+    @if (Session["userId"] != null && (int) Session["userId"] > 0)
     {
         <!--User is logged in-->
-        using (@Html.BeginForm("SearchResult", "Home", FormMethod.Post, new { @class = "navbar-form pull-left" }))
+        using (@Html.BeginForm("SearchResult", "Channel", FormMethod.Post, new { @class = "navbar-form pull-left" }))
         {
             @Html.TextBox("searchArgs", null, new { @class = "span3", placeholder = "Search for ..." })
             <button class="btn btn-primary" type="submit">

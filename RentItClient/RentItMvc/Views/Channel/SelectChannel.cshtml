@@ -1,0 +1,60 @@
+﻿@using RentItMvc.Models
+
+@model RentItMvc.Models.GuiChannel
+
+@if (Model.OwnerId == (int)@Session["userId"])
+{
+    <div style="margin-top: 16px; margin-right: 16px" class="pull-left">
+        @Html.ActionLink("Edit", "EditChannel", "Channel", new { channelId = Model.Id }, new { @class = "btn btn-small btn-warning" })
+    </div>
+}
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<table>
+    <tr>
+        <th style="width: 50px"><i class="icon-thumbs-up" /></th>
+        <th style="width: 50px"><i class="icon-thumbs-down" /></th>
+        <th style="width: 50px"><i class="icon-play" /></th>
+    </tr>
+    <tr>
+        <td>
+            <div style="text-align: center">
+                <span class="badge badge-inverse">
+                    @Html.DisplayFor(model => model.Hits)
+                </span>
+            </div>
+        </td>
+        <td>
+            <div style="text-align: center">
+                <span class="badge badge-success">
+                    @Html.DisplayFor(model => model.Upvotes)
+                </span>
+            </div>
+        </td>
+        <td>
+            <div style="text-align: center">
+                <span class="badge badge-important">
+                    @Html.DisplayFor(model => model.DownVotes)
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<h4 style="margin-top: 20px">@Html.DisplayFor(model => model.Description)</h4>
+
+<h4>Tracks</h4>
+
+@foreach (GuiTrack track in Model.Tracks)
+{
+    <div class="pull-left">
+        @Html.Label(track.ArtistName)
+    </div>
+    <div class="pull-left">
+        <p style="margin-left: 5px; margin-right: 5px;">-</p>
+    </div>
+    <div class="pull-left">
+        @Html.Label(track.TrackName)
+    </div>
+}

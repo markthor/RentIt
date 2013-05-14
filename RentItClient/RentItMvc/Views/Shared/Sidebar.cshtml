@@ -7,10 +7,13 @@
         Channel
     </li>
     <li>
-        <a href="/Home/MyChannels?userId=@Session["userId"]">My channels</a>
+        @Html.ActionLink("Featured channels", "FeaturedChannels", "Channel")
     </li>
     <li>
-        <a href="/Home/MySubscriptions?userId=@Session["userId"]">My subscriptions</a>
+        @Html.ActionLink("My channels", "MyChannels", "Channel")
+    </li>
+    <li>
+        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel")
     </li>
     <li>
         <a href="#">Create channel</a>

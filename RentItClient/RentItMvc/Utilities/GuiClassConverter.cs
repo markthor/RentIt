@@ -56,6 +56,7 @@ namespace RentItMvc.Utilities
             GuiTrack track = new GuiTrack();
             track.TrackName = t.Name;
             track.Id = t.Id;
+            track.ArtistName = t.Artist;
             return track;
         }
     }

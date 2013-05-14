@@ -124,7 +124,6 @@
     <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\TrackController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
@@ -208,14 +207,12 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Home\ChannelList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\ChannelListTemplate.cshtml" />
-    <Content Include="Views\Home\SelectChannel.cshtml" />
+    <Content Include="Views\Channel\ChannelList.cshtml" />
+    <Content Include="Views\Channel\SelectChannel.cshtml" />
     <Content Include="Views\Shared\BaseLayout.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
-    <Content Include="Views\Home\MyChannels.cshtml" />
-    <Content Include="Views\Home\EditChannel.cshtml" />
+    <Content Include="Views\Channel\EditChannel.cshtml" />
     <Content Include="Views\Audio\LastTracks.cshtml" />
     <None Include="Service References\RentItService\RentItService.wsdl" />
     <None Include="Service References\RentItService\RentItService.xsd">
@@ -239,8 +236,8 @@
     <None Include="Service References\RentItService\RentItService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Home\CreateChannelForm.cshtml" />
-    <Content Include="Views\Home\AddTrackForm.cshtml" />
+    <Content Include="Views\Channel\CreateChannelForm.cshtml" />
+    <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>

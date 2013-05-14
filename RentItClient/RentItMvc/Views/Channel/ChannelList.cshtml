@@ -4,46 +4,46 @@
 <div class="row-fluid"> 
     <table class="table table-hover">
         <tr>  
-            <th>Name</th>  
-            <th>Description</th>  
-            <th><div style="text-align:center"><i class="icon-thumbs-up"></i></div></th>  
-            <th><div style="text-align:center"><i class="icon-thumbs-down"></i></div></th>  
-            <th><div style="text-align:center"><i class="icon-play"></i></div></th>
-            <th></th>
+            <th style="width: 25%">Name</th>  
+            <th style="width: 47%">Description</th>  
+            <th style="width: 7%; text-align: center"><i class="icon-thumbs-up" /></th>  
+            <th style="width: 7%; text-align: center"><i class="icon-thumbs-down" /></th>  
+            <th style="width: 7%; text-align: center"><i class="icon-play" /></th>
+            <th style="width: 7%; text-align: center"></th>
             </tr> 
-        @foreach (var p in Model)
+        @foreach (var channel in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@p.Name, "SelectChannel", "Home", new { channelId = p.Id }, null)
+                    @Html.ActionLink(channel.Name, "SelectChannel", "Channel", new { channelId = channel.Id }, null)
                 </td>
                 <td>
-                    @p.Description
+                    @channel.Description
                 </td>  
                 <td>
                     <div style="text-align:center">
                         <span class="badge badge-success" >
-                            @p.Upvotes
+                            @channel.Upvotes
                         </span>
                     </div>
                 </td>  
                 <td>
                     <div style="text-align:center">
                         <span class="badge badge-important" >
-                            @p.DownVotes
+                            @channel.DownVotes
                         </span>
                     </div>
                 </td>
                 <td>
                     <div style="text-align:center">
                         <span class="badge badge-inverse" >
-                            @p.Hits
+                            @channel.Hits
                         </span>
                     </div>
                 </td> 
                     
                 <td>
-                    <button class="btn btn-small" value="@p.StreamUri" onclick="openPlayer(this.value)">
+                    <button class="btn btn-small" value="@channel.StreamUri" onclick="openPlayer(this.value)">
                         <i class="icon-play"></i>
                     </button>
                 </td>
