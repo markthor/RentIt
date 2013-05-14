@@ -134,6 +134,9 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
+
+                Console.WriteLine("Hund");
+
                 //SetNextTrack(p);
 
             }
