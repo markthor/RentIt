@@ -88,7 +88,8 @@ namespace RentItServer.ITU
 
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
-                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
+                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+
                 _logger.AddEntry("Process created");
                 p.Start();
                 _logger.AddEntry("Process started");
