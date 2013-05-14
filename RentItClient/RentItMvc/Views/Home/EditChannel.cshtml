@@ -5,7 +5,6 @@
 
 @model RentItMvc.Models.GuiChannel
 
-
 <h2>Edit Channel</h2>
 
 <div class="row-fluid">
@@ -43,11 +42,5 @@
                     }
             </table>
         </div>
-        <div class="signup-field">
-            @using (Html.BeginForm("AddTrack", "Home", new { channelId = Model.Id, userId = Session["userId"] }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            { 
-                <input type="file" name="file" id="file"/>
-                <input type="submit" value="OK" />
-            }
-        </div>
+        @Html.Action("AddTrackForm", "HomeController");
 </div>

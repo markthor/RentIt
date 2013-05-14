@@ -182,5 +182,12 @@ namespace RentItMvc.Controllers
             // redirect back to the index action to show the form once again
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
+
+        public PartialViewResult AddTrackForm()
+        {
+            return PartialView(new GuiTrack());
+        }
     }
+
+   
 }
