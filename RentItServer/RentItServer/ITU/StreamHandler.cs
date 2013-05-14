@@ -95,9 +95,16 @@ namespace RentItServer.ITU
                 //Write the config file to the system
                 FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
+
+
+
+                //ryk den her og fjern log
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
                 
+
+
+
 
                 //Start set up the process
                 //Path to ezstream executable
@@ -144,9 +151,9 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
-                //SetNextTrack(p); FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
+                SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
             }
             else //channel is already running
             {
@@ -230,9 +237,9 @@ namespace RentItServer.ITU
             _dao.AddTrackPlay(track);
         }
 
-        private void GenerateM3uWithOneTrack(int channelId, string trackName)
+        private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
         {
-            string trackPath = FilePath.ITUTrackPath.GetPath() + trackName;
+            string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
             FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
         }
     }
