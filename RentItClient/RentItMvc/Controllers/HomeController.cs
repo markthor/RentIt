@@ -73,6 +73,25 @@ namespace RentItMvc.Controllers
             return RedirectToAction("EditChannel", new { channelId = routeChannelId, userId = routeUserId });
         }
 
+        public ActionResult MySubscriptions(int userId)
+        {
+            Channel[] channels;
+            try
+            {
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    channels = proxy.GetSubscribedChannels(userId);
+                }
+            }
+            catch (Exception)
+            {
+                channels = new Channel[0];
+            }
+            TempData["ChannelArray"] = channels;
+            return RedirectToAction("ChannelList", new { title = "My Subscriptions" });
+        }
+
+
         /// <summary>
         /// Returns a list of most popular or highlighted channels
         /// </summary>
@@ -176,6 +195,11 @@ namespace RentItMvc.Controllers
             return RedirectToAction("EditChannel", new { userId = userId, channelId = channelId });
         }
 
+        /// <summary>
+        /// Returns a for thats enables adding uploading a track
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
         public PartialViewResult AddTrackForm(int channelId)
         {
             Session["ChannelId"] = channelId;
