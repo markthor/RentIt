@@ -90,14 +90,15 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Arguments: " + arguments);
                 
                 
-                //EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
-                //p.StartInfo.UseShellExecute = true;
+                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+                p.StartInfo.UseShellExecute = true;
                 //p.StartInfo.UserName = "rentit21";
 
-                Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
+
+                //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 _logger.AddEntry("Process created");
-                //p.Start();
+                p.Start();
                 _logger.AddEntry("Process started");
 
                 //Listen for when a new song starts
