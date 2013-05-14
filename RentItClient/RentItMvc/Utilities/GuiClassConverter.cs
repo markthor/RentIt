@@ -41,8 +41,6 @@ namespace RentItMvc.Utilities
             chan.Name = c.Name;
             chan.StreamUri = c.StreamUri;
             List<GuiTrack> tracks = new List<GuiTrack>();
-            foreach (Track t in c.Tracks)
-                tracks.Add(ConvertTrack(t));
             chan.Tracks = tracks;
             return chan;
         }
