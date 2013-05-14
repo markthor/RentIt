@@ -58,26 +58,28 @@ namespace RentItServer.ITU
         /// <param name="channelId">Channel id of the channel to be started</param>
         public void StartStream(int channelId)
         {
-            
-
             if (!IsChannelRunning(channelId)) // Check if stream is already running
             {
                 _logger.AddEntry("Start Stream - ChannelId: " + channelId);
-                Track track = GetNextTrack(channelId);
-                if (track == null) // no tracks on channel
+
+                //Get the first track which should be played on the channel
+                Track track = GetNextTrack(channelId); 
+                if (track == null) // no tracks associated with the channel
                 {
                     _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
                     throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
                 }
-
                 _logger.AddEntry("Next track name: " + track.Name + " and id: " + track.Id + " for channel with id: " + channelId);
 
-                string fileName = track.Id.ToString() + ".mp3";
+                //Create the filename for the track
+                string trackFileName;
+                trackFileName = track.Id.ToString() + ".mp3";
                 //string fileName = "a.mp3"; til test!
-                _logger.AddEntry("Next track filename: " + fileName + " for channel with id: " + channelId);
+                _logger.AddEntry("Next track filename: " + trackFileName + " for channel with id: " + channelId);
 
-                //Writes an m3u playlist to the filesystem.
-                GenerateM3u(channelId, fileName); // generate m3u
+                //Write the m3u file to the system
+                GenerateM3uWithOneTrack(channelId, trackFileName);
+                //Create the filename for the m3u file
                 string m3uFileName;
                 m3uFileName = channelId + ".m3u";
 
@@ -157,7 +159,7 @@ namespace RentItServer.ITU
             Track track = GetNextTrack(p.ChannelId);
             string fileName = track.Id.ToString() + ".mp3";
 
-            GenerateM3u(p.ChannelId, fileName);
+            GenerateM3uWithOneTrack(p.ChannelId, fileName);
 
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
@@ -220,9 +222,9 @@ namespace RentItServer.ITU
             _dao.AddTrackPlay(track);
         }
 
-        private void GenerateM3u(int channelId, string fileName)
+        private void GenerateM3uWithOneTrack(int channelId, string trackName)
         {
-            string trackPath = FilePath.ITUTrackPath.GetPath() + fileName;
+            string trackPath = FilePath.ITUTrackPath.GetPath() + trackName;
             FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
         }
     }
