@@ -483,7 +483,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, RentItServer.ITU.DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream, DatabaseWrapperObjects.Track trackInfo)
         {
             try
             {
@@ -516,7 +516,11 @@ namespace RentItServer.ITU
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                //TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                FileStream audioFile = File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                theTrack.Artist = "Drezz";
+                theTrack.Name = "Mikkels coke eventyr part 2";
+                /*
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
@@ -529,6 +533,7 @@ namespace RentItServer.ITU
                 theTrack.TrackPlays = new List<TrackPlay>();
                 theTrack.Votes = new List<Vote>();
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
+                */
                 try
                 {
                     _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
