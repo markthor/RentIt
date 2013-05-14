@@ -90,6 +90,8 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Arguments: " + arguments);
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath(), arguments);
                 p.StartInfo.UseShellExecute = true;
+                p.StartInfo.UserName = "rentit21";
+                p.StartInfo.Password = "ZAQ12wsx";
                 _logger.AddEntry("Process created");
                 p.Start();
                 _logger.AddEntry("Process started");
