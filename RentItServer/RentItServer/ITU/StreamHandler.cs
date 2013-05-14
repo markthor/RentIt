@@ -94,7 +94,7 @@ namespace RentItServer.ITU
                 //p.StartInfo.UseShellExecute = true;
                 //p.StartInfo.UserName = "rentit21";
 
-                Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "RENTIT21");
+                Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 _logger.AddEntry("Process created");
                 //p.Start();
