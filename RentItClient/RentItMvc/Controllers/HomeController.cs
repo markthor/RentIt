@@ -174,9 +174,13 @@ namespace RentItMvc.Controllers
                 Stream stream = file.InputStream;
                 MemoryStream memory = new MemoryStream();
                 stream.CopyTo(memory);
+                Track track = new Track();
+                track.Artist = artistName;
+                track.Name = trackName;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    Track chan = proxy.GetTrackInfoByStream(memory);
+                    //Track chan = proxy.GetTrackInfoByStream(memory);
+                    proxy.AddTrack(userId, channelId, memory, track);
                 }
             }
             // redirect back to the index action to show the form once again
