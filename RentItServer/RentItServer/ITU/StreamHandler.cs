@@ -102,12 +102,12 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started");
 
                 //Listen for when a new song starts
-                //p.OutputDataReceived += p_OutputDataReceived;
+                p.OutputDataReceived += p_OutputDataReceived;
 
-                //runningChannelIds.Add(channelId, p);
+                runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
-                //SetNextTrack(p);
+                SetNextTrack(p);
             }
             else //channel is already running
             {
