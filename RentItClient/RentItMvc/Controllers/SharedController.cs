@@ -13,5 +13,10 @@ namespace RentItMvc.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult Sidebar()
+        {
+            return PartialView();
+        }
     }
 }
