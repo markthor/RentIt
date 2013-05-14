@@ -1,0 +1,21 @@
+﻿@model RentItMvc.Models.GuiTrack
+
+@{
+    Layout = null;
+    Html.EnableClientValidation(true);
+}
+
+<div class="signup-field">
+    @using (Html.BeginForm("AddTrack", "Home", new { channelId = Model.Id, userId = Session["userId"], trackName = Model.TrackName, artistName = Model.ArtistName  }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    { 
+        <div class="input-field">
+            @Html.TextBoxFor(t => Model.ArtistName, "artistName");
+        </div>  
+        <div class="input-field">
+            @Html.TextBoxFor(t => Model.TrackName, "trackName");
+        </div>  
+        <input type="file" name="file" id="file"/>
+        <input type="submit" value="OK" />                                     
+    }
+    </div>
+
