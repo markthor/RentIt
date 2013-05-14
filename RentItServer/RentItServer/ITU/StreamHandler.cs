@@ -73,8 +73,8 @@ namespace RentItServer.ITU
 
                 //Create the filename for the track
                 string trackFileName;
-                trackFileName = track.Id.ToString() + ".mp3";
-                //string fileName = "a.mp3"; til test!
+                //trackFileName = track.Id.ToString() + ".mp3"; // DET RIGTIGE KODE!!!!!!!!
+                trackFileName = "a.mp3"; // TIL TESTING!!!!!!!!!!!
                 _logger.AddEntry("Next track filename: " + trackFileName + " for channel with id: " + channelId);
 
                 //Write the m3u file to the system
