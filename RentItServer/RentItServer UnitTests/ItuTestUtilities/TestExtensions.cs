@@ -7,6 +7,9 @@ using RentItServer.ITU;
 
 namespace RentItServer_UnitTests.ItuTestUtilities
 {
+    /// <summary>
+    /// Class containing static methods for generating test data to the database.
+    /// </summary>
     public class TestExtensions
     {
         //Id of the first channel created the last time the database was populated.

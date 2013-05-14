@@ -10,7 +10,7 @@
         <a href="/Home/Mychannels/?userId=@Session["userId"]">My channels</a>
     </li>
     <li>
-        <a href="#">My subscriptions</a>
+        <a onclick="location.href ='@(Url.Action("MySubscriptions", "Home", new { userId = Session["userId"] }))'">My subscriptions</a>
     </li>
     <li>
         <a href="#">Create channel</a>
