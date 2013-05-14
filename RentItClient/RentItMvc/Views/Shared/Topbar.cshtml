@@ -32,10 +32,7 @@
         {
             <a href="/Account/Edit" class="brand pull-left">@Session["username"]</a>
             <button class="btn btn-danger btn-signInOut pull-left" type="submit">Sign out</button>
-        }  
-        <button style="margin-right: 20px" class="btn pull-right" type="submit" onclick="location.href ='@(Url.Action("MyChannels", "Home", new {userId = Session["userId"] } ))'">
-            My Channels
-        </button>
+        }
     }
     else
     {
