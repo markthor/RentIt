@@ -135,7 +135,7 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here
 
 
-                Console.WriteLine("Hund");
+                _logger.AddEntry(p.StandardOutput.ReadToEnd());
 
                 //SetNextTrack(p);
 
