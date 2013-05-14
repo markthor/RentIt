@@ -91,7 +91,7 @@ namespace RentItServer.ITU
                 
                 
                 EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
-                p.StartInfo.UseShellExecute = true;
+                p.StartInfo.UseShellExecute = false;
                 //p.StartInfo.UserName = "rentit21";
 
 
