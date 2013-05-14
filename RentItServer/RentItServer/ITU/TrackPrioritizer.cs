@@ -47,6 +47,8 @@ namespace RentItServer.ITU
         /// <returns>The id of the next track to be played</returns>
         public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
+            if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
+
             //Initializing data structure for track prioritizing.
             Dictionary<int, TrackData> trackData = new Dictionary<int, TrackData>();
 

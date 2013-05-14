@@ -94,21 +94,39 @@ namespace RentItServer.ITU
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
                 
-                EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
+
+                
+
+                string ezpath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe";
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezpath + " " + arguments);
+                //startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.UseShellExecute = false;
+                startInfo.CreateNoWindow = true;
+                _logger.AddEntry("tsartinfo ready");
+                EzProcess p = new EzProcess(channelId);
+                p.StartInfo = startInfo;
+                _logger.AddEntry("startinfo sat");
+                p.Start();
+                _logger.AddEntry("Process running");
+
+
+
+                /*EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
                 _logger.AddEntry("Process created");
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardInput = true;
-                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardOutput = true;*/
                 //p.StartInfo.
                 //p.StartInfo.UserName = "rentit21";
                 //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
 
                 _logger.AddEntry("Process not using shell");
-                p.Start();
+                //p.Start();
                 _logger.AddEntry("Process started");
 
-                System.IO.StreamWriter wr = p.StandardInput;
-                System.IO.StreamReader rr = p.StandardOutput;
+                //System.IO.StreamWriter wr = p.StandardInput;
+                //System.IO.StreamReader rr = p.StandardOutput;
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
@@ -116,9 +134,11 @@ namespace RentItServer.ITU
                 runningChannelIds.Add(channelId, p);
                 AddTrackPlay(track); // should this call be here
 
+
+                _logger.AddEntry(p.StandardOutput.ReadToEnd());
+
                 //SetNextTrack(p);
 
-                _logger.AddEntry(p.ProcessName + " - " + p.HasExited + " - " + p.MachineName + " - " + p.StartTime + " - ");
             }
             else //channel is already running
             {
