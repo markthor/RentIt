@@ -100,6 +100,7 @@ namespace RentItServer.ITU
                 string ezpath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe";
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", ezpath + " " + arguments);
                 startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardOutput = true;
                 startInfo.UseShellExecute = false;
                 startInfo.CreateNoWindow = true;
 
