@@ -32,9 +32,7 @@
                 </div>
             </div>
             <div class="signup-field">
-                <div class="input-field">
                     @Html.TextBoxFor(acc => acc.Username, new {@class = "input-block-level", type = "text", required = "required", placeholder = "Pick a username"})
-                </div>
                 <div class="error-field">
                     @Html.ValidationMessageFor(acc => acc.Username, null, new {@class = "txt-error"})
                 </div>    

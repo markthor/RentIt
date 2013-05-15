@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RentItMvc.Models;
 using RentItMvc.RentItService;
+using RentItMvc.Utilities;
 using System.Threading;
 
 namespace RentItMvc.Controllers
@@ -95,6 +96,86 @@ namespace RentItMvc.Controllers
         {
             Session.RemoveAll();
             return Redirect("/");
+        }
+
+        /// <summary>
+        /// Subscribes the user to a channel
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public ActionResult Subscribe(int channelId )
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.Subscribe((int)Session["UserId"], channelId);              
+            }
+            string previousPage = Request.UrlReferrer.AbsolutePath;
+            return Redirect(previousPage);
+        }
+
+        public ActionResult UnSubscribe(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {           
+                proxy.Unsubscribe((int)Session["UserId"], channelId);
+            }
+            string previousPage = Request.UrlReferrer.AbsolutePath;
+            return Redirect(previousPage);
+        }
+
+        /// <summary>
+        /// Returns a view of the subscriptions assosiated with a User
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MySubscriptions()
+        {
+            int userId = (int)Session["UserId"];
+            Channel[] channels;
+            try
+            {
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    channels = proxy.GetSubscribedChannels(userId);
+                }
+            }
+            catch (Exception)
+            {
+                channels = new Channel[0];
+            }
+            TempData["ChannelArray"] = channels;
+            ViewBag.Title = "My subscriptions";
+            List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+            return RedirectToAction("ChannelList", "Channel", guiChannels);
+        }
+        
+        /// <summary>
+        /// Method called to determine if a user has subscribed to a given channel
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static bool IsSubscribed(int channelId, int userId)
+        {
+            int uId = userId;
+            Channel[] channels;
+            try
+            {
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    channels = proxy.GetSubscribedChannels(uId);
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            foreach (Channel c in channels)
+            {
+                if (c.Id == channelId)
+                    return true;
+            }
+            return false;
         }
     }
 }

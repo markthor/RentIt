@@ -6,9 +6,9 @@
         <tr>  
             <th style="width: 25%">Name</th>  
             <th style="width: 47%">Description</th>  
-            <th style="width: 7%; text-align: center"><i class="icon-thumbs-up" /></th>  
-            <th style="width: 7%; text-align: center"><i class="icon-thumbs-down" /></th>  
+            <th style="width: 7%; text-align: center"><i class="icon-ok" /></th>  
             <th style="width: 7%; text-align: center"><i class="icon-play" /></th>
+            <th style="width: 7%; text-align: center"></th>
             <th style="width: 7%; text-align: center"></th>
             </tr> 
         @foreach (var channel in Model)
@@ -19,17 +19,10 @@
                 </td>
                 <td>
                     @channel.Description
-                </td>  
+                </td>   
                 <td>
                     <div style="text-align:center">
                         <span class="badge badge-success" >
-                            @channel.Upvotes
-                        </span>
-                    </div>
-                </td>  
-                <td>
-                    <div style="text-align:center">
-                        <span class="badge badge-important" >
                             @channel.DownVotes
                         </span>
                     </div>
@@ -46,6 +39,24 @@
                     <button class="btn btn-small" value="@channel.StreamUri" onclick="openPlayer(this.value)">
                         <i class="icon-play"></i>
                     </button>
+                </td>
+                <td>
+                 @{
+                    if(RentItMvc.Controllers.AccountController.IsSubscribed(channel.Id, (int)Session["UserId"]))
+                    {
+                        <button class="btn btn-small" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = channel.Id }))'">
+                            <i class="icon-remove"></i>
+                        </button>
+                    }
+                    else 
+                    {                     
+                        <button class="btn btn-small" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = channel.Id }))'">
+                            <i class="icon-ok"></i>
+                        </button>
+                    }
+                  }
+                        
+                   
                 </td>
             </tr>
         }
