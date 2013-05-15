@@ -146,7 +146,7 @@ namespace RentItServer.Utilities
         /// </exception>
         public void WriteFile(string content, string filePath)
         {
-            if (filePath == null) throw new ArgumentNullException("absolutePath");
+            if (filePath == null) throw new ArgumentNullException("absolutePath"); //WRITE A BETTER EXCEPTION STRING!!!!
             FileStream fs = File.OpenWrite(filePath);
             Byte[] bytes = GetBytes(content);
             fs.Write(bytes, 0, bytes.Length);
