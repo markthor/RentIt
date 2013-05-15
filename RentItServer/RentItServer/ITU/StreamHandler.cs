@@ -175,7 +175,7 @@ namespace RentItServer.ITU
             while (true)//while channel running
             {
                 _logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
-                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + p.StandardOutput.ReadToEnd();
+                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + p.StandardOutput.ReadToEnd());
                 Thread.Sleep(1000);
                 SetNextTrack(p);
             }
