@@ -179,7 +179,7 @@ namespace RentItServer.ITU
                 //_logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
                 _logger.AddEntry("EzProcess sleeping for channel with id: " + p.ChannelId);
                 Thread.Sleep(10000);
-                FileSystemDao.GetInstance().AddTrackToM3UFile(FilePath.ITUTrackPath.GetPath() + "a.mp3", FilePath.ITUM3uPath.GetPath() + p.ChannelId);
+                FileSystemDao.GetInstance().AddTrackToM3UFile(FilePath.ITUTrackPath.GetPath() + "a.mp3", FilePath.ITUM3uPath.GetPath() + p.ChannelId + ".m3u");
                 //SetNextTrack(p);
                 Thread.Sleep(10000000);
             }
