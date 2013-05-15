@@ -104,7 +104,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Arguments: " + arguments); // REMOVE THIS LOG!!!!!!!!!!!!!!!
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
-                startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
+                startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
                 //In order to redirect the standard input for ezstream into this program
                 startInfo.RedirectStandardOutput = true;
                 //Default is true, it should be false for ezstream
