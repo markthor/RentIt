@@ -63,7 +63,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Start Stream - ChannelId: " + channelId);
 
                 //Get the first track which should be played on the channel
-                Track track = GetNextTrack(channelId); 
+                Track track = GetNextTrack(channelId);
                 if (track == null) // no tracks associated with the channel
                 {
                     _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
@@ -89,11 +89,10 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Config file generated for channel with id: " + channelId);
                 //Create the xmlFilePath
                 string xmlFilePath;
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml"; test!!
-
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml"; // TIL TEST!!!!!!
                 //Write the config file to the system
-                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
 
 
@@ -101,7 +100,7 @@ namespace RentItServer.ITU
                 //ryk den her og fjern log
                 string arguments = "-c " + xmlFilePath;
                 _logger.AddEntry("Arguments: " + arguments);
-                
+
 
 
 
@@ -110,7 +109,7 @@ namespace RentItServer.ITU
                 //Path to ezstream executable
                 string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
                 //Start set up process info
-                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "//c " + ezPath + " " + arguments);
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
                 startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
                 //In order to redirect the standard input for ezstream into this program
                 startInfo.RedirectStandardOutput = true;
@@ -151,9 +150,9 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
-                //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
+                SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
             }
             else //channel is already running
             {
