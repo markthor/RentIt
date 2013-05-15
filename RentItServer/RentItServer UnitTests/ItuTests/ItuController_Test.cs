@@ -39,25 +39,22 @@ namespace RentItServer_UnitTests.ItuTests
                 testchannelnames.Add(testchannelname + i);
                 testchanneldescrs.Add(testchanneldescr + i);
             } 
-            CreationOfDataForGuiTest wtf = new CreationOfDataForGuiTest();
-            wtf.CreateUsersAndChannels();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
-            CreationOfDataForGuiTest wtf = new CreationOfDataForGuiTest();
-            wtf.CreateUsersAndChannels();
         }
 
         /// <summary>
-        /// Deletes all tuples in SMU database.
+        /// Deletes all tuples in database.
         /// </summary>
         [ClassCleanup]
         public static void CleanDataBaseFinish()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
+            TestExtensions.PopulateDatabase();
         }
 
         #region Controller_Signup
@@ -641,7 +638,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], TestExtensions._testUser1.Id, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -670,7 +667,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -699,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -728,7 +725,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -757,7 +754,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -786,7 +783,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
@@ -815,7 +812,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Channel channel = null;
                 for (int i = 0; i < interval; i++)
                 {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
+                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
                     channel.Hits = i;
                     testchannels.Add(channel);
                 }
