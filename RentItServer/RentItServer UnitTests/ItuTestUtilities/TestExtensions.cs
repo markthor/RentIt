@@ -76,5 +76,10 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             _testTrack = t1;
             _testChannelId = channelId1;
         }
+
+        public static void PopulateDatabaseWithUser()
+        {
+
+        }
     }
 }

@@ -1077,6 +1077,7 @@ namespace RentItServer.ITU
                 var channels = proxy.Channels;
                 foreach (Channel c in channels)
                 {
+                    c.Subscribers.Clear();
                     proxy.Channels.Remove(c);
                 }
 
@@ -1151,7 +1152,7 @@ namespace RentItServer.ITU
                 if (!users.Any())
                     return new List<Channel>();
                 var channels = from c in context.Channels
-                               where c.Subscribers.Contains(users.First())
+                               where c.Subscribers.Contains(users.FirstOrDefault())
                                select c;
                 return channels.ToList();
             }
