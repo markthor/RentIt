@@ -223,7 +223,8 @@ namespace RentItServer.ITU
         private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
         {
             string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
-            FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
+            //FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
+            FileSystemDao.GetInstance().WriteM3UFile(trackPath, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
         }
     }
 

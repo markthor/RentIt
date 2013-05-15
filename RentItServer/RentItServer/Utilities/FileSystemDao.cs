@@ -160,5 +160,28 @@ namespace RentItServer.Utilities
             System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
+
+
+
+
+        public void WriteM3UFile(string trackPath, string filePath)
+        {
+            FileStream fs = null;
+            if (!File.Exists(filePath))
+            {
+                using (fs = File.Create(filePath))
+                {
+
+                }
+            }
+
+            if (File.Exists(filePath))
+            {
+                using (StreamWriter sw = new StreamWriter(filePath))
+                {
+                    sw.Write(trackPath);
+                }
+            }
+        }
     }
 }
