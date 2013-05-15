@@ -127,7 +127,7 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
 
