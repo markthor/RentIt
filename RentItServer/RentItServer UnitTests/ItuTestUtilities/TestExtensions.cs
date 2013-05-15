@@ -13,7 +13,11 @@ namespace RentItServer_UnitTests.ItuTestUtilities
     public class TestExtensions
     {
         //Id of the first channel created the last time the database was populated.
-        public static int _testChannelId;
+        public static int _testChannelId1;
+        public static int _testChannelId2;
+        public static int _testChannelId3;
+        public static int _testChannelId4;
+        public static int _testChannelId5;
         public const string _user1name = "Prechtig";
         public const string _user2name = "TestMan Jr";
         public const string _user1email = "andreas.p.poulsen@gmail.com";
@@ -48,7 +52,7 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             Controller.GetInstance().UpdateChannel(channelId4, null, null, null, 30, 9);
             int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", _testUser1.Id, "No description for you.", new List<string>() { genreName2 });
             Controller.GetInstance().UpdateChannel(channelId5, null, null, null, 102, 1);
-            //Controller.GetInstance().Subscribe(_testUser2.Id, channelId1);
+            Controller.GetInstance().Subscribe(_testUser2.Id, channelId1);
             RentItServer.ITU.DatabaseWrapperObjects.Track t1 = new RentItServer.ITU.DatabaseWrapperObjects.Track();
             t1.Artist = "Kiss";
             t1.Name = "Heaven's On Fire";
@@ -74,7 +78,11 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t2);
             Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t3); 
             _testTrack = t1;
-            _testChannelId = channelId1;
+            _testChannelId1 = channelId1;
+            _testChannelId2 = channelId2;
+            _testChannelId3 = channelId3;
+            _testChannelId4 = channelId4;
+            _testChannelId5 = channelId5;
         }
     }
 }
