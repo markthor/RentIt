@@ -18,7 +18,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITUChannelConfigPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "ChannelConfig" + Path.DirectorySeparatorChar);
 
@@ -28,7 +28,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITUEzStreamPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "EzStream" + Path.DirectorySeparatorChar);
 
@@ -38,7 +38,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITUM3uPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "M3u" + Path.DirectorySeparatorChar);
 
@@ -48,7 +48,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath SMUAudioPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
             "Audio" + Path.DirectorySeparatorChar);
 
@@ -58,7 +58,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath SMULogPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
             "Log" + Path.DirectorySeparatorChar);
 
@@ -68,7 +68,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath SMUPdfPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
             "PDF" + Path.DirectorySeparatorChar);
 
@@ -78,7 +78,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath SMUImagePath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "SMU" + Path.DirectorySeparatorChar +
             "Images" + Path.DirectorySeparatorChar);
 
@@ -88,7 +88,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITUTrackPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "Tracks" + Path.DirectorySeparatorChar);
 
@@ -98,7 +98,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITUTempPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "Temp" + Path.DirectorySeparatorChar);
 
@@ -108,7 +108,7 @@ namespace RentItServer.Utilities
         public static readonly FilePath ITULogPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
             "RentItServices" + Path.DirectorySeparatorChar +
-            "Rentit21Files" + Path.DirectorySeparatorChar +
+            "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
             "Log" + Path.DirectorySeparatorChar);
 
