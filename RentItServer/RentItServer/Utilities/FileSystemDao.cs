@@ -183,5 +183,11 @@ namespace RentItServer.Utilities
                 }
             }
         }
+
+        public void AddTrackToM3UFile(string trackPath, string filePath)
+        {
+            string text = Environment.NewLine + trackPath;
+            System.IO.File.AppendAllText(filePath, text);
+        }
     }
 }
