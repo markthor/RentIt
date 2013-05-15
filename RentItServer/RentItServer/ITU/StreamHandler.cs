@@ -120,7 +120,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started for channel with id: " + channelId);
 
                 //Listen for when a new song starts
-                p.OutputDataReceived += p_OutputDataReceived;
+                //p.OutputDataReceived += p_OutputDataReceived;
 
                 //Add this process to the dictionary with running channels
                 runningChannelIds.Add(channelId, p);
@@ -130,6 +130,10 @@ namespace RentItServer.ITU
                 //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
+
+
+                Thread t = new Thread(new ParameterizedThreadStart(EzProcessThread));
+                t.Start(p);
             }
             else //channel is already running
             {
@@ -152,16 +156,29 @@ namespace RentItServer.ITU
 
             GenerateM3uWithOneTrack(p.ChannelId, fileName);
 
-            /*
+            /* 
              * 
              * TEST OF LONG TIME IT WOULD TAKE TO CHANGE SONG WHEN A SONG HAS JUST FINISHED, IF IT IS EVEN POSSIBLE
              * 
              */
-            string command = "killall -HUP ezstream";
-            p.StandardInput.WriteLine(command);
-            p.StandardInput.Flush();
+            //string command = "killall -HUP ezstream";
+            //p.StandardInput.WriteLine(command);
+            //p.StandardInput.Flush();
 
             AddTrackPlay(track);
+        }
+
+        private void EzProcessThread(object o)
+        {
+            EzProcess p = (EzProcess)o;
+            _logger.AddEntry("EzProcessThread for channel with id: " + p.ChannelId + " has started");
+            while (true)//while channel running
+            {
+                _logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
+                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + p.StandardOutput.ReadToEnd();
+                Thread.Sleep(1000);
+                SetNextTrack(p);
+            }
         }
 
         private Track GetNextTrack(int channelId)
