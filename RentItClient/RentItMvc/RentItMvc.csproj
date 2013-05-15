@@ -240,6 +240,7 @@
     <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Track\TrackList.cshtml" />
+    <Content Include="Views\Channel\CreateChannel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

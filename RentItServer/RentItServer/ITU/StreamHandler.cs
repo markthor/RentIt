@@ -74,10 +74,10 @@ namespace RentItServer.ITU
                 //Create the filename for the track
                 string trackFileName;
                 //trackFileName = track.Id.ToString() + ".mp3"; // DET RIGTIGE KODE!!!!!!!!
-                trackFileName = "a.mp3"; // TIL TESTING!!!!!!!!!!!
+                trackFileName = "b.mp3"; // TIL TESTING!!!!!!!!!!!
                 _logger.AddEntry("Next track filename: " + trackFileName + " for channel with id: " + channelId);
 
-                //Write the m3u file to the system
+                //Write the m3u file to the filesystem
                 GenerateM3uWithOneTrack(channelId, trackFileName);
                 //Create the filename for the m3u file
                 string m3uFileName;
@@ -98,10 +98,9 @@ namespace RentItServer.ITU
 
                 //Start set up the process
                 //Path to ezstream executable
-                string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
+                string ezPath = FilePath.ITUEzStreamPath.GetPath();
                 //Create the arguments
                 string arguments = "-c " + xmlFilePath;
-                _logger.AddEntry("Arguments: " + arguments); // REMOVE THIS LOG!!!!!!!!!!!!!!!
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
                 startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
@@ -120,7 +119,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started for channel with id: " + channelId);
 
                 //Listen for when a new song starts
-                p.OutputDataReceived += p_OutputDataReceived;
+                //p.OutputDataReceived += p_OutputDataReceived;
 
                 //Add this process to the dictionary with running channels
                 runningChannelIds.Add(channelId, p);
@@ -130,6 +129,10 @@ namespace RentItServer.ITU
                 //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
+
+
+                Thread t = new Thread(new ParameterizedThreadStart(EzProcessThread));
+                t.Start(p);
             }
             else //channel is already running
             {
@@ -148,11 +151,12 @@ namespace RentItServer.ITU
         private void SetNextTrack(EzProcess p)
         {
             Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
+            //string trackFileName = track.Id.ToString() + ".mp3";
+            string trackFileName = "b.mp3"; // TESTING!!!!!
 
-            GenerateM3uWithOneTrack(p.ChannelId, fileName);
+            GenerateM3uWithOneTrack(p.ChannelId, trackFileName);
 
-            /*
+            /* 
              * 
              * TEST OF LONG TIME IT WOULD TAKE TO CHANGE SONG WHEN A SONG HAS JUST FINISHED, IF IT IS EVEN POSSIBLE
              * 
@@ -162,6 +166,22 @@ namespace RentItServer.ITU
             p.StandardInput.Flush();
 
             AddTrackPlay(track);
+        }
+
+        private void EzProcessThread(object o)
+        {
+            EzProcess p = (EzProcess)o;
+            _logger.AddEntry("EzProcessThread for channel with id: " + p.ChannelId + " has started");
+            while (true)//while channel running
+            {
+                //_logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
+                //string stdOutput = p.StandardOutput.ReadToEnd();
+                //_logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
+                _logger.AddEntry("EzProcess sleeping for channel with id: " + p.ChannelId);
+                Thread.Sleep(1000);
+                SetNextTrack(p);
+                Thread.Sleep(1000000);
+            }
         }
 
         private Track GetNextTrack(int channelId)

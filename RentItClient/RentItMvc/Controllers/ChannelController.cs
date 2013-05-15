@@ -22,22 +22,23 @@ namespace RentItMvc.Controllers
             return View(channels);
         }
         
-        public PartialViewResult CreateChannelForm()
-        {
-            return PartialView(new GuiChannel());
-        }
-
-        public ActionResult CreateChannel(GuiChannel channel)
+        /// <summary>
+        /// Creates a new channel in the database. Is called from CreateChannel window.
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <returns></returns>
+        public ActionResult CreateNewChannel(GuiChannel channel)
         {
             int channelId;
             int userId = (int)Session["userId"];
+            string description = channel.Description;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channelId = proxy.CreateChannel(channel.Name, userId, "", new string[0]);
+                channelId = proxy.CreateChannel(channel.Name, userId, description, new string[0]);
             }
             int routeChannelId = channelId;
             int routeUserId = userId;
-            return RedirectToAction("EditChannel", new { channelId = routeChannelId, userId = routeUserId });
+            return RedirectToAction("SelectChannel", new { channelId = routeChannelId });
         }
         
         /// <summary>
@@ -99,27 +100,7 @@ namespace RentItMvc.Controllers
             return View("ChannelList", guiChannelList);
         }
 
-        public ActionResult MySubscriptions()
-        {
-            int userId = (int)Session["userId"];
-            Channel[] channels;
-            try
-            {
-                using (RentItServiceClient proxy = new RentItServiceClient())
-                {
-                    channels = proxy.GetSubscribedChannels(userId);
-                }
-            }
-            catch (Exception)
-            {
-                channels = new Channel[0];
-            }
-            TempData["ChannelArray"] = channels;
-            ViewBag.Title = "My subscriptions";
-            List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
-            return View("ChannelList", guiChannels);
-        }
-
+        
         public ActionResult SaveEditChannel(GuiChannel channel, int channelId)
         {
             //channelId = Model.Id, ownerId = Model.OwnerId, name = Model.Name, description = Model.Description
@@ -156,6 +137,11 @@ namespace RentItMvc.Controllers
                 }
             }
             return Redirect("/");
+        }
+
+        public ActionResult CreateChannel()
+        {
+            return View(new GuiChannel());
         }
     }
 }
