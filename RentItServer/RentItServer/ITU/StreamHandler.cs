@@ -151,9 +151,10 @@ namespace RentItServer.ITU
         private void SetNextTrack(EzProcess p)
         {
             Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
+            //string trackFileName = track.Id.ToString() + ".mp3";
+            string trackFileName = "b.mp3"; // TESTING!!!!!
 
-            GenerateM3uWithOneTrack(p.ChannelId, fileName);
+            GenerateM3uWithOneTrack(p.ChannelId, trackFileName);
 
             /* 
              * 
