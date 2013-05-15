@@ -17,34 +17,32 @@ namespace RentItServer_UnitTests.ItuTests
         private const string testname = TestExtensions._user2name;
         private const string testmail = TestExtensions._user2email;
         private const string testpw = TestExtensions._userpassword;
+        private const string testGenre = TestExtensions.genreName1;
+        private static RentItServer.ITU.DatabaseWrapperObjects.User _testUser = TestExtensions._testUser1;
         private int testId = int.MaxValue;
 
         private const string testchannelname = "TestDummyChannel9000";
         private const string testchanneldescr = "TestDummyChannel9000Description";
-        private readonly List<string> testchannelnames = new List<string>();
-        private readonly List<string> testchanneldescrs = new List<string>();
-        private readonly List<Channel> testchannels = new List<Channel>();
+        private static readonly List<string> testchannelnames = new List<string>();
+        private static readonly List<string> testchanneldescrs = new List<string>();
+        private static readonly List<Channel> testchannels = new List<Channel>();
 
         private const int interval = 3;
 
-        private Controller controller;
+        private static Controller controller;
        
             
         [TestInitialize]
         public void Initialize()
         {
-            controller = Controller.GetInstance();
-            for (int i = 0; i < interval; i++)
-            {
-                testchannelnames.Add(testchannelname + i);
-                testchanneldescrs.Add(testchanneldescr + i);
-            } 
+            DatabaseDao.GetInstance().DeleteDatabaseData();
+            TestExtensions.PopulateDatabase();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
+            //DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
         /// <summary>
@@ -53,6 +51,19 @@ namespace RentItServer_UnitTests.ItuTests
         [ClassCleanup]
         public static void CleanDataBaseFinish()
         {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
+            TestExtensions.PopulateDatabase();
+        }
+
+        [ClassInitialize]
+        public static void CleanDataBaseStart(TestContext tc)
+        {
+            controller = Controller.GetInstance();
+            for (int i = 0; i < interval; i++)
+            {
+                testchannelnames.Add(testchannelname + i);
+                testchanneldescrs.Add(testchanneldescr + i);
+            } 
             DatabaseDao.GetInstance().DeleteDatabaseData();
             TestExtensions.PopulateDatabase();
         }
@@ -513,19 +524,24 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
 
+        public void CreateChannelsForTests()
+        {
+            Channel channel = null;
+            for (int i = 0; i < interval; i++)
+            {
+                channel = _dao.CreateChannel(testchannelnames[i], TestExtensions._testUser1.Id, testchanneldescrs[i], new string[] { testGenre });
+                _dao.UpdateChannel(channel.Id, null, null, null, i, i, null);
+                testchannels.Add(channel);
+            }
+        }
+
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Behavior_ProperOwner()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
-            testId = user.Id;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    testchannels.Add(channel);
-                }
+                testId = TestExtensions._testUser1.Id;
+                CreateChannelsForTests();
                 ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
                 csa.SearchString = testchannelname;
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
@@ -546,16 +562,9 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_PositiveInterval()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
-            testId = user.Id;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[]{"jazz"});
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
                 csa.StartIndex = 0;
                 csa.EndIndex = interval;
@@ -573,16 +582,9 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_NegativeInterval()
         {
-            User user = _dao.SignUp(testname, testmail, testpw);
-            testId = user.Id;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
                 csa.StartIndex = -interval;
                 csa.EndIndex = interval;
@@ -606,24 +608,18 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsDesc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { "jazz" });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
-                    Assert.IsTrue(theChannels[i-1].Hits > theChannels[i].Hits);   
+                    Assert.IsTrue(theChannels[i-1].Hits >= theChannels[i].Hits);   
                 } 
             }
-            catch
+            catch(Exception e)
             {
-                Assert.Fail("An exception was raised");
+                Assert.Fail("An exception was raised. " + e);
             }
         }
 
@@ -635,24 +631,18 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.HitsAsc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], TestExtensions._testUser1.Id, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
-                    Assert.IsTrue(theChannels[i - 1].Hits < theChannels[i].Hits);
+                    Assert.IsTrue(theChannels[i - 1].Hits <= theChannels[i].Hits);
                 }
             }
-            catch
+            catch(Exception e)
             {
-                Assert.Fail("An exception was raised");
+                Assert.Fail("An exception was raised. " + e);
             }
         }
 
@@ -664,13 +654,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
@@ -693,13 +677,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
@@ -708,7 +686,7 @@ namespace RentItServer_UnitTests.ItuTests
                     //TODO fix this Assert.IsTrue(theChannels[i - 1].Comments.Count < theChannels[i].Comments.Count);
                 }
             }
-            catch
+            catch(Exception e)
             {
                 Assert.Fail("An exception was raised");
             }
@@ -722,24 +700,18 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingDesc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
-                    Assert.IsTrue(theChannels[i - 1].Rating > theChannels[i].Rating);
+                    Assert.IsTrue(theChannels[i - 1].Rating >= theChannels[i].Rating);
                 }
             }
-            catch
+            catch(Exception e)
             {
-                Assert.Fail("An exception was raised");
+                Assert.Fail("An exception was raised. " + e);
             }
         }
 
@@ -751,25 +723,19 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.RatingAsc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
-                    Assert.IsTrue(theChannels[i - 1].Rating < theChannels[i].Rating);
+                    Assert.IsTrue(theChannels[i - 1].Rating <= theChannels[i].Rating);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Assert.Fail("An exception was raised");
-            }
+                Assert.Fail("An exception was raised." + e);
+            } 
         }
 
         [TestMethod]
@@ -780,13 +746,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
@@ -809,13 +769,7 @@ namespace RentItServer_UnitTests.ItuTests
             csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
             try
             {
-                Channel channel = null;
-                for (int i = 0; i < interval; i++)
-                {
-                    channel = _dao.CreateChannel(testchannelnames[i], testId, testchanneldescrs[i], new string[] { TestExtensions.genreName1 });
-                    channel.Hits = i;
-                    testchannels.Add(channel);
-                }
+                CreateChannelsForTests();
                 IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
                 List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
                 Assert.IsTrue(theChannels.Count >= interval);
