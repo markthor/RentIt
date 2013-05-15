@@ -4,7 +4,7 @@
 
 @model List<RentItMvc.Models.GuiTrack>
 
-<h2>Tracks</h2>
+<h1>Manage Tracks</h1>
 <div style="width: 100%; height: 424px; margin-bottom: 20px; overflow-x: hidden; overflow-y: auto">
     <table class="table table-hover">
         <tr>
@@ -26,7 +26,7 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id }))'">
+                    <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id }))'">
                         <i class="icon-remove icon-white"></i>
                     </button>
                 </td>

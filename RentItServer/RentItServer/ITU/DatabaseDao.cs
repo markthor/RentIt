@@ -411,7 +411,7 @@ namespace RentItServer.ITU
                 var channels = from c in context.Channels
                                where c.Id == channelId
                                select c;
-                
+
                 if (channels.Any() == false)
                 {   // No channel with matching id
                     return null;
@@ -528,27 +528,26 @@ namespace RentItServer.ITU
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
-
-                if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
-                {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
-                    Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                    if (filter.StartIndex < 0)
-                    {   // Avoid OutOfBoundsException
-                        filter.StartIndex = 0;
-                    }
-                    if (filter.EndIndex < filteredChannels.Count)
-                    {
-                        filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
-                    }
-                    else
-                    {
-                        filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
-                    }
-                    filteredChannels = new List<Channel>(range);
-                }
-                filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
-                return filteredChannels;
             }
+            if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
+            {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
+                if (filter.StartIndex < 0)
+                {   // Avoid OutOfBoundsException
+                    filter.StartIndex = 0;
+                }
+                if (filter.EndIndex < filteredChannels.Count)
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
+                }
+                else
+                {
+                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
+                }
+                filteredChannels = new List<Channel>(range);
+            }
+            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
+            return filteredChannels;
         }
 
         /// <summary>
@@ -853,8 +852,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var genres = from g in context.Genres
-                               where g.Name == genreName
-                               select g;
+                             where g.Name == genreName
+                             select g;
 
                 if (genres.Any()) throw new ArgumentException("A genre with the name already exists");
 
@@ -1162,8 +1161,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var tracks = from t in context.Tracks
-                            where t.ChannelId == channelId
-                            select t;
+                             where t.ChannelId == channelId
+                             select t;
                 if (!tracks.Any())
                     return new List<Track>();
                 return tracks.ToList();
