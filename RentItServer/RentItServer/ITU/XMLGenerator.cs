@@ -77,9 +77,15 @@ namespace RentItServer.ITU
             string svrinfopublic = "0";
 
 
+            XmlWriterSettings xmlSettings = new XmlWriterSettings();
+            xmlSettings.Indent = true;
+            xmlSettings.IndentChars = "  ";
+            xmlSettings.NewLineChars = "\r\n";
+            xmlSettings.NewLineHandling = NewLineHandling.Replace;
+
 
             StringBuilder sb = new StringBuilder();
-            XmlWriter xmlWriter = XmlWriter.Create(sb);
+            XmlWriter xmlWriter = XmlWriter.Create(sb, xmlSettings);
             xmlWriter.WriteStartDocument();
 
             xmlWriter.WriteStartElement(startElement);
@@ -100,7 +106,7 @@ namespace RentItServer.ITU
 
             xmlWriter.WriteEndElement();
             xmlWriter.Flush();
-
+            
             return sb.ToString();
         }
     }

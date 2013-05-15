@@ -89,10 +89,10 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Config file generated for channel with id: " + channelId);
                 //Create the xmlFilePath
                 string xmlFilePath;
-                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml"; // TIL TEST!!!!!!
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                //xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + "configtest.xml"; // TIL TEST!!!!!!
                 //Write the config file to the system
-                //FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
 
 
 
@@ -150,9 +150,9 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
-                SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
+                //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
             }
             else //channel is already running
             {
