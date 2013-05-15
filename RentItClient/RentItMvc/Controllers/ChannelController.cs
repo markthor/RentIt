@@ -77,7 +77,7 @@ namespace RentItMvc.Controllers
             {
                 channels = new Channel[0];
             }
-            ViewBag.Title = "Featured Channels";
+            ViewBag.Title = "Featured channels";
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
             return View("ChannelList", guiChannels);
         }
@@ -96,10 +96,33 @@ namespace RentItMvc.Controllers
                 channels = proxy.GetCreatedChannels(userId);
             }
             List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels);
-            ViewBag.Title = "My Channels";
+            ViewBag.Title = "My channels";
             return View("ChannelList", guiChannelList);
         }
 
+        /// <summary>
+        /// Returns a view of the subscriptions assosiated with a User
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MySubscriptions()
+        {
+            int userId = (int)Session["UserId"];
+            Channel[] channels;
+            try
+            {
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    channels = proxy.GetSubscribedChannels(userId);
+                }
+            }
+            catch (Exception)
+            {
+                channels = new Channel[0];
+            }
+            List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+            ViewBag.Title = "My subscriptions";
+            return View("ChannelList", guiChannels);
+        }
         
         public ActionResult SaveEditChannel(GuiChannel channel, int channelId)
         {

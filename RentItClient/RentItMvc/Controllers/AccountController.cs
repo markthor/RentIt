@@ -122,31 +122,6 @@ namespace RentItMvc.Controllers
             string previousPage = Request.UrlReferrer.AbsolutePath;
             return Redirect(previousPage);
         }
-
-        /// <summary>
-        /// Returns a view of the subscriptions assosiated with a User
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult MySubscriptions()
-        {
-            int userId = (int)Session["UserId"];
-            Channel[] channels;
-            try
-            {
-                using (RentItServiceClient proxy = new RentItServiceClient())
-                {
-                    channels = proxy.GetSubscribedChannels(userId);
-                }
-            }
-            catch (Exception)
-            {
-                channels = new Channel[0];
-            }
-            TempData["ChannelArray"] = channels;
-            ViewBag.Title = "My subscriptions";
-            List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
-            return RedirectToAction("ChannelList", "Channel", guiChannels);
-        }
         
         /// <summary>
         /// Method called to determine if a user has subscribed to a given channel

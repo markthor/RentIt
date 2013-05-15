@@ -17,7 +17,6 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "Email address")]
         [Remote("IsEmailAvailable", "Validation")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
@@ -31,7 +30,7 @@ namespace RentItMvc.Models
         
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Passwords doesn't match.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Passwords doesn't match.")]
         public string ConfirmPassword { get; set; }
 
         public string UsernameOrEmail { get; set; }

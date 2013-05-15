@@ -1,62 +1,66 @@
 ﻿@model List<RentItMvc.Models.GuiChannel>
 
 <h1>@ViewBag.Title</h1>
-<div class="row-fluid"> 
+<div class="row-fluid">
     <table class="table table-hover">
-        <tr>  
-            <th style="width: 25%">Name</th>  
-            <th style="width: 47%">Description</th>  
-            <th style="width: 7%; text-align: center"><i class="icon-ok" /></th>  
+        <tr>
+            <th style="width: 25%">Name</th>
+            <th style="width: 47%">Description</th>
+            <th style="width: 7%; text-align: center"><i class="icon-ok" /></th>
             <th style="width: 7%; text-align: center"><i class="icon-play" /></th>
             <th style="width: 7%; text-align: center"></th>
             <th style="width: 7%; text-align: center"></th>
-            </tr> 
+        </tr>
         @foreach (var channel in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(channel.Name, "SelectChannel", "Channel", new { channelId = channel.Id }, null)
+                    <div title="@channel.Name">
+                        @Html.ActionLink(channel.Name, "SelectChannel", "Channel", new { channelId = channel.Id }, new { @class = "link-overflow", style = "width: 220px"})
+                    </div>
                 </td>
                 <td>
-                    @channel.Description
-                </td>   
+                    <div class="text-overflow" style="width:375px" title="@channel.Description">
+                        @channel.Description
+                    </div>
+                </td>
                 <td>
-                    <div style="text-align:center">
-                        <span class="badge badge-success" >
+                    <div style="text-align: center">
+                        <span class="badge badge-success">
                             @channel.DownVotes
                         </span>
                     </div>
                 </td>
                 <td>
-                    <div style="text-align:center">
-                        <span class="badge badge-inverse" >
+                    <div style="text-align: center">
+                        <span class="badge badge-inverse">
                             @channel.Hits
                         </span>
                     </div>
-                </td> 
-                    
+                </td>
+
                 <td>
                     <button class="btn btn-small" value="@channel.StreamUri" onclick="openPlayer(this.value)">
                         <i class="icon-play"></i>
                     </button>
                 </td>
                 <td>
-                 @{
-                    if(RentItMvc.Controllers.AccountController.IsSubscribed(channel.Id, (int)Session["UserId"]))
-                    {
+                    @{
+            if (RentItMvc.Controllers.AccountController.IsSubscribed(channel.Id, (int)Session["UserId"]))
+            {
                         <button class="btn btn-small" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = channel.Id }))'">
                             <i class="icon-remove"></i>
                         </button>
-                    }
-                    else 
-                    {                     
+            }
+            else
+            {                     
                         <button class="btn btn-small" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = channel.Id }))'">
                             <i class="icon-ok"></i>
                         </button>
+            }
                     }
-                  }
-                        
-                   
+
+
                 </td>
             </tr>
         }
