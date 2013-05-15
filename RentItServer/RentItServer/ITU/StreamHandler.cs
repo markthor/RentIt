@@ -152,7 +152,7 @@ namespace RentItServer.ITU
         {
             Track track = GetNextTrack(p.ChannelId);
             //string trackFileName = track.Id.ToString() + ".mp3";
-            string trackFileName = "b.mp3"; // TESTING!!!!!
+            string trackFileName = "a.mp3"; // TESTING!!!!!
 
             GenerateM3uWithOneTrack(p.ChannelId, trackFileName);
 
@@ -178,9 +178,9 @@ namespace RentItServer.ITU
                 //string stdOutput = p.StandardOutput.ReadToEnd();
                 //_logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
                 _logger.AddEntry("EzProcess sleeping for channel with id: " + p.ChannelId);
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
                 SetNextTrack(p);
-                Thread.Sleep(1000000);
+                Thread.Sleep(10000000);
             }
         }
 
