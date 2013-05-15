@@ -12,37 +12,15 @@
         @using (Html.BeginForm("SaveEditChannel", "Channel", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
         {
             <h5>Name</h5>
-            <div class="input-block-level">  
-                @Html.TextBoxFor(model => model.Name, new {@class = "input-block-level", type = "text", required = "required", placeholder = Model.Name})
+            <div class="input-block-level">
+                @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level", type = "text", required = "required", placeholder = Model.Name })
             </div>
             <h5>Description</h5>
             <div class="input-block-level">
-                @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description})        
+                @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description })
             </div>
             <button class="btn">Save changes</button>
         }
-            <div class="input-block-level">
-            <h5>Track List</h5>
-            <table class="table table-hover">
-                <tr>  
-                    <th>Name</th> 
-                    <th>Actions</th> 
-                </tr> 
-                @foreach (var t in Model.Tracks)
-                { 
-                    <tr>
-                        <td>
-                            @t.TrackName
-                        </td>
-                        <td>
-                            <button class="btn btn-small" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new {channelId = Model.Id, userId = Session["UserId"], trackId = t.Id} ))'">
-                                <i class="icon-remove-circle"></i>
-                            </button>                    
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
     </div>
-    @Html.Action("AddTrackForm", "Track", new { channelId = Model.Id } )
+@Html.Action("AddTrackForm", "Track", new { channelId = Model.Id })
 </div>

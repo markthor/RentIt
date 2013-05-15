@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "TrackList";
+}
+
+@model List<RentItMvc.Models.GuiTrack>
+
+<h2>Tracks</h2>
+<div style="width: 100%; height: 424px; margin-bottom: 20px; overflow-x: hidden; overflow-y: auto">
+    <table class="table table-hover">
+        <tr>
+            <th>Artist</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        @foreach (var t in Model)
+        { 
+            <tr>
+                <td>
+                    <div class="text-overflow" style="margin-top: 2px; width: 250px" title="@t.ArtistName">
+                        @t.ArtistName
+                    </div>
+                </td>
+                <td>
+                    <div class="text-overflow" style="margin-top: 2px; width: 500px"  title="@t.TrackName">
+                        @t.TrackName
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id }))'">
+                        <i class="icon-remove icon-white"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<!-- Add track form -->
+@Html.Action("AddTrackForm", "Track")

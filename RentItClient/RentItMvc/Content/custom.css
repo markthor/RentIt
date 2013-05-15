@@ -1,4 +1,10 @@
-﻿.sidebar-nav {
+﻿.text-overflow {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.sidebar-nav {
     padding: 9px 0;
 }
 
@@ -107,3 +113,51 @@ input[type="range"]::-webkit-slider-thumb {
     height: 28px;
     border-radius: 5px;
 }
+
+/************** SCROLLBAR **************/
+
+::-webkit-scrollbar {
+    width: 15px;
+} /* this targets the default scrollbar (compulsory) */
+
+::-webkit-scrollbar-track {
+    background-color: darkgray;
+    border-radius: 10px;
+} /* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+    background-color: silver;
+    border-radius: 10px;
+} /* this will style the thumb, ignoring the track */
+
+  /************** UPLOAD FILE FORM **************/
+
+input[type="file"] { 
+    position: relative /* this needs to be in place for the pseudo element to position properly */; 
+    -webkit-appearance: none /* this is the key to clearing the default styling */; 
+    width: 218px; 
+    padding:0; 
+    background-color: #ffffff; 
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); 
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+} /* This styles the text box */
+
+input[type=file]::-webkit-file-upload-button { 
+    width: 0; 
+    padding: 0; 
+    margin: 0; 
+    -webkit-appearance: none; 
+    border: none; 
+} /* This removes the default file upload button */
+
+input[type="file"]:after { 
+    content: "Upload"; 
+    margin:0 0 0 0.5em; 
+    display: inline-block; left: 100%; position: relative; 
+    background: white url(formelements-select.png) no-repeat center left; 
+    padding:0.3em 0.5em; 
+    border: solid 1px #ccc; 
+    -webkit-appearance: none; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); 
+} /* This styles the upload file button, you can even change the wording */
