@@ -77,7 +77,7 @@ namespace RentItServer.ITU
                 trackFileName = "a.mp3"; // TIL TESTING!!!!!!!!!!!
                 _logger.AddEntry("Next track filename: " + trackFileName + " for channel with id: " + channelId);
 
-                //Write the m3u file to the system
+                //Write the m3u file to the filesystem
                 GenerateM3uWithOneTrack(channelId, trackFileName);
                 //Create the filename for the m3u file
                 string m3uFileName;
@@ -98,10 +98,9 @@ namespace RentItServer.ITU
 
                 //Start set up the process
                 //Path to ezstream executable
-                string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
+                string ezPath = FilePath.ITUEzStreamPath.GetPath();
                 //Create the arguments
                 string arguments = "-c " + xmlFilePath;
-                _logger.AddEntry("Arguments: " + arguments); // REMOVE THIS LOG!!!!!!!!!!!!!!!
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
                 startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT

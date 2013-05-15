@@ -30,7 +30,8 @@ namespace RentItServer.Utilities
             "RentItServices" + Path.DirectorySeparatorChar +
             "RentIt21Files" + Path.DirectorySeparatorChar +
             "ITU" + Path.DirectorySeparatorChar +
-            "EzStream" + Path.DirectorySeparatorChar);
+            "EzStream" + Path.DirectorySeparatorChar +
+            "ezstream.exe");
 
         /// <summary>
         /// The M3u files refered in the config files.
