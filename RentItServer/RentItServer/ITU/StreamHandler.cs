@@ -126,7 +126,7 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
 
@@ -173,8 +173,8 @@ namespace RentItServer.ITU
             _logger.AddEntry("EzProcessThread for channel with id: " + p.ChannelId + " has started");
             while (true)//while channel running
             {
-                _logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
-                string stdOutput = p.StandardOutput.ReadToEnd();
+                //_logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
+                //string stdOutput = p.StandardOutput.ReadToEnd();
                 _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
                 Thread.Sleep(1000);
                 SetNextTrack(p);
