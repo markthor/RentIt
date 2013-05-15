@@ -126,7 +126,7 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
 
@@ -151,9 +151,10 @@ namespace RentItServer.ITU
         private void SetNextTrack(EzProcess p)
         {
             Track track = GetNextTrack(p.ChannelId);
-            string fileName = track.Id.ToString() + ".mp3";
+            //string trackFileName = track.Id.ToString() + ".mp3";
+            string trackFileName = "b.mp3"; // TESTING!!!!!
 
-            GenerateM3uWithOneTrack(p.ChannelId, fileName);
+            GenerateM3uWithOneTrack(p.ChannelId, trackFileName);
 
             /* 
              * 
@@ -173,11 +174,13 @@ namespace RentItServer.ITU
             _logger.AddEntry("EzProcessThread for channel with id: " + p.ChannelId + " has started");
             while (true)//while channel running
             {
-                _logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
-                string stdOutput = p.StandardOutput.ReadToEnd();
-                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
+                //_logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
+                //string stdOutput = p.StandardOutput.ReadToEnd();
+                //_logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
+                _logger.AddEntry("EzProcess sleeping for channel with id: " + p.ChannelId);
                 Thread.Sleep(1000);
                 SetNextTrack(p);
+                Thread.Sleep(1000000);
             }
         }
 

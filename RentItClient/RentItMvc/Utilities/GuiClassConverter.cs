@@ -57,7 +57,28 @@ namespace RentItMvc.Utilities
             track.TrackName = t.Name;
             track.Id = t.Id;
             track.ArtistName = t.Artist;
+            track.ChannelId = t.ChannelId;
             return track;
+        }
+
+        public static List<GuiTrack> ConvertTrackList(Track[] tracks)
+        {
+            List<GuiTrack> convertedTracks = new List<GuiTrack>();
+            if (tracks != null)
+            {
+                foreach (Track t in tracks)
+                {
+                    GuiTrack track = new GuiTrack()
+                    {
+                        Id = t.Id,
+                        ArtistName = t.Artist,
+                        ChannelId = t.ChannelId,
+                        TrackName = t.Name
+                    };
+                    convertedTracks.Add(track);
+                }
+            }
+            return convertedTracks;
         }
     }
 }

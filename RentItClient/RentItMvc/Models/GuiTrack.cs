@@ -20,5 +20,8 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "Id")]
         public int Id { get; set; }
+
+        [Required]
+        public int ChannelId { get; set; }
     }
 }

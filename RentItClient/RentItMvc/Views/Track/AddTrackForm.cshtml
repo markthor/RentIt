@@ -9,10 +9,10 @@
     @using (Html.BeginForm("AddTrack", "Track", new { channelId = Session["channelId"], trackName = Model.TrackName, artistName = Model.ArtistName  }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     { 
         <div class="input-field">
-            @Html.TextBoxFor(t => Model.ArtistName, new { placeholder = "Artist name" })
+            @Html.TextBoxFor(t => Model.ArtistName, new { placeholder = "Artist" })
         </div>  
         <div class="input-field">
-            @Html.TextBoxFor(t => Model.TrackName, new { placeholder = "Track name" })
+            @Html.TextBoxFor(t => Model.TrackName, new { placeholder = "Title" })
         </div>  
         <input type="file" name="file" id="file"/>
         <input class="btn" type="submit" value="OK" />                                     

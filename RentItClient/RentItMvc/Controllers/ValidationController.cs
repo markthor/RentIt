@@ -57,7 +57,7 @@ namespace RentItMvc.Controllers
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
-                return Json("The name is already in use.", JsonRequestBehavior.AllowGet);
+                return Json("The channel name is already in use.", JsonRequestBehavior.AllowGet);
             }
         }
     }

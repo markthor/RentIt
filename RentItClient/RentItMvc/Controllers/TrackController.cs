@@ -36,8 +36,9 @@ namespace RentItMvc.Controllers
                     proxy.AddTrack(userId, channelId, memory, track);
                 }
             }
+            return Redirect(Request.UrlReferrer.PathAndQuery);
             // redirect back to the index action to show the form once again
-            return RedirectToAction("EditChannel", "Channel", new { channelId = channelId });
+            //return RedirectToAction("EditChannel", "Channel", new { channelId = channelId });
         }
 
         /// <summary>
@@ -54,17 +55,33 @@ namespace RentItMvc.Controllers
         /// <summary>
         /// Deletes a track and reloads the edit channel page
         /// </summary>
-        /// <param name="channelId"></param>
         /// <param name="trackId"></param>
         /// <returns></returns>
-        public ActionResult DeleteTrack(int channelId, int trackId)
+        public ActionResult DeleteTrack(int trackId)
         {
             int userId = (int)Session["userId"];
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 proxy.RemoveTrack(userId, trackId);
             }
-            return RedirectToAction("EditChannel", "Channel", new { channelId = channelId });
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+            //return RedirectToAction("EditChannel", "Channel"/*, new { channelId = channelId }*/);
+        }
+
+        public ActionResult EditTracks(int channelId)
+        {
+            List<GuiTrack> guiTracks;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                Track[] tracks = proxy.GetTrackByChannelId(channelId);
+                guiTracks = Utilities.GuiClassConverter.ConvertTrackList(tracks);
+            }
+            return View("TrackList", guiTracks);
+        }
+
+        public ActionResult TrackList(List<GuiTrack> tracks)
+        {
+            return View(tracks);
         }
     }
 }

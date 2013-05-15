@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Create Channel";
+    Html.EnableClientValidation(true);
+}
+
+@model RentItMvc.Models.GuiChannel
+
+<h2>Create Channel</h2>
+
+<div class="row-fluid">
+    <div style="width: 400px">
+        @using (Html.BeginForm("CreateNewChannel", "Channel", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
+        {
+            <h5>Name</h5>
+            <div class="input-block-level"> 
+                @Html.TextBoxFor(model => model.Name, new {@class = "input-block-level", type = "text", required = "required", placeholder = "Channel Name"})     
+                <div class="error-field">
+                    @Html.ValidationMessageFor(model => model.Name, null, new {@class = "txt-error"})
+                </div>   
+            </div> 
+            <div class="clearfix"></div>
+            <div class="input-block-level">
+                <h5 style="">Description</h5>
+                <div class="input-block-level">
+                    @Html.TextAreaFor(model => model.Description, 5, 60, new {@class = "input-block-level", type = "textarea", required = "required", placeholder = "Description"})        
+                </div>
+            </div>
+            <button class="btn">Save changes</button>
+        }
+    </div>     
+</div>

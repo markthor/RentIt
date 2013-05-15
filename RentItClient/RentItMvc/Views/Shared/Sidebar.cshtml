@@ -13,9 +13,12 @@
         @Html.ActionLink("My channels", "MyChannels", "Channel")
     </li>
     <li>
-        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel")
+        @Html.ActionLink("My subscriptions", "MySubscriptions", "Account")
     </li>
     <li>
-        <a href="#">Create channel</a>
+        @Html.ActionLink("Create channel", "CreateChannel", "Channel")
+    </li>
+    <li>
+        @Html.ActionLink("Track list", "TrackList", "Track")
     </li>
 </ul>

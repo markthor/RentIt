@@ -152,7 +152,7 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\audioplayer.js" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\custom.css" />
@@ -239,6 +239,8 @@
     <Content Include="Views\Channel\CreateChannelForm.cshtml" />
     <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
+    <Content Include="Views\Track\TrackList.cshtml" />
+    <Content Include="Views\Channel\CreateChannel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
