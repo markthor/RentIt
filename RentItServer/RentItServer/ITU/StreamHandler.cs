@@ -97,9 +97,7 @@ namespace RentItServer.ITU
 
 
 
-                //ryk den her og fjern log
-                string arguments = "-c " + xmlFilePath;
-                _logger.AddEntry("Arguments: " + arguments);
+
 
 
 
@@ -108,6 +106,9 @@ namespace RentItServer.ITU
                 //Start set up the process
                 //Path to ezstream executable
                 string ezPath = FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe"; //INSERT "ezstream.exe" IN FILEPATH!
+                //Create the arguments
+                string arguments = "-c " + xmlFilePath;
+                _logger.AddEntry("Arguments: " + arguments); // REMOVE THIS LOG!!!!!!!!!!!!!!!
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
                 startInfo.RedirectStandardInput = true; // Måske nødvendig når der skal input
@@ -124,23 +125,6 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process created for channel with id: " + channelId);
                 p.Start();
                 _logger.AddEntry("Process started for channel with id: " + channelId);
-
-
-
-                /*EzProcess p = new EzProcess(channelId, FilePath.ITUEzStreamPath.GetPath() + "ezstream.exe", arguments);
-                _logger.AddEntry("Process created");
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardInput = true;
-                p.StartInfo.RedirectStandardOutput = true;*/
-                //p.StartInfo.
-                //p.StartInfo.UserName = "rentit21";
-                //Process.Start(FilePath.ITUEzStreamPath.GetPath(), "", null, "rentit");
-
-                //p.Start();
-                //_logger.AddEntry("Process started");
-
-                //System.IO.StreamWriter wr = p.StandardInput; TEST!!
-                //System.IO.StreamReader rr = p.StandardOutput; TEST!!
 
                 //Listen for when a new song starts
                 p.OutputDataReceived += p_OutputDataReceived;
