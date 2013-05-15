@@ -1030,7 +1030,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.Subscribe(0, TestExtensions._testChannelId);
+                controller.Subscribe(0, TestExtensions._testChannelId1);
                 Cleanup();
                 Assert.Fail("No exception was raised.");
             }
@@ -1045,7 +1045,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
+                controller.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId1);
             }
             catch
             {
@@ -1074,7 +1074,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.UnSubscribe(-1, TestExtensions._testChannelId);
+                controller.UnSubscribe(-1, TestExtensions._testChannelId1);
                 Cleanup();
                 Assert.Fail("An exception was raised");
             }
@@ -1101,21 +1101,21 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_UnSubscribe_Parameter_ValidValid()
         {
             //TODO fix this one
-            /*Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+            /*Channel theChannel = _dao.GetChannel(TestExtensions._testChannelId1);
             if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == true)
             {
                 Assert.Fail("test user is already subscribed");
             }
-            _dao.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
-            theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+            _dao.Subscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId1);
+            theChannel = _dao.GetChannel(TestExtensions._testChannelId1);
             if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == false)
             {
                 Assert.Fail("test user was not subscribed before test");
             }
             try
             {
-                controller.UnSubscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId);
-                theChannel = _dao.GetChannel(TestExtensions._testChannelId);
+                controller.UnSubscribe(TestExtensions._testUser2.Id, TestExtensions._testChannelId1);
+                theChannel = _dao.GetChannel(TestExtensions._testChannelId1);
                 if (theChannel.Subscribers.Contains(TestExtensions._testUser2.Id) == true)
                 {
                     Assert.Fail("test user was not unsubscribed");
@@ -1164,7 +1164,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
-                controller.Subscribe(-1, TestExtensions._testChannelId);
+                controller.Subscribe(-1, TestExtensions._testChannelId1);
                 Assert.Fail("An exception was raised");
             }
             catch
@@ -1174,20 +1174,70 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_SubscribeGetSubscriptions_Parameter_ValidValid()
+        public void Controller_Subscribe_Parameter_ValidValid()
         {
             try
             {
-                int channelId = TestExtensions._testChannelId;
+                int channelId = TestExtensions._testChannelId1;
                 RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
-                controller.Subscribe(user.Id, TestExtensions._testChannelId);
-                List<Channel> channels = controller.GetSubscribedChannels(user.Id);
-                Assert.IsTrue(channels[0].Id == channelId);
+                controller.Subscribe(user.Id, TestExtensions._testChannelId1);
             }
             catch(Exception e)
             {
                 Assert.Fail("An exception was raised. " + e);
             }
+        }
+
+        [TestMethod]
+        public void Controller_SubscribeGetSubscriptions_Behavior_OneChannel()
+        {
+            try
+            {
+                int channelId = TestExtensions._testChannelId1;
+                RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
+                List<Channel> channels = controller.GetSubscribedChannels(user.Id);
+                Assert.IsTrue(channels[0].Id == channelId);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was raised. " + e);
+            }
+        }
+
+        [TestMethod]
+        public void Controller_SubscribeGetSubscriptions_Behavior_MultipleChannels()
+        {
+            try
+            {
+                int channelId1 = TestExtensions._testChannelId1;
+                int channelId2 = TestExtensions._testChannelId2;
+                int channelId3 = TestExtensions._testChannelId3;
+                int channelId4 = TestExtensions._testChannelId4;
+                int channelId5 = TestExtensions._testChannelId5;
+                RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
+                controller.Subscribe(user.Id, TestExtensions._testChannelId2);
+                controller.Subscribe(user.Id, TestExtensions._testChannelId3);
+                controller.Subscribe(user.Id, TestExtensions._testChannelId4);
+                controller.Subscribe(user.Id, TestExtensions._testChannelId5);
+                List<Channel> channels = controller.GetSubscribedChannels(user.Id);
+                foreach (Channel c in channels)
+                {
+                    Assert.IsTrue(ChannelsContainId(channels, c.Id));
+                }
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was raised. " + e);
+            }
+        }
+
+        public Boolean ChannelsContainId(List<Channel> channels, int id)
+        {
+            foreach (Channel c in channels)
+            {
+                if (c.Id == id) return true;
+            }
+            return false;
         }
         #endregion
     }
