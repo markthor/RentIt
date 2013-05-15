@@ -58,8 +58,16 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             t2.UpVotes = 3;
             t2.DownVotes = 1;
             t2.Path = "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3";
+            RentItServer.ITU.DatabaseWrapperObjects.Track t3 = new RentItServer.ITU.DatabaseWrapperObjects.Track();
+            t3.Artist = "Temp0";
+            t3.Name = "When Im Grandmaster";
+            t3.Length = 0;
+            t3.UpVotes = 1;
+            t3.DownVotes = 1;
+            t3.Path = "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3";
             Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t1);
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t2); 
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t2);
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t3); 
             _testTrack = t1;
             _testChannelId = channelId1;
         }
