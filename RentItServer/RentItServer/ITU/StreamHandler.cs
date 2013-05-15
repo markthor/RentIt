@@ -74,7 +74,7 @@ namespace RentItServer.ITU
                 //Create the filename for the track
                 string trackFileName;
                 //trackFileName = track.Id.ToString() + ".mp3"; // DET RIGTIGE KODE!!!!!!!!
-                trackFileName = "a.mp3"; // TIL TESTING!!!!!!!!!!!
+                trackFileName = "b.mp3"; // TIL TESTING!!!!!!!!!!!
                 _logger.AddEntry("Next track filename: " + trackFileName + " for channel with id: " + channelId);
 
                 //Write the m3u file to the system
@@ -161,9 +161,9 @@ namespace RentItServer.ITU
              * TEST OF LONG TIME IT WOULD TAKE TO CHANGE SONG WHEN A SONG HAS JUST FINISHED, IF IT IS EVEN POSSIBLE
              * 
              */
-            //string command = "killall -HUP ezstream";
-            //p.StandardInput.WriteLine(command);
-            //p.StandardInput.Flush();
+            string command = "killall -HUP ezstream";
+            p.StandardInput.WriteLine(command);
+            p.StandardInput.Flush();
 
             AddTrackPlay(track);
         }
@@ -175,7 +175,8 @@ namespace RentItServer.ITU
             while (true)//while channel running
             {
                 _logger.AddEntry("EzProcessThread waiting for standardoutput for channel with id: " + p.ChannelId);
-                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + p.StandardOutput.ReadToEnd());
+                string stdOutput = p.StandardOutput.ReadToEnd();
+                _logger.AddEntry("standardoutput for channel with id: " + p.ChannelId + " has given: " + stdOutput);
                 Thread.Sleep(1000);
                 SetNextTrack(p);
             }
