@@ -179,6 +179,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("EzProcess sleeping for channel with id: " + p.ChannelId);
                 Thread.Sleep(1000);
                 SetNextTrack(p);
+                Thread.Sleep(1000000);
             }
         }
 
