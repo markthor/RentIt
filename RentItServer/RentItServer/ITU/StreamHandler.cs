@@ -127,7 +127,7 @@ namespace RentItServer.ITU
                 AddTrackPlay(track); // should this call be here??????????
 
 
-                _logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
+                //_logger.AddEntry(p.StandardOutput.ReadToEnd()); //thread that shiat
 
                 //SetNextTrack(p); // FIND ANOTHER WAY OF DOING THIS, PROBLEM IS THAT IT CALLS GenerateM3uWithOneTrack
             }
@@ -152,6 +152,11 @@ namespace RentItServer.ITU
 
             GenerateM3uWithOneTrack(p.ChannelId, fileName);
 
+            /*
+             * 
+             * TEST OF LONG TIME IT WOULD TAKE TO CHANGE SONG WHEN A SONG HAS JUST FINISHED, IF IT IS EVEN POSSIBLE
+             * 
+             */
             string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
             p.StandardInput.Flush();
