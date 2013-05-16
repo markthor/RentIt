@@ -271,8 +271,8 @@ namespace RentItServer.ITU
             Thread.Sleep(1000);
             while (true)//while channel running
             {
-                _logger.AddEntry("EzProcess sleeping the duration of the current track for channel with id: " + p.ChannelId);
-                Thread.Sleep(p.CurrentTrackLength); // the duration of the track - this is the the time that a.mp3 lasts(not yet tough)! Should it be the entire duration when i wait 2 times
+                _logger.AddEntry("EzProcess sleeping the duration of the current track: " + p.CurrentTrackLength + " for channel with id: " + p.ChannelId);
+                Thread.Sleep(66000);//(p.CurrentTrackLength); // the duration of the track - this is the the time that a.mp3 lasts(not yet tough)! Should it be the entire duration when i wait 2 times
                 _logger.AddEntry("Closing the process for channel with id: " + p.ChannelId);
                 p.Close();
                 _logger.AddEntry("Setting the next track for channel with id: " + p.ChannelId);
