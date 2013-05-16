@@ -36,11 +36,6 @@
         //Remove the stopIcon
         playstopButton.removeChild(stopIcon);
     }
-    if (player.canPlayType) {
-        alert("can play");
-    } else {
-        alert("can't play");
-    }
 }
 
 function updateSlider(newValue) {
