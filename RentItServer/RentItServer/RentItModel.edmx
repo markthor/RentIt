@@ -5,368 +5,368 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RENTITModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="RENTITModelStoreContainer">
-          <EntitySet Name="ChannelGenre" EntityType="RENTITModel.Store.ChannelGenre" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Channels" EntityType="RENTITModel.Store.Channels" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ChannelUser1" EntityType="RENTITModel.Store.ChannelUser1" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Comments" EntityType="RENTITModel.Store.Comments" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Genres" EntityType="RENTITModel.Store.Genres" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SMUbooks" EntityType="RENTITModel.Store.SMUbooks" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SMUrentals" EntityType="RENTITModel.Store.SMUrentals" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SMUusers" EntityType="RENTITModel.Store.SMUusers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="RENTITModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TrackPlays" EntityType="RENTITModel.Store.TrackPlays" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tracks" EntityType="RENTITModel.Store.Tracks" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Users" EntityType="RENTITModel.Store.Users" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Votes" EntityType="RENTITModel.Store.Votes" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_ChannelComment" Association="RENTITModel.Store.FK_ChannelComment">
-            <End Role="Channels" EntitySet="Channels" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelGenre_Channel" Association="RENTITModel.Store.FK_ChannelGenre_Channel">
-            <End Role="Channels" EntitySet="Channels" />
-            <End Role="ChannelGenre" EntitySet="ChannelGenre" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelGenre_Genre" Association="RENTITModel.Store.FK_ChannelGenre_Genre">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="ChannelGenre" EntitySet="ChannelGenre" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelTrack" Association="RENTITModel.Store.FK_ChannelTrack">
-            <End Role="Channels" EntitySet="Channels" />
-            <End Role="Tracks" EntitySet="Tracks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelUser" Association="RENTITModel.Store.FK_ChannelUser">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Channels" EntitySet="Channels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelUser1_Channel" Association="RENTITModel.Store.FK_ChannelUser1_Channel">
-            <End Role="Channels" EntitySet="Channels" />
-            <End Role="ChannelUser1" EntitySet="ChannelUser1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChannelUser1_User" Association="RENTITModel.Store.FK_ChannelUser1_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ChannelUser1" EntitySet="ChannelUser1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CommentUser" Association="RENTITModel.Store.FK_CommentUser">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SMUrentals_bookId" Association="RENTITModel.Store.FK_SMUrentals_bookId">
-            <End Role="SMUbooks" EntitySet="SMUbooks" />
-            <End Role="SMUrentals" EntitySet="SMUrentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SMUrentals_userId" Association="RENTITModel.Store.FK_SMUrentals_userId">
-            <End Role="SMUusers" EntitySet="SMUusers" />
-            <End Role="SMUrentals" EntitySet="SMUrentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TrackTrackPlay" Association="RENTITModel.Store.FK_TrackTrackPlay">
-            <End Role="Tracks" EntitySet="Tracks" />
-            <End Role="TrackPlays" EntitySet="TrackPlays" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TrackVote" Association="RENTITModel.Store.FK_TrackVote">
-            <End Role="Tracks" EntitySet="Tracks" />
-            <End Role="Votes" EntitySet="Votes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserVote" Association="RENTITModel.Store.FK_UserVote">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Votes" EntitySet="Votes" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="ChannelGenre">
-          <Key>
-            <PropertyRef Name="Channels_Id" />
-            <PropertyRef Name="Genres_Id" />
-          </Key>
-          <Property Name="Channels_Id" Type="int" Nullable="false" />
-          <Property Name="Genres_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Channels">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
-          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="1000" />
-          <Property Name="Rating" Type="float" />
-          <Property Name="Hits" Type="int" />
-          <Property Name="StreamUri" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="ChannelUser1">
-          <Key>
-            <PropertyRef Name="SubscribedChannels_Id" />
-            <PropertyRef Name="Subscribers_Id" />
-          </Key>
-          <Property Name="SubscribedChannels_Id" Type="int" Nullable="false" />
-          <Property Name="Subscribers_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Comments">
-          <Key>
-            <PropertyRef Name="ChannelId" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="ChannelId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="Genres">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="SMUbooks">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="varchar" Nullable="false" MaxLength="500" />
-          <Property Name="author" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="description" Type="varchar" MaxLength="5000" />
-          <Property Name="genre" Type="varchar" MaxLength="50" />
-          <Property Name="price" Type="float" Nullable="false" />
-          <Property Name="dateAdded" Type="datetime" Nullable="false" />
-          <Property Name="PDFFilePath" Type="varchar" MaxLength="255" />
-          <Property Name="imageFilePath" Type="varchar" MaxLength="255" />
-          <Property Name="hit" Type="int" Nullable="false" />
-          <Property Name="audioFilePath" Type="nvarchar(max)" />
-          <Property Name="audioNarrator" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SMUrentals">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="userId" Type="int" Nullable="false" />
-          <Property Name="bookId" Type="int" />
-          <Property Name="startDate" Type="datetime" Nullable="false" />
-          <Property Name="mediaType" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SMUusers">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="email" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="password" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="isAdmin" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="TrackPlays">
-          <Key>
-            <PropertyRef Name="TrackId" />
-            <PropertyRef Name="TimePlayed" />
-          </Key>
-          <Property Name="TrackId" Type="int" Nullable="false" />
-          <Property Name="TimePlayed" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tracks">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ChannelId" Type="int" Nullable="false" />
-          <Property Name="Path" Type="nvarchar" Nullable="false" MaxLength="230" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="Length" Type="int" Nullable="false" />
-          <Property Name="UpVotes" Type="int" Nullable="false" />
-          <Property Name="DownVotes" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="25" />
-        </EntityType>
-        <EntityType Name="Votes">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="TrackId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="TrackId" Type="int" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_ChannelComment">
-          <End Role="Channels" Type="RENTITModel.Store.Channels" Multiplicity="1" />
-          <End Role="Comments" Type="RENTITModel.Store.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Channels">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="ChannelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelGenre_Channel">
-          <End Role="Channels" Type="RENTITModel.Store.Channels" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Channels">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChannelGenre">
-              <PropertyRef Name="Channels_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelGenre_Genre">
-          <End Role="Genres" Type="RENTITModel.Store.Genres" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genres">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChannelGenre">
-              <PropertyRef Name="Genres_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelTrack">
-          <End Role="Channels" Type="RENTITModel.Store.Channels" Multiplicity="1" />
-          <End Role="Tracks" Type="RENTITModel.Store.Tracks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Channels">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tracks">
-              <PropertyRef Name="ChannelId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelUser">
-          <End Role="Users" Type="RENTITModel.Store.Users" Multiplicity="1" />
-          <End Role="Channels" Type="RENTITModel.Store.Channels" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Channels">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelUser1_Channel">
-          <End Role="Channels" Type="RENTITModel.Store.Channels" Multiplicity="1" />
-          <End Role="ChannelUser1" Type="RENTITModel.Store.ChannelUser1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Channels">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChannelUser1">
-              <PropertyRef Name="SubscribedChannels_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChannelUser1_User">
-          <End Role="Users" Type="RENTITModel.Store.Users" Multiplicity="1" />
-          <End Role="ChannelUser1" Type="RENTITModel.Store.ChannelUser1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChannelUser1">
-              <PropertyRef Name="Subscribers_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CommentUser">
-          <End Role="Users" Type="RENTITModel.Store.Users" Multiplicity="1" />
-          <End Role="Comments" Type="RENTITModel.Store.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SMUrentals_bookId">
-          <End Role="SMUbooks" Type="RENTITModel.Store.SMUbooks" Multiplicity="0..1" />
-          <End Role="SMUrentals" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SMUbooks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SMUrentals">
-              <PropertyRef Name="bookId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SMUrentals_userId">
-          <End Role="SMUusers" Type="RENTITModel.Store.SMUusers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="SMUrentals" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SMUusers">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SMUrentals">
-              <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TrackTrackPlay">
-          <End Role="Tracks" Type="RENTITModel.Store.Tracks" Multiplicity="1" />
-          <End Role="TrackPlays" Type="RENTITModel.Store.TrackPlays" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tracks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TrackPlays">
-              <PropertyRef Name="TrackId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TrackVote">
-          <End Role="Tracks" Type="RENTITModel.Store.Tracks" Multiplicity="1" />
-          <End Role="Votes" Type="RENTITModel.Store.Votes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tracks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Votes">
-              <PropertyRef Name="TrackId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserVote">
-          <End Role="Users" Type="RENTITModel.Store.Users" Multiplicity="1" />
-          <End Role="Votes" Type="RENTITModel.Store.Votes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Votes">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema></edmx:StorageModels>
+  <EntityContainer Name="RENTITModelStoreContainer">
+    <EntitySet Name="SMUbooks" EntityType="RENTITModel.Store.SMUbooks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SMUrentals" EntityType="RENTITModel.Store.SMUrentals" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SMUusers" EntityType="RENTITModel.Store.SMUusers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="RENTITModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Channels" EntityType="RENTITModel.Store.Channels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Genres" EntityType="RENTITModel.Store.Genres" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tracks" EntityType="RENTITModel.Store.Tracks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="RENTITModel.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="RENTITModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Votes" EntityType="RENTITModel.Store.Votes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TrackPlays" EntityType="RENTITModel.Store.TrackPlays" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Subscription" EntityType="RENTITModel.Store.Subscription" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ChannelGenre" EntityType="RENTITModel.Store.ChannelGenre" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_SMUrentals_bookId" Association="RENTITModel.Store.FK_SMUrentals_bookId">
+      <End Role="SMUbook" EntitySet="SMUbooks" />
+      <End Role="SMUrental" EntitySet="SMUrentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMUrentals_userId" Association="RENTITModel.Store.FK_SMUrentals_userId">
+      <End Role="SMUuser" EntitySet="SMUusers" />
+      <End Role="SMUrental" EntitySet="SMUrentals" />
+    </AssociationSet>
+    <AssociationSet Name="ChannelComment" Association="RENTITModel.Store.ChannelComment">
+      <End Role="Channel" EntitySet="Channels" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="CommentUser" Association="RENTITModel.Store.CommentUser">
+      <End Role="Comment" EntitySet="Comments" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="ChannelUser" Association="RENTITModel.Store.ChannelUser">
+      <End Role="Channel" EntitySet="Channels" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subscription_Channel" Association="RENTITModel.Store.FK_Subscription_Channel">
+      <End Role="Channel" EntitySet="Channels" />
+      <End Role="Subscription" EntitySet="Subscription" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subscription_User" Association="RENTITModel.Store.FK_Subscription_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Subscription" EntitySet="Subscription" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChannelGenre_Channel" Association="RENTITModel.Store.FK_ChannelGenre_Channel">
+      <End Role="Channel" EntitySet="Channels" />
+      <End Role="ChannelGenre" EntitySet="ChannelGenre" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChannelGenre_Genre" Association="RENTITModel.Store.FK_ChannelGenre_Genre">
+      <End Role="Genre" EntitySet="Genres" />
+      <End Role="ChannelGenre" EntitySet="ChannelGenre" />
+    </AssociationSet>
+    <AssociationSet Name="UserVote" Association="RENTITModel.Store.UserVote">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Vote" EntitySet="Votes" />
+    </AssociationSet>
+    <AssociationSet Name="TrackVote" Association="RENTITModel.Store.TrackVote">
+      <End Role="Track" EntitySet="Tracks" />
+      <End Role="Vote" EntitySet="Votes" />
+    </AssociationSet>
+    <AssociationSet Name="TrackTrackPlay" Association="RENTITModel.Store.TrackTrackPlay">
+      <End Role="Track" EntitySet="Tracks" />
+      <End Role="TrackPlay" EntitySet="TrackPlays" />
+    </AssociationSet>
+    <AssociationSet Name="ChannelTrack" Association="RENTITModel.Store.ChannelTrack">
+      <End Role="Channel" EntitySet="Channels" />
+      <End Role="Track" EntitySet="Tracks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SMUbooks">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="author" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="description" Type="varchar" Nullable="true" MaxLength="5000" />
+    <Property Name="genre" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="dateAdded" Type="datetime" Nullable="false" />
+    <Property Name="PDFFilePath" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="imageFilePath" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="hit" Type="int" Nullable="false" />
+    <Property Name="audioFilePath" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="audioNarrator" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SMUrentals">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="bookId" Type="int" Nullable="true" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="mediaType" Type="int" Nullable="false" DefaultValue="-1" />
+  </EntityType>
+  <EntityType Name="SMUusers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="password" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Channels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="1000" />
+    <Property Name="Rating" Type="float" Nullable="true" />
+    <Property Name="Hits" Type="int" Nullable="true" />
+    <Property Name="StreamUri" Type="nvarchar" Nullable="true" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Genres">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Tracks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChannelId" Type="int" Nullable="false" />
+    <Property Name="Path" Type="nvarchar" Nullable="false" MaxLength="230" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Length" Type="int" Nullable="false" />
+    <Property Name="UpVotes" Type="int" Nullable="false" />
+    <Property Name="DownVotes" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="ChannelId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ChannelId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="25" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Votes">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="TrackId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="TrackId" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrackPlays">
+    <Key>
+      <PropertyRef Name="TrackId" />
+      <PropertyRef Name="TimePlayed" />
+    </Key>
+    <Property Name="TrackId" Type="int" Nullable="false" />
+    <Property Name="TimePlayed" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="SubscribedChannels_Id" />
+      <PropertyRef Name="Subscribers_Id" />
+    </Key>
+    <Property Name="SubscribedChannels_Id" Type="int" Nullable="false" />
+    <Property Name="Subscribers_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ChannelGenre">
+    <Key>
+      <PropertyRef Name="Channels_Id" />
+      <PropertyRef Name="Genres_Id" />
+    </Key>
+    <Property Name="Channels_Id" Type="int" Nullable="false" />
+    <Property Name="Genres_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_SMUrentals_bookId">
+    <End Role="SMUbook" Type="RENTITModel.Store.SMUbooks" Multiplicity="0..1" />
+    <End Role="SMUrental" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMUbook">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SMUrental">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMUrentals_userId">
+    <End Role="SMUuser" Type="RENTITModel.Store.SMUusers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SMUrental" Type="RENTITModel.Store.SMUrentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMUuser">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SMUrental">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ChannelComment">
+    <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
+    <End Role="Comment" Type="RENTITModel.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Channel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="ChannelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommentUser">
+    <End Role="Comment" Type="RENTITModel.Store.Comments" Multiplicity="*" />
+    <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ChannelUser">
+    <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="*" />
+    <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Channel">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserVote">
+    <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Vote" Type="RENTITModel.Store.Votes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vote">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TrackVote">
+    <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Vote" Type="RENTITModel.Store.Votes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Track">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vote">
+        <PropertyRef Name="TrackId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TrackTrackPlay">
+    <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="1" />
+    <End Role="TrackPlay" Type="RENTITModel.Store.TrackPlays" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Track">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TrackPlay">
+        <PropertyRef Name="TrackId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ChannelTrack">
+    <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
+    <End Role="Track" Type="RENTITModel.Store.Tracks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Channel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Track">
+        <PropertyRef Name="ChannelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subscription_Channel">
+    <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
+    <End Role="Subscription" Type="RENTITModel.Store.Subscription" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Channel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Subscription">
+        <PropertyRef Name="SubscribedChannels_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subscription_User">
+    <End Role="Subscription" Type="RENTITModel.Store.Subscription" Multiplicity="*" />
+    <End Role="User" Type="RENTITModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Subscription">
+        <PropertyRef Name="Subscribers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChannelGenre_Channel">
+    <End Role="Channel" Type="RENTITModel.Store.Channels" Multiplicity="1" />
+    <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Channel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ChannelGenre">
+        <PropertyRef Name="Channels_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChannelGenre_Genre">
+    <End Role="ChannelGenre" Type="RENTITModel.Store.ChannelGenre" Multiplicity="*" />
+    <End Role="Genre" Type="RENTITModel.Store.Genres" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ChannelGenre">
+        <PropertyRef Name="Genres_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RENTITModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -402,7 +402,7 @@
             <End Role="Channel" EntitySet="Channels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="ChannelUser1" Association="RENTITModel.ChannelUser1">
+          <AssociationSet Name="Subscription" Association="RENTITModel.Subscription">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
@@ -512,7 +512,7 @@
           <NavigationProperty Name="Comments" Relationship="RENTITModel.ChannelComment" FromRole="Channel" ToRole="Comment" />
           <NavigationProperty Name="ChannelOwner" Relationship="RENTITModel.ChannelUser" FromRole="Channel" ToRole="User" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
-          <NavigationProperty Name="Subscribers" Relationship="RENTITModel.ChannelUser1" FromRole="Channel" ToRole="User" />
+          <NavigationProperty Name="Subscribers" Relationship="RENTITModel.Subscription" FromRole="Channel" ToRole="User" />
           <NavigationProperty Name="Genres" Relationship="RENTITModel.ChannelGenre" FromRole="Channel" ToRole="Genre" />
           <NavigationProperty Name="Tracks" Relationship="RENTITModel.ChannelTrack" FromRole="Channel" ToRole="Track" />
           <Property Type="String" Name="Name" Nullable="false" FixedLength="false" MaxLength="200" Unicode="true" />
@@ -564,7 +564,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Comments" Relationship="RENTITModel.CommentUser" FromRole="User" ToRole="Comment" />
           <NavigationProperty Name="Channels" Relationship="RENTITModel.ChannelUser" FromRole="User" ToRole="Channel" />
-          <NavigationProperty Name="SubscribedChannels" Relationship="RENTITModel.ChannelUser1" FromRole="User" ToRole="Channel" />
+          <NavigationProperty Name="SubscribedChannels" Relationship="RENTITModel.Subscription" FromRole="User" ToRole="Channel" />
           <NavigationProperty Name="Votes" Relationship="RENTITModel.UserVote" FromRole="User" ToRole="Vote" />
           <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
@@ -627,7 +627,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ChannelUser1">
+        <Association Name="Subscription">
           <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
           <End Type="RENTITModel.User" Role="User" Multiplicity="*" />
         </Association>
@@ -636,7 +636,9 @@
           <End Type="RENTITModel.Genre" Role="Genre" Multiplicity="*" />
         </Association>
         <Association Name="UserVote">
-          <End Type="RENTITModel.User" Role="User" Multiplicity="1" />
+          <End Type="RENTITModel.User" Role="User" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="RENTITModel.Vote" Role="Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -648,7 +650,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="TrackVote">
-          <End Type="RENTITModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="RENTITModel.Track" Role="Track" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="RENTITModel.Vote" Role="Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Track">
@@ -743,13 +747,13 @@
     <EntitySetMapping Name="Channels">
       <EntityTypeMapping TypeName="IsTypeOf(RENTITModel.Channel)">
         <MappingFragment StoreEntitySet="Channels">
-                <ScalarProperty Name="StreamUri" ColumnName="StreamUri" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="Hits" ColumnName="Hits" />
+          <ScalarProperty Name="StreamUri" ColumnName="StreamUri" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -813,7 +817,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="ChannelUser1" TypeName="RENTITModel.ChannelUser1" StoreEntitySet="ChannelUser1">
+    <AssociationSetMapping Name="Subscription" TypeName="RENTITModel.Subscription" StoreEntitySet="Subscription">
       <EndProperty Name="Channel">
         <ScalarProperty Name="Id" ColumnName="SubscribedChannels_Id" />
       </EndProperty>

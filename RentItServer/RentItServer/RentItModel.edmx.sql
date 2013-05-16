@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/23/2013 11:43:40
--- Generated from EDMX file: D:\Dropbox\Team programming\2års projekt\RentIt\RentItServer\RentItServer\RentItModel.edmx
+-- Date Created: 05/16/2013 16:08:35
+-- Generated from EDMX file: C:\Users\mark\Documents\Editor\GitHub\RentIt\RentItServer\RentItServer\RentItModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -20,79 +20,55 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ChannelComment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_ChannelComment];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CommentUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_CommentUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ChannelUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Channels] DROP CONSTRAINT [FK_ChannelUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Subscription_Channel]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Subscription] DROP CONSTRAINT [FK_Subscription_Channel];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Subscription_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Subscription] DROP CONSTRAINT [FK_Subscription_User];
+GO
 IF OBJECT_ID(N'[dbo].[FK_ChannelGenre_Channel]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ChannelGenre] DROP CONSTRAINT [FK_ChannelGenre_Channel];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ChannelGenre_Genre]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ChannelGenre] DROP CONSTRAINT [FK_ChannelGenre_Genre];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ChannelTrack]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Tracks] DROP CONSTRAINT [FK_ChannelTrack];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ChannelUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Channels] DROP CONSTRAINT [FK_ChannelUser];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ChannelUser1_Channel]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ChannelUser1] DROP CONSTRAINT [FK_ChannelUser1_Channel];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ChannelUser1_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ChannelUser1] DROP CONSTRAINT [FK_ChannelUser1_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CommentUser]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_CommentUser];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SMUrentals_bookId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SMUrentals] DROP CONSTRAINT [FK_SMUrentals_bookId];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SMUrentals_userId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SMUrentals] DROP CONSTRAINT [FK_SMUrentals_userId];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TrackTrackPlay]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TrackPlays] DROP CONSTRAINT [FK_TrackTrackPlay];
+IF OBJECT_ID(N'[dbo].[FK_UserVote]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Votes] DROP CONSTRAINT [FK_UserVote];
 GO
 IF OBJECT_ID(N'[dbo].[FK_TrackVote]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Votes] DROP CONSTRAINT [FK_TrackVote];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserVote]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Votes] DROP CONSTRAINT [FK_UserVote];
+IF OBJECT_ID(N'[dbo].[FK_TrackTrackPlay]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TrackPlays] DROP CONSTRAINT [FK_TrackTrackPlay];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ChannelTrack]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Tracks] DROP CONSTRAINT [FK_ChannelTrack];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[ChannelGenre]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ChannelGenre];
+IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sysdiagrams];
 GO
 IF OBJECT_ID(N'[dbo].[Channels]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Channels];
 GO
-IF OBJECT_ID(N'[dbo].[ChannelUser1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ChannelUser1];
-GO
-IF OBJECT_ID(N'[dbo].[Comments]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Comments];
-GO
 IF OBJECT_ID(N'[dbo].[Genres]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Genres];
 GO
-IF OBJECT_ID(N'[dbo].[SMUbooks]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SMUbooks];
-GO
-IF OBJECT_ID(N'[dbo].[SMUrentals]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SMUrentals];
-GO
-IF OBJECT_ID(N'[dbo].[SMUusers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SMUusers];
-GO
-IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[sysdiagrams];
-GO
-IF OBJECT_ID(N'[dbo].[TrackPlays]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TrackPlays];
-GO
 IF OBJECT_ID(N'[dbo].[Tracks]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Tracks];
+GO
+IF OBJECT_ID(N'[dbo].[Comments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Comments];
 GO
 IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Users];
@@ -100,47 +76,20 @@ GO
 IF OBJECT_ID(N'[dbo].[Votes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Votes];
 GO
+IF OBJECT_ID(N'[dbo].[TrackPlays]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TrackPlays];
+GO
+IF OBJECT_ID(N'[dbo].[Subscription]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Subscription];
+GO
+IF OBJECT_ID(N'[dbo].[ChannelGenre]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ChannelGenre];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'SMUbooks'
-CREATE TABLE [dbo].[SMUbooks] (
-    [id] int IDENTITY(1,1) NOT NULL,
-    [title] varchar(500)  NOT NULL,
-    [author] varchar(50)  NOT NULL,
-    [description] varchar(5000)  NULL,
-    [genre] varchar(50)  NULL,
-    [price] float  NOT NULL,
-    [dateAdded] datetime  NOT NULL,
-    [PDFFilePath] varchar(255)  NULL,
-    [imageFilePath] varchar(255)  NULL,
-    [hit] int  NOT NULL,
-    [audioFilePath] nvarchar(max)  NULL,
-    [audioNarrator] nvarchar(max)  NULL
-);
-GO
-
--- Creating table 'SMUrentals'
-CREATE TABLE [dbo].[SMUrentals] (
-    [id] int IDENTITY(1,1) NOT NULL,
-    [userId] int  NOT NULL,
-    [bookId] int  NULL,
-    [startDate] datetime  NOT NULL,
-    [mediaType] int  NOT NULL
-);
-GO
-
--- Creating table 'SMUusers'
-CREATE TABLE [dbo].[SMUusers] (
-    [id] int IDENTITY(1,1) NOT NULL,
-    [email] varchar(255)  NOT NULL,
-    [username] varchar(50)  NOT NULL,
-    [password] varchar(20)  NOT NULL,
-    [isAdmin] bit  NOT NULL
-);
-GO
 
 -- Creating table 'sysdiagrams'
 CREATE TABLE [dbo].[sysdiagrams] (
@@ -159,7 +108,8 @@ CREATE TABLE [dbo].[Channels] (
     [Name] nvarchar(200)  NOT NULL,
     [Description] nvarchar(1000)  NOT NULL,
     [Rating] float  NULL,
-    [Hits] int  NULL
+    [Hits] int  NULL,
+    [StreamUri] nvarchar(200)  NULL
 );
 GO
 
@@ -217,8 +167,8 @@ CREATE TABLE [dbo].[TrackPlays] (
 );
 GO
 
--- Creating table 'ChannelUser1'
-CREATE TABLE [dbo].[ChannelUser1] (
+-- Creating table 'Subscription'
+CREATE TABLE [dbo].[Subscription] (
     [SubscribedChannels_Id] int  NOT NULL,
     [Subscribers_Id] int  NOT NULL
 );
@@ -234,24 +184,6 @@ GO
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
-
--- Creating primary key on [id] in table 'SMUbooks'
-ALTER TABLE [dbo].[SMUbooks]
-ADD CONSTRAINT [PK_SMUbooks]
-    PRIMARY KEY CLUSTERED ([id] ASC);
-GO
-
--- Creating primary key on [id] in table 'SMUrentals'
-ALTER TABLE [dbo].[SMUrentals]
-ADD CONSTRAINT [PK_SMUrentals]
-    PRIMARY KEY CLUSTERED ([id] ASC);
-GO
-
--- Creating primary key on [id] in table 'SMUusers'
-ALTER TABLE [dbo].[SMUusers]
-ADD CONSTRAINT [PK_SMUusers]
-    PRIMARY KEY CLUSTERED ([id] ASC);
-GO
 
 -- Creating primary key on [diagram_id] in table 'sysdiagrams'
 ALTER TABLE [dbo].[sysdiagrams]
@@ -301,9 +233,9 @@ ADD CONSTRAINT [PK_TrackPlays]
     PRIMARY KEY CLUSTERED ([TrackId], [TimePlayed] ASC);
 GO
 
--- Creating primary key on [SubscribedChannels_Id], [Subscribers_Id] in table 'ChannelUser1'
-ALTER TABLE [dbo].[ChannelUser1]
-ADD CONSTRAINT [PK_ChannelUser1]
+-- Creating primary key on [SubscribedChannels_Id], [Subscribers_Id] in table 'Subscription'
+ALTER TABLE [dbo].[Subscription]
+ADD CONSTRAINT [PK_Subscription]
     PRIMARY KEY NONCLUSTERED ([SubscribedChannels_Id], [Subscribers_Id] ASC);
 GO
 
@@ -317,33 +249,6 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [bookId] in table 'SMUrentals'
-ALTER TABLE [dbo].[SMUrentals]
-ADD CONSTRAINT [FK_SMUrentals_bookId]
-    FOREIGN KEY ([bookId])
-    REFERENCES [dbo].[SMUbooks]
-        ([id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SMUrentals_bookId'
-CREATE INDEX [IX_FK_SMUrentals_bookId]
-ON [dbo].[SMUrentals]
-    ([bookId]);
-GO
-
--- Creating foreign key on [userId] in table 'SMUrentals'
-ALTER TABLE [dbo].[SMUrentals]
-ADD CONSTRAINT [FK_SMUrentals_userId]
-    FOREIGN KEY ([userId])
-    REFERENCES [dbo].[SMUusers]
-        ([id])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SMUrentals_userId'
-CREATE INDEX [IX_FK_SMUrentals_userId]
-ON [dbo].[SMUrentals]
-    ([userId]);
-GO
 
 -- Creating foreign key on [ChannelId] in table 'Comments'
 ALTER TABLE [dbo].[Comments]
@@ -382,26 +287,26 @@ ON [dbo].[Channels]
     ([UserId]);
 GO
 
--- Creating foreign key on [SubscribedChannels_Id] in table 'ChannelUser1'
-ALTER TABLE [dbo].[ChannelUser1]
-ADD CONSTRAINT [FK_ChannelUser1_Channel]
+-- Creating foreign key on [SubscribedChannels_Id] in table 'Subscription'
+ALTER TABLE [dbo].[Subscription]
+ADD CONSTRAINT [FK_Subscription_Channel]
     FOREIGN KEY ([SubscribedChannels_Id])
     REFERENCES [dbo].[Channels]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Subscribers_Id] in table 'ChannelUser1'
-ALTER TABLE [dbo].[ChannelUser1]
-ADD CONSTRAINT [FK_ChannelUser1_User]
+-- Creating foreign key on [Subscribers_Id] in table 'Subscription'
+ALTER TABLE [dbo].[Subscription]
+ADD CONSTRAINT [FK_Subscription_User]
     FOREIGN KEY ([Subscribers_Id])
     REFERENCES [dbo].[Users]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_ChannelUser1_User'
-CREATE INDEX [IX_FK_ChannelUser1_User]
-ON [dbo].[ChannelUser1]
+-- Creating non-clustered index for FOREIGN KEY 'FK_Subscription_User'
+CREATE INDEX [IX_FK_Subscription_User]
+ON [dbo].[Subscription]
     ([Subscribers_Id]);
 GO
 
@@ -434,7 +339,7 @@ ADD CONSTRAINT [FK_UserVote]
     FOREIGN KEY ([UserId])
     REFERENCES [dbo].[Users]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating foreign key on [TrackId] in table 'Votes'
@@ -443,7 +348,7 @@ ADD CONSTRAINT [FK_TrackVote]
     FOREIGN KEY ([TrackId])
     REFERENCES [dbo].[Tracks]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_TrackVote'
 CREATE INDEX [IX_FK_TrackVote]
