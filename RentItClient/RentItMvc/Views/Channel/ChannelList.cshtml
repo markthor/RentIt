@@ -6,8 +6,12 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th style="text-align: center"><i class="icon-ok" /></th>
-            <th style="text-align: center"><i class="icon-play" /></th>
+            <th style="text-align: center" title="Number of subscribers">
+                <i class="icon-ok" />
+            </th>
+            <th style="text-align: center" title="Number of plays">
+                <i class="icon-play" />
+            </th>
             <th></th>
             <th></th>
         </tr>
@@ -25,14 +29,14 @@
                     </div>
                 </td>
                 <td>
-                    <div style="width: 60px;" class="text-center">
+                    <div style="width: 60px;" class="text-center" title="Number of subscribers">
                         <span class="badge badge-success">
-                            @channel.DownVotes
+                            @channel.Subscribers
                         </span>
                     </div>
                 </td>
                 <td>
-                    <div style="width: 60px;" class="text-center">
+                    <div style="width: 60px;" class="text-center" title="Number of plays">
                         <span class="badge badge-inverse">
                             @channel.Hits
                         </span>

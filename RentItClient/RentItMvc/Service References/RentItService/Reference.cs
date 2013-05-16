@@ -1036,6 +1036,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
         System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscriberCount", ReplyAction="http://tempuri.org/IRentItService/GetSubscriberCountResponse")]
+        int GetSubscriberCount(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscriberCount", ReplyAction="http://tempuri.org/IRentItService/GetSubscriberCountResponse")]
+        System.Threading.Tasks.Task<int> GetSubscriberCountAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1359,6 +1365,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName) {
             return base.Channel.IsChannelNameAvailableAsync(channelName);
+        }
+        
+        public int GetSubscriberCount(int channelId) {
+            return base.Channel.GetSubscriberCount(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetSubscriberCountAsync(int channelId) {
+            return base.Channel.GetSubscriberCountAsync(channelId);
         }
     }
 }

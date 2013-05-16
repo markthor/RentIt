@@ -1181,5 +1181,17 @@ namespace RentItServer.ITU
                 return !channels.Any();
             }
         }
+
+        public int GetSubscriberCount(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channel = from c in context.Channels
+                                  where c.Id == channelId
+                                  select c;
+                if (!channel.Any()) return 0;
+                return channel.First().Subscribers.Count;
+            }
+        }
     }
 }

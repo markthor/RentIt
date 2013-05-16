@@ -62,7 +62,7 @@ namespace RentItMvc.Controllers
             int userId = (int)Session["userId"];
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                proxy.RemoveTrack(userId, trackId);
+                proxy.RemoveTrack(trackId);
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
             //return RedirectToAction("EditChannel", "Channel"/*, new { channelId = channelId }*/);
