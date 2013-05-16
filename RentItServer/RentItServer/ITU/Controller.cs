@@ -770,5 +770,10 @@ namespace RentItServer.ITU
         {
             return _dao.GetSubscriberCount(channelId);
         }
+
+        public void IncrementChannelPlays(int channelId)
+        {
+            _dao.IncrementChannelPlays(channelId);
+        }
     }
 }

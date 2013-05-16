@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using RentItServer.ITU.Exceptions;
 
 namespace RentItServer.ITU
@@ -1234,6 +1235,26 @@ namespace RentItServer.ITU
                                   select c;
                 if (!channel.Any()) return 0;
                 return channel.First().Subscribers.Count;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void IncrementChannelPlays(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                              where c.Id == channelId
+                              select c;
+                if (channels.Any())
+                {
+                    Channel channel = channels.First();
+                    if (channel.Hits.HasValue)
+                    {
+                        channel.Hits = channel.Hits + 1;
+                    }
+                }
+                context.SaveChanges();
             }
         }
     }
