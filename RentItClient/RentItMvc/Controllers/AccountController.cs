@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using RentItMvc.Models;
 using RentItMvc.RentItService;
-using RentItMvc.Utilities;
 using System.Threading;
 
 namespace RentItMvc.Controllers
@@ -14,27 +13,33 @@ namespace RentItMvc.Controllers
     {
         public ActionResult ChangePassword(Account account)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (Session["userId"] != null)
             {
-                proxy.UpdateUser((int) Session["userId"], null, account.NewPassword, null);
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.UpdateUser((int)Session["userId"], null, account.NewPassword, null);
+                }
             }
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Edit()
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (Session["userId"] != null)
             {
-                User user = proxy.GetUser((int)Session["userId"]);
-                if (user != null)
+                using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    Account acc = new Account();
-                    acc.Email = user.Email;
-                    acc.Username = user.Username;
-                    return View(acc);
+                    User user = proxy.GetUser((int)Session["userId"]);
+                    if (user != null)
+                    {
+                        Account acc = new Account();
+                        acc.Email = user.Email;
+                        acc.Username = user.Username;
+                        return View(acc);
+                    }
                 }
             }
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -52,23 +57,10 @@ namespace RentItMvc.Controllers
                     }
                     catch (Exception e)
                     {
-                        string message = e.Message;
-                        if (message.StartsWith("Username"))
-                        {
-                            ModelState.AddModelError("Username", message);
-                        }
-                        else if (message.StartsWith("Email"))
-                        {
-                            ModelState.AddModelError("Email", message);
-                        }
-                        else
-                        {
-                            throw e;
-                        }
                     }
                 }
             }
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -82,20 +74,18 @@ namespace RentItMvc.Controllers
                     Session["userId"] = user.Id;
                     Session["username"] = user.Username;
                 }
-                
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Wrong username or password");
                 }
             }
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult LogOut()
         {
             Session.RemoveAll();
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -103,26 +93,32 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public ActionResult Subscribe(int channelId )
+        public ActionResult Subscribe(int channelId)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (Session["userId"] != null)
             {
-                proxy.Subscribe((int)Session["UserId"], channelId);              
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.Subscribe((int)Session["UserId"], channelId);
+                }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
             }
-            string previousPage = Request.UrlReferrer.AbsolutePath;
-            return Redirect(previousPage);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult UnSubscribe(int channelId)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
-            {           
-                proxy.Unsubscribe((int)Session["UserId"], channelId);
+            if (Session["userId"] != null)
+            {
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.Unsubscribe((int)Session["UserId"], channelId);
+                }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
             }
-            string previousPage = Request.UrlReferrer.AbsolutePath;
-            return Redirect(previousPage);
+            return RedirectToAction("Index", "Home");
         }
-        
+
         /// <summary>
         /// Method called to determine if a user has subscribed to a given channel
         /// </summary>

@@ -16,15 +16,7 @@ namespace RentItMvc.Utilities
             {
                 foreach (Channel c in channels)
                 {
-                    GuiChannel chan = new GuiChannel();
-                    chan.Id = c.Id;
-                    chan.Description = c.Description;
-                    if(c.Hits != null)
-                        chan.Hits = c.Hits.Value;
-                    chan.Name = c.Name;
-                    chan.StreamUri = c.StreamUri;
-                    chan.OwnerId = c.OwnerId;
-                    returnList.Add(chan);
+                    returnList.Add(ConvertChannel(c));
                 }
             }
             return returnList;
@@ -32,18 +24,21 @@ namespace RentItMvc.Utilities
 
         public static GuiChannel ConvertChannel(Channel c)
         {
-            GuiChannel chan = new GuiChannel();
-            chan.Id = c.Id;
-            chan.Description = c.Description;
-            if (c.Hits != null)
-                chan.Hits = c.Hits.Value;
-            chan.Name = c.Name;
-            chan.StreamUri = c.StreamUri;
-            chan.Tracks = new List<GuiTrack>();
-            chan.OwnerId = c.OwnerId;
-            //Calls the webservice and recieves an array of the tracks asossiated with the channel
+            GuiChannel chan = new GuiChannel()
+            {
+                Id = c.Id,
+                Description = c.Description,
+                Plays = c.Hits != null ? c.Hits.Value : 0,
+                Name = c.Name,
+                StreamUri = c.StreamUri,
+                Tracks = new List<GuiTrack>(),
+                OwnerId = c.OwnerId,
+            };
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
+                //Get number of subscribers
+                chan.Subscribers = proxy.GetSubscriberCount(chan.Id);
+                //Calls the webservice and recieves an array of the tracks asossiated with the channel
                 Track[] tracks = proxy.GetTrackByChannelId(c.Id);
                 foreach (Track t in tracks)
                     chan.Tracks.Add(ConvertTrack(t));
@@ -53,11 +48,13 @@ namespace RentItMvc.Utilities
 
         public static GuiTrack ConvertTrack(Track t)
         {
-            GuiTrack track = new GuiTrack();
-            track.TrackName = t.Name;
-            track.Id = t.Id;
-            track.ArtistName = t.Artist;
-            track.ChannelId = t.ChannelId;
+            GuiTrack track = new GuiTrack()
+            {
+                TrackName = t.Name,
+                Id = t.Id,
+                ArtistName = t.Artist,
+                ChannelId = t.ChannelId,
+            };
             return track;
         }
 
@@ -68,14 +65,7 @@ namespace RentItMvc.Utilities
             {
                 foreach (Track t in tracks)
                 {
-                    GuiTrack track = new GuiTrack()
-                    {
-                        Id = t.Id,
-                        ArtistName = t.Artist,
-                        ChannelId = t.ChannelId,
-                        TrackName = t.Name
-                    };
-                    convertedTracks.Add(track);
+                    convertedTracks.Add(ConvertTrack(t));
                 }
             }
             return convertedTracks;

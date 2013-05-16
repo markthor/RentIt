@@ -1,14 +1,4 @@
-﻿function initPlayer(ogg, mp3) {
-    //Prepent http:// to the link and set the ogg source
-    var _ogg = document.getElementById("ogg");
-    _ogg.src = "http://" + ogg;
-
-    //Prepent http:// to the link and set the mp3 source
-    var _mp3 = document.getElementById("mp3");
-    _mp3.src = "http://" + mp3;
-}
-
-function playAudio() {
+﻿function playAudio() {
     //Retrieve the button and player
     var player = document.getElementById("player");
     var playstopButton = document.getElementById("playStop");

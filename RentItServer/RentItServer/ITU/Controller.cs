@@ -490,6 +490,7 @@ namespace RentItServer.ITU
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
                 {
+                    _logger.AddEntry("Size of audioStream: " + audioStream.Length);
                     _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
                 }
                 catch
@@ -761,6 +762,11 @@ namespace RentItServer.ITU
         public bool IsChannelNameAvailable(string channelName)
         {
             return _dao.IsChannelNameAvailable(channelName);
+        }
+
+        public int GetSubscriberCount(int channelId)
+        {
+            return _dao.GetSubscriberCount(channelId);
         }
     }
 }

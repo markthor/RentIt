@@ -12,8 +12,11 @@ namespace RentItMvc.App_Start
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/jquery.validate.js",
                 "~/scripts/jquery.validate.unobtrusive.js",
-                "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
-                "~/Scripts/custom.js"
+                "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/audio").Include(
+                "~/Scripts/audioplayer.js"
                 ));
 
             bundles.Add(new StyleBundle("~/content/css").Include(

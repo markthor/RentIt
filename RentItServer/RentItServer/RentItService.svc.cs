@@ -77,12 +77,12 @@ namespace RentItServer
         {
             _controller.UpdateUser(userId, username, password, email);
         }
-        
+
         public int CreateChannel(string channelName, int userId, string description, string[] genres)
         {
             return _controller.CreateChannel(channelName, userId, description, genres);
         }
-        
+
         public void DeleteChannel(int channelId)
         {
             _controller.DeleteChannel(channelId);
@@ -107,7 +107,7 @@ namespace RentItServer
         {
             return _controller.GetChannels(args);
         }
-        
+
         public void CreateVote(int rating, int userId, int trackId)
         {
             _controller.CreateVote(rating, userId, trackId);
@@ -145,7 +145,7 @@ namespace RentItServer
         {
             return _controller.GetTrackInfo(channelId, trackname);
         }
-        
+
         public void RemoveTrack(int trackId)
         {
             _controller.RemoveTrack(trackId);
@@ -158,7 +158,7 @@ namespace RentItServer
 
         public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)
         {
-            return  _controller.GetTracks(channelId, args).ToArray();
+            return _controller.GetTracks(channelId, args).ToArray();
         }
 
         public void CreateComment(string comment, int userId, int channelId)
@@ -293,9 +293,14 @@ namespace RentItServer
             return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
         }
 
-            public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(string channelName)
         {
             return _controller.IsChannelNameAvailable(channelName);
+        }
+
+        public int GetSubscriberCount(int channelId)
+        {
+            return _controller.GetSubscriberCount(channelId);
         }
     }
 }

@@ -359,5 +359,8 @@ namespace RentItServer.ITU
         
         [OperationContract]
         bool IsChannelNameAvailable(string channelName);
+
+        [OperationContract]
+        int GetSubscriberCount(int channelId);
     }
 }

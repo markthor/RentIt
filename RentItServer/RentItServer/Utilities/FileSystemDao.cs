@@ -52,12 +52,13 @@ namespace RentItServer.Utilities
             //Create the directory
             Directory.CreateDirectory(path.GetPath());
             //Open the file to write to it
-            FileStream fs = File.OpenWrite(fullPath);
-            //Write the content and close the resources
-            memoryStream.CopyTo(fs);
-            memoryStream.Close();
-            fs.Flush();
-            fs.Close();
+            using (FileStream fs = File.OpenWrite(fullPath))
+            {
+                //Write the content and close the resources
+                //memoryStream.CopyTo(fs);
+                memoryStream.WriteTo(fs);
+                memoryStream.Close();
+            }
         }
 
         /// <summary>
