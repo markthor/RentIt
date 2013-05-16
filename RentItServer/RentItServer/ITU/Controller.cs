@@ -578,6 +578,7 @@ namespace RentItServer.ITU
                 if (_fileSystemHandler.Exists(track.Path))
                     _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
+                _dao.DeleteVotesForTrack(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
