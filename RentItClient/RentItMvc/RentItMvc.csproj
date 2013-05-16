@@ -133,7 +133,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Audio.cs" />
-    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\GuiComment.cs" />
     <Compile Include="Models\GuiChannel.cs" />
     <Compile Include="Models\GuiTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,8 +244,9 @@
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Track\TrackList.cshtml" />
     <Content Include="Views\Channel\CreateChannel.cshtml" />
-    <Content Include="Views\Comment\ListComments.cshtml" />
     <Content Include="Views\Comment\Comment.cshtml" />
+    <Content Include="Views\Comment\AddCommentForm.cshtml" />
+    <Content Include="Views\Comment\CommentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

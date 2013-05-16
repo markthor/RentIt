@@ -22,6 +22,34 @@ namespace RentItMvc.Utilities
             return returnList;
         }
 
+        public static GuiComment ConvertComment(Comment c)
+        {
+            GuiComment comment = new GuiComment()
+            {
+                UserId = c.UserId,
+                Content = c.Content,
+                Date = c.PostTime,
+            };
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                comment.UserName = proxy.GetUser(comment.UserId).Username;
+            }
+            return comment;
+        }
+
+        public static List<GuiComment> ConvertComments(Comment[] comments)
+        {
+            List<GuiComment> guiComments = new List<GuiComment>();
+            if (comments != null)
+            {
+                foreach (Comment comment in comments)
+                {
+                    guiComments.Add(ConvertComment(comment));
+                }
+            }
+            return guiComments;
+        }
+
         public static GuiChannel ConvertChannel(Channel c)
         {
             GuiChannel chan = new GuiChannel()

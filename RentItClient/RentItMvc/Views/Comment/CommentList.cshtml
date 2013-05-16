@@ -1,0 +1,11 @@
+﻿@model List<RentItMvc.Models.GuiComment>
+
+<div style="width: 475px; height: 150px; padding-top: 15px; overflow-x: hidden; overflow-y: auto">
+    @foreach (RentItMvc.Models.GuiComment c in Model)
+    {
+        <div>
+            @Html.Partial("Comment", c)
+        </div>
+    }
+</div>
+@Html.Partial("AddCommentForm", new RentItMvc.Models.GuiComment())

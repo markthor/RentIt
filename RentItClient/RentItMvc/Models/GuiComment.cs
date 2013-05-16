@@ -7,19 +7,11 @@ using System.Web.Mvc;
 
 namespace RentItMvc.Models
 {
-    public class Comment
+    public class GuiComment
     {
-
-        public Comment()
-        {
-            userId = -1;
-            Content = "default content";
-            Date = DateTime.MinValue;
-        }
-
         [Required]
         [Display(Name = "UserId")]
-        public int userId { get; set; }
+        public int UserId { get; set; }
        
         [Required]
         [Display(Name = "UserName")]

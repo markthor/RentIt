@@ -170,15 +170,24 @@ input[type=file]::-webkit-file-upload-button {
 
 .comment {
     border: solid 1px #cccccc;
-    padding: 5px;
-    margin-top: 5px;
-    border-radius: 4px 4px 4px 4px;
+    background-color: #fafafa;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+    width: 450px;
 }
 
-.commentstyle {
-    font-size:smaller;
+.comment-user {
+    font-weight: bold;
+    margin-right: 4px;
 }
 
-li {
-    list-style: none;
+.comment-time {
+    font-size: smaller;
+    margin-top: 1px;
+    margin-bottom: -1px;
+}
+
+.comment-text {
+    font-size: smaller;
 }

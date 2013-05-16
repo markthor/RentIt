@@ -191,6 +191,7 @@ namespace RentItMvc.Controllers
                     GuiChannel chan = GuiClassConverter.ConvertChannel(serviceChan);
                     if (chan != null)
                     {
+                        Session["channelId"] = chan.Id;
                         return View(chan);
                     }
                 }

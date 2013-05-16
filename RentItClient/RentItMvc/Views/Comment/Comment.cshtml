@@ -1,13 +1,13 @@
-﻿@{
-    ViewBag.Title = "CommentForm";
-}
+﻿@model RentItMvc.Models.GuiComment
 
-@model RentItMvc.Models.Comment
-
-
-<div class="">
-    <h5>@Model.UserName</h5>
-    <p class="commentstyle">@Model.Content</p>
-    <p class="commentstyle">@Model.Date</p>
+<div class="comment">
+    <div class="comment-user pull-left">
+        @Model.UserName
+    </div>
+    <div class="comment-time">
+        @Model.Date.ToString()
+    </div>
+    <div class="comment-text">
+        @Model.Content
+    </div>
 </div>
-
