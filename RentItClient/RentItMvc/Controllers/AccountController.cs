@@ -68,7 +68,7 @@ namespace RentItMvc.Controllers
                     }
                 }
             }
-            return Redirect("/");
+            return Redirect("/BlobfishRadio");
         }
 
         [HttpPost]
@@ -88,14 +88,14 @@ namespace RentItMvc.Controllers
                     ModelState.AddModelError("", "Wrong username or password");
                 }
             }
-            return Redirect("/");
+            return Redirect("/BlobfishRadio");
         }
 
         [HttpPost]
         public ActionResult LogOut()
         {
             Session.RemoveAll();
-            return Redirect("/");
+            return Redirect("/BlobfishRadio");
         }
 
         /// <summary>
