@@ -9,7 +9,7 @@ namespace RentItMvc.Controllers
 {
     public class SharedController : Controller
     {
-        public ActionResult Topbar()
+        public PartialViewResult Topbar()
         {
             return PartialView();
         }
