@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "ListComments";
+}
+
+@using RentItMvc.Models
+@model List<RentItMvc.Models.Comment>
+<div class="span8">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+
+            @foreach (Comment c in Model)
+            { 
+                <div class="comment">
+                    <li>
+                        @Html.Action("Comment", "Comment", c)
+                    </li>
+                </div>
+            }
+    
+        </ul>
+    </div>
+</div>
