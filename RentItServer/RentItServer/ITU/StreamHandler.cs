@@ -250,7 +250,7 @@ namespace RentItServer.ITU
             string trackFileName = "a.mp3"; // TESTING!!!!!
 
             GenerateM3uWithOneTrack(p.ChannelId, trackFileName);
-            p.CurrentTrackLength = track.Length;
+            //p.CurrentTrackLength = track.Length;
 
             /* 
              * 
@@ -279,7 +279,8 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Setting the next track for channel with id: " + p.ChannelId);
                 SetNextTrack(p);
                 _logger.AddEntry("Starting the process for channel with id: " + p.ChannelId);
-                p.Start();
+                //p.Start();
+                p = StartProcess(p.ChannelId, 66000);
                 //_logger.AddEntry("Sleeping after channel has started for channel with id: " + p.ChannelId);
                 //Thread.Sleep(1000);
                 //_logger.AddEntry("Set next track for channel with id: " + p.ChannelId);
@@ -346,6 +347,43 @@ namespace RentItServer.ITU
             string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
             //FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
             FileSystemDao.GetInstance().WriteM3UFile(trackPath, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
+        }
+
+
+        private EzProcess StartProcess(int channelId, int trackLength)
+        {
+            string xmlFilePath;
+            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+
+            //Start set up the process
+            //Path to ezstream executable
+            string ezPath = FilePath.ITUEzStreamPath.GetPath();
+            //Create the arguments
+            string arguments = "-c " + xmlFilePath;
+            //Start set up process info
+            ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
+            startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
+            //In order to redirect the standard input for ezstream into this program
+            startInfo.RedirectStandardOutput = true;
+            //Default is true, it should be false for ezstream
+            startInfo.UseShellExecute = false;
+            //It should not create a new window for the ezstream process
+            startInfo.CreateNoWindow = true;
+
+            //Create the process
+            EzProcess p = new EzProcess(channelId);
+            p.CurrentTrackLength = trackLength;
+            p.StartInfo = startInfo;
+            _logger.AddEntry("Process created for channel with id: " + channelId);
+            p.Start();
+            _logger.AddEntry("Process started for channel with id: " + channelId);
+
+            //Listen for when a new song starts
+            //p.OutputDataReceived += p_OutputDataReceived;
+
+            //Add this process to the dictionary with running channels
+            runningChannelIds.Add(channelId, p);
+            return p;
         }
     }
 
