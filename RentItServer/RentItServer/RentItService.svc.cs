@@ -83,9 +83,9 @@ namespace RentItServer
             return _controller.CreateChannel(channelName, userId, description, genres);
         }
         
-        public void DeleteChannel(int userId, int channelId)
+        public void DeleteChannel(int channelId)
         {
-            _controller.DeleteChannel(userId, channelId);
+            _controller.DeleteChannel(channelId);
         }
 
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
@@ -146,9 +146,9 @@ namespace RentItServer
             return _controller.GetTrackInfo(channelId, trackname);
         }
         
-        public void RemoveTrack(int userId, int trackId)
+        public void RemoveTrack(int trackId)
         {
-            _controller.RemoveTrack(userId, trackId);
+            _controller.RemoveTrack(trackId);
         }
 
         public int[] GetTrackIds(int channelId)
