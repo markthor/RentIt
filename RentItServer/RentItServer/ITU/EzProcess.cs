@@ -26,7 +26,7 @@ namespace RentItServer.ITU
             private set;
         }
 
-        public int CurrentTrackLength //LONG?!?
+        public int CurrentTrackLength //INT OR LONG?!?
         {
             get;
             set;
