@@ -51,3 +51,10 @@ function updateSlider(newValue) {
 function openPlayer(uri) {
     window.open(uri, 'playerWindow', 'width = 200, height = 400, left = 100, right = 100');
 }
+
+function registerEventListener() {
+    var button = document.getElementById("playButton");
+    if (button != null) {
+        button.addEventListener("click", function () { openPlayer(button.value) }, false);
+    }
+}

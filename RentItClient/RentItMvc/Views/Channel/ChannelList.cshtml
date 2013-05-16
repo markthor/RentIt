@@ -45,7 +45,7 @@
 
                 <td>
                     <div style="width: 40px;" class="text-center">
-                        <button class="btn btn-small" value="@channel.StreamUri" onclick="location.href = '@Url.Action("AudioPlayer", "Audio", new { channelId = @channel.Id })'">
+                        <button class="btn btn-small" id="playButton" value="@channel.StreamUri" onclick="location.href = '@Url.Action("AudioPlayer", "Audio", new { channelId = @channel.Id })'">
                             <i class="icon-play"></i>
                         </button>    
                     </div>

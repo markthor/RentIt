@@ -266,5 +266,10 @@ namespace RentItServer
         {
             return _controller.GetSubscriberCount(channelId);
         }
+
+        public void IncrementChannelPlays(int channelId)
+        {
+            _controller.IncrementChannelPlays(channelId);
+        }
     }
 }

@@ -353,5 +353,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         int GetSubscriberCount(int channelId);
+
+        [OperationContract]
+        void IncrementChannelPlays(int channelId);
     }
 }
