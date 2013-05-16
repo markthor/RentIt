@@ -28,7 +28,7 @@ namespace RentItMvc.Utilities
             {
                 Id = c.Id,
                 Description = c.Description,
-                Hits = c.Hits != null ? c.Hits.Value : 0,
+                Plays = c.Hits != null ? c.Hits.Value : 0,
                 Name = c.Name,
                 StreamUri = c.StreamUri,
                 Tracks = new List<GuiTrack>(),
