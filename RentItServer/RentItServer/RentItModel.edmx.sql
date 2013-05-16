@@ -29,6 +29,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Subscription_Channel]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Subscription] DROP CONSTRAINT [FK_Subscription_Channel];
 GO
+IF OBJECT_ID(N'[dbo].[FK_ChannelUser1_Channel]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ChannelUser1] DROP CONSTRAINT [FK_ChannelUser1_Channel];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ChannelUser1_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ChannelUser1] DROP CONSTRAINT [FK_ChannelUser1_User];
+GO
 IF OBJECT_ID(N'[dbo].[FK_Subscription_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Subscription] DROP CONSTRAINT [FK_Subscription_User];
 GO
@@ -57,6 +63,9 @@ GO
 
 IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
     DROP TABLE [dbo].[sysdiagrams];
+GO
+IF OBJECT_ID(N'[dbo].[ChannelUser1]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ChannelUser1];
 GO
 IF OBJECT_ID(N'[dbo].[Channels]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Channels];

@@ -628,12 +628,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Subscription">
-          <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
-          <End Type="RENTITModel.User" Role="User" Multiplicity="*" />
+          <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" >
+          </End>
+          <End Type="RENTITModel.User" Role="User" Multiplicity="*" >
+          </End>
         </Association>
         <Association Name="ChannelGenre">
-          <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" />
-          <End Type="RENTITModel.Genre" Role="Genre" Multiplicity="*" />
+          <End Type="RENTITModel.Channel" Role="Channel" Multiplicity="*" >
+          </End>
+          <End Type="RENTITModel.Genre" Role="Genre" Multiplicity="*" >
+          </End>
         </Association>
         <Association Name="UserVote">
           <End Type="RENTITModel.User" Role="User" Multiplicity="1" >

@@ -193,7 +193,8 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     user = _dao.GetUser(userId);
-                    _dao.DeleteUser(userId);
+                    _dao.DeletesUser(userId);
+                    _dao.DeleteVotesForUser(userId);
                     _userCache.Put(user.Username, null);
                     _userCache.Put(user.Email, null);
                     _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));

@@ -343,6 +343,7 @@ namespace RentItServer.ITU
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
                 Channel dbChannel = channels.First();
                 dbChannel.Subscribers.Clear();
+                dbChannel.Genres.Clear();
                 context.Channels.Remove(dbChannel);
                 context.SaveChanges();
 
@@ -1116,6 +1117,7 @@ namespace RentItServer.ITU
                 foreach (Channel c in channels)
                 {
                     c.Subscribers.Clear();
+                    c.Genres.Clear();
                     proxy.Channels.Remove(c);
                 }
 
