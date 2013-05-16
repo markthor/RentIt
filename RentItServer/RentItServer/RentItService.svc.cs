@@ -7,8 +7,6 @@ using RentItServer.ITU;
 
 namespace RentItServer
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class RentItService : IRentItService
     {
         private static readonly Controller _controller = Controller.GetInstance();
@@ -93,6 +91,11 @@ namespace RentItServer
             _controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
         }
 
+        public void IncrementHitsForChannel(int channelId)
+        {
+            _controller.IncrementHitsForChannel(channelId);
+        }
+
         public ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
             return _controller.GetChannel(channelId);
@@ -171,54 +174,15 @@ namespace RentItServer
             _controller.DeleteComment(channelId, userId, date);
         }
 
-        public ITU.DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date)
+        public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
-            throw new NotImplementedException();
-            //CreateComment theComment = _controller.GetComment(channelId, userId, date);
-            //return theComment.GetComment();
-        }
-
-        public ITU.DatabaseWrapperObjects.Comment[] GetComments(int channelId, int userId, int fromInclusive, int toExclusive)
-        {
-            throw new NotImplementedException();
-            //List<CreateComment> theRawComments = _controller.GetComments(channelId, userId, fromInclusive, toExclusive);
-            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
-            //foreach (CreateComment comment in theRawComments)
-            //{
-            //    theComments.Add(comment.GetComment());
-            //}
-            //return theComments.ToArray();
-        }
-
-        public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int fromInclusive, int toExclusive)
-        {
-            throw new NotImplementedException();
-            //List<CreateComment> theRawComments = _controller.GetComments(channelId, null, fromInclusive, toExclusive);
-            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
-            //foreach (CreateComment comment in theRawComments)
-            //{
-            //    theComments.Add(comment.GetComment());
-            //}
-            //return theComments.ToArray();
+            return _controller.GetChannelComments(channelId, fromInclusive, toExclusive);
         }
 
         public ITU.DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
-            throw new NotImplementedException();
-            //List<CreateComment> theRawComments = _controller.GetComments(null, userId, fromInclusive, toExclusive);
-            //List<ITU.DatabaseWrapperObjects.CreateComment> theComments = new List<ITU.DatabaseWrapperObjects.CreateComment>();
-            //foreach (CreateComment comment in theRawComments)
-            //{
-            //    theComments.Add(comment.GetComment());
-            //}
-            //return theComments.ToArray();
+            return _controller.GetUserComments(userId, fromInclusive, toExclusive);
         }
-
-        //public ITU.DatabaseWrapperObjects.Comment GetComment(int commentId)
-        //{
-        //    Comment theComment = _controller.GetComment(commentId);
-        //    return theComment.GetComment();
-        //}
 
         public bool IsEmailAvailable(string email)
         {
@@ -254,7 +218,7 @@ namespace RentItServer
         /// Starts the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
-        public void startChannel(int cId)
+        public void StartChannel(int cId)
         {
             _controller.StartChannelStream(cId);
         }
@@ -263,7 +227,7 @@ namespace RentItServer
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
-        public void stopChannel(int cId)
+        public void StopChannel(int cId)
         {
             _controller.StopChannelStream(cId);
         }

@@ -64,7 +64,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ItuTests\CreationOfDataForGuiTest.cs" />
     <Compile Include="ItuTests\ItuController_Test.cs" />
     <Compile Include="ItuTests\ItuDao_Test.cs" />
     <Compile Include="ItuTests\StreamHandler_Test.cs" />

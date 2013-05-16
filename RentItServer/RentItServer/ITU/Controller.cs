@@ -391,6 +391,15 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Adds one to the hits of a channel.
+        /// </summary>
+        /// <param name="channelId">The id of the channel.</param>
+        public void IncrementHitsForChannel(int channelId)
+        {
+            _dao.IncrementHitsForChannel(channelId);
+        }
+
+        /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
@@ -655,14 +664,52 @@ namespace RentItServer.ITU
             }
         }
 
-        public DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date)
+        /// <summary>
+        /// Gets comments associated with a user within the specified range. Ranges outside the size of the comment collection or null is interpreted as extremes.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// /// <param name="fromInclusive">The start index to retrieve comments from inclusive.</param>
+        /// /// <param name="toExclusive">The end index to retieve comments from exclusive.</param>
+        /// <returns>
+        /// Comments from a specific user in the specified range.
+        /// </returns>
+        public DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int? fromInclusive, int? toExclusive)
         {
-            throw new NotImplementedException();
+            if (fromInclusive == null) fromInclusive = 0;
+            if (toExclusive == null) toExclusive = int.MaxValue;
+            try
+            {
+                List<DatabaseWrapperObjects.Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
+                return comments.ToArray();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
-        public DatabaseWrapperObjects.Comment[] GetComments(int? channelId, int? userId, int fromInclusive, int toExclusive)
+        /// <summary>
+        /// Gets comments associated with a channel within the specified range. Ranges outside the size of the comment collection or null is interpreted as extremes.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// /// <param name="fromInclusive">The start index to retrieve comments from inclusive.</param>
+        /// /// <param name="toExclusive">The end index to retieve comments from exclusive.</param>
+        /// <returns>
+        /// Comments from a specific channel in the specified range.
+        /// </returns>
+        public DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
-            throw new NotImplementedException();
+            if (fromInclusive == null) fromInclusive = 0;
+            if (toExclusive == null) toExclusive = int.MaxValue; 
+            try
+            {
+                List<DatabaseWrapperObjects.Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
+                return comments.ToArray();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         public DatabaseWrapperObjects.Comment GetComment(int commentId)

@@ -402,6 +402,16 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Adds one to the hits of a channel.
+        /// </summary>
+        /// <param name="channelId">The id of the channel.</param>
+        public void IncrementHitsForChannel(int channelId)
+        {
+            Channel channel = GetChannel(channelId);
+            UpdateChannel(channelId, null, null, null, channel.Hits + 1, null, null);
+        }
+
+        /// <summary>
         /// Gets the channel.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -982,42 +992,68 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets all comments associated with a channel
+        /// Gets comments associated with a channel within the specified range. Ranges outside the size of the comment collection is interpreted as extremes.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
+        /// /// <param name="fromInclusive">The start index to retrieve comments from inclusive.</param>
+        /// /// <param name="toExclusive">The end index to retieve comments from exclusive.</param>
         /// <returns>
-        /// All comments from a specific channel
+        /// Comments from a specific channel in the specified range.
         /// </returns>
-        public List<Comment> GetChannelComments(int channelId)
+        public List<DatabaseWrapperObjects.Comment> GetChannelComments(int channelId, int fromInclusive, int toExclusive)
         {
+            if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var comments = from comment in context.Comments
                                where comment.ChannelId == channelId
                                select comment;
-
-                // It doesn't matter if there are no comments
-                return comments.ToList();
+                //Set variables relevant for getting list range
+                if(fromInclusive < 0) fromInclusive = 0;
+                if(toExclusive > comments.Count()) toExclusive = comments.Count();
+                int sizeOfRange = toExclusive - fromInclusive;
+                //Gets the specified range
+                List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
+                //Converts from entity object to wrapper object
+                List<DatabaseWrapperObjects.Comment> result = new List<DatabaseWrapperObjects.Comment>(listComments.Count);
+                foreach (Comment c in listComments)
+                {
+                    result.Add(c.GetComment());
+                }
+                return result;
             }
         }
 
         /// <summary>
-        /// Gets all comments associated with a user
+        /// Gets comments associated with a user within the specified range. Ranges outside the size of the comment collection is interpreted as extremes.
         /// </summary>
         /// <param name="userId">The user id.</param>
+        /// /// <param name="fromInclusive">The start index to retrieve comments from inclusive.</param>
+        /// /// <param name="toExclusive">The end index to retieve comments from exclusive.</param>
         /// <returns>
-        /// All comments from a specific user
+        /// Comments from a specific user in the specified range.
         /// </returns>
-        public List<Comment> GetUserComments(int userId)
+        public List<DatabaseWrapperObjects.Comment> GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
+            if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var comments = from comment in context.Comments
                                where comment.UserId == userId
                                select comment;
-
-                // It doesn't matter if there are no comments
-                return comments.ToList();
+                //Set variables relevant for getting list range
+                if (fromInclusive < 0) fromInclusive = 0;
+                if (toExclusive > comments.Count()) toExclusive = comments.Count();
+                int sizeOfRange = toExclusive - fromInclusive;
+                //Gets the specified range
+                List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
+                //Converts from entity object to wrapper object
+                List<DatabaseWrapperObjects.Comment> result = new List<DatabaseWrapperObjects.Comment>(listComments.Count);
+                foreach (Comment c in listComments)
+                {
+                    result.Add(c.GetComment());
+                }
+                return result;
             }
         }
 
