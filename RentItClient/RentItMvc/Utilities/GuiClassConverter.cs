@@ -16,15 +16,7 @@ namespace RentItMvc.Utilities
             {
                 foreach (Channel c in channels)
                 {
-                    GuiChannel chan = new GuiChannel();
-                    chan.Id = c.Id;
-                    chan.Description = c.Description;
-                    if(c.Hits != null)
-                        chan.Hits = c.Hits.Value;
-                    chan.Name = c.Name;
-                    chan.StreamUri = c.StreamUri;
-                    chan.OwnerId = c.OwnerId;
-                    returnList.Add(chan);
+                    returnList.Add(ConvertChannel(c));
                 }
             }
             return returnList;
@@ -68,14 +60,7 @@ namespace RentItMvc.Utilities
             {
                 foreach (Track t in tracks)
                 {
-                    GuiTrack track = new GuiTrack()
-                    {
-                        Id = t.Id,
-                        ArtistName = t.Artist,
-                        ChannelId = t.ChannelId,
-                        TrackName = t.Name
-                    };
-                    convertedTracks.Add(track);
+                    convertedTracks.Add(ConvertTrack(t));
                 }
             }
             return convertedTracks;
