@@ -343,6 +343,7 @@ namespace RentItServer.ITU
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
                 Channel dbChannel = channels.First();
                 dbChannel.Subscribers.Clear();
+                dbChannel.Genres.Clear();
                 context.Channels.Remove(dbChannel);
                 context.SaveChanges();
 
@@ -596,6 +597,44 @@ namespace RentItServer.ITU
 
                 // Update the user with the new vote. 
                 theUser.Votes.Add(vote);
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Deletes all votes for a specific track.
+        /// </summary>
+        /// <param name="trackId">The track id</param>
+        public void DeleteVotesForTrack(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.TrackId == trackId
+                            select v;
+                foreach (Vote v in votes)
+                {
+                    context.Votes.Remove(v);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Deletes all votes for a specific user.
+        /// </summary>
+        /// <param name="trackId">The user id</param>
+        public void DeleteVotesForUser(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId
+                            select v;
+                foreach (Vote v in votes)
+                {
+                    context.Votes.Remove(v);
+                }
                 context.SaveChanges();
             }
         }
@@ -1078,6 +1117,7 @@ namespace RentItServer.ITU
                 foreach (Channel c in channels)
                 {
                     c.Subscribers.Clear();
+                    c.Genres.Clear();
                     proxy.Channels.Remove(c);
                 }
 
@@ -1146,14 +1186,17 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
+                User user;
                 var users = from u in context.Users
                             where u.Id == userId
                             select u;
                 if (!users.Any())
                     return new List<Channel>();
+
                 var channels = from c in context.Channels
-                               where c.Subscribers.Contains(users.FirstOrDefault())
+                               where c.Subscribers.Where(u => u.Id == userId).Any()
                                select c;
+
                 return channels.ToList();
             }
         }

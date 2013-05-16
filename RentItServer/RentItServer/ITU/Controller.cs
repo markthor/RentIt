@@ -194,6 +194,7 @@ namespace RentItServer.ITU
                 {
                     user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
+                    _dao.DeleteVotesForUser(userId);
                     _userCache.Put(user.Username, null);
                     _userCache.Put(user.Email, null);
                     _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
@@ -577,6 +578,7 @@ namespace RentItServer.ITU
                 if (_fileSystemHandler.Exists(track.Path))
                     _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
+                _dao.DeleteVotesForTrack(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)

@@ -161,9 +161,9 @@ namespace RentItServer.ITU
              * TEST OF LONG TIME IT WOULD TAKE TO CHANGE SONG WHEN A SONG HAS JUST FINISHED, IF IT IS EVEN POSSIBLE
              * 
              */
-            string command = "killall -HUP ezstream";
+            /*string command = "killall -HUP ezstream";
             p.StandardInput.WriteLine(command);
-            p.StandardInput.Flush();
+            p.StandardInput.Flush();*/
 
             AddTrackPlay(track);
         }

@@ -15,7 +15,7 @@ namespace RentItMvc.Models
             Name = "";
             Id = -1;
             Description = "";
-            Hits = 0;
+            Plays = 0;
             OwnerId = -1;
             Tracks = new List<GuiTrack>();
             StreamUri = "";
@@ -35,8 +35,8 @@ namespace RentItMvc.Models
         public string Description{ get; set; }
 
         [Required]
-        [Display(Name = "Hits")]
-        public int Hits{ get; set; } 
+        [Display(Name = "Plays")]
+        public int Plays{ get; set; } 
 
         [Required]
         [Display(Name = "OwnerId")]
