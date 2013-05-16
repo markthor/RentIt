@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\TrackController.cs" />
@@ -131,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GuiChannel.cs" />
     <Compile Include="Models\GuiTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +243,8 @@
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Track\TrackList.cshtml" />
     <Content Include="Views\Channel\CreateChannel.cshtml" />
+    <Content Include="Views\Comment\ListComments.cshtml" />
+    <Content Include="Views\Comment\Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

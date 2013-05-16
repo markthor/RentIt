@@ -167,3 +167,18 @@ input[type=file]::-webkit-file-upload-button {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     height: 28px;
 }
+
+.comment {
+    border: solid 1px #cccccc;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.commentstyle {
+    font-size:smaller;
+}
+
+li {
+    list-style: none;
+}
