@@ -15,40 +15,40 @@
     <meta name="viewport" content="width=device-width" />
     <title>LogInTopBar</title>
 </head>
-<body>
-    <a class="brand" style="margin-right: 225px" href="/BlobfishRadio" title="Home">@ViewBag.Title</a>
-    @if (Session["userId"] != null && (int) Session["userId"] > 0)
-    {
-        <!--User is logged in-->
-        using (@Html.BeginForm("SearchResult", "Channel", FormMethod.Post, new { @class = "navbar-form pull-left" }))
+    <body>
+        @Html.ActionLink((string) ViewBag.Title, "Index", "Home", null, new { @class = "brand", style = "margin-right:225px", title = "Home"})
+        @if (Session["userId"] != null && (int) Session["userId"] > 0)
         {
-            @Html.TextBox("searchArgs", null, new { @class = "span3", placeholder = "Search for ..." })
-            <button class="btn btn-primary" type="submit">
-                <i class="icon-search icon-white"></i>
-            </button>    
-        }
+            <!--User is logged in-->
+            using (@Html.BeginForm("SearchResult", "Channel", FormMethod.Post, new { @class = "navbar-form pull-left" }))
+            {
+                @Html.TextBox("searchArgs", null, new { @class = "span3", placeholder = "Search for channels" })
+                <button class="btn btn-primary" type="submit">
+                    <i class="icon-search icon-white"></i>
+                </button>    
+            }
         
-        using (@Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
+            using (@Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
+            {
+                @Html.ActionLink((string) Session["username"], "Edit", "Account", null, new { @class = "brand pull-left" })
+                <button class="btn btn-danger btn-signInOut pull-left" type="submit">Sign out</button>
+            }
+        }
+        else
         {
-            <a href="/BlobfishRadio/Account/Edit" class="brand pull-left">@Session["username"]</a>
-            <button class="btn btn-danger btn-signInOut pull-left" type="submit">Sign out</button>
+            <!--User is not logged in-->
+            using (@Html.BeginForm("LogIn", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
+            {       
+                <div class="pull-left input-login">
+                    @Html.TextBoxFor(acc => acc.UsernameOrEmail, new { @class = "span3", type = "text", required = "required", placeholder = "Username or Email" })
+                </div>
+                <div class="pull-left input-login">
+                    @Html.TextBoxFor(acc => acc.CurrentPassword, new { @class = "span2", type = "password", required = "required", placeholder = "Password" })
+                </div>
+                <div class="pull-left">
+                    <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
+                </div>
+            }
         }
-    }
-    else
-    {
-        <!--User is not logged in-->
-        using (@Html.BeginForm("LogIn", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
-        {       
-        <div class="pull-left input-login">
-            @Html.TextBoxFor(acc => acc.UsernameOrEmail, new { @class = "span3", type = "text", required = "required", placeholder = "Username or Email" })
-        </div>
-        <div class="pull-left input-login">
-            @Html.TextBoxFor(acc => acc.CurrentPassword, new { @class = "span2", type = "password", required = "required", placeholder = "Password" })
-        </div>
-        <div class="pull-left">
-            <button class="btn btn-success btn-signInOut" type="submit">Sign in</button>
-        </div>
-        }
-    }
-</body>
+    </body>
 </html>

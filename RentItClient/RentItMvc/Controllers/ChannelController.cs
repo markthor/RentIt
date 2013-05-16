@@ -159,7 +159,7 @@ namespace RentItMvc.Controllers
                     return View(chan);
                 }
             }
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult CreateChannel()

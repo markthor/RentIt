@@ -18,7 +18,7 @@ namespace RentItMvc.Controllers
             {
                 proxy.UpdateUser((int) Session["userId"], null, account.NewPassword, null);
             }
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Edit()
@@ -34,7 +34,7 @@ namespace RentItMvc.Controllers
                     return View(acc);
                 }
             }
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -68,7 +68,7 @@ namespace RentItMvc.Controllers
                     }
                 }
             }
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -88,14 +88,14 @@ namespace RentItMvc.Controllers
                     ModelState.AddModelError("", "Wrong username or password");
                 }
             }
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult LogOut()
         {
             Session.RemoveAll();
-            return Redirect("/BlobfishRadio");
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
