@@ -14,13 +14,12 @@ namespace RentItServer
     
     public partial class TrackPlay
     {
+        public TrackPlay()
+        {
+        }
         public int TrackId { get; set; }
         public System.DateTime TimePlayed { get; set; }
     
         public virtual Track Track { get; set; }
-
-        public TrackPlay()
-        {
-        }
     }
 }

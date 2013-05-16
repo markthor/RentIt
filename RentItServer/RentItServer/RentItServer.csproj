@@ -99,6 +99,9 @@
     <Compile Include="CustomModels\ItuUserCustom.cs" />
     <Compile Include="CustomModels\ItuVoteCustom.cs" />
     <Compile Include="CustomModels\SMUrentalCustom.cs" />
+    <Compile Include="Genre.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ITU\DatabaseWrapperObjects\Channel.cs" />
     <Compile Include="ITU\ChannelOrganizer.cs" />
     <Compile Include="ITU\ChannelStreamer.cs" />
@@ -118,15 +121,30 @@
     <Compile Include="ITU\Search\UserStruct.cs" />
     <Compile Include="ITU\TrackSearchArgs.cs" />
     <Compile Include="ITU\XMLGenerator.cs" />
+    <Compile Include="SMUbook.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMUrental.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMUuser.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SMU\Rental.cs" />
     <Compile Include="ITU\StreamHandler.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\FileSystemDao.cs" />
-    <Compile Include="Genre.cs">
+    <Compile Include="Track.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TrackPlay.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>RentItModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FileSystemDao.cs" />
     <Compile Include="RentItModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,18 +168,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITU\Search\TernarySearchTrie.cs" />
     <Compile Include="ITU\Search\TernarySearchTrieNode.cs" />
-    <Compile Include="SMUbook.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="CustomModels\SMUbookCustom.cs" />
-    <Compile Include="SMUrental.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SMURentItService.svc.cs">
       <DependentUpon>SMURentItService.svc</DependentUpon>
-    </Compile>
-    <Compile Include="SMUuser.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomModels\SMUuserCustom.cs" />
     <Compile Include="SMU\Book.cs" />
@@ -173,18 +182,9 @@
     <Compile Include="Utilities\FilePath.cs" />
     <Compile Include="Utilities\RentItEventArgs.cs" />
     <Compile Include="Utilities\Logger.cs" />
-    <Compile Include="Track.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="CustomModels\TrackCustom.cs" />
-    <Compile Include="TrackPlay.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="CustomModels\TrackPlayCustom.cs" />
     <Compile Include="ITU\TrackPrioritizer.cs" />
-    <Compile Include="User.cs">
-      <DependentUpon>RentItModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Vote.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>

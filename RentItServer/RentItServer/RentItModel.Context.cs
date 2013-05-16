@@ -19,9 +19,7 @@ namespace RentItServer
             : base("name=RENTIT21Entities")
         {
         }
-        
-
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

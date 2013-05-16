@@ -21,7 +21,7 @@
         <AssociationConnector Association="RENTITModel.ChannelComment" />
         <AssociationConnector Association="RENTITModel.CommentUser" />
         <AssociationConnector Association="RENTITModel.ChannelUser" />
-        <AssociationConnector Association="RENTITModel.ChannelUser1" />
+        <AssociationConnector Association="RENTITModel.Subscription" />
         <AssociationConnector Association="RENTITModel.ChannelGenre" />
         <AssociationConnector Association="RENTITModel.UserVote" />
         <AssociationConnector Association="RENTITModel.TrackVote" />

@@ -52,7 +52,7 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             Controller.GetInstance().UpdateChannel(channelId4, null, null, null, 30, 9);
             int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", _testUser1.Id, "No description for you.", new List<string>() { genreName2 });
             Controller.GetInstance().UpdateChannel(channelId5, null, null, null, 102, 1);
-            Controller.GetInstance().Subscribe(_testUser2.Id, channelId1);
+            Controller.GetInstance().Subscribe(_testUser1.Id, channelId1);
             RentItServer.ITU.DatabaseWrapperObjects.Track t1 = new RentItServer.ITU.DatabaseWrapperObjects.Track();
             t1.Artist = "Kiss";
             t1.Name = "Heaven's On Fire";
