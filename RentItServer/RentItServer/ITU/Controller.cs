@@ -490,6 +490,7 @@ namespace RentItServer.ITU
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
                 {
+                    _logger.AddEntry("Size of audioStream: " + audioStream.Length);
                     _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
                 }
                 catch
