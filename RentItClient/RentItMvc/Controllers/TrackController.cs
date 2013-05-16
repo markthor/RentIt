@@ -21,24 +21,26 @@ namespace RentItMvc.Controllers
         /// <returns></returns>
         public ActionResult AddTrack(HttpPostedFileBase file, int channelId, string trackName, string artistName)
         {
-            // Verify that the user selected a file
-            if (file != null && file.ContentLength > 0)
+            if (Session["userId"] != null)
             {
-                int userId = (int)Session["userId"];
-                Stream stream = file.InputStream;
-                MemoryStream memory = new MemoryStream();
-                stream.CopyTo(memory);
-                Track track = new Track();
-                track.Artist = artistName;
-                track.Name = trackName;
-                using (RentItServiceClient proxy = new RentItServiceClient())
+                // Verify that the user selected a file
+                if (file != null && file.ContentLength > 0)
                 {
-                    proxy.AddTrack(userId, channelId, memory, track);
+                    int userId = (int)Session["userId"];
+                    Stream stream = file.InputStream;
+                    MemoryStream memory = new MemoryStream();
+                    stream.CopyTo(memory);
+                    Track track = new Track();
+                    track.Artist = artistName;
+                    track.Name = trackName;
+                    using (RentItServiceClient proxy = new RentItServiceClient())
+                    {
+                        proxy.AddTrack(userId, channelId, memory, track);
+                    }
                 }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
             }
-            return Redirect(Request.UrlReferrer.PathAndQuery);
-            // redirect back to the index action to show the form once again
-            //return RedirectToAction("EditChannel", "Channel", new { channelId = channelId });
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -59,29 +61,40 @@ namespace RentItMvc.Controllers
         /// <returns></returns>
         public ActionResult DeleteTrack(int trackId)
         {
-            int userId = (int)Session["userId"];
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (Session["userId"] != null)
             {
-                proxy.RemoveTrack(trackId);
+                int userId = (int)Session["userId"];
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.RemoveTrack(trackId);
+                }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
             }
-            return Redirect(Request.UrlReferrer.PathAndQuery);
-            //return RedirectToAction("EditChannel", "Channel"/*, new { channelId = channelId }*/);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult EditTracks(int channelId)
         {
-            List<GuiTrack> guiTracks;
-            using (RentItServiceClient proxy = new RentItServiceClient())
+            if (Session["userId"] != null)
             {
-                Track[] tracks = proxy.GetTrackByChannelId(channelId);
-                guiTracks = Utilities.GuiClassConverter.ConvertTrackList(tracks);
+                List<GuiTrack> guiTracks;
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    Track[] tracks = proxy.GetTrackByChannelId(channelId);
+                    guiTracks = Utilities.GuiClassConverter.ConvertTrackList(tracks);
+                }
+                return View("TrackList", guiTracks);
             }
-            return View("TrackList", guiTracks);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult TrackList(List<GuiTrack> tracks)
         {
-            return View(tracks);
+            if (Session["userId"] != null)
+            {
+                return View(tracks);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
