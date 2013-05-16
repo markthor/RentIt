@@ -111,9 +111,9 @@ namespace RentItServer.Utilities
         /// <returns>Whether the file exists or not</returns>
         public bool Exists(string absolutePath)
         {
-            if (absolutePath == null) throw new ArgumentNullException("absolutePath");
-            if (absolutePath.Equals("")) throw new ArgumentException("absolutePath path must target a file");
-            if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) throw new ArgumentException("absolutePath path must target a file. AbsolutePath path = " + absolutePath);
+            if (absolutePath == null) return false;
+            if (absolutePath.Equals("")) return false;
+            if (absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString())) return false;
 
             return File.Exists(absolutePath);
         }

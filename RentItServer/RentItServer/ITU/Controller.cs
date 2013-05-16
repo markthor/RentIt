@@ -183,6 +183,11 @@ namespace RentItServer.ITU
         public void DeleteUser(int userId)
         {
             User user = null;
+            List<Channel> userCreatedChannels = GetCreatedChannels(userId);
+            foreach (Channel c in userCreatedChannels)
+            {
+                DeleteChannel(c.Id);
+            }
             try
             {
                 lock (_dbLock)
@@ -338,10 +343,14 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
         /// <param name="channelId">The channel id.</param>
-        public void DeleteChannel(int userId, int channelId)
+        public void DeleteChannel(int channelId)
         {
-            if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "DeleteChannel");
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
+            List<Track> associatedTracks = GetTracksByChannelId(channelId);
+            foreach (Track t in associatedTracks)
+            {
+                RemoveTrack(t.Id);
+            }
 
             Channel channel = null;
             try
@@ -349,27 +358,17 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     channel = _dao.GetChannel(channelId);
-
-                    string logEntry = "User id [" + userId + "] want to delete the channel [" + channel.Name + "]. ";
-                    if (channel.UserId == userId)
-                    {
-                        _dao.DeleteChannel(userId, channel.GetChannel());
-                        _channelCache[channelId] = null;
-                        _logger.AddEntry(logEntry + "Deletion successful.");
-                    }
-                    else
-                    {
-                        //if (_handler != null)
-                        //    _handler(this, new RentItEventArgs(logEntry + "Deletion failed. Request comes from a user other than channel owner."));
-                        _logger.AddEntry(logEntry + "Deletion failed. Request comes from a user other than channel owner.");
-                    }
+                    string logEntry = "[" + channel.Name + "] with id [" + channelId + "] is being deleted.";
+                    _dao.DeleteChannel(channel.GetChannel());
+                    _channelCache[channelId] = null;
+                    _logger.AddEntry(logEntry + "Deletion successful.");
                 }
             }
             catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("Channel deletion failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("DeleteChannel failed with exception [{0}]. Local variables: userId = {1}, channelId = {2}, channel = {3}", e, userId, channelId, channel));
+                _logger.AddEntry(string.Format("DeleteChannel failed with exception [{0}]. Local variables: channelId = {1}, channel = {2}", e, channelId, channel));
                 throw;
             }
         }
@@ -566,16 +565,16 @@ namespace RentItServer.ITU
             }
         }
 
-        public void RemoveTrack(int userId, int trackId)
+        public void RemoveTrack(int trackId)
         {
-            if (userId < 0) LogAndThrowException(new ArgumentException("userId is below 0"), "RemoveTrack");
             if (trackId < 0) LogAndThrowException(new ArgumentException("trackId was below 0"), "RemoveTrack");
 
             try
             {
                 Track track = _dao.GetTrack(trackId);
-                string logEntry = "User id [" + userId + "] want to delete the track [" + track.Name + "]. ";
-
+                string logEntry = "[" + track.Name + "] with id [" + trackId + "] is being deleted.";
+                if (_fileSystemHandler.Exists(track.Path))
+                    _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }

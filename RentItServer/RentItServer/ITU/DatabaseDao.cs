@@ -332,21 +332,22 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="ownerId">The owner id.</param>
         /// <param name="theChannel">The channel.</param>
-        public void DeleteChannel(int ownerId, DatabaseWrapperObjects.Channel channel)
+        public void DeleteChannel(DatabaseWrapperObjects.Channel channel)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 int channelId = channel.Id;
                 var channels = from c in context.Channels
-                               where c.Id == channel.Id && c.ChannelOwner.Id == ownerId
+                               where c.Id == channel.Id
                                select c;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel found");
                 Channel dbChannel = channels.First();
+                dbChannel.Subscribers.Clear();
                 context.Channels.Remove(dbChannel);
                 context.SaveChanges();
 
                 channels = from c in context.Channels
-                           where c.ChannelOwner.Id == ownerId && c.Id == channelId
+                           where c.Id == channelId
                            select c;
                 if (channels.Any() == true) throw new Exception("End of DeleteChannel, but channel entry is still in database");
             }

@@ -82,7 +82,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
         /// <param name="channelId">The channel id.</param>
         [OperationContract]
-        void DeleteChannel(int userId, int channelId);
+        void DeleteChannel(int channelId);
 
         /// <summary>
         /// Updates the channel.
@@ -169,7 +169,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         [OperationContract]
-        void RemoveTrack(int userId, int trackId);
+        void RemoveTrack(int trackId);
 
         /// <summary>
         /// Gets the track ids associated witht he channel.

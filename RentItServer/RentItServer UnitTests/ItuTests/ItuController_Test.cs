@@ -67,8 +67,6 @@ namespace RentItServer_UnitTests.ItuTests
                 testchannelnames.Add(testchannelname + i);
                 testchanneldescrs.Add(testchanneldescr + i);
             } 
-            DatabaseDao.GetInstance().DeleteDatabaseData();
-            TestExtensions.PopulateDatabase();
         }
 
         #region Controller_Signup
@@ -481,11 +479,13 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.DeleteUser(testId);
+                List<Channel> userCreatedChannels = controller.GetCreatedChannels(testId);
+                Assert.IsTrue(userCreatedChannels.Count == 0);
                 testId = int.MaxValue;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("An exception was thrown. " + e);
             }
         }
         #endregion
