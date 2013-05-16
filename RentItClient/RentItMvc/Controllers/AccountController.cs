@@ -13,7 +13,7 @@ namespace RentItMvc.Controllers
     {
         public ActionResult ChangePassword(Account account)
         {
-            if (UserIsLoggedIn())
+            if (Session["userId"] != null)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -25,7 +25,7 @@ namespace RentItMvc.Controllers
 
         public ActionResult Edit()
         {
-            if (UserIsLoggedIn())
+            if (Session["userId"] != null)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -95,7 +95,7 @@ namespace RentItMvc.Controllers
         /// <returns></returns>
         public ActionResult Subscribe(int channelId)
         {
-            if (UserIsLoggedIn())
+            if (Session["userId"] != null)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -108,7 +108,7 @@ namespace RentItMvc.Controllers
 
         public ActionResult UnSubscribe(int channelId)
         {
-            if (UserIsLoggedIn())
+            if (Session["userId"] != null)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -147,11 +147,6 @@ namespace RentItMvc.Controllers
                     return true;
             }
             return false;
-        }
-
-        public bool UserIsLoggedIn()
-        {
-            return Session["userId"] != null;
         }
     }
 }
