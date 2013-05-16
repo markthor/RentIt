@@ -110,6 +110,7 @@ namespace RentItServer.ITU
                 startInfo.UseShellExecute = false;
                 //It should not create a new window for the ezstream process
                 startInfo.CreateNoWindow = true;
+                
 
                 //Create the process
                 EzProcess p = new EzProcess(channelId);
@@ -267,6 +268,7 @@ namespace RentItServer.ITU
         private void EzProcessThread(object o)
         {
             EzProcess p = (EzProcess)o;
+            _logger.AddEntry("################");
             _logger.AddEntry("EzProcessThread for channel with id: " + p.ChannelId + " has started");
             Thread.Sleep(1000);
             while (true)//while channel running
@@ -276,11 +278,24 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Closing the process for channel with id: " + p.ChannelId);
                 p.Kill();
                 p.WaitForExit();
-                _logger.AddEntry("Setting the next track for channel with id: " + p.ChannelId);
-                SetNextTrack(p);
-                _logger.AddEntry("Starting the process for channel with id: " + p.ChannelId);
+                _logger.AddEntry("Has exited: " + p.HasExited);
+                //_logger.AddEntry("Setting the next track for channel with id: " + p.ChannelId);
+                //SetNextTrack(p);
+                //_logger.AddEntry("Starting the process for channel with id: " + p.ChannelId);
+
+                foreach (System.Diagnostics.Process myProc in System.Diagnostics.Process.GetProcesses())
+                {
+                    //if (myProc.ProcessName == "process name")
+                    //{
+                    //    myProc.Kill();
+                    //}
+                    _logger.AddEntry("Process: " + myProc.ProcessName);
+                }
+
+
                 //p.Start();
-                p = StartProcess(p.ChannelId, 66000);
+                //p = StartProcess(p.ChannelId, 66000);
+                //p.Start();
                 //_logger.AddEntry("Sleeping after channel has started for channel with id: " + p.ChannelId);
                 //Thread.Sleep(1000);
                 //_logger.AddEntry("Set next track for channel with id: " + p.ChannelId);
@@ -374,9 +389,9 @@ namespace RentItServer.ITU
             EzProcess p = new EzProcess(channelId);
             p.CurrentTrackLength = trackLength;
             p.StartInfo = startInfo;
-            _logger.AddEntry("Process created for channel with id: " + channelId);
-            p.Start();
-            _logger.AddEntry("Process started for channel with id: " + channelId);
+            //_logger.AddEntry("Process created for channel with id: " + channelId);
+            //p.Start();
+            //_logger.AddEntry("Process started for channel with id: " + channelId);
 
             //Listen for when a new song starts
             //p.OutputDataReceived += p_OutputDataReceived;
