@@ -17,7 +17,9 @@ namespace RentItMvc.Controllers
             {
                 proxy.IncrementChannelPlays(channelId);
             }
-            return Redirect(Request.UrlReferrer.PathAndQuery);
+            Audio audio = new Audio();
+            audio.StreamUri = "http://rentit.itu.dk:27000/" + channelId.ToString();
+            return View(audio);
         }
     }
 }

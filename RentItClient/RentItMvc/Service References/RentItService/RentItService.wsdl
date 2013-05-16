@@ -71,6 +71,12 @@
   <wsdl:message name="IRentItService_UpdateChannel_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateChannelResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_IncrementHitsForChannel_InputMessage">
+    <wsdl:part name="parameters" element="tns:IncrementHitsForChannel" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IncrementHitsForChannel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IncrementHitsForChannelResponse" />
+  </wsdl:message>
   <wsdl:message name="IRentItService_GetChannel_InputMessage">
     <wsdl:part name="parameters" element="tns:GetChannel" />
   </wsdl:message>
@@ -143,11 +149,17 @@
   <wsdl:message name="IRentItService_DeleteComment_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCommentResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_GetComment_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetComment" />
+  <wsdl:message name="IRentItService_GetChannelComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetChannelComments" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_GetComment_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCommentResponse" />
+  <wsdl:message name="IRentItService_GetChannelComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetChannelCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetUserComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserComments" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetUserComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserCommentsResponse" />
   </wsdl:message>
   <wsdl:message name="IRentItService_IsEmailAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:IsEmailAvailable" />
@@ -185,17 +197,17 @@
   <wsdl:message name="IRentItService_ListenToChannel_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListenToChannelResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_startChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:startChannel" />
+  <wsdl:message name="IRentItService_StartChannel_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannel" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_startChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:startChannelResponse" />
+  <wsdl:message name="IRentItService_StartChannel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannelResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_stopChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:stopChannel" />
+  <wsdl:message name="IRentItService_StopChannel_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopChannel" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_stopChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:stopChannelResponse" />
+  <wsdl:message name="IRentItService_StopChannel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopChannelResponse" />
   </wsdl:message>
   <wsdl:message name="IRentItService_GetDefaultChannelSearchArgs_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultChannelSearchArgs" />
@@ -239,6 +251,12 @@
   <wsdl:message name="IRentItService_GetSubscriberCount_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSubscriberCountResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_IncrementChannelPlays_InputMessage">
+    <wsdl:part name="parameters" element="tns:IncrementChannelPlays" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IncrementChannelPlays_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IncrementChannelPlaysResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
@@ -279,6 +297,10 @@
     <wsdl:operation name="UpdateChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/UpdateChannel" message="tns:IRentItService_UpdateChannel_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/UpdateChannelResponse" message="tns:IRentItService_UpdateChannel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IncrementHitsForChannel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IncrementHitsForChannel" message="tns:IRentItService_IncrementHitsForChannel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IncrementHitsForChannelResponse" message="tns:IRentItService_IncrementHitsForChannel_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetChannel" message="tns:IRentItService_GetChannel_InputMessage" />
@@ -328,9 +350,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/DeleteComment" message="tns:IRentItService_DeleteComment_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/DeleteCommentResponse" message="tns:IRentItService_DeleteComment_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetComment">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetComment" message="tns:IRentItService_GetComment_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetCommentResponse" message="tns:IRentItService_GetComment_OutputMessage" />
+    <wsdl:operation name="GetChannelComments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetChannelComments" message="tns:IRentItService_GetChannelComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetChannelCommentsResponse" message="tns:IRentItService_GetChannelComments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserComments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetUserComments" message="tns:IRentItService_GetUserComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetUserCommentsResponse" message="tns:IRentItService_GetUserComments_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="IsEmailAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsEmailAvailable" message="tns:IRentItService_IsEmailAvailable_InputMessage" />
@@ -356,13 +382,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/ListenToChannel" message="tns:IRentItService_ListenToChannel_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/ListenToChannelResponse" message="tns:IRentItService_ListenToChannel_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="startChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/startChannel" message="tns:IRentItService_startChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/startChannelResponse" message="tns:IRentItService_startChannel_OutputMessage" />
+    <wsdl:operation name="StartChannel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannel" message="tns:IRentItService_StartChannel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelResponse" message="tns:IRentItService_StartChannel_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="stopChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/stopChannel" message="tns:IRentItService_stopChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/stopChannelResponse" message="tns:IRentItService_stopChannel_OutputMessage" />
+    <wsdl:operation name="StopChannel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StopChannel" message="tns:IRentItService_StopChannel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StopChannelResponse" message="tns:IRentItService_StopChannel_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDefaultChannelSearchArgs">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs" message="tns:IRentItService_GetDefaultChannelSearchArgs_InputMessage" />
@@ -391,6 +417,10 @@
     <wsdl:operation name="GetSubscriberCount">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetSubscriberCount" message="tns:IRentItService_GetSubscriberCount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetSubscriberCountResponse" message="tns:IRentItService_GetSubscriberCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IncrementChannelPlays">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IncrementChannelPlays" message="tns:IRentItService_IncrementChannelPlays_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse" message="tns:IRentItService_IncrementChannelPlays_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -478,6 +508,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateChannel">
       <soap:operation soapAction="http://tempuri.org/IRentItService/UpdateChannel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementHitsForChannel">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/IncrementHitsForChannel" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -593,8 +632,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetComment">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/GetComment" style="document" />
+    <wsdl:operation name="GetChannelComments">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetChannelComments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserComments">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetUserComments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -656,8 +704,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="startChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/startChannel" style="document" />
+    <wsdl:operation name="StartChannel">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannel" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -665,8 +713,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="stopChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/stopChannel" style="document" />
+    <wsdl:operation name="StopChannel">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/StopChannel" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -730,6 +778,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSubscriberCount">
       <soap:operation soapAction="http://tempuri.org/IRentItService/GetSubscriberCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncrementChannelPlays">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/IncrementChannelPlays" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

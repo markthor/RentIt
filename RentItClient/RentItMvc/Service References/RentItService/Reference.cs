@@ -875,6 +875,12 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateChannel", ReplyAction="http://tempuri.org/IRentItService/UpdateChannelResponse")]
         System.Threading.Tasks.Task UpdateChannelAsync(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementHitsForChannel", ReplyAction="http://tempuri.org/IRentItService/IncrementHitsForChannelResponse")]
+        void IncrementHitsForChannel(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementHitsForChannel", ReplyAction="http://tempuri.org/IRentItService/IncrementHitsForChannelResponse")]
+        System.Threading.Tasks.Task IncrementHitsForChannelAsync(int channelId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
         RentItMvc.RentItService.Channel GetChannel(int channelId);
         
@@ -947,11 +953,17 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteComment", ReplyAction="http://tempuri.org/IRentItService/DeleteCommentResponse")]
         System.Threading.Tasks.Task DeleteCommentAsync(int channelId, int userId, System.DateTime date);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
-        RentItMvc.RentItService.Comment GetComment(int channelId, int userId, System.DateTime date);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelComments", ReplyAction="http://tempuri.org/IRentItService/GetChannelCommentsResponse")]
+        RentItMvc.RentItService.Comment[] GetChannelComments(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetComment", ReplyAction="http://tempuri.org/IRentItService/GetCommentResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int channelId, int userId, System.DateTime date);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelComments", ReplyAction="http://tempuri.org/IRentItService/GetChannelCommentsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Comment[]> GetChannelCommentsAsync(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUserComments", ReplyAction="http://tempuri.org/IRentItService/GetUserCommentsResponse")]
+        RentItMvc.RentItService.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUserComments", ReplyAction="http://tempuri.org/IRentItService/GetUserCommentsResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Comment[]> GetUserCommentsAsync(int userId, int fromInclusive, int toExclusive);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsEmailAvailable", ReplyAction="http://tempuri.org/IRentItService/IsEmailAvailableResponse")]
         bool IsEmailAvailable(string email);
@@ -989,17 +1001,17 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
         System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/startChannel", ReplyAction="http://tempuri.org/IRentItService/startChannelResponse")]
-        void startChannel(int cId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannel", ReplyAction="http://tempuri.org/IRentItService/StartChannelResponse")]
+        void StartChannel(int cId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/startChannel", ReplyAction="http://tempuri.org/IRentItService/startChannelResponse")]
-        System.Threading.Tasks.Task startChannelAsync(int cId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannel", ReplyAction="http://tempuri.org/IRentItService/StartChannelResponse")]
+        System.Threading.Tasks.Task StartChannelAsync(int cId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/stopChannel", ReplyAction="http://tempuri.org/IRentItService/stopChannelResponse")]
-        void stopChannel(int cId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannel", ReplyAction="http://tempuri.org/IRentItService/StopChannelResponse")]
+        void StopChannel(int cId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/stopChannel", ReplyAction="http://tempuri.org/IRentItService/stopChannelResponse")]
-        System.Threading.Tasks.Task stopChannelAsync(int cId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannel", ReplyAction="http://tempuri.org/IRentItService/StopChannelResponse")]
+        System.Threading.Tasks.Task StopChannelAsync(int cId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgsResponse")]
         RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs();
@@ -1042,6 +1054,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscriberCount", ReplyAction="http://tempuri.org/IRentItService/GetSubscriberCountResponse")]
         System.Threading.Tasks.Task<int> GetSubscriberCountAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementChannelPlays", ReplyAction="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse")]
+        void IncrementChannelPlays(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementChannelPlays", ReplyAction="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse")]
+        System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1151,6 +1169,14 @@ namespace RentItMvc.RentItService {
             return base.Channel.UpdateChannelAsync(channelId, ownerId, channelName, description, hits, rating);
         }
         
+        public void IncrementHitsForChannel(int channelId) {
+            base.Channel.IncrementHitsForChannel(channelId);
+        }
+        
+        public System.Threading.Tasks.Task IncrementHitsForChannelAsync(int channelId) {
+            return base.Channel.IncrementHitsForChannelAsync(channelId);
+        }
+        
         public RentItMvc.RentItService.Channel GetChannel(int channelId) {
             return base.Channel.GetChannel(channelId);
         }
@@ -1247,12 +1273,20 @@ namespace RentItMvc.RentItService {
             return base.Channel.DeleteCommentAsync(channelId, userId, date);
         }
         
-        public RentItMvc.RentItService.Comment GetComment(int channelId, int userId, System.DateTime date) {
-            return base.Channel.GetComment(channelId, userId, date);
+        public RentItMvc.RentItService.Comment[] GetChannelComments(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive) {
+            return base.Channel.GetChannelComments(channelId, fromInclusive, toExclusive);
         }
         
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Comment> GetCommentAsync(int channelId, int userId, System.DateTime date) {
-            return base.Channel.GetCommentAsync(channelId, userId, date);
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Comment[]> GetChannelCommentsAsync(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive) {
+            return base.Channel.GetChannelCommentsAsync(channelId, fromInclusive, toExclusive);
+        }
+        
+        public RentItMvc.RentItService.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive) {
+            return base.Channel.GetUserComments(userId, fromInclusive, toExclusive);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Comment[]> GetUserCommentsAsync(int userId, int fromInclusive, int toExclusive) {
+            return base.Channel.GetUserCommentsAsync(userId, fromInclusive, toExclusive);
         }
         
         public bool IsEmailAvailable(string email) {
@@ -1303,20 +1337,20 @@ namespace RentItMvc.RentItService {
             return base.Channel.ListenToChannelAsync(channelId);
         }
         
-        public void startChannel(int cId) {
-            base.Channel.startChannel(cId);
+        public void StartChannel(int cId) {
+            base.Channel.StartChannel(cId);
         }
         
-        public System.Threading.Tasks.Task startChannelAsync(int cId) {
-            return base.Channel.startChannelAsync(cId);
+        public System.Threading.Tasks.Task StartChannelAsync(int cId) {
+            return base.Channel.StartChannelAsync(cId);
         }
         
-        public void stopChannel(int cId) {
-            base.Channel.stopChannel(cId);
+        public void StopChannel(int cId) {
+            base.Channel.StopChannel(cId);
         }
         
-        public System.Threading.Tasks.Task stopChannelAsync(int cId) {
-            return base.Channel.stopChannelAsync(cId);
+        public System.Threading.Tasks.Task StopChannelAsync(int cId) {
+            return base.Channel.StopChannelAsync(cId);
         }
         
         public RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs() {
@@ -1373,6 +1407,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<int> GetSubscriberCountAsync(int channelId) {
             return base.Channel.GetSubscriberCountAsync(channelId);
+        }
+        
+        public void IncrementChannelPlays(int channelId) {
+            base.Channel.IncrementChannelPlays(channelId);
+        }
+        
+        public System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId) {
+            return base.Channel.IncrementChannelPlaysAsync(channelId);
         }
     }
 }

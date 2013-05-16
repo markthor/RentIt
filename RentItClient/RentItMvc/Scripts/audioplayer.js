@@ -7,8 +7,6 @@
     var playIcon = document.getElementById("playIcon");
     var stopIcon = document.getElementById("stopIcon");
     
-    //Check which icon is present on the player
-
     if (playIcon != null) { //Player is not playing
         //Reload the player - effectivly rebuffering
         player.load();
@@ -38,6 +36,11 @@
         //Remove the stopIcon
         playstopButton.removeChild(stopIcon);
     }
+    if (player.canPlayType) {
+        alert("can play");
+    } else {
+        alert("can't play");
+    }
 }
 
 function updateSlider(newValue) {
@@ -48,15 +51,7 @@ function updateSlider(newValue) {
     player.volume = newValue;
 }
 
-function openPlayer(uri) {
+function openPlayer(channelId) {
+    var uri = "http://rentit.itu.dk/BlobfishRadio/Audio/AudioPlayer?channelId=" + channelId;
     window.open(uri, 'playerWindow', 'width = 200, height = 400, left = 100, right = 100');
-}
-
-function registerEventListener() {
-    var buttons = document.getElementsByClassName('playbutton');
-    if (buttons != null) {
-        for (var i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener("click", function () { openPlayer(this.value); }, false);
-        }
-    }
 }

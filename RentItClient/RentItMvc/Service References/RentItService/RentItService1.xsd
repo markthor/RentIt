@@ -45,6 +45,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTrack" nillable="true" type="tns:ArrayOfTrack" />
+  <xs:complexType name="ArrayOfComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Comment" nillable="true" type="tns:Comment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfComment" nillable="true" type="tns:ArrayOfComment" />
   <xs:complexType name="Comment">
     <xs:sequence>
       <xs:element minOccurs="0" name="ChannelId" type="xs:int" />

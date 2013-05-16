@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model RentItMvc.Models.Audio
+
 <!DOCTYPE html>
 
 <html>
@@ -17,8 +19,8 @@
         <div id="audioPlayer">
             <h2 style="text-align: center">AudioPlayer</h2>
             <audio id="player" preload="auto">
-                <source id="ogg" type="audio/ogg" />
-                <source id="mp3" type="audio/mpeg"/>
+                <source id="ogg" type="audio/ogg" src="@Model.StreamUri"/>
+                <source id="mp3" type="audio/mpeg" src="@Model.StreamUri"/>
             </audio>
             <div id="controls">
                 <div id="playStop" class="pull-left" onclick="playAudio()">
