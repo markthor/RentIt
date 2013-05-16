@@ -100,6 +100,13 @@ namespace RentItServer.ITU
         void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating);
 
         /// <summary>
+        /// Increments the hits attribute for the specified channel.
+        /// </summary>
+        /// <param name="channelId">The id of the channel.</param>
+        [OperationContract]
+        void IncrementHitsForChannel(int channelId);
+
+        /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
@@ -205,25 +212,7 @@ namespace RentItServer.ITU
         /// <exception cref="System.ArgumentException">No comment with channelId [+channelId+] and userId [+userId+] and date [+date+]</exception>
         [OperationContract]
         void DeleteComment(int channelId, int userId, DateTime date);
-        
-        /// <summary>
-        /// Gets a specific comment.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="date">The date of the comment.</param>
-        /// <returns>The comment</returns>
-        [OperationContract]
-        DatabaseWrapperObjects.Comment GetComment(int channelId, int userId, DateTime date);
-
-        /// <summary>
-        /// Gets the comments from a specific user in a specific channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <returns>All comments from a channel made by a specific user</returns>
-        DatabaseWrapperObjects.Comment[] GetComments(int channelId, int userId, int fromInclusive, int toExclusive);
-        
+               
         /// <summary>
         /// Gets all comments associated with a channel
         /// </summary>
@@ -231,7 +220,8 @@ namespace RentItServer.ITU
         /// <returns>
         /// All comments from a specific channel
         /// </returns>
-        DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int fromInclusive, int toExclusive);
+        [OperationContract]
+        DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive);
 
         /// <summary>
         /// Gets all comments associated with a user
@@ -240,6 +230,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// All comments from a specific user
         /// </returns>
+        [OperationContract]
         DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive);
 
             /// <summary>
@@ -310,14 +301,14 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
-        void startChannel(int cId);
+        void StartChannel(int cId);
 
         /// <summary>
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
-        void stopChannel(int cId);
+        void StopChannel(int cId);
 
         /// <summary>
         /// Gets a channel search args object with all fields having default values.
