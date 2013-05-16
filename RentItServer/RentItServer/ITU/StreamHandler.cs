@@ -285,13 +285,15 @@ namespace RentItServer.ITU
 
                 foreach (System.Diagnostics.Process myProc in System.Diagnostics.Process.GetProcesses())
                 {
-                    //if (myProc.ProcessName == "process name")
-                    //{
-                    //    myProc.Kill();
-                    //}
-                    _logger.AddEntry("Process: " + myProc.ProcessName);
+                    if (myProc.ProcessName == "ezstream")
+                    {
+                        myProc.Kill();
+                        _logger.AddEntry("Process: " + myProc.ProcessName);
+                    }
+
                 }
 
+                break;
 
                 //p.Start();
                 //p = StartProcess(p.ChannelId, 66000);
