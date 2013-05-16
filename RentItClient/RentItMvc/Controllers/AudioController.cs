@@ -15,7 +15,7 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-
+                proxy.IncrementChannelPlays(channelId);
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }

@@ -53,8 +53,10 @@ function openPlayer(uri) {
 }
 
 function registerEventListener() {
-    var button = document.getElementById("playButton");
-    if (button != null) {
-        button.addEventListener("click", function () { openPlayer(button.value) }, false);
+    var buttons = document.getElementsByClassName('playbutton');
+    if (buttons != null) {
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function () { openPlayer(this.value); }, false);
+        }
     }
 }
