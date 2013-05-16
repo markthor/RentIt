@@ -131,7 +131,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Audio.cs" />
     <Compile Include="Models\GuiChannel.cs" />
     <Compile Include="Models\GuiTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
