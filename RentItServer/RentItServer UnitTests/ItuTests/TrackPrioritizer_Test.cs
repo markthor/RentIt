@@ -32,11 +32,11 @@ namespace RentItServer_UnitTests
             testPlays.Add(new TrackPlay(2, new DateTime(2013, 1, 12)));
             testPlays.Add(new TrackPlay(2, new DateTime(2013, 1, 5)));
             testPlays.Add(new TrackPlay(1, new DateTime(2013, 1, 9)));
-            int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
-            Assert.AreNotEqual(0, result);
-            Assert.AreNotEqual(2, result);
-            Assert.AreNotEqual(3, result);
-            Assert.AreNotEqual(4, result);
+            Track result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
+            Assert.AreNotEqual(0, result.Id);
+            Assert.AreNotEqual(2, result.Id);
+            Assert.AreNotEqual(3, result.Id);
+            Assert.AreNotEqual(4, result.Id);
         }
 
         [TestMethod]
@@ -50,8 +50,8 @@ namespace RentItServer_UnitTests
             testTracks.Add(new Track(5, 39, 33));
 
             List<TrackPlay> testPlays = new List<TrackPlay>();
-            int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
-            Assert.AreNotEqual(0, result);
+            Track result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
+            Assert.AreNotEqual(0, result.Id);
         }
 
         [TestMethod]
@@ -60,8 +60,8 @@ namespace RentItServer_UnitTests
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
             List<TrackPlay> testPlays = new List<TrackPlay>();
-            int result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
-            Assert.AreNotEqual(0, result);
+            Track result = TrackPrioritizer.GetInstance().GetNextTrackId(testTracks, testPlays);
+            Assert.AreNotEqual(0, result.Id);
         }
 
     }
