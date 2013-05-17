@@ -65,10 +65,27 @@ namespace RentItServer_UnitTests
         }
 
         [TestMethod]
-        public void TrackPrioritizer_GetNextPlayList()
+        public void TrackPrioritizer_GetNextPlayList_OneTrack_NoPlays()
         {
-            List<Track> testTracks = new List<Track>();
             int trackLength = 180000;
+            int minMilliSeconds = 3000000;
+            List<Track> testTracks = new List<Track>();
+            testTracks.Add(new Track(1, 10, 2, trackLength));
+
+            List<TrackPlay> testPlays = new List<TrackPlay>();
+            List<TrackPlay> playListPlays = new List<TrackPlay>();
+
+            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, minMilliSeconds, out playListPlays);
+            int roundUpDivision = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(minMilliSeconds) / Convert.ToDouble(trackLength)));
+            Assert.AreEqual(roundUpDivision, result.Count);
+            Assert.AreEqual(roundUpDivision, playListPlays.Count);
+        }
+
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlayList_MultipleTracks_MultiplePlays()
+        {
+            int trackLength = 180000;
+            List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2, trackLength));
             testTracks.Add(new Track(2, 0, 1, trackLength));
             testTracks.Add(new Track(3, 3, 30, trackLength));
@@ -97,7 +114,25 @@ namespace RentItServer_UnitTests
                 Assert.AreEqual(roundUpDivision, playListPlays.Count);
                 playListPlays.Clear();
             }
+        }
 
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlayList_NoTracks()
+        {
+            try
+            {
+                int trackLength = 180000;
+                List<Track> testTracks = new List<Track>();
+                List<TrackPlay> testPlays = new List<TrackPlay>();
+                List<TrackPlay> playListPlays = new List<TrackPlay>();
+                List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, 1000, out playListPlays);
+                //No exception was thrown.
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                //This is expected.
+            }
         }
 
     }
