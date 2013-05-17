@@ -194,7 +194,9 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\RentItService\RentItService.disco" />
+    <None Include="Service References\RentItService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\RentItService\configuration91.svcinfo" />
     <None Include="Service References\RentItService\configuration.svcinfo" />
     <None Include="Service References\RentItService\Reference.svcmap">
@@ -217,28 +219,6 @@
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
     <Content Include="Views\Channel\EditChannel.cshtml" />
     <Content Include="Views\Audio\LastTracks.cshtml" />
-    <None Include="Service References\RentItService\RentItService.wsdl" />
-    <None Include="Service References\RentItService\RentItService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RentItService\RentItService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Channel\CreateChannelForm.cshtml" />
     <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
@@ -248,6 +228,25 @@
     <Content Include="Views\Comment\AddCommentForm.cshtml" />
     <Content Include="Views\Comment\CommentList.cshtml" />
     <Content Include="Views\Shared\Tracks.cshtml" />
+    <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\RentItServer.ITU.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\service.wsdl" />
+    <None Include="Service References\RentItService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\System.IO.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RentItService\System.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

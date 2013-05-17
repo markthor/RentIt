@@ -15,10 +15,40 @@ namespace RentItMvc.Controllers
         {
             if (Session["userId"] != null)
             {
+                int userId = (int) Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateUser((int)Session["userId"], null, account.NewPassword, null);
+                    proxy.UpdateUser(userId, null, account.NewPassword, null);
                 }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangeUsername(Account account)
+        {
+            if (Session["userId"] != null)
+            {
+                int userId = (int)Session["userId"];
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.UpdateUser(userId, account.NewUsername, null, null);
+                }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangeEmail(Account account)
+        {
+            if (Session["userId"] != null)
+            {
+                int userId = (int)Session["userId"];
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    proxy.UpdateUser(userId, null, null, account.NewEmail);
+                }
+                return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             return RedirectToAction("Index", "Home");
         }
@@ -33,8 +63,8 @@ namespace RentItMvc.Controllers
                     if (user != null)
                     {
                         Account acc = new Account();
-                        acc.Email = user.Email;
-                        acc.Username = user.Username;
+                        acc.CurrentEmail = user.Email;
+                        acc.CurrentUsername = user.Username;
                         return View(acc);
                     }
                 }
@@ -51,7 +81,7 @@ namespace RentItMvc.Controllers
                 {
                     try
                     {
-                        User user = proxy.SignUp(account.Username, account.Email, account.NewPassword);
+                        User user = proxy.SignUp(account.NewUsername, account.NewEmail, account.NewPassword);
                         Session["userId"] = user.Id;
                         Session["username"] = user.Username;
                     }

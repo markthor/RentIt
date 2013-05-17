@@ -12,12 +12,18 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "User name")]
         [Remote("IsUsernameAvailable", "Validation")]
-        public string Username { get; set; }
+        public string NewUsername { get; set; }
+
+        [Required]
+        public string CurrentUsername { get; set; }
         
         [Required]
         [Display(Name = "Email address")]
         [Remote("IsEmailAvailable", "Validation")]
-        public string Email { get; set; }
+        public string NewEmail { get; set; }
+
+        [Required]
+        public string CurrentEmail { get; set; }
 
         [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
         [DataType(DataType.Password)]

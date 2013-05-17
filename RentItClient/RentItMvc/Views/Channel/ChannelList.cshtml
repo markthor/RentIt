@@ -9,7 +9,7 @@
             <th style="text-align: center" title="Number of subscribers">
                 <i class="icon-ok" />
             </th>
-            <th style="text-align: center" title="Number of plays">
+            <th style="text-align: center" title="Times played">
                 <i class="icon-play" />
             </th>
             <th></th>
@@ -19,12 +19,12 @@
         {
             <tr>
                 <td>
-                    <div style="width:200px" title="@channel.Name">
-                        @Html.ActionLink(channel.Name, "SelectChannel", "Channel", new { channelId = channel.Id }, new { @class = "link-overflow", style = "width: 215px" })
+                    <div style="width:215px" title="@channel.Name">
+                        @Html.ActionLink(channel.Name, "SelectChannel", "Channel", new { channelId = channel.Id }, new { @class = "link-overflow", style = "width: 220px" })
                     </div>
                 </td>
                 <td>
-                    <div class="text-overflow" style="width:370px" title="@channel.Description">
+                    <div class="text-overflow" style="width:355px" title="@channel.Description">
                         @channel.Description
                     </div>
                 </td>
@@ -36,7 +36,7 @@
                     </div>
                 </td>
                 <td>
-                    <div style="width: 60px;" class="text-center" title="Number of plays">
+                    <div style="width: 60px;" class="text-center" title="Times played">
                         <span class="badge badge-inverse">
                             @channel.Plays
                         </span>

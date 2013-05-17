@@ -13,10 +13,10 @@
 
 <div class="clearfix"></div>
 
-<table>
+<table class="pull-left" style="margin-right: 50px">
     <tr>
-        <th style="width: 50px"><i class="icon-play" title="Number of plays"/></th>
-        <th style="width: 50px"><i class="icon-ok" title="Number of subscribers"/></th>
+        <th style="width: 50px"><i class="icon-play" title="Number of plays" /></th>
+        <th style="width: 50px"><i class="icon-ok" title="Number of subscribers" /></th>
     </tr>
     <tr>
         <td>
@@ -36,7 +36,16 @@
     </tr>
 </table>
 
-<p style="margin-top: 20px">@Html.DisplayFor(model => model.Description)</p>
+@if (Model.OwnerId == (int) @Session["userId"])
+{
+    <div style="margin-top: 10px;">
+        <button class="btn btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new {channelId = Model.Id}))' ">
+            <i class="icon-play icon-white"></i>
+        </button>
+    </div>
+}
+
+<p style="clear: left; padding-top: 20px">@Html.DisplayFor(model => model.Description)</p>
 
 <div style="margin-top: 30px"></div>
 

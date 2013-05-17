@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RentItServer.ITU" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="ChannelSearchArgs">
     <xs:sequence>
       <xs:element minOccurs="0" name="AmountPlayed" type="xs:int" />
@@ -28,12 +28,20 @@
   <xs:complexType name="TrackSearchArgs">
     <xs:sequence>
       <xs:element minOccurs="0" name="Artist" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ArtistAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ArtistDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Downvotes" type="xs:int" />
+      <xs:element minOccurs="0" name="DownvotesAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DownvotesDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EndIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="NameAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NameDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SearchString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOption" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartIndex" type="xs:int" />
       <xs:element minOccurs="0" name="Upvotes" type="xs:int" />
+      <xs:element minOccurs="0" name="UpvotesAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpvotesDesc" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TrackSearchArgs" nillable="true" type="tns:TrackSearchArgs" />
