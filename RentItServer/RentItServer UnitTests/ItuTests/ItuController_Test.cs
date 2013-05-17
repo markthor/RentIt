@@ -1236,6 +1236,7 @@ namespace RentItServer_UnitTests.ItuTests
             return false;
         }
         #endregion
+
         #region Controller_IsCorrectPassword
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_InvalidNull()
@@ -1310,7 +1311,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_IsEmailAvailable
         [TestMethod]
-        public void Controller_IsEmailAvailable_Null()
+        public void Controller_IsEmailAvailable_Parameter_Null()
         {
             try
             {
@@ -1322,10 +1323,535 @@ namespace RentItServer_UnitTests.ItuTests
                 // This is good
             }
         }
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Parameter_Empty()
+        {
+            try
+            {
+                controller.IsEmailAvailable("");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Parameter_Invalid()
+        {
+            try
+            {
+                controller.IsEmailAvailable(testname);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Parameter_Valid()
+        {
+            try
+            {
+                controller.IsEmailAvailable(TestExtensions._user1email);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Behavior_Available()
+        {
+            Assert.IsTrue(controller.IsEmailAvailable("thisisatest@thisisatest.org"));
+        }
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Behavior_Unavailable()
+        {
+            Assert.IsFalse(controller.IsEmailAvailable(TestExtensions._user1email));
+        }
         #endregion
         #region Controller_IsUsernameAvailable
+        [TestMethod]
+        public void Controller_IsUsernameAvailable_Parameter_Null()
+        {
+            try
+            {
+                controller.IsUsernameAvailable(null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsUsernameAvailable_Parameter_Empty()
+        {
+            try
+            {
+                controller.IsUsernameAvailable("");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsUsernameAvailable_Parameter_Valid()
+        {
+            try
+            {
+                controller.IsUsernameAvailable(TestExtensions._testUser1.Username);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_IsUsernameAvailable_Behavior_Available()
+        {
+            Assert.IsTrue(controller.IsUsernameAvailable("iamatestuserthatnoonewilleverduplicate"));
+        }
+        [TestMethod]
+        public void Controller_IsUsernameAvailable_Behavior_Unavailable()
+        {
+            Assert.IsFalse(controller.IsUsernameAvailable(TestExtensions._testUser1.Username));
+        }
         #endregion
+        #region Controller_IsChannelNameAvailable
 
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_InvalidNull()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(-1, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_InvalidEmpty()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(-1, "");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_InvalidValid()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(-1, TestExtensions._testChannel1.Name);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_ValidNull()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(TestExtensions._testChannelId1, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_ValidEmpty()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(TestExtensions._testChannelId1, "");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Parameter_ValidValid()
+        {
+            try
+            {
+                controller.IsChannelNameAvailable(TestExtensions._testChannelId1, TestExtensions._testChannel1.Name);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Behavior_Available()
+        {
+            Assert.IsTrue(controller.IsChannelNameAvailable(TestExtensions._testChannelId1, "thischannelnamewillnotexistithink"));
+        }
+        [TestMethod]
+        public void Controller_IsChannelNameAvailable_Behavior_Unavailable()
+        {
+            Assert.IsFalse(controller.IsChannelNameAvailable(TestExtensions._testChannelId1, TestExtensions._testChannel2.Name));
+        }
+        #endregion
+        #region Controller_GetSubscriberCount
+        [TestMethod]
+        public void Controller_GetSubscriberCount_Parameter_Invalid()
+        {
+            try
+            {
+                controller.GetSubscriberCount(-1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetSubscriberCount_Parameter_Valid()
+        {
+            try
+            {
+                controller.GetSubscriberCount(TestExtensions._testChannelId1);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_GetSubscriberCount_Behavior_NoSubscribers()
+        {
+            Assert.IsTrue(controller.GetSubscriberCount(TestExtensions._testChannelId1) > 0);
+        }
+        [TestMethod]
+        public void Controller_GetSubscriberCount_Behavior_Subscribers()
+        {
+            Assert.IsTrue(controller.GetSubscriberCount(TestExtensions._testChannelId2) == 0);
+        }
+        #endregion
+        #region Controller_GetUserComments
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_InvalidNullNull()
+        {
+            try
+            {
+                controller.GetUserComments(-1, null, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidNullNull()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, null, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidInvalidNull()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, -1, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidValidNull()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, 0, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidNullInvalid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, null, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidNullValid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, null, 1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidInvalidInvalid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, -1, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidInvalidValid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, -1, 1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidValidInvalid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, 0, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Parameter_ValidValidValid()
+        {
+            try
+            {
+                controller.GetUserComments(TestExtensions._testUser1.Id, 0, 1);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Behavior_NoComments()
+        {
+            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetUserComments(TestExtensions._testUser2.Id, 0, 1);
+            Assert.IsTrue(comments.Length == 0);
+        }
+        [TestMethod]
+        public void Controller_GetUserComments_Behavior_Comments()
+        {
+            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetUserComments(TestExtensions._testUser1.Id, 0, 1);
+            Assert.IsTrue(comments.Length > 0);
+        }
+        #endregion
+        #region Controller_GetChannelComments
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_InvalidNullNull()
+        {
+            try
+            {
+                controller.GetChannelComments(-1, null, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidNullNull()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, null, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidInvalidNull()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, -1, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidValidNull()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, 0, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidNullInvalid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, null, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidNullValid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, null, 1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidInvalidInvalid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, -1, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidInvalidValid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, -1, 1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidValidInvalid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, 0, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Parameter_ValidValidValid()
+        {
+            try
+            {
+                controller.GetChannelComments(TestExtensions._testChannelId1, 0, 1);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Behavior_NoComments()
+        {
+            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetChannelComments(TestExtensions._testChannelId2, 0, 1);
+            Assert.IsTrue(comments.Length == 0);
+        }
+        [TestMethod]
+        public void Controller_GetChannelComments_Behavior_Comments()
+        {
+            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetChannelComments(TestExtensions._testChannelId1, 0, 1);
+            Assert.IsTrue(comments.Length > 0);
+        }
+        #endregion
+        #region Controller_GetCreatedChannels
+        //public void Controller_GetCreatedChannels_Parameter_Invalid()
+        //{
+        //    controller.GetCreatedChannels()
+        //}
+        //public void Controller_GetCreatedChannels_Parameter_Valid()
+        //{
+        //    controller.GetCreatedChannels()
+        //}
+        //public void Controller_GetCreatedChannels_Behavior_Invalid()
+        //{
+        //    controller.GetCreatedChannels()
+        //}
+        #endregion
+        #region Controller_GetSubscribedChannels
+        #endregion
         //TODO:
         #region Controller_GetUser
         #endregion
@@ -1345,23 +1871,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_DeleteComment
         #endregion
-        #region Controller_GetUserComments
-        #endregion
-        #region Controller_GetChannelComments
-        #endregion
-        #region Controller_GetDefaultChannelSearchArgs
-        #endregion
-        #region Controller_GetDefaultTrackSearchArgs
-        #endregion
-        #region Controller_GetCreatedChannels
-        #endregion
-        #region Controller_GetSubscribedChannels
-        #endregion
         #region Controller_GetTracksByChannelId
-        #endregion
-        #region Controller_IsChannelNameAvailable
-        #endregion
-        #region Controller_GetSubscriberCount
         #endregion
         #region Controller_IncrementChannelPlays
         #endregion

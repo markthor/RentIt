@@ -771,6 +771,7 @@ namespace RentItServer.ITU
         public bool IsUsernameAvailable(string username)
         {
             if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
+            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
 
