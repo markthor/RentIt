@@ -127,29 +127,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region StopStream(int channelId)  Out commented
-        /*/// <summary>
-        /// Stops the stream of a channel and sets it is not running.
-        /// </summary>
-        /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
-        {
-            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
-
-
-
-            if (IsChannelRunning(channelId))
-            {
-                EzProcess p = runningChannelIds[channelId];
-                p.Close();
-                runningChannelIds.Remove(channelId);
-            }
-            else
-            {
-                throw new ChannelRunningException("The channel is not running");
-            }
-        }*/
-        #endregion
+        
 
         #region AddTrackPlay(Track track)
         private void AddTrackPlay(Track track)
@@ -158,13 +136,13 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region GenerateM3uWithOneTrack(int channelId, string trackFileName)
-        private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
+        #region GenerateM3uWithOneTrack(int channelId, string trackFileName) Out commented
+        /*private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
         {
             string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
             //FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
             FileSystemDao.GetInstance().WriteM3UFile(trackPath, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
-        }
+        }*/
         #endregion
 
         
@@ -192,7 +170,6 @@ namespace RentItServer.ITU
             runningChannelIds.Add(channelId, p);
         }
         #endregion
-
 
         #region CreateChannelConfigfile
         private void CreateChannelConfigFile(int channelId)
@@ -316,6 +293,32 @@ namespace RentItServer.ITU
             }
             _logger.AddEntry("All ezstream processes have been killed");
         }
+        #endregion
+
+
+
+        #region StopStream(int channelId)  Out commented
+        /*/// <summary>
+        /// Stops the stream of a channel and sets it is not running.
+        /// </summary>
+        /// <param name="channelId">The id of the channel to be stopped</param>
+        public void StopStream(int channelId)
+        {
+            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
+
+
+
+            if (IsChannelRunning(channelId))
+            {
+                EzProcess p = runningChannelIds[channelId];
+                p.Close();
+                runningChannelIds.Remove(channelId);
+            }
+            else
+            {
+                throw new ChannelRunningException("The channel is not running");
+            }
+        }*/
         #endregion
     }
 
