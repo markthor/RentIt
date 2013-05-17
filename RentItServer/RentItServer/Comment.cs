@@ -18,6 +18,7 @@ namespace RentItServer
         public int UserId { get; set; }
         public System.DateTime Date { get; set; }
         public string Content { get; set; }
+        public int Id { get; set; }
     
         public virtual Channel Channel { get; set; }
         public virtual User User { get; set; }
