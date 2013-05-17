@@ -20,7 +20,7 @@ namespace RentItMvc.Controllers
             Comment[] comments = new Comment[0];
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                comments = proxy.GetChannelComments(channelId, 0, 10);
+                comments = proxy.GetChannelComments(channelId, null, null);
             }
             List<GuiComment> guiComments = GuiClassConverter.ConvertComments(comments);
             GuiComment c = new GuiComment();
