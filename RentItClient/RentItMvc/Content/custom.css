@@ -191,3 +191,10 @@ input[type=file]::-webkit-file-upload-button {
 .comment-text {
     font-size: smaller;
 }
+
+.comment-section {
+    width: 475px;
+    max-height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

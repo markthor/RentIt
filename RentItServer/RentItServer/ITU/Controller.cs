@@ -39,7 +39,7 @@ namespace RentItServer.ITU
         public static string _defaultUri = "http://rentit.itu.dk";
         public static string _defaultStreamExtension = "";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
-
+        
         private int tempCounter;
         private readonly object _dbLock = new object();
 

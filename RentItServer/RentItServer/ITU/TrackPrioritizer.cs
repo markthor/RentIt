@@ -37,6 +37,25 @@ namespace RentItServer.ITU
             }
             return _instance;
         }
+
+        public List<Track> GetNextPlayList(List<Track> trackList, List<TrackPlay> plays, int minMillisDuration, out List<TrackPlay> playsForPlaylist)
+        {
+            int timeOfPlaylist = 0;
+            List<Track> playlist = new List<Track>();
+            playsForPlaylist = new List<TrackPlay>();
+
+            for (int i = 0; i < minMillisDuration; )
+            {
+                Track nextTrack = GetNextTrackId(trackList, plays);
+                TrackPlay play = new TrackPlay(nextTrack.Id, DateTime.Now.AddMilliseconds(timeOfPlaylist));
+                playlist.Add(nextTrack);
+                plays.Add(play);
+                playsForPlaylist.Add(play);
+                i = i + nextTrack.Length;
+            }
+
+            return playlist;
+        }
         
         /// <summary>
         /// Gets the id of the next track to be played from predefined selection criteria.
@@ -45,7 +64,7 @@ namespace RentItServer.ITU
         /// <param name="trackList">The tracks on the channels playlist</param>
         /// <param name="plays">The record of tracks played on the channel</param>
         /// <returns>The id of the next track to be played</returns>
-        public int GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
+        public Track GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
         {
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
 
@@ -55,7 +74,7 @@ namespace RentItServer.ITU
             //Adding a key for each track and a TrackData object.
             foreach (Track t in trackList)
             {
-                trackData.Add(t.Id, new TrackData(t.UpVotes, t.DownVotes));
+                trackData.Add(t.Id, new TrackData(t));
             }
             
             //Counting trackPlay occurences and adding it to TrackData.
@@ -63,8 +82,6 @@ namespace RentItServer.ITU
             {
                 TrackData currentTrackData = trackData[tp.TrackId];
                 currentTrackData.Plays++;
-                trackData.Remove(tp.TrackId);
-                trackData.Add(tp.TrackId, currentTrackData);
             }
 
             //The total amount of recorded plays.
@@ -94,7 +111,7 @@ namespace RentItServer.ITU
             {
                 if (kvp.Value.NextTrackCandidate)
                 {
-                    kvp.Value.Ratio = GetRatio(kvp.Value.Upvotes, kvp.Value.Downvotes);
+                    kvp.Value.Ratio = GetRatio(kvp.Value.Track.UpVotes, kvp.Value.Track.DownVotes);
                     sumOfRatios += kvp.Value.Ratio;
                 }
             }
@@ -109,7 +126,7 @@ namespace RentItServer.ITU
                 {
                     if ((ratioAccumulator + kvp.Value.Ratio) > nextTrackRandomRatioIndex)
                     {
-                        return kvp.Key;
+                        return kvp.Value.Track;
                     }
                     else
                     {
@@ -118,8 +135,7 @@ namespace RentItServer.ITU
 
                 }
             }
-
-            return 0;
+            throw new ArgumentException("This implementaion does not support the arguments because of an error in this method.");
         }
         
         private double GetRatio(int upvotes, int downvotes)
@@ -180,12 +196,11 @@ namespace RentItServer.ITU
 
     public class TrackData
     {
-        public TrackData(int Upvotes, int Downvotes)
+        public TrackData(Track t)
         {
             NextTrackCandidate = true;
             Plays = 0;
-            this.Upvotes = Upvotes;
-            this.Downvotes = Downvotes;
+            Track = t;
         }
 
         public double Ratio
@@ -200,13 +215,7 @@ namespace RentItServer.ITU
             set;
         }
 
-        public int Upvotes
-        {
-            get;
-            set;
-        }
-
-        public int Downvotes
+        public Track Track
         {
             get;
             set;

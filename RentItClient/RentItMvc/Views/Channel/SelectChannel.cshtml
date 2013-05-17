@@ -2,6 +2,8 @@
 
 @model RentItMvc.Models.GuiChannel
 
+<h2 class="pull-left" style="margin-top: 8px; margin-right: 20px">@Html.DisplayFor(model => model.Name)</h2>
+
 @if (Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px" class="pull-left">
@@ -9,23 +11,23 @@
     </div>
 }
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
+<div class="clearfix"></div>
 
 <table>
     <tr>
-        <th style="width: 50px"><i class="icon-play" /></th>
-        <th style="width: 50px"><i class="icon-ok" /></th>
+        <th style="width: 50px"><i class="icon-play" title="Number of plays"/></th>
+        <th style="width: 50px"><i class="icon-ok" title="Number of subscribers"/></th>
     </tr>
     <tr>
         <td>
-            <div style="text-align: center">
+            <div style="text-align: center" title="Number of plays">
                 <span class="badge badge-inverse">
                     @Html.DisplayFor(model => model.Plays)
                 </span>
             </div>
         </td>
         <td>
-            <div style="text-align: center">
+            <div style="text-align: center" title="Number of subscribers">
                 <span class="badge badge-success">
                     @Html.DisplayFor(model => model.Subscribers)
                 </span>
@@ -38,6 +40,8 @@
 
 <div style="margin-top: 30px"></div>
 
+<h4 class="pull-left" style="margin-top: 4px; margin-right: 20px">Tracks</h4>
+
 @if (Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px">
@@ -45,20 +49,6 @@
     </div>
 }
 
-<h4>Tracks</h4>
-
-@foreach (GuiTrack track in Model.Tracks)
-{
-    <div class="pull-left">
-        @Html.Label(track.ArtistName)
-    </div>
-    <div class="pull-left">
-        <p style="margin-left: 5px; margin-right: 5px;">-</p>
-    </div>
-    <div class="pull-left">
-        @Html.Label(track.TrackName)
-    </div>
-    <div class="clearfix"></div>
-}
+@Html.Partial("Tracks", Model.Tracks)
 
 @Html.Action("CommentList", "Comment")
