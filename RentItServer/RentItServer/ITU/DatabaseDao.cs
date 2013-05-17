@@ -280,7 +280,7 @@ namespace RentItServer.ITU
             {
                 // Check that no channel with channelName already exists
                 var channels = from channel in context.Channels
-                               where channel.Name.ToLowerInvariant().Equals(channelName.ToLowerInvariant())
+                               where channel.Name.ToLower().Equals(channelName.ToLower())
                                select channel;
                 if (channels.Any() == true) throw new ArgumentException("Channel with channelname [" + channelName + "] already exists");
 
@@ -1268,7 +1268,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
-                               where c.Id != channelId && c.Name.ToLowerInvariant().Equals(channelName.ToLowerInvariant())
+                               where c.Id != channelId && c.Name.ToLower().Equals(channelName.ToLower())
                                select c;
                 return !channels.Any();
             }

@@ -764,11 +764,13 @@ namespace RentItServer.ITU
 
         public bool IsEmailAvailable(string email)
         {
+            if(email == null)   LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
         public bool IsUsernameAvailable(string username)
         {
+            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
 
@@ -799,6 +801,7 @@ namespace RentItServer.ITU
 
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
+            if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 

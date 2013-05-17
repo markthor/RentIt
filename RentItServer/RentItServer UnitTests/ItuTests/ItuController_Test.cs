@@ -1310,9 +1310,17 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_IsEmailAvailable
         [TestMethod]
-        public void Controller_IsEmailAvailable()
+        public void Controller_IsEmailAvailable_Null()
         {
-            //Assert.IsFalse(controller.is);
+            try
+            {
+                controller.IsEmailAvailable(null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
         }
         #endregion
         #region Controller_IsUsernameAvailable
