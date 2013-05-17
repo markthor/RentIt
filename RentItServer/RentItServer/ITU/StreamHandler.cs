@@ -63,13 +63,13 @@ namespace RentItServer.ITU
         #endregion
 
         #region InitTimer()
-        private void InitTimer()
+        public void InitTimer()
         {
             _logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
             timer.Interval = 86400000; //24 hours
             timer.Elapsed += timer_Elapsed;
-            timer.AutoReset = true;
+            timer.AutoReset = false; //timer.AutoReset = true;
             _logger.AddEntry("Start timer");
             timer.Start();
         }
@@ -113,7 +113,7 @@ namespace RentItServer.ITU
                 if(_dao.ChannelHasTracks(channelId))
                 {
                     StartChannelStream(channelId);
-                    AddTrackNewTrackPlays();
+                    AddNewTrackPlays();
                 }
                 else
                 {
@@ -236,7 +236,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started for channel with id: " + channelId);
 
                 //Add this process to the dictionary with running channels
-                //runningChannelIds.Add(channelId, p); SKAL DET GØRES HER?!?!?!?!?!?!?!?!?!?!?!?!?!?
+                runningChannelIds.Add(channelId, p);
                 return p;
             }
             else
@@ -247,11 +247,13 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        private void AddTrackNewTrackPlays()
+        #region AddNewTrackPlays()
+        private void AddNewTrackPlays()
         {
             AddTrackPlayList(NewTrackPlays);
             NewTrackPlays.Clear();
         }
+        #endregion
 
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
@@ -288,7 +290,7 @@ namespace RentItServer.ITU
                 StartChannelStream(c.Id);
             }
 
-            AddTrackNewTrackPlays();
+            AddNewTrackPlays();
         }
         #endregion
 
@@ -306,6 +308,7 @@ namespace RentItServer.ITU
             _logger.AddEntry("All ezstream processes have been killed");
         }
         #endregion
+
 
 
 
