@@ -1289,6 +1289,10 @@ namespace RentItServer.ITU
                     {
                         channel.Hits = channel.Hits + 1;
                     }
+                    else
+                    {
+                        channel.Hits = 1;
+                    }
                 }
                 context.SaveChanges();
             }
