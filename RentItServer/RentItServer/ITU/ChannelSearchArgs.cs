@@ -9,7 +9,7 @@ namespace RentItServer.ITU
     public class ChannelSearchArgs
     {
         [DataMember]
-        public const string NameDesc = "nam desc";
+        public readonly string NameDesc = "nam desc";
         [DataMember]
         public const string NameAsc = "nam asc";
         [DataMember]

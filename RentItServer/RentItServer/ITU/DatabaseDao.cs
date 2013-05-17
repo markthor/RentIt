@@ -517,9 +517,9 @@ namespace RentItServer.ITU
                         case ChannelSearchArgs.NameAsc:
                             channels = from channel in channels orderby channel.Name ascending select channel;
                             break;
-                        case ChannelSearchArgs.NameDesc:
-                            channels = from channel in channels orderby channel.Name descending select channel;
-                            break;
+                        //case ChannelSearchArgs.NameDesc:
+                        //    channels = from channel in channels orderby channel.Name descending select channel;
+                        //    break;
                         case ChannelSearchArgs.NumberOfCommentsAsc:
                             channels = from channel in channels orderby channel.Comments.Count ascending select channel;
                             break;
