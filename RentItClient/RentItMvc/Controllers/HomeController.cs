@@ -18,13 +18,10 @@ namespace RentItMvc.Controllers
             if (userId != null && userId > 0)
             {
                 //User is logged in
-                return RedirectToAction("FeaturedChannels", "Channel");
+                return RedirectToAction("PopularChannels", "Channel");
             }
-            else
-            {
-                //User is not logged in
-                return View();
-            }
+            //User is not logged in
+            return View();
         }
     }
 }

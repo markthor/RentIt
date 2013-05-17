@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "EditChannel";
-    Html.EnableClientValidation(false);
+    Html.EnableClientValidation(true);
 }
 
 @model RentItMvc.Models.GuiChannel
@@ -8,19 +8,22 @@
 <h2>Edit Channel</h2>
 
 <div class="row-fluid">
-    <div style="width: 400px">
+    <div>
         @using (Html.BeginForm("SaveEditChannel", "Channel", new { channelId = Model.Id, ownerId = @Session["userId"] }, FormMethod.Post))
         {
             <h5>Name</h5>
-            <div class="input-block-level">
+            <div style="width: 400px" class="pull-left">
                 @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level", type = "text", required = "required", placeholder = Model.Name })
             </div>
+            <div>
+                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "txt-error" })
+            </div>
+            <div class="clearfix"></div>
             <h5>Description</h5>
-            <div class="input-block-level">
+            <div style="width: 400px">
                 @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = Model.Description })
             </div>
             <button class="btn">Save changes</button>
         }
     </div>
-@Html.Action("AddTrackForm", "Track", new { channelId = Model.Id })
 </div>

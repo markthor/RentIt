@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
 using RentItServer.ITU;
@@ -35,14 +36,14 @@ namespace RentItServer_UnitTests.ItuTests
         private static Controller controller;
 
 
-        [TestInitialize]
+        //[TestInitialize]
         public void Initialize()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
             TestExtensions.PopulateDatabase();
         }
 
-        [TestCleanup]
+        //[TestCleanup]
         public void Cleanup()
         {
             //DatabaseDao.GetInstance().DeleteDatabaseData();
@@ -553,7 +554,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (Exception e)
             {
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised. " + e);
             }
         }
@@ -573,7 +574,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch
             {
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }
         }
@@ -594,7 +595,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch
             {
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }
         }
@@ -952,7 +953,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(-1, -1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -967,7 +968,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(-1, 0);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -982,7 +983,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(0, -1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -997,7 +998,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(0, 0);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -1012,7 +1013,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(TestExtensions._testUser2.Id, 0);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -1027,7 +1028,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.Subscribe(0, TestExtensions._testChannelId1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("No exception was raised.");
             }
             catch
@@ -1045,7 +1046,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch
             {
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised.");
             }
         }
@@ -1057,7 +1058,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UnSubscribe(-1, -1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }
             catch
@@ -1071,7 +1072,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UnSubscribe(-1, TestExtensions._testChannelId1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }
             catch
@@ -1085,7 +1086,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UnSubscribe(TestExtensions._testUser2.Id, -1);
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }
             catch
@@ -1119,7 +1120,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch
             {
-                Cleanup();
+                //Cleanup();
                 Assert.Fail("An exception was raised");
             }*/
         }
@@ -1876,6 +1877,14 @@ namespace RentItServer_UnitTests.ItuTests
         #region Controller_IncrementChannelPlays
         #endregion
         #region Controller_AddTrack
+        //[TestMethod]
+        //public void Controller_AddTrack()
+        //{
+        //    FileStream fs = File.OpenRead(string.Format("C:{0}Users{0}Public{0}Music{0}Sample Music{0}Kalimba.mp3", System.IO.Path.DirectorySeparatorChar));
+        //    MemoryStream ms = new MemoryStream();
+        //    fs.CopyTo(ms);
+        //    RentItServer.ITU.DatabaseWrapperObjects.Track track = Controller.GetInstance().GetTrackInfo(ms);
+        //}
         #endregion
         #region Controller_GetTracks
         #endregion

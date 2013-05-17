@@ -19,10 +19,6 @@
     margin-right: 5px;
 }
 
-.input-error-group {
-    margin-bottom: 20px
-}
-
 .input-field {
     line-height: 20px;
     width: 200px;
@@ -40,7 +36,6 @@
 }
 
 .error-field {
-    width: 200px;
     margin-top: 4px;
 }
 

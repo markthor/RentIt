@@ -85,6 +85,7 @@ namespace RentItMvc.Controllers
                         ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
                         searchArgs.StartIndex = 0;
                         searchArgs.EndIndex = 10;
+                        searchArgs.SortOption = searchArgs.SubscriptionsDesc;
                         channels = proxy.GetChannels(searchArgs);
                     }
                 }
@@ -92,7 +93,7 @@ namespace RentItMvc.Controllers
                 {
                     channels = new Channel[0];
                 }
-                ViewBag.Title = "Featured channels";
+                ViewBag.Title = "Popular channels";
                 List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
                 return View("ChannelList", guiChannels);
             }
@@ -153,7 +154,6 @@ namespace RentItMvc.Controllers
         {
             if (Session["userId"] != null)
             {
-                //channelId = Model.Id, ownerId = Model.OwnerId, name = Model.Name, description = Model.Description
                 int userId = (int)Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -206,6 +206,15 @@ namespace RentItMvc.Controllers
                 return View(new GuiChannel());
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult StartChannel(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.StartChannelStream(channelId);
+            }
+            return Redirect(Request.UrlReferrer.PathAndQuery);
         }
     }
 }
