@@ -6,12 +6,22 @@
       <xs:element minOccurs="0" name="AmountPlayed" type="xs:int" />
       <xs:element minOccurs="0" name="EndIndex" type="xs:int" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Genres" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="HitsAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HitsDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NameAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NameDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NumberOfComments" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfCommentsAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfCommentsDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NumberOfSubscriptions" type="xs:int" />
       <xs:element minOccurs="0" name="Rating" type="xs:double" />
+      <xs:element minOccurs="0" name="RatingAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RatingDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SearchString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOption" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionsAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriptionsDesc" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChannelSearchArgs" nillable="true" type="tns:ChannelSearchArgs" />

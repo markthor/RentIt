@@ -40,7 +40,7 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
 
-            InitTimer();
+            //InitTimer();
         }
         #endregion
 

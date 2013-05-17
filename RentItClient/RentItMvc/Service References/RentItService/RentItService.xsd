@@ -430,40 +430,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListenToChannel">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ListenToChannelResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ListenToChannelResult" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StartChannel">
+  <xs:element name="StartChannelStream">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="cId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="StartChannelResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StopChannel">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="cId" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StopChannelResponse">
+  <xs:element name="StartChannelStreamResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
