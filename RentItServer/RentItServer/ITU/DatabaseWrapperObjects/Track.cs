@@ -43,11 +43,6 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
 
         [DataMember]
         public int ChannelId { get; set; }
-
-        public int GetHashCode()
-        {
-            return Id;
-        }
     
         public static Track[] GetTracks(IEnumerable<RentItServer.Track> tracks)
         {

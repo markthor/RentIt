@@ -89,10 +89,10 @@ namespace RentItServer.ITU
             _streamHandler.ManualStreamStart(channelId);
         }
 
-        public void StopChannelStream(int channelId)
+        /*public void StopChannelStream(int channelId)
         {
             _streamHandler.StopStream(channelId);
-        }
+        }*/
 
         /// <summary>
         /// Login the specified user.

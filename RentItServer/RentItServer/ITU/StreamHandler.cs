@@ -44,6 +44,21 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region GetInstance()
+        /// <summary>
+        /// Accessor method to access the only instance of the class
+        /// </summary>
+        /// <returns>The singleton instance of the class</returns>
+        public static StreamHandler GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new StreamHandler();
+            }
+            return _instance;
+        }
+        #endregion
+
         #region InitTimer()
         private void InitTimer()
         {
@@ -64,20 +79,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region GetInstance()
-        /// <summary>
-        /// Accessor method to access the only instance of the class
-        /// </summary>
-        /// <returns>The singleton instance of the class</returns>
-        public static StreamHandler GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new StreamHandler();
-            }
-            return _instance;
-        }
-        #endregion
+        
 
         #region ManualStreamStart(int channelId)
         /// <summary>
@@ -165,35 +167,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //Reset all streams
-        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            // Game plan:
-            // Close all streams
-            // clear dictionary of active streams
-            // Find all channel ids for channels with tracks
-            // Start one channel at a time
-                // make sure it has a config file
-                // generate m3u file
-                // start stream process
-                // add process to list of active streams
-
-
-            // Close all streams
-            CloseAllStreams();
-            // clear dictionary of active streams
-            runningChannelIds.Clear();
-
-            // Find all channel ids for channels with tracks
-            List<Channel> channels = _dao.GetChannelsWithTracks();
-
-            foreach (Channel c in channels) // make a method which call all these
-            {
-                StartChannelStream(c.Id);
-            }
-        }
-        #endregion
+        
 
         #region StartChannelStream(int channelId)
         private void StartChannelStream(int channelId)
@@ -219,20 +193,6 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region CloseAllStreams()
-        private void CloseAllStreams()
-        {
-            _logger.AddEntry("Start killing all running ezstream processes");
-            foreach (System.Diagnostics.Process myProc in System.Diagnostics.Process.GetProcesses())
-            {
-                if (myProc.ProcessName == "ezstream")
-                {
-                    myProc.Kill();
-                }
-            }
-            _logger.AddEntry("All ezstream processes have been killed");
-        }
-        #endregion
 
         #region CreateChannelConfigfile
         private void CreateChannelConfigFile(int channelId)
@@ -310,6 +270,51 @@ namespace RentItServer.ITU
         private void AddTackPlays(List<Track> tracks)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+        
+        #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        //Reset all streams
+        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            // Game plan:
+            // Close all streams
+            // clear dictionary of active streams
+            // Find all channel ids for channels with tracks
+            // Start one channel at a time
+                // make sure it has a config file
+                // generate m3u file
+                // start stream process
+                // add process to list of active streams
+
+
+            // Close all streams
+            CloseAllStreams();
+            // clear dictionary of active streams
+            runningChannelIds.Clear();
+
+            // Find all channel ids for channels with tracks
+            List<Channel> channels = _dao.GetChannelsWithTracks();
+
+            foreach (Channel c in channels) // make a method which call all these
+            {
+                StartChannelStream(c.Id);
+            }
+        }
+        #endregion
+
+        #region CloseAllStreams()
+        private void CloseAllStreams()
+        {
+            _logger.AddEntry("Start killing all running ezstream processes");
+            foreach (System.Diagnostics.Process myProc in System.Diagnostics.Process.GetProcesses())
+            {
+                if (myProc.ProcessName == "ezstream")
+                {
+                    myProc.Kill();
+                }
+            }
+            _logger.AddEntry("All ezstream processes have been killed");
         }
         #endregion
     }

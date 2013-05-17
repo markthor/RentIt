@@ -295,12 +295,12 @@ namespace RentItServer.ITU
         [OperationContract]
         void StartChannelStream(int cId);
 
-        /// <summary>
+        /*/// <summary>
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
-        void StopChannel(int cId);
+        void StopChannel(int cId);*/
 
         /// <summary>
         /// Gets a channel search args object with all fields having default values.
