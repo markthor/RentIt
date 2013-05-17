@@ -604,7 +604,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsDesc;
+            csa.SortOption = csa.HitsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -627,7 +627,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsAsc;
+            csa.SortOption = csa.HitsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -650,7 +650,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
+            csa.SortOption = csa.NumberOfCommentsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -673,7 +673,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
+            csa.SortOption = csa.NumberOfCommentsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -696,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingDesc;
+            csa.SortOption = csa.RatingDesc;
             try
             {
                 CreateChannelsForTests();
@@ -719,7 +719,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingAsc;
+            csa.SortOption = csa.RatingAsc;
             try
             {
                 CreateChannelsForTests();
@@ -742,7 +742,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
+            csa.SortOption = csa.SubscriptionsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -765,7 +765,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
+            csa.SortOption = csa.SubscriptionsAsc;
             try
             {
                 CreateChannelsForTests();

@@ -506,38 +506,45 @@ namespace RentItServer.ITU
                 }
                 else
                 {   // Apply specific sort order
-                    switch (filter.SortOption)
+                    if (filter.SortOption.Equals(filter.HitsAsc))
                     {
-                        case ChannelSearchArgs.HitsAsc:
-                            channels = from channel in channels orderby channel.Hits ascending select channel;
-                            break;
-                        case ChannelSearchArgs.HitsDesc:
-                            channels = from channel in channels orderby channel.Hits descending select channel;
-                            break;
-                        case ChannelSearchArgs.NameAsc:
-                            channels = from channel in channels orderby channel.Name ascending select channel;
-                            break;
-                        //case ChannelSearchArgs.NameDesc:
-                        //    channels = from channel in channels orderby channel.Name descending select channel;
-                        //    break;
-                        case ChannelSearchArgs.NumberOfCommentsAsc:
-                            channels = from channel in channels orderby channel.Comments.Count ascending select channel;
-                            break;
-                        case ChannelSearchArgs.NumberOfCommentsDesc:
-                            channels = from channel in channels orderby channel.Comments.Count descending select channel;
-                            break;
-                        case ChannelSearchArgs.RatingAsc:
-                            channels = from channel in channels orderby channel.Rating ascending select channel;
-                            break;
-                        case ChannelSearchArgs.RatingDesc:
-                            channels = from channel in channels orderby channel.Rating descending select channel;
-                            break;
-                        case ChannelSearchArgs.SubscriptionsAsc:
-                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
-                            break;
-                        case ChannelSearchArgs.SubscriptionsDesc:
-                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
-                            break;
+                        channels = from channel in channels orderby channel.Hits ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.HitsDesc))
+                    {
+channels = from channel in channels orderby channel.Hits descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameAsc))
+                    {
+                        channels = from channel in channels orderby channel.Name ascending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.NameDesc))
+                    {
+                        channels = from channel in channels orderby channel.Name descending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.NumberOfCommentsAsc))
+                    {
+                        channels = from channel in channels orderby channel.Comments.Count ascending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.NumberOfCommentsDesc))
+                    {
+                        channels = from channel in channels orderby channel.Comments.Count descending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.RatingAsc))
+                    {
+                        channels = from channel in channels orderby channel.Rating ascending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.RatingDesc))
+                    {
+                        channels = from channel in channels orderby channel.Rating descending select channel;
+                        }
+                    else if (filter.SortOption.Equals(filter.SubscriptionsAsc))
+                    {
+                        channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                    }                    
+                    else if (filter.SortOption.Equals(filter.SubscriptionsDesc))
+                    {
+                        channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
@@ -1010,8 +1017,8 @@ namespace RentItServer.ITU
                                where comment.ChannelId == channelId
                                select comment;
                 //Set variables relevant for getting list range
-                if(fromInclusive < 0) fromInclusive = 0;
-                if(toExclusive > comments.Count()) toExclusive = comments.Count();
+                if (fromInclusive < 0) fromInclusive = 0;
+                if (toExclusive > comments.Count()) toExclusive = comments.Count();
                 int sizeOfRange = toExclusive - fromInclusive;
                 //Gets the specified range
                 List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
@@ -1267,8 +1274,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channel = from c in context.Channels
-                                  where c.Id == channelId
-                                  select c;
+                              where c.Id == channelId
+                              select c;
                 if (!channel.Any()) return 0;
                 return channel.First().Subscribers.Count;
             }
@@ -1280,8 +1287,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
-                              where c.Id == channelId
-                              select c;
+                               where c.Id == channelId
+                               select c;
                 if (channels.Any())
                 {
                     Channel channel = channels.First();
@@ -1300,13 +1307,13 @@ namespace RentItServer.ITU
 
         public List<Channel> GetChannelsWithTracks()
         {
-            List <Channel> channelList = new List<Channel>();
+            List<Channel> channelList = new List<Channel>();
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
                                where c.Tracks.Count > 0
                                select c;
-                if(channels.Any())
+                if (channels.Any())
                 {
                     channelList = channels.ToList();
                 }
