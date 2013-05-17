@@ -289,26 +289,18 @@ namespace RentItServer.ITU
         int GetChannelPort(int channelId, int ipAddress, int port);
 
         /// <summary>
-        /// Listens to channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns>Returns the port which the client should connect to</returns>
-        [OperationContract]
-        int ListenToChannel(int channelId);
-
-        /// <summary>
         /// Starts the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
         void StartChannelStream(int cId);
 
-        /// <summary>
+        /*/// <summary>
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
-        void StopChannel(int cId);
+        void StopChannel(int cId);*/
 
         /// <summary>
         /// Gets a channel search args object with all fields having default values.
@@ -349,7 +341,7 @@ namespace RentItServer.ITU
         DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId);
         
         [OperationContract]
-        bool IsChannelNameAvailable(string channelName);
+        bool IsChannelNameAvailable(int channelId, string channelName);
 
         [OperationContract]
         int GetSubscriberCount(int channelId);

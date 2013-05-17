@@ -9,25 +9,25 @@ namespace RentItServer.ITU
     public class ChannelSearchArgs
     {
         [DataMember]
-        public const string NameDesc = "nam desc";
+        public readonly string NameDesc = "nam desc";
         [DataMember]
-        public const string NameAsc = "nam asc";
+        public readonly string NameAsc = "nam asc";
         [DataMember]
-        public const string HitsDesc = "ap desc";
+        public readonly string HitsDesc = "ap desc";
         [DataMember]
-        public const string HitsAsc = "ap asc";
+        public readonly string HitsAsc = "ap asc";
         [DataMember]
-        public const string SubscriptionsDesc = "sub desc";
+        public readonly string SubscriptionsDesc = "sub desc";
         [DataMember]
-        public const string SubscriptionsAsc = "sub asc";
+        public readonly string SubscriptionsAsc = "sub asc";
         [DataMember]
-        public const string NumberOfCommentsDesc = "com desc";
+        public readonly string NumberOfCommentsDesc = "com desc";
         [DataMember]
-        public const string NumberOfCommentsAsc = "com asc";
+        public readonly string NumberOfCommentsAsc = "com asc";
         [DataMember]
-        public const string RatingDesc = "rat desc";
+        public readonly string RatingDesc = "rat desc";
         [DataMember]
-        public const string RatingAsc = "rat asc";
+        public readonly string RatingAsc = "rat asc";
 
         /// <summary>
         /// Gets the search string.
@@ -103,7 +103,7 @@ namespace RentItServer.ITU
         public int EndIndex { get; set; }
 
         /// <summary>
-        /// Gets the sort option. Must be one of the const fields of this class
+        /// Gets the sort option. Must be one of the readonly fields of this class
         /// </summary>
         /// <value>
         /// The sort option.

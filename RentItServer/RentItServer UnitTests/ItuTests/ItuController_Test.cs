@@ -33,8 +33,8 @@ namespace RentItServer_UnitTests.ItuTests
         private const int interval = 3;
 
         private static Controller controller;
-       
-            
+
+
         [TestInitialize]
         public void Initialize()
         {
@@ -66,7 +66,7 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 testchannelnames.Add(testchannelname + i);
                 testchanneldescrs.Add(testchanneldescr + i);
-            } 
+            }
         }
 
         #region Controller_Signup
@@ -551,7 +551,7 @@ namespace RentItServer_UnitTests.ItuTests
                     Assert.IsTrue(aChannel.OwnerId == testId);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Cleanup();
                 Assert.Fail("An exception was raised. " + e);
@@ -604,7 +604,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsDesc;
+            csa.SortOption = csa.HitsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -613,10 +613,10 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
-                    Assert.IsTrue(theChannels[i-1].Hits >= theChannels[i].Hits);   
-                } 
+                    Assert.IsTrue(theChannels[i - 1].Hits >= theChannels[i].Hits);
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was raised. " + e);
             }
@@ -627,7 +627,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsAsc;
+            csa.SortOption = csa.HitsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -639,7 +639,7 @@ namespace RentItServer_UnitTests.ItuTests
                     Assert.IsTrue(theChannels[i - 1].Hits <= theChannels[i].Hits);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was raised. " + e);
             }
@@ -650,7 +650,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
+            csa.SortOption = csa.NumberOfCommentsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -673,7 +673,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
+            csa.SortOption = csa.NumberOfCommentsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -685,7 +685,7 @@ namespace RentItServer_UnitTests.ItuTests
                     //TODO fix this Assert.IsTrue(theChannels[i - 1].Comments.Count < theChannels[i].Comments.Count);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was raised");
             }
@@ -696,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingDesc;
+            csa.SortOption = csa.RatingDesc;
             try
             {
                 CreateChannelsForTests();
@@ -708,7 +708,7 @@ namespace RentItServer_UnitTests.ItuTests
                     Assert.IsTrue(theChannels[i - 1].Rating >= theChannels[i].Rating);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was raised. " + e);
             }
@@ -719,7 +719,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingAsc;
+            csa.SortOption = csa.RatingAsc;
             try
             {
                 CreateChannelsForTests();
@@ -734,7 +734,7 @@ namespace RentItServer_UnitTests.ItuTests
             catch (Exception e)
             {
                 Assert.Fail("An exception was raised." + e);
-            } 
+            }
         }
 
         [TestMethod]
@@ -742,7 +742,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
+            csa.SortOption = csa.SubscriptionsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -765,7 +765,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
+            csa.SortOption = csa.SubscriptionsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -811,7 +811,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(user.Username.Equals(updatedUser.Username));
                 Assert.IsTrue(user.Email.Equals(updatedUser.Email));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was thrown. " + e);
             }
@@ -825,7 +825,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, "", null, null);
-                Assert.Fail("An exception was thrown"); 
+                Assert.Fail("An exception was thrown");
             }
             catch
             {
@@ -945,10 +945,6 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         #endregion
-
-        #region Controller_AddTrack
-        #endregion
-
         #region Controller_Subscribe
         [TestMethod]
         public void Controller_Subscribe_Parameter_NegNeg()
@@ -1053,7 +1049,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.Fail("An exception was raised.");
             }
         }
-#endregion
+        #endregion
         #region Controller_UnSubscribe
         [TestMethod]
         public void Controller_UnSubscribe_Parameter_InvalidInvalid()
@@ -1182,7 +1178,7 @@ namespace RentItServer_UnitTests.ItuTests
                 RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
                 controller.Subscribe(user.Id, TestExtensions._testChannelId1);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.Fail("An exception was raised. " + e);
             }
@@ -1231,7 +1227,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
 
-        public Boolean ChannelsContainId(List<Channel> channels, int id)
+        private Boolean ChannelsContainId(List<Channel> channels, int id)
         {
             foreach (Channel c in channels)
             {
@@ -1239,6 +1235,141 @@ namespace RentItServer_UnitTests.ItuTests
             }
             return false;
         }
+        #endregion
+        #region Controller_IsCorrectPassword
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_InvalidNull()
+        {
+            try
+            {
+                controller.IsCorrectPassword(-1, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_InvalidEmpty()
+        {
+            try
+            {
+                controller.IsCorrectPassword(-1, "");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_InvalidValid()
+        {
+            try
+            {
+                controller.IsCorrectPassword(-1, TestExtensions._userpassword);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_ValidNull()
+        {
+            try
+            {
+                controller.IsCorrectPassword(TestExtensions._testUser2.Id, null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_ValidEmpty()
+        {
+            try
+            {
+                controller.IsCorrectPassword(TestExtensions._testUser2.Id, "");
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_IsCorrectPassword_Parameter_ValidValid()
+        {
+            Assert.IsTrue(controller.IsCorrectPassword(TestExtensions._testUser2.Id, TestExtensions._userpassword));
+        }
+        #endregion
+        #region Controller_IsEmailAvailable
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Null()
+        {
+            try
+            {
+                controller.IsEmailAvailable(null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        #endregion
+        #region Controller_IsUsernameAvailable
+        #endregion
+
+        //TODO:
+        #region Controller_GetUser
+        #endregion
+        #region Controller_CreateChannel
+        #endregion
+        #region Controller_DeleteChannel
+        #endregion
+        #region Controller_UpdateChannel
+        #endregion
+        #region Controller_GetChannel
+        #endregion
+        #region Controller_CreateVote
+        #endregion
+        #region Controller_GetTrackInfo
+        #endregion
+        #region Controller_CreateComment
+        #endregion
+        #region Controller_DeleteComment
+        #endregion
+        #region Controller_GetUserComments
+        #endregion
+        #region Controller_GetChannelComments
+        #endregion
+        #region Controller_GetDefaultChannelSearchArgs
+        #endregion
+        #region Controller_GetDefaultTrackSearchArgs
+        #endregion
+        #region Controller_GetCreatedChannels
+        #endregion
+        #region Controller_GetSubscribedChannels
+        #endregion
+        #region Controller_GetTracksByChannelId
+        #endregion
+        #region Controller_IsChannelNameAvailable
+        #endregion
+        #region Controller_GetSubscriberCount
+        #endregion
+        #region Controller_IncrementChannelPlays
+        #endregion
+        #region Controller_AddTrack
+        #endregion
+        #region Controller_GetTracks
+        #endregion
+        #region Controller_RemoveTrack
         #endregion
     }
 }

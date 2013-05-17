@@ -28,8 +28,6 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
-        //The channel organizer
-        private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
@@ -71,12 +69,10 @@ namespace RentItServer.ITU
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
             //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
-            // Initialize the channel organizer
-            _channelOrganizer = ChannelOrganizer.GetInstance();
-
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
             _streamHandler.AddLogger(_logger);
+            _streamHandler.InitTimer();
         }
 
         /// <summary>
@@ -94,10 +90,10 @@ namespace RentItServer.ITU
             _streamHandler.ManualStreamStart(channelId);
         }
 
-        public void StopChannelStream(int channelId)
+        /*public void StopChannelStream(int channelId)
         {
             _streamHandler.StopStream(channelId);
-        }
+        }*/
 
         /// <summary>
         /// Login the specified user.
@@ -767,19 +763,15 @@ namespace RentItServer.ITU
             throw e;
         }
 
-        public int ListenToChannel(int channelId)
-        {
-            _channelOrganizer.StartChannel(channelId);
-            return _channelOrganizer.GetChannelPortNumber(channelId);
-        }
-
         public bool IsEmailAvailable(string email)
         {
+            if(email == null)   LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
         public bool IsUsernameAvailable(string username)
         {
+            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
 
@@ -808,9 +800,10 @@ namespace RentItServer.ITU
             return _dao.GetTracksByChannelId(channelId);
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _dao.IsChannelNameAvailable(channelName);
+            if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
+            return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)
