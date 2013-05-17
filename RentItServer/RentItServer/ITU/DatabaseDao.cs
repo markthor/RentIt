@@ -1152,62 +1152,62 @@ namespace RentItServer.ITU
 
         public void DeleteDatabaseData()
         {
-            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 //Delete all users
-                var users = proxy.Users;
+                var users = context.Users;
                 foreach (User u in users)
                 {
-                    proxy.Users.Remove(u);
+                    context.Users.Remove(u);
                 }
 
                 //Delete all channels
-                var channels = proxy.Channels;
+                var channels = context.Channels;
                 foreach (Channel c in channels)
                 {
                     c.Subscribers.Clear();
                     c.Genres.Clear();
-                    proxy.Channels.Remove(c);
+                    context.Channels.Remove(c);
                 }
 
                 //Delete all genres
-                var genres = proxy.Genres;
+                var genres = context.Genres;
                 foreach (Genre g in genres)
                 {
-                    proxy.Genres.Remove(g);
+                    context.Genres.Remove(g);
                 }
 
                 //Delete all tracks
-                var tracks = proxy.Tracks;
+                var tracks = context.Tracks;
                 foreach (Track t in tracks)
                 {
-                    proxy.Tracks.Remove(t);
+                    context.Tracks.Remove(t);
                 }
 
                 //Delete all trackPlays
-                var trackPlays = proxy.TrackPlays;
+                var trackPlays = context.TrackPlays;
                 if (trackPlays.Any())
                 {
                     foreach (TrackPlay tp in trackPlays)
                     {
-                        proxy.TrackPlays.Remove(tp);
+                        context.TrackPlays.Remove(tp);
                     }
                 }
                 //Delete all comments
-                var comments = proxy.Comments;
+                var comments = context.Comments;
                 foreach (Comment c in comments)
                 {
-                    proxy.Comments.Remove(c);
+                    context.Comments.Remove(c);
                 }
 
                 //Delete all votes
-                var votes = proxy.Votes;
+                var votes = context.Votes;
                 foreach (Vote v in votes)
                 {
-                    proxy.Votes.Remove(v);
+                    context.Votes.Remove(v);
                 }
 
-                proxy.SaveChanges();
+                context.SaveChanges();
             }
         }
 
@@ -1342,6 +1342,18 @@ namespace RentItServer.ITU
             }
 
             return result;
+        }
+
+        public void AddTrackPlayList(List<TrackPlay> trackPlayList)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                foreach (TrackPlay tp in trackPlayList)
+                {
+                    context.TrackPlays.Add(tp);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }
