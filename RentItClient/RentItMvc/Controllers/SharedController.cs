@@ -18,5 +18,10 @@ namespace RentItMvc.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult Tracks(List<GuiTrack> tracks)
+        {
+            return PartialView(tracks);
+        }
     }
 }
