@@ -209,11 +209,6 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public int ListenToChannel(int channelId)
-        {
-            return _controller.ListenToChannel(channelId);
-        }
-
         /// <summary>
         /// Starts the channel stream.
         /// </summary>

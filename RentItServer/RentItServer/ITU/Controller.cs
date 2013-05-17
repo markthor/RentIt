@@ -28,8 +28,6 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
-        //The channel organizer
-        private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
@@ -70,9 +68,6 @@ namespace RentItServer.ITU
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
             //_logger = new Logger(FilePath.ITULogPath + LogFileName);
-
-            // Initialize the channel organizer
-            _channelOrganizer = ChannelOrganizer.GetInstance();
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
@@ -765,12 +760,6 @@ namespace RentItServer.ITU
             //if (_handler != null)
             //    _handler(this, new RentItEventArgs("[" + e + "] raised in [" + operationName + "] with message [" + e.Message + "]."));
             throw e;
-        }
-
-        public int ListenToChannel(int channelId)
-        {
-            _channelOrganizer.StartChannel(channelId);
-            return _channelOrganizer.GetChannelPortNumber(channelId);
         }
 
         public bool IsEmailAvailable(string email)

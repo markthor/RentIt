@@ -289,14 +289,6 @@ namespace RentItServer.ITU
         int GetChannelPort(int channelId, int ipAddress, int port);
 
         /// <summary>
-        /// Listens to channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns>Returns the port which the client should connect to</returns>
-        [OperationContract]
-        int ListenToChannel(int channelId);
-
-        /// <summary>
         /// Starts the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
