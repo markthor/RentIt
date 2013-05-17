@@ -56,6 +56,7 @@ namespace RentItServer.ITU
             for (int i = 0; i < minMillisDuration; )
             {
                 Track nextTrack = GetNextTrack(trackList, plays);
+                if (nextTrack.Length == null) throw new ArgumentException("Track has null length");
                 if (nextTrack.Length <= 0) throw new ArgumentException("Track has length equal to or below zero.");
                 TrackPlay play = new TrackPlay(nextTrack.Id, DateTime.Now.AddMilliseconds(timeOfPlaylist));
                 playlist.Add(nextTrack);

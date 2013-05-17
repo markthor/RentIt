@@ -10,8 +10,11 @@ namespace RentItServer_UnitTests
     [TestClass]
     public class TrackPrioritizer_Test
     {
+        /// <summary>
+        /// Tests GetNextTrack with multiple tracks and multiple trackplays.
+        /// </summary>
         [TestMethod]
-        public void TrackPrioritizer_GetNextTrack()
+        public void TrackPrioritizer_GetNextTrack_MultipleTracks_MultiplePlays()
         {
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
@@ -39,8 +42,11 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(4, result.Id);
         }
 
+        /// <summary>
+        /// Tests GetNextTrack with multiple tracks and no trackplays.
+        /// </summary>
         [TestMethod]
-        public void TrackPrioritizer_GetNextTrack_EmptyPlaysList()
+        public void TrackPrioritizer_GetNextTrack_MultipleTracks_EmptyPlays()
         {
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
@@ -54,6 +60,9 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(0, result.Id);
         }
 
+        /// <summary>
+        /// Tests GetNextTrack with one track and no trackplays.
+        /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextTrackEmptyPlaysList_OneTrack()
         {
@@ -64,6 +73,9 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(0, result.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextPlayList_OneTrack_NoPlays()
         {
@@ -121,7 +133,6 @@ namespace RentItServer_UnitTests
         {
             try
             {
-                int trackLength = 180000;
                 List<Track> testTracks = new List<Track>();
                 List<TrackPlay> testPlays = new List<TrackPlay>();
                 List<TrackPlay> playListPlays = new List<TrackPlay>();
@@ -134,6 +145,8 @@ namespace RentItServer_UnitTests
                 //This is expected.
             }
         }
+
+
 
     }
 }
