@@ -544,7 +544,7 @@ namespace RentItServer.ITU
                     }
                     else if (filter.SortOption.Equals(filter.SubscriptionsDesc))
                     {
-                        channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                        channels = from channel in channels orderby channel.Subscribers.Count descending select channel;
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
