@@ -522,24 +522,20 @@ namespace RentItServer.ITU
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                //TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                FileStream audioFile = File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                theTrack.Artist = "Drezz";
-                theTrack.Name = "Mikkels coke eventyr part 2";
-                /*
+                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
                     theTrack.Artist += artist + ", ";
                 }
-                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 3);
+                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 2);
                 theTrack.DownVotes = 0;
                 theTrack.UpVotes = 0;
                 theTrack.Name = audioFile.Tag.Title;
                 theTrack.TrackPlays = new List<TrackPlay>();
                 theTrack.Votes = new List<Vote>();
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
-                */
                 try
                 {
                     _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
