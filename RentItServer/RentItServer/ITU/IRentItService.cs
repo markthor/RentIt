@@ -341,7 +341,7 @@ namespace RentItServer.ITU
         DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId);
         
         [OperationContract]
-        bool IsChannelNameAvailable(string channelName);
+        bool IsChannelNameAvailable(int channelId, string channelName);
 
         [OperationContract]
         int GetSubscriberCount(int channelId);

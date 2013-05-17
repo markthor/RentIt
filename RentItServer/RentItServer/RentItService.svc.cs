@@ -252,9 +252,9 @@ namespace RentItServer
             return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _controller.IsChannelNameAvailable(channelName);
+            return _controller.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)

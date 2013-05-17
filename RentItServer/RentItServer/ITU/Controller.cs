@@ -797,9 +797,9 @@ namespace RentItServer.ITU
             return _dao.GetTracksByChannelId(channelId);
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _dao.IsChannelNameAvailable(channelName);
+            return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)
