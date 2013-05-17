@@ -65,13 +65,13 @@ namespace RentItServer.ITU
         #region InitTimer()
         public void InitTimer()
         {
-            _logger.AddEntry("Init timer");
+            /*_logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
             timer.Interval = 86400000; //24 hours
             timer.Elapsed += timer_Elapsed;
             timer.AutoReset = false; //timer.AutoReset = true;
             _logger.AddEntry("Start timer");
-            timer.Start();
+            timer.Start();*/
         }
         #endregion
 
@@ -94,7 +94,7 @@ namespace RentItServer.ITU
             }
             catch (KeyNotFoundException) 
             { 
-                _logger.AddEntry("[IsChannelRunning]: KeyNotFoundException when looking for channelId: " + channelId); 
+                //_logger.AddEntry("[IsChannelRunning]: KeyNotFoundException when looking for channelId: " + channelId); 
             }
             return false;
         }
