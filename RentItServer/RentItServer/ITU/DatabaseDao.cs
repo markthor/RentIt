@@ -280,7 +280,7 @@ namespace RentItServer.ITU
             {
                 // Check that no channel with channelName already exists
                 var channels = from channel in context.Channels
-                               where channel.Name.Equals(channelName)
+                               where channel.Name.ToLower().Equals(channelName.ToLower())
                                select channel;
                 if (channels.Any() == true) throw new ArgumentException("Channel with channelname [" + channelName + "] already exists");
 
@@ -512,39 +512,39 @@ namespace RentItServer.ITU
                     }
                     else if (filter.SortOption.Equals(filter.HitsDesc))
                     {
-channels = from channel in channels orderby channel.Hits descending select channel;
+                        channels = from channel in channels orderby channel.Hits descending select channel;
                     }
                     else if (filter.SortOption.Equals(filter.NameAsc))
                     {
                         channels = from channel in channels orderby channel.Name ascending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.NameDesc))
                     {
                         channels = from channel in channels orderby channel.Name descending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.NumberOfCommentsAsc))
                     {
                         channels = from channel in channels orderby channel.Comments.Count ascending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.NumberOfCommentsDesc))
                     {
                         channels = from channel in channels orderby channel.Comments.Count descending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.RatingAsc))
                     {
                         channels = from channel in channels orderby channel.Rating ascending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.RatingDesc))
                     {
                         channels = from channel in channels orderby channel.Rating descending select channel;
-                        }
+                    }
                     else if (filter.SortOption.Equals(filter.SubscriptionsAsc))
                     {
                         channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
-                    }                    
+                    }
                     else if (filter.SortOption.Equals(filter.SubscriptionsDesc))
                     {
-                        channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                        channels = from channel in channels orderby channel.Subscribers.Count descending select channel;
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
@@ -780,32 +780,37 @@ channels = from channel in channels orderby channel.Hits descending select chann
                 }
                 else
                 {   // Apply specific sort order
-                    switch (filter.SortOption)
+                    if (filter.SortOption.Equals(filter.ArtistAsc))
                     {
-                        case TrackSearchArgs.ArtistAsc:
-                            tracks = from track in tracks orderby track.Artist ascending select track;
-                            break;
-                        case TrackSearchArgs.ArtistDesc:
-                            tracks = from track in tracks orderby track.Artist descending select track;
-                            break;
-                        case TrackSearchArgs.DownvotesAsc:
-                            tracks = from track in tracks orderby track.DownVotes ascending select track;
-                            break;
-                        case TrackSearchArgs.DownvotesDesc:
-                            tracks = from track in tracks orderby track.DownVotes descending select track;
-                            break;
-                        case TrackSearchArgs.NameAsc:
-                            tracks = from track in tracks orderby track.Name ascending select track;
-                            break;
-                        case TrackSearchArgs.NameDesc:
-                            tracks = from track in tracks orderby track.Name descending select track;
-                            break;
-                        case TrackSearchArgs.UpvotesAsc:
-                            tracks = from track in tracks orderby track.UpVotes ascending select track;
-                            break;
-                        case TrackSearchArgs.UpvotesDesc:
-                            tracks = from track in tracks orderby track.UpVotes descending select track;
-                            break;
+                        tracks = from track in tracks orderby track.Artist ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.ArtistDesc))
+                    {
+                        tracks = from track in tracks orderby track.Artist descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.DownvotesAsc))
+                    {
+                        tracks = from track in tracks orderby track.DownVotes ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.DownvotesDesc))
+                    {
+                        tracks = from track in tracks orderby track.DownVotes descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameAsc))
+                    {
+                        tracks = from track in tracks orderby track.Name ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameDesc))
+                    {
+                        tracks = from track in tracks orderby track.Name descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.UpvotesAsc))
+                    {
+                        tracks = from track in tracks orderby track.UpVotes ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.UpvotesDesc))
+                    {
+                        tracks = from track in tracks orderby track.UpVotes descending select track;
                     }
                 }
 
@@ -1147,62 +1152,62 @@ channels = from channel in channels orderby channel.Hits descending select chann
 
         public void DeleteDatabaseData()
         {
-            using (RENTIT21Entities proxy = new RENTIT21Entities())
+            using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 //Delete all users
-                var users = proxy.Users;
+                var users = context.Users;
                 foreach (User u in users)
                 {
-                    proxy.Users.Remove(u);
+                    context.Users.Remove(u);
                 }
 
                 //Delete all channels
-                var channels = proxy.Channels;
+                var channels = context.Channels;
                 foreach (Channel c in channels)
                 {
                     c.Subscribers.Clear();
                     c.Genres.Clear();
-                    proxy.Channels.Remove(c);
+                    context.Channels.Remove(c);
                 }
 
                 //Delete all genres
-                var genres = proxy.Genres;
+                var genres = context.Genres;
                 foreach (Genre g in genres)
                 {
-                    proxy.Genres.Remove(g);
+                    context.Genres.Remove(g);
                 }
 
                 //Delete all tracks
-                var tracks = proxy.Tracks;
+                var tracks = context.Tracks;
                 foreach (Track t in tracks)
                 {
-                    proxy.Tracks.Remove(t);
+                    context.Tracks.Remove(t);
                 }
 
                 //Delete all trackPlays
-                var trackPlays = proxy.TrackPlays;
+                var trackPlays = context.TrackPlays;
                 if (trackPlays.Any())
                 {
                     foreach (TrackPlay tp in trackPlays)
                     {
-                        proxy.TrackPlays.Remove(tp);
+                        context.TrackPlays.Remove(tp);
                     }
                 }
                 //Delete all comments
-                var comments = proxy.Comments;
+                var comments = context.Comments;
                 foreach (Comment c in comments)
                 {
-                    proxy.Comments.Remove(c);
+                    context.Comments.Remove(c);
                 }
 
                 //Delete all votes
-                var votes = proxy.Votes;
+                var votes = context.Votes;
                 foreach (Vote v in votes)
                 {
-                    proxy.Votes.Remove(v);
+                    context.Votes.Remove(v);
                 }
 
-                proxy.SaveChanges();
+                context.SaveChanges();
             }
         }
 
@@ -1258,12 +1263,12 @@ channels = from channel in channels orderby channel.Hits descending select chann
             }
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
-                               where c.Name.Equals(channelName)
+                               where c.Id != channelId && c.Name.ToLower().Equals(channelName.ToLower())
                                select c;
                 return !channels.Any();
             }
@@ -1337,6 +1342,18 @@ channels = from channel in channels orderby channel.Hits descending select chann
             }
 
             return result;
+        }
+
+        public void AddTrackPlayList(List<TrackPlay> trackPlayList)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                foreach (TrackPlay tp in trackPlayList)
+                {
+                    context.TrackPlays.Add(tp);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -72,6 +72,7 @@ namespace RentItServer.ITU
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
             _streamHandler.AddLogger(_logger);
+            _streamHandler.InitTimer();
         }
 
         /// <summary>
@@ -521,24 +522,20 @@ namespace RentItServer.ITU
                 int counter = tempCounter++;
                 _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
                 // Use external library
-                //TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                FileStream audioFile = File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                theTrack.Artist = "Drezz";
-                theTrack.Name = "Mikkels coke eventyr part 2";
-                /*
+                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
+                
                 string[] artists = audioFile.Tag.AlbumArtists;
                 foreach (string artist in artists)
                 {
                     theTrack.Artist += artist + ", ";
                 }
-                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 3);
+                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 2);
                 theTrack.DownVotes = 0;
                 theTrack.UpVotes = 0;
                 theTrack.Name = audioFile.Tag.Title;
                 theTrack.TrackPlays = new List<TrackPlay>();
                 theTrack.Votes = new List<Vote>();
                 theTrack.Length = audioFile.Properties.Duration.Milliseconds;
-                */
                 try
                 {
                     _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
@@ -764,11 +761,14 @@ namespace RentItServer.ITU
 
         public bool IsEmailAvailable(string email)
         {
+            if(email == null)   LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
         public bool IsUsernameAvailable(string username)
         {
+            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
+            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
 
@@ -797,9 +797,10 @@ namespace RentItServer.ITU
             return _dao.GetTracksByChannelId(channelId);
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _dao.IsChannelNameAvailable(channelName);
+            if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
+            return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)

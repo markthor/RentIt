@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RentItServer;
 
 namespace RentItServer.ITU
 {
@@ -12,11 +13,11 @@ namespace RentItServer.ITU
         private static TrackPrioritizer _instance;
         private static Random rng = new Random();
         //The maximal play percentage that a track can have to be considered for the next track.
-        private const double _maxFrequency = 0.3;
+        private double _maxFrequency = 0;
         //Determines how much upvotes and downvotes should influence the propability of a track being selected.
-        private const int _ratioConstant = 10;
+        private int _ratioConstant = 10;
         //The number of latest played tracks that will not be considered for the next track.
-        private const int _minimumRepeatDistance = 3;
+        private int _minimumRepeatDistance = 3;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -38,6 +39,14 @@ namespace RentItServer.ITU
             return _instance;
         }
 
+        /// <summary>
+        /// Gets a list of tracks determined from the GetNextTrack
+        /// </summary>
+        /// <param name="trackList"></param>
+        /// <param name="plays"></param>
+        /// <param name="minMillisDuration"></param>
+        /// <param name="playsForPlaylist"></param>
+        /// <returns></returns>
         public List<Track> GetNextPlayList(List<Track> trackList, List<TrackPlay> plays, int minMillisDuration, out List<TrackPlay> playsForPlaylist)
         {
             int timeOfPlaylist = 0;
@@ -46,17 +55,18 @@ namespace RentItServer.ITU
 
             for (int i = 0; i < minMillisDuration; )
             {
-                Track nextTrack = GetNextTrackId(trackList, plays);
+                Track nextTrack = GetNextTrack(trackList, plays);
+                if (nextTrack.Length == null) throw new ArgumentException("Track has null length");
+                if (nextTrack.Length <= 0) throw new ArgumentException("Track has length equal to or below zero.");
                 TrackPlay play = new TrackPlay(nextTrack.Id, DateTime.Now.AddMilliseconds(timeOfPlaylist));
                 playlist.Add(nextTrack);
                 plays.Add(play);
                 playsForPlaylist.Add(play);
                 i = i + nextTrack.Length;
             }
-
             return playlist;
         }
-        
+
         /// <summary>
         /// Gets the id of the next track to be played from predefined selection criteria.
         /// These includes the ratio between the upvotes and downvotes, the percentage of plays and whether the track has been played recently.
@@ -64,8 +74,11 @@ namespace RentItServer.ITU
         /// <param name="trackList">The tracks on the channels playlist</param>
         /// <param name="plays">The record of tracks played on the channel</param>
         /// <returns>The id of the next track to be played</returns>
-        public Track GetNextTrackId(List<Track> trackList, List<TrackPlay> plays)
+        public Track GetNextTrack(List<Track> trackList, List<TrackPlay> plays)
         {
+            //Set variables
+            _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
+
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
 
             //Initializing data structure for track prioritizing.
@@ -87,18 +100,25 @@ namespace RentItServer.ITU
             //The total amount of recorded plays.
             int totalPlays = plays.Count;
 
-            //Updating candidate boolean for TrackData based on percentage of plays.
+            //Updating candidate boolean for TrackData based on percentage of plays and counting the number of disqualifications.
+            int disqualifications = 0;
             foreach (KeyValuePair<int, TrackData> kvp in trackData)
             {
                 double percentageOfPlays = Convert.ToDouble(kvp.Value.Plays) / Convert.ToDouble(totalPlays);
                 if (percentageOfPlays > _maxFrequency)
                 {
                     kvp.Value.NextTrackCandidate = false;
+                    disqualifications++;
                 }
             }
 
+            //Set minimum repeat distance in special cases.
+            int effectiveMinimumRepeatDistance = _minimumRepeatDistance;
+            if (trackList.Count - disqualifications <= _minimumRepeatDistance) effectiveMinimumRepeatDistance = trackList.Count - disqualifications - 1;
+            if (effectiveMinimumRepeatDistance < 0) effectiveMinimumRepeatDistance = 0;
+
             //Setting candidate boolean to false for recently played tracks.
-            List<int> MostRecentlyPlayedTrackIds = GetMostRecentlyPlayedTrackIds(_minimumRepeatDistance, plays);
+            List<int> MostRecentlyPlayedTrackIds = GetMostRecentlyPlayedTrackIds(effectiveMinimumRepeatDistance, plays);
             foreach(int i in MostRecentlyPlayedTrackIds)
             {
                 trackData[i].NextTrackCandidate = false;
@@ -180,16 +200,17 @@ namespace RentItServer.ITU
 
         private void RemoveOldestTrackPlay(List<TrackPlay> plays)
         {
-            DateTime oldestDate = DateTime.UtcNow;
+            DateTime oldestDate = DateTime.MinValue;
             TrackPlay playToBeRemoved = null;
             foreach (TrackPlay tp in plays)
             {
-                if (tp.TimePlayed < oldestDate)
+                if (tp.TimePlayed >= oldestDate)
                 {
                     oldestDate = tp.TimePlayed;
                     playToBeRemoved = tp;
                 }
             }
+
             plays.Remove(playToBeRemoved);
         }
     }
