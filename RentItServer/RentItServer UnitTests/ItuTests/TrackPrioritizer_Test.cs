@@ -74,7 +74,7 @@ namespace RentItServer_UnitTests
         }
 
         /// <summary>
-        /// 
+        /// Tests GetNextTrackPlayList with one track and no plays.
         /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextPlayList_OneTrack_NoPlays()
@@ -93,6 +93,9 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(roundUpDivision, playListPlays.Count);
         }
 
+        /// <summary>
+        /// Tests GetNextPlayList with multiple tracks and multiple plays.
+        /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextPlayList_MultipleTracks_MultiplePlays()
         {
@@ -128,6 +131,9 @@ namespace RentItServer_UnitTests
             }
         }
 
+        /// <summary>
+        /// Tests GetNextPlayList with no tracks.
+        /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextPlayList_NoTracks()
         {

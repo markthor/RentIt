@@ -40,13 +40,13 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets a list of tracks determined from the GetNextTrack
+        /// Gets a list of tracks determined from the GetNextTrack method. The minimum length of the playlist is specified and the playlist and the resulting trackplays are returned.
         /// </summary>
-        /// <param name="trackList"></param>
-        /// <param name="plays"></param>
-        /// <param name="minMillisDuration"></param>
-        /// <param name="playsForPlaylist"></param>
-        /// <returns></returns>
+        /// <param name="trackList">The tracks to compose the list of</param>
+        /// <param name="plays">The plays of the tracks</param>
+        /// <param name="minMillisDuration">The minimum duration of the playlist in milliseconds</param>
+        /// <param name="playsForPlaylist">The resulting trackPlays from playing the playlist</param>
+        /// <returns>The playlist</returns>
         public List<Track> GetNextPlayList(List<Track> trackList, List<TrackPlay> plays, int minMillisDuration, out List<TrackPlay> playsForPlaylist)
         {
             int timeOfPlaylist = 0;
