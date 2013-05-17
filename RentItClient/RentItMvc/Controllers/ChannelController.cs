@@ -73,7 +73,7 @@ namespace RentItMvc.Controllers
         /// Returns a list of most popular or highlighted channels
         /// </summary>
         /// <returns></returns>
-        public ActionResult FeaturedChannels()
+        public ActionResult PopularChannels()
         {
             if (Session["userId"] != null)
             {

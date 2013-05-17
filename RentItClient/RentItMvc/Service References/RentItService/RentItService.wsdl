@@ -191,23 +191,11 @@
   <wsdl:message name="IRentItService_GetChannelPort_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetChannelPortResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_ListenToChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:ListenToChannel" />
+  <wsdl:message name="IRentItService_StartChannelStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannelStream" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_ListenToChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ListenToChannelResponse" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StartChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:StartChannel" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StartChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StartChannelResponse" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StopChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:StopChannel" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StopChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StopChannelResponse" />
+  <wsdl:message name="IRentItService_StartChannelStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannelStreamResponse" />
   </wsdl:message>
   <wsdl:message name="IRentItService_GetDefaultChannelSearchArgs_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultChannelSearchArgs" />
@@ -378,17 +366,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetChannelPort" message="tns:IRentItService_GetChannelPort_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetChannelPortResponse" message="tns:IRentItService_GetChannelPort_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ListenToChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/ListenToChannel" message="tns:IRentItService_ListenToChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/ListenToChannelResponse" message="tns:IRentItService_ListenToChannel_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="StartChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannel" message="tns:IRentItService_StartChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelResponse" message="tns:IRentItService_StartChannel_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="StopChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StopChannel" message="tns:IRentItService_StopChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StopChannelResponse" message="tns:IRentItService_StopChannel_OutputMessage" />
+    <wsdl:operation name="StartChannelStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannelStream" message="tns:IRentItService_StartChannelStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelStreamResponse" message="tns:IRentItService_StartChannelStream_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDefaultChannelSearchArgs">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs" message="tns:IRentItService_GetDefaultChannelSearchArgs_InputMessage" />
@@ -695,26 +675,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ListenToChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/ListenToChannel" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="StartChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannel" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="StopChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/StopChannel" style="document" />
+    <wsdl:operation name="StartChannelStream">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannelStream" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

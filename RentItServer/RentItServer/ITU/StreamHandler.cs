@@ -42,6 +42,7 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
             NewTrackPlays = new List<TrackPlay>();
+
             //InitTimer();
         }
         #endregion

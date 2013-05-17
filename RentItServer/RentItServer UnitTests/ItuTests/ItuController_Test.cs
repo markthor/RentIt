@@ -604,7 +604,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsDesc;
+            csa.SortOption = csa.HitsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -627,7 +627,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.HitsAsc;
+            csa.SortOption = csa.HitsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -650,7 +650,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsDesc;
+            csa.SortOption = csa.NumberOfCommentsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -673,7 +673,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.NumberOfCommentsAsc;
+            csa.SortOption = csa.NumberOfCommentsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -696,7 +696,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingDesc;
+            csa.SortOption = csa.RatingDesc;
             try
             {
                 CreateChannelsForTests();
@@ -719,7 +719,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.RatingAsc;
+            csa.SortOption = csa.RatingAsc;
             try
             {
                 CreateChannelsForTests();
@@ -742,7 +742,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsDesc;
+            csa.SortOption = csa.SubscriptionsDesc;
             try
             {
                 CreateChannelsForTests();
@@ -765,7 +765,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             controller = Controller.GetInstance();
             ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = ChannelSearchArgs.SubscriptionsAsc;
+            csa.SortOption = csa.SubscriptionsAsc;
             try
             {
                 CreateChannelsForTests();
@@ -1240,8 +1240,6 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_InvalidNull()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             try
             {
                 controller.IsCorrectPassword(-1, null);
@@ -1255,8 +1253,6 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_InvalidEmpty()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             try
             {
                 controller.IsCorrectPassword(-1, "");
@@ -1270,11 +1266,9 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_InvalidValid()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             try
             {
-                controller.IsCorrectPassword(-1, testPasswordSignup);
+                controller.IsCorrectPassword(-1, TestExtensions._userpassword);
                 Assert.Fail("No exception was raised");
             }
             catch
@@ -1285,11 +1279,9 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_ValidNull()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             try
             {
-                controller.IsCorrectPassword(u.Id, null);
+                controller.IsCorrectPassword(TestExtensions._testUser2.Id, null);
                 Assert.Fail("No exception was raised");
             }
             catch
@@ -1300,11 +1292,9 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_ValidEmpty()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             try
             {
-                controller.IsCorrectPassword(u.Id, "");
+                controller.IsCorrectPassword(TestExtensions._testUser2.Id, "");
                 Assert.Fail("No exception was raised");
             }
             catch
@@ -1315,10 +1305,25 @@ namespace RentItServer_UnitTests.ItuTests
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_ValidValid()
         {
-            controller = Controller.GetInstance();
-            RentItServer.ITU.DatabaseWrapperObjects.User u = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
-            Assert.IsTrue(controller.IsCorrectPassword(u.Id, testPasswordSignup));
+            Assert.IsTrue(controller.IsCorrectPassword(TestExtensions._testUser2.Id, TestExtensions._userpassword));
         }
+        #endregion
+        #region Controller_IsEmailAvailable
+        [TestMethod]
+        public void Controller_IsEmailAvailable_Null()
+        {
+            try
+            {
+                controller.IsEmailAvailable(null);
+                Assert.Fail("No exception was raised");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        #endregion
+        #region Controller_IsUsernameAvailable
         #endregion
 
         //TODO:
@@ -1343,10 +1348,6 @@ namespace RentItServer_UnitTests.ItuTests
         #region Controller_GetUserComments
         #endregion
         #region Controller_GetChannelComments
-        #endregion
-        #region Controller_IsEmailAvailable
-        #endregion
-        #region Controller_IsUsernameAvailable
         #endregion
         #region Controller_GetDefaultChannelSearchArgs
         #endregion

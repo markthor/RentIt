@@ -280,7 +280,7 @@ namespace RentItServer.ITU
             {
                 // Check that no channel with channelName already exists
                 var channels = from channel in context.Channels
-                               where channel.Name.Equals(channelName)
+                               where channel.Name.ToLower().Equals(channelName.ToLower())
                                select channel;
                 if (channels.Any() == true) throw new ArgumentException("Channel with channelname [" + channelName + "] already exists");
 
@@ -506,38 +506,45 @@ namespace RentItServer.ITU
                 }
                 else
                 {   // Apply specific sort order
-                    switch (filter.SortOption)
+                    if (filter.SortOption.Equals(filter.HitsAsc))
                     {
-                        case ChannelSearchArgs.HitsAsc:
-                            channels = from channel in channels orderby channel.Hits ascending select channel;
-                            break;
-                        case ChannelSearchArgs.HitsDesc:
-                            channels = from channel in channels orderby channel.Hits descending select channel;
-                            break;
-                        case ChannelSearchArgs.NameAsc:
-                            channels = from channel in channels orderby channel.Name ascending select channel;
-                            break;
-                        //case ChannelSearchArgs.NameDesc:
-                        //    channels = from channel in channels orderby channel.Name descending select channel;
-                        //    break;
-                        case ChannelSearchArgs.NumberOfCommentsAsc:
-                            channels = from channel in channels orderby channel.Comments.Count ascending select channel;
-                            break;
-                        case ChannelSearchArgs.NumberOfCommentsDesc:
-                            channels = from channel in channels orderby channel.Comments.Count descending select channel;
-                            break;
-                        case ChannelSearchArgs.RatingAsc:
-                            channels = from channel in channels orderby channel.Rating ascending select channel;
-                            break;
-                        case ChannelSearchArgs.RatingDesc:
-                            channels = from channel in channels orderby channel.Rating descending select channel;
-                            break;
-                        case ChannelSearchArgs.SubscriptionsAsc:
-                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
-                            break;
-                        case ChannelSearchArgs.SubscriptionsDesc:
-                            channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
-                            break;
+                        channels = from channel in channels orderby channel.Hits ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.HitsDesc))
+                    {
+                        channels = from channel in channels orderby channel.Hits descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameAsc))
+                    {
+                        channels = from channel in channels orderby channel.Name ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameDesc))
+                    {
+                        channels = from channel in channels orderby channel.Name descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NumberOfCommentsAsc))
+                    {
+                        channels = from channel in channels orderby channel.Comments.Count ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NumberOfCommentsDesc))
+                    {
+                        channels = from channel in channels orderby channel.Comments.Count descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.RatingAsc))
+                    {
+                        channels = from channel in channels orderby channel.Rating ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.RatingDesc))
+                    {
+                        channels = from channel in channels orderby channel.Rating descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.SubscriptionsAsc))
+                    {
+                        channels = from channel in channels orderby channel.Subscribers.Count ascending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.SubscriptionsDesc))
+                    {
+                        channels = from channel in channels orderby channel.Subscribers.Count descending select channel;
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
@@ -773,32 +780,37 @@ namespace RentItServer.ITU
                 }
                 else
                 {   // Apply specific sort order
-                    switch (filter.SortOption)
+                    if (filter.SortOption.Equals(filter.ArtistAsc))
                     {
-                        case TrackSearchArgs.ArtistAsc:
-                            tracks = from track in tracks orderby track.Artist ascending select track;
-                            break;
-                        case TrackSearchArgs.ArtistDesc:
-                            tracks = from track in tracks orderby track.Artist descending select track;
-                            break;
-                        case TrackSearchArgs.DownvotesAsc:
-                            tracks = from track in tracks orderby track.DownVotes ascending select track;
-                            break;
-                        case TrackSearchArgs.DownvotesDesc:
-                            tracks = from track in tracks orderby track.DownVotes descending select track;
-                            break;
-                        case TrackSearchArgs.NameAsc:
-                            tracks = from track in tracks orderby track.Name ascending select track;
-                            break;
-                        case TrackSearchArgs.NameDesc:
-                            tracks = from track in tracks orderby track.Name descending select track;
-                            break;
-                        case TrackSearchArgs.UpvotesAsc:
-                            tracks = from track in tracks orderby track.UpVotes ascending select track;
-                            break;
-                        case TrackSearchArgs.UpvotesDesc:
-                            tracks = from track in tracks orderby track.UpVotes descending select track;
-                            break;
+                        tracks = from track in tracks orderby track.Artist ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.ArtistDesc))
+                    {
+                        tracks = from track in tracks orderby track.Artist descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.DownvotesAsc))
+                    {
+                        tracks = from track in tracks orderby track.DownVotes ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.DownvotesDesc))
+                    {
+                        tracks = from track in tracks orderby track.DownVotes descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameAsc))
+                    {
+                        tracks = from track in tracks orderby track.Name ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.NameDesc))
+                    {
+                        tracks = from track in tracks orderby track.Name descending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.UpvotesAsc))
+                    {
+                        tracks = from track in tracks orderby track.UpVotes ascending select track;
+                    }
+                    else if (filter.SortOption.Equals(filter.UpvotesDesc))
+                    {
+                        tracks = from track in tracks orderby track.UpVotes descending select track;
                     }
                 }
 
@@ -1010,8 +1022,8 @@ namespace RentItServer.ITU
                                where comment.ChannelId == channelId
                                select comment;
                 //Set variables relevant for getting list range
-                if(fromInclusive < 0) fromInclusive = 0;
-                if(toExclusive > comments.Count()) toExclusive = comments.Count();
+                if (fromInclusive < 0) fromInclusive = 0;
+                if (toExclusive > comments.Count()) toExclusive = comments.Count();
                 int sizeOfRange = toExclusive - fromInclusive;
                 //Gets the specified range
                 List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
@@ -1251,12 +1263,12 @@ namespace RentItServer.ITU
             }
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
-                               where c.Name.Equals(channelName)
+                               where c.Id != channelId && c.Name.ToLower().Equals(channelName.ToLower())
                                select c;
                 return !channels.Any();
             }
@@ -1267,8 +1279,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channel = from c in context.Channels
-                                  where c.Id == channelId
-                                  select c;
+                              where c.Id == channelId
+                              select c;
                 if (!channel.Any()) return 0;
                 return channel.First().Subscribers.Count;
             }
@@ -1280,8 +1292,8 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
-                              where c.Id == channelId
-                              select c;
+                               where c.Id == channelId
+                               select c;
                 if (channels.Any())
                 {
                     Channel channel = channels.First();
@@ -1300,13 +1312,13 @@ namespace RentItServer.ITU
 
         public List<Channel> GetChannelsWithTracks()
         {
-            List <Channel> channelList = new List<Channel>();
+            List<Channel> channelList = new List<Channel>();
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from c in context.Channels
                                where c.Tracks.Count > 0
                                select c;
-                if(channels.Any())
+                if (channels.Any())
                 {
                     channelList = channels.ToList();
                 }
