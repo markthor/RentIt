@@ -28,6 +28,8 @@ namespace RentItServer.ITU
 
         private System.Timers.Timer timer;
 
+        private List<TrackPlay> NewTrackPlays;
+
         #endregion
 
         #region Constructor
@@ -39,8 +41,8 @@ namespace RentItServer.ITU
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
-
-            InitTimer();
+            NewTrackPlays = new List<TrackPlay>();
+            //InitTimer();
         }
         #endregion
 
@@ -79,36 +81,6 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        
-
-        #region ManualStreamStart(int channelId)
-        /// <summary>
-        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
-        /// </summary>
-        /// <param name="channelId">Channel id of the channel to be started</param>
-        public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
-        {
-            _logger.AddEntry("Manually starting stream for channel with id: " + channelId);
-            if (!IsChannelRunning(channelId)) // Check if stream is already running
-            {
-                if(_dao.ChannelHasTracks(channelId))
-                {
-                    StartEzstreamProcess(channelId);
-                }
-                else
-                {
-                    _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
-                    throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
-                }
-            }
-            else //channel is already running
-            {
-                _logger.AddEntry("Channel with id: " + channelId + " is already running");
-                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
-            }
-        }
-        #endregion
-
         #region IsChannelRunning(int channelId)
         private bool IsChannelRunning(int channelId)
         {
@@ -127,25 +99,34 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        
-
-        #region AddTrackPlay(Track track)
-        private void AddTrackPlay(Track track)
+        #region ManualStreamStart(int channelId)
+        /// <summary>
+        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
+        /// </summary>
+        /// <param name="channelId">Channel id of the channel to be started</param>
+        public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
         {
-            _dao.AddTrackPlay(track);
+            _logger.AddEntry("Manually starting stream for channel with id: " + channelId);
+            if (!IsChannelRunning(channelId)) // Check if stream is already running
+            {
+                if(_dao.ChannelHasTracks(channelId))
+                {
+                    StartChannelStream(channelId);
+                    AddTrackNewTrackPlays();
+                }
+                else
+                {
+                    _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
+                    throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
+                }
+            }
+            else //channel is already running
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " is already running");
+                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
+            }
         }
         #endregion
-
-        #region GenerateM3uWithOneTrack(int channelId, string trackFileName) Out commented
-        /*private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
-        {
-            string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
-            //FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
-            FileSystemDao.GetInstance().WriteM3UFile(trackPath, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
-        }*/
-        #endregion
-
-        
 
         #region StartChannelStream(int channelId)
         private void StartChannelStream(int channelId)
@@ -171,7 +152,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region CreateChannelConfigfile
+        #region CreateChannelConfigfile(int channelId)
         private void CreateChannelConfigFile(int channelId)
         {
             _logger.AddEntry("Generate config xml for channel with id: " + channelId);
@@ -190,8 +171,30 @@ namespace RentItServer.ITU
         #region GenerateM3UFile(int channelId, int playTime)
         private void GenerateM3UFile(int channelId, int playTime)
         {
-            throw new NotImplementedException();
-            //create m3u file which lasts around as long as the playtime, one track over, doesnt matter anyway
+            List<TrackPlay> addedTrackPlays;
+            List<Track> playlist = GeneratePlaylist(channelId, playTime, out addedTrackPlays);
+            NewTrackPlays.AddRange(addedTrackPlays);
+
+            string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
+            _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
+        }
+        #endregion
+
+        #region GeneratePlaylist(int channelId, int playTime, out List<TrackPlay> addedTrackPlays)
+        private List<Track> GeneratePlaylist(int channelId, int playTime, out List<TrackPlay> addedTrackPlays)
+        {
+            List<Track> channelTracks = _dao.GetTrackList(channelId);
+            if (!channelTracks.Any())
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
+                throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
+            }
+
+            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+
+            List<Track> playlist = TrackPrioritizer.GetInstance().GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
+
+            return playlist;
         }
         #endregion
 
@@ -243,10 +246,16 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region AddTackPlays(List<Track> tracks)
-        private void AddTackPlays(List<Track> tracks)
+        private void AddTrackNewTrackPlays()
         {
-            throw new NotImplementedException();
+            AddTrackPlayList(NewTrackPlays);
+            NewTrackPlays.Clear();
+        }
+
+        #region AddTrackPlayList(List<TrackPlay> tracks)
+        private void AddTrackPlayList(List<TrackPlay> trackPlayList)
+        {
+            _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
         
@@ -277,6 +286,8 @@ namespace RentItServer.ITU
             {
                 StartChannelStream(c.Id);
             }
+
+            AddTrackNewTrackPlays();
         }
         #endregion
 

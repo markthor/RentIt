@@ -162,10 +162,12 @@ namespace RentItServer.Utilities
             return bytes;
         }
 
+        public bool FileExists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
 
-
-
-        public void WriteM3UFile(string trackPath, string filePath)
+        public void WriteM3UPlaylistFile(string filePath, List<Track> playlist)
         {
             FileStream fs = null;
             if (!File.Exists(filePath))
@@ -180,20 +182,13 @@ namespace RentItServer.Utilities
             {
                 using (StreamWriter sw = new StreamWriter(filePath))
                 {
-                    sw.Write(trackPath);
+                    foreach (Track t in playlist)
+                    {
+                        sw.WriteLine(t.Path);
+                    }
+                    sw.Flush();
                 }
             }
-        }
-
-        public void AddTrackToM3UFile(string trackPath, string filePath)
-        {
-            string text = Environment.NewLine + trackPath;
-            System.IO.File.AppendAllText(filePath, text);
-        }
-
-        public bool FileExists(string filePath)
-        {
-            return File.Exists(filePath);
         }
     }
 }
