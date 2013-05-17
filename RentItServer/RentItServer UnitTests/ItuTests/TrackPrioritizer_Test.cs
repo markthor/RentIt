@@ -10,8 +10,11 @@ namespace RentItServer_UnitTests
     [TestClass]
     public class TrackPrioritizer_Test
     {
+        /// <summary>
+        /// Tests GetNextTrack with multiple tracks and multiple trackplays.
+        /// </summary>
         [TestMethod]
-        public void TrackPrioritizer_GetNextTrack()
+        public void TrackPrioritizer_GetNextTrack_MultipleTracks_MultiplePlays()
         {
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
@@ -39,8 +42,11 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(4, result.Id);
         }
 
+        /// <summary>
+        /// Tests GetNextTrack with multiple tracks and no trackplays.
+        /// </summary>
         [TestMethod]
-        public void TrackPrioritizer_GetNextTrack_EmptyPlaysList()
+        public void TrackPrioritizer_GetNextTrack_MultipleTracks_EmptyPlays()
         {
             List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2));
@@ -54,6 +60,9 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(0, result.Id);
         }
 
+        /// <summary>
+        /// Tests GetNextTrack with one track and no trackplays.
+        /// </summary>
         [TestMethod]
         public void TrackPrioritizer_GetNextTrackEmptyPlaysList_OneTrack()
         {
@@ -64,11 +73,31 @@ namespace RentItServer_UnitTests
             Assert.AreNotEqual(0, result.Id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
-        public void TrackPrioritizer_GetNextPlayList()
+        public void TrackPrioritizer_GetNextPlayList_OneTrack_NoPlays()
         {
-            List<Track> testTracks = new List<Track>();
             int trackLength = 180000;
+            int minMilliSeconds = 3000000;
+            List<Track> testTracks = new List<Track>();
+            testTracks.Add(new Track(1, 10, 2, trackLength));
+
+            List<TrackPlay> testPlays = new List<TrackPlay>();
+            List<TrackPlay> playListPlays = new List<TrackPlay>();
+
+            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, minMilliSeconds, out playListPlays);
+            int roundUpDivision = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(minMilliSeconds) / Convert.ToDouble(trackLength)));
+            Assert.AreEqual(roundUpDivision, result.Count);
+            Assert.AreEqual(roundUpDivision, playListPlays.Count);
+        }
+
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlayList_MultipleTracks_MultiplePlays()
+        {
+            int trackLength = 180000;
+            List<Track> testTracks = new List<Track>();
             testTracks.Add(new Track(1, 10, 2, trackLength));
             testTracks.Add(new Track(2, 0, 1, trackLength));
             testTracks.Add(new Track(3, 3, 30, trackLength));
@@ -97,8 +126,27 @@ namespace RentItServer_UnitTests
                 Assert.AreEqual(roundUpDivision, playListPlays.Count);
                 playListPlays.Clear();
             }
-
         }
+
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlayList_NoTracks()
+        {
+            try
+            {
+                List<Track> testTracks = new List<Track>();
+                List<TrackPlay> testPlays = new List<TrackPlay>();
+                List<TrackPlay> playListPlays = new List<TrackPlay>();
+                List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, 1000, out playListPlays);
+                //No exception was thrown.
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                //This is expected.
+            }
+        }
+
+
 
     }
 }
