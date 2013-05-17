@@ -190,5 +190,10 @@ namespace RentItServer.Utilities
             string text = Environment.NewLine + trackPath;
             System.IO.File.AppendAllText(filePath, text);
         }
+
+        public bool FileExists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
     }
 }

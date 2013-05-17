@@ -91,7 +91,7 @@ namespace RentItServer.ITU
 
         public void StartChannelStream(int channelId)
         {
-            _streamHandler.StartStream(channelId);
+            _streamHandler.ManualStreamStart(channelId);
         }
 
         public void StopChannelStream(int channelId)

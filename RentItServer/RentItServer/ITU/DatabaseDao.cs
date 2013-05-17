@@ -1293,5 +1293,39 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        public List<Channel> GetChannelsWithTracks()
+        {
+            List <Channel> channelList = new List<Channel>();
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                               where c.Tracks.Count > 0
+                               select c;
+                if(channels.Any())
+                {
+                    channelList = channels.ToList();
+                }
+            }
+
+            return channelList;
+        }
+
+        public bool ChannelHasTracks(int channelId)
+        {
+            bool result = false;
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels
+                               where c.Id == channelId && c.Tracks.Count > 0
+                               select c;
+                if (channels.Any())
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
     }
 }

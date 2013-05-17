@@ -301,7 +301,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         [OperationContract]
-        void StartChannel(int cId);
+        void StartChannelStream(int cId);
 
         /// <summary>
         /// Stops the channel stream.

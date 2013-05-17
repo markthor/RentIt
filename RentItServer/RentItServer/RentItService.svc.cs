@@ -218,7 +218,7 @@ namespace RentItServer
         /// Starts the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
-        public void StartChannel(int cId)
+        public void StartChannelStream(int cId)
         {
             _controller.StartChannelStream(cId);
         }
