@@ -103,8 +103,6 @@
       <DependentUpon>RentItModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ITU\DatabaseWrapperObjects\Channel.cs" />
-    <Compile Include="ITU\ChannelOrganizer.cs" />
-    <Compile Include="ITU\ChannelStreamer.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Comment.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DatabaseDao.cs" />

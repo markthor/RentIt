@@ -209,11 +209,6 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public int ListenToChannel(int channelId)
-        {
-            return _controller.ListenToChannel(channelId);
-        }
-
         /// <summary>
         /// Starts the channel stream.
         /// </summary>
@@ -223,14 +218,14 @@ namespace RentItServer
             _controller.StartChannelStream(cId);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         public void StopChannel(int cId)
         {
             _controller.StopChannelStream(cId);
-        }
+        }*/
 
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {

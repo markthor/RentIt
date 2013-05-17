@@ -1,0 +1,22 @@
+Featured Channels -> Popular channels, kald top 10 subscriptions
+Listcomment i login menuen skal fjernes
+Tracks i listentochannel vindue skal tilføjes
+plays - times played
+edit channel, der skal ikke være add new track
+channels name check skal ikke være case sensitive
+Holy space i manage tracks
+add a new track skal displaye at man kun kan adde mp3 filer
+Holy space i edit user
+edit email, edit username
+På specific channel page skal der være listentochannel knap
+Der skal være genres lige under channel title
+ADVANCED SEARCH link
+
+
+
+
+Possible extensions
+current listeners
+Sort efter name eller description
+Sæg efter genre når der klikkes på genre
+

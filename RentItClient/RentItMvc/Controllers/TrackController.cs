@@ -96,5 +96,7 @@ namespace RentItMvc.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        
     }
 }
