@@ -103,7 +103,7 @@ namespace RentItServer.ITU
         public int EndIndex { get; set; }
 
         /// <summary>
-        /// Gets the sort option. Must be one of the const fields of this class
+        /// Gets the sort option. Must be one of the readonly fields of this class
         /// </summary>
         /// <value>
         /// The sort option.

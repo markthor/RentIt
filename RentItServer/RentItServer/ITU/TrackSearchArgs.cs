@@ -11,21 +11,21 @@ namespace RentItServer.ITU
     public class TrackSearchArgs
     {
         [DataMember]
-        public const string NameDesc = "nam desc";
+        public readonly string NameDesc = "nam desc";
         [DataMember]
-        public const string NameAsc = "nam asc";
+        public readonly string NameAsc = "nam asc";
         [DataMember]
-        public const string ArtistDesc = "art desc";
+        public readonly string ArtistDesc = "art desc";
         [DataMember]
-        public const string ArtistAsc = "art asc";
+        public readonly string ArtistAsc = "art asc";
         [DataMember]
-        public const string UpvotesDesc = "upvot desc";
+        public readonly string UpvotesDesc = "upvot desc";
         [DataMember]
-        public const string UpvotesAsc = "upvot asc";
+        public readonly string UpvotesAsc = "upvot asc";
         [DataMember]
-        public const string DownvotesDesc = "downvot desc";
+        public readonly string DownvotesDesc = "downvot desc";
         [DataMember]
-        public const string DownvotesAsc = "downvot asc";
+        public readonly string DownvotesAsc = "downvot asc";
 
         /// <summary>
         /// Gets the search string.
@@ -82,7 +82,7 @@ namespace RentItServer.ITU
         public int EndIndex { get; set; }
         
         /// <summary>
-        /// Gets the sort option. Must be one of the const fields of this class
+        /// Gets the sort option. Must be one of the readonly fields of this class
         /// </summary>
         /// <value>
         /// The sort option.
