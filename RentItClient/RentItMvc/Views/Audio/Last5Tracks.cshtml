@@ -1,4 +1,4 @@
-﻿@model List<RentItMvc.Models.GuiTrack>
+﻿@model Tuple<List<RentItMvc.Models.GuiTrack>, int>
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
             <th></th>
             <th></th>
         </tr>
-        @foreach (var track in Model)
+        @foreach (var track in Model.Item1)
         {
             <tr>
                 <td>
@@ -28,7 +28,7 @@
                 </td>
                 <td>
                     <div style="width: 30px">
-                        @if (RentItMvc.Controllers.AccountController.GetVote((int)@Session["userId"], @track.Id) == 1)
+                        @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == 1)
                         {
                             <button class="btn btn-small btn-success" onclick=" upvote(@track.Id) ">
                                 <i class="icon-thumbs-up icon-white"></i>
@@ -45,7 +45,7 @@
 
                 </td>
                 <td>
-                    @if (RentItMvc.Controllers.AccountController.GetVote((int)@Session["userId"], @track.Id) == -1)
+                    @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == -1)
                     {
                         <div style="width: 30px">
                             <button class="btn btn-small btn-danger">

@@ -895,7 +895,12 @@ namespace RentItServer.ITU
 
         public DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
         {
-            return _dao.GetVote(userId, trackId).GetVote();
+            Vote vote = _dao.GetVote(userId, trackId);
+            if (vote != null)
+            {
+                return _dao.GetVote(userId, trackId).GetVote();
+            }
+            return null;
         }
 
         public void DeleteVote(int userId, int trackId)

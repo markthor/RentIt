@@ -48,6 +48,7 @@ function updateSlider(newValue) {
 
 function openPlayer(channelIdAndUserId) {
     var uri = "http://rentit.itu.dk/BlobfishRadio/Audio/AudioPlayer?channelId=" + channelIdAndUserId;
+    //var uri = "http://localhost:49932/Audio/AudioPlayer?channelId=" + channelIdAndUserId;
     var width = 365;
     var height = 500;
     var left = (screen.width / 2) - (width / 2);

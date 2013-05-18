@@ -3,7 +3,7 @@
 }
 
 @using System.Web.Optimization
-@model RentItMvc.Models.Audio
+@model Tuple<RentItMvc.Models.Audio, int>
 
 <!DOCTYPE html>
 
@@ -19,8 +19,8 @@
     <div id="audioPlayer">
         <h2 style="text-align: center">AudioPlayer</h2>
         <audio id="player" preload="auto" autoplay="autoplay">
-            <source id="ogg" type="audio/ogg" src="@Model.StreamUri"/>
-            <source id="mp3" type="audio/mpeg" src="@Model.StreamUri"/>
+            <source id="ogg" type="audio/ogg" src="@Model.Item1.StreamUri"/>
+            <source id="mp3" type="audio/mpeg" src="@Model.Item1.StreamUri"/>
         </audio>
         <div id="controls">
             <div id="playStop" class="pull-left" onclick="playAudio()">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div>
-        @Html.Action("Last5Tracks", new { channelId = Model.ChannelId })
+        @Html.Action("Last5Tracks", new { channelId = Model.Item1.ChannelId, userId = Model.Item2 })
     </div>
     @Scripts.Render("~/audio")
 </body>

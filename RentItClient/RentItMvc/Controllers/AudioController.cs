@@ -20,10 +20,10 @@ namespace RentItMvc.Controllers
             Audio audio = new Audio();
             audio.StreamUri = "http://rentit.itu.dk:27000/" + channelId.ToString();
             audio.ChannelId = channelId;
-            return View(audio);
+            return View(new Tuple<Audio, int>(audio, userId));
         }
 
-        public PartialViewResult Last5Tracks(int channelId)
+        public PartialViewResult Last5Tracks(int channelId, int userId)
         {
             List<GuiTrack> guiTracks = new List<GuiTrack>();
             for (int i = 0; i < 5; i++)
@@ -38,7 +38,7 @@ namespace RentItMvc.Controllers
                 guiTracks.Add(track);
             }
 
-            return PartialView(guiTracks);
+            return PartialView(new Tuple<List<GuiTrack>, int>(guiTracks, userId));
         }
     }
 }
