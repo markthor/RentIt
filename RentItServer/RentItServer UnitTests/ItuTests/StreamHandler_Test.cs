@@ -22,8 +22,8 @@ namespace RentItServer_UnitTests.ItuTests
         {
             using (ITUServiceReference.RentItServiceClient proxy = new ITUServiceReference.RentItServiceClient())
             {
-                //proxy.Login("Prechtig", "tesat");
-                proxy.StartChannel(TestExtensions._testChannelId1);
+                proxy.Login("Prechtig", "tesat");
+                //proxy.StartChannel(TestExtensions._testChannelId1);
             }
         }
     }
