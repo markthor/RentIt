@@ -670,7 +670,7 @@ namespace RentItServer.ITU
         /// <param name="downVotes">Down votes.</param>
         /// <returns>The track</returns>
         /// <exception cref="System.ArgumentException">No channel with channel id [+channelId+].</exception>
-        public Track CreateTrackEntry(int channelId, string path, string trackName, string trackArtist, int length, int upVotes, int downVotes)
+        /*public Track CreateTrackEntry(int channelId, string path, string trackName, string trackArtist, int length, int upVotes, int downVotes)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -700,6 +700,43 @@ namespace RentItServer.ITU
                 context.SaveChanges();
 
                 return theTrack;
+            }
+        }*/
+
+        public Track CreateTrackEntry(int channelId, Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from c in context.Channels 
+                               where c.Id == channelId 
+                               select c;
+                if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
+
+                context.Tracks.Add(track);
+                context.SaveChanges();
+            }
+
+            return track;
+        }
+
+        public void UpdateTrack(Track track)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var tracks = from t in context.Tracks
+                             where t.Id == track.Id
+                             select t;
+                if (tracks.Any() == false) throw new ArgumentException("No track with id [" + track.Id + "].");
+
+                Track tdb = tracks.First();
+                tdb.Artist = track.Artist;
+                tdb.DownVotes = track.DownVotes;
+                tdb.Length = track.Length;
+                tdb.Name = track.Name;
+                tdb.Path = track.Path;
+                tdb.UpVotes = track.UpVotes;
+                
+                context.SaveChanges();
             }
         }
 

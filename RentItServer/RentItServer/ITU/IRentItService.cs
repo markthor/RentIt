@@ -347,5 +347,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         void IncrementChannelPlays(int channelId);
+
+        [OperationContract]
+        bool IsChannelPlaying(int channelId);
     }
 }

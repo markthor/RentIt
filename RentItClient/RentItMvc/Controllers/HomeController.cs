@@ -12,13 +12,12 @@ namespace RentItMvc.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? userId)
         {
-            int? userId = (int?)Session["userId"];
-            if (userId != null && userId > 0)
+            if (userId.HasValue)
             {
                 //User is logged in
-                return RedirectToAction("PopularChannels", "Channel");
+                return RedirectToAction("PopularChannels", "Channel", new { userId = userId.Value });
             }
             //User is not logged in
             return View();

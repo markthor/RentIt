@@ -7,15 +7,15 @@
         Channel
     </li>
     <li>
-        @Html.ActionLink("Popular channels", "PopularChannels", "Channel")
+        @Html.ActionLink("Popular channels", "PopularChannels", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li>
-        @Html.ActionLink("My channels", "MyChannels", "Channel")
+        @Html.ActionLink("My channels", "MyChannels", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li>
-        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel")
+        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li>
-        @Html.ActionLink("Create channel", "CreateChannel", "Channel")
+        @Html.ActionLink("Create channel", "CreateChannel", "Channel", new { userId = Session["userId"] }, null)
     </li>
 </ul>

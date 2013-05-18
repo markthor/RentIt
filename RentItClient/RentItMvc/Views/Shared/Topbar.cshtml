@@ -16,11 +16,11 @@
     <title>LogInTopBar</title>
 </head>
     <body>
-        @Html.ActionLink((string) ViewBag.Title, "Index", "Home", null, new { @class = "brand", style = "margin-right:225px", title = "Home"})
+        @Html.ActionLink((string) ViewBag.Title, "PopularChannels", "Channel", new { userId = Session["userId"] }, new { @class = "brand", style = "margin-right:225px", title = "Home"})
         @if (Session["userId"] != null && (int) Session["userId"] > 0)
         {
             <!--User is logged in-->
-            using (@Html.BeginForm("SearchResult", "Channel", FormMethod.Post, new { @class = "navbar-form pull-left" }))
+            using (@Html.BeginForm("SearchResult", "Channel", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "navbar-form pull-left" }))
             {
                 @Html.TextBox("searchArgs", null, new { @class = "span3", placeholder = "Search for channels" })
                 <button class="btn btn-primary" type="submit">
@@ -30,7 +30,7 @@
         
             using (@Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
             {
-                @Html.ActionLink((string) Session["username"], "Edit", "Account", null, new { @class = "brand pull-left" })
+                @Html.ActionLink((string) Session["username"], "Edit", "Account", new { userId = Session["userId"] }, new { @class = "brand pull-left" })
                 <button class="btn btn-danger btn-signInOut pull-left" type="submit">Sign out</button>
             }
         }

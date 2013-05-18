@@ -31,13 +31,12 @@ namespace RentItMvc.Controllers
             return PartialView(c);
         }
 
-        public ActionResult AddComment(Comment comment)
+        public ActionResult AddComment(Comment comment, int? userId, int? channelId)
         {
-            int userId = (int) Session["userId"];
-            int channelId = (int) Session["channelId"];
+            if(userId.HasValue && channelId.HasValue)
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                proxy.CreateComment(comment.Content, userId, channelId);
+                proxy.CreateComment(comment.Content, userId.Value, channelId.Value);
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }
