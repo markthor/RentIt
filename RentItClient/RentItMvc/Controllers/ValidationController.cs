@@ -37,11 +37,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsCurrentPasswordCorrect(string currentPassword)
+        public JsonResult IsCurrentPasswordCorrect(string currentPassword, int userId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsCorrectPassword((int) Session["userId"], currentPassword))
+                if (proxy.IsCorrectPassword(userId, currentPassword))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }

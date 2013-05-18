@@ -7,12 +7,9 @@
 @if (Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px" class="pull-left">
-        @Html.ActionLink("Edit channel", "EditChannel", "Channel", new { channelId = Model.Id }, new { @class = "btn btn-small btn-warning" })
+        @Html.ActionLink("Edit channel", "EditChannel", "Channel", new { channelId = Model.Id, userId = Session["userId"] }, new { @class = "btn btn-small btn-warning" })
     </div>
-}
-
-@if (Model.OwnerId == (int)@Session["userId"])
-{
+    
     if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
     {
     <div style="margin-top: 16px;">
@@ -69,7 +66,7 @@
 @if (Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px">
-        @Html.ActionLink("Edit tracks", "EditTracks", "Track", new { channelId = Model.Id }, new { @class = "btn btn-small btn-warning" })
+        @Html.ActionLink("Edit tracks", "EditTracks", "Track", new { channelId = Model.Id, userId = Session["userId"] }, new { @class = "btn btn-small btn-warning" })
     </div>
 }
 

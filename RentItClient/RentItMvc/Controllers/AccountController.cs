@@ -11,58 +11,56 @@ namespace RentItMvc.Controllers
 {
     public class AccountController : Controller
     {
-        public ActionResult ChangePassword(Account account)
+        public ActionResult ChangePassword(Account account, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int) Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateUser(userId, null, account.NewPassword, null);
+                    proxy.UpdateUser(userId.Value, null, account.NewPassword, null);
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult ChangeUsername(Account account)
+        public ActionResult ChangeUsername(Account account, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int)Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateUser(userId, account.NewUsername, null, null);
+                    proxy.UpdateUser(userId.Value, account.NewUsername, null, null);
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult ChangeEmail(Account account)
+        public ActionResult ChangeEmail(Account account, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int)Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateUser(userId, null, null, account.NewEmail);
+                    proxy.UpdateUser(userId.Value, null, null, account.NewEmail);
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    User user = proxy.GetUser((int)Session["userId"]);
+                    User user = proxy.GetUser(userId.Value);
                     if (user != null)
                     {
                         Account acc = new Account();
+                        acc.UserId = user.Id;
                         acc.CurrentEmail = user.Email;
                         acc.CurrentUsername = user.Username;
                         return View(acc);
@@ -108,7 +106,7 @@ namespace RentItMvc.Controllers
                 {
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("PopularChannels", "Channel", new { userId = Session["userId"] });
         }
 
         [HttpPost]
@@ -123,26 +121,26 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public ActionResult Subscribe(int channelId)
+        public ActionResult Subscribe(int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.Subscribe((int)Session["UserId"], channelId);
+                    proxy.Subscribe(userId.Value, channelId);
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult UnSubscribe(int channelId)
+        public ActionResult UnSubscribe(int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.Unsubscribe((int)Session["UserId"], channelId);
+                    proxy.Unsubscribe(userId.Value, channelId);
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }

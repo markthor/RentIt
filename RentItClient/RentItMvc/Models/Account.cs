@@ -9,6 +9,8 @@ namespace RentItMvc.Models
 {
     public class Account
     {
+        public int UserId { get; set; }
+
         [Required]
         [Display(Name = "User name")]
         [Remote("IsUsernameAvailable", "Validation")]
@@ -27,7 +29,7 @@ namespace RentItMvc.Models
 
         [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
         [DataType(DataType.Password)]
-        [Remote("IsCurrentPasswordCorrect", "Validation")]
+        [Remote("IsCurrentPasswordCorrect", "Validation", AdditionalFields = "UserId")]
         public string CurrentPassword { get; set; }
 
         [StringLength(20, ErrorMessage = "Must be between 4 and 20 chars.", MinimumLength = 4)]
