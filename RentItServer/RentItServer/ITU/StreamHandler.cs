@@ -88,7 +88,7 @@ namespace RentItServer.ITU
             {
                 //For testing!
                 DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(1);
+                resetDate = resetDate.AddMinutes(15);
                 return resetDate;
                 //endFor
 
@@ -160,7 +160,7 @@ namespace RentItServer.ITU
         /// Stops the stream of a channel and sets it is not running.
         /// </summary>
         /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
+        public void StopChannelStream(int channelId)
         {
             //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
             try
@@ -199,7 +199,7 @@ namespace RentItServer.ITU
             {
                 CreateChannelConfigFile(channelId);
             }
-
+            
             // generate m3u file
             int playTime = MillisecondsUntilReset(); //24 hours
             GenerateM3UFile(channelId, playTime);

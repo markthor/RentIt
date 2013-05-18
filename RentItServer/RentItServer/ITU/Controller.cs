@@ -887,5 +887,10 @@ namespace RentItServer.ITU
         {
             return _streamHandler.IsChannelPlaying(channelId);
         }
+
+        public void StopChannelStream(int channelId)
+        {
+            _streamHandler.StopChannelStream(channelId);
+        }
     }
 }
