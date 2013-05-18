@@ -42,8 +42,6 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
             NewTrackPlays = new List<TrackPlay>();
-
-            //InitTimer();
         }
 
         /// <summary>
@@ -63,9 +61,12 @@ namespace RentItServer.ITU
         {
             _logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
-            timer.Interval = 600000;//timer.Interval = 86400000; //24 hours
+
+            //Calculate how long time the first ionterval should be
+            timer.Interval = MillisecondsUntilReset();
+
             timer.Elapsed += timer_Elapsed;
-            timer.AutoReset = true; //timer.AutoReset = true;
+            timer.AutoReset = true;
             _logger.AddEntry("Start timer");
             timer.Start();
         }
@@ -75,6 +76,36 @@ namespace RentItServer.ITU
             _logger = logger;
         }
         #endregion
+
+        private int MillisecondsUntilReset()
+        {
+            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
+        }
+
+        private DateTime ResetDate
+        {
+            get
+            {
+                //For testing!
+                DateTime resetDate = DateTime.Now;
+                resetDate = resetDate.AddMinutes(15);
+                return resetDate;
+                //endFor
+
+
+                /* THE REAL DEAL
+                DateTime resetDate = DateTime.Now;
+                if (resetDate.Hour > 3) // in case the server is restarted in the before 3AM one day
+                {
+                    resetDate = resetDate.AddDays(1);
+                }
+                resetDate = resetDate.AddHours(3 - resetDate.Hour);
+                resetDate = resetDate.AddMinutes(-resetDate.Minute);
+                resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
+                return resetDate;
+                */
+            }
+        }
 
         #region IsChannelPlaying(int channelId)
         public bool IsChannelPlaying(int channelId)
@@ -129,7 +160,7 @@ namespace RentItServer.ITU
         /// Stops the stream of a channel and sets it is not running.
         /// </summary>
         /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
+        public void StopChannelStream(int channelId)
         {
             //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
             try
@@ -168,9 +199,9 @@ namespace RentItServer.ITU
             {
                 CreateChannelConfigFile(channelId);
             }
-
+            
             // generate m3u file
-            int playTime = 86400000; //24 hours
+            int playTime = MillisecondsUntilReset(); //24 hours
             GenerateM3UFile(channelId, playTime);
 
 

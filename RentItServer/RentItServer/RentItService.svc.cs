@@ -270,5 +270,10 @@ namespace RentItServer
         {
             return _controller.IsChannelPlaying(channelId);
         }
+
+        public void StopChannelStream(int channelId)
+        {
+            _controller.StopChannelStream(channelId);
+        }
     }
 }
