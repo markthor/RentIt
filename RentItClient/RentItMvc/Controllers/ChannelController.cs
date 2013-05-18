@@ -156,7 +156,7 @@ namespace RentItMvc.Controllers
                 {
                     proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0);
                 }
-                return Redirect(Request.UrlReferrer.PathAndQuery);
+                return RedirectToAction("SelectChannel", "Channel", new { channelId = channelId });
             }
             return RedirectToAction("Index", "Home");
         }
