@@ -6,6 +6,7 @@ using System.Diagnostics;
 using RentItServer.Utilities;
 using System.Threading;
 using System.Timers;
+using System.Threading.Tasks;
 
 namespace RentItServer.ITU
 {
@@ -87,7 +88,7 @@ namespace RentItServer.ITU
             {
                 //For testing!
                 DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(1);
+                resetDate = resetDate.AddMinutes(15);
                 return resetDate;
                 //endFor
 
@@ -311,6 +312,8 @@ namespace RentItServer.ITU
                 p.Start();
                 _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
                 AssignProcessId(p);
+                Task t = new Task(() => AssignProcessId(p));
+                t.Start();
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
@@ -327,9 +330,6 @@ namespace RentItServer.ITU
 
         private void AssignProcessId(EzProcess p)
         {
-
-
-
             _logger.AddEntry("start sleep");
             Thread.Sleep(1000);
             Process[] activeProcesses = Process.GetProcessesByName("ezstream");
