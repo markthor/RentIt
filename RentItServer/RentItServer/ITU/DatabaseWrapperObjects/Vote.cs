@@ -9,11 +9,11 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class Vote
     {
-        public Vote(int value, DateTime voteTime, User user, Track track)
+        public Vote(int value, DateTime voteTime, int userId, Track track)
         {
             Value = value;
             VoteTime = voteTime;
-            UserId = user.Id;
+            UserId = userId;
             TrackId = track.Id;
         }
 
