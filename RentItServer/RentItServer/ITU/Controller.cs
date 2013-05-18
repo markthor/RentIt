@@ -892,5 +892,15 @@ namespace RentItServer.ITU
         {
             _streamHandler.StopChannelStream(channelId);
         }
+
+        public DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
+        {
+            return _dao.GetVote(userId, trackId).GetVote();
+        }
+
+        public void DeleteVote(int userId, int trackId)
+        {
+            _dao.DeleteVote(userId, trackId);
+        }
     }
 }
