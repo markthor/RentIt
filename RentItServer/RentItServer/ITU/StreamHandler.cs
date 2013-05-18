@@ -298,14 +298,7 @@ namespace RentItServer.ITU
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
-            _logger.AddEntry("Starting adding trackplays from list");
-
-
-            foreach (var t in trackPlayList)
-            {
-                _logger.AddEntry("TrackPlayId: " + t.TrackId + " - " + t.TimePlayed);
-            }
-
+            _logger.AddEntry("Starting adding trackplays from given list");
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
