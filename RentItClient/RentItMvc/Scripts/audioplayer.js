@@ -71,6 +71,7 @@ function upvote(trackId) {
 }
 
 function sendRequest(uri) {
-    var xml = new XMLHttpRequest().open("GET", uri, true);
-    alert(xml);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", uri, true);
+    xmlhttp.send();
 }
