@@ -9,7 +9,7 @@ namespace RentItServer
     {
         public ITU.DatabaseWrapperObjects.Vote GetVote()
         {
-            return new ITU.DatabaseWrapperObjects.Vote(Value, Date, UserId, Track.GetTrack());
+            return new ITU.DatabaseWrapperObjects.Vote(Value, Date, UserId, TrackId);
         }
     }
 }
