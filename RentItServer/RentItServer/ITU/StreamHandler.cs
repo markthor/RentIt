@@ -149,7 +149,8 @@ namespace RentItServer.ITU
             EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
 
             // add process to list of active streams
-            runningChannelIds.Add(channelId, p);
+            //_logger.AddEntry("[StartChannelStream]: Adding to dictionary");
+            //runningChannelIds.Add(channelId, p);
         }
         #endregion
 
@@ -236,6 +237,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started for channel with id: " + channelId);
 
                 //Add this process to the dictionary with running channels
+                _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
                 runningChannelIds.Add(channelId, p);
                 return p;
             }
