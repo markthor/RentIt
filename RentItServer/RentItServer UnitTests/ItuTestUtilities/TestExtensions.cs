@@ -79,9 +79,9 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             t3.UpVotes = 1;
             t3.DownVotes = 1;
             t3.Path = "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3";
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream()); 
+            //Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
+            //Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
+            //Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream()); 
             _testTrack = t1;
             DatabaseDao.GetInstance().CreateComment("testcomment", _testUser1.Id, _testChannelId1);
             _testChannel1 = DatabaseDao.GetInstance().GetChannel(_testChannelId1).GetChannel();

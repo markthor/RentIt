@@ -110,7 +110,7 @@ namespace RentItServer_UnitTests
             List<TrackPlay> testPlays = new List<TrackPlay>();
             List<TrackPlay> playListPlays = new List<TrackPlay>();
 
-            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, 1000000, out playListPlays);
+            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, 5000000, out playListPlays);
 
         }
 

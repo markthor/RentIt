@@ -72,8 +72,7 @@ namespace RentItServer.ITU
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
-            _streamHandler.AddLogger(_logger);
-            _streamHandler.InitTimer();
+            InitializeStreamHandler();
         }
 
         /// <summary>
@@ -83,6 +82,12 @@ namespace RentItServer.ITU
         public static Controller GetInstance()
         {
             return _instance ?? (_instance = new Controller());
+        }
+
+        private void InitializeStreamHandler()
+        {
+            _streamHandler.SetLogger(_logger);
+            _streamHandler.InitTimer();
         }
 
 

@@ -56,7 +56,6 @@ namespace RentItServer.ITU
             for (int i = 0; i < minMillisDuration; )
             {
                 Track nextTrack = GetNextTrack(trackList, plays);
-                if (nextTrack.Length == null) throw new ArgumentException("Track has null length");
                 if (nextTrack.Length <= 0) throw new ArgumentException("Track has length equal to or below zero.");
                 TrackPlay play = new TrackPlay(nextTrack.Id, DateTime.Now.AddMilliseconds(timeOfPlaylist));
                 timeOfPlaylist = timeOfPlaylist + nextTrack.Length;
@@ -201,11 +200,11 @@ namespace RentItServer.ITU
 
         private void RemoveOldestTrackPlay(List<TrackPlay> plays)
         {
-            DateTime oldestDate = DateTime.MinValue;
+            DateTime oldestDate = DateTime.MaxValue;
             TrackPlay playToBeRemoved = null;
             foreach (TrackPlay tp in plays)
             {
-                if (tp.TimePlayed >= oldestDate)
+                if (tp.TimePlayed <= oldestDate)
                 {
                     oldestDate = tp.TimePlayed;
                     playToBeRemoved = tp;
