@@ -10,6 +10,7 @@ Tracks i listentochannel vindue skal tilføjes
 [DONE]	edit email, edit username
 [DONE]	På specific channel page skal der være listentochannel knap
 Der skal være genres lige under channel title
+Hvis der ikke er nogen channels sidder ikonerne anderledes end hvis der er
 ADVANCED SEARCH link
 
 
