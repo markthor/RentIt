@@ -219,7 +219,7 @@ namespace RentItServer.ITU
             // start stream process
             if (!IsChannelPlaying(channelId))
             {
-                EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
+                EzProcess p = StartEzstreamProcess(channelId);
             }
             else
             {
@@ -314,6 +314,7 @@ namespace RentItServer.ITU
                 AssignProcessId(p);
                 Task t = new Task(() => AssignProcessId(p));
                 t.Start();
+                //Task.Factory.StartNew(() => AssignProcessId(p), );
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
@@ -331,7 +332,7 @@ namespace RentItServer.ITU
         private void AssignProcessId(EzProcess p)
         {
             _logger.AddEntry("start sleep");
-            Thread.Sleep(1000);
+            Thread.Sleep(100000);
             Process[] activeProcesses = Process.GetProcessesByName("ezstream");
             _logger.AddEntry("length of active processes: " + activeProcesses.Length);
             foreach (Process process in activeProcesses)
