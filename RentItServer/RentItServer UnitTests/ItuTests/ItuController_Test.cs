@@ -36,7 +36,7 @@ namespace RentItServer_UnitTests.ItuTests
         private static Controller controller;
 
 
-        //[TestInitialize]
+        [TestInitialize]
         public void Initialize()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
