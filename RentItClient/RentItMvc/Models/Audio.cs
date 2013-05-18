@@ -8,5 +8,6 @@ namespace RentItMvc.Models
     public class Audio
     {
         public string StreamUri { get; set; }
+        public int ChannelId { get; set; }
     }
 }

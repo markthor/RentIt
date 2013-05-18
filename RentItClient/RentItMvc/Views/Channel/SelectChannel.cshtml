@@ -4,6 +4,8 @@
 
 <h2 class="pull-left" style="margin-top: 8px; margin-right: 20px">@Html.DisplayFor(model => model.Name)</h2>
 
+
+
 @if (Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px" class="pull-left">
@@ -71,5 +73,4 @@
 }
 
 @Html.Partial("Tracks", Model.Tracks)
-
-@Html.Action("CommentList", "Comment")
+@Html.Action("CommentList", "Comment", new { channelId = Model.Id })

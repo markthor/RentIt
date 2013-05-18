@@ -887,5 +887,25 @@ namespace RentItServer.ITU
         {
             return _streamHandler.IsChannelPlaying(channelId);
         }
+
+        public void StopChannelStream(int channelId)
+        {
+            _streamHandler.StopChannelStream(channelId);
+        }
+
+        public DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
+        {
+            Vote vote = _dao.GetVote(userId, trackId);
+            if (vote != null)
+            {
+                return _dao.GetVote(userId, trackId).GetVote();
+            }
+            return null;
+        }
+
+        public void DeleteVote(int userId, int trackId)
+        {
+            _dao.DeleteVote(userId, trackId);
+        }
     }
 }

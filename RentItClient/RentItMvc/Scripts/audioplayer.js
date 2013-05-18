@@ -46,7 +46,33 @@ function updateSlider(newValue) {
     player.volume = newValue;
 }
 
-function openPlayer(channelId) {
-    var uri = "http://rentit.itu.dk/BlobfishRadio/Audio/AudioPlayer?channelId=" + channelId;
-    window.open(uri, 'playerWindow', 'width = 200, height = 400, left = 100, right = 100');
+function openPlayer(channelIdAndUserId) {
+    var uri = "http://rentit.itu.dk/BlobfishRadio/Audio/AudioPlayer?channelId=" + channelIdAndUserId;
+    //var uri = "http://localhost:49932/Audio/AudioPlayer?channelId=" + channelIdAndUserId;
+    var width = 365;
+    var height = 500;
+    var left = (screen.width / 2) - (width / 2);
+    var top = (screen.height / 2) - (height / 2);
+    //window.open(uri, 'playerWindow', 'width = 365, height = 500, left = 100, right = 100');
+    window.open(uri, 'playerWindow', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+}
+
+function upvote(trackId) {
+    //Get the user id
+    var currentUrl = window.location.href;
+    var index = currentUrl.lastIndexOf("=") + 1;
+    var userId = currentUrl.substring(index, currentUrl.length);
+    alert(userId);
+    
+    var createUpvoteUri = "http://rentit.itu.dk/BlobfishRadio/Account/CreateUpvote?userId=" + userId + "&trackId=" + trackId;
+    //var createUpvoteUri = "http://localhost:49932/Account/CreateUpvote?userId=" + userId + "&trackId=" + trackId;
+    var deleteVoteUri = "http://rentit.itu.dk/BlobfishRadio/Account/DeleteVote?userId=" + userId + "&trackId=" + trackId;
+    sendRequest(createUpvoteUri);
+    
+}
+
+function sendRequest(uri) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", uri, true);
+    xmlhttp.send();
 }

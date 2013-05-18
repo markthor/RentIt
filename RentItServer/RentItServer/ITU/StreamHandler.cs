@@ -6,6 +6,7 @@ using System.Diagnostics;
 using RentItServer.Utilities;
 using System.Threading;
 using System.Timers;
+using System.Threading.Tasks;
 
 namespace RentItServer.ITU
 {
@@ -30,6 +31,8 @@ namespace RentItServer.ITU
 
         private List<TrackPlay> NewTrackPlays;
 
+        private List<int> ezstreamProcessIds;
+
         #endregion
 
         #region Initial methods
@@ -42,6 +45,7 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
             NewTrackPlays = new List<TrackPlay>();
+            ezstreamProcessIds = new List<int>();
         }
 
         /// <summary>
@@ -77,18 +81,14 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        private int MillisecondsUntilReset()
-        {
-            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
-        }
-
+        #region Properties
         private DateTime ResetDate
         {
             get
             {
                 //For testing!
                 DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(1);
+                resetDate = resetDate.AddMinutes(15);
                 return resetDate;
                 //endFor
 
@@ -106,6 +106,15 @@ namespace RentItServer.ITU
                 */
             }
         }
+        #endregion
+
+        #region Helper methods
+        #region MillisecondsUntilReset()
+        private int MillisecondsUntilReset()
+        {
+            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
+        }
+        #endregion
 
         #region IsChannelPlaying(int channelId)
         public bool IsChannelPlaying(int channelId)
@@ -123,6 +132,7 @@ namespace RentItServer.ITU
             }
             return false;
         }
+        #endregion
         #endregion
 
         #region ManualStreamStart(int channelId)
@@ -160,32 +170,33 @@ namespace RentItServer.ITU
         /// Stops the stream of a channel and sets it is not running.
         /// </summary>
         /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
+        public void StopChannelStream(int channelId)
         {
-            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
+            _logger.AddEntry("Starting stopping channel with id: " + channelId);
+            
+            EzProcess p;
             try
             {
-                Process p = runningChannelIds[channelId];
+                p = runningChannelIds[channelId];
             }
             catch(KeyNotFoundException)
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is not running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is not running");
             }
-
-            _logger.AddEntry("Start killing all running ezstream processes");
-            foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
+            
+            Process[] activeEzstreamProcesses = System.Diagnostics.Process.GetProcessesByName("ezstream");
+            foreach (Process process in activeEzstreamProcesses)
             {
-                if (process.Id == process.Id)
+                if (process.Id == p.RealProcessId)
                 {
                     process.Kill();
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
-                    break;
                 }
             }
 
             runningChannelIds.Remove(channelId);
-            //FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
+            //TODO: FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
         }
         #endregion
 
@@ -199,7 +210,7 @@ namespace RentItServer.ITU
             {
                 CreateChannelConfigFile(channelId);
             }
-
+            
             // generate m3u file
             int playTime = MillisecondsUntilReset(); //24 hours
             GenerateM3UFile(channelId, playTime);
@@ -208,7 +219,7 @@ namespace RentItServer.ITU
             // start stream process
             if (!IsChannelPlaying(channelId))
             {
-                EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
+                EzProcess p = StartEzstreamProcess(channelId);
             }
             else
             {
@@ -238,6 +249,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region M3U methods
         #region GenerateM3UFile(int channelId, int playTime)
         private void GenerateM3UFile(int channelId, int playTime)
         {
@@ -267,13 +279,13 @@ namespace RentItServer.ITU
             return playlist;
         }
         #endregion
+        #endregion
 
         #region StartEzstreamProcess(int channelId)
         private EzProcess StartEzstreamProcess(int channelId)
         {
             if (!IsChannelPlaying(channelId))
             {
-
                 //Start set up the process
                 //Path to ezstream executable
                 string ezPath = FilePath.ITUEzStreamPath.GetPath();
@@ -285,10 +297,6 @@ namespace RentItServer.ITU
 
                 //Start set up process info
                 ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
-
-                //startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
-                //In order to redirect the standard input for ezstream into this program
-                //startInfo.RedirectStandardOutput = true;
 
                 //Default is true, it should be false for ezstream
                 startInfo.UseShellExecute = false;
@@ -302,7 +310,11 @@ namespace RentItServer.ITU
 
                 _logger.AddEntry("Starting process for channel with id: " + channelId);
                 p.Start();
-                _logger.AddEntry("Process started for channel with id: " + channelId);
+                _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
+                //AssignProcessId(p);
+                Task t = new Task(() => AssignProcessId(p));
+                t.Start();
+                //Task.Factory.StartNew(() => AssignProcessId(p), );
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
@@ -316,6 +328,27 @@ namespace RentItServer.ITU
             }
         }
         #endregion
+
+        private void AssignProcessId(EzProcess p)
+        {
+            _logger.AddEntry("start sleep");
+            Thread.Sleep(100000);
+            Process[] activeProcesses = Process.GetProcessesByName("ezstream");
+            _logger.AddEntry("length of active processes: " + activeProcesses.Length);
+            foreach (Process process in activeProcesses)
+            {
+                _logger.AddEntry("process.id: " + process.Id + " - process.name: " + process.ProcessName);
+                if (!ezstreamProcessIds.Contains(process.Id))
+                {
+                    p.RealProcessId = process.Id;
+                    ezstreamProcessIds.Add(process.Id);
+
+                    _logger.AddEntry("p.id: " + p.Id + " - p.realProcessId: " + p.RealProcessId + " - list.first: " + ezstreamProcessIds.First());
+                    break;
+                }
+            }
+        }
+
 
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
@@ -372,21 +405,14 @@ namespace RentItServer.ITU
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
-            foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+
+            foreach (Process p in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
-                if (p.ProcessName == "ezstream")
-                {
-                    p.Kill();
-                }
+                p.Kill();
             }
             _logger.AddEntry("All ezstream processes have been killed");
         }
         #endregion
-
-
-
-
-        
     }
 
     #region Custom exceptions

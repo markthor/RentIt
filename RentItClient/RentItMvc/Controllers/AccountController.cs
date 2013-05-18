@@ -82,13 +82,14 @@ namespace RentItMvc.Controllers
                         User user = proxy.SignUp(account.NewUsername, account.NewEmail, account.NewPassword);
                         Session["userId"] = user.Id;
                         Session["username"] = user.Username;
+                        return RedirectToAction("PopularChannels", "Channel");
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                     }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -173,6 +174,27 @@ namespace RentItMvc.Controllers
                     return true;
             }
             return false;
+        }
+
+        public static int GetVote(int userId, int trackId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                Vote vote = proxy.GetVote(userId, trackId);
+                if (vote != null)
+                {
+                    return vote.Value;
+                }
+                return 0;
+            }
+        }
+
+        public void CreateUpvote(int userId, int trackId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.CreateVote(1, userId, trackId);
+            }
         }
     }
 }

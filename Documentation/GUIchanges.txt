@@ -1,6 +1,5 @@
 [DONE]	Featured Channels -> Popular channels, kald top 10 subscriptions
 [DONE]	Listcomment i login menuen skal fjernes
-Tracks i listentochannel vindue skal tilføjes
 [DONE]	plays - times played
 [DONE]	edit channel, der skal ikke være add new track
 [DONE]	channels name check skal ikke være case sensitive
@@ -9,8 +8,9 @@ Tracks i listentochannel vindue skal tilføjes
 [DONE]	Holy space i edit user
 [DONE]	edit email, edit username
 [DONE]	På specific channel page skal der være listentochannel knap
+[DONE]	Hvis der ikke er nogen channels sidder ikonerne anderledes end hvis der er
+Tracks i listentochannel vindue skal tilføjes
 Der skal være genres lige under channel title
-Hvis der ikke er nogen channels sidder ikonerne anderledes end hvis der er
 ADVANCED SEARCH link
 
 

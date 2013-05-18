@@ -61,4 +61,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Comment" nillable="true" type="tns:Comment" />
+  <xs:complexType name="Vote">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TrackId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" type="xs:int" />
+      <xs:element minOccurs="0" name="VoteTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Vote" nillable="true" type="tns:Vote" />
 </xs:schema>
