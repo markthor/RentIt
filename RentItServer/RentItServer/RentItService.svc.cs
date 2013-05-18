@@ -265,5 +265,10 @@ namespace RentItServer
         {
             _controller.IncrementChannelPlays(channelId);
         }
+
+        public bool IsChannelPlaying(int channelId)
+        {
+            return _controller.IsChannelPlaying(channelId);
+        }
     }
 }
