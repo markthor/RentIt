@@ -77,11 +77,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        private int MillisecondsUntilReset()
-        {
-            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
-        }
-
+        #region Properties
         private DateTime ResetDate
         {
             get
@@ -106,6 +102,14 @@ namespace RentItServer.ITU
                 */
             }
         }
+        #endregion
+
+        private int MillisecondsUntilReset()
+        {
+            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
+        }
+
+        
 
         #region IsChannelPlaying(int channelId)
         public bool IsChannelPlaying(int channelId)
@@ -164,9 +168,11 @@ namespace RentItServer.ITU
         {
             _logger.AddEntry("Starting stopping channel with id: " + channelId);
             //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
+
+            EzProcess p;
             try
             {
-                Process p = runningChannelIds[channelId];
+                p = runningChannelIds[channelId];
             }
             catch(KeyNotFoundException)
             {
@@ -176,24 +182,28 @@ namespace RentItServer.ITU
 
             foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
             {
-                foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
-                {
-                    if (p.ProcessName == "ezstream")
-                    {
-                        _logger.AddEntry("p.id: " + p.Id);
-                    }
-                }
 
 
 
-                if (process.Id == process.Id)
+
+                if (process.Id == p.Id)
                 {
                     _logger.AddEntry("p.id: " + process.Id + " - name: " + process.ProcessName);
-                    //process.Kill();
+                    process.Kill();
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
                     break;
                 }
             }
+
+
+
+            /*foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+            {
+                if (p.ProcessName == "ezstream")
+                {
+                    _logger.AddEntry("eztream p.id: " + p.Id);
+                }
+            }*/
 
             runningChannelIds.Remove(channelId);
             //FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
@@ -249,6 +259,7 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region M3U methods
         #region GenerateM3UFile(int channelId, int playTime)
         private void GenerateM3UFile(int channelId, int playTime)
         {
@@ -277,6 +288,7 @@ namespace RentItServer.ITU
 
             return playlist;
         }
+        #endregion
         #endregion
 
         #region StartEzstreamProcess(int channelId)
@@ -314,6 +326,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Starting process for channel with id: " + channelId);
                 p.Start();
                 _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
+                p.RealId = p.Id;
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
