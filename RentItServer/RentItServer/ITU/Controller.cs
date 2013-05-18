@@ -257,7 +257,7 @@ namespace RentItServer.ITU
             try
             {
                 user = _dao.GetUser(userId);
-                _dao.UpdateUser(userId, username, password);
+                _dao.UpdateUser(userId, username, password, email);
                 if (user.Username != null) _userCache.Put(user.Username, null);
                 if (user.Email != null) _userCache.Put(user.Email, null);
                 updatedUser = _dao.GetUser(userId);
