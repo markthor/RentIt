@@ -112,6 +112,7 @@ namespace RentItServer.ITU
             {
                 if(_dao.ChannelHasTracks(channelId))
                 {
+                    _logger.AddEntry("Starting channel stream for channel with id: " + channelId);
                     StartChannelStream(channelId);
                     AddNewTrackPlays();
                 }
@@ -147,9 +148,10 @@ namespace RentItServer.ITU
 
             // start stream process
             EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
-
+            _logger.AddEntry("here");
             // add process to list of active streams
-            runningChannelIds.Add(channelId, p);
+            //_logger.AddEntry("[StartChannelStream]: Adding to dictionary");
+            //runningChannelIds.Add(channelId, p);
         }
         #endregion
 
@@ -236,6 +238,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Process started for channel with id: " + channelId);
 
                 //Add this process to the dictionary with running channels
+                _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
                 runningChannelIds.Add(channelId, p);
                 return p;
             }
@@ -250,6 +253,7 @@ namespace RentItServer.ITU
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
         {
+            _logger.AddEntry("Starting adding new trackplays");
             AddTrackPlayList(NewTrackPlays);
             NewTrackPlays.Clear();
         }
@@ -258,6 +262,14 @@ namespace RentItServer.ITU
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
+            _logger.AddEntry("Starting adding trackplays from list");
+
+
+            foreach (var t in trackPlayList)
+            {
+                _logger.AddEntry("TrackPlayId: " + t.TrackId + " - " + t.TimePlayed);
+            }
+
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion

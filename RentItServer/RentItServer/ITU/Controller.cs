@@ -496,9 +496,7 @@ namespace RentItServer.ITU
             //save to db
             //omg
             _logger.AddEntry("start");
-            Track track = new Track() { ChannelId = channelId };
-
-            Track theTrack = new Track()
+            Track track = new Track() 
             {
                 ChannelId = channelId,
                 Path = "",
@@ -589,7 +587,7 @@ namespace RentItServer.ITU
             }*/
         }
 
-        //TODO: REMAKE SO THAT IT DOES NOT CREATE AND DELETE A FILE
+        
         private Track GetTrackInfo(string filePath)
         {
             TagLib.File audioFile = TagLib.File.Create(filePath);

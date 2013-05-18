@@ -49,11 +49,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsChannelNameAvailable(GuiChannel channel)
+        public JsonResult IsChannelNameAvailable(string name, int id)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsChannelNameAvailable(channel.Id, channel.Name))
+                if (proxy.IsChannelNameAvailable(id, name))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
