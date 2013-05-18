@@ -18,13 +18,13 @@
     <body>
         <div id="audioPlayer">
             <h2 style="text-align: center">AudioPlayer</h2>
-            <audio id="player" preload="auto">
+            <audio id="player" preload="auto" autoplay="autoplay">
                 <source id="ogg" type="audio/ogg" src="@Model.StreamUri"/>
                 <source id="mp3" type="audio/mpeg" src="@Model.StreamUri"/>
             </audio>
             <div id="controls">
                 <div id="playStop" class="pull-left" onclick="playAudio()">
-                    <i id="playIcon" class="icon-play icon-white"></i>
+                    <i id="stopIcon" class="icon-stop icon-white"></i>
                 </div>
                 <div id="slider" class="pull-left">
                     <i id="down" class="icon-volume-down icon-white"></i>
