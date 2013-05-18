@@ -518,6 +518,7 @@ namespace RentItServer.ITU
             }
         }
 
+        //TODO: REMAKE SO THAT IT DOES NOT CREATE AND DELETE A FILE
         private DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
             Track theTrack = new Track();
@@ -530,17 +531,20 @@ namespace RentItServer.ITU
                 TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
                 
                 string[] artists = audioFile.Tag.AlbumArtists;
-                foreach (string artist in artists)
+                if (artists.Any())
                 {
-                    theTrack.Artist += artist + ", ";
+                    foreach (string artist in artists)
+                    {
+                        theTrack.Artist += artist + ", ";
+                    }
+                    theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 2);
                 }
-                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 2);
                 theTrack.DownVotes = 0;
                 theTrack.UpVotes = 0;
                 theTrack.Name = audioFile.Tag.Title;
                 theTrack.TrackPlays = new List<TrackPlay>();
                 theTrack.Votes = new List<Vote>();
-                theTrack.Length = audioFile.Properties.Duration.Milliseconds;
+                theTrack.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
                 try
                 {
                     _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
