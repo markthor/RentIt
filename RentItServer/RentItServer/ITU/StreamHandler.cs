@@ -329,6 +329,7 @@ namespace RentItServer.ITU
 
             foreach (Channel c in channels) // make a method which call all these
             {
+                _logger.AddEntry("restarting channel with id: " + c.Id);
                 StartChannelStream(c.Id);
             }
 
