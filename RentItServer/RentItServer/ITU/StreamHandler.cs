@@ -147,7 +147,7 @@ namespace RentItServer.ITU
 
             // start stream process
             EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
-
+            _logger.AddEntry("here");
             // add process to list of active streams
             //_logger.AddEntry("[StartChannelStream]: Adding to dictionary");
             //runningChannelIds.Add(channelId, p);
