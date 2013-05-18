@@ -311,7 +311,7 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Starting process for channel with id: " + channelId);
                 p.Start();
                 _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
-                AssignProcessId(p);
+                //AssignProcessId(p);
                 Task t = new Task(() => AssignProcessId(p));
                 t.Start();
                 //Task.Factory.StartNew(() => AssignProcessId(p), );
