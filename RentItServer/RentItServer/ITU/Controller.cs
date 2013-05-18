@@ -492,6 +492,9 @@ namespace RentItServer.ITU
         {
             try
             {
+                _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
+                trackInfo = GetTrackInfo(audioStream);
+                _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
