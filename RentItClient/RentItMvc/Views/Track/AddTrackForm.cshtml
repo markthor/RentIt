@@ -7,18 +7,12 @@
 
 <h5>Add a new track</h5>
 <div class="signup-field">
-    @using (Html.BeginForm("AddTrack", "Track", new { channelId = Session["channelId"], trackName = Model.TrackName, artistName = Model.ArtistName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddTrack", "Track", new { channelId = Session["channelId"], userId = Session["userId"], trackName = Model.TrackName, artistName = Model.ArtistName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     { 
-        <div style="margin-bottom: 10px" class="input-field">
-            @Html.TextBoxFor(t => Model.ArtistName, new { placeholder = "Artist", required = "required" })
-        </div>
-        <div style="margin-bottom: 10px" class="input-field">
-            @Html.TextBoxFor(t => Model.TrackName, new { placeholder = "Title", required = "required" })
-        </div>  
+        <div style="color: red; font-size: smaller; margin-top: -10px;">Only mp3 files will work!</div>
         <div class="textbox pull-left">
             <input type="file" name="file" id="file" required/>
         </div>
         <input style="margin-left: 7px" class="btn btn-success" type="submit" value="Add" />                                     
     }
 </div>
-

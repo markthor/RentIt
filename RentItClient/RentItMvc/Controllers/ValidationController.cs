@@ -13,11 +13,11 @@ namespace RentItMvc.Controllers
     [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
     public class ValidationController : Controller
     {
-        public JsonResult IsEmailAvailable(string email)
+        public JsonResult IsEmailAvailable(string newEmail)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsEmailAvailable(email))
+                if (proxy.IsEmailAvailable(newEmail))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
@@ -25,11 +25,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsUsernameAvailable(string username)
+        public JsonResult IsUsernameAvailable(string newUsername)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsUsernameAvailable(username))
+                if (proxy.IsUsernameAvailable(newUsername))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
@@ -37,11 +37,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsCurrentPasswordCorrect(string currentPassword)
+        public JsonResult IsCurrentPasswordCorrect(string currentPassword, int userId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsCorrectPassword((int) Session["userId"], currentPassword))
+                if (proxy.IsCorrectPassword(userId, currentPassword))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
@@ -49,11 +49,11 @@ namespace RentItMvc.Controllers
             }
         }
 
-        public JsonResult IsChannelNameAvailable(GuiChannel channel)
+        public JsonResult IsChannelNameAvailable(string name, int id)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsChannelNameAvailable(channel.Name))
+                if (proxy.IsChannelNameAvailable(id, name))
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }

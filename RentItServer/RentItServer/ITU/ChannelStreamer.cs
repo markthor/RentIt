@@ -114,7 +114,7 @@ namespace RentItServer.ITU
         private void NextSong()
         {
             TrackPrioritizer tp = TrackPrioritizer.GetInstance();
-            int trackId = tp.GetNextTrackId(DatabaseDao.GetInstance().GetTrackList(ChannelId), DatabaseDao.GetInstance().GetTrackPlays(ChannelId));
+            int trackId = tp.GetNextTrack(DatabaseDao.GetInstance().GetTrackList(ChannelId), DatabaseDao.GetInstance().GetTrackPlays(ChannelId)).Id;
             //currentTrack = DAO.GetInstance().GetTrack(trackId);
 
             //SongBytes = FileSystemHandler.LoadTrackBytes(currentTrack.trackpath);

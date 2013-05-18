@@ -19,10 +19,6 @@
     margin-right: 5px;
 }
 
-.input-error-group {
-    margin-bottom: 20px
-}
-
 .input-field {
     line-height: 20px;
     width: 200px;
@@ -40,7 +36,6 @@
 }
 
 .error-field {
-    width: 200px;
     margin-top: 4px;
 }
 
@@ -197,4 +192,9 @@ input[type=file]::-webkit-file-upload-button {
     max-height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.edit-account-label {
+    margin-bottom: 10px;
+    width: 225px;
 }

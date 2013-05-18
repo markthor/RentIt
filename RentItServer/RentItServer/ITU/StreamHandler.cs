@@ -11,6 +11,7 @@ namespace RentItServer.ITU
 {
     public class StreamHandler
     {
+        #region Fields
         //Singleton instance of the class
         private static StreamHandler _instance;
         //FileSystemHandler
@@ -27,6 +28,11 @@ namespace RentItServer.ITU
 
         private System.Timers.Timer timer;
 
+        private List<TrackPlay> NewTrackPlays;
+
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
@@ -35,25 +41,13 @@ namespace RentItServer.ITU
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
+            NewTrackPlays = new List<TrackPlay>();
 
-            InitTimer();
+            //InitTimer();
         }
+        #endregion
 
-        private void InitTimer()
-        {
-            timer = new System.Timers.Timer();
-            timer.Interval = 86400000; //24 hours
-            timer.Elapsed += timer_Elapsed;
-            timer.AutoReset = true;
-            timer.Start();
-        }
-
-        public void AddLogger(Logger logger)
-        {
-            _logger = logger;
-        }
-
-
+        #region GetInstance()
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
@@ -66,31 +60,30 @@ namespace RentItServer.ITU
             }
             return _instance;
         }
-        /// <summary>
-        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
-        /// </summary>
-        /// <param name="channelId">Channel id of the channel to be started</param>
-        public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
-        {
-            if (!IsChannelRunning(channelId)) // Check if stream is already running
-            {
-                if(_dao.ChannelHasTracks(channelId))
-                {
-                    StartEzstreamProcess(channelId);
-                }
-                else
-                {
-                    _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
-                    throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
-                }
-            }
-            else //channel is already running
-            {
-                throw new ChannelRunningException("The channel is already running");
-            }
-        }
+        #endregion
 
-        private bool IsChannelRunning(int channelId)
+        #region InitTimer()
+        public void InitTimer()
+        {
+            /*_logger.AddEntry("Init timer");
+            timer = new System.Timers.Timer();
+            timer.Interval = 86400000; //24 hours
+            timer.Elapsed += timer_Elapsed;
+            timer.AutoReset = false; //timer.AutoReset = true;
+            _logger.AddEntry("Start timer");
+            timer.Start();*/
+        }
+        #endregion
+
+        #region AddLogger(Logger logger)
+        public void AddLogger(Logger logger)
+        {
+            _logger = logger;
+        }
+        #endregion
+
+        #region IsChannelPlaying(int channelId)
+        public bool IsChannelPlaying(int channelId)
         {
             try
             {
@@ -101,44 +94,187 @@ namespace RentItServer.ITU
             }
             catch (KeyNotFoundException) 
             { 
-                _logger.AddEntry("[IsChannelRunning]: KeyNotFoundException when looking for channelId: " + channelId); 
+                //_logger.AddEntry("[IsChannelRunning]: KeyNotFoundException when looking for channelId: " + channelId); 
             }
             return false;
         }
+        #endregion
 
+        #region ManualStreamStart(int channelId)
         /// <summary>
-        /// Stops the stream of a channel and sets it is not running.
+        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
         /// </summary>
-        /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
+        /// <param name="channelId">Channel id of the channel to be started</param>
+        public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
         {
-            if (IsChannelRunning(channelId))
+            _logger.AddEntry("Manually starting stream for channel with id: " + channelId);
+            if (!IsChannelPlaying(channelId)) // Check if stream is already running
             {
-                EzProcess p = runningChannelIds[channelId];
-                p.Close();
-                runningChannelIds.Remove(channelId);
+                if(_dao.ChannelHasTracks(channelId))
+                {
+                    _logger.AddEntry("Starting channel stream for channel with id: " + channelId);
+                    StartChannelStream(channelId);
+                    AddNewTrackPlays();
+                }
+                else
+                {
+                    _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
+                    throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
+                }
+            }
+            else //channel is already running
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " is already running");
+                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
+            }
+        }
+        #endregion
+
+        #region StartChannelStream(int channelId)
+        private void StartChannelStream(int channelId)
+        {
+            // make sure it has a config file
+            string xmlFilePath;
+            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+            if (!_fileSystemHandler.Exists(xmlFilePath))
+            {
+                CreateChannelConfigFile(channelId);
+            }
+
+            // generate m3u file
+            int playTime = 86400000; //24 hours
+            GenerateM3UFile(channelId, playTime);
+
+
+            // start stream process
+            EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
+            _logger.AddEntry("here");
+            // add process to list of active streams
+            //_logger.AddEntry("[StartChannelStream]: Adding to dictionary");
+            //runningChannelIds.Add(channelId, p);
+        }
+        #endregion
+
+        #region CreateChannelConfigfile(int channelId)
+        private void CreateChannelConfigFile(int channelId)
+        {
+            _logger.AddEntry("Generate config xml for channel with id: " + channelId);
+            //Generate the xml for the config file
+            string xml;
+            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + channelId + ".m3u");
+            //Create the xmlFilePath
+            string xmlFilePath;
+            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+            _logger.AddEntry("Generating config file for channel with id: " + channelId);
+            //Write the config file to the system
+            FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+        }
+        #endregion
+
+        #region GenerateM3UFile(int channelId, int playTime)
+        private void GenerateM3UFile(int channelId, int playTime)
+        {
+            List<TrackPlay> addedTrackPlays;
+            List<Track> playlist = GeneratePlaylist(channelId, playTime, out addedTrackPlays);
+            NewTrackPlays.AddRange(addedTrackPlays);
+
+            string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
+            _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
+        }
+        #endregion
+
+        #region GeneratePlaylist(int channelId, int playTime, out List<TrackPlay> addedTrackPlays)
+        private List<Track> GeneratePlaylist(int channelId, int playTime, out List<TrackPlay> addedTrackPlays)
+        {
+            List<Track> channelTracks = _dao.GetTrackList(channelId);
+            if (!channelTracks.Any())
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
+                throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
+            }
+
+            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+
+            List<Track> playlist = TrackPrioritizer.GetInstance().GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
+
+            return playlist;
+        }
+        #endregion
+
+        #region StartEzstreamProcess(int channelId)
+        private EzProcess StartEzstreamProcess(int channelId)
+        {
+            if (!IsChannelPlaying(channelId))
+            {
+
+                //Start set up the process
+                //Path to ezstream executable
+                string ezPath = FilePath.ITUEzStreamPath.GetPath();
+
+                //Create the arguments
+                string xmlFilePath;
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                string arguments = "-c " + xmlFilePath;
+
+                //Start set up process info
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
+
+                //startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
+                //In order to redirect the standard input for ezstream into this program
+                //startInfo.RedirectStandardOutput = true;
+
+                //Default is true, it should be false for ezstream
+                startInfo.UseShellExecute = false;
+                //It should not create a new window for the ezstream process
+                startInfo.CreateNoWindow = true;
+
+                //Create the process
+                _logger.AddEntry("Creating process for channel with id: " + channelId);
+                EzProcess p = new EzProcess(channelId);
+                p.StartInfo = startInfo;
+
+                _logger.AddEntry("Starting process for channel with id: " + channelId);
+                p.Start();
+                _logger.AddEntry("Process started for channel with id: " + channelId);
+
+                //Add this process to the dictionary with running channels
+                _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
+                runningChannelIds.Add(channelId, p);
+                return p;
             }
             else
             {
-                throw new ChannelRunningException("The channel is not running");
+                _logger.AddEntry("Channel with id: " + channelId + " is already running");
+                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
             }
         }
+        #endregion
 
-        private void AddTrackPlay(Track track)
+        #region AddNewTrackPlays()
+        private void AddNewTrackPlays()
         {
-            _dao.AddTrackPlay(track);
+            _logger.AddEntry("Starting adding new trackplays");
+            AddTrackPlayList(NewTrackPlays);
+            NewTrackPlays.Clear();
         }
+        #endregion
 
-        private void GenerateM3uWithOneTrack(int channelId, string trackFileName)
+        #region AddTrackPlayList(List<TrackPlay> tracks)
+        private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
-            string trackPath = FilePath.ITUTrackPath.GetPath() + trackFileName;
-            //FileSystemDao.GetInstance().WriteM3u(new List<string>() { trackPath }, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
-            FileSystemDao.GetInstance().WriteM3UFile(trackPath, FilePath.ITUM3uPath.GetPath() + channelId.ToString() + ".m3u");
+            _logger.AddEntry("Starting adding trackplays from list");
+
+
+            foreach (var t in trackPlayList)
+            {
+                _logger.AddEntry("TrackPlayId: " + t.TrackId + " - " + t.TimePlayed);
+            }
+
+            _dao.AddTrackPlayList(trackPlayList);
         }
-
-
-
-
+        #endregion
+        
+        #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         //Reset all streams
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -165,32 +301,15 @@ namespace RentItServer.ITU
             {
                 StartChannelStream(c.Id);
             }
+
+            AddNewTrackPlays();
         }
+        #endregion
 
-        private void StartChannelStream(int channelId)
-        {
-            // make sure it has a config file
-            string xmlFilePath;
-            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-            if (!_fileSystemHandler.Exists(xmlFilePath))
-            {
-                CreateChannelConfigFile(channelId);
-            }
-
-            // generate m3u file
-            int playTime = 86400000; //24 hours
-            GenerateM3U(channelId, playTime);
-
-
-            // start stream process
-            EzProcess p = StartEzstreamProcess(channelId); //CHECK AT DEN IKKE KØRER
-
-            // add process to list of active streams
-            runningChannelIds.Add(channelId, p);
-        }
-
+        #region CloseAllStreams()
         private void CloseAllStreams()
         {
+            _logger.AddEntry("Start killing all running ezstream processes");
             foreach (System.Diagnostics.Process myProc in System.Diagnostics.Process.GetProcesses())
             {
                 if (myProc.ProcessName == "ezstream")
@@ -198,62 +317,39 @@ namespace RentItServer.ITU
                     myProc.Kill();
                 }
             }
+            _logger.AddEntry("All ezstream processes have been killed");
         }
+        #endregion
 
-        private void CreateChannelConfigFile(int channelId)
+
+
+
+        #region StopStream(int channelId)  Out commented
+        /*/// <summary>
+        /// Stops the stream of a channel and sets it is not running.
+        /// </summary>
+        /// <param name="channelId">The id of the channel to be stopped</param>
+        public void StopStream(int channelId)
         {
-            //Generate the xml for the config file
-            string xml;
-            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + channelId + ".m3u");
-            _logger.AddEntry("Config file generated for channel with id: " + channelId);
-            //Create the xmlFilePath
-            string xmlFilePath;
-            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-            //Write the config file to the system
-            FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
-        }
+            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
 
-        private void GenerateM3U(int channelId, int playTime)
-        {
-            throw new NotImplementedException();
-            //create m3u file which lasts around as long as the playtime, one track over, doesnt matter anyway
-        }
 
-        private EzProcess StartEzstreamProcess(int channelId)
-        {
-            string xmlFilePath;
-            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
 
-            //Start set up the process
-            //Path to ezstream executable
-            string ezPath = FilePath.ITUEzStreamPath.GetPath();
-            //Create the arguments
-            string arguments = "-c " + xmlFilePath;
-            //Start set up process info
-            ProcessStartInfo startInfo = new ProcessStartInfo("cmd", "/c " + ezPath + " " + arguments);
-            startInfo.RedirectStandardInput = true; // MAYBE NEEDED FOR WHEN WE TEST CHANGE SONG VIA COMMAND LINE INPUT
-            //In order to redirect the standard input for ezstream into this program
-            startInfo.RedirectStandardOutput = true;
-            //Default is true, it should be false for ezstream
-            startInfo.UseShellExecute = false;
-            //It should not create a new window for the ezstream process
-            startInfo.CreateNoWindow = true;
-
-            //Create the process
-            _logger.AddEntry("Creating process for channel with id: " + channelId);
-            EzProcess p = new EzProcess(channelId);
-            p.StartInfo = startInfo;
-
-            _logger.AddEntry("Starting process for channel with id: " + channelId);
-            p.Start();
-            _logger.AddEntry("Process started for channel with id: " + channelId);
-
-            //Add this process to the dictionary with running channels
-            //runningChannelIds.Add(channelId, p); SKAL DET GØRES HER?!?!?!?!?!?!?!?!?!?!?!?!?!?
-            return p;
-        }
+            if (IsChannelRunning(channelId))
+            {
+                EzProcess p = runningChannelIds[channelId];
+                p.Close();
+                runningChannelIds.Remove(channelId);
+            }
+            else
+            {
+                throw new ChannelRunningException("The channel is not running");
+            }
+        }*/
+        #endregion
     }
 
+    #region Custom exceptions
     class NoTracksOnChannelException : Exception
     {
         public NoTracksOnChannelException(string message)
@@ -267,4 +363,5 @@ namespace RentItServer.ITU
             : base(message)
         { }
     }
+    #endregion
 }

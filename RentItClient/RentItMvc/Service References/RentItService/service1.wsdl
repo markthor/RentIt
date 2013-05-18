@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RentItService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RentItService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
-      <xsd:import schemaLocation="http://rentit.itu.dk/RentIt21/RentItService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IRentItService_Login_InputMessage">
@@ -107,12 +107,6 @@
   <wsdl:message name="IRentItService_AddTrack_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddTrackResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_GetTrackInfoByStream_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetTrackInfoByStream" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_GetTrackInfoByStream_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetTrackInfoByStreamResponse" />
-  </wsdl:message>
   <wsdl:message name="IRentItService_GetTrackInfoByTrackname_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTrackInfoByTrackname" />
   </wsdl:message>
@@ -191,23 +185,11 @@
   <wsdl:message name="IRentItService_GetChannelPort_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetChannelPortResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_ListenToChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:ListenToChannel" />
+  <wsdl:message name="IRentItService_StartChannelStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannelStream" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_ListenToChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ListenToChannelResponse" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StartChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:StartChannel" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StartChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StartChannelResponse" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StopChannel_InputMessage">
-    <wsdl:part name="parameters" element="tns:StopChannel" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_StopChannel_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StopChannelResponse" />
+  <wsdl:message name="IRentItService_StartChannelStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartChannelStreamResponse" />
   </wsdl:message>
   <wsdl:message name="IRentItService_GetDefaultChannelSearchArgs_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultChannelSearchArgs" />
@@ -256,6 +238,12 @@
   </wsdl:message>
   <wsdl:message name="IRentItService_IncrementChannelPlays_OutputMessage">
     <wsdl:part name="parameters" element="tns:IncrementChannelPlaysResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IsChannelPlaying_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsChannelPlaying" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_IsChannelPlaying_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsChannelPlayingResponse" />
   </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
@@ -322,10 +310,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/AddTrack" message="tns:IRentItService_AddTrack_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/AddTrackResponse" message="tns:IRentItService_AddTrack_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetTrackInfoByStream">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetTrackInfoByStream" message="tns:IRentItService_GetTrackInfoByStream_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetTrackInfoByStreamResponse" message="tns:IRentItService_GetTrackInfoByStream_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetTrackInfoByTrackname">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetTrackInfoByTrackname" message="tns:IRentItService_GetTrackInfoByTrackname_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetTrackInfoByTracknameResponse" message="tns:IRentItService_GetTrackInfoByTrackname_OutputMessage" />
@@ -378,17 +362,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetChannelPort" message="tns:IRentItService_GetChannelPort_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetChannelPortResponse" message="tns:IRentItService_GetChannelPort_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ListenToChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/ListenToChannel" message="tns:IRentItService_ListenToChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/ListenToChannelResponse" message="tns:IRentItService_ListenToChannel_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="StartChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannel" message="tns:IRentItService_StartChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelResponse" message="tns:IRentItService_StartChannel_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="StopChannel">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StopChannel" message="tns:IRentItService_StopChannel_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StopChannelResponse" message="tns:IRentItService_StopChannel_OutputMessage" />
+    <wsdl:operation name="StartChannelStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannelStream" message="tns:IRentItService_StartChannelStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelStreamResponse" message="tns:IRentItService_StartChannelStream_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDefaultChannelSearchArgs">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs" message="tns:IRentItService_GetDefaultChannelSearchArgs_InputMessage" />
@@ -421,6 +397,10 @@
     <wsdl:operation name="IncrementChannelPlays">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IncrementChannelPlays" message="tns:IRentItService_IncrementChannelPlays_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse" message="tns:IRentItService_IncrementChannelPlays_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsChannelPlaying">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsChannelPlaying" message="tns:IRentItService_IsChannelPlaying_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IsChannelPlayingResponse" message="tns:IRentItService_IsChannelPlaying_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -569,15 +549,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetTrackInfoByStream">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/GetTrackInfoByStream" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetTrackInfoByTrackname">
       <soap:operation soapAction="http://tempuri.org/IRentItService/GetTrackInfoByTrackname" style="document" />
       <wsdl:input>
@@ -695,26 +666,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ListenToChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/ListenToChannel" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="StartChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannel" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="StopChannel">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/StopChannel" style="document" />
+    <wsdl:operation name="StartChannelStream">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannelStream" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -787,6 +740,15 @@
     </wsdl:operation>
     <wsdl:operation name="IncrementChannelPlays">
       <soap:operation soapAction="http://tempuri.org/IRentItService/IncrementChannelPlays" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsChannelPlaying">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/IsChannelPlaying" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

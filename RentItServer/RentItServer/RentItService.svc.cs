@@ -122,10 +122,9 @@ namespace RentItServer
         /// <param name="userId">The user id.</param>
         /// <param name="channelId">The channel id.</param>
         /// <param name="audioStream">The audio stream.</param>
-        /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
-            _controller.AddTrack(userId, channelId, audioStream, trackInfo);
+            _controller.AddTrack(userId, channelId, audioStream);
         }
 
         /// <summary>
@@ -133,10 +132,10 @@ namespace RentItServer
         /// </summary>
         /// <param name="audioStream">The audio stream.</param>
         /// <returns></returns>
-        public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
-        {
-            return _controller.GetTrackInfo(audioStream);
-        }
+        //public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
+        //{
+        //    return _controller.GetTrackInfo(audioStream);
+        //}
 
         /// <summary>
         /// Gets the track info associated with the track.
@@ -209,11 +208,6 @@ namespace RentItServer
             throw new NotImplementedException();
         }
 
-        public int ListenToChannel(int channelId)
-        {
-            return _controller.ListenToChannel(channelId);
-        }
-
         /// <summary>
         /// Starts the channel stream.
         /// </summary>
@@ -223,14 +217,14 @@ namespace RentItServer
             _controller.StartChannelStream(cId);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Stops the channel stream.
         /// </summary>
         /// <param name="cId">The id of the channel</param>
         public void StopChannel(int cId)
         {
             _controller.StopChannelStream(cId);
-        }
+        }*/
 
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
@@ -257,9 +251,9 @@ namespace RentItServer
             return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _controller.IsChannelNameAvailable(channelName);
+            return _controller.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)
@@ -270,6 +264,11 @@ namespace RentItServer
         public void IncrementChannelPlays(int channelId)
         {
             _controller.IncrementChannelPlays(channelId);
+        }
+
+        public bool IsChannelPlaying(int channelId)
+        {
+            return _controller.IsChannelPlaying(channelId);
         }
     }
 }

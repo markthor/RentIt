@@ -7,6 +7,7 @@ using System.Linq;
 using RentItServer.ITU.Exceptions;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
+using System.Text;
 
 namespace RentItServer.ITU
 {
@@ -28,8 +29,6 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
-        //The channel organizer
-        private readonly ChannelOrganizer _channelOrganizer;
         // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
         private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
@@ -41,7 +40,7 @@ namespace RentItServer.ITU
         public static string _defaultUri = "http://rentit.itu.dk";
         public static string _defaultStreamExtension = "";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
-
+        
         private int tempCounter;
         private readonly object _dbLock = new object();
 
@@ -71,12 +70,10 @@ namespace RentItServer.ITU
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
             //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
-            // Initialize the channel organizer
-            _channelOrganizer = ChannelOrganizer.GetInstance();
-
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
             _streamHandler.AddLogger(_logger);
+            _streamHandler.InitTimer();
         }
 
         /// <summary>
@@ -94,10 +91,10 @@ namespace RentItServer.ITU
             _streamHandler.ManualStreamStart(channelId);
         }
 
-        public void StopChannelStream(int channelId)
+        /*public void StopChannelStream(int channelId)
         {
             _streamHandler.StopStream(channelId);
-        }
+        }*/
 
         /// <summary>
         /// Login the specified user.
@@ -261,7 +258,7 @@ namespace RentItServer.ITU
             try
             {
                 user = _dao.GetUser(userId);
-                _dao.UpdateUser(userId, username, password);
+                _dao.UpdateUser(userId, username, password, email);
                 if (user.Username != null) _userCache.Put(user.Username, null);
                 if (user.Email != null) _userCache.Put(user.Email, null);
                 updatedUser = _dao.GetUser(userId);
@@ -492,74 +489,134 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
+            //save file
+            //get track info
+            //save to db
+            //omg
+            _logger.AddEntry("start");
+            Track track = new Track() 
+            {
+                ChannelId = channelId,
+                Path = "",
+                Name = "",
+                Artist = "",
+                Length = 0,
+                UpVotes = 0,
+                DownVotes = 0,
+                Channel = null,
+                TrackPlays = new Collection<TrackPlay>(),
+                Votes = new Collection<Vote>()
+            };
+
+
+            _logger.AddEntry("1");
             try
             {
+                track = _dao.CreateTrackEntry(channelId, track);
+                _logger.AddEntry("Track id: " + track.Id);
+                string fileName = track.Id + ".mp3";
+                _logger.AddEntry("Track filename: " + fileName);
+                _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
+
+                string filepath = FilePath.ITUTrackPath + fileName;//temp value for testing
+                _logger.AddEntry("Track filepath: " + filepath);
+                int tId = track.Id;
+                _logger.AddEntry("Getting trackinfo");
+                track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
+                track.Id = tId;
+                track.ChannelId = channelId;
+
+                _dao.UpdateTrack(track);
+            }
+            catch(Exception e)
+            {
+                _logger.AddEntry("exception: " + e);
+                //delete file and database entry
+            }
+
+            /*
+
+
+            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
+            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
+            try
+            {
+                
+                //trackInfo = GetTrackInfo(audioStream);
+                _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
+                
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
                 {
                     _logger.AddEntry("Size of audioStream: " + audioStream.Length);
                     _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
+                    _logger.AddEntry("HER ER DUA");
                 }
                 catch
                 {
+                    _logger.AddEntry("HER ER DUB" + " - TRACKINFO: " + trackInfo.Id + " - " +trackInfo.ChannelId);
                     _dao.DeleteTrackEntry(trackInfo);
                     throw new Exception("Exception occured when trying to write file to filesystem.");
                 }
             }
             catch (Exception e)
             {
+                _logger.AddEntry("HER ER DUC");
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("AddTrack failed with exception [" + e + "]."));
                 throw;
-            }
+            }*/
         }
 
-        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        
+        private Track GetTrackInfo(string filePath)
         {
-            Track theTrack = new Track();
-            theTrack.Artist = "";
-            try
+            TagLib.File audioFile = TagLib.File.Create(filePath);
+
+            Track track = new Track();
+            track.Id = 0;
+            track.ChannelId = 0;//FIX
+            track.Path = filePath;
+            track.UpVotes = 0;
+            track.DownVotes = 0;
+            track.Name = audioFile.Tag.Title;
+            track.TrackPlays = new List<TrackPlay>();
+            track.Votes = new List<Vote>();
+            track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
+
+            track.Artist = "";
+            string[] artists = audioFile.Tag.AlbumArtists;
+            if (artists.Any())
             {
-                int counter = tempCounter++;
-                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
-                // Use external library
-                //TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                FileStream audioFile = File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                theTrack.Artist = "Drezz";
-                theTrack.Name = "Mikkels coke eventyr part 2";
-                /*
-                string[] artists = audioFile.Tag.AlbumArtists;
+                StringBuilder sb = new StringBuilder();
                 foreach (string artist in artists)
                 {
-                    theTrack.Artist += artist + ", ";
+                    sb.Append(artist);
+                    sb.Append(", ");
                 }
-                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 3);
-                theTrack.DownVotes = 0;
-                theTrack.UpVotes = 0;
-                theTrack.Name = audioFile.Tag.Title;
-                theTrack.TrackPlays = new List<TrackPlay>();
-                theTrack.Votes = new List<Vote>();
-                theTrack.Length = audioFile.Properties.Duration.Milliseconds;
-                */
-                try
-                {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                }
-                catch
-                {
-                    // It doesn't matter much
-                }
-                return theTrack.GetTrack();
+                track.Artist = sb.ToString().Remove(sb.Length - 2);
             }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfo failed with exception [" + e + "]."));
-                throw;
-            }
+
+            return track;
         }
 
         public DatabaseWrapperObjects.Track GetTrackInfo(int channelId, string trackname)
@@ -767,19 +824,16 @@ namespace RentItServer.ITU
             throw e;
         }
 
-        public int ListenToChannel(int channelId)
-        {
-            _channelOrganizer.StartChannel(channelId);
-            return _channelOrganizer.GetChannelPortNumber(channelId);
-        }
-
         public bool IsEmailAvailable(string email)
         {
+            if(email == null)   LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
         public bool IsUsernameAvailable(string username)
         {
+            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
+            if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
 
@@ -808,9 +862,10 @@ namespace RentItServer.ITU
             return _dao.GetTracksByChannelId(channelId);
         }
 
-        public bool IsChannelNameAvailable(string channelName)
+        public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _dao.IsChannelNameAvailable(channelName);
+            if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
+            return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
         public int GetSubscriberCount(int channelId)
@@ -821,6 +876,11 @@ namespace RentItServer.ITU
         public void IncrementChannelPlays(int channelId)
         {
             _dao.IncrementChannelPlays(channelId);
+        }
+
+        public bool IsChannelPlaying(int channelId)
+        {
+            return _streamHandler.IsChannelPlaying(channelId);
         }
     }
 }

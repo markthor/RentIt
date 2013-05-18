@@ -16,9 +16,9 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channels">The list of channels to display</param>
         /// <returns></returns>
-        public ActionResult ChannelList(List<GuiChannel> channels)
+        public ActionResult ChannelList(List<GuiChannel> channels, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 if (channels == null)
                     channels = new List<GuiChannel>();
@@ -32,20 +32,17 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        public ActionResult CreateNewChannel(GuiChannel channel)
+        public ActionResult CreateNewChannel(GuiChannel channel, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
+                channel.OwnerId = userId.Value;
                 int channelId;
-                int userId = (int)Session["userId"];
-                string description = channel.Description;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    channelId = proxy.CreateChannel(channel.Name, userId, description, new string[0]);
+                    channelId = proxy.CreateChannel(channel.Name, userId.Value, channel.Description, new string[0]);
                 }
-                int routeChannelId = channelId;
-                int routeUserId = userId;
-                return RedirectToAction("SelectChannel", new { channelId = routeChannelId });
+                return RedirectToAction("SelectChannel", new { channelId = channelId, userId = userId });
             }
             return RedirectToAction("Index", "Home");
         }
@@ -55,15 +52,19 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public ActionResult EditChannel(int channelId)
+        public ActionResult EditChannel(int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     Channel chan = proxy.GetChannel(channelId);
                     GuiChannel channel = GuiClassConverter.ConvertChannel(chan);
-                    return View(channel);
+                    if (channel.OwnerId == userId.Value)
+                    {
+                        return View(channel);
+                    }
+                    return Redirect(Request.UrlReferrer.PathAndQuery);
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -73,9 +74,9 @@ namespace RentItMvc.Controllers
         /// Returns a list of most popular or highlighted channels
         /// </summary>
         /// <returns></returns>
-        public ActionResult FeaturedChannels()
+        public ActionResult PopularChannels(int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 Channel[] channels;
                 try
@@ -85,6 +86,7 @@ namespace RentItMvc.Controllers
                         ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
                         searchArgs.StartIndex = 0;
                         searchArgs.EndIndex = 10;
+                        searchArgs.SortOption = searchArgs.SubscriptionsDesc;
                         channels = proxy.GetChannels(searchArgs);
                     }
                 }
@@ -92,7 +94,7 @@ namespace RentItMvc.Controllers
                 {
                     channels = new Channel[0];
                 }
-                ViewBag.Title = "Featured channels";
+                ViewBag.Title = "Popular channels";
                 List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
                 return View("ChannelList", guiChannels);
             }
@@ -103,16 +105,14 @@ namespace RentItMvc.Controllers
         /// The list of channels assossiated with the logged in user
         /// </summary>
         /// <returns></returns>
-        public ActionResult MyChannels()
+        public ActionResult MyChannels(int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int)Session["userId"];
                 Channel[] channels;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    User user = proxy.GetUser(userId);
-                    channels = proxy.GetCreatedChannels(userId);
+                    channels = proxy.GetCreatedChannels(userId.Value);
                 }
                 List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels);
                 ViewBag.Title = "My channels";
@@ -125,17 +125,16 @@ namespace RentItMvc.Controllers
         /// Returns a view of the subscriptions assosiated with a User
         /// </summary>
         /// <returns></returns>
-        public ActionResult MySubscriptions()
+        public ActionResult MySubscriptions(int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int)Session["UserId"];
                 Channel[] channels;
                 try
                 {
                     using (RentItServiceClient proxy = new RentItServiceClient())
                     {
-                        channels = proxy.GetSubscribedChannels(userId);
+                        channels = proxy.GetSubscribedChannels(userId.Value);
                     }
                 }
                 catch (Exception)
@@ -149,24 +148,22 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SaveEditChannel(GuiChannel channel, int channelId)
+        public ActionResult SaveEditChannel(GuiChannel channel, int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                //channelId = Model.Id, ownerId = Model.OwnerId, name = Model.Name, description = Model.Description
-                int userId = (int)Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateChannel(channelId, userId, channel.Name, channel.Description, 0.0, 0.0);
+                    proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0);
                 }
-                return RedirectToAction("MyChannels", "Channel");
+                return RedirectToAction("SelectChannel", "Channel", new { channelId = channelId, userId = userId });
             }
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SearchResult(string searchArgs)
+        public ActionResult SearchResult(string searchArgs, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -181,9 +178,9 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SelectChannel(int channelId)
+        public ActionResult SelectChannel(int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
@@ -199,13 +196,39 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult CreateChannel()
+        public ActionResult CreateChannel(int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 return View(new GuiChannel());
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult StartChannel(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.StartChannelStream(channelId);
+            }
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+        }
+
+        public ActionResult StopChannel(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                //proxy.StopChannelStream(channelId);
+            }
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+        }
+
+        public static bool IsChannelPlaying(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.IsChannelPlaying(channelId);
+            }
         }
     }
 }

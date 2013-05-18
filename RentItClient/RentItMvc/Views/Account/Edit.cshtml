@@ -5,45 +5,72 @@
 }
 
 
-<h2>Edit Account</h2>
+<h2>Account details</h2>
+<div class="editor-label">
+    @Html.DisplayFor(model => model.CurrentUsername)
+</div>
 
-@using (Html.BeginForm("ChangePassword", "Account", null, FormMethod.Post, new { @class = "form-horizontal" }))
+<div class="editor-label">
+    @Html.DisplayFor(model => model.CurrentEmail)
+</div>
+
+<!-- CHANGE USERNAME -->
+@using (Html.BeginForm("ChangeUsername", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
-
-    <div class="editor-label">
-        @Html.DisplayFor(model => model.Username)
-    </div>
-
-    <div class="editor-label">
-        @Html.DisplayFor(model => model.Email)
-    </div>
         
-    <h2>Change password</h2>
+    <h4>Change username</h4>
+    <div class="edit-account-label pull-left">
+        @Html.TextBoxFor(model => model.NewUsername, new { @class = "input-block-level", type = "text", required = "required", placeholder = "Pick a new username" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.NewUsername, null, new { @class = "txt-error" })
+    </div>
+    <div class="clearfix"></div>
+    <button class="btn btn-success" type="submit">Save changes</button>
+}
+
+<!-- CHANGE EMAIL -->
+@using (Html.BeginForm("ChangeEmail", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+        
+    <h4>Change email</h4>
+    <div class="edit-account-label pull-left">
+        @Html.TextBoxFor(model => model.NewEmail, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Enter your new email" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.NewEmail, null, new { @class = "txt-error" })
+    </div>
+    <div class="clearfix"></div>
+    <button class="btn btn-success" type="submit">Save changes</button>
+}
+
+<!-- CHANGE PASSWORD -->
+@using (Html.BeginForm("ChangePassword", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.UserId)
     
-    <div class="input-error-group clearfix">
-        <div class="input-field pull-left">
-            @Html.TextBoxFor(model => model.CurrentPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Current password" })
-        </div>
-        <div class="error-field">
-            @Html.ValidationMessageFor(model => model.CurrentPassword, null, new { @class = "txt-error" })
-        </div>
+    <h4>Change password</h4>
+    <div class="edit-account-label pull-left">
+        @Html.TextBoxFor(model => model.CurrentPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Current password" })
     </div>
-    <div class="input-error-group clearfix">
-        <div class="input-field pull-left">
-            @Html.TextBoxFor(model => model.NewPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "New password" })
-        </div>
-        <div class="error-field">
-            @Html.ValidationMessageFor(model => model.NewPassword, null, new { @class = "txt-error" })
-        </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.CurrentPassword, null, new { @class = "txt-error" })
     </div>
-    <div class="input-error-group clearfix">
-        <div class="input-field pull-left">
-            @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Confirm new password" })
-        </div>
-        <div class="error-field">
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "txt-error" })
-        </div>
+    <div class="clearfix"></div>
+    <div class="edit-account-label pull-left">
+        @Html.TextBoxFor(model => model.NewPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "New password" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.NewPassword, null, new { @class = "txt-error" })
+    </div>
+    <div class="clearfix"></div>
+    <div class="edit-account-label pull-left">
+        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Confirm new password" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "txt-error" })
     </div>
     <div class="clearfix"></div>
     <button class="btn btn-success" type="submit">Save changes</button>

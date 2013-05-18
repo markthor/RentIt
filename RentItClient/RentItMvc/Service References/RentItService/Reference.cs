@@ -250,13 +250,37 @@ namespace RentItMvc.RentItService {
         private string[] GenresField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HitsAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HitsDescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameDescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int NumberOfCommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfCommentsAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfCommentsDescField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int NumberOfSubscriptionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double RatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RatingAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RatingDescField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SearchStringField;
@@ -266,6 +290,12 @@ namespace RentItMvc.RentItService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int StartIndexField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SubscriptionsAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SubscriptionsDescField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -317,6 +347,58 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HitsAsc {
+            get {
+                return this.HitsAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HitsAscField, value) != true)) {
+                    this.HitsAscField = value;
+                    this.RaisePropertyChanged("HitsAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HitsDesc {
+            get {
+                return this.HitsDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HitsDescField, value) != true)) {
+                    this.HitsDescField = value;
+                    this.RaisePropertyChanged("HitsDesc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NameAsc {
+            get {
+                return this.NameAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameAscField, value) != true)) {
+                    this.NameAscField = value;
+                    this.RaisePropertyChanged("NameAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NameDesc {
+            get {
+                return this.NameDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameDescField, value) != true)) {
+                    this.NameDescField = value;
+                    this.RaisePropertyChanged("NameDesc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int NumberOfComments {
             get {
                 return this.NumberOfCommentsField;
@@ -325,6 +407,32 @@ namespace RentItMvc.RentItService {
                 if ((this.NumberOfCommentsField.Equals(value) != true)) {
                     this.NumberOfCommentsField = value;
                     this.RaisePropertyChanged("NumberOfComments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfCommentsAsc {
+            get {
+                return this.NumberOfCommentsAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfCommentsAscField, value) != true)) {
+                    this.NumberOfCommentsAscField = value;
+                    this.RaisePropertyChanged("NumberOfCommentsAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfCommentsDesc {
+            get {
+                return this.NumberOfCommentsDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfCommentsDescField, value) != true)) {
+                    this.NumberOfCommentsDescField = value;
+                    this.RaisePropertyChanged("NumberOfCommentsDesc");
                 }
             }
         }
@@ -351,6 +459,32 @@ namespace RentItMvc.RentItService {
                 if ((this.RatingField.Equals(value) != true)) {
                     this.RatingField = value;
                     this.RaisePropertyChanged("Rating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RatingAsc {
+            get {
+                return this.RatingAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RatingAscField, value) != true)) {
+                    this.RatingAscField = value;
+                    this.RaisePropertyChanged("RatingAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RatingDesc {
+            get {
+                return this.RatingDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RatingDescField, value) != true)) {
+                    this.RatingDescField = value;
+                    this.RaisePropertyChanged("RatingDesc");
                 }
             }
         }
@@ -390,6 +524,32 @@ namespace RentItMvc.RentItService {
                 if ((this.StartIndexField.Equals(value) != true)) {
                     this.StartIndexField = value;
                     this.RaisePropertyChanged("StartIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SubscriptionsAsc {
+            get {
+                return this.SubscriptionsAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubscriptionsAscField, value) != true)) {
+                    this.SubscriptionsAscField = value;
+                    this.RaisePropertyChanged("SubscriptionsAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SubscriptionsDesc {
+            get {
+                return this.SubscriptionsDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubscriptionsDescField, value) != true)) {
+                    this.SubscriptionsDescField = value;
+                    this.RaisePropertyChanged("SubscriptionsDesc");
                 }
             }
         }
@@ -683,10 +843,28 @@ namespace RentItMvc.RentItService {
         private string ArtistField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ArtistAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ArtistDescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int DownvotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DownvotesAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DownvotesDescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int EndIndexField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameDescField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SearchStringField;
@@ -699,6 +877,12 @@ namespace RentItMvc.RentItService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int UpvotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpvotesAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpvotesDescField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -724,6 +908,32 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ArtistAsc {
+            get {
+                return this.ArtistAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ArtistAscField, value) != true)) {
+                    this.ArtistAscField = value;
+                    this.RaisePropertyChanged("ArtistAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ArtistDesc {
+            get {
+                return this.ArtistDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ArtistDescField, value) != true)) {
+                    this.ArtistDescField = value;
+                    this.RaisePropertyChanged("ArtistDesc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Downvotes {
             get {
                 return this.DownvotesField;
@@ -737,6 +947,32 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DownvotesAsc {
+            get {
+                return this.DownvotesAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DownvotesAscField, value) != true)) {
+                    this.DownvotesAscField = value;
+                    this.RaisePropertyChanged("DownvotesAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DownvotesDesc {
+            get {
+                return this.DownvotesDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DownvotesDescField, value) != true)) {
+                    this.DownvotesDescField = value;
+                    this.RaisePropertyChanged("DownvotesDesc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int EndIndex {
             get {
                 return this.EndIndexField;
@@ -745,6 +981,32 @@ namespace RentItMvc.RentItService {
                 if ((this.EndIndexField.Equals(value) != true)) {
                     this.EndIndexField = value;
                     this.RaisePropertyChanged("EndIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NameAsc {
+            get {
+                return this.NameAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameAscField, value) != true)) {
+                    this.NameAscField = value;
+                    this.RaisePropertyChanged("NameAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NameDesc {
+            get {
+                return this.NameDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameDescField, value) != true)) {
+                    this.NameDescField = value;
+                    this.RaisePropertyChanged("NameDesc");
                 }
             }
         }
@@ -797,6 +1059,32 @@ namespace RentItMvc.RentItService {
                 if ((this.UpvotesField.Equals(value) != true)) {
                     this.UpvotesField = value;
                     this.RaisePropertyChanged("Upvotes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpvotesAsc {
+            get {
+                return this.UpvotesAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpvotesAscField, value) != true)) {
+                    this.UpvotesAscField = value;
+                    this.RaisePropertyChanged("UpvotesAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpvotesDesc {
+            get {
+                return this.UpvotesDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpvotesDescField, value) != true)) {
+                    this.UpvotesDescField = value;
+                    this.RaisePropertyChanged("UpvotesDesc");
                 }
             }
         }
@@ -906,16 +1194,10 @@ namespace RentItMvc.RentItService {
         System.Threading.Tasks.Task CreateVoteAsync(int rating, int userId, int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/AddTrack", ReplyAction="http://tempuri.org/IRentItService/AddTrackResponse")]
-        void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo);
+        void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/AddTrack", ReplyAction="http://tempuri.org/IRentItService/AddTrackResponse")]
-        System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByStream", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByStreamResponse")]
-        RentItMvc.RentItService.Track GetTrackInfoByStream(System.IO.MemoryStream audioStream);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByStream", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByStreamResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Track> GetTrackInfoByStreamAsync(System.IO.MemoryStream audioStream);
+        System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByTrackname", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByTracknameResponse")]
         RentItMvc.RentItService.Track GetTrackInfoByTrackname(int channelId, string trackname);
@@ -995,23 +1277,11 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
         System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
-        int ListenToChannel(int channelId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannelStream", ReplyAction="http://tempuri.org/IRentItService/StartChannelStreamResponse")]
+        void StartChannelStream(int cId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/ListenToChannel", ReplyAction="http://tempuri.org/IRentItService/ListenToChannelResponse")]
-        System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannel", ReplyAction="http://tempuri.org/IRentItService/StartChannelResponse")]
-        void StartChannel(int cId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannel", ReplyAction="http://tempuri.org/IRentItService/StartChannelResponse")]
-        System.Threading.Tasks.Task StartChannelAsync(int cId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannel", ReplyAction="http://tempuri.org/IRentItService/StopChannelResponse")]
-        void StopChannel(int cId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannel", ReplyAction="http://tempuri.org/IRentItService/StopChannelResponse")]
-        System.Threading.Tasks.Task StopChannelAsync(int cId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannelStream", ReplyAction="http://tempuri.org/IRentItService/StartChannelStreamResponse")]
+        System.Threading.Tasks.Task StartChannelStreamAsync(int cId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgsResponse")]
         RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs();
@@ -1044,10 +1314,10 @@ namespace RentItMvc.RentItService {
         System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTrackByChannelIdAsync(int channelId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
-        bool IsChannelNameAvailable(string channelName);
+        bool IsChannelNameAvailable(int channelId, string channelName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
-        System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName);
+        System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(int channelId, string channelName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetSubscriberCount", ReplyAction="http://tempuri.org/IRentItService/GetSubscriberCountResponse")]
         int GetSubscriberCount(int channelId);
@@ -1060,6 +1330,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementChannelPlays", ReplyAction="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse")]
         System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelPlaying", ReplyAction="http://tempuri.org/IRentItService/IsChannelPlayingResponse")]
+        bool IsChannelPlaying(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelPlaying", ReplyAction="http://tempuri.org/IRentItService/IsChannelPlayingResponse")]
+        System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1209,20 +1485,12 @@ namespace RentItMvc.RentItService {
             return base.Channel.CreateVoteAsync(rating, userId, trackId);
         }
         
-        public void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo) {
-            base.Channel.AddTrack(userId, channelId, audioStream, trackInfo);
+        public void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream) {
+            base.Channel.AddTrack(userId, channelId, audioStream);
         }
         
-        public System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo) {
-            return base.Channel.AddTrackAsync(userId, channelId, audioStream, trackInfo);
-        }
-        
-        public RentItMvc.RentItService.Track GetTrackInfoByStream(System.IO.MemoryStream audioStream) {
-            return base.Channel.GetTrackInfoByStream(audioStream);
-        }
-        
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Track> GetTrackInfoByStreamAsync(System.IO.MemoryStream audioStream) {
-            return base.Channel.GetTrackInfoByStreamAsync(audioStream);
+        public System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream) {
+            return base.Channel.AddTrackAsync(userId, channelId, audioStream);
         }
         
         public RentItMvc.RentItService.Track GetTrackInfoByTrackname(int channelId, string trackname) {
@@ -1329,28 +1597,12 @@ namespace RentItMvc.RentItService {
             return base.Channel.GetChannelPortAsync(channelId, ipAddress, port);
         }
         
-        public int ListenToChannel(int channelId) {
-            return base.Channel.ListenToChannel(channelId);
+        public void StartChannelStream(int cId) {
+            base.Channel.StartChannelStream(cId);
         }
         
-        public System.Threading.Tasks.Task<int> ListenToChannelAsync(int channelId) {
-            return base.Channel.ListenToChannelAsync(channelId);
-        }
-        
-        public void StartChannel(int cId) {
-            base.Channel.StartChannel(cId);
-        }
-        
-        public System.Threading.Tasks.Task StartChannelAsync(int cId) {
-            return base.Channel.StartChannelAsync(cId);
-        }
-        
-        public void StopChannel(int cId) {
-            base.Channel.StopChannel(cId);
-        }
-        
-        public System.Threading.Tasks.Task StopChannelAsync(int cId) {
-            return base.Channel.StopChannelAsync(cId);
+        public System.Threading.Tasks.Task StartChannelStreamAsync(int cId) {
+            return base.Channel.StartChannelStreamAsync(cId);
         }
         
         public RentItMvc.RentItService.ChannelSearchArgs GetDefaultChannelSearchArgs() {
@@ -1393,12 +1645,12 @@ namespace RentItMvc.RentItService {
             return base.Channel.GetTrackByChannelIdAsync(channelId);
         }
         
-        public bool IsChannelNameAvailable(string channelName) {
-            return base.Channel.IsChannelNameAvailable(channelName);
+        public bool IsChannelNameAvailable(int channelId, string channelName) {
+            return base.Channel.IsChannelNameAvailable(channelId, channelName);
         }
         
-        public System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(string channelName) {
-            return base.Channel.IsChannelNameAvailableAsync(channelName);
+        public System.Threading.Tasks.Task<bool> IsChannelNameAvailableAsync(int channelId, string channelName) {
+            return base.Channel.IsChannelNameAvailableAsync(channelId, channelName);
         }
         
         public int GetSubscriberCount(int channelId) {
@@ -1415,6 +1667,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId) {
             return base.Channel.IncrementChannelPlaysAsync(channelId);
+        }
+        
+        public bool IsChannelPlaying(int channelId) {
+            return base.Channel.IsChannelPlaying(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId) {
+            return base.Channel.IsChannelPlayingAsync(channelId);
         }
     }
 }

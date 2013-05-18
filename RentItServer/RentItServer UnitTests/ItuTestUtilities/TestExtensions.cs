@@ -31,6 +31,11 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         //The second user created the last time the database was populated.
         public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser2;
         public static RentItServer.ITU.DatabaseWrapperObjects.Track _testTrack;
+        public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel1;
+        public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel2;
+        public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel3;
+        public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel4;
+        public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel5;
 
         /// <summary>
         /// Adds instances of different entities to test.
@@ -74,15 +79,22 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             t3.UpVotes = 1;
             t3.DownVotes = 1;
             t3.Path = "C:\\RentItServices\\RentIt21Files\\ITU\\Tracks\\test.mp3";
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t1);
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t2);
-            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream(), t3); 
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
+            Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream()); 
             _testTrack = t1;
+            DatabaseDao.GetInstance().CreateComment("testcomment", _testUser1.Id, _testChannelId1);
+            _testChannel1 = DatabaseDao.GetInstance().GetChannel(_testChannelId1).GetChannel();
+            _testChannel2 = DatabaseDao.GetInstance().GetChannel(_testChannelId2).GetChannel();
+            _testChannel3 = DatabaseDao.GetInstance().GetChannel(_testChannelId3).GetChannel();
+            _testChannel4 = DatabaseDao.GetInstance().GetChannel(_testChannelId4).GetChannel();
+            _testChannel5 = DatabaseDao.GetInstance().GetChannel(_testChannelId5).GetChannel();
             _testChannelId1 = channelId1;
             _testChannelId2 = channelId2;
             _testChannelId3 = channelId3;
             _testChannelId4 = channelId4;
             _testChannelId5 = channelId5;
+
         }
     }
 }
