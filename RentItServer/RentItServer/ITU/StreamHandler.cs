@@ -42,8 +42,6 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
             NewTrackPlays = new List<TrackPlay>();
-
-            //InitTimer();
         }
 
         /// <summary>
@@ -63,9 +61,12 @@ namespace RentItServer.ITU
         {
             _logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
-            timer.Interval = 600000;//timer.Interval = 86400000; //24 hours
+
+            //Calculate how long time the first ionterval should be
+            timer.Interval = MillisecondsUntilReset();
+
             timer.Elapsed += timer_Elapsed;
-            timer.AutoReset = true; //timer.AutoReset = true;
+            timer.AutoReset = true;
             _logger.AddEntry("Start timer");
             timer.Start();
         }
@@ -75,6 +76,36 @@ namespace RentItServer.ITU
             _logger = logger;
         }
         #endregion
+
+        private int MillisecondsUntilReset()
+        {
+            return (ResetDate - DateTime.Now).Milliseconds;
+        }
+
+        private DateTime ResetDate
+        {
+            get
+            {
+                //For testing!
+                DateTime resetDate = DateTime.Now;
+                resetDate.AddMinutes(1);
+                return resetDate;
+                //endFor
+
+
+                /* THE REAL DEAL
+                DateTime resetDate = DateTime.Now;
+                if (resetDate.Hour > 3) // in case the server is restarted in the before 3AM one day
+                {
+                    resetDate.AddDays(1);
+                }
+                resetDate.AddHours(3 - resetDate.Hour);
+                resetDate.AddMinutes(-resetDate.Minute);
+                resetDate.AddMilliseconds(-resetDate.Millisecond);
+                return resetDate;
+                */
+            }
+        }
 
         #region IsChannelPlaying(int channelId)
         public bool IsChannelPlaying(int channelId)
@@ -170,7 +201,7 @@ namespace RentItServer.ITU
             }
 
             // generate m3u file
-            int playTime = 86400000; //24 hours
+            int playTime = MillisecondsUntilReset(); //24 hours
             GenerateM3UFile(channelId, playTime);
 
 
