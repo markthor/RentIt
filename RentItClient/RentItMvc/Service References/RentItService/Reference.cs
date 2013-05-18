@@ -832,6 +832,99 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Vote", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
+    [System.SerializableAttribute()]
+    public partial class Vote : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TrackIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime VoteTimeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TrackId {
+            get {
+                return this.TrackIdField;
+            }
+            set {
+                if ((this.TrackIdField.Equals(value) != true)) {
+                    this.TrackIdField = value;
+                    this.RaisePropertyChanged("TrackId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime VoteTime {
+            get {
+                return this.VoteTimeField;
+            }
+            set {
+                if ((this.VoteTimeField.Equals(value) != true)) {
+                    this.VoteTimeField = value;
+                    this.RaisePropertyChanged("VoteTime");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TrackSearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
     [System.SerializableAttribute()]
     public partial class TrackSearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1342,6 +1435,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannelStream", ReplyAction="http://tempuri.org/IRentItService/StopChannelStreamResponse")]
         System.Threading.Tasks.Task StopChannelStreamAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetVote", ReplyAction="http://tempuri.org/IRentItService/GetVoteResponse")]
+        RentItMvc.RentItService.Vote GetVote(int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetVote", ReplyAction="http://tempuri.org/IRentItService/GetVoteResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Vote> GetVoteAsync(int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteVote", ReplyAction="http://tempuri.org/IRentItService/DeleteVoteResponse")]
+        void DeleteVote(int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteVote", ReplyAction="http://tempuri.org/IRentItService/DeleteVoteResponse")]
+        System.Threading.Tasks.Task DeleteVoteAsync(int userId, int trackId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1689,6 +1794,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task StopChannelStreamAsync(int channelId) {
             return base.Channel.StopChannelStreamAsync(channelId);
+        }
+        
+        public RentItMvc.RentItService.Vote GetVote(int userId, int trackId) {
+            return base.Channel.GetVote(userId, trackId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Vote> GetVoteAsync(int userId, int trackId) {
+            return base.Channel.GetVoteAsync(userId, trackId);
+        }
+        
+        public void DeleteVote(int userId, int trackId) {
+            base.Channel.DeleteVote(userId, trackId);
+        }
+        
+        public System.Threading.Tasks.Task DeleteVoteAsync(int userId, int trackId) {
+            return base.Channel.DeleteVoteAsync(userId, trackId);
         }
     }
 }

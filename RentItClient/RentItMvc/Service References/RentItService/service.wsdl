@@ -251,6 +251,18 @@
   <wsdl:message name="IRentItService_StopChannelStream_OutputMessage">
     <wsdl:part name="parameters" element="tns:StopChannelStreamResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_GetVote_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVote" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetVote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_DeleteVote_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVote" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_DeleteVote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVoteResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
@@ -411,6 +423,14 @@
     <wsdl:operation name="StopChannelStream">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StopChannelStream" message="tns:IRentItService_StopChannelStream_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StopChannelStreamResponse" message="tns:IRentItService_StopChannelStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVote">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetVote" message="tns:IRentItService_GetVote_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetVoteResponse" message="tns:IRentItService_GetVote_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVote">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/DeleteVote" message="tns:IRentItService_DeleteVote_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/DeleteVoteResponse" message="tns:IRentItService_DeleteVote_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -768,6 +788,24 @@
     </wsdl:operation>
     <wsdl:operation name="StopChannelStream">
       <soap:operation soapAction="http://tempuri.org/IRentItService/StopChannelStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVote">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetVote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVote">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/DeleteVote" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

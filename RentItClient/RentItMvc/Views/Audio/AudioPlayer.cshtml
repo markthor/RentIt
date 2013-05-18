@@ -2,6 +2,7 @@
     Layout = null;
 }
 
+@using System.Web.Optimization
 @model RentItMvc.Models.Audio
 
 <!DOCTYPE html>
@@ -10,7 +11,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>AudioPlayer</title>
-    <script type="text/javascript" src="~/Scripts/audioplayer.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-1.9.1.js"></script>
     <link rel="stylesheet" type="text/css" href="~/Content/custom.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
@@ -36,5 +36,6 @@
     <div>
         @Html.Action("Last5Tracks", new { channelId = Model.ChannelId })
     </div>
+    @Scripts.Render("~/audio")
 </body>
 </html>

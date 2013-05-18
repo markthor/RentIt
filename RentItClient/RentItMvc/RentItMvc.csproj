@@ -227,6 +227,9 @@
     <Content Include="Views\Comment\AddCommentForm.cshtml" />
     <Content Include="Views\Shared\Tracks.cshtml" />
     <Content Include="Views\Comment\CommentList.cshtml" />
+    <Content Include="Service References\RentItService\RentItMvc.RentItService.Vote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects.xsd">
       <SubType>Designer</SubType>
     </None>

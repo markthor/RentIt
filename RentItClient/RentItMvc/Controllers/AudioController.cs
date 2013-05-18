@@ -11,7 +11,7 @@ namespace RentItMvc.Controllers
 {
     public class AudioController : Controller
     {
-        public ActionResult AudioPlayer(int channelId)
+        public ActionResult AudioPlayer(int channelId, int userId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
@@ -32,7 +32,7 @@ namespace RentItMvc.Controllers
                 {
                     ArtistName = "Artist" + i,
                     TrackName = "Title" + i,
-                    Id = i,
+                    Id = 542,
                     ChannelId = channelId
                 };
                 guiTracks.Add(track);

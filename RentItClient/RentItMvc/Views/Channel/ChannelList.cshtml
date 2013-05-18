@@ -45,7 +45,7 @@
 
                 <td>
                     <div style="width: 40px;" class="text-center">
-                        <button class="btn btn-small" id="playButton" title="Listen to this channel" value="@channel.Id" onclick="openPlayer(this.value)">
+                        <button class="btn btn-small" id="playButton" title="Listen to this channel" value="@channel.Id&userId=@Session["userId"]" onclick="openPlayer(this.value)">
                             <i class="icon-play"></i>
                         </button>
                     </div>
