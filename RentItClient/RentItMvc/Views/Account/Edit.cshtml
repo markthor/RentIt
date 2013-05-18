@@ -19,7 +19,7 @@
 {
     @Html.ValidationSummary(true)
         
-    <h4>Change email</h4>
+    <h4>Change username</h4>
     <div style="margin-bottom: 10px" class="pull-left">
         @Html.TextBoxFor(model => model.NewUsername, new { @class = "input-block-level", type = "text", required = "required", placeholder = "Pick a new username" })
     </div>
@@ -35,7 +35,7 @@
 {
     @Html.ValidationSummary(true)
         
-    <h4>Change username</h4>
+    <h4>Change email</h4>
     <div style="margin-bottom: 10px" class="pull-left">
         @Html.TextBoxFor(model => model.NewEmail, new { @class = "input-block-level", type = "email", required = "required", placeholder = "Enter your new email" })
     </div>

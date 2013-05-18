@@ -225,7 +225,7 @@ namespace RentItServer.ITU
         /// <param name="subscribedChannels">The subscribed channels. Can be null.</param>
         /// <param name="votes">The votes. Can be null.</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
-        public void UpdateUser(int userId, string username, string password)
+        public void UpdateUser(int userId, string username, string password, string email)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -237,6 +237,7 @@ namespace RentItServer.ITU
                 User theUser = users.First();
                 if (username != null) theUser.Username = username;
                 if (password != null) theUser.Password = password;
+                if (email != null) theUser.Email = email;
                 context.SaveChanges();
             }
         }

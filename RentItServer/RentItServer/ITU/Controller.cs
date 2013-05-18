@@ -257,7 +257,7 @@ namespace RentItServer.ITU
             try
             {
                 user = _dao.GetUser(userId);
-                _dao.UpdateUser(userId, username, password);
+                _dao.UpdateUser(userId, username, password, email);
                 if (user.Username != null) _userCache.Put(user.Username, null);
                 if (user.Email != null) _userCache.Put(user.Email, null);
                 updatedUser = _dao.GetUser(userId);
@@ -493,6 +493,9 @@ namespace RentItServer.ITU
             DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
             try
             {
+                _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
+                trackInfo = GetTrackInfo(audioStream);
+                _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
