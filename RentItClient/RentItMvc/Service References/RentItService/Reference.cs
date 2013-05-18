@@ -1336,6 +1336,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelPlaying", ReplyAction="http://tempuri.org/IRentItService/IsChannelPlayingResponse")]
         System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannelStream", ReplyAction="http://tempuri.org/IRentItService/StopChannelStreamResponse")]
+        void StopChannelStream(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StopChannelStream", ReplyAction="http://tempuri.org/IRentItService/StopChannelStreamResponse")]
+        System.Threading.Tasks.Task StopChannelStreamAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1675,6 +1681,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId) {
             return base.Channel.IsChannelPlayingAsync(channelId);
+        }
+        
+        public void StopChannelStream(int channelId) {
+            base.Channel.StopChannelStream(channelId);
+        }
+        
+        public System.Threading.Tasks.Task StopChannelStreamAsync(int channelId) {
+            return base.Channel.StopChannelStreamAsync(channelId);
         }
     }
 }

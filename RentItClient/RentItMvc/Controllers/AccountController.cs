@@ -82,13 +82,14 @@ namespace RentItMvc.Controllers
                         User user = proxy.SignUp(account.NewUsername, account.NewEmail, account.NewPassword);
                         Session["userId"] = user.Id;
                         Session["username"] = user.Username;
+                        return RedirectToAction("PopularChannels", "Channel");
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                     }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

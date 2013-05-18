@@ -4,12 +4,12 @@
 <div class="row-fluid">
     <table class="table table-hover">
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th style="text-align: center" title="Number of subscribers">
+            <th style="width: 215px" >Name</th>
+            <th style="width: 355px" >Description</th>
+            <th style="width: 60px; text-align: center" title="Number of subscribers">
                 <i class="icon-ok" />
             </th>
-            <th style="text-align: center" title="Times played">
+            <th style="width: 60px; text-align: center" title="Times played">
                 <i class="icon-play" />
             </th>
             <th></th>
@@ -47,23 +47,23 @@
                     <div style="width: 40px;" class="text-center">
                         <button class="btn btn-small" id="playButton" title="Listen to this channel" value="@channel.Id" onclick="openPlayer(this.value)">
                             <i class="icon-play"></i>
-                        </button>    
+                        </button>
                     </div>
                 </td>
                 <td>
                     <div style="width: 40px;" class="text-center">
                         @{
-                            if (RentItMvc.Controllers.AccountController.IsSubscribed(channel.Id, (int)Session["UserId"]))
+                            if (Session["userId"] != null && RentItMvc.Controllers.AccountController.IsSubscribed(channel.Id, (int)Session["UserId"]))
                             {
-                                <button class="btn btn-small btn-warning" title="Unsubscribe" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = channel.Id, userId = Session["userId"] }))'">
-                                    <i class="icon-remove icon-white"></i>
-                                </button>
+                                            <button class="btn btn-small btn-warning" title="Unsubscribe" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = channel.Id, userId = Session["userId"] }))'">
+                                                <i class="icon-remove icon-white"></i>
+                                            </button>
                             }
                             else
                             {                     
-                                <button class="btn btn-small btn-success" title="Subscribe" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = channel.Id, userId = Session["userId"] }))'">
-                                    <i class="icon-ok icon-white"></i>
-                                </button>
+                                            <button class="btn btn-small btn-success" title="Subscribe" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = channel.Id, userId = Session["userId"] }))'">
+                                                <i class="icon-ok icon-white"></i>
+                                            </button>
                             }
                         }
                     </div>

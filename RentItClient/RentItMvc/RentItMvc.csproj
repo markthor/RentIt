@@ -194,7 +194,7 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\RentItService\Arrays1.xsd">
+    <None Include="Service References\RentItService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RentItService\configuration91.svcinfo" />
@@ -218,32 +218,32 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
     <Content Include="Views\Channel\EditChannel.cshtml" />
-    <Content Include="Views\Audio\LastTracks.cshtml" />
+    <Content Include="Views\Audio\Last5Tracks.cshtml" />
     <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Track\TrackList.cshtml" />
     <Content Include="Views\Channel\CreateChannel.cshtml" />
     <Content Include="Views\Comment\Comment.cshtml" />
     <Content Include="Views\Comment\AddCommentForm.cshtml" />
-    <Content Include="Views\Comment\CommentList.cshtml" />
     <Content Include="Views\Shared\Tracks.cshtml" />
-    <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects1.xsd">
+    <Content Include="Views\Comment\CommentList.cshtml" />
+    <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItServer.ITU1.xsd">
+    <None Include="Service References\RentItService\RentItServer.ITU.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\RentItService\service1.wsdl" />
-    <None Include="Service References\RentItService\service2.xsd">
+    <None Include="Service References\RentItService\service.wsdl" />
+    <None Include="Service References\RentItService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\service21.xsd">
+    <None Include="Service References\RentItService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\System.IO1.xsd">
+    <None Include="Service References\RentItService\System.IO.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\System1.xsd">
+    <None Include="Service References\RentItService\System.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

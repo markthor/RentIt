@@ -19,7 +19,26 @@ namespace RentItMvc.Controllers
             }
             Audio audio = new Audio();
             audio.StreamUri = "http://rentit.itu.dk:27000/" + channelId.ToString();
+            audio.ChannelId = channelId;
             return View(audio);
+        }
+
+        public PartialViewResult Last5Tracks(int channelId)
+        {
+            List<GuiTrack> guiTracks = new List<GuiTrack>();
+            for (int i = 0; i < 5; i++)
+            {
+                GuiTrack track = new GuiTrack
+                {
+                    ArtistName = "Artist" + i,
+                    TrackName = "Title" + i,
+                    Id = i,
+                    ChannelId = channelId
+                };
+                guiTracks.Add(track);
+            }
+
+            return PartialView(guiTracks);
         }
     }
 }

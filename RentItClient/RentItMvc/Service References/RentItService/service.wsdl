@@ -245,6 +245,12 @@
   <wsdl:message name="IRentItService_IsChannelPlaying_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsChannelPlayingResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_StopChannelStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopChannelStream" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_StopChannelStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopChannelStreamResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
@@ -401,6 +407,10 @@
     <wsdl:operation name="IsChannelPlaying">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsChannelPlaying" message="tns:IRentItService_IsChannelPlaying_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/IsChannelPlayingResponse" message="tns:IRentItService_IsChannelPlaying_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopChannelStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StopChannelStream" message="tns:IRentItService_StopChannelStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StopChannelStreamResponse" message="tns:IRentItService_StopChannelStream_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -749,6 +759,15 @@
     </wsdl:operation>
     <wsdl:operation name="IsChannelPlaying">
       <soap:operation soapAction="http://tempuri.org/IRentItService/IsChannelPlaying" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopChannelStream">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/StopChannelStream" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

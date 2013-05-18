@@ -29,6 +29,7 @@ namespace RentItMvc.Utilities
                 UserId = c.UserId,
                 Content = c.Content,
                 Date = c.PostTime,
+                ChannelId = c.ChannelId
             };
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
@@ -59,17 +60,16 @@ namespace RentItMvc.Utilities
                 Plays = c.Hits != null ? c.Hits.Value : 0,
                 Name = c.Name,
                 StreamUri = c.StreamUri,
-                Tracks = new List<GuiTrack>(),
                 OwnerId = c.OwnerId,
+                Genres = new string[0]
             };
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 //Get number of subscribers
                 chan.Subscribers = proxy.GetSubscriberCount(chan.Id);
-                //Calls the webservice and recieves an array of the tracks asossiated with the channel
-                Track[] tracks = proxy.GetTrackByChannelId(c.Id);
-                foreach (Track t in tracks)
-                    chan.Tracks.Add(ConvertTrack(t));
+                //Get the channels
+                chan.Tracks = ConvertTrackList(proxy.GetTrackByChannelId(c.Id));
+                //Get the genres
             }
             return chan;
         }

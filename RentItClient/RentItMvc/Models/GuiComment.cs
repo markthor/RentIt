@@ -24,5 +24,7 @@ namespace RentItMvc.Models
         [Required]
         [Display(Name = "Date")]
         public DateTime Date { get; set; }
+
+        public int ChannelId { get; set; }
     }
 }

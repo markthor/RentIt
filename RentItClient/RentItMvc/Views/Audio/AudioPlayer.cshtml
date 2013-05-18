@@ -7,31 +7,34 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>AudioPlayer</title>
-        <script type="text/javascript" src="~/Scripts/audioplayer.js"></script>
-        <script type="text/javascript" src="~/Scripts/jquery-1.9.1.js"></script>
-        <link rel="stylesheet" type="text/css" href="~/Content/custom.css"/>
-        <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css"/>
-    </head>
-    <body>
-        <div id="audioPlayer">
-            <h2 style="text-align: center">AudioPlayer</h2>
-            <audio id="player" preload="auto" autoplay="autoplay">
-                <source id="ogg" type="audio/ogg" src="@Model.StreamUri"/>
-                <source id="mp3" type="audio/mpeg" src="@Model.StreamUri"/>
-            </audio>
-            <div id="controls">
-                <div id="playStop" class="pull-left" onclick="playAudio()">
-                    <i id="stopIcon" class="icon-stop icon-white"></i>
-                </div>
-                <div id="slider" class="pull-left">
-                    <i id="down" class="icon-volume-down icon-white"></i>
-                    <input id="slide" type="range" min="0.0" max="1.0" step="0.01" value="0.5" onchange="updateSlider(this.value)"/>
-                    <i id="up" class="icon-volume-up icon-white"></i>
-                </div>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AudioPlayer</title>
+    <script type="text/javascript" src="~/Scripts/audioplayer.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+</head>
+<body>
+    <div id="audioPlayer">
+        <h2 style="text-align: center">AudioPlayer</h2>
+        <audio id="player" preload="auto" autoplay="autoplay">
+            <source id="ogg" type="audio/ogg" src="@Model.StreamUri"/>
+            <source id="mp3" type="audio/mpeg" src="@Model.StreamUri"/>
+        </audio>
+        <div id="controls">
+            <div id="playStop" class="pull-left" onclick="playAudio()">
+                <i id="stopIcon" class="icon-stop icon-white"></i>
+            </div>
+            <div id="slider" class="pull-left">
+                <i id="down" class="icon-volume-down icon-white"></i>
+                <input id="slide" type="range" min="0.0" max="1.0" step="0.01" value="0.5" onchange="updateSlider(this.value)" />
+                <i id="up" class="icon-volume-up icon-white"></i>
             </div>
         </div>
-    </body>
+    </div>
+    <div>
+        @Html.Action("Last5Tracks", new { channelId = Model.ChannelId })
+    </div>
+</body>
 </html>

@@ -1,6 +1,6 @@
 ﻿@model List<RentItMvc.Models.GuiComment>
 
-<hr style="margin-bottom: -5px;"/>
+<hr style="margin-bottom: -5px;" />
 <h4>Comments</h4>
 <div class="comment-section">
     @foreach (RentItMvc.Models.GuiComment c in Model)
@@ -10,4 +10,4 @@
         </div>
     }
 </div>
-@Html.Partial("AddCommentForm", new RentItMvc.Models.GuiComment())
+@Html.Partial("AddCommentForm", new RentItMvc.Models.GuiComment(), new ViewDataDictionary(new { channelId = ViewBag.ChannelId }))

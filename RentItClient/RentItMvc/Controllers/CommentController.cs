@@ -14,15 +14,15 @@ namespace RentItMvc.Controllers
         //
         // GET: /Comment/
 
-        public PartialViewResult CommentList()
+        public PartialViewResult CommentList(int channelId)
         {
-            int channelId = (int) Session["channelId"];
             Comment[] comments;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 comments = proxy.GetChannelComments(channelId, null, null);
             }
             List<GuiComment> guiComments = GuiClassConverter.ConvertComments(comments);
+            ViewBag.ChannelId = channelId;
             return PartialView(guiComments);
         }
 

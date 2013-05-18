@@ -1,0 +1,47 @@
+﻿@model List<RentItMvc.Models.GuiTrack>
+
+@{
+    Layout = null;
+}
+
+<div style="margin-top: 30px">
+<h4 style="margin-left: 8px">Last played tracks</h4>
+    <table class="table">
+        <tr>
+            <th>Artist</th>
+            <th>Title</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var track in Model)
+        {
+            <tr>
+                <td>
+                    <div style="width: 120px" class="text-overflow">
+                        @track.ArtistName
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 120px" class="text-overflow">
+                        @track.TrackName
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 30px">
+                        <button class="btn btn-small">
+                            <i class="icon-thumbs-up"></i>
+                        </button>
+                    </div>
+
+                </td>
+                <td>
+                    <div style="width: 30px">
+                        <button class="btn btn-small">
+                            <i class="icon-thumbs-down"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

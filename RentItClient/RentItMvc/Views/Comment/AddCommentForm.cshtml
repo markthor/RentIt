@@ -2,7 +2,7 @@
 
 
 <div style="width: 456px; padding-top: 10px">
-    @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post, new { }))
+    @using (Html.BeginForm("AddComment", "Comment", new { userId = Session["userId"], channelId = ViewBag.ChannelId }, FormMethod.Post, null))
     {
         @Html.TextAreaFor(comment => comment.Content, new { @class = "input-block-level comment-text", rows = "3", type = "textarea", required = "required", placeholder = "Write your comment" })
         <button class="btn btn-info" style="margin-top: -5px;" type="submit">

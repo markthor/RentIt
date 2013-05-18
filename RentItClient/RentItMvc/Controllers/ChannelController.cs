@@ -218,7 +218,7 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                //proxy.StopChannelStream(channelId);
+                proxy.StopChannelStream(channelId);
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }
