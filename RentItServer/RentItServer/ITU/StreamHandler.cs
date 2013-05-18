@@ -176,6 +176,16 @@ namespace RentItServer.ITU
 
             foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
             {
+                foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+                {
+                    if (p.ProcessName == "ezstream")
+                    {
+                        _logger.AddEntry("p-id: " + p.Id);
+                    }
+                }
+
+
+
                 if (process.Id == process.Id)
                 {
                     _logger.AddEntry("p.id: " + process.Id + " - name: " + process.ProcessName);
