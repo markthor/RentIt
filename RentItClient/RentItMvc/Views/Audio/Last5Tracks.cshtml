@@ -6,23 +6,24 @@
 
 <div style="margin-top: 30px">
     <h4 style="margin-left: 8px">Last played tracks</h4>
-    <table class="table">
+    <table id="trackTable" class="table">
         <tr>
             <th>Artist</th>
             <th>Title</th>
             <th></th>
             <th></th>
         </tr>
-        @foreach (var track in Model.Item1)
+        @for (int i = 0; i < 5; i++)
         {
+            var track = Model.Item1[i];
             <tr>
                 <td>
-                    <div style="width: 120px" class="text-overflow">
+                    <div id="@track.Id-artist"style="width: 120px" class="text-overflow">
                         @track.ArtistName
                     </div>
                 </td>
                 <td>
-                    <div style="width: 120px" class="text-overflow">
+                    <div id="@track.Id-title"style="width: 120px" class="text-overflow">
                         @track.TrackName
                     </div>
                 </td>
@@ -30,13 +31,13 @@
                     <div style="width: 30px">
                         @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == 1)
                         {
-                            <button class="btn btn-small btn-success" onclick=" upvote(@track.Id) ">
-                                <i class="icon-thumbs-up icon-white"></i>
+                            <button id="@track.Id-up" class="btn btn-small btn-success" onclick="upvote(@track.Id) ">
+                                <i class="icon-thumbs-up"></i>
                             </button>
                         }
                         else
                         {
-                            <button class="btn btn-small" onclick=" upvote(@track.Id) ">
+                            <button id="@track.Id-up" class="btn btn-small" onclick="upvote(@track.Id) ">
                                 <i class="icon-thumbs-up"></i>
                             </button>
                         }
@@ -48,15 +49,15 @@
                     @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == -1)
                     {
                         <div style="width: 30px">
-                            <button class="btn btn-small btn-danger">
-                                <i class="icon-thumbs-down icon-white"></i>
+                            <button id="@track.Id-down" class="btn btn-small btn-danger" onclick="downvote(@track.Id)">
+                                <i class="icon-thumbs-down"></i>
                             </button>
                         </div>
                     }
                     else
                     {
                         <div style="width: 30px">
-                            <button class="btn btn-small">
+                            <button id="@track.Id-down" class="btn btn-small" onclick="downvote(@track.Id)">
                                 <i class="icon-thumbs-down"></i>
                             </button>
                         </div>
