@@ -350,5 +350,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         bool IsChannelPlaying(int channelId);
+
+        [OperationContract]
+        void StopChannelStream(int channelId);
     }
 }
