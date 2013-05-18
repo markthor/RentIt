@@ -59,6 +59,7 @@ namespace RentItServer.ITU
                 if (nextTrack.Length == null) throw new ArgumentException("Track has null length");
                 if (nextTrack.Length <= 0) throw new ArgumentException("Track has length equal to or below zero.");
                 TrackPlay play = new TrackPlay(nextTrack.Id, DateTime.Now.AddMilliseconds(timeOfPlaylist));
+                timeOfPlaylist = timeOfPlaylist + nextTrack.Length;
                 playlist.Add(nextTrack);
                 plays.Add(play);
                 playsForPlaylist.Add(play);

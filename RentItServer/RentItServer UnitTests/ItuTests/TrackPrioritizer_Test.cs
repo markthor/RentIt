@@ -93,6 +93,27 @@ namespace RentItServer_UnitTests
             Assert.AreEqual(roundUpDivision, playListPlays.Count);
         }
 
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlaylist_MultipleTracks_NoPlays()
+        {
+            int trackLength = 180000;
+            List<Track> testTracks = new List<Track>();
+            testTracks.Add(new Track(1, 10, 2, trackLength));
+            testTracks.Add(new Track(2, 0, 1, trackLength));
+            testTracks.Add(new Track(3, 3, 30, trackLength));
+            testTracks.Add(new Track(4, 20, 4, trackLength));
+            testTracks.Add(new Track(5, 39, 33, trackLength));
+            testTracks.Add(new Track(6, 8, 9, trackLength));
+            testTracks.Add(new Track(7, 1, 49, trackLength));
+            testTracks.Add(new Track(8, 15, 18, trackLength));
+
+            List<TrackPlay> testPlays = new List<TrackPlay>();
+            List<TrackPlay> playListPlays = new List<TrackPlay>();
+
+            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(testTracks, testPlays, 1000000, out playListPlays);
+
+        }
+
         /// <summary>
         /// Tests GetNextPlayList with multiple tracks and multiple plays.
         /// </summary>
