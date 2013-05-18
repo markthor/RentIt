@@ -79,7 +79,7 @@ namespace RentItServer.ITU
 
         private int MillisecondsUntilReset()
         {
-            return (ResetDate - DateTime.Now).Milliseconds;
+            return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
         }
 
         private DateTime ResetDate
@@ -88,7 +88,7 @@ namespace RentItServer.ITU
             {
                 //For testing!
                 DateTime resetDate = DateTime.Now;
-                resetDate.AddMinutes(1);
+                resetDate = resetDate.AddMinutes(1);
                 return resetDate;
                 //endFor
 
@@ -97,11 +97,11 @@ namespace RentItServer.ITU
                 DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour > 3) // in case the server is restarted in the before 3AM one day
                 {
-                    resetDate.AddDays(1);
+                    resetDate = resetDate.AddDays(1);
                 }
-                resetDate.AddHours(3 - resetDate.Hour);
-                resetDate.AddMinutes(-resetDate.Minute);
-                resetDate.AddMilliseconds(-resetDate.Millisecond);
+                resetDate = resetDate.AddHours(3 - resetDate.Hour);
+                resetDate = resetDate.AddMinutes(-resetDate.Minute);
+                resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
                 */
             }
