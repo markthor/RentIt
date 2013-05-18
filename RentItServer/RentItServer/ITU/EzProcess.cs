@@ -19,7 +19,7 @@ namespace RentItServer.ITU
             private set;
         }
 
-        public int RealId
+        public int RealProcessId
         {
             get;
             set;

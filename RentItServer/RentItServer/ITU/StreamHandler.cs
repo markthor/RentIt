@@ -30,6 +30,8 @@ namespace RentItServer.ITU
 
         private List<TrackPlay> NewTrackPlays;
 
+        private List<int> ezstreamProcessIds;
+
         #endregion
 
         #region Initial methods
@@ -42,6 +44,7 @@ namespace RentItServer.ITU
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
             NewTrackPlays = new List<TrackPlay>();
+            ezstreamProcessIds = new List<int>();
         }
 
         /// <summary>
@@ -104,12 +107,13 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region Helper methods
+        #region MillisecondsUntilReset()
         private int MillisecondsUntilReset()
         {
             return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
         }
-
-        
+        #endregion
 
         #region IsChannelPlaying(int channelId)
         public bool IsChannelPlaying(int channelId)
@@ -127,6 +131,7 @@ namespace RentItServer.ITU
             }
             return false;
         }
+        #endregion
         #endregion
 
         #region ManualStreamStart(int channelId)
@@ -180,14 +185,32 @@ namespace RentItServer.ITU
                 throw new ChannelRunningException("Channel with id: " + channelId + " is not running");
             }
 
-            foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
+
+            Process[] processes = System.Diagnostics.Process.GetProcessesByName("ezstream");
+            _logger.AddEntry("Length of processes: " + processes.Length);
+            foreach (Process process in processes)
             {
+                _logger.AddEntry("process.id: " + process.Id + " - name: " + process.ProcessName + " - p.id: " + p.RealProcessId);
+                if (process.Id == p.RealProcessId)
+                {
+                    _logger.AddEntry("p.id: " + process.Id + " - name: " + process.ProcessName);
+                    process.Kill();
+                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
+                }
+            }
 
-
+            /*foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
+            {
+                
 
 
                 if (process.Id == p.Id)
                 {
+
+
+
+
+
                     _logger.AddEntry("p.id: " + process.Id + " - name: " + process.ProcessName);
                     process.Kill();
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
@@ -195,6 +218,13 @@ namespace RentItServer.ITU
                 }
             }
 
+            foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
+            {
+                if (process.ProcessName == "ezstream")
+                {
+                    process.Kill();
+                }
+            }*/
 
 
             /*foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
@@ -326,7 +356,8 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Starting process for channel with id: " + channelId);
                 p.Start();
                 _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
-                p.RealId = p.Id;
+                AssignProcessId(p);
+
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
@@ -340,6 +371,30 @@ namespace RentItServer.ITU
             }
         }
         #endregion
+
+        private void AssignProcessId(EzProcess p)
+        {
+
+
+
+            _logger.AddEntry("start sleep");
+            Thread.Sleep(1000);
+            Process[] activeProcesses = Process.GetProcessesByName("ezstream");
+            _logger.AddEntry("length of active processes: " + activeProcesses.Length);
+            foreach (Process process in activeProcesses)
+            {
+                _logger.AddEntry("process.id: " + process.Id + " - process.name: " + process.ProcessName);
+                if (!ezstreamProcessIds.Contains(process.Id))
+                {
+                    p.RealProcessId = process.Id;
+                    ezstreamProcessIds.Add(process.Id);
+
+                    _logger.AddEntry("p.id: " + p.Id + " - p.realProcessId: " + p.RealProcessId + " - list.first: " + ezstreamProcessIds.First());
+                    break;
+                }
+            }
+        }
+
 
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
@@ -396,7 +451,7 @@ namespace RentItServer.ITU
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
-            foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses())
+            foreach (System.Diagnostics.Process p in System.Diagnostics.Process.GetProcesses()) //foreach System.Diagnostics.Process.GetProcessesByName MAKE THAT
             {
                 if (p.ProcessName == "ezstream")
                 {
@@ -406,11 +461,6 @@ namespace RentItServer.ITU
             _logger.AddEntry("All ezstream processes have been killed");
         }
         #endregion
-
-
-
-
-        
     }
 
     #region Custom exceptions
