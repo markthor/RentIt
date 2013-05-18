@@ -13,7 +13,7 @@
 
 \begin{document}
 \title{RentIt}
-\author{Andreas Precht Poulsen, Morten F. Therkildsen, Mark Thorhauge, Toke Loke \& Mikkel Funch}
+\author{Andreas P., Morten T., Mark T., Toke L. \& Mikkel F.}
 \date{28-05-2013}
 \maketitle
 
@@ -76,11 +76,11 @@ The channel must be visible to other users with proper search parameters. \\*
 \textbf{Dependencies:} 
 The requirement is necessary for "upload track" and "listen to channel" because a track is associated with a channel. \\*
 \textbf{Priority:} 
-It is of essential importance, er since the functionality is prerequested for other fundamentally important requirements.
+It is of essential importance, since the functionality is prerequested for other fundamentally important requirements.
 \\ \\
 
 \textbf{R1:}
-The system must allow users to listen to an online radio-channel that streams audio. \\*
+The system shall allow users to listen to an online radio-channel that streams audio. \\*
 \textbf{Domain concepts:}
 A channel has a collection of tracks that can be listened to. \\*
 \textbf{Priority:}
@@ -91,7 +91,7 @@ A radio-channel must be able to stream an endless stream of audio without pauses
 \\ \\
 
 \textbf{R2:}
-The user must be able to rate a track associated with a channel. \\*
+The user shall be able to rate a track associated with a channel. \\*
 \textbf{Domain concepts:}
 The rating of a track must affect the frequency with which it is played within its associated channel.
 A higher rating giving a proportionally higher chance of being played. \\*
@@ -104,7 +104,7 @@ It is of essential importance, since the functionality is prerequisite for other
 \textbf{R3:}
 It shall be possible for users with a channel to upload a track to it. \\*
 \textbf{Domain concepts:}
-A channel has tracks that is managed by the channel creator. \\*
+A channel has tracks that are managed by the channel creator. \\*
 \textbf{Dependencies:}
 The listen to channel requirement is dependant on this requirement because the track can only be played to others if it has been uploaded to the server.\\*
 \textbf{Priority:}
@@ -112,7 +112,27 @@ It is of essential importance, since the functionality is prerequisite for other
 \\ \\
 
 \textbf{R4:}
+It shall be possible for users to subscribe and unsubscribe to channels. \\*
+\textbf{Domain concepts:}
+A user has a collection of subscribed channels. \\*
+\textbf{Priority:}
+This requirement is of secondary importance because no essential requirements are dependent on this requirement. It is important because it helps classifing popular channels and helps the user navigate to his or her favorite channels.
+\\ \\
 
+\textbf{R5:}
+It shall be possible for user to comment on channels. \\*
+\textbf{Domain concepts:}
+A channel has comments that everyone can read and author.
+\\ \\
+
+\textbf{R6:}
+It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable. \\*
+\textbf{Domain concepts:}
+All users of the system has an account. \\*
+\textbf{Dependencies:}
+As an account is required for the use of the system, all requirements are dependent on the creation of an account. \\*
+\textbf{Priority:} 
+It is of essential importance to create an account, since the functionality is prerequested for other fundamentally important requirements. Delete and edit are of secondary priority.
 
 \subsection{Non-functional requirements}
 The non-functional requirements describes how the functionality shall work in multiple aspects, as well as defining success criteria for them. They are structured with FURPS+. \\
@@ -122,7 +142,7 @@ The non-functional requirements describes how the functionality shall work in mu
 Channel owners must be able to assign genre tags to the channels they control/own. \\*
 Two users listening to the same channel at the same time must hear the same song with same amount of elapsed time (\(\Delta\) 1s), in other words, a channel is "playing" the same track for all listeners. \\*
 A function for searching for channels must be implemented. \\*
-A list of the most popular channels should be available to all users. Popularity must be based on an algorithm and it must be explained in the documentation. \\*
+A list of the most popular channels should be available to all users. Popularity must be based an attribute or a combination of attributes of channels and must me documented. \\*
 
 \textit{Tracks} \\*
 The service must support tracks in .mp3 format. \\*
@@ -135,7 +155,7 @@ All state changes must be logged.\\*
 All usage requires authentication. (usage meaning the use of any services related to the program)\\*
 
 \textbf{Usability} \\*
-The website should be intuitive to use for 90\% of persons above the age of 12 with regard to the following:
+The website shall be intuitive to use for 90\% of persons above the age of 12 to appeal to our target audience. Intuitive means that no use case may take more than 3 minutes to complete.
 \begin{itemize}
 \item listening to a channel
 \item maintaining one 
