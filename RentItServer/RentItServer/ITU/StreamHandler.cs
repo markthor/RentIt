@@ -32,7 +32,7 @@ namespace RentItServer.ITU
 
         #endregion
 
-        #region Constructor
+        #region Initial methods
         /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
@@ -45,9 +45,7 @@ namespace RentItServer.ITU
 
             //InitTimer();
         }
-        #endregion
 
-        #region GetInstance()
         /// <summary>
         /// Accessor method to access the only instance of the class
         /// </summary>
@@ -60,23 +58,19 @@ namespace RentItServer.ITU
             }
             return _instance;
         }
-        #endregion
 
-        #region InitTimer()
         public void InitTimer()
         {
-            /*_logger.AddEntry("Init timer");
+            _logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
-            timer.Interval = 86400000; //24 hours
+            timer.Interval = 60000;//timer.Interval = 86400000; //24 hours
             timer.Elapsed += timer_Elapsed;
             timer.AutoReset = false; //timer.AutoReset = true;
             _logger.AddEntry("Start timer");
-            timer.Start();*/
+            timer.Start();
         }
-        #endregion
 
-        #region AddLogger(Logger logger)
-        public void AddLogger(Logger logger)
+        public void SetLogger(Logger logger)
         {
             _logger = logger;
         }
@@ -127,6 +121,40 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Channel with id: " + channelId + " is already running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
             }
+        }
+        #endregion
+
+        #region StopStream(int channelId)
+        /// <summary>
+        /// Stops the stream of a channel and sets it is not running.
+        /// </summary>
+        /// <param name="channelId">The id of the channel to be stopped</param>
+        public void StopStream(int channelId)
+        {
+            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
+            try
+            {
+                Process p = runningChannelIds[channelId];
+            }
+            catch(KeyNotFoundException)
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " is not running");
+                throw new ChannelRunningException("Channel with id: " + channelId + " is not running");
+            }
+
+            _logger.AddEntry("Start killing all running ezstream processes");
+            foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
+            {
+                if (process.Id == process.Id)
+                {
+                    process.Kill();
+                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
+                    break;
+                }
+            }
+
+            runningChannelIds.Remove(channelId);
+            //FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
         }
         #endregion
 
@@ -300,6 +328,7 @@ namespace RentItServer.ITU
             // Close all streams
             CloseAllStreams();
             // clear dictionary of active streams
+            _logger.AddEntry("Clearing all runningChannelIds");
             runningChannelIds.Clear();
 
             // Find all channel ids for channels with tracks
@@ -332,38 +361,7 @@ namespace RentItServer.ITU
 
 
 
-        #region StopStream(int channelId)  Out commented
-        /// <summary>
-        /// Stops the stream of a channel and sets it is not running.
-        /// </summary>
-        /// <param name="channelId">The id of the channel to be stopped</param>
-        public void StopStream(int channelId)
-        {
-            //Notes: if p.Id is unique for every ezstream, then we can just loop through all running processes and kill the specific ezstream. If this is true, we can also drop the 24 hour cycle and kill a process after each song and start a new one. If this is done we should completely remove the 24 hour cycle in order to not fuck with TrackPlays and be consistent
-            try
-            {
-                Process p = runningChannelIds[channelId];
-            }
-            catch(KeyNotFoundException e)
-            {
-                _logger.AddEntry("Channel with id: " + channelId + " is not running");
-                throw new ChannelRunningException("Channel with id: " + channelId + " is not running");
-            }
-
-            _logger.AddEntry("Start killing all running ezstream processes");
-            foreach (System.Diagnostics.Process process in System.Diagnostics.Process.GetProcesses())
-            {
-                if (process.Id == process.Id)
-                {
-                    process.Kill();
-                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
-                    break;
-                }
-            }
-
-            runningChannelIds.Remove(channelId);
-        }
-        #endregion
+        
     }
 
     #region Custom exceptions
