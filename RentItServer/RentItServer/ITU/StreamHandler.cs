@@ -112,6 +112,7 @@ namespace RentItServer.ITU
             {
                 if(_dao.ChannelHasTracks(channelId))
                 {
+                    _logger.AddEntry("Starting channel stream for channel with id: " + channelId);
                     StartChannelStream(channelId);
                     AddNewTrackPlays();
                 }
@@ -252,6 +253,7 @@ namespace RentItServer.ITU
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
         {
+            _logger.AddEntry("Starting adding new trackplays");
             AddTrackPlayList(NewTrackPlays);
             NewTrackPlays.Clear();
         }
@@ -260,6 +262,14 @@ namespace RentItServer.ITU
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
+            _logger.AddEntry("Starting adding trackplays from list");
+
+
+            foreach (var t in trackPlayList)
+            {
+                _logger.AddEntry("TrackPlayId: " + t.TrackId + " - " + t.TimePlayed);
+            }
+
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
