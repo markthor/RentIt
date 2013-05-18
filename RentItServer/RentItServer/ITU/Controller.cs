@@ -495,7 +495,25 @@ namespace RentItServer.ITU
             //get track info
             //save to db
             //omg
+            _logger.AddEntry("start");
             Track track = new Track() { ChannelId = channelId };
+
+            Track theTrack = new Track()
+            {
+                ChannelId = channelId,
+                Path = "",
+                Name = "",
+                Artist = "",
+                Length = 0,
+                UpVotes = 0,
+                DownVotes = 0,
+                Channel = null,
+                TrackPlays = new Collection<TrackPlay>(),
+                Votes = new Collection<Vote>()
+            };
+
+
+            _logger.AddEntry("1");
             try
             {
                 track = _dao.CreateTrackEntry(channelId, track);
@@ -516,6 +534,7 @@ namespace RentItServer.ITU
             }
             catch(Exception e)
             {
+                _logger.AddEntry("exception: " + e);
                 //delete file and database entry
             }
 
