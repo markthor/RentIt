@@ -157,20 +157,18 @@ namespace RentItMvc.Controllers
         /// <returns></returns>
         public static bool IsSubscribed(int channelId, int userId)
         {
-            int uId = userId;
             Channel[] channels;
             try
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    channels = proxy.GetSubscribedChannels(uId);
+                    channels = proxy.GetSubscribedChannels(userId);
                 }
             }
             catch (Exception)
             {
                 return false;
             }
-
             foreach (Channel c in channels)
             {
                 if (c.Id == channelId)

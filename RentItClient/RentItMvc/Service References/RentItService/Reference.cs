@@ -1194,16 +1194,10 @@ namespace RentItMvc.RentItService {
         System.Threading.Tasks.Task CreateVoteAsync(int rating, int userId, int trackId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/AddTrack", ReplyAction="http://tempuri.org/IRentItService/AddTrackResponse")]
-        void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo);
+        void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/AddTrack", ReplyAction="http://tempuri.org/IRentItService/AddTrackResponse")]
-        System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByStream", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByStreamResponse")]
-        RentItMvc.RentItService.Track GetTrackInfoByStream(System.IO.MemoryStream audioStream);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByStream", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByStreamResponse")]
-        System.Threading.Tasks.Task<RentItMvc.RentItService.Track> GetTrackInfoByStreamAsync(System.IO.MemoryStream audioStream);
+        System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByTrackname", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByTracknameResponse")]
         RentItMvc.RentItService.Track GetTrackInfoByTrackname(int channelId, string trackname);
@@ -1336,6 +1330,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementChannelPlays", ReplyAction="http://tempuri.org/IRentItService/IncrementChannelPlaysResponse")]
         System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelPlaying", ReplyAction="http://tempuri.org/IRentItService/IsChannelPlayingResponse")]
+        bool IsChannelPlaying(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelPlaying", ReplyAction="http://tempuri.org/IRentItService/IsChannelPlayingResponse")]
+        System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1485,20 +1485,12 @@ namespace RentItMvc.RentItService {
             return base.Channel.CreateVoteAsync(rating, userId, trackId);
         }
         
-        public void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo) {
-            base.Channel.AddTrack(userId, channelId, audioStream, trackInfo);
+        public void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream) {
+            base.Channel.AddTrack(userId, channelId, audioStream);
         }
         
-        public System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream, RentItMvc.RentItService.Track trackInfo) {
-            return base.Channel.AddTrackAsync(userId, channelId, audioStream, trackInfo);
-        }
-        
-        public RentItMvc.RentItService.Track GetTrackInfoByStream(System.IO.MemoryStream audioStream) {
-            return base.Channel.GetTrackInfoByStream(audioStream);
-        }
-        
-        public System.Threading.Tasks.Task<RentItMvc.RentItService.Track> GetTrackInfoByStreamAsync(System.IO.MemoryStream audioStream) {
-            return base.Channel.GetTrackInfoByStreamAsync(audioStream);
+        public System.Threading.Tasks.Task AddTrackAsync(int userId, int channelId, System.IO.MemoryStream audioStream) {
+            return base.Channel.AddTrackAsync(userId, channelId, audioStream);
         }
         
         public RentItMvc.RentItService.Track GetTrackInfoByTrackname(int channelId, string trackname) {
@@ -1675,6 +1667,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task IncrementChannelPlaysAsync(int channelId) {
             return base.Channel.IncrementChannelPlaysAsync(channelId);
+        }
+        
+        public bool IsChannelPlaying(int channelId) {
+            return base.Channel.IsChannelPlaying(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsChannelPlayingAsync(int channelId) {
+            return base.Channel.IsChannelPlayingAsync(channelId);
         }
     }
 }

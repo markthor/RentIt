@@ -11,9 +11,29 @@
     </div>
 }
 
+@if (Model.OwnerId == (int)@Session["userId"])
+{
+    if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
+    {
+    <div style="margin-top: 16px;">
+        <button class="btn btn-small btn-danger" title="Stop channel" onclick=" location.href = '@(Url.Action("StopChannel", "Channel", new { channelId = Model.Id }))' ">
+            <i class="icon-stop icon-white"></i>
+        </button>
+    </div>
+    }
+    else
+    {
+    <div style="margin-top: 16px;">
+        <button class="btn btn-small btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new { channelId = Model.Id }))' ">
+            <i class="icon-play icon-white"></i>
+        </button>
+    </div>
+    }
+}
+
 <div class="clearfix"></div>
 
-<table class="pull-left" style="margin-right: 50px">
+<table class="pull-left" style="margin-right: 30px">
     <tr>
         <th style="width: 50px"><i class="icon-play" title="Number of plays" /></th>
         <th style="width: 50px"><i class="icon-ok" title="Number of subscribers" /></th>
@@ -36,14 +56,9 @@
     </tr>
 </table>
 
-@if (Model.OwnerId == (int) @Session["userId"])
-{
-    <div style="margin-top: 10px;">
-        <button class="btn btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new {channelId = Model.Id}))' ">
-            <i class="icon-play icon-white"></i>
-        </button>
-    </div>
-}
+<button style="margin-top: 10px" class="btn btn-small" id="playButton" title="Listen to this channel" value="@Model.Id" onclick="openPlayer(this.value)">
+    <i class="icon-play"></i>
+</button>
 
 <p style="clear: left; padding-top: 20px">@Html.DisplayFor(model => model.Description)</p>
 

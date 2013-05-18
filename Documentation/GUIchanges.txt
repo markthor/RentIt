@@ -6,9 +6,9 @@ Tracks i listentochannel vindue skal tilføjes
 [DONE]	channels name check skal ikke være case sensitive
 [DONE]	Holy space i manage tracks
 [DONE]	add a new track skal displaye at man kun kan adde mp3 filer
-Holy space i edit user
-edit email, edit username
-På specific channel page skal der være listentochannel knap
+[DONE]	Holy space i edit user
+[DONE]	edit email, edit username
+[DONE]	På specific channel page skal der være listentochannel knap
 Der skal være genres lige under channel title
 ADVANCED SEARCH link
 

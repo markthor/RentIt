@@ -35,7 +35,7 @@ namespace RentItMvc.Controllers
                     track.Name = trackName;
                     using (RentItServiceClient proxy = new RentItServiceClient())
                     {
-                        proxy.AddTrack(userId, channelId, memory, track);
+                        proxy.AddTrack(userId, channelId, memory);
                     }
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);

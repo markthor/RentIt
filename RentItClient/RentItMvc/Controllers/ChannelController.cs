@@ -216,5 +216,22 @@ namespace RentItMvc.Controllers
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }
+
+        public ActionResult StopChannel(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                //proxy.StopChannelStream(channelId);
+            }
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+        }
+
+        public static bool IsChannelPlaying(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.IsChannelPlaying(channelId);
+            }
+        }
     }
 }
