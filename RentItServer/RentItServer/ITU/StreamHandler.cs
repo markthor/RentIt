@@ -180,7 +180,7 @@ namespace RentItServer.ITU
                 {
                     if (p.ProcessName == "ezstream")
                     {
-                        _logger.AddEntry("p-id: " + p.Id);
+                        _logger.AddEntry("p.id: " + p.Id);
                     }
                 }
 
@@ -189,7 +189,7 @@ namespace RentItServer.ITU
                 if (process.Id == process.Id)
                 {
                     _logger.AddEntry("p.id: " + process.Id + " - name: " + process.ProcessName);
-                    process.Kill();
+                    //process.Kill();
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
                     break;
                 }
@@ -313,7 +313,7 @@ namespace RentItServer.ITU
 
                 _logger.AddEntry("Starting process for channel with id: " + channelId);
                 p.Start();
-                _logger.AddEntry("Process started for channel with id: " + channelId);
+                _logger.AddEntry("Process started for channel with id: " + channelId + " with process id: " + p.Id);
 
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
