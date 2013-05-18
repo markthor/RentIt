@@ -711,7 +711,7 @@ namespace RentItServer.ITU
                                where c.Id == channelId 
                                select c;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
-
+                track.Channel = channels.First();
                 context.Tracks.Add(track);
                 context.SaveChanges();
             }
