@@ -63,9 +63,9 @@ namespace RentItServer.ITU
         {
             _logger.AddEntry("Init timer");
             timer = new System.Timers.Timer();
-            timer.Interval = 60000;//timer.Interval = 86400000; //24 hours
+            timer.Interval = 600000;//timer.Interval = 86400000; //24 hours
             timer.Elapsed += timer_Elapsed;
-            timer.AutoReset = false; //timer.AutoReset = true;
+            timer.AutoReset = true; //timer.AutoReset = true;
             _logger.AddEntry("Start timer");
             timer.Start();
         }
