@@ -1,0 +1,5 @@
+Class diagram text (temporary title)
+
+The <orientation of png in relation to text> picture shows the static representation of the RentIt software 
+running on the server. The first entry point is the RentItService class; this class merely delegates method 
+calls to the controller.
