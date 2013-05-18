@@ -488,8 +488,9 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
+            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
             try
             {
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
@@ -513,7 +514,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        private DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
             Track theTrack = new Track();
             theTrack.Artist = "";

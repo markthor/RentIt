@@ -122,10 +122,9 @@ namespace RentItServer
         /// <param name="userId">The user id.</param>
         /// <param name="channelId">The channel id.</param>
         /// <param name="audioStream">The audio stream.</param>
-        /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
-            _controller.AddTrack(userId, channelId, audioStream, trackInfo);
+            _controller.AddTrack(userId, channelId, audioStream);
         }
 
         /// <summary>
@@ -133,10 +132,10 @@ namespace RentItServer
         /// </summary>
         /// <param name="audioStream">The audio stream.</param>
         /// <returns></returns>
-        public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
-        {
-            return _controller.GetTrackInfo(audioStream);
-        }
+        //public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
+        //{
+        //    return _controller.GetTrackInfo(audioStream);
+        //}
 
         /// <summary>
         /// Gets the track info associated with the track.
