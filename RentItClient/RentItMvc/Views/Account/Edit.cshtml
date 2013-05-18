@@ -15,7 +15,7 @@
 </div>
 
 <!-- CHANGE USERNAME -->
-@using (Html.BeginForm("ChangeUsername", "Account", null, FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("ChangeUsername", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
         
@@ -31,7 +31,7 @@
 }
 
 <!-- CHANGE EMAIL -->
-@using (Html.BeginForm("ChangeEmail", "Account", null, FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("ChangeEmail", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
         
@@ -47,10 +47,10 @@
 }
 
 <!-- CHANGE PASSWORD -->
-@using (Html.BeginForm("ChangePassword", "Account", null, FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("ChangePassword", "Account", new { userId = Session["userId"] }, FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.ValidationSummary(true)
-        
+    @Html.HiddenFor(model => model.UserId)
+    
     <h4>Change password</h4>
     <div class="edit-account-label pull-left">
         @Html.TextBoxFor(model => model.CurrentPassword, new { @class = "input-block-level", type = "password", required = "required", placeholder = "Current password" })

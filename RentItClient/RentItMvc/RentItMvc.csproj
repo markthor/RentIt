@@ -219,7 +219,6 @@
     <Content Include="Views\Audio\AudioPlayer.cshtml" />
     <Content Include="Views\Channel\EditChannel.cshtml" />
     <Content Include="Views\Audio\LastTracks.cshtml" />
-    <Content Include="Views\Channel\CreateChannelForm.cshtml" />
     <Content Include="Views\Track\AddTrackForm.cshtml" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="Views\Track\TrackList.cshtml" />

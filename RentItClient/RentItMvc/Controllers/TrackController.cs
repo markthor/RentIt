@@ -19,14 +19,13 @@ namespace RentItMvc.Controllers
         /// <param name="trackName"></param>
         /// <param name="artistName"></param>
         /// <returns></returns>
-        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, string trackName, string artistName)
+        public ActionResult AddTrack(HttpPostedFileBase file, int channelId, int? userId, string trackName, string artistName)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 // Verify that the user selected a file
                 if (file != null && file.ContentLength > 0)
                 {
-                    int userId = (int)Session["userId"];
                     Stream stream = file.InputStream;
                     MemoryStream memory = new MemoryStream();
                     stream.CopyTo(memory);
@@ -35,7 +34,7 @@ namespace RentItMvc.Controllers
                     track.Name = trackName;
                     using (RentItServiceClient proxy = new RentItServiceClient())
                     {
-                        proxy.AddTrack(userId, channelId, memory);
+                        proxy.AddTrack(userId.Value, channelId, memory);
                     }
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
@@ -44,7 +43,7 @@ namespace RentItMvc.Controllers
         }
 
         /// <summary>
-        /// Returns a for thats enables adding uploading a track
+        /// Returns a form thats enables adding uploading a track
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
@@ -59,11 +58,10 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="trackId"></param>
         /// <returns></returns>
-        public ActionResult DeleteTrack(int trackId)
+        public ActionResult DeleteTrack(int trackId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
-                int userId = (int)Session["userId"];
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     proxy.RemoveTrack(trackId);
@@ -73,9 +71,9 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult EditTracks(int channelId)
+        public ActionResult EditTracks(int channelId, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 List<GuiTrack> guiTracks;
                 using (RentItServiceClient proxy = new RentItServiceClient())
@@ -88,9 +86,9 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult TrackList(List<GuiTrack> tracks)
+        public ActionResult TrackList(List<GuiTrack> tracks, int? userId)
         {
-            if (Session["userId"] != null)
+            if (userId.HasValue)
             {
                 return View(tracks);
             }
