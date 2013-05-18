@@ -32,7 +32,7 @@ namespace RentItMvc.Controllers
                 {
                     ArtistName = "Artist" + i,
                     TrackName = "Title" + i,
-                    Id = 542,
+                    Id = 542+i,
                     ChannelId = channelId
                 };
                 guiTracks.Add(track);
