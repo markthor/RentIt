@@ -488,12 +488,14 @@ namespace RentItServer.ITU
             }
         }
 
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream, DatabaseWrapperObjects.Track trackInfo)
+        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
+            _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
+            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
             try
             {
-                _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
-                trackInfo = GetTrackInfo(audioStream);
+                
+                //trackInfo = GetTrackInfo(audioStream);
                 _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
@@ -516,7 +518,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        private DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
         {
             Track theTrack = new Track();
             theTrack.Artist = "";
@@ -814,6 +816,11 @@ namespace RentItServer.ITU
         public void IncrementChannelPlays(int channelId)
         {
             _dao.IncrementChannelPlays(channelId);
+        }
+
+        public bool IsChannelPlaying(int channelId)
+        {
+            return _streamHandler.IsChannelPlaying(channelId);
         }
     }
 }

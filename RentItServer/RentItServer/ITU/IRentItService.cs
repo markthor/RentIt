@@ -149,17 +149,16 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <param name="channelId">The channel id.</param>
         /// <param name="audioStream">The audio stream.</param>
-        /// <param name="trackInfo">The track info. Get this by calling GetTrackInfroByStream.</param>
         [OperationContract]
-        void AddTrack(int userId, int channelId, MemoryStream audioStream, ITU.DatabaseWrapperObjects.Track trackInfo);
+        void AddTrack(int userId, int channelId, MemoryStream audioStream);
 
         /// <summary>
         /// Gets the track info associated with the track stream.
         /// </summary>
         /// <param name="audioStream">The audio stream.</param>
         /// <returns></returns>
-        [OperationContract]
-        DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream);
+        //[OperationContract]
+        //DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream);
 
         /// <summary>
         /// Gets the track info associated with the track.
@@ -348,5 +347,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         void IncrementChannelPlays(int channelId);
+
+        [OperationContract]
+        bool IsChannelPlaying(int channelId);
     }
 }

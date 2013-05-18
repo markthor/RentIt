@@ -82,8 +82,8 @@ namespace RentItServer.ITU
         }
         #endregion
 
-        #region IsChannelRunning(int channelId)
-        private bool IsChannelRunning(int channelId)
+        #region IsChannelPlaying(int channelId)
+        public bool IsChannelPlaying(int channelId)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace RentItServer.ITU
         public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
         {
             _logger.AddEntry("Manually starting stream for channel with id: " + channelId);
-            if (!IsChannelRunning(channelId)) // Check if stream is already running
+            if (!IsChannelPlaying(channelId)) // Check if stream is already running
             {
                 if(_dao.ChannelHasTracks(channelId))
                 {
@@ -202,7 +202,7 @@ namespace RentItServer.ITU
         #region StartEzstreamProcess(int channelId)
         private EzProcess StartEzstreamProcess(int channelId)
         {
-            if (!IsChannelRunning(channelId))
+            if (!IsChannelPlaying(channelId))
             {
 
                 //Start set up the process
