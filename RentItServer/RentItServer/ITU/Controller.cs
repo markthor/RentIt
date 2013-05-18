@@ -7,6 +7,7 @@ using System.Linq;
 using RentItServer.ITU.Exceptions;
 using RentItServer.ITU.Search;
 using RentItServer.Utilities;
+using System.Text;
 
 namespace RentItServer.ITU
 {
@@ -490,6 +491,53 @@ namespace RentItServer.ITU
 
         public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
+            //save file
+            //get track info
+            //save to db
+            //omg
+            Track track = new Track() { ChannelId = channelId };
+            try
+            {
+                track = _dao.CreateTrackEntry(channelId, track);
+                _logger.AddEntry("Track id: " + track.Id);
+                string fileName = track.Id + ".mp3";
+                _logger.AddEntry("Track filename: " + fileName);
+                _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
+
+                string filepath = FilePath.ITUTrackPath + fileName;//temp value for testing
+                _logger.AddEntry("Track filepath: " + filepath);
+                int tId = track.Id;
+                _logger.AddEntry("Getting trackinfo");
+                track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
+                track.Id = tId;
+                track.ChannelId = channelId;
+
+                _dao.UpdateTrack(track);
+            }
+            catch(Exception e)
+            {
+                //delete file and database entry
+            }
+
+            /*
+
+
+            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
             DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
             try
@@ -498,65 +546,60 @@ namespace RentItServer.ITU
                 //trackInfo = GetTrackInfo(audioStream);
                 _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
                 _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
+                
                 string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
                 try
                 {
                     _logger.AddEntry("Size of audioStream: " + audioStream.Length);
                     _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
+                    _logger.AddEntry("HER ER DUA");
                 }
                 catch
                 {
+                    _logger.AddEntry("HER ER DUB" + " - TRACKINFO: " + trackInfo.Id + " - " +trackInfo.ChannelId);
                     _dao.DeleteTrackEntry(trackInfo);
                     throw new Exception("Exception occured when trying to write file to filesystem.");
                 }
             }
             catch (Exception e)
             {
+                _logger.AddEntry("HER ER DUC");
                 if (_handler != null)
                     _handler(this, new RentItEventArgs("AddTrack failed with exception [" + e + "]."));
                 throw;
-            }
+            }*/
         }
 
-        private DatabaseWrapperObjects.Track GetTrackInfo(MemoryStream audioStream)
+        //TODO: REMAKE SO THAT IT DOES NOT CREATE AND DELETE A FILE
+        private Track GetTrackInfo(string filePath)
         {
-            Track theTrack = new Track();
-            theTrack.Artist = "";
-            try
+            TagLib.File audioFile = TagLib.File.Create(filePath);
+
+            Track track = new Track();
+            track.Id = 0;
+            track.ChannelId = 0;//FIX
+            track.Path = filePath;
+            track.UpVotes = 0;
+            track.DownVotes = 0;
+            track.Name = audioFile.Tag.Title;
+            track.TrackPlays = new List<TrackPlay>();
+            track.Votes = new List<Vote>();
+            track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
+
+            track.Artist = "";
+            string[] artists = audioFile.Tag.AlbumArtists;
+            if (artists.Any())
             {
-                int counter = tempCounter++;
-                _fileSystemHandler.WriteFile(FilePath.ITUTempPath, FileName.ItuGenerateAudioFileName(counter), audioStream);
-                // Use external library
-                TagLib.File audioFile = TagLib.File.Create(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                
-                string[] artists = audioFile.Tag.AlbumArtists;
+                StringBuilder sb = new StringBuilder();
                 foreach (string artist in artists)
                 {
-                    theTrack.Artist += artist + ", ";
+                    sb.Append(artist);
+                    sb.Append(", ");
                 }
-                theTrack.Artist = theTrack.Artist.Substring(0, theTrack.Artist.Count() - 2);
-                theTrack.DownVotes = 0;
-                theTrack.UpVotes = 0;
-                theTrack.Name = audioFile.Tag.Title;
-                theTrack.TrackPlays = new List<TrackPlay>();
-                theTrack.Votes = new List<Vote>();
-                theTrack.Length = audioFile.Properties.Duration.Milliseconds;
-                try
-                {
-                    _fileSystemHandler.DeleteFile(FilePath.ITUTempPath.GetPath() + FileName.ItuGenerateAudioFileName(counter));
-                }
-                catch
-                {
-                    // It doesn't matter much
-                }
-                return theTrack.GetTrack();
+                track.Artist = sb.ToString().Remove(sb.Length - 2);
             }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfo failed with exception [" + e + "]."));
-                throw;
-            }
+
+            return track;
         }
 
         public DatabaseWrapperObjects.Track GetTrackInfo(int channelId, string trackname)
