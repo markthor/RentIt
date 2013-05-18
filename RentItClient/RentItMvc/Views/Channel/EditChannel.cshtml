@@ -9,7 +9,7 @@
 
 <div class="row-fluid">
     <div>
-        @using (Html.BeginForm("SaveEditChannel", "Channel", new { channelId = Model.Id, ownerId = Session["userId"] }, FormMethod.Post))
+        @using (Html.BeginForm("SaveEditChannel", "Channel", new { channelId = Model.Id, userId = Session["userId"] }, FormMethod.Post))
         {
             <h5>Name</h5>
             <div style="width: 400px" class="pull-left">
