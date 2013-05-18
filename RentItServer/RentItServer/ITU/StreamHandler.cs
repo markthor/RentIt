@@ -29,7 +29,7 @@ namespace RentItServer.ITU
 
         private System.Timers.Timer timer;
 
-        private List<TrackPlay> NewTrackPlays;
+        private List<TrackPlay> newTrackPlays;
 
         private List<int> ezstreamProcessIds;
 
@@ -44,7 +44,7 @@ namespace RentItServer.ITU
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
             runningChannelIds = new Dictionary<int, EzProcess>();
-            NewTrackPlays = new List<TrackPlay>();
+            newTrackPlays = new List<TrackPlay>();
             ezstreamProcessIds = new List<int>();
         }
 
@@ -63,7 +63,7 @@ namespace RentItServer.ITU
 
         public void InitTimer()
         {
-            _logger.AddEntry("Init timer");
+            _logger.AddEntry("Initialize timer");
             timer = new System.Timers.Timer();
 
             //Calculate how long time the first ionterval should be
@@ -87,13 +87,13 @@ namespace RentItServer.ITU
             get
             {
                 //For testing!
-                DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(15);
-                return resetDate;
+                //DateTime resetDate = DateTime.Now;
+                //resetDate = resetDate.AddMinutes(15);
+                //return resetDate;
                 //endFor
 
 
-                /* THE REAL DEAL
+                //THE REAL DEAL
                 DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour > 3) // in case the server is restarted in the before 3AM one day
                 {
@@ -103,7 +103,7 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
-                */
+                
             }
         }
         #endregion
@@ -191,6 +191,7 @@ namespace RentItServer.ITU
                 if (process.Id == p.RealProcessId)
                 {
                     process.Kill();
+                    ezstreamProcessIds.Remove(p.RealProcessId);
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
                 }
             }
@@ -255,7 +256,7 @@ namespace RentItServer.ITU
         {
             List<TrackPlay> addedTrackPlays;
             List<Track> playlist = GeneratePlaylist(channelId, playTime, out addedTrackPlays);
-            NewTrackPlays.AddRange(addedTrackPlays);
+            newTrackPlays.AddRange(addedTrackPlays);
 
             string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
             _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
@@ -329,44 +330,44 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region AssignProcessId(EzProcess p)
         private void AssignProcessId(EzProcess p)
         {
-            _logger.AddEntry("start sleep");
-            Thread.Sleep(100000);
+            _logger.AddEntry("Start assign process id for channel with id: " + p.ChannelId);
+            Thread.Sleep(1000);
             Process[] activeProcesses = Process.GetProcessesByName("ezstream");
-            _logger.AddEntry("length of active processes: " + activeProcesses.Length);
             foreach (Process process in activeProcesses)
             {
-                _logger.AddEntry("process.id: " + process.Id + " - process.name: " + process.ProcessName);
                 if (!ezstreamProcessIds.Contains(process.Id))
                 {
                     p.RealProcessId = process.Id;
                     ezstreamProcessIds.Add(process.Id);
-
-                    _logger.AddEntry("p.id: " + p.Id + " - p.realProcessId: " + p.RealProcessId + " - list.first: " + ezstreamProcessIds.First());
+                    _logger.AddEntry("Process for channel with id: " + p.ChannelId + " has been assign process id: " + p.RealProcessId);
                     break;
                 }
             }
         }
+        #endregion
 
-
+        #region Add TrackPlay methods
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
         {
-            _logger.AddEntry("Starting adding new trackplays");
-            AddTrackPlayList(NewTrackPlays);
-            NewTrackPlays.Clear();
+            AddTrackPlayList(newTrackPlays);
+            newTrackPlays.Clear();
         }
         #endregion
 
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
-            _logger.AddEntry("Starting adding trackplays from given list");
+            _logger.AddEntry("Starting adding trackplays from given list to database");
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
-        
+        #endregion
+
+        #region Methods to restart all channels
         #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         //Reset all streams
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -381,22 +382,20 @@ namespace RentItServer.ITU
                 // start stream process
                 // add process to list of active streams
 
-
+            _logger.AddEntry("Start restart of all streams");
             // Close all streams
             CloseAllStreams();
-            // clear dictionary of active streams
-            _logger.AddEntry("Clearing all runningChannelIds");
-            runningChannelIds.Clear();
-
+            
             // Find all channel ids for channels with tracks
             List<Channel> channels = _dao.GetChannelsWithTracks();
 
             foreach (Channel c in channels) // make a method which call all these
             {
-                _logger.AddEntry("restarting channel with id: " + c.Id);
+                _logger.AddEntry("Restarting channel with id: " + c.Id);
                 StartChannelStream(c.Id);
             }
 
+            //Add all new trackplays to database
             AddNewTrackPlays();
         }
         #endregion
@@ -405,13 +404,17 @@ namespace RentItServer.ITU
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
-
             foreach (Process p in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
                 p.Kill();
             }
             _logger.AddEntry("All ezstream processes have been killed");
+
+            // clear dictionary of active streams
+            _logger.AddEntry("Clearing all runningChannelIds");
+            runningChannelIds.Clear();
         }
+        #endregion
         #endregion
     }
 
