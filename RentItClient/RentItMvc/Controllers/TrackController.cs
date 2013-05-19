@@ -79,7 +79,7 @@ namespace RentItMvc.Controllers
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     Track[] tracks = proxy.GetTrackByChannelId(channelId);
-                    guiTracks = Utilities.GuiClassConverter.ConvertTrackList(tracks);
+                    guiTracks = Utilities.GuiClassConverter.ConvertTracks(tracks);
                 }
                 return View("TrackList", new Tuple<List<GuiTrack>, int, int>(guiTracks, channelId, userId.Value));
             }

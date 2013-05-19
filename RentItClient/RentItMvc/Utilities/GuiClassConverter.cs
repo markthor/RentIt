@@ -9,19 +9,7 @@ namespace RentItMvc.Utilities
 {
     public static class GuiClassConverter
     {
-        public static List<GuiChannel> ConvertChannelList(Channel[] channels)
-        {
-            List<GuiChannel> returnList = new List<GuiChannel>();
-            if (channels != null)
-            {
-                foreach (Channel c in channels)
-                {
-                    returnList.Add(ConvertChannel(c));
-                }
-            }
-            return returnList;
-        }
-
+        #region Comment
         public static GuiComment ConvertComment(Comment c)
         {
             GuiComment comment = new GuiComment()
@@ -50,7 +38,9 @@ namespace RentItMvc.Utilities
             }
             return guiComments;
         }
+        #endregion
 
+        #region Channel
         public static GuiChannel ConvertChannel(Channel c)
         {
             GuiChannel chan = new GuiChannel()
@@ -68,11 +58,26 @@ namespace RentItMvc.Utilities
                 //Get number of subscribers
                 chan.Subscribers = proxy.GetSubscriberCount(chan.Id);
                 //Get the channels
-                chan.Tracks = ConvertTrackList(proxy.GetTrackByChannelId(c.Id));
+                chan.Tracks = ConvertTracks(proxy.GetTrackByChannelId(c.Id));
             }
             return chan;
         }
 
+        public static List<GuiChannel> ConvertChannels(Channel[] channels)
+        {
+            List<GuiChannel> returnList = new List<GuiChannel>();
+            if (channels != null)
+            {
+                foreach (Channel c in channels)
+                {
+                    returnList.Add(ConvertChannel(c));
+                }
+            }
+            return returnList;
+        }
+        #endregion
+
+        #region Track
         public static GuiTrack ConvertTrack(Track t)
         {
             GuiTrack track = new GuiTrack()
@@ -85,7 +90,7 @@ namespace RentItMvc.Utilities
             return track;
         }
 
-        public static List<GuiTrack> ConvertTrackList(Track[] tracks)
+        public static List<GuiTrack> ConvertTracks(Track[] tracks)
         {
             List<GuiTrack> convertedTracks = new List<GuiTrack>();
             if (tracks != null)
@@ -97,5 +102,31 @@ namespace RentItMvc.Utilities
             }
             return convertedTracks;
         }
+        #endregion
+
+        #region Genre
+        public static GuiGenre ConvertGenre(Genre genre)
+        {
+            GuiGenre guiGenre = new GuiGenre
+            {
+                Id = genre.Id,
+                Name = genre.Name
+            };
+            return guiGenre;
+        }
+
+        public static List<GuiGenre> ConvertGenres(Genre[] genres)
+        {
+            List<GuiGenre> convertedGenres = new List<GuiGenre>();
+            if (genres != null)
+            {
+                foreach (Genre genre in genres)
+                {
+                    convertedGenres.Add(ConvertGenre(genre));
+                }
+            }
+            return convertedGenres;
+        }
     }
+        #endregion
 }
