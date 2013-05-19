@@ -231,7 +231,7 @@ TrackPlay is an entity that represents a play of a track. It is an entity and no
 Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
 
 \subsection{Data storage}
-For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper[reference] suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4 MB. We have a table called track which have a path that indicates where the song is placed on the file system.
+For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4 MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
 \subsection{Webservice}
 The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
@@ -339,6 +339,9 @@ As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call
 \theta (g(n + m))
 \end{align*}
 Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays.
+
+\subsection{Third-party streaming components}
+To stream music we use a third-party server component named IceCast
 
 \begin{landscape}
 \subsection{Sequence diagram}
@@ -461,7 +464,18 @@ Our collaboration with the SMUs was a success. We did not run into major issues,
 \paragraph{Changes in a future collaboration}
 What would we do different in a potential future collaboration? One of things that would have helped the collaboration would have been access to the SMU website. Not so much because we wanted to influence any of their design choices, but because it would have given us a better understanding of the problems they were facing. Understanding the problems of the other team can help for a much better collaboration. The SMU team did supply us with information about what services they needed, but access to the actual website they developed would have been even better. In a future collaboration we would also emphasize direct communication, like the one we had through WHatsApp, even more. We would make sure that at least one member of our development team would always be available for questions. He would not have to be able to give a correct answer all the time, but the fact that you get a very quick response as soon as possible really helps to increase the feeling of collaboration. It is important that the team feels as less secluded as possible and that the waiting period between questions and answer is limited as much as possible. 
 
-
+\begin{thebibliography}{9}
+\bibitem{Russel}
+  Russell Sears, Catharine van Ingen, Jim Gray
+  \emph{To BLOB or Not To BLOB: 
+Large Object Storage in a Database or a Filesystem}.
+  Microsoft Research and University of California at Berkeley
+  April 2006
+  
+  \bibitem{IceCast}
+    www.xiph.org, the xiph open source community
+    \emph{www.IceCast.org, IceCast documentation and contact}.
+\end{thebibliography}
 
 
 
