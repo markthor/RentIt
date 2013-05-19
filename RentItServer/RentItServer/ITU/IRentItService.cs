@@ -379,5 +379,8 @@ namespace RentItServer.ITU
         /// <param name="trackId">The id of the track</param>
         [OperationContract]
         void DeleteVote(int userId, int trackId);
+
+        [OperationContract]
+        int CountAllChannelsWithFilter(ChannelSearchArgs filter);
     }
 }
