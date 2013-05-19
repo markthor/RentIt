@@ -354,9 +354,9 @@ namespace RentItServer.ITU
         public void DeleteChannel(int channelId)
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
-            List<Track> associatedTracks = GetTracksByChannelId(channelId);
-            
+            if (_streamHandler.IsChannelStreamRunning(channelId) == true) throw new ChannelRunningException("Cannot delete channel while its stream is running");
 
+            List<Track> associatedTracks = GetTracksByChannelId(channelId);
             foreach (Track t in associatedTracks)
             {
                 RemoveTrack(t.Id);
