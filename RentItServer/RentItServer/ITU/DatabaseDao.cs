@@ -30,6 +30,12 @@ namespace RentItServer.ITU
             return _instance ?? (_instance = new DatabaseDao());
         }
 
+        /// <summary>
+        /// Logins the specified username or email.
+        /// </summary>
+        /// <param name="usernameOrEmail">The username or email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         public User Login(string usernameOrEmail, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1566,6 +1572,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the track plays associated with channel id.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="datetime">The datetime.</param>
         public void DeleteTrackPlaysByChannelId(int channelId, DateTime datetime)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1583,6 +1594,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the trackplays associated with track id.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
         public void DeleteTrackPlaysByTrackId(int trackId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1639,6 +1654,12 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Counts the track votes.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public int CountTrackVotes(int trackId, int value)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())

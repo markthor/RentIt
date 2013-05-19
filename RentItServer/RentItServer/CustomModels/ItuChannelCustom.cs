@@ -5,6 +5,9 @@ using System.Web;
 
 namespace RentItServer
 {
+    /// <summary>
+    /// Partial class of the database entity "Channel". Used to add functionality to the class.
+    /// </summary>
     public partial class Channel
     {
         /// <summary>
