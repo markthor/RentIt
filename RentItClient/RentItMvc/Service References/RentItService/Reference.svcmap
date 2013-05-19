@@ -22,14 +22,14 @@
     <MetadataSource Address="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="45b7f4b1-a8bb-42cb-85eb-b2d5c054f686" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="6aa40b77-9583-444c-bd7d-3e89bd1e26f4" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="82561966-71bf-46ab-aa3b-e5dba4446fe4" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="RentItServer.ITU.DatabaseWrapperObjects.xsd" MetadataType="Schema" ID="98801561-4641-4c4a-b089-4f64272b9035" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="82fa74f8-a6ab-48ff-91de-b8c3c387dd39" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="RentItServer.ITU.xsd" MetadataType="Schema" ID="186b8cd8-e66f-415a-a633-2a98ae01de1a" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="89e21357-b2ed-4180-828b-60a622c7968f" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="19d8570c-299d-40dc-bdac-01f4de5cdf33" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="536fbd17-5737-4408-b7d7-5597d8a85f60" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="57b023cc-603a-4f3c-b980-80ba05a66302" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="ab03b3e5-d26a-4d3d-b709-ce98615ab0d3" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="RentItServer.ITU.DatabaseWrapperObjects1.xsd" MetadataType="Schema" ID="9dacfdef-bfcb-4234-9779-26d40d6a283e" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="08bfe156-f8b5-4d3a-b6d0-adc418c5a767" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="RentItServer.ITU1.xsd" MetadataType="Schema" ID="be687d1a-b40c-40d3-b492-ab045400ac71" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="System.IO1.xsd" MetadataType="Schema" ID="a4154fb2-997f-4d89-8f1d-802504ce42a9" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
+    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="f592889c-142d-440c-8df9-b3ecdebb4f35" SourceId="1" SourceUrl="http://rentit.itu.dk/rentit21/RentItService.svc/mex/mex/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

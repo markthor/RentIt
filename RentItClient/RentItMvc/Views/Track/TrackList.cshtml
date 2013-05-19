@@ -2,9 +2,12 @@
     ViewBag.Title = "TrackList";
 }
 
-@model List<RentItMvc.Models.GuiTrack>
+@model Tuple<List<RentItMvc.Models.GuiTrack>, int, int>
 
-<h1>Manage Tracks</h1>
+<h1 class="pull-left">Manage Tracks</h1>
+
+@Html.ActionLink("Back to channel", "SelectChannel", "Channel", new { channelId = Model.Item2, userId = Model.Item3 }, new { @class = "btn btn-primary", style = "margin-top: 15px; margin-left: 20px"})
+
 <div style="width: 100%; max-height: 424px; margin-bottom: 20px; overflow-x: hidden; overflow-y: auto">
     <table class="table table-hover">
         <tr>
@@ -12,7 +15,7 @@
             <th>Title</th>
             <th></th>
         </tr>
-        @foreach (var t in Model)
+        @foreach (var t in Model.Item1)
         { 
             <tr>
                 <td>

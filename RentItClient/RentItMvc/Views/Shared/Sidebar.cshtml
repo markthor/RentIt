@@ -16,6 +16,9 @@
         @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li>
+        @Html.ActionLink("All channels", "BrowsableChannels", "Channel", new { userId = Session["userId"], startIndex = 0, endIndex = 10 }, null)
+    </li>
+    <li>
         @Html.ActionLink("Create channel", "CreateChannel", "Channel", new { userId = Session["userId"] }, null)
     </li>
 </ul>

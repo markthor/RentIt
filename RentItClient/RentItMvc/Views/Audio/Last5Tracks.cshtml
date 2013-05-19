@@ -13,55 +13,70 @@
             <th></th>
             <th></th>
         </tr>
-        @for (int i = 0; i < 5; i++)
+        @foreach(var track in Model.Item1)
         {
-            var track = Model.Item1[i];
             <tr>
                 <td>
-                    <div id="@track.Id-artist"style="width: 120px" class="text-overflow">
+                    <div id="@track.Id-artist"style="width: 120px" class="text-overflow" title="@track.ArtistName">
                         @track.ArtistName
                     </div>
                 </td>
                 <td>
-                    <div id="@track.Id-title"style="width: 120px" class="text-overflow">
+                    <div id="@track.Id-title"style="width: 120px" class="text-overflow" title="@track.TrackName">
                         @track.TrackName
                     </div>
                 </td>
                 <td>
                     <div style="width: 30px">
-                        @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == 1)
+                        @if (RentItMvc.Controllers.AccountController.IsSubscribed(@track.ChannelId, Model.Item2))
                         {
-                            <button id="@track.Id-up" class="btn btn-small btn-success" onclick="upvote(@track.Id) ">
+                            if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == 1)
+                            {
+                            <button id="@track.Id-up" class="btn btn-small btn-success" onclick=" upvote(@track.Id) ">
                                 <i class="icon-thumbs-up"></i>
                             </button>
+                            }
+                            else
+                            {
+                            <button id="@track.Id-up" class="btn btn-small" onclick=" upvote(@track.Id) ">
+                                <i class="icon-thumbs-up"></i>
+                            </button>
+                            }
                         }
                         else
                         {
-                            <button id="@track.Id-up" class="btn btn-small" onclick="upvote(@track.Id) ">
+                            <button class="btn btn-small disabled" disabled="disabled" title="Subscribe to vote">
                                 <i class="icon-thumbs-up"></i>
                             </button>
                         }
-
                     </div>
 
                 </td>
                 <td>
-                    @if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == -1)
-                    {
-                        <div style="width: 30px">
-                            <button id="@track.Id-down" class="btn btn-small btn-danger" onclick="downvote(@track.Id)">
+                    <div style="width: 30px">
+                        @if (RentItMvc.Controllers.AccountController.IsSubscribed(@track.ChannelId, Model.Item2))
+                        {
+                            if (RentItMvc.Controllers.AccountController.GetVote(Model.Item2, @track.Id) == -1)
+                            {
+                        
+                            <button id="@track.Id-down" class="btn btn-small btn-danger" onclick=" downvote(@track.Id) ">
                                 <i class="icon-thumbs-down"></i>
                             </button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="width: 30px">
-                            <button id="@track.Id-down" class="btn btn-small" onclick="downvote(@track.Id)">
+                            }
+                            else
+                            {
+                            <button id="@track.Id-down" class="btn btn-small" onclick=" downvote(@track.Id) ">
                                 <i class="icon-thumbs-down"></i>
                             </button>
-                        </div>
-                    }
+                            }
+                        }
+                        else
+                        {
+                            <button class="btn btn-small disabled" disabled="disabled" title="Subscribe to vote">
+                                <i class="icon-thumbs-down"></i>
+                            </button>
+                        }
+                    </div>
                 </td>
             </tr>
         }

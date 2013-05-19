@@ -81,7 +81,7 @@ namespace RentItMvc.Controllers
                     Track[] tracks = proxy.GetTrackByChannelId(channelId);
                     guiTracks = Utilities.GuiClassConverter.ConvertTrackList(tracks);
                 }
-                return View("TrackList", guiTracks);
+                return View("TrackList", new Tuple<List<GuiTrack>, int, int>(guiTracks, channelId, userId.Value));
             }
             return RedirectToAction("Index", "Home");
         }

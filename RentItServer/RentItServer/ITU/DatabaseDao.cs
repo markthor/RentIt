@@ -444,7 +444,6 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public IEnumerable<Channel> GetAllChannels()
         {
-            IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.Channels select channel;
@@ -552,23 +551,23 @@ namespace RentItServer.ITU
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                int count = filter.EndIndex - filter.StartIndex;
+                if (filteredChannels.Count < filter.EndIndex)
+                {
+                    filter.EndIndex = filteredChannels.Count - 1;
+                }
+                if (filteredChannels.Count < filter.StartIndex)
+                {
+                    filter.StartIndex = ((filteredChannels.Count - count) - 1);
+                    filter.EndIndex = filteredChannels.Count;
+                }
+                
+
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                if (filter.StartIndex < 0)
-                {   // Avoid OutOfBoundsException
-                    filter.StartIndex = 0;
-                }
-                if (filter.EndIndex < filteredChannels.Count)
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
-                }
-                else
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
-                }
-                filteredChannels = new List<Channel>(range);
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, (filter.EndIndex - filter.StartIndex));
+                return range.ToList();
             }
-            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
-            return filteredChannels;
+            return null;
         }
 
         /// <summary>
@@ -1247,7 +1246,6 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user;
                 var users = from u in context.Users
                             where u.Id == userId
                             select u;
@@ -1382,7 +1380,10 @@ namespace RentItServer.ITU
                                  select tp;
 
                 List<TrackPlay> trackPlaysList = trackPlays.ToList();
-                trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                if (trackPlaysList.Count > numberOfTracks)
+                {
+                    trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                }
                 List<Track> result = new List<Track>();
 
                 foreach(TrackPlay tp in trackPlaysList)
@@ -1438,6 +1439,41 @@ namespace RentItServer.ITU
 	            }
 
                 context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Deletes all the users votes on a given channel
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="channelId">The id of the channel</param>
+        public void DeleteVotesForUser(int userId, int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId && v.Track.ChannelId == channelId
+                            select v;
+                foreach (Vote v in votes)
+                {
+                    context.Votes.Remove(v);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteTrackEntry(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var track = from t in context.Tracks
+                            where t.Id == trackId
+                            select t;
+                if (track.Any())
+                {
+                    context.Tracks.Remove(track.First());
+                    context.SaveChanges();
+                }
             }
         }
     }

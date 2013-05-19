@@ -107,14 +107,14 @@ namespace RentItServer.ITU
             get
             {
                 //For testing!
-                //DateTime resetDate = DateTime.Now;
-                //resetDate = resetDate.AddMinutes(15);
-                //return resetDate;
+                DateTime resetDate = DateTime.Now;
+                resetDate = resetDate.AddMinutes(180);
+                return resetDate;
                 //endFor
 
 
                 //Creates the time now and adds to that value
-                DateTime resetDate = DateTime.Now;
+                /*DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
                 {
                     resetDate = resetDate.AddDays(1);
@@ -122,7 +122,7 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddHours(3 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
-                return resetDate;
+                return resetDate;*/
             }
         }
         #endregion
@@ -204,7 +204,7 @@ namespace RentItServer.ITU
         /// <param name="channelId"></param>
         private void StartChannelStream(int channelId)
         {
-            _logger.AddEntry("Starting channel stream for channel with id: " + channelId);
+            _logger.AddEntry("Starting channel stream for channel with id: [" + channelId + "]");
             // Start stream process
             if (!IsChannelStreamRunning(channelId)) // Check if channel already has a running stream
             {
@@ -217,7 +217,7 @@ namespace RentItServer.ITU
                 }
                 else
                 {
-                    _logger.AddEntry("Channel with id: " + channelId + " already has a config file");
+                    _logger.AddEntry("Channel with id: [" + channelId + "] already has a config file");
                 }
             
                 // Generate m3u file for the channel
@@ -232,8 +232,8 @@ namespace RentItServer.ITU
             }
             else // Channel already has a running stream
             {
-                _logger.AddEntry("Channel with id: " + channelId + " is already running");
-                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
+                _logger.AddEntry("Channel with id: [" + channelId + "] is already running");
+                throw new ChannelRunningException("Channel with id: [" + channelId + "] is already running");
             }
         }
         #endregion
@@ -245,7 +245,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">Channel id for the channel which should have a config file created</param>
         private void CreateChannelConfigFile(int channelId)
         {
-            _logger.AddEntry("Starting generate config xml for channel with id: " + channelId);
+            _logger.AddEntry("Starting generate config xml for channel with id: [" + channelId + "]");
 
             //Generate the xml for the config file
             string xml;
@@ -255,7 +255,7 @@ namespace RentItServer.ITU
             string xmlFilePath;
             xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
 
-            _logger.AddEntry("Writing config file for channel with id: " + channelId + " to file system");
+            _logger.AddEntry("Writing config file for channel with id: [" + channelId + "] to file system");
             //Write the config file to the system
             FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
         }
@@ -270,7 +270,7 @@ namespace RentItServer.ITU
         /// <param name="playTime">The playtime of the generated M3U file</param>
         private void GenerateM3UFile(int channelId, int playTime)
         {
-            _logger.AddEntry("Begin generate m3u file for channel with id: " + channelId + " with playtime: " + playTime);
+            _logger.AddEntry("Begin generate m3u file for channel with id: [" + channelId + "] with playtime: [" + playTime + "]");
             //List to contain all the trackplays for the tracks on the playlist
             List<TrackPlay> addedTrackPlays;
             //Generate the playlist
@@ -278,7 +278,7 @@ namespace RentItServer.ITU
             //Add the trackplays to the list of newly added trackplays
             newTrackPlays.AddRange(addedTrackPlays);
 
-            _logger.AddEntry("Start writing m3u for channel with id: " + channelId + " file to filesystem");
+            _logger.AddEntry("Start writing m3u for channel with id: [" + channelId + "] file to filesystem");
             //Write the m3u file to the filesystem
             string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
             _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
@@ -295,21 +295,26 @@ namespace RentItServer.ITU
         /// <returns>A list of tracks in the order they should be played according to the trackplays generated</returns>
         private List<Track> GeneratePlaylist(int channelId, int playTime, out List<TrackPlay> addedTrackPlays)
         {
-            _logger.AddEntry("Start generate playlist with playtime: " + playTime + " for channel with id: " + channelId);
+            _logger.AddEntry("Start generate playlist with playtime: [" + playTime + "] for channel with id: [" + channelId + "]");
             //Get all tracks on the channel
             List<Track> channelTracks = _dao.GetTrackList(channelId);
             if (!channelTracks.Any()) //Check that the channel has any tracks
             {
-                _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
-                throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
+                _logger.AddEntry("Channel with id: [" + channelId + "] has no associated tracks");
+                throw new NoTracksOnChannelException("Channel with id: [" + channelId + "] has no associated tracks");
             }
 
             //Get all trackplays for the channel
             List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+            if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
+            {
+                _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+                throw new ArgumentException("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+            }
 
             //Generate the playlist
             List<Track> playlist = _trackPrioritizer.GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
-            _logger.AddEntry("Created playlist with count: " + playlist.Count + " tracks for channel with id: " + channelId);
+            _logger.AddEntry("Created playlist with count: [" + playlist.Count + "] tracks for channel with id: [" + channelId + "]");
             //return the playlist
             return playlist;
         }
@@ -323,7 +328,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">Channel id for the channel which should have an ezstram started</param>
         private void StartEzstreamProcess(int channelId)
         {
-            _logger.AddEntry("Start starting ezstream process for channel with id: " + channelId);
+            _logger.AddEntry("Start starting ezstream process for channel with id: [" + channelId + "]");
             if (!IsChannelStreamRunning(channelId)) //Check if the channel already has a running stream
             {
                 //Start set up the process
@@ -346,9 +351,9 @@ namespace RentItServer.ITU
                 EzProcess p = new EzProcess(channelId);
                 p.StartInfo = startInfo;
 
-                _logger.AddEntry("Starting process for channel with id: " + channelId);
+                _logger.AddEntry("Starting process for channel with id: [" + channelId + "]");
                 p.Start();
-                _logger.AddEntry("Process started for channel with id: " + channelId);
+                _logger.AddEntry("Process started for channel with id: [" + channelId + "]");
 
                 //Start asynchronous assignment of process id to the newly created process
                 Task t = new Task(() => AssignProcessId(p));
@@ -359,8 +364,8 @@ namespace RentItServer.ITU
             }
             else // Channel already has a running ezstream
             {
-                _logger.AddEntry("Channel with id: " + channelId + " is already running");
-                throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
+                _logger.AddEntry("Channel with id: [" + channelId + "] is already running");
+                throw new ChannelRunningException("Channel with id: [" + channelId + "] is already running");
             }
         }
         #endregion
@@ -373,9 +378,9 @@ namespace RentItServer.ITU
         /// <param name="p">Process which should have assigned its RealProcessId property</param>
         private void AssignProcessId(EzProcess p)
         {
-            _logger.AddEntry("Start assign process id for channel with id: " + p.ChannelId);
+            _logger.AddEntry("Start assign process id for channel with id: [" + p.ChannelId + "]");
             Thread.Sleep(1000);
-            _logger.AddEntry("Sleep has finished for channel with id: " + p.ChannelId);
+            _logger.AddEntry("Sleep has finished for channel with id: [" + p.ChannelId + "]");
             //Loop through all windows processes names "ezstream"
             foreach (Process process in Process.GetProcessesByName("ezstream"))
             {
@@ -385,7 +390,7 @@ namespace RentItServer.ITU
                     p.RealProcessId = process.Id;
                     //Add the id to the list of running processes ids
                     ezstreamProcessIds.Add(process.Id);
-                    _logger.AddEntry("Process for channel with id: " + p.ChannelId + " has been assigned process id: " + p.RealProcessId);
+                    _logger.AddEntry("Process for channel with id: [" + p.ChannelId + "] has been assigned process id: [" + p.RealProcessId + "]");
                     break;
                 }
             }
@@ -401,7 +406,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">Channel id for the channel which should have stopped its streaming process</param>
         public void StopChannelStream(int channelId)
         {
-            _logger.AddEntry("Starting stopping stream for channel with id: " + channelId);
+            _logger.AddEntry("Starting stopping stream for channel with id: [" + channelId + "]");
 
             //The process for the given channel id
             EzProcess p;
@@ -411,8 +416,8 @@ namespace RentItServer.ITU
             }
             catch (KeyNotFoundException) //The given channel id has no running streaming process
             {
-                _logger.AddEntry("Channel with id: " + channelId + " is not running");
-                throw new ChannelNotRunningException("Channel with id: " + channelId + " is not running");
+                _logger.AddEntry("Channel with id: [" + channelId + "] is not running");
+                throw new ChannelNotRunningException("Channel with id: [" + channelId + "] is not running");
             }
 
             bool success = false;
@@ -431,12 +436,12 @@ namespace RentItServer.ITU
                     DeleteTrackPlays(channelId, DateTime.Now);
                     //Set success to true
                     success = true;
-                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
+                    _logger.AddEntry("Ezstream process for channel with id: [" + channelId + "] has been killed");
                 }
             }
             if (!success)
             {
-                _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has not been killed");
+                _logger.AddEntry("Ezstream process for channel with id: [" + channelId + "] has not been killed");
             }
         }
         #endregion
@@ -449,7 +454,7 @@ namespace RentItServer.ITU
         /// <param name="datetime">The lower bound of the time</param>
         public void DeleteTrackPlays(int channelId, DateTime datetime)
         {
-            _logger.AddEntry("Start deleting trackplays for channel with id: " + channelId + " after datetime: " + datetime.ToLongDateString() + " " + datetime.ToLongTimeString());
+            _logger.AddEntry("Start deleting trackplays for channel with id: [" + channelId + "] after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "]");
             _dao.DeleteTrackPlays(channelId, datetime);
         }
         #endregion
@@ -475,7 +480,7 @@ namespace RentItServer.ITU
         /// <param name="trackPlayList"></param>
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
-            _logger.AddEntry("Starting adding count: " + trackPlayList.Count + " trackplays from given list to database");
+            _logger.AddEntry("Starting adding count: [" + trackPlayList.Count + "] trackplays from given list to database");
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
@@ -507,7 +512,7 @@ namespace RentItServer.ITU
             //Loop trhough all the channels and start their stream
             foreach (Channel c in channels)
             {
-                _logger.AddEntry("Restarting channel with id: " + c.Id);
+                _logger.AddEntry("Restarting channel with id: [" + c.Id + "]");
                 StartChannelStream(c.Id);
             }
 
