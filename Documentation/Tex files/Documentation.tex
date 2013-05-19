@@ -38,14 +38,26 @@
 
 \section{Introduction}
 \subsection{Vision}
-RentIt is a radio hosting service, that enables users to host online radio stations and for other users to listen to them. The creator of a channel can upload tracks to the channel, and based on how popular the tracks are among listeners, the system chooses which tracks to play next.
+RentIt is a radio hosting service, that enables users to host online radio stations and for other users to listen to them. The creator of a channel can upload tracks to the channel, and the listeners of the channel can shape the future of the channel by submitting there up vote or down vote of a track. The service shall also promote the community by making room for discussion of channels.
 It is a system intended to be used by the common user, without any special knowledge or traning.
+
+\subsection{Application scope}
+In this section we will analyse what features that are needed to make a successfull internet radio hosting service. We will go through the overall components that the service needs. In the requirements and use case section, we will go into more detail.
+
+We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The access to the service must be accessible through a browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and uncomplicated way. An internet radio service is different from a normal media streaming service, because several users who listen to the same radio channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
+
+Another crucial component is to find ways differentiate the radio stations from one another. In a radio hosting service, where users can create their own radio stations and all content on the website essentially is user created, it is important to make ways to sort the radio stations so a listener easily can find a radio station that he wants to listen to. One way to differentiate radio stations is to attach genres to the stations. This is a way for the radio hosts, to describe what kind of content a listener can expect when listening to the radio station. Another way is through subscriptions. Subscriptions serves two purposes: It gives the listener an ability to flag his favorite radio stations and enables him to access them in an easy way. It also serves as a way to rank the stations after popularity. A listener can use the subscriptions as an indication for how popular a radio stations are and use it as a guideline for finding new stations to listen to. Number of comments is also a way to find the channels that has caused the most discussions and community activity. 
+
+This brings us to another component which is the ability for community activity between the listeners. Other user driven services, such as YouTube[reference] are very driven by their user community, and it is crucial to get a stable and active user base if your service is to be successful. To support this activity, we need to give the users the ability to make comments to channels.
+
+We must also address the question of channel selection. How do we determine in what order the tracks on a channel should be played? On an original FM radio channel, the order of tracks is determined manually by the radio host, but on an internet radio station that is rarely an option. One solution is that the radio host makes a list of tracks and that becomes the list that is played over and over until it is changed again. This would work, but it essentially makes the radio service into an online playlist service, and that is not quite what we are going for. On a radio station the order of tracks should not be fixed and should from one hearing to another. It would be easy to do with a random generator, that simply generated a new random playlist every time the station had played through the tracks, but this would mean that popular tracks had the same chance of being played as a non popular song. Essentially, we want users to influence in what order the songs are to be played and a program that selects the songs in an intelligent and dynamic way. 
+
 \subsection{Glossary}
 Track: An audio file that the users can listen to via channels. \\*
 Channel: A collection of tracks that is played infinitly, and can be listened to by users. Managed by a channel host.
 
 \section{Specification}
-This section contains the functional and non-functional requirements, as well as the use cases that they are based on.
+In this section we elaborate on the features discussed in the program scope section and we define the requirements and use cases. We start by defining the use cases and then we define the actual requirements based on these. 
 \subsection{Use Cases}
 \textbf{Create account:}
 The user navigates to the "create account"/"register" page. He fills out required information and agrees on possible conditions.
@@ -304,7 +316,7 @@ This class is the single point of entry to the server programs functionality.
 \subsubsection{Class diagram}
 \begin{figure}[H]
   \centering
-\includegraphics[]{./ClassDiagram v2.png}
+\includegraphics[width=450pt,keepaspectratio=true]{./ClassDiagramv2.png}
 \caption{Class diagram of important methods and all classes}
 \end{figure}
 
@@ -327,12 +339,13 @@ The eligible track's ratio are calculated from the formula:
 \begin{align*}
 ratio &= \frac{ratioConstant + upvotes}{ratioConstant + downvotes}
 \end{align*}
-The selection are visualized and explained in the following figure.\\\\
+The selection are visualized and explained in the following figure.\\
 \begin{figure}[htp]
 \centering
 \includegraphics[width=130pt,height=200pt,keepaspectratio=true]{./trackSelectionB.png}
 \caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length that the track has are proportional to the ratio.}
 \end{figure}
+\textbf{ } \\*
 \textbf{Time complexity} \\*
 As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call, runs several times, the time complex is relevant. The algorithm iterates through tracks up to four times and track plays two times. The iterations does not involve iterations in iterations, making non of the \texttt{foreach()} calls quadratic in time. Therefore the time complexity is: 
 \begin{align*}

@@ -271,5 +271,14 @@ namespace RentItMvc.Controllers
                 return proxy.CountAllChannelsWithFilter(searchArgs);
             }
         }
+
+        public ActionResult DeleteChannel(int channelId, int userId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.DeleteChannel(channelId);
+            }
+            return RedirectToAction("MyChannels", new { userId = userId });
+        }
     }
 }
