@@ -1440,5 +1440,25 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Deletes all the users votes on a given channel
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="channelId">The id of the channel</param>
+        public void DeleteVotesForUser(int userId, int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId && v.Track.ChannelId == channelId
+                            select v;
+                foreach (Vote v in votes)
+                {
+                    context.Votes.Remove(v);
+                }
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -771,6 +771,7 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     _dao.UnSubscribe(userId, channelId);
+                    _dao.DeleteVotesForUser(userId, channelId);
                 }
             }
             catch (Exception e)

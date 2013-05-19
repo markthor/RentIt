@@ -15,7 +15,7 @@ namespace RentItServer.ITU
         //The lowest possible value for the maximal play percentage that a track can have to be considered for the next track.
         private double _maxFrequencyLowerCap = 0.2;
         //Determines how much upvotes and downvotes should influence the propability of a track being selected.
-        private int _ratioConstant = 2;
+        private int _ratioConstant = 10;
         //The number of latest played tracks that will not be considered for the next track.
         private int _minimumRepeatDistance = 3;
 
