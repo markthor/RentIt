@@ -305,7 +305,7 @@ namespace RentItServer.ITU
             }
 
             //Get all trackplays for the channel
-            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId, DateTime.Now.AddDays(-2));
             if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
             {
                 _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");

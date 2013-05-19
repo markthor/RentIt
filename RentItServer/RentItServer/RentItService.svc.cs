@@ -270,5 +270,10 @@ namespace RentItServer
         {
             _controller.DeleteVote(userId, trackId);
         }
+
+        public int CountAllChannelsWithFilter(ChannelSearchArgs filter)
+        {
+            return _controller.CountAllChannelsWithFilter(filter);
+        }
     }
 }

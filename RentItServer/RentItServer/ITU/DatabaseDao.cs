@@ -817,7 +817,6 @@ namespace RentItServer.ITU
                 filteredTracks = new List<Track>(range);
             }
             return filteredTracks;
-
         }
 
         /// <summary>
@@ -1122,6 +1121,18 @@ namespace RentItServer.ITU
                     }
                 }
                 return trackPlays;
+            }
+        }
+
+        public List<TrackPlay> GetTrackPlays(int channelId, DateTime dateTime)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackPlays = from tp in context.TrackPlays
+                                 where tp.TimePlayed > dateTime && tp.Track.ChannelId == channelId
+                                 select tp;
+
+                return trackPlays.ToList();
             }
         }
 
