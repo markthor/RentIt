@@ -45,7 +45,6 @@ namespace RentItServer.ITU
         {
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
-            //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
@@ -72,11 +71,6 @@ namespace RentItServer.ITU
         {
             _streamHandler.ManualStreamStart(channelId);
         }
-
-        /*public void StopChannelStream(int channelId)
-        {
-            _streamHandler.StopStream(channelId);
-        }*/
 
         /// <summary>
         /// Login the specified user.
@@ -463,11 +457,19 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Adds a track(mp3 file) to the filesystem
+        /// </summary>
+        /// <param name="userId">User id of the owner of the track</param>
+        /// <param name="channelId">Id of the channel which own the track</param>
+        /// <param name="audioStream">MemoryStream of the mp3 file</param>
         public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
             //save file
             //get track info
             //save to db
+
+            //Create initial track
             Track track = new Track() 
             {
                 ChannelId = channelId,
@@ -484,22 +486,25 @@ namespace RentItServer.ITU
 
             try
             {
+                //Create the track enty in the database. This is in order to get the id of the track
                 track = _dao.CreateTrackEntry(channelId, track);
+                //Write the file to the filesystem
                 string fileName = track.Id + ".mp3";
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
 
-                string filepath = FilePath.ITUTrackPath + fileName;//temp value for testing
+                //Set track properties and update the track in the database
+                string filepath = FilePath.ITUTrackPath + fileName;
                 int tId = track.Id;
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
                 track.Id = tId;
                 track.ChannelId = channelId;
-
                 _dao.UpdateTrack(track);
             }
             catch(Exception e)
             {
-                _logger.AddEntry("exception: " + e);
-                //TODO: delete file and database entry
+                _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
+                _dao.DeleteTrackEntry(track.Id);
+                _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
         }
 
@@ -509,8 +514,8 @@ namespace RentItServer.ITU
             TagLib.File audioFile = TagLib.File.Create(filePath);
 
             Track track = new Track();
-            track.Id = 0;
-            track.ChannelId = 0;//FIX
+            track.Id = -1;
+            track.ChannelId = -1;//FIX
             track.Path = filePath;
             track.UpVotes = 0;
             track.DownVotes = 0;

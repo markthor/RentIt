@@ -1460,5 +1460,20 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        public void DeleteTrackEntry(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var track = from t in context.Tracks
+                            where t.Id == trackId
+                            select t;
+                if (track.Any())
+                {
+                    context.Tracks.Remove(track.First());
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }
