@@ -158,11 +158,23 @@ namespace RentItServer.ITU
             throw new ArgumentException("This implementaion does not support the arguments because of an error in this method.");
         }
         
+        /// <summary>
+        /// Gets the ratio that determines how likely the track is to be selected.
+        /// </summary>
+        /// <param name="upvotes">The up votes of the track</param>
+        /// <param name="downvotes">The down votes of the track</param>
+        /// <returns>The ratio of the track</returns>
         private double GetRatio(int upvotes, int downvotes)
         {
             return Convert.ToDouble(_ratioConstant + upvotes) / Convert.ToDouble(_ratioConstant + downvotes);
         }
 
+        /// <summary>
+        /// Gets the ids of most recently played tracks.
+        /// </summary>
+        /// <param name="numberOfTracks">The number of tracks to retrieve</param>
+        /// <param name="plays">The track plays that determines when the tracks have been played</param>
+        /// <returns>The most recently played tracks ids.</returns>
         public List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)
         {
             List<TrackPlay> recentlyPlayedTracks = new List<TrackPlay>(numberOfTracks);
@@ -189,6 +201,12 @@ namespace RentItServer.ITU
             return ids;
         }
 
+        /// <summary>
+        /// Whether the collection of trackplays contain an older trackplays than the target trackplay.
+        /// </summary>
+        /// <param name="targetTrack">The target trackplay to be compare against</param>
+        /// <param name="plays">The collection of trackplays to investigate</param>
+        /// <returns>Whether there is an older trackplay in the collection</returns>
         private Boolean ContainsOlderTrackPlay(TrackPlay targetTrack, List<TrackPlay> plays)
         {
             foreach (TrackPlay tp in plays)
@@ -198,6 +216,10 @@ namespace RentItServer.ITU
             return false;
         }
 
+        /// <summary>
+        /// Removes the oldest track from a collection of trackplays.
+        /// </summary>
+        /// <param name="plays">The collection of trackplays to remove from</param>
         private void RemoveOldestTrackPlay(List<TrackPlay> plays)
         {
             DateTime oldestDate = DateTime.MaxValue;
@@ -215,6 +237,9 @@ namespace RentItServer.ITU
         }
     }
 
+    /// <summary>
+    /// Contains aggregated data about tracks, used in the GetNextTrack.
+    /// </summary>
     public class TrackData
     {
         public TrackData(Track t)
@@ -224,24 +249,36 @@ namespace RentItServer.ITU
             Track = t;
         }
 
+        /// <summary>
+        /// Ratio determines how likely the track is to be selected by GetNextTrack.
+        /// </summary>
         public double Ratio
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The number of times a track has been played.
+        /// </summary>
         public int Plays
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The track that the trackdata holds information about.
+        /// </summary>
         public Track Track
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Whether it is possible for this track to be selected.
+        /// </summary>
         public Boolean NextTrackCandidate
         {
             get;
