@@ -551,36 +551,23 @@ namespace RentItServer.ITU
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                int count = filter.EndIndex - filter.StartIndex;
+                if (filteredChannels.Count < filter.EndIndex)
+                {
+                    filter.EndIndex = filteredChannels.Count - 1;
+                }
                 if (filteredChannels.Count < filter.StartIndex)
                 {
-                    if (filteredChannels.Count < 10)
-                    {
-                        filter.StartIndex = 0;
-                    }
-                    else
-                    {
-                        filter.StartIndex = filteredChannels.Count - 10;
-                    }
+                    filter.StartIndex = ((filteredChannels.Count - count) - 1);
                     filter.EndIndex = filteredChannels.Count;
                 }
+                
 
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                if (filter.StartIndex < 0)
-                {   // Avoid OutOfBoundsException
-                    filter.StartIndex = 0;
-                }
-                if (filter.EndIndex < filteredChannels.Count)
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filter.EndIndex);
-                }
-                else
-                {
-                    filteredChannels.CopyTo(filter.StartIndex, range, filter.StartIndex, filteredChannels.Count - filter.StartIndex);
-                }
-                filteredChannels = new List<Channel>(range);
+                filteredChannels.CopyTo(filter.StartIndex, range, 0, (filter.EndIndex - filter.StartIndex));
+                return range.ToList();
             }
-            filteredChannels = filteredChannels.Where(channel => channel != null).ToList();
-            return filteredChannels;
+            return null;
         }
 
         /// <summary>
