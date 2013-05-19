@@ -1,12 +1,10 @@
+Testing.
+This paragraph will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
+as it is; following with a description of how we tested against the requirements of the product, followed by our argumentation that the tests indicate that 
+the product meets the requirements.
+
 Testing strategy.
-This paragraph will explain how we went about testing our software; it will start with a description of how we tested
-against the requirements of the product, followed by our argumentation that those tests indicate that the product meeting the
-requirements. It will also contain 
-
-<LAV TESTS PÅ REQUIREMENTS OG SKRIV OM DET HER>
-
-Besides testing on the requirements of the software, we also did basic unit testing. Each unit tests signature use the 
-following template:
+Through the course of the project, a lost of basic unit testing was done. Each unit test signature use the following template:
 
 **** public void <Tested class>_<Tested method>_<Parameter or Behavior>_<The parameters/behavior tested> ****
 
@@ -18,6 +16,164 @@ controller, it would make little sense to spend resources on testing it.
 It was the intention that every method in the "Controller" class should be tested for all parameter combinations together 
 with behavior testing. This turned out to be more time consuming than first anticipated, and therefore some of the tests
 only test for the behavior of the corresponding method.
+
+
+
+
+
+
+--------------------------------
+R0:
+The system shall allow all users to create a channel, add attributes and edit the channel. 
+
+Domain concepts:
+The channel shall have its own collection of tracks that it plays. It is created and maintained by the channel host(the creator of the channel).
+The channel shall have genres, a description and comments posted by users.
+The channel must be visible to other users with proper search parameters.
+
+Dependencies:
+The requirement is necessary for "upload track" and "listen to channel" because a track is associated with a channel.
+
+Priority:
+It is of essential importance, since the functionality is prerequested for other fundamentally important requirements.
+
+
+Tested with:
+<mangler>
+CreateChannel
+DeleteChannel
+UpdateChannel
+
+
+-----------------------------------
+
+R1:
+The system shall allow users to listen to an online radio-channel that streams audio. 
+
+Domain concepts:
+A channel has a collection of tracks that can be listened to. 
+
+Priority:
+Highest as this is the primary service that the system provides. 
+
+Implementation notes:
+The system must be able to stream audio in a smooth and clutter-free manner. The system must have an intelligent way of selecting the next track to be played, meaning that it must consider up/downvotes and how much it has been played compared to other tracks of the channel.
+A radio-channel must be able to stream an endless stream of audio without pauses between audio tracks.
+
+
+Tested with:
+note: Det er svært at teste om der kommer lyd ud, udover at man selv kan høre det når man trykker play... Hvordan skal vi teste det?
+
+
+
+---------------------------------------
+
+R2:
+The user shall be able to rate a track associated with a channel. 
+
+Domain concepts:
+The rating of a track must affect the frequency with which it is played within its associated channel.
+A higher rating giving a proportionally higher chance of being played. 
+
+Dependencies:
+The listen to channel requirement is dependant on this requirement because the track to be played is determined by its rating.
+
+Priority:
+It is of essential importance, since the functionality is prerequisite for other fundamentally important requirements.
+
+
+Tested with:
+<mangler>
+CreateVote
+DeleteVote
+
+kom ind på at alle votes på tracks i en channel fra en bruger forsvinder når han unsubscriber.
+
+----------------------------------------
+
+R3:
+It shall be possible for users with a channel to upload a track to it. 
+
+Domain concepts:
+A channel has tracks that are managed by the channel creator. 
+
+Dependencies:
+The listen to channel requirement is dependant on this requirement because the track can only be played to others if it has been uploaded to the server.
+
+Priority:
+It is of essential importance, since the functionality is prerequisite for other fundamentally important requirements.
+
+
+Tested with:
+<mangler>
+AddTrack
+
+---------------------------------------
+
+R4:
+It shall be possible for users to subscribe and unsubscribe to channels. 
+
+Domain concepts:
+A user has a collection of subscribed channels. 
+
+Priority:
+This requirement is of secondary importance because no essential requirements are dependent on this requirement. It is important because it helps 
+classifing popular channels and helps the user navigate to his or her favorite channels.
+
+
+Tested with:
+Subscribe
+<mangler>
+Unsubscribe behavior
+
+---------------------------------------------
+
+R5:
+It shall be possible for user to comment on channels. 
+
+Domain concepts:
+A channel has comments that everyone can read and author.
+
+
+Tested with:
+<mangler>
+CreateComment
+DeleteComment
+
+------------------------------------------
+
+R6:
+It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable. 
+
+Domain concepts:
+All users of the system has an account. 
+
+Dependencies:
+As an account is required for the use of the system, all requirements are dependent on the creation of an account. 
+
+Priority:
+It is of essential importance to create an account, since the functionality is prerequested for other fundamentally important requirements. Delete 
+and edit are of secondary priority.
+
+
+Tested with:
+SignUp
+DeleteUser
+UpdateUser
+<mangler>
+behavior tests for dem alle
+
+------------------------------------------
+
+
+
+
+
+
+!!!!! Kom ind på at koden understøtter requirements, men at brugergrænsefladen ikke har dem alle implementeret og at det samlede produkt derfor ikke lever op til requirements!!!!!!
+
+
+
 
 
 

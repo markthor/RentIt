@@ -63,6 +63,7 @@ namespace RentItServer_UnitTests.ItuTests
         public static void CleanDataBaseStart(TestContext tc)
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
+            TestExtensions.PopulateDatabase();
             controller = Controller.GetInstance();
             for (int i = 0; i < interval; i++)
             {
@@ -661,7 +662,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
-                    //TODO fix this Assert.IsTrue(theChannels[i - 1].Comments.Count > theChannels[i].Comments.Count);
+                    Assert.IsTrue(_dao.GetChannelComments(theChannels[i - 1].Id, 0, int.MaxValue).Count >= _dao.GetChannelComments(theChannels[i].Id, 0, int.MaxValue).Count);
                 }
             }
             catch
@@ -1848,8 +1849,8 @@ namespace RentItServer_UnitTests.ItuTests
                 string channelDescr = "a description";
                 int channelId = controller.CreateChannel(channelName, TestExtensions._testUser1.Id,
                                                          channelDescr, new string[] { TestExtensions.genreName1 });
-                Channel channel = _dao.GetChannel(channelId);
-                Assert.IsTrue(channel.ChannelOwner.Id == TestExtensions._testUser1.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Channel channel = _dao.GetChannel(channelId).GetChannel();
+                Assert.IsTrue(channel.OwnerId == TestExtensions._testUser1.Id);
                 Assert.IsTrue(channel.Description.Equals(channelDescr));
                 Assert.IsTrue(channel.Name.Equals(channelName));
             }
@@ -1877,7 +1878,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_UpdateChannel
         [TestMethod]
-        public void Controller_UpdateChannel_Behavior_ChannelUpdated1()
+        public void Controller_UpdateChannel_Behavior_UpdatedAllAttributes()
         {
             try
             {
@@ -1900,22 +1901,17 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         [TestMethod]
-        public void Controller_UpdateChannel_Behavior_ChannelUpdated2()
+        public void Controller_UpdateChannel_Behavior_UpdatedNoAttributes()
         {
             try
             {
-                int? updatedOwnerId = null;
-                string updatedChannelName = null;
-                string updatedDescription = null;
-                double? updatedHits = null;
-                double? updatedRating = null;
-                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating);
+                controller.UpdateChannel(TestExtensions._testChannelId1, null, null, null, null, null);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
                 Assert.IsTrue(channel.ChannelOwner.Id == TestExtensions._testChannelId1);
-             //   Assert.IsTrue(channel.Description.Equals());
-                Assert.IsTrue(channel.Hits == updatedHits);
-                Assert.IsTrue(channel.Rating == updatedRating);
-                Assert.IsTrue(channel.Name.Equals(updatedChannelName));
+                Assert.IsTrue(channel.Description.Equals(TestExtensions._testChannel1Description));
+                Assert.IsTrue(channel.Hits == TestExtensions._testChannel1Hits);
+                Assert.IsTrue(channel.Rating == TestExtensions._testChannel1Rating);
+                Assert.IsTrue(channel.Name.Equals(TestExtensions._testChannel1Name));
             }
             catch
             {
