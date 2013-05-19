@@ -37,6 +37,7 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel4;
         public static RentItServer.ITU.DatabaseWrapperObjects.Channel _testChannel5;
 
+
         /// <summary>
         /// Adds instances of different entities to test.
         /// </summary>

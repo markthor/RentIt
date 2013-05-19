@@ -9,7 +9,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class Channel
     {
-        public Channel(int id, string name, string description, double? rating, int? hits, int ownerId, string streamUri)
+        public Channel(int id, string name, string description, double? rating, int? hits, int ownerId, string streamUri, string[] genres)
         {
             Id = id;
             Name = name;
@@ -18,6 +18,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Hits = hits;
             OwnerId = ownerId;
             StreamUri = streamUri;
+            Genres = genres;
         }
 
         [DataMember]
@@ -34,5 +35,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public int OwnerId { get; set; }
         [DataMember]
         public string StreamUri { get; set; }
+        [DataMember]
+        public string[] Genres { get; set; } 
     }
 }

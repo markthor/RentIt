@@ -13,7 +13,7 @@ following template:
 It was not possible to write unit tests for all methods in all classes, therefore we prioritized testing the methods of 
 critical components. That meant the "Controller" and "TrackPrioritizer" classes (HVAD MED STREAMHANDLER?). One could argue 
 that the webservice class is also a critical component, but since every method in the webservice class is mirrored in the
-controller, it would make little sense to spend resources on it.
+controller, it would make little sense to spend resources on testing it.
 
 It was the intention that every method in the "Controller" class should be tested for all parameter combinations together 
 with behavior testing. This turned out to be more time consuming than first anticipated, and therefore some of the tests
