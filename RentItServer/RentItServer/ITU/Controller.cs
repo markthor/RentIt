@@ -797,6 +797,7 @@ namespace RentItServer.ITU
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
+            _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
