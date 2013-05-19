@@ -101,7 +101,7 @@ namespace RentItMvc.Controllers
             int downvotes;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                downvotes = proxy.CountAllUpvotes(trackId);
+                downvotes = proxy.CountAllDownvotes(trackId);
             }
             return downvotes;
         }
