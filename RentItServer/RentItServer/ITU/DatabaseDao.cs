@@ -1725,7 +1725,14 @@ namespace RentItServer.ITU
                              where c.Id == channelId
                              select c.Genres;
 
-                return genres.First().ToList();
+                if (!genres.Any())
+                {
+                    return new List<Genre>();
+                }
+                else
+                {
+                    return genres.First().ToList();
+                }
             }
         }
     }
