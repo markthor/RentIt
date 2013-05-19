@@ -22,10 +22,10 @@ namespace RentItServer.ITU
             string format = "MP3";
             string filename = filePath;
             string stream_once = "0";
-            string svrinfoname = "My Stream";
-            string svrinfourl = "http://www.oddsock.org";
-            string svrinfogenre = "RockNRoll";
-            string svrinfodescription = "This is a stream description";
+            string svrinfoname = "Channel id: " + cId;
+            string svrinfourl = "rentit.itu.dk/blobfishradio";
+            string svrinfogenre = "";
+            string svrinfodescription = "";
             string svrinfobitrate = "128";
             string svrinfochannels = "2";
             string svrinfosamplerate = "44100";
