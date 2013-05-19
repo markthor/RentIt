@@ -29,9 +29,18 @@
                     </div>
                 </td>
                 <td>
-                    <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id, userId = Session["userId"]}))'">
-                        <i class="icon-remove icon-white"></i>
-                    </button>
+                    @if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Item2))
+                    {
+                        <button title="Connot delete track while channel is playing" class="btn btn-small btn-danger disabled">
+                            <i class="icon-remove icon-white"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id, userId = Session["userId"]}))'">
+                            <i class="icon-remove icon-white"></i>
+                        </button>
+                    }
                 </td>
             </tr>
         }
