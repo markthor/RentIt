@@ -76,7 +76,7 @@ namespace RentItServer.ITU
         /// <returns>The id of the next track to be played</returns>
         public Track GetNextTrack(List<Track> trackList, List<TrackPlay> plays)
         {
-            //Set variables
+            //Set max frequency
             _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
 
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
@@ -163,7 +163,7 @@ namespace RentItServer.ITU
             return Convert.ToDouble(_ratioConstant + upvotes) / Convert.ToDouble(_ratioConstant + downvotes);
         }
 
-        private List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)
+        public List<int> GetMostRecentlyPlayedTrackIds(int numberOfTracks, List<TrackPlay> plays)
         {
             List<TrackPlay> recentlyPlayedTracks = new List<TrackPlay>(numberOfTracks);
 

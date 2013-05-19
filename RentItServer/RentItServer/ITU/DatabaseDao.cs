@@ -1393,5 +1393,10 @@ namespace RentItServer.ITU
                 context.SaveChanges();
             }
         }
+
+        public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
