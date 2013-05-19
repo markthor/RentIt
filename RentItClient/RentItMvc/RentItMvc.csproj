@@ -197,7 +197,7 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\RentItService\Arrays.xsd">
+    <None Include="Service References\RentItService\Arrays1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\RentItService\configuration91.svcinfo" />
@@ -233,25 +233,26 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Vote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects.xsd">
+    <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\RentItServer.ITU.xsd">
+    <None Include="Service References\RentItService\RentItServer.ITU1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\service.wsdl" />
-    <None Include="Service References\RentItService\service.xsd">
+    <Content Include="Service References\RentItService\service1.wsdl" />
+    <None Include="Service References\RentItService\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\service1.xsd">
+    <None Include="Service References\RentItService\service21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\System.IO.xsd">
+    <None Include="Service References\RentItService\System.IO1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\RentItService\System.xsd">
+    <None Include="Service References\RentItService\System1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Channel\BrowsableChannels.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
