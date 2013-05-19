@@ -85,16 +85,25 @@ namespace RentItMvc.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
-        public ActionResult TrackList(List<GuiTrack> tracks, int? userId)
+ 
+        public static int GetUpvotes(int trackId)
         {
-            if (userId.HasValue)
+            int upvotes;
+            using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                return View(tracks);
+                upvotes = proxy.CountAllUpvotes(trackId);
             }
-            return RedirectToAction("Index", "Home");
+            return upvotes;
         }
 
-        
+        public static int GetDownvotes(int trackId)
+        {
+            int downvotes;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                downvotes = proxy.CountAllUpvotes(trackId);
+            }
+            return downvotes;
+        }
     }
 }
