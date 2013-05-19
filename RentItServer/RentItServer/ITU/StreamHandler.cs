@@ -108,7 +108,7 @@ namespace RentItServer.ITU
             {
                 //For testing!
                 DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(15);
+                resetDate = resetDate.AddMinutes(180);
                 return resetDate;
                 //endFor
 
