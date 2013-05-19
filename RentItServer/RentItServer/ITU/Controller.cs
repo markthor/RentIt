@@ -547,6 +547,7 @@ namespace RentItServer.ITU
         public void RemoveTrack(int trackId)
         {
             if (trackId < 0) LogAndThrowException(new ArgumentException("trackId was below 0"), "RemoveTrack");
+            if (_streamHandler.IsChannelStreamRunning(_dao.GetTrack(trackId).ChannelId) == true) throw new ChannelRunningException("Cannot delete track while channel stream is running");
 
             try
             {
