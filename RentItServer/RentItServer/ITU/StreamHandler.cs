@@ -156,6 +156,7 @@ namespace RentItServer.ITU
         #endregion
         #endregion
 
+        #region Methods regarding starting a stream
         #region ManualStreamStart(int channelId)
         /// <summary>
         /// Method to manually start the stream for a channel
@@ -174,7 +175,7 @@ namespace RentItServer.ITU
                     //Start the channel stream
                     StartChannelStream(channelId);
                     //Add all new track plays to the database
-                    AddNewTrackPlays();
+                    AddTrackPlayList();
                 }
                 else // Tjhe channel has no associated tracks
                 {
@@ -187,46 +188,6 @@ namespace RentItServer.ITU
                 _logger.AddEntry("Channel with id: " + channelId + " is already running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
             }
-        }
-        #endregion
-
-        #region StopStream(int channelId)
-        /// <summary>
-        /// Method to stop the stream process of a specific channel
-        /// </summary>
-        /// <param name="channelId">Channel id for the channel which should have stopped its streaming process</param>
-        public void StopChannelStream(int channelId)
-        {
-            _logger.AddEntry("Starting stopping channel with id: " + channelId);
-            
-            //The process for the given channel id
-            EzProcess p;
-            try
-            {
-                p = runningChannelIds[channelId];
-            }
-            catch(KeyNotFoundException) //The given channel id has no running streaming process
-            {
-                _logger.AddEntry("Channel with id: " + channelId + " is not running");
-                throw new ChannelNotRunningException("Channel with id: " + channelId + " is not running");
-            }
-            
-            //Loop through all windows processes named "ezstream"
-            foreach (Process process in System.Diagnostics.Process.GetProcessesByName("ezstream"))
-            {
-                if (process.Id == p.RealProcessId) //if the windows process has the same id as the process associated with the given channel id
-                {
-                    //Kill the process
-                    process.Kill();
-                    //Remove the id from active processes' widnows ids
-                    ezstreamProcessIds.Remove(p.RealProcessId);
-                    //Remove
-                    runningChannelIds.Remove(channelId);
-                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
-                }
-            }
-
-            //TODO: FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
         }
         #endregion
 
@@ -416,13 +377,69 @@ namespace RentItServer.ITU
             }
         }
         #endregion
+        #endregion
+
+        #region Methods regarding stopping a stream
+        #region StopStream(int channelId)
+        /// <summary>
+        /// Method to stop the stream process of a specific channel
+        /// </summary>
+        /// <param name="channelId">Channel id for the channel which should have stopped its streaming process</param>
+        public void StopChannelStream(int channelId)
+        {
+            _logger.AddEntry("Starting stopping channel with id: " + channelId);
+
+            //The process for the given channel id
+            EzProcess p;
+            try
+            {
+                p = runningChannelIds[channelId];
+            }
+            catch (KeyNotFoundException) //The given channel id has no running streaming process
+            {
+                _logger.AddEntry("Channel with id: " + channelId + " is not running");
+                throw new ChannelNotRunningException("Channel with id: " + channelId + " is not running");
+            }
+
+            //Loop through all windows processes named "ezstream"
+            foreach (Process process in System.Diagnostics.Process.GetProcessesByName("ezstream"))
+            {
+                if (process.Id == p.RealProcessId) //if the windows process has the same id as the process associated with the given channel id
+                {
+                    //Kill the process
+                    process.Kill();
+                    //Remove the id from active processes' widnows ids
+                    ezstreamProcessIds.Remove(p.RealProcessId);
+                    //Remove
+                    runningChannelIds.Remove(channelId);
+                    _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
+                }
+            }
+
+            //Delete all the trackplays which have not yet been played
+            DeleteTrackPlays(channelId, DateTime.Now);
+        }
+        #endregion
+
+        #region DeleteTrackPlays(int channelId, DateTime datetime)
+        /// <summary>
+        /// Deletes all trackplays for the given channel id which have a playtime after the fiven datetime object
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <param name="datetime">The lower bound of the time</param>
+        public void DeleteTrackPlays(int channelId, DateTime datetime)
+        {
+            _dao.DeleteTrackPlays(channelId, datetime);
+        }
+        #endregion
+        #endregion
 
         #region Add TrackPlay methods
-        #region AddNewTrackPlays()
+        #region AddTrackPlayList()
         /// <summary>
         /// Adds all the trackplays from newTrackPlays-list to the database
         /// </summary>
-        private void AddNewTrackPlays()
+        private void AddTrackPlayList()
         {
             AddTrackPlayList(newTrackPlays);
             //Clear the list
@@ -474,7 +491,7 @@ namespace RentItServer.ITU
             }
 
             //Add all new trackplays to the database
-            AddNewTrackPlays();
+            AddTrackPlayList();
         }
         #endregion
 
