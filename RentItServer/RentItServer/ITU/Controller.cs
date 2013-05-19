@@ -32,7 +32,7 @@ namespace RentItServer.ITU
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
-        
+
         private int tempCounter; //TODO: IS THIS BEING USED?
         private readonly object _dbLock = new object();
 
@@ -78,10 +78,10 @@ namespace RentItServer.ITU
         /// <returns>The id of the user, or -1 if the (username,password) is not found.</returns>
         public DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
         {
-            if(usernameOrEmail == null) LogAndThrowException(new ArgumentNullException("usernameOrEmail"), "Login");
-            if(usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
-            if(password == null)    LogAndThrowException(new ArgumentNullException("password"), "Login");
-            if(password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
+            if (usernameOrEmail == null) LogAndThrowException(new ArgumentNullException("usernameOrEmail"), "Login");
+            if (usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
+            if (password == null) LogAndThrowException(new ArgumentNullException("password"), "Login");
+            if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
 
             User user = null;
             try
@@ -260,7 +260,7 @@ namespace RentItServer.ITU
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
-                _logger.AddEntry("ChannelCreation failed with exception [{0}]. logEntry = " + logEntry + ". Local variable: channel = " + channel+".");
+                _logger.AddEntry("ChannelCreation failed with exception [{0}]. logEntry = " + logEntry + ". Local variable: channel = " + channel + ".");
                 throw;
             }
             return channel.Id;
@@ -273,8 +273,8 @@ namespace RentItServer.ITU
         public void CreateGenre(string genreName)
         {
             if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
-            string logEntry = "Genre with name: " + " [" + genreName + "] has been created." ;
-            
+            string logEntry = "Genre with name: " + " [" + genreName + "] has been created.";
+
             try
             {
                 lock (_dbLock)
@@ -444,7 +444,7 @@ namespace RentItServer.ITU
             //save to db
 
             //Create initial track
-            Track track = new Track() 
+            Track track = new Track()
             {
                 ChannelId = channelId,
                 Path = "",
@@ -474,16 +474,16 @@ namespace RentItServer.ITU
                 track.ChannelId = channelId;
                 _dao.UpdateTrack(track);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
                 _dao.DeleteTrackEntry(track.Id);
                 _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
 
-            _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId +"]");
+            _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
         }
-        
+
         /// <summary>
         /// Uses Taglib to retreive information about the mp3 file from the filepath
         /// </summary>
@@ -661,7 +661,7 @@ namespace RentItServer.ITU
         public DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
             if (fromInclusive == null) fromInclusive = 0;
-            if (toExclusive == null) toExclusive = int.MaxValue; 
+            if (toExclusive == null) toExclusive = int.MaxValue;
             try
             {
                 List<DatabaseWrapperObjects.Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
@@ -758,7 +758,7 @@ namespace RentItServer.ITU
 
         public bool IsEmailAvailable(string email)
         {
-            if(email == null)   LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
+            if (email == null) LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
@@ -796,8 +796,8 @@ namespace RentItServer.ITU
 
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            if (channelName == null) LogAndThrowException(new ArgumentException("channelName"), "IsChannelNameAvailable");
             _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
+            if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "IsChannelNameAvailable");
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
