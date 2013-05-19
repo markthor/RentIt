@@ -1382,7 +1382,10 @@ namespace RentItServer.ITU
                                  select tp;
 
                 List<TrackPlay> trackPlaysList = trackPlays.ToList();
-                trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                if (trackPlaysList.Count > numberOfTracks)
+                {
+                    trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                }
                 List<Track> result = new List<Track>();
 
                 foreach(TrackPlay tp in trackPlaysList)
