@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using RentItServer.ITU.Exceptions;
-using RentItServer.ITU.Search;
 using RentItServer.Utilities;
 using System.Text;
 
@@ -31,8 +30,6 @@ namespace RentItServer.ITU
         private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
         private readonly StreamHandler _streamHandler;
-        //The ternary search trie for users. Each username or email has an associated password as value
-        private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
@@ -46,26 +43,8 @@ namespace RentItServer.ITU
         /// </summary>
         private Controller()
         {
-            _channelCache = new Dictionary<int, Channel>();
-            _userCache = new TernarySearchTrie<User>();
-            // Initialize channel search trie
-            IEnumerable<Channel> allChannels = _dao.GetAllChannels();
-            foreach (Channel channel in allChannels)
-            {
-                _channelCache[channel.Id] = channel;
-            }
-
-            // Initialize user search tries
-            IEnumerable<User> allUsers = _dao.GetAllUsers();
-            foreach (User user in allUsers)
-            {
-                _userCache.Put(user.Email, user);
-                _userCache.Put(user.Email, user);
-            }
-
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
-            //_logger = new Logger(FilePath.ITULogPath + LogFileName);
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
@@ -92,11 +71,6 @@ namespace RentItServer.ITU
         {
             _streamHandler.ManualStreamStart(channelId);
         }
-
-        /*public void StopChannelStream(int channelId)
-        {
-            _streamHandler.StopStream(channelId);
-        }*/
 
         /// <summary>
         /// Login the specified user.
@@ -160,8 +134,6 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     user = _dao.SignUp(username, email, password);
-                    _userCache.Put(user.Username, user);
-                    _userCache.Put(user.Email, user);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
                 }
                 return user.GetUser();
@@ -194,8 +166,6 @@ namespace RentItServer.ITU
                     user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
                     _dao.DeleteVotesForUser(userId);
-                    _userCache.Put(user.Username, null);
-                    _userCache.Put(user.Email, null);
                     _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
                 }
             }
@@ -261,11 +231,7 @@ namespace RentItServer.ITU
             {
                 user = _dao.GetUser(userId);
                 _dao.UpdateUser(userId, username, password, email);
-                if (user.Username != null) _userCache.Put(user.Username, null);
-                if (user.Email != null) _userCache.Put(user.Email, null);
                 updatedUser = _dao.GetUser(userId);
-                if (username != null) _userCache.Put(username, updatedUser);
-                if (email != null) _userCache.Put(email, updatedUser);
             }
             catch (Exception e)
             {
@@ -491,11 +457,19 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Adds a track(mp3 file) to the filesystem
+        /// </summary>
+        /// <param name="userId">User id of the owner of the track</param>
+        /// <param name="channelId">Id of the channel which own the track</param>
+        /// <param name="audioStream">MemoryStream of the mp3 file</param>
         public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
             //save file
             //get track info
             //save to db
+
+            //Create initial track
             Track track = new Track() 
             {
                 ChannelId = channelId,
@@ -512,22 +486,25 @@ namespace RentItServer.ITU
 
             try
             {
+                //Create the track enty in the database. This is in order to get the id of the track
                 track = _dao.CreateTrackEntry(channelId, track);
+                //Write the file to the filesystem
                 string fileName = track.Id + ".mp3";
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
 
-                string filepath = FilePath.ITUTrackPath + fileName;//temp value for testing
+                //Set track properties and update the track in the database
+                string filepath = FilePath.ITUTrackPath + fileName;
                 int tId = track.Id;
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
                 track.Id = tId;
                 track.ChannelId = channelId;
-
                 _dao.UpdateTrack(track);
             }
             catch(Exception e)
             {
-                _logger.AddEntry("exception: " + e);
-                //TODO: delete file and database entry
+                _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
+                _dao.DeleteTrackEntry(track.Id);
+                _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
         }
 
@@ -537,8 +514,8 @@ namespace RentItServer.ITU
             TagLib.File audioFile = TagLib.File.Create(filePath);
 
             Track track = new Track();
-            track.Id = 0;
-            track.ChannelId = 0;//FIX
+            track.Id = -1;
+            track.ChannelId = -1;//FIX
             track.Path = filePath;
             track.UpVotes = 0;
             track.DownVotes = 0;
