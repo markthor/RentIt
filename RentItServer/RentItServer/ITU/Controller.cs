@@ -774,6 +774,11 @@ namespace RentItServer.ITU
             }
         }
 
+        public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
+        {
+            throw new NotImplementedException();
+        }
+
         public DatabaseWrapperObjects.Comment GetComment(int commentId)
         {
             throw new NotImplementedException();

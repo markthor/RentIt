@@ -1394,6 +1394,12 @@ namespace RentItServer.ITU
             }
         }
 
+
+        public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
+        {
+            throw new NotImplementedException();
+        }
+
         public Vote GetVote(int userId, int trackId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
