@@ -554,11 +554,11 @@ namespace RentItServer.ITU
                 int count = filter.EndIndex - filter.StartIndex;
                 if (filteredChannels.Count < filter.EndIndex)
                 {
-                    filter.EndIndex = filteredChannels.Count - 1;
+                    filter.EndIndex = filteredChannels.Count ;
                 }
                 if (filteredChannels.Count < filter.StartIndex)
                 {
-                    filter.StartIndex = ((filteredChannels.Count - count) - 1);
+                    filter.StartIndex = (filteredChannels.Count - count);
                     filter.EndIndex = filteredChannels.Count;
                 }
                 
