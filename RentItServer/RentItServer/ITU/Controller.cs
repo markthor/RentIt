@@ -361,6 +361,7 @@ namespace RentItServer.ITU
             {
                 RemoveTrack(t.Id);
             }
+            _dao.DeleteAllComments(channelId);
 
             Channel channel = null;
             try
