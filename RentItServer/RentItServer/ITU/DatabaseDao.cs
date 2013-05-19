@@ -1436,7 +1436,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void DeleteTrackPlays(int channelId, DateTime datetime)
+        public void DeleteTrackPlaysByChannelId(int channelId, DateTime datetime)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -1448,6 +1448,23 @@ namespace RentItServer.ITU
 	            {
                     context.TrackPlays.Remove(tp);
 	            }
+
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteTrackPlaysByTrackId(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackplays = from tp in context.TrackPlays
+                                 where tp.TrackId == trackId
+                                 select tp;
+
+                foreach(TrackPlay tp in trackplays)
+                {
+                    context.TrackPlays.Remove(tp);
+                }
 
                 context.SaveChanges();
             }

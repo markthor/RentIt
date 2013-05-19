@@ -455,7 +455,7 @@ namespace RentItServer.ITU
         public void DeleteTrackPlays(int channelId, DateTime datetime)
         {
             _logger.AddEntry("Start deleting trackplays for channel with id: [" + channelId + "] after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "]");
-            _dao.DeleteTrackPlays(channelId, datetime);
+            _dao.DeleteTrackPlaysByChannelId(channelId, datetime);
         }
         #endregion
         #endregion

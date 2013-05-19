@@ -556,6 +556,7 @@ namespace RentItServer.ITU
                     _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 _dao.DeleteVotesForTrack(trackId);
+                _dao.DeleteTrackPlaysByTrackId(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
