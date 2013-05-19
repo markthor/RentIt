@@ -387,5 +387,11 @@ namespace RentItServer.ITU
         /// <returns>The number of channels which passes</returns>
         [OperationContract]
         int CountAllChannelsWithFilter(ChannelSearchArgs filter);
+
+        [OperationContract]
+        int CountAllUpvotes(int trackId);
+
+        [OperationContract]
+        int CountAllDownvotes(int trackId);
     }
 }
