@@ -496,8 +496,6 @@ namespace RentItServer.ITU
             //save file
             //get track info
             //save to db
-            //omg
-            _logger.AddEntry("start");
             Track track = new Track() 
             {
                 ChannelId = channelId,
@@ -512,20 +510,14 @@ namespace RentItServer.ITU
                 Votes = new Collection<Vote>()
             };
 
-
-            _logger.AddEntry("1");
             try
             {
                 track = _dao.CreateTrackEntry(channelId, track);
-                _logger.AddEntry("Track id: " + track.Id);
                 string fileName = track.Id + ".mp3";
-                _logger.AddEntry("Track filename: " + fileName);
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
 
                 string filepath = FilePath.ITUTrackPath + fileName;//temp value for testing
-                _logger.AddEntry("Track filepath: " + filepath);
                 int tId = track.Id;
-                _logger.AddEntry("Getting trackinfo");
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
                 track.Id = tId;
                 track.ChannelId = channelId;

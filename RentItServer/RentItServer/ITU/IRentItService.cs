@@ -363,9 +363,20 @@ namespace RentItServer.ITU
         [OperationContract]
         void StopChannelStream(int channelId);
 
+        /// <summary>
+        /// Retreives the vote from a user on a track
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Vote GetVote(int userId, int trackId);
 
+        /// <summary>
+        /// Deletes the vote from a user on a track
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="trackId">The id of the track</param>
         [OperationContract]
         void DeleteVote(int userId, int trackId);
     }
