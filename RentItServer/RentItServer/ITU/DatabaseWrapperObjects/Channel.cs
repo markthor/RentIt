@@ -18,6 +18,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Hits = hits;
             OwnerId = ownerId;
             StreamUri = streamUri;
+            Genres = DatabaseDao.GetInstance().GetChannelGenres(id).ToArray(); // This is not pretty
         }
 
         [DataMember]
@@ -34,5 +35,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         public int OwnerId { get; set; }
         [DataMember]
         public string StreamUri { get; set; }
+        [DataMember]
+        public string[] Genres { get; set; } 
     }
 }

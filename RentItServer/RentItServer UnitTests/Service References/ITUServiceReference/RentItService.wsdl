@@ -221,6 +221,12 @@
   <wsdl:message name="IRentItService_GetTrackByChannelId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTrackByChannelIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_GetRecentlyPlayedTracks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecentlyPlayedTracks" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetRecentlyPlayedTracks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecentlyPlayedTracksResponse" />
+  </wsdl:message>
   <wsdl:message name="IRentItService_IsChannelNameAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:IsChannelNameAvailable" />
   </wsdl:message>
@@ -403,6 +409,10 @@
     <wsdl:operation name="GetTrackByChannelId">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetTrackByChannelId" message="tns:IRentItService_GetTrackByChannelId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetTrackByChannelIdResponse" message="tns:IRentItService_GetTrackByChannelId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentlyPlayedTracks">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetRecentlyPlayedTracks" message="tns:IRentItService_GetRecentlyPlayedTracks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetRecentlyPlayedTracksResponse" message="tns:IRentItService_GetRecentlyPlayedTracks_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="IsChannelNameAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/IsChannelNameAvailable" message="tns:IRentItService_IsChannelNameAvailable_InputMessage" />
@@ -743,6 +753,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetTrackByChannelId">
       <soap:operation soapAction="http://tempuri.org/IRentItService/GetTrackByChannelId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentlyPlayedTracks">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetRecentlyPlayedTracks" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

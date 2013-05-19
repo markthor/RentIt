@@ -127,16 +127,6 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the track info associated with the track stream.
-        /// </summary>
-        /// <param name="audioStream">The audio stream.</param>
-        /// <returns></returns>
-        //public ITU.DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream)
-        //{
-        //    return _controller.GetTrackInfo(audioStream);
-        //}
-
-        /// <summary>
         /// Gets the track info associated with the track.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -221,14 +211,10 @@ namespace RentItServer
             _controller.StartChannelStream(cId);
         }
 
-        /*/// <summary>
-        /// Stops the channel stream.
-        /// </summary>
-        /// <param name="cId">The id of the channel</param>
-        public void StopChannel(int cId)
+        public void StopChannelStream(int channelId)
         {
-            _controller.StopChannelStream(cId);
-        }*/
+            _controller.StopChannelStream(channelId);
+        }
 
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
@@ -269,15 +255,10 @@ namespace RentItServer
         {
             _controller.IncrementChannelPlays(channelId);
         }
-
+        
         public bool IsChannelPlaying(int channelId)
         {
             return _controller.IsChannelPlaying(channelId);
-        }
-
-        public void StopChannelStream(int channelId)
-        {
-            _controller.StopChannelStream(channelId);
         }
 
         public ITU.DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
