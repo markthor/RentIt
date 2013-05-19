@@ -11,6 +11,18 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
+        public PartialViewResult SelectGenre(int channelId)
+        {
+            List<GuiGenre> chosenGenres;
+            List<GuiGenre> availableGenres;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                chosenGenres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
+                availableGenres = GuiClassConverter.ConvertGenres(proxy.GetAllGenres()).Except(chosenGenres).ToList();
+            }
+            return PartialView(new Tuple<List<GuiGenre>, List<GuiGenre>, int>(availableGenres, chosenGenres, channelId));
+        }
+
         public ActionResult BrowsableChannels(int? userId, int startIndex, int endIndex)
         {
             if (userId.HasValue)
@@ -29,7 +41,7 @@ namespace RentItMvc.Controllers
                     searchArgs.SortOption = searchArgs.SubscriptionsDesc;
                     channels = proxy.GetChannels(searchArgs);
                 }
-                return View(new Tuple<List<GuiChannel>, int, int>(GuiClassConverter.ConvertChannelList(channels), startIndex, endIndex));
+                return View(new Tuple<List<GuiChannel>, int, int>(GuiClassConverter.ConvertChannels(channels), startIndex, endIndex));
             }
             return RedirectToAction("Index", "Home");
         }
@@ -118,7 +130,7 @@ namespace RentItMvc.Controllers
                     channels = new Channel[0];
                 }
                 ViewBag.Title = "Popular channels";
-                List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+                List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
                 return View("ChannelList", guiChannels);
             }
             return RedirectToAction("Index", "Home");
@@ -137,7 +149,7 @@ namespace RentItMvc.Controllers
                 {
                     channels = proxy.GetCreatedChannels(userId.Value);
                 }
-                List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannelList(channels);
+                List<GuiChannel> guiChannelList = GuiClassConverter.ConvertChannels(channels);
                 ViewBag.Title = "My channels";
                 return View("ChannelList", guiChannelList);
             }
@@ -164,7 +176,7 @@ namespace RentItMvc.Controllers
                 {
                     channels = new Channel[0];
                 }
-                List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+                List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
                 ViewBag.Title = "My subscriptions";
                 return View("ChannelList", guiChannels);
             }
@@ -193,7 +205,7 @@ namespace RentItMvc.Controllers
                     ChannelSearchArgs channelSearchArgs = proxy.GetDefaultChannelSearchArgs();
                     channelSearchArgs.SearchString = searchArgs;
                     Channel[] channels = proxy.GetChannels(channelSearchArgs);
-                    List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannelList(channels);
+                    List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
                     ViewBag.Title = "Search results";
                     return View("ChannelList", guiChannels);
                 }

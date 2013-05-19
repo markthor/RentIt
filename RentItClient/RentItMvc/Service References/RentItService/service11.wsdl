@@ -179,12 +179,6 @@
   <wsdl:message name="IRentItService_Unsubscribe_OutputMessage">
     <wsdl:part name="parameters" element="tns:UnsubscribeResponse" />
   </wsdl:message>
-  <wsdl:message name="IRentItService_GetChannelPort_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetChannelPort" />
-  </wsdl:message>
-  <wsdl:message name="IRentItService_GetChannelPort_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetChannelPortResponse" />
-  </wsdl:message>
   <wsdl:message name="IRentItService_StartChannelStream_InputMessage">
     <wsdl:part name="parameters" element="tns:StartChannelStream" />
   </wsdl:message>
@@ -286,6 +280,18 @@
   </wsdl:message>
   <wsdl:message name="IRentItService_CountAllDownvotes_OutputMessage">
     <wsdl:part name="parameters" element="tns:CountAllDownvotesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetAllGenres_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllGenres" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetAllGenres_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllGenresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetGenresForChannel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGenresForChannel" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetGenresForChannel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGenresForChannelResponse" />
   </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
@@ -400,10 +406,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Unsubscribe" message="tns:IRentItService_Unsubscribe_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/UnsubscribeResponse" message="tns:IRentItService_Unsubscribe_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetChannelPort">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetChannelPort" message="tns:IRentItService_GetChannelPort_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetChannelPortResponse" message="tns:IRentItService_GetChannelPort_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="StartChannelStream">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/StartChannelStream" message="tns:IRentItService_StartChannelStream_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/StartChannelStreamResponse" message="tns:IRentItService_StartChannelStream_OutputMessage" />
@@ -471,6 +473,14 @@
     <wsdl:operation name="CountAllDownvotes">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/CountAllDownvotes" message="tns:IRentItService_CountAllDownvotes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/CountAllDownvotesResponse" message="tns:IRentItService_CountAllDownvotes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGenres">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetAllGenres" message="tns:IRentItService_GetAllGenres_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetAllGenresResponse" message="tns:IRentItService_GetAllGenres_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGenresForChannel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetGenresForChannel" message="tns:IRentItService_GetGenresForChannel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetGenresForChannelResponse" message="tns:IRentItService_GetGenresForChannel_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -727,15 +737,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetChannelPort">
-      <soap:operation soapAction="http://tempuri.org/IRentItService/GetChannelPort" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="StartChannelStream">
       <soap:operation soapAction="http://tempuri.org/IRentItService/StartChannelStream" style="document" />
       <wsdl:input>
@@ -882,6 +883,24 @@
     </wsdl:operation>
     <wsdl:operation name="CountAllDownvotes">
       <soap:operation soapAction="http://tempuri.org/IRentItService/CountAllDownvotes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllGenres">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetAllGenres" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGenresForChannel">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetGenresForChannel" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
