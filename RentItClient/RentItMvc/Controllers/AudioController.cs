@@ -9,6 +9,7 @@ using System.Web.UI;
 using RentItMvc.Models;
 using RentItMvc.RentItService;
 using System.Runtime.Serialization.Json;
+using RentItMvc.Utilities;
 
 namespace RentItMvc.Controllers
 {
@@ -28,48 +29,24 @@ namespace RentItMvc.Controllers
 
         public PartialViewResult Last5Tracks(int channelId, int userId)
         {
-            List<GuiTrack> guiTracks = new List<GuiTrack>();
-            for (int i = 0; i < 5; i++)
+            List<GuiTrack> guiTracks;
+            using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                GuiTrack track = new GuiTrack
-                {
-                    ArtistName = "Artist" + i,
-                    TrackName = "Title" + i,
-                    Id = 542+i,
-                    ChannelId = channelId
-                };
-                guiTracks.Add(track);
+                Track[] tracks = proxy.GetRecentlyPlayedTracks(channelId, 5);
+                guiTracks = GuiClassConverter.ConvertTrackList(tracks);
             }
-
             return PartialView(new Tuple<List<GuiTrack>, int>(guiTracks, userId));
         }
 
         public JsonResult Last5TracksJson(int channelId, int userId)
         {
-            List<GuiTrack> guiTracks = new List<GuiTrack>();
-            for (int i = 0; i < 5; i++)
+            List<GuiTrack> guiTracks;
+            using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                GuiTrack track = new GuiTrack
-                {
-                    ArtistName = "Artist" + i,
-                    TrackName = "Title" + i,
-                    Id = 542 + i,
-                    ChannelId = channelId
-                };
-                guiTracks.Add(track);
+                Track[] tracks = proxy.GetRecentlyPlayedTracks(channelId, 5);
+                guiTracks = GuiClassConverter.ConvertTrackList(tracks);
             }
-            string json = JsonSerialize(guiTracks);
             return Json(guiTracks, JsonRequestBehavior.AllowGet);
-        }
-
-        private string JsonSerialize(List<GuiTrack> tracks)
-        {
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<GuiTrack>));
-            MemoryStream ms = new MemoryStream();
-            ser.WriteObject(ms, tracks);
-            string jsonString = Encoding.UTF8.GetString(ms.ToArray());
-            ms.Close();
-            return jsonString;
         }
     }
 }

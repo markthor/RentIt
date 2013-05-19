@@ -19,6 +19,7 @@ namespace RentItMvc.Models
             OwnerId = -1;
             Tracks = new List<GuiTrack>();
             StreamUri = "";
+            Genres = new string[0];
         }
 
         [Required]

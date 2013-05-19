@@ -169,7 +169,7 @@ function sendRequest(uri) {
 //////////////////UPDATE THE TRACKS///////////////////////////////
 
 //Set the window to call the function every 5th second
-setInterval(updateLatestTracks, 30000);
+setInterval(updateLatestTracks, 10000);
 
 //Update the tracklist
 function updateTracklist() {
@@ -225,6 +225,7 @@ function updateTracklist() {
         div.setAttribute("id", track.Id + "-artist");
         div.setAttribute("style", "width: 120px");
         div.setAttribute("class", "text-overflow");
+        div.setAttribute("title", track.ArtistName);
         div.textContent = track.ArtistName;
         td.appendChild(div);
         
@@ -235,6 +236,7 @@ function updateTracklist() {
         div.setAttribute("id", track.Id + "-title");
         div.setAttribute("style", "width: 120px");
         div.setAttribute("class", "text-overflow");
+        div.setAttribute("title", track.TrackName);
         div.textContent = track.TrackName;
         td.appendChild(div);
         
@@ -252,6 +254,10 @@ function updateTracklist() {
             button.setAttribute("class", "btn btn-small btn-success");
         } else {
             button.setAttribute("class", "btn btn-small");
+        }
+        if (!isSubscribed()) {
+            button.setAttribute("disabled", "disabled");
+            button.setAttribute("title", "Subscribe to vote");
         }
         icon = document.createElement("i");
         icon.setAttribute("class", "icon-thumbs-up");
@@ -272,6 +278,10 @@ function updateTracklist() {
             button.setAttribute("class", "btn btn-small btn-danger");
         } else {
             button.setAttribute("class", "btn btn-small");
+        }
+        if (!isSubscribed()) {
+            button.setAttribute("disabled", "disabled");
+            button.setAttribute("title", "Subscribe to vote");
         }
         icon = document.createElement("i");
         icon.setAttribute("class", "icon-thumbs-down");
@@ -297,5 +307,17 @@ function updateLatestTracks() {
     if (isValidUrl) {
         updateTracklist();
         getNewestTracks();
+    }
+}
+
+function isSubscribed() {
+    var userId = getUserId();
+    var channelId = getChannelId();
+    var uri = "http://rentit.itu.dk/BlobfishRadio/Account/IsSubscribedJson?channelId=" + channelId + "&userId=" + userId;
+    var json = sendRequest(uri);
+    if (json == 1) {
+        return true;
+    } else {
+        return false;
     }
 }

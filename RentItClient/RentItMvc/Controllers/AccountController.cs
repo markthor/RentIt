@@ -82,7 +82,7 @@ namespace RentItMvc.Controllers
                         User user = proxy.SignUp(account.NewUsername, account.NewEmail, account.NewPassword);
                         Session["userId"] = user.Id;
                         Session["username"] = user.Username;
-                        return RedirectToAction("PopularChannels", "Channel");
+                        return RedirectToAction("PopularChannels", "Channel", new { userId = user.Id });
                     }
                     catch (Exception)
                     {
@@ -174,6 +174,23 @@ namespace RentItMvc.Controllers
                     return true;
             }
             return false;
+        }
+
+        public JsonResult IsSubscribedJson(int channelId, int userId)
+        {
+            Channel[] channels;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                channels = proxy.GetSubscribedChannels(userId);
+            }
+            if (channels != null)
+            {
+                if (channels.Any(channel => channel.Id == channelId))
+                {
+                    return Json(1, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(0, JsonRequestBehavior.AllowGet);
         }
 
         public static int GetVote(int userId, int trackId)

@@ -103,6 +103,9 @@ namespace RentItMvc.RentItService {
         private string DescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] GenresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> HitsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -139,6 +142,19 @@ namespace RentItMvc.RentItService {
                 if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
                     this.DescriptionField = value;
                     this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Genres {
+            get {
+                return this.GenresField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GenresField, value) != true)) {
+                    this.GenresField = value;
+                    this.RaisePropertyChanged("Genres");
                 }
             }
         }
@@ -1406,6 +1422,12 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackByChannelId", ReplyAction="http://tempuri.org/IRentItService/GetTrackByChannelIdResponse")]
         System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTrackByChannelIdAsync(int channelId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetRecentlyPlayedTracks", ReplyAction="http://tempuri.org/IRentItService/GetRecentlyPlayedTracksResponse")]
+        RentItMvc.RentItService.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetRecentlyPlayedTracks", ReplyAction="http://tempuri.org/IRentItService/GetRecentlyPlayedTracksResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetRecentlyPlayedTracksAsync(int channelId, int numberOfTracks);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsChannelNameAvailable", ReplyAction="http://tempuri.org/IRentItService/IsChannelNameAvailableResponse")]
         bool IsChannelNameAvailable(int channelId, string channelName);
         
@@ -1754,6 +1776,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetTrackByChannelIdAsync(int channelId) {
             return base.Channel.GetTrackByChannelIdAsync(channelId);
+        }
+        
+        public RentItMvc.RentItService.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks) {
+            return base.Channel.GetRecentlyPlayedTracks(channelId, numberOfTracks);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Track[]> GetRecentlyPlayedTracksAsync(int channelId, int numberOfTracks) {
+            return base.Channel.GetRecentlyPlayedTracksAsync(channelId, numberOfTracks);
         }
         
         public bool IsChannelNameAvailable(int channelId, string channelName) {
