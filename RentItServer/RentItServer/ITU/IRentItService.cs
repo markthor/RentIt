@@ -357,9 +357,18 @@ namespace RentItServer.ITU
         [OperationContract]
         void IncrementChannelPlays(int channelId);
 
+        /// <summary>
+        /// Checks if a channel is currently streaming
+        /// </summary>
+        /// <param name="channelId">Id of the channel to check</param>
+        /// <returns>Whether or not the channel is streaming</returns>
         [OperationContract]
         bool IsChannelPlaying(int channelId);
 
+        /// <summary>
+        /// Stops the running ezstream for the the given channelid
+        /// </summary>
+        /// <param name="channelId">The id of the channel which stream should be stopped</param>
         [OperationContract]
         void StopChannelStream(int channelId);
 
