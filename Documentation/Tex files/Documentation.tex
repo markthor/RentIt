@@ -331,7 +331,7 @@ The selection are visualized and explained in the following figure.\\\\
 \begin{figure}[htp]
 \centering
 \includegraphics[width=130pt,height=200pt,keepaspectratio=true]{./trackSelectionB.png}
-\caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length that the track has are determined by the ratio.}
+\caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length that the track has are proportional to the ratio.}
 \end{figure}
 \textbf{Time complexity} \\*
 As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call, runs several times, the time complex is relevant. The algorithm iterates through tracks up to four times and track plays two times. The iterations does not involve iterations in iterations, making non of the \texttt{foreach()} calls quadratic in time. Therefore the time complexity is: 
@@ -341,7 +341,13 @@ As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call
 Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays.
 
 \subsection{Third-party streaming components}
-To stream music we use a third-party server component named IceCast
+Two third party components have been used to to stream audio.
+\subsubsection{IceCast}
+To stream music we use a third-party server component named IceCast\cite{IceCast}, that streams multiple audio streams to multiple listeners. IceCast publishes multiple streams by creating an URL for each stream. IceCast needs a source client to read audio files and transform them to audio streams that can be played. Source clients connect to IceCast and it transmits the streams over the network. A running IceCast program is a requirement for our system to function.
+\subsubsection{EzStream}
+EzStream\cite{EzStream} is a source client used to transform audio files to audio streams. EzStream does not re-encode the audio stream, making it consume very few CPU resources. As we want to run as many channels as possible, and one channel requires one EzStream process, this is very important for keeping the server processor requirements low. To stream audio, EzStream takes a command line input referring to an XML document, specifying where the MP3 file or m3u file is located and which properties it shall use to connect to IceCast. \\ \\
+\textbf{Interfacing with the server} \\
+Mikkel du skal skrive det her for det kan du lide
 
 \begin{landscape}
 \subsection{Sequence diagram}
@@ -361,7 +367,7 @@ A success criteria for our systems is that an error or change in one system shou
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. 
 
 \subsection{SMU webservice api}
-The following api is the api the group from Singapore requested. 
+The group from Singapore Management University requested the following API.
 
 \begin{itemize}
 	\item int SignUp(string email, string name, string password, bool isAdmin)
@@ -472,9 +478,13 @@ Large Object Storage in a Database or a Filesystem}.
   Microsoft Research and University of California at Berkeley
   April 2006
   
-  \bibitem{IceCast}
-    www.xiph.org, the xiph open source community
-    \emph{www.IceCast.org, IceCast documentation and contact}.
+\bibitem{IceCast}
+  www.xiph.org, the xiph open source community
+  \emph{www.IceCast.org, IceCast documentation and contact}.
+    
+\bibitem{EzStream}
+  www.xiph.org, the xiph open source community
+  \emph{www.icecast.com/ezstream.php}.
 \end{thebibliography}
 
 
