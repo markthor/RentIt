@@ -383,5 +383,11 @@ namespace RentItServer.ITU
 
         [OperationContract]
         int CountAllDownvotes(int trackId);
+
+        [OperationContract]
+        ITU.DatabaseWrapperObjects.Genre[] GetAllGenres();
+
+        [OperationContract]
+        ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId);
     }
 }

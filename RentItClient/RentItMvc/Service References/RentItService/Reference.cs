@@ -941,6 +941,67 @@ namespace RentItMvc.RentItService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects")]
+    [System.SerializableAttribute()]
+    public partial class Genre : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TrackSearchArgs", Namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU")]
     [System.SerializableAttribute()]
     public partial class TrackSearchArgs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1380,12 +1441,6 @@ namespace RentItMvc.RentItService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Unsubscribe", ReplyAction="http://tempuri.org/IRentItService/UnsubscribeResponse")]
         System.Threading.Tasks.Task UnsubscribeAsync(int userId, int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        int GetChannelPort(int channelId, int ipAddress, int port);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannelStream", ReplyAction="http://tempuri.org/IRentItService/StartChannelStreamResponse")]
         void StartChannelStream(int cId);
         
@@ -1487,6 +1542,18 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllDownvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllDownvotesResponse")]
         System.Threading.Tasks.Task<int> CountAllDownvotesAsync(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllGenres", ReplyAction="http://tempuri.org/IRentItService/GetAllGenresResponse")]
+        RentItMvc.RentItService.Genre[] GetAllGenres();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllGenres", ReplyAction="http://tempuri.org/IRentItService/GetAllGenresResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Genre[]> GetAllGenresAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetGenresForChannel", ReplyAction="http://tempuri.org/IRentItService/GetGenresForChannelResponse")]
+        RentItMvc.RentItService.Genre[] GetGenresForChannel(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetGenresForChannel", ReplyAction="http://tempuri.org/IRentItService/GetGenresForChannelResponse")]
+        System.Threading.Tasks.Task<RentItMvc.RentItService.Genre[]> GetGenresForChannelAsync(int channelId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1740,14 +1807,6 @@ namespace RentItMvc.RentItService {
             return base.Channel.UnsubscribeAsync(userId, channelId);
         }
         
-        public int GetChannelPort(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPort(channelId, ipAddress, port);
-        }
-        
-        public System.Threading.Tasks.Task<int> GetChannelPortAsync(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPortAsync(channelId, ipAddress, port);
-        }
-        
         public void StartChannelStream(int cId) {
             base.Channel.StartChannelStream(cId);
         }
@@ -1882,6 +1941,22 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<int> CountAllDownvotesAsync(int trackId) {
             return base.Channel.CountAllDownvotesAsync(trackId);
+        }
+        
+        public RentItMvc.RentItService.Genre[] GetAllGenres() {
+            return base.Channel.GetAllGenres();
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Genre[]> GetAllGenresAsync() {
+            return base.Channel.GetAllGenresAsync();
+        }
+        
+        public RentItMvc.RentItService.Genre[] GetGenresForChannel(int channelId) {
+            return base.Channel.GetGenresForChannel(channelId);
+        }
+        
+        public System.Threading.Tasks.Task<RentItMvc.RentItService.Genre[]> GetGenresForChannelAsync(int channelId) {
+            return base.Channel.GetGenresForChannelAsync(channelId);
         }
     }
 }

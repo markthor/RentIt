@@ -1,0 +1,5 @@
+﻿@using RentItMvc.Models;
+
+@model Tuple<List<GuiGenre>, List<GuiGenre>, int>
+
+@Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item2, "Id", "Name"), new { size = "6" })

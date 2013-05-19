@@ -33,7 +33,7 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 Track[] tracks = proxy.GetRecentlyPlayedTracks(channelId, 5);
-                guiTracks = GuiClassConverter.ConvertTrackList(tracks);
+                guiTracks = GuiClassConverter.ConvertTracks(tracks);
             }
             return PartialView(new Tuple<List<GuiTrack>, int>(guiTracks, userId));
         }
@@ -44,7 +44,7 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 Track[] tracks = proxy.GetRecentlyPlayedTracks(channelId, 5);
-                guiTracks = GuiClassConverter.ConvertTrackList(tracks);
+                guiTracks = GuiClassConverter.ConvertTracks(tracks);
             }
             return Json(guiTracks, JsonRequestBehavior.AllowGet);
         }

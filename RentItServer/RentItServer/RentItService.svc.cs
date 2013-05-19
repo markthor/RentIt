@@ -492,5 +492,14 @@ namespace RentItServer
             return _controller.CountAllDownvotes(trackId);
         }
 
+        public ITU.DatabaseWrapperObjects.Genre[] GetAllGenres()
+        {
+            return Genre.GetTracks(_controller.GetAllGenres()).ToArray();
+        }
+
+        public ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId)
+        {
+            return Genre.GetTracks(_controller.GetGenresForChannel(channelId)).ToArray();
+        }
     }
 }

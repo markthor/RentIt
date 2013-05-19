@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" />
-  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/RentItServer.ITU" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -399,22 +399,6 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetChannelPort">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-        <xs:element minOccurs="0" name="ipAddress" type="xs:int" />
-        <xs:element minOccurs="0" name="port" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetChannelPortResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="GetChannelPortResult" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="StartChannelStream">
     <xs:complexType>
       <xs:sequence>
@@ -642,6 +626,32 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="CountAllDownvotesResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllGenres">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllGenresResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetAllGenresResult" nillable="true" type="q25:ArrayOfGenre" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetGenresForChannel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="channelId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetGenresForChannelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetGenresForChannelResult" nillable="true" type="q26:ArrayOfGenre" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

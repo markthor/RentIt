@@ -464,7 +464,7 @@ namespace RentItServer.ITU
                 }
                 if (channels.Count() > 1)
                 {
-                    // Da fuk?
+                    // Won't happen
                 }
                 return channels.First();
             }
@@ -583,21 +583,27 @@ namespace RentItServer.ITU
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+
+                //The amount of channels to retreive
                 int count = filter.EndIndex - filter.StartIndex;
-                if (filteredChannels.Count < filter.EndIndex)
+                if (filteredChannels.Count < filter.EndIndex) //Check if endindex is higher than the amount of channels found
                 {
-                    filter.EndIndex = filteredChannels.Count ;
+                    //Set endindex to the amount of channels found
+                    filter.EndIndex = filteredChannels.Count;
                 }
-                if (filteredChannels.Count < filter.StartIndex)
+                if (filteredChannels.Count < filter.StartIndex) //Check if startindex is higher than the amount of channels found
                 {
+                    //Set startindex to the amount of channels found minus the amount of channels which should be retreived
                     filter.StartIndex = (filteredChannels.Count - count);
+                    //Set endindex to the amount of channels found
                     filter.EndIndex = filteredChannels.Count;
                 }
                 
-
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, (filter.EndIndex - filter.StartIndex));
-                return range.ToList();
+                //Create array to contain the result channels
+                Channel[] result = new Channel[filter.EndIndex - filter.StartIndex];
+                //Copy the channels to the result array
+                filteredChannels.CopyTo(filter.StartIndex, result, 0, (filter.EndIndex - filter.StartIndex));
+                return result.ToList();
             }
             return filteredChannels;
         }
@@ -1031,6 +1037,26 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Deletes all comments from a specific user.
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        public void DeleteUserComments(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from c in context.Comments
+                               where c.UserId == userId
+                               select c;
+
+                foreach (Comment c in comments)
+                {
+                    context.Comments.Remove(c);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Gets a specific comment.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -1141,7 +1167,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <returns></returns>
-        internal List<Track> GetTrackList(int channelId)
+        public List<Track> GetTrackList(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -1684,6 +1710,35 @@ namespace RentItServer.ITU
                     context.Comments.Remove(c);
                 }
                 context.SaveChanges();
+            }
+        }
+
+        public List<Genre> GetAllGenres()
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from g in context.Genres
+                             select g;
+                return genres.ToList();
+            }
+        }
+
+        public List<Genre> GetGenresForChannel(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from c in context.Channels
+                             where c.Id == channelId
+                             select c.Genres;
+
+                if (!genres.Any())
+                {
+                    return new List<Genre>();
+                }
+                else
+                {
+                    return genres.First().ToList();
+                }
             }
         }
     }
