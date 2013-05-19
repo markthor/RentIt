@@ -647,9 +647,9 @@ namespace RentItServer.ITU
                 string logEntry = "[" + track.Name + "] with id [" + trackId + "] is being deleted.";
                 if (_fileSystemHandler.Exists(track.Path))
                     _fileSystemHandler.DeleteFile(track.Path);
+                _dao.DeleteTrackPlaysByTrackId(trackId);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 _dao.DeleteVotesForTrack(trackId);
-                _dao.DeleteTrackPlaysByTrackId(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
