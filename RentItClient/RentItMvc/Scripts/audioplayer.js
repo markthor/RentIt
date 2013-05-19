@@ -169,18 +169,21 @@ function sendRequest(uri) {
 //////////////////UPDATE THE TRACKS///////////////////////////////
 
 //Set the window to call the function every 5th second
-setInterval(updateLatestTracks, 5000);
+setInterval(updateLatestTracks, 30000);
 
 //Update the tracklist
 function updateTracklist() {
-    getChannelId();
+    var userId = getUserId();
     var trackTable = document.getElementById("trackTable");
     var parent = trackTable.parentNode;
     parent.removeChild(trackTable);
 
-    var tr = document.createElement("tr");
-    var th = document.createElement("th");
-    var td = document.createElement("td");
+    var tr;
+    var th;
+    var td;
+    var div;
+    var button;
+    var icon;
 
     trackTable = document.createElement("table");
     trackTable.setAttribute("class", "table");
@@ -208,11 +211,72 @@ function updateTracklist() {
     
     //Get the new tracks
     var json = getNewestTracks();
-    var newestTracks = Array.parseJSON(json);
-    //var newestTracks = JSON.parse(json);
-    alert(newestTracks);
-    for (var i = 0; i < newestTracks.tracks.length; i++) {
-        alert(newestTracks.tracks[i]);
+    var data = JSON.parse(json);
+    for (var i = 0; i < data.length; i++) {
+        var track = data[i];
+        
+        tr = document.createElement("tr");
+        trackTable.appendChild(tr);
+        
+        //Create artist
+        td = document.createElement("td");
+        tr.appendChild(td);
+        div = document.createElement("div");
+        div.setAttribute("id", track.Id + "-artist");
+        div.setAttribute("style", "width: 120px");
+        div.setAttribute("class", "text-overflow");
+        div.textContent = track.ArtistName;
+        td.appendChild(div);
+        
+        //Create title
+        td = document.createElement("td");
+        tr.appendChild(td);
+        div = document.createElement("div");
+        div.setAttribute("id", track.Id + "-title");
+        div.setAttribute("style", "width: 120px");
+        div.setAttribute("class", "text-overflow");
+        div.textContent = track.TrackName;
+        td.appendChild(div);
+        
+        //Create upvote button
+        td = document.createElement("td");
+        tr.appendChild(td);
+        div = document.createElement("div");
+        div.setAttribute("style", "width: 30px");
+        td.appendChild(div);
+        
+        button = document.createElement("button");
+        button.setAttribute("id", track.Id + "-up");
+        button.setAttribute("onclick", "upvote(" + track.Id + ")");
+        if (getVoteValue(userId, track.Id) == 1) {
+            button.setAttribute("class", "btn btn-small btn-success");
+        } else {
+            button.setAttribute("class", "btn btn-small");
+        }
+        icon = document.createElement("i");
+        icon.setAttribute("class", "icon-thumbs-up");
+        button.appendChild(icon);
+        div.appendChild(button);
+        
+        //Create downvote button
+        td = document.createElement("td");
+        tr.appendChild(td);
+        div = document.createElement("div");
+        div.setAttribute("style", "width: 30px");
+        td.appendChild(div);
+
+        button = document.createElement("button");
+        button.setAttribute("id", track.Id + "-down");
+        button.setAttribute("onclick", "downvote(" + track.Id + ")");
+        if (getVoteValue(userId, track.Id) == -1) {
+            button.setAttribute("class", "btn btn-small btn-danger");
+        } else {
+            button.setAttribute("class", "btn btn-small");
+        }
+        icon = document.createElement("i");
+        icon.setAttribute("class", "icon-thumbs-down");
+        button.appendChild(icon);
+        div.appendChild(button);
     }
 }
 
