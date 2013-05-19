@@ -817,7 +817,6 @@ namespace RentItServer.ITU
                 filteredTracks = new List<Track>(range);
             }
             return filteredTracks;
-
         }
 
         /// <summary>

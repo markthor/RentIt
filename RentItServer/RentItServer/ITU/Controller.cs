@@ -416,6 +416,13 @@ namespace RentItServer.ITU
             }
         }
 
+        public int CountAllChannelsWithFilter(ChannelSearchArgs filter)
+        {
+            filter.StartIndex = 0;
+            filter.EndIndex = Int32.MaxValue;
+            return GetChannels(filter).Length;
+        }
+
         public void CreateVote(int rating, int userId, int trackId)
         {
             try
