@@ -159,7 +159,14 @@ namespace RentItServer.Utilities
             if (playlist == null) throw new ArgumentNullException("playlist");
             if (playlist.Count == 0) throw new ArgumentException("empty playlist");
 
-            File.Create(absolutePath); //Create or overwrite the .m3u file
+            FileStream fs = null;
+            if (!File.Exists(absolutePath))
+            {
+                using (fs = File.Create(absolutePath))
+                {
+
+                }
+            }
 
             if (File.Exists(absolutePath)) // Make sure the file exists
             {
