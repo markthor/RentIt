@@ -238,7 +238,7 @@ namespace RentItServer.ITU
 
             //Generate the xml for the config file
             string xml;
-            xml = XMLGenerator.GenerateConfig(channelId, FilePath.ITUM3uPath.GetPath() + channelId + ".m3u");
+            xml = XMLGenerator.GenerateConfigXML(channelId, FilePath.ITUM3uPath.GetPath() + channelId + ".m3u");
 
             //Create the config filepath
             string xmlFilePath;
