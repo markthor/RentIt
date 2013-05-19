@@ -18,6 +18,10 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         public static int _testChannelId3;
         public static int _testChannelId4;
         public static int _testChannelId5;
+        public const string _testChannel1Name = "Nightly Psychoactive Electro Hits";
+        public const string _testChannel1Description = "Sick channel with groovy beats.";
+        public static double? _testChannel1Rating = 3;
+        public static double? _testChannel1Hits = 15;
         public const string _user1name = "Prechtig";
         public const string _user2name = "TestMan Jr";
         public const string _user1email = "andreas.p.poulsen@gmail.com";
@@ -48,8 +52,8 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             Controller.GetInstance().CreateGenre(genreName1);
             Controller.GetInstance().CreateGenre(genreName2);
             Controller.GetInstance().CreateGenre(genreName3);
-            int channelId1 = Controller.GetInstance().CreateChannel("Nightly Psychoactive Electro Hits", _testUser1.Id, "Sick channel with groovy beats.", new List<string>() { genreName1 });
-            Controller.GetInstance().UpdateChannel(channelId1, null, null, null, 15, 3);
+            int channelId1 = Controller.GetInstance().CreateChannel(_testChannel1Name, _testUser1.Id, _testChannel1Description, new List<string>() { genreName1 });
+            Controller.GetInstance().UpdateChannel(channelId1, null, null, null, _testChannel1Hits, _testChannel1Rating);
             int channelId2 = Controller.GetInstance().CreateChannel("Hard Hitting Iron Bass", _testUser1.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
             Controller.GetInstance().UpdateChannel(channelId2, null, null, null, 4, 2);
             int channelId3 = Controller.GetInstance().CreateChannel("Nine Inch Nails", _testUser1.Id, "Soft rock for your soul.", new List<string>() { genreName2 });
@@ -84,17 +88,17 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             //Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream());
             //Controller.GetInstance().AddTrack(_testUser1.Id, channelId1, new System.IO.MemoryStream()); 
             _testTrack = t1;
+            _testChannelId1 = channelId1;
+            _testChannelId2 = channelId2;
+            _testChannelId3 = channelId3;
+            _testChannelId4 = channelId4;
+            _testChannelId5 = channelId5;
             DatabaseDao.GetInstance().CreateComment("testcomment", _testUser1.Id, _testChannelId1);
             _testChannel1 = DatabaseDao.GetInstance().GetChannel(_testChannelId1).GetChannel();
             _testChannel2 = DatabaseDao.GetInstance().GetChannel(_testChannelId2).GetChannel();
             _testChannel3 = DatabaseDao.GetInstance().GetChannel(_testChannelId3).GetChannel();
             _testChannel4 = DatabaseDao.GetInstance().GetChannel(_testChannelId4).GetChannel();
             _testChannel5 = DatabaseDao.GetInstance().GetChannel(_testChannelId5).GetChannel();
-            _testChannelId1 = channelId1;
-            _testChannelId2 = channelId2;
-            _testChannelId3 = channelId3;
-            _testChannelId4 = channelId4;
-            _testChannelId5 = channelId5;
 
         }
     }
