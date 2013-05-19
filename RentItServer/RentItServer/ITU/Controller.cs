@@ -32,7 +32,7 @@ namespace RentItServer.ITU
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The ternary search trie for users. Each username or email has an associated password as value
-        //private TernarySearchTrie<User> _userCache;
+        private TernarySearchTrie<User> _userCache;
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
@@ -859,7 +859,7 @@ namespace RentItServer.ITU
 
         public bool IsChannelPlaying(int channelId)
         {
-            return _streamHandler.IsChannelPlaying(channelId);
+            return _streamHandler.IsChannelStreamRunning(channelId);
         }
 
         public void StopChannelStream(int channelId)
