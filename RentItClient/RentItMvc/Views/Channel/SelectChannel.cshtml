@@ -14,7 +14,7 @@
     
     if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
     {
-    <div style="margin-top: 16px;">
+    <div class="pull-left" style="margin-top: 16px; margin-right:16px;">
         <button class="btn btn-small btn-danger" title="Stop channel" onclick=" location.href = '@(Url.Action("StopChannel", "Channel", new { channelId = Model.Id }))' ">
             <i class="icon-stop icon-white"></i>
         </button>
@@ -22,13 +22,33 @@
     }
     else
     {
-    <div style="margin-top: 16px;">
+    <div class="pull-left" style="margin-top: 16px; margin-right:16px;">
         <button class="btn btn-small btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new { channelId = Model.Id }))' ">
             <i class="icon-play icon-white"></i>
         </button>
     </div>
     }
 }
+
+@{
+    if (Session["userId"] != null && RentItMvc.Controllers.AccountController.IsSubscribed(Model.Id, (int)Session["UserId"]))
+    {
+        <div style="margin-top: 16px;">
+            <button class="btn btn-small btn-warning" title="Unsubscribe" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
+                <i class="icon-remove icon-white"></i>
+            </button>
+        </div>
+    }
+    else
+    {     
+        <div style="margin-top: 16px;">                
+            <button class="btn btn-small btn-success" title="Subscribe" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
+                <i class="icon-ok icon-white"></i>
+            </button>
+        </div>
+    }
+}
+
 
 <div class="clearfix"></div>
 
