@@ -920,6 +920,24 @@ namespace RentItServer.ITU
             }
         }
 
+        public IEnumerable<string> GetChannelGenres(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.Channels select channel;
+                if (channels.Any() == false)
+                    throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
+                Channel theChannel = channels.First();
+                List<string> genres = new List<string>();
+                foreach (Genre genre in theChannel.Genres)
+                {
+                    genres.Add(genre.Name);
+                }
+                return genres;
+            }
+        } 
+
         /// <summary>
         /// Deletes the comment.
         /// </summary>

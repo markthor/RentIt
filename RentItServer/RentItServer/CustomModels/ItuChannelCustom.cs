@@ -9,7 +9,7 @@ namespace RentItServer
     {
         public ITU.DatabaseWrapperObjects.Channel GetChannel()
         {
-            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId, StreamUri, GetGenresAsStrings().ToArray());
+            return new ITU.DatabaseWrapperObjects.Channel(Id, Name, Description, Rating, Hits, UserId, StreamUri);
         }
 
         private List<ITU.DatabaseWrapperObjects.Comment> GetComments()
@@ -21,16 +21,6 @@ namespace RentItServer
             }
             return comments;
         }
-
-        private List<string> GetGenresAsStrings()
-        {
-            List<string> genres = new List<string>(Genres.Count);
-            foreach (Genre g in Genres)
-            {
-                genres.Add(g.Name);
-            }
-            return genres;
-        } 
 
         private List<ITU.DatabaseWrapperObjects.User> GetSubcribers()
         {
