@@ -658,51 +658,6 @@ namespace RentItServer.ITU
             }
         }
 
-        /// <summary>
-        /// Creates a track entry.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="path">The path.</param>
-        /// <param name="trackName">Name of the track.</param>
-        /// <param name="trackArtist">The track artist.</param>
-        /// <param name="length">The length in ms.</param>
-        /// <param name="upVotes">Up votes.</param>
-        /// <param name="downVotes">Down votes.</param>
-        /// <returns>The track</returns>
-        /// <exception cref="System.ArgumentException">No channel with channel id [+channelId+].</exception>
-        /*public Track CreateTrackEntry(int channelId, string path, string trackName, string trackArtist, int length, int upVotes, int downVotes)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var channels = from channel in context.Channels where channel.Id == channelId select channel;
-                if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
-
-                Track theTrack = new Track()
-                    {
-                        ChannelId = channelId,
-                        Path = path,
-                        Name = trackName,
-                        Artist = trackArtist,
-                        Length = length,
-                        UpVotes = upVotes,
-                        DownVotes = downVotes,
-                        Channel = channels.First(),
-                        TrackPlays = new Collection<TrackPlay>(),
-                        Votes = new Collection<Vote>()
-                    };
-
-                context.Tracks.Add(theTrack);
-                context.SaveChanges();
-
-                // Update the channel with the track
-                Channel theChannel = channels.First();
-                theChannel.Tracks.Add(theTrack);
-                context.SaveChanges();
-
-                return theTrack;
-            }
-        }*/
-
         public Track CreateTrackEntry(int channelId, Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1446,6 +1401,23 @@ namespace RentItServer.ITU
                 {
                     context.Votes.Remove(votes.First());
                 }
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteTrackPlays(int channelId, DateTime datetime)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackplays = from tp in context.TrackPlays
+                                 where tp.Track.ChannelId == channelId && tp.TimePlayed > datetime
+                                 select tp;
+                
+                foreach (TrackPlay tp in trackplays)
+	            {
+                    context.TrackPlays.Remove(tp);
+	            }
+
                 context.SaveChanges();
             }
         }
