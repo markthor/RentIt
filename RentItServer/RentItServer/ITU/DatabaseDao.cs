@@ -707,8 +707,8 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                var channels = from c in context.Channels 
-                               where c.Id == channelId 
+                var channels = from c in context.Channels
+                               where c.Id == channelId
                                select c;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "].");
                 track.Channel = channels.First();
@@ -735,7 +735,7 @@ namespace RentItServer.ITU
                 tdb.Name = track.Name;
                 tdb.Path = track.Path;
                 tdb.UpVotes = track.UpVotes;
-                
+
                 context.SaveChanges();
             }
         }
@@ -1394,9 +1394,40 @@ namespace RentItServer.ITU
             }
         }
 
+
         public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
         {
             throw new NotImplementedException();
+        }
+
+        public Vote GetVote(int userId, int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId && v.TrackId == trackId
+                            select v;
+                if (votes.Any())
+                {
+                    return votes.First();
+                }
+                return null;
+            }
+        }
+
+        public void DeleteVote(int userId, int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId && v.TrackId == trackId
+                            select v;
+                if (votes.Any())
+                {
+                    context.Votes.Remove(votes.First());
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

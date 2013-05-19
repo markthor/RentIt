@@ -98,6 +98,7 @@
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Comment.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Track.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.User.datasource" />
+    <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Vote.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.TrackSearchArgs.datasource" />
     <None Include="Properties\DataSources\RentItServer.SMU.Book.datasource" />
     <None Include="Properties\DataSources\RentItServer.SMU.Rental.datasource" />

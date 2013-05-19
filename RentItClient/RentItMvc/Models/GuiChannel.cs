@@ -49,5 +49,7 @@ namespace RentItMvc.Models
         public string StreamUri { get; set; }
 
         public int Subscribers { get; set; }
+
+        public string[] Genres { get; set; }
     }
 }

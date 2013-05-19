@@ -270,5 +270,20 @@ namespace RentItServer
         {
             return _controller.IsChannelPlaying(channelId);
         }
+
+        public void StopChannelStream(int channelId)
+        {
+            _controller.StopChannelStream(channelId);
+        }
+
+        public ITU.DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
+        {
+            return _controller.GetVote(userId, trackId);
+        }
+
+        public void DeleteVote(int userId, int trackId)
+        {
+            _controller.DeleteVote(userId, trackId);
+        }
     }
 }
