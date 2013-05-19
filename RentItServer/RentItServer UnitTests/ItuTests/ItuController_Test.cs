@@ -37,16 +37,17 @@ namespace RentItServer_UnitTests.ItuTests
         private static Controller controller;
 
 
-        //[TestInitialize]
+        [TestInitialize]
         public void Initialize()
         {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
             TestExtensions.PopulateDatabase();
         }
 
-        //[TestCleanup]
+        [TestCleanup]
         public void Cleanup()
         {
-            //DatabaseDao.GetInstance().DeleteDatabaseData();
+            DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
         /// <summary>
@@ -56,14 +57,14 @@ namespace RentItServer_UnitTests.ItuTests
         public static void CleanDataBaseFinish()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
-            //TestExtensions.PopulateDatabase();
+            TestExtensions.PopulateDatabase();
         }
 
         [ClassInitialize]
         public static void CleanDataBaseStart(TestContext tc)
         {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
-            TestExtensions.PopulateDatabase();
+            //DatabaseDao.GetInstance().DeleteDatabaseData();
+            //TestExtensions.PopulateDatabase();
             controller = Controller.GetInstance();
             for (int i = 0; i < interval; i++)
             {
@@ -482,9 +483,14 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.DeleteUser(testId);
+                User user = _dao.GetUser(testId);
+                Assert.IsNull(user);
                 List<Channel> userCreatedChannels = controller.GetCreatedChannels(testId);
                 Assert.IsTrue(userCreatedChannels.Count == 0);
+                //TODO: assert that all user comments have been removed
                 testId = int.MaxValue;
+                //Cleanup();
+                //Initialize();
             }
             catch (Exception e)
             {
@@ -1839,6 +1845,9 @@ namespace RentItServer_UnitTests.ItuTests
             Assert.IsTrue(comments.Length > 0);
         }
         #endregion
+
+        /* R0 */
+
         #region Controller_CreateChannel
         [TestMethod]
         public void Controller_CreateChannel_Behavior_ChannelCreated()
@@ -1920,6 +1929,12 @@ namespace RentItServer_UnitTests.ItuTests
         }
         #endregion
 
+        /* R2 */
+
+        #region Controller_CreateVote
+        #endregion
+
+
         //TODO:
         #region Controller_GetCreatedChannels
         //public void Controller_GetCreatedChannels_Parameter_Invalid()
@@ -1941,8 +1956,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_GetChannel
         #endregion
-        #region Controller_CreateVote
-        #endregion
+
         #region Controller_GetTrackInfo
         #endregion
         #region Controller_CreateComment

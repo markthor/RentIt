@@ -2,4 +2,10 @@
 
 @model Tuple<List<GuiGenre>, List<GuiGenre>, int>
 
-@Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item2, "Id", "Name"), new { size = "6" })
+<div id="genreDiv">
+    @Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item1, "Id", "Name"), new { size = "10" })
+    
+    @Html.ListBoxFor(model => model.Item2, new MultiSelectList(Model.Item2, "Id", "Name"), new { size = "10" })
+    
+    @Ajax.ActionLink("Add", "AddGenres", "Channel", new { chosenGenres = Model.Item2, channelId = Model.Item3 }, new AjaxOptions() { UpdateTargetId = "genreDiv" })
+</div>

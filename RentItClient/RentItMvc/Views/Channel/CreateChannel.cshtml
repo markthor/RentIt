@@ -2,6 +2,7 @@
     Html.EnableClientValidation(true);
 }
 
+@using RentItMvc.Models
 @model RentItMvc.Models.GuiChannel
 
 <h2>Create Channel</h2>
@@ -29,5 +30,7 @@
     </div>
 </div>
 
+
+@Ajax.ActionLink("AddFromOuterView", "AddGenres", "Channel", new { chosenGenres = new List<GuiGenre>(), channelId = -1 }, new AjaxOptions() { UpdateTargetId = "genreDiv" })
 
 @Html.Action("SelectGenre", new { channelId = -1 })
