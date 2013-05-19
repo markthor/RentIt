@@ -120,24 +120,6 @@ namespace RentItServer.Utilities
         }
 
         /// <summary>
-        /// Writes an m3u file with the track paths as content. Can overwrite.
-        /// </summary>
-        /// <param name="trackPaths">List of the track paths</param>
-        /// <param name="filePath">The path of the file to write to</param>
-        public void WriteM3u(List<string> trackPaths, string filePath)
-        {
-            StringWriter sw = new StringWriter();
-            foreach (string s in trackPaths)
-            {
-                sw.Write(s + "\r\n");
-            }
-            string fileContent;
-            fileContent = sw.ToString();
-            fileContent = fileContent.TrimEnd('\r', '\n');
-            WriteFile(fileContent, filePath);
-        }
-
-        /// <summary>
         /// Writes the specified string to a file at the absolute file path. Can overwrite.
         /// </summary>
         /// <param name="path">The path to the directory in which the file should be placed with the file name</param>
@@ -162,30 +144,26 @@ namespace RentItServer.Utilities
             return bytes;
         }
 
-        public bool FileExists(string filePath)
+        /// <summary>
+        /// Writes the list of tracks' path to a .m3u file on the system
+        /// </summary>
+        /// <param name="absolutePath">Where the .m3u file should be saved. Including the file name and file ending</param>
+        /// <param name="playlist">The list of tracks which should be in the file</param>
+        public void WriteM3UPlaylistFile(string absolutePath, List<Track> playlist)
         {
-            return File.Exists(filePath);
-        }
+            File.Create(absolutePath); //Create or overwrite the .m3u file
 
-        public void WriteM3UPlaylistFile(string filePath, List<Track> playlist)
-        {
-            FileStream fs = null;
-            if (!File.Exists(filePath))
+            if (File.Exists(absolutePath)) // Make sure the file exists
             {
-                using (fs = File.Create(filePath))
+                //Open a writer to the file
+                using (StreamWriter sw = new StreamWriter(absolutePath))
                 {
-
-                }
-            }
-
-            if (File.Exists(filePath))
-            {
-                using (StreamWriter sw = new StreamWriter(filePath))
-                {
+                    //Loop through all tracks and add their path to the file
                     foreach (Track t in playlist)
                     {
                         sw.WriteLine(t.Path);
                     }
+                    //Make sure everything is flushed to the file
                     sw.Flush();
                 }
             }
