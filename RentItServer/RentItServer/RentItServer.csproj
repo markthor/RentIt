@@ -106,7 +106,10 @@
     <Compile Include="ITU\DatabaseWrapperObjects\Comment.cs" />
     <Compile Include="ITU\Controller.cs" />
     <Compile Include="ITU\DatabaseDao.cs" />
+    <Compile Include="ITU\Exceptions\ChannelNotRunningException.cs" />
+    <Compile Include="ITU\Exceptions\ChannelRunningException.cs" />
     <Compile Include="ITU\Exceptions\EmptyTableException.cs" />
+    <Compile Include="ITU\Exceptions\NoTracksOnChannelException.cs" />
     <Compile Include="ITU\Exceptions\NullValueException.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Genre.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Track.cs" />

@@ -517,38 +517,4 @@ namespace RentItServer.ITU
         #endregion
         #endregion
     }
-
-    #region Custom exceptions
-
-    /// <summary>
-    /// Exception thrown when an action requireing tracks is called upon a channel with no associated tracks
-    /// </summary>
-    class NoTracksOnChannelException : Exception
-    {
-        public NoTracksOnChannelException(string message)
-            : base(message)
-        { }
-    }
-
-    /// <summary>
-    /// Exception thrown when an action requireing a channel's stream to not be running and the channel's stream is running
-    /// </summary>
-    class ChannelRunningException : Exception
-    {
-        public ChannelRunningException(string message)
-            : base(message)
-        { }
-    }
-
-    /// <summary>
-    /// Exception thrown when an action requireing a channel's stream to be running and the channel's stream is not running
-    /// </summary>
-    class ChannelNotRunningException : Exception
-    {
-        public ChannelNotRunningException(string message)
-            : base(message)
-        { }
-    }
-    #endregion
-
 }
