@@ -380,7 +380,18 @@ namespace RentItServer.ITU
         [OperationContract]
         void DeleteVote(int userId, int trackId);
 
+        /// <summary>
+        /// Count all channels which pass the given filter
+        /// </summary>
+        /// <param name="filter">The filter which should be applied on the channels</param>
+        /// <returns>The number of channels which passes</returns>
         [OperationContract]
         int CountAllChannelsWithFilter(ChannelSearchArgs filter);
+
+        [OperationContract]
+        int CountAllUpvotes(int trackId);
+
+        [OperationContract]
+        int CountAllDownvotes(int trackId);
     }
 }

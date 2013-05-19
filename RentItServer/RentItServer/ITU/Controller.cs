@@ -556,6 +556,7 @@ namespace RentItServer.ITU
                     _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 _dao.DeleteVotesForTrack(trackId);
+                _dao.DeleteTrackPlaysByTrackId(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
@@ -841,6 +842,16 @@ namespace RentItServer.ITU
         public void DeleteVote(int userId, int trackId)
         {
             _dao.DeleteVote(userId, trackId);
+        }
+
+        public int CountAllUpvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, 1);
+        }
+
+        public int CountAllDownvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, -1);
         }
     }
 }

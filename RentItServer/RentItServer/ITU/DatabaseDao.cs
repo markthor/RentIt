@@ -1125,6 +1125,24 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Retreives trackplays for a channel which has a playtime after the given datetime
+        /// </summary>
+        /// <param name="channelId">Id of the channel</param>
+        /// <param name="dateTime">The lower-bound datetime</param>
+        /// <returns>All TrackPlays associated with the channel after the given datetime</returns>
+        public List<TrackPlay> GetTrackPlays(int channelId, DateTime dateTime)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackPlays = from tp in context.TrackPlays
+                                 where tp.TimePlayed > dateTime && tp.Track.ChannelId == channelId
+                                 select tp;
+
+                return trackPlays.ToList();
+            }
+        }
+
+        /// <summary>
         /// Determines whether [is email available] [the specified email].
         /// </summary>
         /// <param name="email">The email.</param>
@@ -1424,7 +1442,7 @@ namespace RentItServer.ITU
             }
         }
 
-        public void DeleteTrackPlays(int channelId, DateTime datetime)
+        public void DeleteTrackPlaysByChannelId(int channelId, DateTime datetime)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -1436,6 +1454,23 @@ namespace RentItServer.ITU
 	            {
                     context.TrackPlays.Remove(tp);
 	            }
+
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteTrackPlaysByTrackId(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackplays = from tp in context.TrackPlays
+                                 where tp.TrackId == trackId
+                                 select tp;
+
+                foreach(TrackPlay tp in trackplays)
+                {
+                    context.TrackPlays.Remove(tp);
+                }
 
                 context.SaveChanges();
             }
@@ -1472,6 +1507,24 @@ namespace RentItServer.ITU
                 {
                     context.Tracks.Remove(track.First());
                     context.SaveChanges();
+                }
+            }
+        }
+
+        public int CountVotes(int trackId, int value)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.TrackId == trackId && v.Value == value
+                            select v;
+                if (votes.Any())
+                {
+                    return votes.Count();
+                }
+                else
+                {
+                    return 0;
                 }
             }
         }

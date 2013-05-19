@@ -305,7 +305,7 @@ namespace RentItServer.ITU
             }
 
             //Get all trackplays for the channel
-            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+            List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId, DateTime.Now.AddDays(-2));
             if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
             {
                 _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
@@ -455,7 +455,7 @@ namespace RentItServer.ITU
         public void DeleteTrackPlays(int channelId, DateTime datetime)
         {
             _logger.AddEntry("Start deleting trackplays for channel with id: [" + channelId + "] after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "]");
-            _dao.DeleteTrackPlays(channelId, datetime);
+            _dao.DeleteTrackPlaysByChannelId(channelId, datetime);
         }
         #endregion
         #endregion
