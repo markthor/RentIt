@@ -1013,6 +1013,7 @@ namespace RentItServer.ITU
             {
                 var comments = from comment in context.Comments
                                where comment.ChannelId == channelId
+                               orderby comment.Date descending
                                select comment;
                 //Set variables relevant for getting list range
                 if (fromInclusive < 0) fromInclusive = 0;
