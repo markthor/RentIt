@@ -306,6 +306,11 @@ namespace RentItServer.ITU
 
             //Get all trackplays for the channel
             List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+            if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
+            {
+                _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+                throw new ArgumentException("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+            }
 
             //Generate the playlist
             List<Track> playlist = _trackPrioritizer.GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);

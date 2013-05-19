@@ -230,5 +230,13 @@ namespace RentItMvc.Controllers
                 return proxy.IsChannelPlaying(channelId);
             }
         }
+
+        public static bool HasChannelTracks(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.GetTrackByChannelId(channelId).Length > 0;
+            }
+        }
     }
 }
