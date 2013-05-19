@@ -313,7 +313,7 @@ namespace RentItServer.ITU
                 {
                     channel = _dao.GetChannel(channelId);
                     _dao.DeleteChannel(channel.GetChannel());
-                    _logger.AddEntry("[" + channel.Name + "] with id [" + channelId + "] has been deleted");
+                    _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
                 }
             }
             catch (Exception e)
