@@ -493,6 +493,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRecentlyPlayedTracks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="channelId" type="xs:int" />
+        <xs:element minOccurs="0" name="numberOfTracks" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRecentlyPlayedTracksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetRecentlyPlayedTracksResult" nillable="true" type="q22:ArrayOfTrack" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="IsChannelNameAvailable">
     <xs:complexType>
       <xs:sequence>
@@ -571,7 +586,7 @@
   <xs:element name="GetVoteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetVoteResult" nillable="true" type="q22:Vote" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetVoteResult" nillable="true" type="q23:Vote" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

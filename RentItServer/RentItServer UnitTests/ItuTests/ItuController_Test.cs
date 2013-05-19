@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RentItServer;
@@ -36,10 +37,9 @@ namespace RentItServer_UnitTests.ItuTests
         private static Controller controller;
 
 
-        [TestInitialize]
+        //[TestInitialize]
         public void Initialize()
         {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
             TestExtensions.PopulateDatabase();
         }
 
@@ -62,6 +62,7 @@ namespace RentItServer_UnitTests.ItuTests
         [ClassInitialize]
         public static void CleanDataBaseStart(TestContext tc)
         {
+            DatabaseDao.GetInstance().DeleteDatabaseData();
             controller = Controller.GetInstance();
             for (int i = 0; i < interval; i++)
             {
@@ -1837,6 +1838,94 @@ namespace RentItServer_UnitTests.ItuTests
             Assert.IsTrue(comments.Length > 0);
         }
         #endregion
+        #region Controller_CreateChannel
+        [TestMethod]
+        public void Controller_CreateChannel_Behavior_ChannelCreated()
+        {
+            try
+            {
+                string channelName = "thischannelisatestchannel";
+                string channelDescr = "a description";
+                int channelId = controller.CreateChannel(channelName, TestExtensions._testUser1.Id,
+                                                         channelDescr, new string[] { TestExtensions.genreName1 });
+                Channel channel = _dao.GetChannel(channelId);
+                Assert.IsTrue(channel.ChannelOwner.Id == TestExtensions._testUser1.Id);
+                Assert.IsTrue(channel.Description.Equals(channelDescr));
+                Assert.IsTrue(channel.Name.Equals(channelName));
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        #endregion
+        #region Controller_DeleteChannel
+        [TestMethod]
+        public void Controller_DeleteChannel_Behavior_ChannelDeleted()
+        {
+            try
+            {
+                controller.DeleteChannel(TestExtensions._testChannelId1);
+                Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
+                Assert.IsNull(channel);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        #endregion
+        #region Controller_UpdateChannel
+        [TestMethod]
+        public void Controller_UpdateChannel_Behavior_ChannelUpdated1()
+        {
+            try
+            {
+                int? updatedOwnerId = TestExtensions._testUser2.Id;
+                string updatedChannelName = "thisisanewnameforatestchannel";
+                string updatedDescription = "thisisanewandupdateddescriptionofatestchannel";
+                double? updatedHits = 1000;
+                double? updatedRating = 10000;
+                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating);
+                Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
+                Assert.IsTrue(channel.ChannelOwner.Id == updatedOwnerId);
+                Assert.IsTrue(channel.Description.Equals(updatedDescription));
+                Assert.IsTrue(channel.Hits == updatedHits);
+                Assert.IsTrue(channel.Rating == updatedRating);
+                Assert.IsTrue(channel.Name.Equals(updatedChannelName));
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateChannel_Behavior_ChannelUpdated2()
+        {
+            try
+            {
+                int? updatedOwnerId = null;
+                string updatedChannelName = null;
+                string updatedDescription = null;
+                double? updatedHits = null;
+                double? updatedRating = null;
+                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating);
+                Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
+                Assert.IsTrue(channel.ChannelOwner.Id == TestExtensions._testChannelId1);
+             //   Assert.IsTrue(channel.Description.Equals());
+                Assert.IsTrue(channel.Hits == updatedHits);
+                Assert.IsTrue(channel.Rating == updatedRating);
+                Assert.IsTrue(channel.Name.Equals(updatedChannelName));
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
+        #endregion
+
+
+        //TODO:
         #region Controller_GetCreatedChannels
         //public void Controller_GetCreatedChannels_Parameter_Invalid()
         //{
@@ -1853,14 +1942,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_GetSubscribedChannels
         #endregion
-        //TODO:
         #region Controller_GetUser
-        #endregion
-        #region Controller_CreateChannel
-        #endregion
-        #region Controller_DeleteChannel
-        #endregion
-        #region Controller_UpdateChannel
         #endregion
         #region Controller_GetChannel
         #endregion
