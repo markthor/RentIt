@@ -464,7 +464,7 @@ namespace RentItServer.ITU
                 }
                 if (channels.Count() > 1)
                 {
-                    // Da fuk?
+                    // Won't happen
                 }
                 return channels.First();
             }
@@ -583,21 +583,27 @@ namespace RentItServer.ITU
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+
+                //The amount of channels to retreive
                 int count = filter.EndIndex - filter.StartIndex;
-                if (filteredChannels.Count < filter.EndIndex)
+                if (filteredChannels.Count < filter.EndIndex) //Check if endindex is higher than the amount of channels found
                 {
-                    filter.EndIndex = filteredChannels.Count ;
+                    //Set endindex to the amount of channels found
+                    filter.EndIndex = filteredChannels.Count;
                 }
-                if (filteredChannels.Count < filter.StartIndex)
+                if (filteredChannels.Count < filter.StartIndex) //Check if startindex is higher than the amount of channels found
                 {
+                    //Set startindex to the amount of channels found minus the amount of channels which should be retreived
                     filter.StartIndex = (filteredChannels.Count - count);
+                    //Set endindex to the amount of channels found
                     filter.EndIndex = filteredChannels.Count;
                 }
                 
-
-                Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
-                filteredChannels.CopyTo(filter.StartIndex, range, 0, (filter.EndIndex - filter.StartIndex));
-                return range.ToList();
+                //Create array to contain the result channels
+                Channel[] result = new Channel[filter.EndIndex - filter.StartIndex];
+                //Copy the channels to the result array
+                filteredChannels.CopyTo(filter.StartIndex, result, 0, (filter.EndIndex - filter.StartIndex));
+                return result.ToList();
             }
             return null;
         }
