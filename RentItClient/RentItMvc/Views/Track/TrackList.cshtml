@@ -6,7 +6,7 @@
 
 <h1 class="pull-left">Manage Tracks</h1>
 
-@Html.ActionLink("Back to channel", "SelectChannel", "Channel", new { channelId = Model.Item2, userId = Model.Item3 }, new { @class = "btn btn-primary", style = "margin-top: 15px; margin-left: 20px"})
+@Html.ActionLink("Back to channel", "SelectChannel", "Channel", new { channelId = Model.Item2, userId = Model.Item3 }, new { @class = "btn btn-primary", style = "margin-top: 15px; margin-left: 20px" })
 
 <div style="width: 100%; max-height: 424px; margin-bottom: 20px; overflow-x: hidden; overflow-y: auto">
     <table class="table table-hover">
@@ -35,20 +35,6 @@
                     </div>
                 </td>
                 <td>
-<<<<<<< HEAD
-                    @if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Item2))
-                    {
-                        <button title="Connot delete track while channel is playing" class="btn btn-small btn-danger disabled">
-                            <i class="icon-remove icon-white"></i>
-                        </button>
-                    }
-                    else
-                    {
-                        <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id, userId = Session["userId"]}))'">
-                            <i class="icon-remove icon-white"></i>
-                        </button>
-                    }
-=======
                     <div style="width: 70px;" class="text-center" title="Upvotes">
                         <span class="badge badge-success">
                             @RentItMvc.Controllers.TrackController.GetUpvotes(t.Id)
@@ -63,10 +49,18 @@
                     </div>
                 </td>
                 <td>
-                    <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id, userId = Session["userId"]}))'">
-                        <i class="icon-remove icon-white"></i>
-                    </button>
->>>>>>> 63dfffda28925357521d5c8767bb3844222abdfe
+                    @if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Item2))
+                    {
+                        <button title="Connot delete track while channel is playing" class="btn btn-small btn-danger disabled">
+                            <i class="icon-remove icon-white"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button title="Delete track" class="btn btn-small btn-danger" onclick="location.href ='@(Url.Action("DeleteTrack", "Track", new { trackId = t.Id, userId = Session["userId"] }))'">
+                            <i class="icon-remove icon-white"></i>
+                        </button>
+                    }
                 </td>
             </tr>
         }
