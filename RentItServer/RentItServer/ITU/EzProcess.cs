@@ -6,6 +6,8 @@ using System.Diagnostics;
 
 namespace RentItServer.ITU
 {
+    //In order to make visual studio handle the class as a coding class rather than a component
+    [System.ComponentModel.DesignerCategory("Code")]
     public class EzProcess : Process
     {
         /// <summary>
