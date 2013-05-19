@@ -1671,5 +1671,20 @@ namespace RentItServer.ITU
                 return votes.Count();
             }
         }
+
+        public void DeleteAllComments(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from c in context.Comments
+                               where c.ChannelId == channelId
+                               select c;
+                foreach (Comment c in comments)
+                {
+                    context.Comments.Remove(c);
+                }
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -99,6 +99,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void StartChannelStream(int channelId)
         {
+            if (!_dao.ChannelHasTracks(channelId)) throw new NoTracksOnChannelException("Channel with id: [" + channelId + "] has no associated tracks and cannot be started");
             _streamHandler.ManualStreamStart(channelId);
         }
 
@@ -354,13 +355,14 @@ namespace RentItServer.ITU
         public void DeleteChannel(int channelId)
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
-            List<Track> associatedTracks = GetTracksByChannelId(channelId);
-            
+            if (_streamHandler.IsChannelStreamRunning(channelId) == true) throw new ChannelRunningException("Cannot delete channel while its stream is running");
 
+            List<Track> associatedTracks = GetTracksByChannelId(channelId);
             foreach (Track t in associatedTracks)
             {
                 RemoveTrack(t.Id);
             }
+            _dao.DeleteAllComments(channelId);
 
             Channel channel = null;
             try
@@ -647,9 +649,9 @@ namespace RentItServer.ITU
                 string logEntry = "[" + track.Name + "] with id [" + trackId + "] is being deleted.";
                 if (_fileSystemHandler.Exists(track.Path))
                     _fileSystemHandler.DeleteFile(track.Path);
+                _dao.DeleteTrackPlaysByTrackId(trackId);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 _dao.DeleteVotesForTrack(trackId);
-                _dao.DeleteTrackPlaysByTrackId(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
