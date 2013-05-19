@@ -261,5 +261,15 @@ namespace RentItMvc.Controllers
                 return proxy.GetTrackByChannelId(channelId).Length > 0;
             }
         }
+
+        public static int TotalChannels()
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
+                searchArgs.SortOption = searchArgs.SubscriptionsDesc;
+                return proxy.CountAllChannelsWithFilter(searchArgs);
+            }
+        }
     }
 }

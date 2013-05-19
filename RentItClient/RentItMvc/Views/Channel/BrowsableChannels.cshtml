@@ -90,6 +90,14 @@
     {
         @Html.ActionLink("<<", "BrowsableChannels", "Channel", new { userId = Session["userId"], startIndex = Model.Item2 - 10, endIndex = Model.Item3 - 10 }, new { @class = "btn btn-primary pull-left", style = "margin-left: 9px"})
     }
+
+    @if ((Model.Item1.Count + Model.Item2) == RentItMvc.Controllers.ChannelController.TotalChannels())
+    {
+          <button class="btn btn-primary pull-right disabled" disabled="disabled" style="margin-left: 9px">>></button>
+    }
+    else
+    {
+        @Html.ActionLink(">>", "BrowsableChannels", "Channel", new { userId = Session["userId"], startIndex = Model.Item2 + 10, endIndex = Model.Item3 + 10 }, new { @class = "btn btn-primary pull-right", style = "margin-right: 13px"})
+    }
     
-    @Html.ActionLink(">>", "BrowsableChannels", "Channel", new { userId = Session["userId"], startIndex = Model.Item2 + 10, endIndex = Model.Item3 + 10 }, new { @class = "btn btn-primary pull-right", style = "margin-right: 13px"})
-</div>
+  </div>
