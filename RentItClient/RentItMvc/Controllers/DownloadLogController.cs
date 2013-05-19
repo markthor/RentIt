@@ -13,7 +13,7 @@ namespace RentItMvc.Controllers
             string logFilePath = "C:\\RentItServices\\Rentit21Files\\ITU\\Log\\ItuLogs.txt";
             string contentType = "text/plain";
             DateTime now = DateTime.Now;
-            string downloadFileName = "ItuLogFile - " + now.ToLongDateString() + " " + now.ToLongTimeString();
+            string downloadFileName = "ItuLogFile - " + now.ToLongDateString() + " " + now.ToLongTimeString() + ".txt";
             return File(logFilePath, contentType, downloadFileName);
         }
     }
