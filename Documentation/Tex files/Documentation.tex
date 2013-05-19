@@ -304,7 +304,7 @@ This class is the single point of entry to the server programs functionality.
 \subsubsection{Class diagram}
 \begin{figure}[H]
   \centering
-\includegraphics[]{./ClassDiagram v2.png}
+\includegraphics[width=450pt,keepaspectratio=true]{./ClassDiagramv2.png}
 \caption{Class diagram of important methods and all classes}
 \end{figure}
 
@@ -327,12 +327,13 @@ The eligible track's ratio are calculated from the formula:
 \begin{align*}
 ratio &= \frac{ratioConstant + upvotes}{ratioConstant + downvotes}
 \end{align*}
-The selection are visualized and explained in the following figure.\\\\
+The selection are visualized and explained in the following figure.\\
 \begin{figure}[htp]
 \centering
 \includegraphics[width=130pt,height=200pt,keepaspectratio=true]{./trackSelectionB.png}
 \caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length that the track has are proportional to the ratio.}
 \end{figure}
+\textbf{ } \\*
 \textbf{Time complexity} \\*
 As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call, runs several times, the time complex is relevant. The algorithm iterates through tracks up to four times and track plays two times. The iterations does not involve iterations in iterations, making non of the \texttt{foreach()} calls quadratic in time. Therefore the time complexity is: 
 \begin{align*}
