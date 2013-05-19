@@ -17,20 +17,22 @@ namespace RentItServer.ITU
         private static StreamHandler _instance;
         //FileSystemHandler
         private static FileSystemDao _fileSystemHandler;
-
         //DAO
         private static DatabaseDao _dao;
 
-        //List of ids of running channels;
+        // A dictionary with all running channels' id and corresponding ezprocess
         private Dictionary<int, EzProcess> runningChannelIds;
 
-        //The logger
+        // The logger
         private Logger _logger;
 
+        // This timer is to detect 3AM every day in order to restart all channels
         private System.Timers.Timer timer;
 
-        private List<TrackPlay> NewTrackPlays;
+        // List containing all TrackPlays which have not yet been inserted into the database
+        private List<TrackPlay> newTrackPlays;
 
+        // List containing the windows process id of all running ezstream processes
         private List<int> ezstreamProcessIds;
 
         #endregion
@@ -41,10 +43,13 @@ namespace RentItServer.ITU
         /// </summary>
         private StreamHandler()
         {
+            // Get singleton instancees
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
+
+            //Initialize collections
             runningChannelIds = new Dictionary<int, EzProcess>();
-            NewTrackPlays = new List<TrackPlay>();
+            newTrackPlays = new List<TrackPlay>();
             ezstreamProcessIds = new List<int>();
         }
 
@@ -61,20 +66,29 @@ namespace RentItServer.ITU
             return _instance;
         }
 
+        /// <summary>
+        /// Initializes the timer to elapse every day at 3AM
+        /// </summary>
         public void InitTimer()
         {
-            _logger.AddEntry("Init timer");
+            _logger.AddEntry("Initialize timer");
             timer = new System.Timers.Timer();
 
-            //Calculate how long time the first ionterval should be
+            //Calculate how long time the first interval should be
             timer.Interval = MillisecondsUntilReset();
 
+            //Set handler for timer elapse
             timer.Elapsed += timer_Elapsed;
+            //Set the timer to elapse more than the first time
             timer.AutoReset = true;
             _logger.AddEntry("Start timer");
             timer.Start();
         }
 
+        /// <summary>
+        /// Set the logger which should be used in the stream handler
+        /// </summary>
+        /// <param name="logger"></param>
         public void SetLogger(Logger logger)
         {
             _logger = logger;
@@ -82,20 +96,23 @@ namespace RentItServer.ITU
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The date that the reset of all channel streams should take place
+        /// </summary>
         private DateTime ResetDate
         {
             get
             {
                 //For testing!
-                DateTime resetDate = DateTime.Now;
-                resetDate = resetDate.AddMinutes(15);
-                return resetDate;
+                //DateTime resetDate = DateTime.Now;
+                //resetDate = resetDate.AddMinutes(15);
+                //return resetDate;
                 //endFor
 
 
-                /* THE REAL DEAL
+                //Creates the time now and adds to that value
                 DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour > 3) // in case the server is restarted in the before 3AM one day
+                if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
                 {
                     resetDate = resetDate.AddDays(1);
                 }
@@ -103,13 +120,17 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
-                */
+                
             }
         }
         #endregion
 
         #region Helper methods
         #region MillisecondsUntilReset()
+        /// <summary>
+        /// Calculates how many miliseconds there is until next reset if channel streams
+        /// </summary>
+        /// <returns></returns>
         private int MillisecondsUntilReset()
         {
             return (int)(ResetDate - DateTime.Now).TotalMilliseconds;
@@ -137,27 +158,31 @@ namespace RentItServer.ITU
 
         #region ManualStreamStart(int channelId)
         /// <summary>
-        /// Starts the stream of the specified channel. Runs ezstream and starts a countinous operation. Requires icecast to be running.
+        /// Method to manually start the stream for a channel
+        /// Throws NoTracksOnChannelException if there are no tracks on the channel with the given id
+        /// Throws ChannelRunningException if the channel already has a running stream
         /// </summary>
-        /// <param name="channelId">Channel id of the channel to be started</param>
-        public void ManualStreamStart(int channelId) // rename to something that says it is the first time the stream is being started and write a method for starting the stream when it has been of(is that even necessary?)
+        /// <param name="channelId">The id of the channel which should start</param>
+        public void ManualStreamStart(int channelId)
         {
             _logger.AddEntry("Manually starting stream for channel with id: " + channelId);
-            if (!IsChannelPlaying(channelId)) // Check if stream is already running
+            if (!IsChannelPlaying(channelId)) // Check if the channel already has a running stream
             {
-                if(_dao.ChannelHasTracks(channelId))
+                if(_dao.ChannelHasTracks(channelId)) // Check if the channel has any associated tracks
                 {
                     _logger.AddEntry("Starting channel stream for channel with id: " + channelId);
+                    //Start the channel stream
                     StartChannelStream(channelId);
+                    //Add all new track plays to the database
                     AddNewTrackPlays();
                 }
-                else
+                else // Tjhe channel has no associated tracks
                 {
                     _logger.AddEntry("Channel with id: " + channelId + " has no associated tracks");
                     throw new NoTracksOnChannelException("Channel with id: " + channelId + " has no associated tracks");
                 }
             }
-            else //channel is already running
+            else //channel already has a running stream
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is already running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
@@ -167,69 +192,77 @@ namespace RentItServer.ITU
 
         #region StopStream(int channelId)
         /// <summary>
-        /// Stops the stream of a channel and sets it is not running.
+        /// Method to stop the stream process of a specific channel
         /// </summary>
-        /// <param name="channelId">The id of the channel to be stopped</param>
+        /// <param name="channelId">Channel id for the channel which should have stopped its streaming process</param>
         public void StopChannelStream(int channelId)
         {
             _logger.AddEntry("Starting stopping channel with id: " + channelId);
             
+            //The process for the given channel id
             EzProcess p;
             try
             {
                 p = runningChannelIds[channelId];
             }
-            catch(KeyNotFoundException)
+            catch(KeyNotFoundException) //The given channel id has no running streaming process
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is not running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is not running");
             }
             
-            Process[] activeEzstreamProcesses = System.Diagnostics.Process.GetProcessesByName("ezstream");
-            foreach (Process process in activeEzstreamProcesses)
+            //Loop through all windows processes named "ezstream"
+            foreach (Process process in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
-                if (process.Id == p.RealProcessId)
+                if (process.Id == p.RealProcessId) //if the windows process has the same id as the process associated with the given channel id
                 {
+                    //Kill the process
                     process.Kill();
+                    //Remove the id from active processes' widnows ids
+                    ezstreamProcessIds.Remove(p.RealProcessId);
+                    //Remove
+                    runningChannelIds.Remove(channelId);
                     _logger.AddEntry("Ezstream process for channel with id: " + channelId + " has been killed");
                 }
             }
 
-            runningChannelIds.Remove(channelId);
             //TODO: FJERN ALLE TRACKPLAYS SOM IKKE ER BLEVET SPILLET!
         }
         #endregion
 
         #region StartChannelStream(int channelId)
+        /// <summary>
+        /// Method to start a channels stream
+        /// </summary>
+        /// <param name="channelId"></param>
         private void StartChannelStream(int channelId)
         {
-            // make sure it has a config file
-            string xmlFilePath;
-            xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
-            if (!_fileSystemHandler.Exists(xmlFilePath))
+            // Start stream process
+            if (!IsChannelPlaying(channelId)) // Check if channel already has a running stream
             {
-                CreateChannelConfigFile(channelId);
-            }
+                // Make sure the channel has a config file
+                string xmlFilePath;
+                xmlFilePath = FilePath.ITUChannelConfigPath.GetPath() + channelId.ToString() + ".xml";
+                if (!_fileSystemHandler.Exists(xmlFilePath))
+                {
+                    CreateChannelConfigFile(channelId);
+                }
             
-            // generate m3u file
-            int playTime = MillisecondsUntilReset(); //24 hours
-            GenerateM3UFile(channelId, playTime);
+                // Generate m3u file for the channel
+                // Calculate the playtime for the m3u file. Time until next reset
+                int playTime = MillisecondsUntilReset();
+                //Generate the m3u file
+                GenerateM3UFile(channelId, playTime);
 
 
-            // start stream process
-            if (!IsChannelPlaying(channelId))
-            {
-                EzProcess p = StartEzstreamProcess(channelId);
+                // Start stream process
+                StartEzstreamProcess(channelId);
             }
-            else
+            else // Channel already has a running stream
             {
                 _logger.AddEntry("Channel with id: " + channelId + " is already running");
                 throw new ChannelRunningException("Channel with id: " + channelId + " is already running");
             }
-
-            // add process to list of active streams
-            //_logger.AddEntry("[StartChannelStream]: Adding to dictionary");
-            //runningChannelIds.Add(channelId, p);
         }
         #endregion
 
@@ -255,7 +288,7 @@ namespace RentItServer.ITU
         {
             List<TrackPlay> addedTrackPlays;
             List<Track> playlist = GeneratePlaylist(channelId, playTime, out addedTrackPlays);
-            NewTrackPlays.AddRange(addedTrackPlays);
+            newTrackPlays.AddRange(addedTrackPlays);
 
             string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
             _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
@@ -282,7 +315,7 @@ namespace RentItServer.ITU
         #endregion
 
         #region StartEzstreamProcess(int channelId)
-        private EzProcess StartEzstreamProcess(int channelId)
+        private void StartEzstreamProcess(int channelId)
         {
             if (!IsChannelPlaying(channelId))
             {
@@ -319,7 +352,6 @@ namespace RentItServer.ITU
                 //Add this process to the dictionary with running channels
                 _logger.AddEntry("[StartEzstreamProcess]: Adding to dictionary");
                 runningChannelIds.Add(channelId, p);
-                return p;
             }
             else
             {
@@ -329,44 +361,44 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region AssignProcessId(EzProcess p)
         private void AssignProcessId(EzProcess p)
         {
-            _logger.AddEntry("start sleep");
-            Thread.Sleep(100000);
+            _logger.AddEntry("Start assign process id for channel with id: " + p.ChannelId);
+            Thread.Sleep(1000);
             Process[] activeProcesses = Process.GetProcessesByName("ezstream");
-            _logger.AddEntry("length of active processes: " + activeProcesses.Length);
             foreach (Process process in activeProcesses)
             {
-                _logger.AddEntry("process.id: " + process.Id + " - process.name: " + process.ProcessName);
                 if (!ezstreamProcessIds.Contains(process.Id))
                 {
                     p.RealProcessId = process.Id;
                     ezstreamProcessIds.Add(process.Id);
-
-                    _logger.AddEntry("p.id: " + p.Id + " - p.realProcessId: " + p.RealProcessId + " - list.first: " + ezstreamProcessIds.First());
+                    _logger.AddEntry("Process for channel with id: " + p.ChannelId + " has been assign process id: " + p.RealProcessId);
                     break;
                 }
             }
         }
+        #endregion
 
-
+        #region Add TrackPlay methods
         #region AddNewTrackPlays()
         private void AddNewTrackPlays()
         {
-            _logger.AddEntry("Starting adding new trackplays");
-            AddTrackPlayList(NewTrackPlays);
-            NewTrackPlays.Clear();
+            AddTrackPlayList(newTrackPlays);
+            newTrackPlays.Clear();
         }
         #endregion
 
         #region AddTrackPlayList(List<TrackPlay> tracks)
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
-            _logger.AddEntry("Starting adding trackplays from given list");
+            _logger.AddEntry("Starting adding trackplays from given list to database");
             _dao.AddTrackPlayList(trackPlayList);
         }
         #endregion
-        
+        #endregion
+
+        #region Methods to restart all channels
         #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         //Reset all streams
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -381,22 +413,22 @@ namespace RentItServer.ITU
                 // start stream process
                 // add process to list of active streams
 
+            _logger.AddEntry("Start restart of all streams");
+            timer.Interval = 86400000; //Set timer interval to 24hours
 
             // Close all streams
             CloseAllStreams();
-            // clear dictionary of active streams
-            _logger.AddEntry("Clearing all runningChannelIds");
-            runningChannelIds.Clear();
-
+            
             // Find all channel ids for channels with tracks
             List<Channel> channels = _dao.GetChannelsWithTracks();
 
             foreach (Channel c in channels) // make a method which call all these
             {
-                _logger.AddEntry("restarting channel with id: " + c.Id);
+                _logger.AddEntry("Restarting channel with id: " + c.Id);
                 StartChannelStream(c.Id);
             }
 
+            //Add all new trackplays to database
             AddNewTrackPlays();
         }
         #endregion
@@ -405,13 +437,17 @@ namespace RentItServer.ITU
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
-
             foreach (Process p in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
                 p.Kill();
             }
             _logger.AddEntry("All ezstream processes have been killed");
+
+            // clear dictionary of active streams
+            _logger.AddEntry("Clearing all runningChannelIds");
+            runningChannelIds.Clear();
         }
+        #endregion
         #endregion
     }
 

@@ -33,7 +33,7 @@ namespace RentItServer.ITU
 
             XmlWriterSettings xmlSettings = new XmlWriterSettings();
             xmlSettings.Indent = true;
-            xmlSettings.IndentChars = "  ";
+            xmlSettings.IndentChars = "    ";
             xmlSettings.NewLineChars = "\r\n";
             xmlSettings.NewLineHandling = NewLineHandling.Replace;
 

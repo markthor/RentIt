@@ -189,11 +189,40 @@ namespace RentItMvc.Controllers
             }
         }
 
+        public JsonResult GetVotes(int userId, int trackId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                Vote vote = proxy.GetVote(userId, trackId);
+                if (vote != null)
+                {
+                    return Json(vote.Value, JsonRequestBehavior.AllowGet);
+                }
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public void CreateUpvote(int userId, int trackId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 proxy.CreateVote(1, userId, trackId);
+            }
+        }
+
+        public void CreateDownvote(int userId, int trackId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.CreateVote(-1, userId, trackId);
+            }
+        }
+
+        public void DeleteVote(int userId, int trackId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.DeleteVote(userId, trackId);
             }
         }
     }
