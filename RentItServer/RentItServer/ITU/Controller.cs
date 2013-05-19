@@ -21,8 +21,6 @@ namespace RentItServer.ITU
         private static Controller _instance;
         //Data access object for database IO
         private readonly DatabaseDao _dao = DatabaseDao.GetInstance();
-        //Responsible for choosing the next trackStream
-        private readonly TrackPrioritizer _trackPrioritizer = TrackPrioritizer.GetInstance();
         //Data access object for file system IO
         private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         //Event cast when log must make an _handler
@@ -38,10 +36,9 @@ namespace RentItServer.ITU
         //The url properties of the stream
         public static int _defaultPort = 27000;
         public static string _defaultUri = "http://rentit.itu.dk";
-        public static string _defaultStreamExtension = "";
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
         
-        private int tempCounter;
+        private int tempCounter; //TODO: IS THIS BEING USED?
         private readonly object _dbLock = new object();
 
         /// <summary>
@@ -538,58 +535,8 @@ namespace RentItServer.ITU
             catch(Exception e)
             {
                 _logger.AddEntry("exception: " + e);
-                //delete file and database entry
+                //TODO: delete file and database entry
             }
-
-            /*
-
-
-            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            _logger.AddEntry("[Controller-AddTrack]: Gathering track information");
-            DatabaseWrapperObjects.Track trackInfo = GetTrackInfo(audioStream);
-            try
-            {
-                
-                //trackInfo = GetTrackInfo(audioStream);
-                _logger.AddEntry("Trackinfo: Name: " + trackInfo.Name + " - Artist: " + trackInfo.Artist + " - length: " + trackInfo.Length);
-                _dao.CreateTrackEntry(channelId, "", trackInfo.Name, trackInfo.Artist, trackInfo.Length, trackInfo.UpVotes, trackInfo.DownVotes);
-                
-                string relativePath = FileName.ItuGenerateAudioFileName(_dao.GetTrack(channelId, trackInfo.Name).Id);
-                try
-                {
-                    _logger.AddEntry("Size of audioStream: " + audioStream.Length);
-                    _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, relativePath, audioStream);
-                    _logger.AddEntry("HER ER DUA");
-                }
-                catch
-                {
-                    _logger.AddEntry("HER ER DUB" + " - TRACKINFO: " + trackInfo.Id + " - " +trackInfo.ChannelId);
-                    _dao.DeleteTrackEntry(trackInfo);
-                    throw new Exception("Exception occured when trying to write file to filesystem.");
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.AddEntry("HER ER DUC");
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("AddTrack failed with exception [" + e + "]."));
-                throw;
-            }*/
         }
 
         

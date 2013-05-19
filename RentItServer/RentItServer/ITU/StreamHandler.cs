@@ -19,6 +19,8 @@ namespace RentItServer.ITU
         private static FileSystemDao _fileSystemHandler;
         //DAO
         private static DatabaseDao _dao;
+        //
+        private static TrackPrioritizer _trackPrioritizer;
 
         // A dictionary with all running channels' id and corresponding ezprocess
         private Dictionary<int, EzProcess> runningChannelIds;
@@ -46,6 +48,7 @@ namespace RentItServer.ITU
             // Get singleton instancees
             _fileSystemHandler = FileSystemDao.GetInstance();
             _dao = DatabaseDao.GetInstance();
+            _trackPrioritizer = TrackPrioritizer.GetInstance();
 
             //Initialize collections
             runningChannelIds = new Dictionary<int, EzProcess>();
@@ -294,7 +297,7 @@ namespace RentItServer.ITU
             List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
 
             //Generate the playlist
-            List<Track> playlist = TrackPrioritizer.GetInstance().GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
+            List<Track> playlist = _trackPrioritizer.GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
 
             //return the playlist
             return playlist;

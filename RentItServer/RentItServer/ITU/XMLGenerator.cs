@@ -20,7 +20,7 @@ namespace RentItServer.ITU
         {
             //Set all values
             string startElement = "ezstream";
-            string url = Controller._defaultUrl + Convert.ToString(cId) + Controller._defaultStreamExtension;
+            string url = Controller._defaultUrl + Convert.ToString(cId);
             string sourcepassword = "hackme";
             string format = "MP3";
             string filename = filePath;
