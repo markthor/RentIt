@@ -4,28 +4,61 @@ using System.Runtime.Serialization;
 
 namespace RentItServer.ITU
 {
+    /// <summary>
+    /// This class holds sorting information for search queries on channels.
+    /// </summary>
     [Serializable]
     [DataContract]
     public class ChannelSearchArgs
     {
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by name descending
+        /// </summary>
         [DataMember]
         public readonly string NameDesc = "nam desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by name ascending
+        /// </summary>
         [DataMember]
         public readonly string NameAsc = "nam asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by hits descending
+        /// </summary>
         [DataMember]
         public readonly string HitsDesc = "ap desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by hits ascending
+        /// </summary>
         [DataMember]
         public readonly string HitsAsc = "ap asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by subscriptions descending
+        /// </summary>
         [DataMember]
         public readonly string SubscriptionsDesc = "sub desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by subscriptions ascending
+        /// </summary>
         [DataMember]
         public readonly string SubscriptionsAsc = "sub asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments descending
+        /// </summary>
         [DataMember]
         public readonly string NumberOfCommentsDesc = "com desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments ascending
+        /// </summary>
         [DataMember]
         public readonly string NumberOfCommentsAsc = "com asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by rating descending
+        /// </summary>
         [DataMember]
         public readonly string RatingDesc = "rat desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by rating ascending
+        /// </summary>
         [DataMember]
         public readonly string RatingAsc = "rat asc";
 
@@ -112,6 +145,9 @@ namespace RentItServer.ITU
         [DefaultValueAttribute("")]
         public string SortOption { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChannelSearchArgs"/> class.
+        /// </summary>
         public ChannelSearchArgs()
         {
             SearchString = "";

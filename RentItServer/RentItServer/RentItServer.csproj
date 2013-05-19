@@ -110,7 +110,6 @@
     <Compile Include="ITU\Exceptions\ChannelRunningException.cs" />
     <Compile Include="ITU\Exceptions\EmptyTableException.cs" />
     <Compile Include="ITU\Exceptions\NoTracksOnChannelException.cs" />
-    <Compile Include="ITU\Exceptions\NullValueException.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Genre.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Track.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\TrackPlay.cs" />
