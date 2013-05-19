@@ -1672,7 +1672,7 @@ namespace RentItServer.ITU
             }
         }
 
-        internal void DeleteAllComments(int channelId)
+        public void DeleteAllComments(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {

@@ -99,6 +99,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void StartChannelStream(int channelId)
         {
+            if (!_dao.ChannelHasTracks(channelId)) throw new NoTracksOnChannelException("Channel with id: [" + channelId + "] has no associated tracks and cannot be started");
             _streamHandler.ManualStreamStart(channelId);
         }
 
