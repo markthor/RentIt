@@ -2,9 +2,4 @@
 
 @model Tuple<List<GuiGenre>, List<GuiGenre>, int>
 
-
-@using (Html.BeginForm("ChooseGenre", "Channel", new { channelId = Model.Item3 }))
-{
-    @Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item1), new { size = "6" })
-}
-
+@Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item2, "Id", "Name"), new { size = "6" })
