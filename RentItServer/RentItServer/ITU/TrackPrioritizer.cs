@@ -12,8 +12,8 @@ namespace RentItServer.ITU
         //Singleton instance of the class
         private static TrackPrioritizer _instance;
         private static Random rng = new Random();
-        //The maximal play percentage that a track can have to be considered for the next track.
-        private double _maxFrequency = 0;
+        //The lowest possible value for the maximal play percentage that a track can have to be considered for the next track.
+        private double _maxFrequencyLowerCap = 0.2;
         //Determines how much upvotes and downvotes should influence the propability of a track being selected.
         private int _ratioConstant = 10;
         //The number of latest played tracks that will not be considered for the next track.
@@ -67,6 +67,18 @@ namespace RentItServer.ITU
             return playlist;
         }
 
+        public Boolean ContainsTrackPlaysFromFuture(List<TrackPlay> trackPlays)
+        {
+            foreach (TrackPlay tp in trackPlays)
+            {
+                if (tp.TimePlayed > DateTime.Now)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gets the id of the next track to be played from predefined selection criteria.
         /// These includes the ratio between the upvotes and downvotes, the percentage of plays and whether the track has been played recently.
@@ -77,7 +89,8 @@ namespace RentItServer.ITU
         public Track GetNextTrack(List<Track> trackList, List<TrackPlay> plays)
         {
             //Set max frequency
-            _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
+            double _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
+            if (_maxFrequency < _maxFrequencyLowerCap) _maxFrequency = _maxFrequencyLowerCap;
 
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
 
@@ -89,7 +102,7 @@ namespace RentItServer.ITU
             {
                 trackData.Add(t.Id, new TrackData(t));
             }
-            
+
             //Counting trackPlay occurences and adding it to TrackData.
             foreach (TrackPlay tp in plays)
             {
@@ -119,7 +132,7 @@ namespace RentItServer.ITU
 
             //Setting candidate boolean to false for recently played tracks.
             List<int> MostRecentlyPlayedTrackIds = GetMostRecentlyPlayedTrackIds(effectiveMinimumRepeatDistance, plays);
-            foreach(int i in MostRecentlyPlayedTrackIds)
+            foreach (int i in MostRecentlyPlayedTrackIds)
             {
                 trackData[i].NextTrackCandidate = false;
             }
@@ -135,7 +148,6 @@ namespace RentItServer.ITU
                     sumOfRatios += kvp.Value.Ratio;
                 }
             }
-
             //Generates a random number from 0 to 1 that chooses the next track.
             double nextTrackRandomRatioIndex = sumOfRatios * rng.NextDouble();
             //Finds the next track from the nextTrackRandomRatioIndex.
@@ -157,7 +169,7 @@ namespace RentItServer.ITU
             }
             throw new ArgumentException("This implementaion does not support the arguments because of an error in this method.");
         }
-        
+
         /// <summary>
         /// Gets the ratio that determines how likely the track is to be selected.
         /// </summary>
@@ -235,54 +247,54 @@ namespace RentItServer.ITU
 
             plays.Remove(playToBeRemoved);
         }
-    }
-
-    /// <summary>
-    /// Contains aggregated data about tracks, used in the GetNextTrack.
-    /// </summary>
-    public class TrackData
-    {
-        public TrackData(Track t)
-        {
-            NextTrackCandidate = true;
-            Plays = 0;
-            Track = t;
-        }
 
         /// <summary>
-        /// Ratio determines how likely the track is to be selected by GetNextTrack.
+        /// Contains aggregated data about tracks, used in the GetNextTrack.
         /// </summary>
-        public double Ratio
+        public class TrackData
         {
-            get;
-            set;
-        }
+            public TrackData(Track t)
+            {
+                NextTrackCandidate = true;
+                Plays = 0;
+                Track = t;
+            }
 
-        /// <summary>
-        /// The number of times a track has been played.
-        /// </summary>
-        public int Plays
-        {
-            get;
-            set;
-        }
+            /// <summary>
+            /// Ratio determines how likely the track is to be selected by GetNextTrack.
+            /// </summary>
+            public double Ratio
+            {
+                get;
+                set;
+            }
 
-        /// <summary>
-        /// The track that the trackdata holds information about.
-        /// </summary>
-        public Track Track
-        {
-            get;
-            set;
-        }
+            /// <summary>
+            /// The number of times a track has been played.
+            /// </summary>
+            public int Plays
+            {
+                get;
+                set;
+            }
 
-        /// <summary>
-        /// Whether it is possible for this track to be selected.
-        /// </summary>
-        public Boolean NextTrackCandidate
-        {
-            get;
-            set;
+            /// <summary>
+            /// The track that the trackdata holds information about.
+            /// </summary>
+            public Track Track
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Whether it is possible for this track to be selected.
+            /// </summary>
+            public Boolean NextTrackCandidate
+            {
+                get;
+                set;
+            }
         }
     }
 }
