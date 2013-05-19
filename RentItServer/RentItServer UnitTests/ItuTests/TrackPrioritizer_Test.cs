@@ -137,6 +137,18 @@ namespace RentItServer_UnitTests
 
         }
 
+        [TestMethod]
+        public void TrackPrioritizer_GetNextPlayList_SpecificChannel()
+        {
+            int channelId = 1025;
+            List<Track> tracks = Controller.GetInstance().GetTracksByChannelId(channelId);
+            List<TrackPlay> trackPlays = DatabaseDao.GetInstance().GetTrackPlays(channelId);
+            List<TrackPlay> playListPlays = new List<TrackPlay>();
+
+            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(tracks, trackPlays, 42359253, out playListPlays);
+            Assert.IsFalse(HasSameTrackTwiceInARow(result));
+        }
+
         /// <summary>
         /// Tests GetNextPlayList with multiple tracks and multiple plays.
         /// </summary>
@@ -153,6 +165,14 @@ namespace RentItServer_UnitTests
             testTracks.Add(new Track(6, 8, 9, trackLength));
             testTracks.Add(new Track(7, 1, 49, trackLength));
             testTracks.Add(new Track(8, 15, 18, trackLength));
+            testTracks.Add(new Track(9, 10, 2, trackLength));
+            testTracks.Add(new Track(10, 0, 1, trackLength));
+            testTracks.Add(new Track(11, 3, 30, trackLength));
+            testTracks.Add(new Track(12, 20, 4, trackLength));
+            testTracks.Add(new Track(13, 39, 33, trackLength));
+            testTracks.Add(new Track(14, 8, 9, trackLength));
+            testTracks.Add(new Track(15, 1, 49, trackLength));
+            testTracks.Add(new Track(16, 15, 18, trackLength));
 
             List<TrackPlay> testPlays = new List<TrackPlay>();
             testPlays.Add(new TrackPlay(1, new DateTime(2013, 1, 4)));
