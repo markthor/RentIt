@@ -121,7 +121,7 @@ else
 
 <h4 class="pull-left" style="margin-top: 4px; margin-right: 20px">Tracks</h4>
 
-@if (Model.OwnerId == (int)@Session["userId"])
+@if (Session["userId"] != null && Model.OwnerId == (int)@Session["userId"])
 {
     <div style="margin-top: 16px; margin-right: 16px">
         @Html.ActionLink("Edit tracks", "EditTracks", "Track", new { channelId = Model.Id, userId = Session["userId"] }, new { @class = "btn btn-small btn-warning" })
