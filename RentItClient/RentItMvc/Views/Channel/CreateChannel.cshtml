@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "Create Channel";
     Html.EnableClientValidation(true);
 }
 
@@ -12,22 +11,18 @@
         @{
             using (Html.BeginForm("CreateNewChannel", "Channel", new { channelId = Model.Id, userId = @Session["userId"] }, FormMethod.Post))
             {
-            @Html.HiddenFor(model => model.Id)
-            <h5>Name</h5>
-            <div style="width: 400px" class="pull-left">
-                @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level", type = "text", required = "required", placeholder = "Channel Name" })
-            </div>
-            <div style="padding-top: 4px;" class="error-field">
-                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "txt-error" })
-            </div>
-            <div class="clearfix"></div>
-            <div style="width: 400px" class="input-block-level">
-                <h5 style="">Description</h5>
-                <div class="input-block-level">
-                    @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = "Description" })
+                <h5>Name</h5>
+                @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level pull-left", type = "text", required = "required", placeholder = "Channel Name", style = "width: 400px" })
+                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "txt-error error-field", style = "padding-top: 4px" })
+                <div class="clearfix"></div>
+                <div style="width: 400px" class="input-block-level">
+                    <h5 style="">Description</h5>
+                    <div class="input-block-level">
+                        @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = "Description" })
+                    </div>
                 </div>
-            </div>
-            <button class="btn">Create</button>
+                @Html.HiddenFor(model => model.Id)
+                <button class="btn">Create</button>
             }
         }
     </div>

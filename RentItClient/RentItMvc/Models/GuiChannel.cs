@@ -21,15 +21,14 @@ namespace RentItMvc.Models
             StreamUri = "";
             Genres = new string[0];
         }
+        [Required]
+        [Display(Name = "Id")]
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Name")]
         [Remote("IsChannelNameAvailable", "Validation", AdditionalFields = "Id")]
         public string Name { get; set; }
-
-        [Required]
-        [Display(Name = "id")]
-        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Description")]
