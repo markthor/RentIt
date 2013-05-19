@@ -1397,7 +1397,27 @@ namespace RentItServer.ITU
 
         public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
         {
-            throw new NotImplementedException();
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackPlays = from tp in context.TrackPlays
+                                 from t in context.Tracks
+                                 where tp.TimePlayed < DateTime.Now
+                                 where tp.TrackId == t.Id
+                                 where t.ChannelId == channelId
+                                 orderby tp.TimePlayed descending
+                                 select tp;
+
+                List<TrackPlay> trackPlaysList = trackPlays.ToList();
+                trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                List<Track> result = new List<Track>();
+
+                foreach(TrackPlay tp in trackPlaysList)
+                {
+                    result.Add(GetTrack(tp.TrackId));
+                }
+
+                return result;
+            }
         }
 
         public Vote GetVote(int userId, int trackId)

@@ -11,7 +11,6 @@ namespace RentItServer
     {
         private static readonly Controller _controller = Controller.GetInstance();
 
-
         /// <summary>
         /// Logins the user with the specified usernameOrEmail and password.
         /// </summary>
@@ -156,6 +155,11 @@ namespace RentItServer
         public int[] GetTrackIds(int channelId)
         {
             return _controller.GetTrackIds(channelId).ToArray();
+        }
+
+        public ITU.DatabaseWrapperObjects.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
+        {
+            return _controller.GetRecentlyPlayedTracks(channelId, numberOfTracks).ToArray();
         }
 
         public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)

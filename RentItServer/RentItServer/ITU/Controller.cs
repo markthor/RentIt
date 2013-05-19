@@ -774,9 +774,31 @@ namespace RentItServer.ITU
             }
         }
 
-        public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
+        /// <summary>
+        /// Gets the specified number of recently played tracks for a channel.
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <param name="numberOfTracks">The number of tracks to be retrieved</param>
+        /// <returns>The most recently played tracks</returns>
+        public List<DatabaseWrapperObjects.Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
         {
-            throw new NotImplementedException();
+            if (numberOfTracks < 1) throw new ArgumentException("Number of tracks is not a positive number.");
+            if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
+            try
+            {
+                List<Track> tracks = _dao.GetRecentlyPlayedTracks(channelId, numberOfTracks);
+                List<DatabaseWrapperObjects.Track> result = new List<DatabaseWrapperObjects.Track>();
+                foreach (Track t in tracks)
+                {
+                    result.Add(t.GetTrack());
+                }
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry(string.Format("GetRecentlyPlayedTracks [{0}]. Local variables: channelId = {1}, numberOfTracks = {2}", e, channelId, numberOfTracks));
+                throw;
+            }
         }
 
         public DatabaseWrapperObjects.Comment GetComment(int commentId)

@@ -338,6 +338,15 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId);
+
+        /// <summary>
+        /// Gets the specified number of most recently played tracks
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <param name="numberOfTracks">The number of tracks to retrieve</param>
+        /// <returns>The most recently played tracks</returns>
+        [OperationContract]
+        DatabaseWrapperObjects.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks);
         
         [OperationContract]
         bool IsChannelNameAvailable(int channelId, string channelName);
