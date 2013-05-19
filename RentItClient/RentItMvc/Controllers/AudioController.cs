@@ -59,7 +59,7 @@ namespace RentItMvc.Controllers
                 guiTracks.Add(track);
             }
             string json = JsonSerialize(guiTracks);
-            return Json(json, JsonRequestBehavior.AllowGet);
+            return Json(guiTracks, JsonRequestBehavior.AllowGet);
         }
 
         private string JsonSerialize(List<GuiTrack> tracks)
