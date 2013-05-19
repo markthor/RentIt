@@ -26,8 +26,6 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
-        // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
-        private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The url properties of the stream
@@ -266,7 +264,6 @@ namespace RentItServer.ITU
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
                     _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
-                    _channelCache[channel.Id] = channel;
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
             }
@@ -326,7 +323,6 @@ namespace RentItServer.ITU
                     channel = _dao.GetChannel(channelId);
                     string logEntry = "[" + channel.Name + "] with id [" + channelId + "] is being deleted.";
                     _dao.DeleteChannel(channel.GetChannel());
-                    _channelCache[channelId] = null;
                     _logger.AddEntry(logEntry + "Deletion successful.");
                 }
             }
@@ -383,7 +379,6 @@ namespace RentItServer.ITU
             if (channel != null)
             {
                 // channel was found in the database, adding to cache
-                _channelCache[channelId] = channel;
             }
             else
             {   // A channel with id = channelId does not exist in cache or in database nigga
