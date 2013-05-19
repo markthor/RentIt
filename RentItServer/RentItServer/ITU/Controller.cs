@@ -843,5 +843,15 @@ namespace RentItServer.ITU
         {
             _dao.DeleteVote(userId, trackId);
         }
+
+        public int CountAllUpvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, 1);
+        }
+
+        public int CountAllDownvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, -1);
+        }
     }
 }
