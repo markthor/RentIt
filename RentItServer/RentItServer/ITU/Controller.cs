@@ -186,6 +186,7 @@ namespace RentItServer.ITU
                     user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
                     _dao.DeleteVotesForUser(userId);
+                    _dao.DeleteUserComments(userId);
                     _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
                 }
             }

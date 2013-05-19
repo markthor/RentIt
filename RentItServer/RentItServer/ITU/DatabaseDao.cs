@@ -1031,6 +1031,26 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Deletes all comments from a specific user.
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        public void DeleteUserComments(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from c in context.Comments
+                               where c.UserId == userId
+                               select c;
+
+                foreach (Comment c in comments)
+                {
+                    context.Comments.Remove(c);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Gets a specific comment.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
