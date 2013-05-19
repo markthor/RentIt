@@ -8,6 +8,9 @@ using RentItServer.ITU.Exceptions;
 
 namespace RentItServer.ITU
 {
+    /// <summary>
+    /// The Data Access Object for all communication from the program to the database.
+    /// </summary>
     public class DatabaseDao
     {
         //Singleton instance of the class
@@ -82,6 +85,15 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Determines whether [is correct password] [the specified user id].
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        ///   <c>true</c> if [is correct password] [the specified user id]; otherwise, <c>false</c>.
+        /// </returns>
+        /// <exception cref="System.ArgumentException"></exception>
         public bool IsCorrectPassword(int userId, string password)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -97,6 +109,16 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Subscribes the specified user id to the channel.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <exception cref="System.ArgumentException">
+        /// No user with userId [ + userId + ]
+        /// or
+        /// No channel with channelId [ + channelId + ]
+        /// </exception>
         public void Subscribe(int userId, int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -119,6 +141,16 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Unsubscribes the user form the channel.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <exception cref="System.ArgumentException">
+        /// No user with userId [ + userId + ]
+        /// or
+        /// No channel with channelId [ + channelId + ]
+        /// </exception>
         public void UnSubscribe(int userId, int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -220,10 +252,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <param name="username">The username. Can be null.</param>
         /// <param name="password">The password. Can be null.</param>
-        /// <param name="channels">The channels. Can be null.</param>
-        /// <param name="comments">The comments. Can be null.</param>
-        /// <param name="subscribedChannels">The subscribed channels. Can be null.</param>
-        /// <param name="votes">The votes. Can be null.</param>
+        /// <param name="email">The email.</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
         public void UpdateUser(int userId, string username, string password, string email)
         {
@@ -332,8 +361,9 @@ namespace RentItServer.ITU
         /// <summary>
         /// Removes the channel from the database.
         /// </summary>
-        /// <param name="ownerId">The owner id.</param>
-        /// <param name="theChannel">The channel.</param>
+        /// <param name="channel">The channel.</param>
+        /// <exception cref="System.ArgumentException">No channel with channel found</exception>
+        /// <exception cref="System.Exception">End of DeleteChannel, but channel entry is still in database</exception>
         public void DeleteChannel(DatabaseWrapperObjects.Channel channel)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -365,14 +395,10 @@ namespace RentItServer.ITU
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
-        /// <param name="comments">The comments. Can be null.</param>
-        /// <param name="genres">The genres. Can be null.</param>
-        /// <param name="tracks">The tracks. Can be null.</param>
-        /// <exception cref="System.ArgumentException">
-        /// No channel with channel id [ + channelId + ]
+        /// <param name="streamUri">The stream URI.</param>
+        /// <exception cref="System.ArgumentException">No channel with channel id [ + channelId + ]
         /// or
-        /// No user with user id [ + ownerId + ]
-        /// </exception>
+        /// No user with user id [ + ownerId + ]</exception>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -657,6 +683,13 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Creates the track entry.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="track">The track.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">No channel with channel id [ + channelId + ].</exception>
         public Track CreateTrackEntry(int channelId, Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -673,6 +706,11 @@ namespace RentItServer.ITU
             return track;
         }
 
+        /// <summary>
+        /// Updates the track.
+        /// </summary>
+        /// <param name="track">The track.</param>
+        /// <exception cref="System.ArgumentException">No track with id [ + track.Id + ].</exception>
         public void UpdateTrack(Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -743,6 +781,12 @@ namespace RentItServer.ITU
             return theTrack;
         }
 
+        /// <summary>
+        /// Gets the tracks associated with a channel with filter options.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         public List<Track> GetTracksWithFilter(int channelId, TrackSearchArgs filter)
         {
             List<Track> filteredTracks;
@@ -918,6 +962,12 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the channel genres.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">No channel with channelId [ + channelId + ]</exception>
         public IEnumerable<string> GetChannelGenres(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1080,6 +1130,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the track list.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         internal List<Track> GetTrackList(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1160,6 +1215,9 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the database data.
+        /// </summary>
         public void DeleteDatabaseData()
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1221,6 +1279,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Adds the track play.
+        /// </summary>
+        /// <param name="track">The track.</param>
         public void AddTrackPlay(Track track)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1230,6 +1292,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the created channels.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
         public List<Channel> GetCreatedChannels(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1241,6 +1308,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the subscribed channels.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
         public List<Channel> GetSubscribedChannels(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1259,6 +1331,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the tracks by channel id.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public List<Track> GetTracksByChannelId(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1272,6 +1349,14 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Determines whether [is channel name available] [the specified channel id].
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <returns>
+        ///   <c>true</c> if [is channel name available] [the specified channel id]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1283,6 +1368,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the subscriber count.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public int GetSubscriberCount(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1295,6 +1385,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Increments the channel plays.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void IncrementChannelPlays(int channelId)
         {
@@ -1319,6 +1413,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the channels with tracks.
+        /// </summary>
+        /// <returns></returns>
         public List<Channel> GetChannelsWithTracks()
         {
             List<Channel> channelList = new List<Channel>();
@@ -1336,6 +1434,11 @@ namespace RentItServer.ITU
             return channelList;
         }
 
+        /// <summary>
+        /// Checks if the channel has tracks.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public bool ChannelHasTracks(int channelId)
         {
             bool result = false;
@@ -1353,6 +1456,10 @@ namespace RentItServer.ITU
             return result;
         }
 
+        /// <summary>
+        /// Adds the track playlist.
+        /// </summary>
+        /// <param name="trackPlayList">The track playlist.</param>
         public void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1366,6 +1473,12 @@ namespace RentItServer.ITU
         }
 
 
+        /// <summary>
+        /// Gets the recently played tracks.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="numberOfTracks">The number of tracks.</param>
+        /// <returns></returns>
         public List<Track> GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1394,6 +1507,12 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the vote.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="trackId">The track id.</param>
+        /// <returns></returns>
         public Vote GetVote(int userId, int trackId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1409,6 +1528,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the vote.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="trackId">The track id.</param>
         public void DeleteVote(int userId, int trackId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1424,6 +1548,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the track plays.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="datetime">The datetime.</param>
         public void DeleteTrackPlays(int channelId, DateTime datetime)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1461,6 +1590,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes the track entry.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
         public void DeleteTrackEntry(int trackId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())

@@ -259,17 +259,7 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         [OperationContract]
         void Unsubscribe(int userId, int channelId);
-
-        /// <summary>
-        /// Gets a channel port.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="ipAddress">The ip address.</param>
-        /// <param name="port">The port.</param>
-        /// <returns></returns>
-        [OperationContract]
-        int GetChannelPort(int channelId, int ipAddress, int port);
-
+        
         /// <summary>
         /// Starts the channel stream.
         /// </summary>

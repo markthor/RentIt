@@ -11,29 +11,54 @@ using System.Text;
 namespace RentItServer.ITU
 {
     /// <summary>
-    /// Reviewed by Toke
+    /// Controller class. Through this class goes all communication between the webservice implementation and the serverside code
     /// </summary>
     public class Controller
     {
+        /// <summary>
+        /// The log file name
+        /// </summary>
         private static readonly string LogFileName = "ItuLogs.txt";
-        //Singleton instance of the class
+        /// <summary>
+        /// Singleton instance of the class
+        /// </summary>
         private static Controller _instance;
-        //Data access object for database IO
+        /// <summary>
+        /// Data access object for database IO
+        /// </summary>
         private readonly DatabaseDao _dao = DatabaseDao.GetInstance();
-        //Data access object for file system IO
+        /// <summary>
+        /// Data access object for file system IO
+        /// </summary>
         private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
-        //Event cast when log must make an _handler
+        /// <summary>
+        /// Event cast when log must make an _handler
+        /// </summary>
         private static EventHandler _handler;
-        //The logger
+        /// <summary>
+        /// The logger
+        /// </summary>
         private readonly Logger _logger;
-        //The streamhandler
+        /// <summary>
+        /// The streamhandler
+        /// </summary>
         private readonly StreamHandler _streamHandler;
-        //The url properties of the stream
+        /// <summary>
+        ///The url properties of the stream
+        /// </summary>
         public static int _defaultPort = 27000;
+        /// <summary>
+        /// The default URI
+        /// </summary>
         public static string _defaultUri = "http://rentit.itu.dk";
+        /// <summary>
+        /// The default URL
+        /// </summary>
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
-        private int tempCounter; //TODO: IS THIS BEING USED?
+        /// <summary>
+        /// The _DB lock
+        /// </summary>
         private readonly object _dbLock = new object();
 
         /// <summary>
@@ -58,6 +83,9 @@ namespace RentItServer.ITU
             return _instance ?? (_instance = new Controller());
         }
 
+        /// <summary>
+        /// Initializes the stream handler.
+        /// </summary>
         private void InitializeStreamHandler()
         {
             _streamHandler.SetLogger(_logger);
@@ -65,6 +93,10 @@ namespace RentItServer.ITU
         }
 
 
+        /// <summary>
+        /// Starts the channel stream.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         public void StartChannelStream(int channelId)
         {
             _streamHandler.ManualStreamStart(channelId);
@@ -168,6 +200,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
         public DatabaseWrapperObjects.User GetUser(int userId)
         {
             try
@@ -183,11 +220,23 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Determines whether [is correct password] [the specified user id].
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        ///   <c>true</c> if [is correct password] [the specified user id]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsCorrectPassword(int userId, string password)
         {
             return _dao.IsCorrectPassword(userId, password);
         }
 
+        /// <summary>
+        /// Gets all user ids.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<int> GetAllUserIds()
         {
             try
@@ -210,6 +259,13 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="email">The email.</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
             User user = null;
@@ -324,6 +380,15 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Updates the channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="ownerId">The owner id.</param>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="hits">The hits.</param>
+        /// <param name="rating">The rating.</param>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits,
                                   double? rating)
         {
@@ -393,6 +458,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the channels.
+        /// </summary>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         public DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
             try
@@ -416,6 +486,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Counts all channels with filter.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         public int CountAllChannelsWithFilter(ChannelSearchArgs filter)
         {
             filter.StartIndex = 0;
@@ -423,6 +498,12 @@ namespace RentItServer.ITU
             return GetChannels(filter).Length;
         }
 
+        /// <summary>
+        /// Creates the vote.
+        /// </summary>
+        /// <param name="rating">The rating.</param>
+        /// <param name="userId">The user id.</param>
+        /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
             try
@@ -530,6 +611,12 @@ namespace RentItServer.ITU
             return track;
         }
 
+        /// <summary>
+        /// Gets the track info.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="trackname">The trackname.</param>
+        /// <returns></returns>
         public DatabaseWrapperObjects.Track GetTrackInfo(int channelId, string trackname)
         {
             try
@@ -544,6 +631,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Removes the track.
+        /// </summary>
+        /// <param name="trackId">The track id.</param>
         public void RemoveTrack(int trackId)
         {
             if (trackId < 0) LogAndThrowException(new ArgumentException("trackId was below 0"), "RemoveTrack");
@@ -566,6 +657,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the track ids.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public IEnumerable<int> GetTrackIds(int channelId)
         {
             try
@@ -586,6 +682,12 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the tracks.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="args">The args.</param>
+        /// <returns></returns>
         public IEnumerable<ITU.DatabaseWrapperObjects.Track> GetTracks(int channelId, TrackSearchArgs args)
         {
             try
@@ -618,6 +720,12 @@ namespace RentItServer.ITU
                 _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
         }
 
+        /// <summary>
+        /// Deletes the comment.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="date">The date.</param>
         public void DeleteComment(int userId, int channelId, DateTime date)
         {
             try
@@ -707,12 +815,11 @@ namespace RentItServer.ITU
             }
         }
 
-        public DatabaseWrapperObjects.Comment GetComment(int commentId)
-        {
-            throw new NotImplementedException();
-            //return new DatabaseWrapperObjects.Comment();
-        }
-
+        /// <summary>
+        /// Subscribes the specified user id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
         public void Subscribe(int userId, int channelId)
         {
             try
@@ -731,6 +838,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Unsubscribes the specified user id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="channelId">The channel id.</param>
         public void UnSubscribe(int userId, int channelId)
         {
             try
@@ -763,12 +875,26 @@ namespace RentItServer.ITU
             throw e;
         }
 
+        /// <summary>
+        /// Determines whether [is email available] [the specified email].
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>
+        ///   <c>true</c> if [is email available] [the specified email]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsEmailAvailable(string email)
         {
             if (email == null) LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
+        /// <summary>
+        /// Determines whether [is username available] [the specified username].
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>
+        ///   <c>true</c> if [is username available] [the specified username]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsUsernameAvailable(string username)
         {
             if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
@@ -776,31 +902,62 @@ namespace RentItServer.ITU
             return _dao.IsUsernameAvailable(username);
         }
 
+        /// <summary>
+        /// Gets the default channel search args.
+        /// </summary>
+        /// <returns></returns>
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
             return new ChannelSearchArgs();
         }
 
+        /// <summary>
+        /// Gets the default track search args.
+        /// </summary>
+        /// <returns></returns>
         public TrackSearchArgs GetDefaultTrackSearchArgs()
         {
             return new TrackSearchArgs();
         }
 
+        /// <summary>
+        /// Gets the created channels.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
         public List<Channel> GetCreatedChannels(int userId)
         {
             return _dao.GetCreatedChannels(userId);
         }
 
+        /// <summary>
+        /// Gets the subscribed channels.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
         public List<Channel> GetSubscribedChannels(int userId)
         {
             return _dao.GetSubscribedChannels(userId);
         }
 
+        /// <summary>
+        /// Gets the tracks by channel id.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public List<Track> GetTracksByChannelId(int channelId)
         {
             return _dao.GetTracksByChannelId(channelId);
         }
 
+        /// <summary>
+        /// Determines whether [is channel name available] [the specified channel id].
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <param name="channelName">Name of the channel.</param>
+        /// <returns>
+        ///   <c>true</c> if [is channel name available] [the specified channel id]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
@@ -808,26 +965,52 @@ namespace RentItServer.ITU
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
+        /// <summary>
+        /// Gets the subscriber count.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public int GetSubscriberCount(int channelId)
         {
             return _dao.GetSubscriberCount(channelId);
         }
 
+        /// <summary>
+        /// Increments the channel plays.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         public void IncrementChannelPlays(int channelId)
         {
             _dao.IncrementChannelPlays(channelId);
         }
 
+        /// <summary>
+        /// Determines whether [is channel playing] [the specified channel id].
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns>
+        ///   <c>true</c> if [is channel playing] [the specified channel id]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsChannelPlaying(int channelId)
         {
             return _streamHandler.IsChannelStreamRunning(channelId);
         }
 
+        /// <summary>
+        /// Stops the channel stream.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         public void StopChannelStream(int channelId)
         {
             _streamHandler.StopChannelStream(channelId);
         }
 
+        /// <summary>
+        /// Gets the vote.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="trackId">The track id.</param>
+        /// <returns></returns>
         public DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
         {
             Vote vote = _dao.GetVote(userId, trackId);
@@ -838,6 +1021,11 @@ namespace RentItServer.ITU
             return null;
         }
 
+        /// <summary>
+        /// Deletes the vote.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="trackId">The track id.</param>
         public void DeleteVote(int userId, int trackId)
         {
             _dao.DeleteVote(userId, trackId);
