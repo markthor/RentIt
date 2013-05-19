@@ -11,7 +11,7 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
-        public PartialViewResult SelectGenre(int channelId)
+        public Tuple<List<GuiGenre>, List<GuiGenre>, int> GetGenreModel(int channelId)
         {
             List<GuiGenre> chosenGenres;
             List<GuiGenre> availableGenres;
@@ -20,7 +20,21 @@ namespace RentItMvc.Controllers
                 chosenGenres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
                 availableGenres = GuiClassConverter.ConvertGenres(proxy.GetAllGenres()).Except(chosenGenres).ToList();
             }
-            return PartialView(new Tuple<List<GuiGenre>, List<GuiGenre>, int>(availableGenres, chosenGenres, channelId));
+            return new Tuple<List<GuiGenre>, List<GuiGenre>, int>(availableGenres, chosenGenres, channelId);
+        }
+
+        public PartialViewResult SelectGenre(int channelId)
+        {
+            return PartialView(GetGenreModel(channelId));
+        }
+
+        public PartialViewResult AddGenres(List<GuiGenre> chosenGenres, int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                
+            }
+            return PartialView("SelectGenre", GetGenreModel(channelId));
         }
 
         public ActionResult BrowsableChannels(int? userId, int startIndex, int endIndex)

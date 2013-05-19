@@ -605,7 +605,7 @@ namespace RentItServer.ITU
                 filteredChannels.CopyTo(filter.StartIndex, result, 0, (filter.EndIndex - filter.StartIndex));
                 return result.ToList();
             }
-            return null;
+            return filteredChannels;
         }
 
         /// <summary>
