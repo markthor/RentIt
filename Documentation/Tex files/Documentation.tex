@@ -233,6 +233,8 @@ The target audience of our RentIt Radio system is primarily users in the age 13-
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
 
+We choose client/server as the overall structure of the program. The webclient makes it easy for the user to access the the service and the server delegates a lot of the heavy operations away from the users computer. Another option would mabye have been a peer to peer solution, but given our requirements that define a lot of functionality that requires central coodination and handeling of data, server/client seems to be far the best choice. More specificly we use a WCF webservice[Reference] to make the server side functionality easy to access and easy to extend. At the server, we need a database to handle the data about channels, users, tracks etc. in an effective way, as well as a system for storing the actual audio files. 
+
 \subsection{Data model}
 The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
 User and channel each represents a unique system entity, while track can represent the exact same data as another track, only separated by the id and the channel it belongs to.
