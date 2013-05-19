@@ -9,6 +9,7 @@
 \usepackage{epstopdf}
 \usepackage{amsmath}
 \usepackage{sidecap}
+\usepackage{hyperref}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
 % Alter some LaTeX defaults for better treatment of figures:
@@ -39,10 +40,10 @@
 \section{Introduction}
 \subsection{Vision}
 RentIt is a radio hosting service, that enables users to host online radio stations and for other users to listen to them. The creator of a channel can upload tracks to the channel, and the listeners of the channel can shape the future of the channel by submitting there up vote or down vote of a track. The service shall also promote the community by making room for discussion of channels.
-It is a system intended to be used by the common user, without any special knowledge or traning.
+It is a system intended to be used by the common user, without any special knowledge or training.
 
 \subsection{Application scope}
-In this section we will analyse what features that are needed to make a successfull internet radio hosting service. We will go through the overall components that the service needs. In the requirements and use case section, we will go into more detail.
+In this section we will analyse what features that are needed to make a successful internet radio hosting service. We will go through the overall components that the service needs. In the requirements and use case section, we will go into more detail.
 
 We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The access to the service must be accessible through a browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and uncomplicated way. An internet radio service is different from a normal media streaming service, because several users who listen to the same radio channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
 
@@ -54,7 +55,7 @@ We must also address the question of channel selection. How do we determine in w
 
 \subsection{Glossary}
 Track: An audio file that the users can listen to via channels. \\*
-Channel: A collection of tracks that is played infinitly, and can be listened to by users. Managed by a channel host.
+Channel: A collection of tracks that is played infinity, and can be listened to by users. Managed by a channel host.
 
 \section{Specification}
 In this section we elaborate on the features discussed in the program scope section and we define the requirements and use cases. We start by defining the use cases and then we define the actual requirements based on these. 
@@ -92,8 +93,8 @@ The owner of a channel wants to remove a track from his channel. He navigates to
 \textbf{Edit channel:}
 The owner of the channel selects edit channel and edits the channel attributes he wants to change. Then he confirmes the changes.
 
-\textbf{Upvote/downvote track:}
-The listener of a channel selects up- or downvote on a list of the last tracks that has been played.
+\textbf{Up vote/down vote track:}
+The listener of a channel selects up- or down vote on a list of the last tracks that has been played.
 
 \subsection{Functional requirements}
 The functional requirements describe the required functionality of the system and defines enumerations for reference.
@@ -122,10 +123,10 @@ A radio-channel must be able to stream an endless stream of audio without pauses
 \\ \\
 
 \textbf{R2:}
-The user shall be able to rate a track associated with a channel by upvoting and downvoting. \\*
+The user shall be able to rate a track associated with a channel by up voting and down voting. \\*
 \textbf{Domain concepts:}
 The rating of a track must affect the frequency with which it is played within its associated channel.
-A higher rating giving a proportionally higher chance of being played. The rating must be calculated from upvotes and downvotes. A user can only have one vote per track that influences the rating. \\*
+A higher rating giving a proportionally higher chance of being played. The rating must be calculated from up votes and down votes. A user can only have one vote per track that influences the rating. \\*
 \textbf{Dependencies:}
 The listen to channel requirement is dependant on this requirement because the track to be played is determined by its rating.\\*
 \textbf{Priority:}
@@ -147,7 +148,7 @@ It shall be possible for users to subscribe and unsubscribe to channels. \\*
 \textbf{Domain concepts:}
 A user has a collection of subscribed channels. \\*
 \textbf{Priority:}
-This requirement is of secondary importance because no essential requirements are dependent on this requirement. It is important because it helps classifing popular channels and helps the user navigate to his or her favorite channels.
+This requirement is of secondary importance because no essential requirements are dependent on this requirement. It is important because it helps classifing popular channels and helps the user navigate to his or her favourite channels.
 \\ \\
 
 \textbf{R5:}
@@ -163,7 +164,7 @@ All users of the system has an account. \\*
 \textbf{Dependencies:}
 As an account is required for the use of the system, all requirements are dependent on the creation of an account. \\*
 \textbf{Priority:} 
-It is of essential importance to create an account, since the functionality is prerequested for other fundamentally important requirements. Delete and edit are of secondary priority.
+It is of essential importance to create an account, since the functionality is prerequisite for other fundamentally important requirements. Delete and edit are of secondary priority.
 
 \subsection{Non-functional requirements}
 The non-functional requirements describes how the functionality shall work in multiple aspects, as well as defining success criteria for them. They are structured with FURPS+. \\
@@ -176,7 +177,7 @@ A function for searching for channels must be implemented. \\*
 A list of the most popular channels should be available to all users. Popularity must be based an attribute or a combination of attributes of channels and must me documented. \\*
 
 \textit{Tracks} \\*
-The service must support tracks in .mp3 format. \\*
+The service must support tracks in .mpMP3 format. \\*
 
 \textit{Logging and Error Handling} \\*
 All exceptional states must be logged.\\*
@@ -200,16 +201,16 @@ Users must not be required to subscribe to a channel in order to listen to it. \
 Users must be required to be subscribed to a channel in order to vote on the channel. \\*
 If a user unsubscribes from a channel, all votes made by that user must be removed so as to not affect track ordering. \\*
 Users must be able to see all the songs contained in a channel. \\*
-Users must be able to upvote and downvote the last 5 songs that have been played on the channel while they were listening. \\*
+Users must be able to up vote and down vote the last 5 songs that have been played on the channel while they were listening. \\*
 Users must not be required to download or install any third party software in order to listen to a channel. \\*
 
 \textbf{Reliability} \\*
-The server must not be affected by any errors clientside. All operations requires internet connection. No system failure of any kind should affect any track in the persistence storage. \\*
+The server must not be affected by any errors client-side. All operations requires internet connection. No system failure of any kind should affect any track in the persistence storage. \\*
 If a channel on the server crashes:
 \begin{itemize}
 \item all clients must be notified about the failure.
 \item the website must not be affected by the crash.
-\item the website must refresh the website with possiblity to listen to the channel greyed out until the channel have been fully recovered on the server side.
+\item the website must refresh the website with possibility to listen to the channel greyed out until the channel have been fully recovered on the server side.
 \item on the server side, the channel stream must shut down.
 \item the error must be logged and reported automatically. 
 \item the channel must be safe to use again when all track's identity have been confirmed(via hashing), and none of them are in use.
@@ -227,29 +228,31 @@ The server will be written in C\# with the .NET 4.0 Framework and Windows Commun
 The website will be written in ASP.NET and must work in all popular browsers.
 
 \subsection{Target Audience}
-The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radiostations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
+The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radio stations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
 
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
 
-\subsection{Datamodel}
+We choose client/server as the overall structure of the program. The webclient makes it easy for the user to access the the service and the server delegates a lot of the heavy operations away from the users computer. Another option would mabye have been a peer to peer solution, but given our requirements that define a lot of functionality that requires central coodination and handeling of data, server/client seems to be far the best choice. More specificly we use a WCF webservice[Reference] to make the server side functionality easy to access and easy to extend. At the server, we need a database to handle the data about channels, users, tracks etc. in an effective way, as well as a system for storing the actual audio files. 
+
+\subsection{Data model}
 The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
 User and channel each represents a unique system entity, while track can represent the exact same data as another track, only separated by the id and the channel it belongs to.
-The decision to not let channels share tracks is because it would require analysis of the mp3 file to determine whether it is similar to another mp3 file, regardless of the name/artist combination.
-This design does not limit a possible extension of the system to measure similar mp3 files and update references to avoid redundant data in the file system, but such an extension will not remove redundant data in the database, as our datamodel does not support it. 
-Track has an upvote and a downvote count, which vote entities have a functional dependency to, because each vote on a track causes upvote or downvote to increase. This duplication is made in order to speed up the algorithm, because it does not need to count vote entities when it has up- and down- vote counters. \\*
+The decision to not let channels share tracks is because it would require analysis of the MP3 file to determine whether it is similar to another MP3 file, regardless of the name/artist combination.
+This design does not limit a possible extension of the system to measure similar MP3 files and update references to avoid redundant data in the file system, but such an extension will not remove redundant data in the database, as our data model does not support it. 
+Track has an up vote and a down vote count, which vote entities have a functional dependency to, because each vote on a track causes up vote or down vote to increase. This duplication is made in order to speed up the algorithm, because it does not need to count vote entities when it has up- and down- vote counters. \\*
 The vote entity exists in order to prevent users from voting one track several times.
 TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date that the track was played. \\*
 Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
 
 \subsection{Data storage}
-For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an mp3 file is around 3-4 MB. We have a table called track which have a path that indicates where the song is placed on the file system.
+For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an MP3 file is around 3-4 MB. We have a table called track which have a path that indicates where the song is placed on the file system.
 
 \subsection{Webservice}
 The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
 With methods which typically have more than one result, we have more options (methods like GetTrackIds and GetChannelIds). 
 The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option would be to return lazy objects, which were first completed (retrieved from the server) when the client called the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait until the objects are actually needed.
-The returning of ids give the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage for this is that our webservice api needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
+The returning of ids give the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage for this is that our webservice API needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
 The advantage for sending all objects back in the first method call is that there will only be one method call and only one network-transfer. The disadvantages is that this could get really rough on the bandwidth and server load as some objects might contain images and other types of heavy properties and all objects would have to be completely instantiated. Another thing is that the client would have to handle this, possibly, huge load of objects even though it might not need to use most of them. \\
 The advantage of lazy object instantiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires some new information, would have to make a new network transfer. \\
 We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is that we assume that users want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
@@ -294,23 +297,26 @@ The functionality of choosing tracks that users prefer to listen to are crucial 
 The persistence of plays on a channel can be limited to Z days to limit the amount of data in the database. This does not limit the ability to choose a preferable track. The track selection shall happen as late as possible to make votes have an immediate effect on the selection. 
 
 \section{Implementation}
-This section describes how the system is implemented by describing classes with a class diagram and functional dynamics with sequence diagrams.
+This section describes how the system is implemented by describing class responsibilities and collaborators, as well as the functional dynamics of the system. Complicated functionality and use of third party 
 
 \subsection{Major classes}
 \textbf{DatabaseDao} \\*
-Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD operations on the database for the server program. 
+Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD\footnote{Abbreviation for Create, Read, Update \& Delete} operations on the database for the server program. This class deals with objects generated by the entity framework. \\*
 
 \textbf{FileSystemDao} \\*
-Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the DatabaseDao does on the database
+Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the filesystem and the program on the server. It enables the same basic operations on the filesystem as the DatabaseDao does on the database, however it has fewer responsibilities, because most of our data is stored in the database. This class is often used in the same context as the FilePath class because all file paths are stored as fields of FilePath instances. \\*
 
 \textbf{RentItService} \\*
-All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. 
+All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfill the requirements for the program. All calls to this class are either propagated to the Controller or the StreamHandler \\*
 
 \textbf{TrackPrioritizer} \\*
-This class selects tracks to be played based on the constaints defined in the track selection analysis.
+This class selects tracks to be played based on the constraints defined in the track selection analysis. The track prioritizer are described in ~\nameref{sec:tp}. \\*
 
 \textbf{Controller} \\*
-This class is the single point of entry to the server programs functionality.
+This class is the main point of entry for almost all program functionality. All calls directly related to CRUD operations goes through this class. It also converts objects from entity framework objects to DatabaseWrapperObjects.\\*
+
+\textbf{StreamHandler} \\*
+Manages all EzStream processes and operations required for starting, stopping and maintaining channels. Acts as a secondary controller for all streaming and calls the FileSystem- and DatabaseDao directly.
 
 \newpage
 \subsubsection{Class diagram}
@@ -320,7 +326,7 @@ This class is the single point of entry to the server programs functionality.
 \caption{Class diagram of important methods and all classes}
 \end{figure}
 
-\subsubsection{TrackPrioritizer}
+\subsubsection{TrackPrioritizer} \label{sec:tp}
 The responsibilities of the track prioritizer was chosen with the idea that every time a channel should stream a new track, it should be selected as late as possible as described in the analysis. Hence the method that defines the main functionality(\texttt{GetNextTrack(...)}) of the track prioritizer returns only one track. However we encountered technical difficulties late in the process, making it necessary to extend the functionality of the track prioritizer to select entire playlists. The \texttt{GetNextPlayList(...)} method is therefore the method that the StreamHandler(the interfacing class) uses. The method calls \texttt{GetNextTrack(...)} a number of times until the accumulating playlist has a certain length. \\*
 
 \textbf{Constants and variables} \\*
@@ -351,7 +357,7 @@ As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call
 \begin{align*}
 \theta (g(n + m))
 \end{align*}
-Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays.
+Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays. As the time complexity is linear in the number of track plays there is no need for frequent removal of track play entities from the database.
 
 \subsection{Third-party streaming components}
 Two third party components have been used to to stream audio.
@@ -405,7 +411,7 @@ The group from Singapore Management University requested the following API.
 	\item void DeleteBook(int bookId)
 	\item int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)
 	\item Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
-	\item void UploadAudio(int bookId, MemoryStream mp3, string narrator)
+	\item void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)
 	\item void UploadPdf(int bookId, MemoryStream pdf)
 \end{itemize}
 

@@ -1031,6 +1031,26 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
+        /// Deletes all comments from a specific user.
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        public void DeleteUserComments(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var comments = from c in context.Comments
+                               where c.UserId == userId
+                               select c;
+
+                foreach (Comment c in comments)
+                {
+                    context.Comments.Remove(c);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// Gets a specific comment.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -1141,7 +1161,7 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="channelId">The channel id.</param>
         /// <returns></returns>
-        internal List<Track> GetTrackList(int channelId)
+        public List<Track> GetTrackList(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -1684,6 +1704,28 @@ namespace RentItServer.ITU
                     context.Comments.Remove(c);
                 }
                 context.SaveChanges();
+            }
+        }
+
+        public List<Genre> GetAllGenres()
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from g in context.Genres
+                             select g;
+                return genres.ToList();
+            }
+        }
+
+        public List<Genre> GetGenresForChannel(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var genres = from c in context.Channels
+                             where c.Id == channelId
+                             select c.Genres;
+
+                return genres.First().ToList();
             }
         }
     }
