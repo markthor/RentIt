@@ -14,7 +14,7 @@
     
     if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
     {
-    <div class="pull-left" style="margin-top: 16px; margin-right:16px;">
+    <div class="pull-left" style="margin-top: 16px; margin-right: 16px;">
         <button class="btn btn-small btn-danger" title="Stop channel" onclick=" location.href = '@(Url.Action("StopChannel", "Channel", new { channelId = Model.Id }))' ">
             <i class="icon-stop icon-white"></i>
         </button>
@@ -22,7 +22,7 @@
     }
     else
     {
-    <div class="pull-left" style="margin-top: 16px; margin-right:16px;">
+    <div class="pull-left" style="margin-top: 16px; margin-right: 16px;">
         <button class="btn btn-small btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new { channelId = Model.Id }))' ">
             <i class="icon-play icon-white"></i>
         </button>
@@ -33,19 +33,19 @@
 @{
     if (Session["userId"] != null && RentItMvc.Controllers.AccountController.IsSubscribed(Model.Id, (int)Session["UserId"]))
     {
-        <div style="margin-top: 16px;">
-            <button class="btn btn-small btn-warning" title="Unsubscribe" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
-                <i class="icon-remove icon-white"></i>
-            </button>
-        </div>
+    <div style="margin-top: 16px;">
+        <button class="btn btn-small btn-warning" title="Unsubscribe" onclick="location.href ='@(Url.Action("UnSubscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
+            <i class="icon-remove icon-white"></i>
+        </button>
+    </div>
     }
     else
     {     
-        <div style="margin-top: 16px;">                
-            <button class="btn btn-small btn-success" title="Subscribe" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
-                <i class="icon-ok icon-white"></i>
-            </button>
-        </div>
+    <div style="margin-top: 16px;">
+        <button class="btn btn-small btn-success" title="Subscribe" onclick="location.href ='@(Url.Action("Subscribe", "Account", new { channelId = Model.Id, userId = Session["userId"] }))'">
+            <i class="icon-ok icon-white"></i>
+        </button>
+    </div>
     }
 }
 
@@ -75,9 +75,19 @@
     </tr>
 </table>
 
-<button style="margin-top: 10px" class="btn btn-small" id="playButton" title="Listen to this channel" value="@Model.Id" onclick="openPlayer(this.value)">
-    <i class="icon-play"></i>
-</button>
+@if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
+{
+    <button style="margin-top: 10px" class="btn btn-small" id="playButton" title="Listen to this channel" value="@Model.Id" onclick=" openPlayer(this.value) ">
+        <i class="icon-play"></i>
+    </button>
+}
+else
+{
+    <button style="margin-top: 10px" class="btn btn-small disabled" id="playButton" disabled="disabled" title="Sorry, the channel is not playing.">
+        <i class="icon-play"></i>
+    </button>
+}
+
 
 <p style="clear: left; padding-top: 20px">@Html.DisplayFor(model => model.Description)</p>
 

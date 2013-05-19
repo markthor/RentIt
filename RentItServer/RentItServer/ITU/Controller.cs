@@ -859,7 +859,7 @@ namespace RentItServer.ITU
 
         public bool IsChannelPlaying(int channelId)
         {
-            return _streamHandler.IsChannelPlaying(channelId);
+            return _streamHandler.IsChannelStreamRunning(channelId);
         }
 
         public void StopChannelStream(int channelId)
