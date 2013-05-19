@@ -1639,21 +1639,15 @@ namespace RentItServer.ITU
             }
         }
 
-        public int CountVotes(int trackId, int value)
+        public int CountTrackVotes(int trackId, int value)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var votes = from v in context.Votes
                             where v.TrackId == trackId && v.Value == value
                             select v;
-                if (votes.Any())
-                {
-                    return votes.Count();
-                }
-                else
-                {
-                    return 0;
-                }
+
+                return votes.Count();
             }
         }
     }

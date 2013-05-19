@@ -355,6 +355,8 @@ namespace RentItServer.ITU
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "DeleteChannel");
             List<Track> associatedTracks = GetTracksByChannelId(channelId);
+            
+
             foreach (Track t in associatedTracks)
             {
                 RemoveTrack(t.Id);
@@ -366,9 +368,8 @@ namespace RentItServer.ITU
                 lock (_dbLock)
                 {
                     channel = _dao.GetChannel(channelId);
-                    string logEntry = "[" + channel.Name + "] with id [" + channelId + "] is being deleted.";
                     _dao.DeleteChannel(channel.GetChannel());
-                    _logger.AddEntry(logEntry + "Deletion successful.");
+                    _logger.AddEntry("[" + channel.Name + "] with id [" + channelId + "] has been deleted");
                 }
             }
             catch (Exception e)
@@ -1035,12 +1036,12 @@ namespace RentItServer.ITU
 
         public int CountAllUpvotes(int trackId)
         {
-            return _dao.CountVotes(trackId, 1);
+            return _dao.CountTrackVotes(trackId, 1);
         }
 
         public int CountAllDownvotes(int trackId)
         {
-            return _dao.CountVotes(trackId, -1);
+            return _dao.CountTrackVotes(trackId, -1);
         }
     }
 }
