@@ -11,6 +11,29 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
+        public ActionResult BrowsableChannels(int? userId, int startIndex, int endIndex)
+        {
+            if (userId.HasValue)
+            {
+                if (startIndex < 0)
+                {
+                    startIndex = 0;
+                    endIndex = 10;
+                }
+                Channel[] channels;
+                using (RentItServiceClient proxy = new RentItServiceClient())
+                {
+                    ChannelSearchArgs searchArgs = proxy.GetDefaultChannelSearchArgs();
+                    searchArgs.StartIndex = startIndex;
+                    searchArgs.EndIndex = endIndex;
+                    searchArgs.SortOption = searchArgs.SubscriptionsDesc;
+                    channels = proxy.GetChannels(searchArgs);
+                }
+                return View(new Tuple<List<GuiChannel>, int, int>(GuiClassConverter.ConvertChannelList(channels), startIndex, endIndex));
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         /// <summary>
         /// Displays a list of channels
         /// </summary>

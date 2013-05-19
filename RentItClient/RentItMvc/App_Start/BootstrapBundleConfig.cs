@@ -7,12 +7,13 @@ namespace RentItMvc.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/js").Include(
-                "~/Scripts/jquery-{version}.js",
-                "~/Scripts/jquery-migrate-{version}.js",
+                "~/Scripts/jquery-1.8.3.js",
+                "~/Scripts/jquery-migrate-1.1.1.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/jquery.validate.js",
                 "~/scripts/jquery.validate.unobtrusive.js",
-                "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js"
+                "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js",
+                "~/Scripts/jquery.unobtrusive.ajax.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/audio").Include(

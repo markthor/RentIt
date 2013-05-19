@@ -11,8 +11,6 @@ namespace RentItServer.SMU
         private static SMUController _instance;
         //Data access object for database IO
         private readonly SMUDao _dao = SMUDao.GetInstance();
-        //Event cast when log must make an _handler
-        private static EventHandler _handler;
         //Data access object for file system IO
         private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         /// <summary>

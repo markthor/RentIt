@@ -13,9 +13,8 @@
             <th></th>
             <th></th>
         </tr>
-        @for (int i = 0; i < 5; i++)
+        @foreach(var track in Model.Item1)
         {
-            var track = Model.Item1[i];
             <tr>
                 <td>
                     <div id="@track.Id-artist"style="width: 120px" class="text-overflow" title="@track.ArtistName">

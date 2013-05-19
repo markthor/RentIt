@@ -23,8 +23,6 @@ namespace RentItServer_UnitTests.ItuTests
             //
         }
 
-        private TestContext testContextInstance;
-
         [TestCleanup]
         public void Cleanup()
         {
