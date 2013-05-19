@@ -1046,5 +1046,15 @@ namespace RentItServer.ITU
         {
             return _dao.CountTrackVotes(trackId, -1);
         }
+
+        public List<Genre> GetAllGenres()
+        {
+            return _dao.GetAllGenres();
+        }
+
+        public List<Genre> GetGenresForChannel(int channelId)
+        {
+            return _dao.GetGenresForChannel(channelId);
+        }
     }
 }
