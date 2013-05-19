@@ -1,11 +1,18 @@
 ﻿using System;
 
-/// <summary>
-/// Exception thrown when an action requireing a channel's stream to be running and the channel's stream is not running
-/// </summary>
-class ChannelNotRunningException : Exception
+namespace RentItServer.ITU.Exceptions
 {
-    public ChannelNotRunningException(string message)
-        : base(message)
-    { }
+    /// <summary>
+    /// Exception thrown when an action requireing a channel's stream to be running and the channel's stream is not running
+    /// </summary>
+    class ChannelNotRunningException : Exception
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChannelNotRunningException"/> class.
+        /// </summary>
+        /// <param name="message">The message that describes the error.</param>
+        public ChannelNotRunningException(string message)
+            : base(message)
+        { }
+    }
 }
