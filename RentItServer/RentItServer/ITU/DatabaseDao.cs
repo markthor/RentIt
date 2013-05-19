@@ -444,7 +444,6 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public IEnumerable<Channel> GetAllChannels()
         {
-            IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.Channels select channel;
@@ -1247,7 +1246,6 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user;
                 var users = from u in context.Users
                             where u.Id == userId
                             select u;
