@@ -56,7 +56,7 @@ namespace RentItServer_UnitTests.ItuTests
         public static void CleanDataBaseFinish()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
-            TestExtensions.PopulateDatabase();
+            //TestExtensions.PopulateDatabase();
         }
 
         [ClassInitialize]
