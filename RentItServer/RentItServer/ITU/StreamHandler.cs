@@ -406,7 +406,9 @@ namespace RentItServer.ITU
             {
                 if (!ezstreamProcessIds.Contains(process.Id)) //If the windows process has an id which is not in the list of already running process ids
                 {
+                    //Set the RealProcessId
                     p.RealProcessId = process.Id;
+                    //Add the id to the list of running processes ids
                     ezstreamProcessIds.Add(process.Id);
                     _logger.AddEntry("Process for channel with id: " + p.ChannelId + " has been assign process id: " + p.RealProcessId);
                     break;
@@ -417,14 +419,22 @@ namespace RentItServer.ITU
 
         #region Add TrackPlay methods
         #region AddNewTrackPlays()
+        /// <summary>
+        /// Adds all the trackplays from newTrackPlays-list to the database
+        /// </summary>
         private void AddNewTrackPlays()
         {
             AddTrackPlayList(newTrackPlays);
+            //Clear the list
             newTrackPlays.Clear();
         }
         #endregion
 
         #region AddTrackPlayList(List<TrackPlay> tracks)
+        /// <summary>
+        /// Adds all trackplays in the given list to the database
+        /// </summary>
+        /// <param name="trackPlayList"></param>
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
             _logger.AddEntry("Starting adding trackplays from given list to database");
@@ -454,16 +464,16 @@ namespace RentItServer.ITU
             // Close all streams
             CloseAllStreams();
             
-            // Find all channel ids for channels with tracks
+            // Find all channels with tracks associated
             List<Channel> channels = _dao.GetChannelsWithTracks();
-
-            foreach (Channel c in channels) // make a method which call all these
+            //Loop trhough all the channels and start their stream
+            foreach (Channel c in channels)
             {
                 _logger.AddEntry("Restarting channel with id: " + c.Id);
                 StartChannelStream(c.Id);
             }
 
-            //Add all new trackplays to database
+            //Add all new trackplays to the database
             AddNewTrackPlays();
         }
         #endregion
@@ -472,6 +482,8 @@ namespace RentItServer.ITU
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
+
+            //Loop trhough all windows processes called "ezstream" and kill them
             foreach (Process p in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
                 p.Kill();
