@@ -9,7 +9,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
     [DataContract]
     public class Channel
     {
-        public Channel(int id, string name, string description, double? rating, int? hits, int ownerId, string streamUri, string[] genres)
+        public Channel(int id, string name, string description, double? rating, int? hits, int ownerId, string streamUri)
         {
             Id = id;
             Name = name;
@@ -18,7 +18,7 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
             Hits = hits;
             OwnerId = ownerId;
             StreamUri = streamUri;
-            Genres = genres;
+            Genres = DatabaseDao.GetInstance().GetChannelGenres(id).ToArray(); // This is not pretty
         }
 
         [DataMember]

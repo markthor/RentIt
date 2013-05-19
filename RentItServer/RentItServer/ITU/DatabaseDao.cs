@@ -920,6 +920,24 @@ namespace RentItServer.ITU
             }
         }
 
+        public IEnumerable<string> GetChannelGenres(int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var channels = from channel in context.Channels select channel;
+                if (channels.Any() == false)
+                    throw new ArgumentException("No channel with channelId [" + channelId + "]");
+
+                Channel theChannel = channels.First();
+                List<string> genres = new List<string>();
+                foreach (Genre genre in theChannel.Genres)
+                {
+                    genres.Add(genre.Name);
+                }
+                return genres;
+            }
+        } 
+
         /// <summary>
         /// Deletes the comment.
         /// </summary>
@@ -1364,7 +1382,10 @@ namespace RentItServer.ITU
                                  select tp;
 
                 List<TrackPlay> trackPlaysList = trackPlays.ToList();
-                trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                if (trackPlaysList.Count > numberOfTracks)
+                {
+                    trackPlaysList = trackPlaysList.GetRange(0, numberOfTracks);
+                }
                 List<Track> result = new List<Track>();
 
                 foreach(TrackPlay tp in trackPlaysList)
@@ -1420,6 +1441,41 @@ namespace RentItServer.ITU
 	            }
 
                 context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Deletes all the users votes on a given channel
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="channelId">The id of the channel</param>
+        public void DeleteVotesForUser(int userId, int channelId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId && v.Track.ChannelId == channelId
+                            select v;
+                foreach (Vote v in votes)
+                {
+                    context.Votes.Remove(v);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteTrackEntry(int trackId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var track = from t in context.Tracks
+                            where t.Id == trackId
+                            select t;
+                if (track.Any())
+                {
+                    context.Tracks.Remove(track.First());
+                    context.SaveChanges();
+                }
             }
         }
     }

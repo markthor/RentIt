@@ -153,14 +153,6 @@ namespace RentItServer.ITU
         void AddTrack(int userId, int channelId, MemoryStream audioStream);
 
         /// <summary>
-        /// Gets the track info associated with the track stream.
-        /// </summary>
-        /// <param name="audioStream">The audio stream.</param>
-        /// <returns></returns>
-        //[OperationContract]
-        //DatabaseWrapperObjects.Track GetTrackInfoByStream(MemoryStream audioStream);
-
-        /// <summary>
         /// Gets the track info associated with the track.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -231,15 +223,6 @@ namespace RentItServer.ITU
         /// </returns>
         [OperationContract]
         DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive);
-
-            /// <summary>
-        /// Gets the comment.
-        /// </summary>
-        /// <param name="commentId">The comment id.</param>
-        /// <returns></returns>
-        //[OperationContract]
-        //DatabaseWrapperObjects.Comment GetComment(int commentId);
-
         
         /// <summary>
         /// Determines whether [is email available] [the specified email].
@@ -294,13 +277,6 @@ namespace RentItServer.ITU
         [OperationContract]
         void StartChannelStream(int cId);
 
-        /*/// <summary>
-        /// Stops the channel stream.
-        /// </summary>
-        /// <param name="cId">The id of the channel</param>
-        [OperationContract]
-        void StopChannel(int cId);*/
-
         /// <summary>
         /// Gets a channel search args object with all fields having default values.
         /// </summary>
@@ -348,12 +324,27 @@ namespace RentItServer.ITU
         [OperationContract]
         DatabaseWrapperObjects.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks);
         
+        /// <summary>
+        /// Check if the given channelname is already used
+        /// </summary>
+        /// <param name="channelId">Id of a channel which name should not be taken into account when checking</param>
+        /// <param name="channelName">The name to lookup</param>
+        /// <returns></returns>
         [OperationContract]
         bool IsChannelNameAvailable(int channelId, string channelName);
 
+        /// <summary>
+        /// Retreives the amount of subscribers to the given channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel to get count for</param>
+        /// <returns>The amout of subscribers</returns>
         [OperationContract]
         int GetSubscriberCount(int channelId);
 
+        /// <summary>
+        /// Increments the channel's hit property with 1
+        /// </summary>
+        /// <param name="channelId">The id of the channel which should have it's property incremented</param>
         [OperationContract]
         void IncrementChannelPlays(int channelId);
 
@@ -372,9 +363,20 @@ namespace RentItServer.ITU
         [OperationContract]
         void StopChannelStream(int channelId);
 
+        /// <summary>
+        /// Retreives the vote from a user on a track
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns></returns>
         [OperationContract]
         DatabaseWrapperObjects.Vote GetVote(int userId, int trackId);
 
+        /// <summary>
+        /// Deletes the vote from a user on a track
+        /// </summary>
+        /// <param name="userId">The id of the user</param>
+        /// <param name="trackId">The id of the track</param>
         [OperationContract]
         void DeleteVote(int userId, int trackId);
     }

@@ -91,10 +91,10 @@ A radio-channel must be able to stream an endless stream of audio without pauses
 \\ \\
 
 \textbf{R2:}
-The user shall be able to rate a track associated with a channel. \\*
+The user shall be able to rate a track associated with a channel by upvoting and downvoting. \\*
 \textbf{Domain concepts:}
 The rating of a track must affect the frequency with which it is played within its associated channel.
-A higher rating giving a proportionally higher chance of being played. \\*
+A higher rating giving a proportionally higher chance of being played. The rating must be calculated from upvotes and downvotes. A user can only have one vote per track that influences the rating. \\*
 \textbf{Dependencies:}
 The listen to channel requirement is dependant on this requirement because the track to be played is determined by its rating.\\*
 \textbf{Priority:}
@@ -225,6 +225,41 @@ We have chosen to implement the solution which returns ids. This allows for seve
 In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of SearchArgs. The SearchArgs class contains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in SearchArgs. \\
 All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and which could be used for malicious purposes, for example filesystem paths.
 
+\subsection{GUI Technology}
+A major part of our web-client is the GUI(Graphical User Interface) and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
+\begin{itemize}
+\item Familiarity - How familiar the programming team are with the technology or a related technology?
+\item Features - Does the technology have the features needed to support the features of our application?
+\item Support - Is the technology widely supported on different browsers and in different web environments?
+\item Extensibility/maintainability - Is the technology easy to maintain and extend and does it live up to common principles for good coding style, such as GRASP(General Responsibility Assignment Software Patterns)?
+\end{itemize}
+With these criteria defined, we consider several different GUI options:
+
+\subsubsection{Silverlight}
+Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C\# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies.
+
+\subsubsection{HTML5}
+
+HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it would still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations.
+
+\subsubsection{ASP.NET}
+Asp.Net is a server-side framework developed by Microsoft and is used to dynamicly create web-sites. It is a complete solution to creating a website with a build-in code-behind file written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE, that the development team is mostly familiar with. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. The styling of components are not that pretty and might require some extra work.
+
+\subsubsection{Microsoft MVC}
+
+Microsoft MVC is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP [REFERENCE] principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use.
+Our choice
+\\ \\
+We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh it.  It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
+
+\subsection{Track selection}
+To 
+
+
+
+
+
+
 \section{Implementation}
 This section describes how the system is implemented by describing classes with a class diagram and functional dynamics with sequence diagrams.
 
@@ -248,7 +283,7 @@ This class is the single point of entry to the server programs functionality.
 \subsection{Class diagram}
 \begin{figure}[H]
   \centering
-\includegraphics[]{./ClassDiagram.png}
+\includegraphics[]{./ClassDiagram v2.png}
 \caption{Class diagram of important methods and all classes}
 \end{figure}
 
@@ -259,6 +294,7 @@ This class is the single point of entry to the server programs functionality.
 \end{figure}
 \end{landscape}
 
+\section{Testing Strategy}
 
 \section{Collaboration with SMU}
 
@@ -269,7 +305,6 @@ A success criteria for our systems is that an error or change in one system shou
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. 
 
 \subsection{SMU webservice api}
-
 The following api is the api the group from Singapore requested. 
 
 \begin{itemize}
@@ -301,7 +336,59 @@ The following api is the api the group from Singapore requested.
 
 
 
+\subsection{Collaboration Considerations}
+One of the main focuses of the RentIt project was our collaboration with another development team at Singapore university(SMU)[reference]. There are many risk factors and challenges associated with international collaboration, especially when the collaborators do not come from the same cultural background. Simple communication tasks, that we take for granted when communication within our own team, can easily become an issue when collaboration with a foreign team and the differences in work routines, traditions and culture often leads to frustrations and project setbacks. \\
 
+In this section, we will not cover any of the technical details about the program we developed with the SMU. We will focus on how the communication went and how well we worked together as part of an international collaboration. We will first analyse the potential faultlines[reference] between our development team and the team at SMU. Then we will discuss what we can do as team to avoid that these faulines evolves into problems. Last, we will conclude on how successful our collaboration with the SMU team were and suggest changes we would make in an potential future collaboration.\\
+
+\paragraph{Data on SMU team}
+
+This is the data initial data we get from the SMU wiki. The SMU team consists of 3 members.\\
+
+\begin{itemize}
+\item Waritta: Girl from Thailand
+\item Umair: Boy from Pakistan
+\item Safouan: Boy from Qatar
+\end{itemize}
+
+\subsubsection{Fault lines}
+A faultline is defined as a difference between two subgroups, that can potentially lead to a conflict. A faultline does not necessarily have to lead to a problem, but like the continental lines of the earth they can suddenly erupt and become one. A faultline enhances the notion of “us and them”, also known as ethnocentrism[reference]. We have analysed and identified the potential faultlines we see between the SMU team and us:
+
+\paragraph{Geographical location}
+The most obvious fault line is the difference in geographical location. The fact that all live in the same city and meet face to face on a regular basis is hugely different from our relationship with the SMUs, who we only see on a computer screen and communicate with through email and video chat. The difference in geographical is the fault line we measure all other fault lines against.
+
+\paragraph{Gender diversity}
+Our team is made up of only men, while the SMUs has one girl in their team. This makes their team a gender diverse team as opposed to ours.
+
+\paragraph{Engineers/Designers}
+The team at SMU university is responsible for the webclient, while we are responsible for the web-service. This division of work area creates a natural fault line between them and us. Us, as engineers who are handling data and logic, and them as designers working with windows and styling. The fact that our team has not had very much experience with web-design and the SMU teams smaller knowledge of web-services and backend programming, can lead to many misunderstanding and an ethnocentric view of our own subgroup. It can be tempting to blame the designers for not using the web service right, instead of putting an effort into understanding their website and modulating the web service to suit that as best as possible.
+
+\paragraph{Social etiquette}
+There is a large difference social norms in Denmark compared to those in Singapore. In Denmark we have a very casual tone in a work environment. We have a very homogenous society, where the difference between people are very little. We dislike hierarchies and talk to our superiors in the almost the same way, that we would talk to our colleges. In Singapore and many asiatic countries they have a much more strict social etiquette, where you behave a lot different when you are in an official environment compared to when you are in a casual, private environment. This difference can create a faultline between us and the SMUs. They might see us as rude and unprofessional, whereas we might see them as stiff and strict. 
+
+\subsubsection{Solutions}
+The fault lines we have identified in the previous chapter are all risk factors, that can create conflict between us and the SMU development team. It is important to address and prepare so that the risk of conflict is minimized as much as possible.
+
+The situation we want to avoid is a situation of ethnocentrism. Ethnocentrism is when a subgroup sees itself as superior to the other group as acts in a hostile and competitive way against it. The more faultlines we have that aligns with the geographical separation of the two groups, the more strong the ethnocentric situation will be. The situation we want is a situation of ethnorelativism[Reference]. Ethnorelativism is a situation where a subgroup takes the perspective of the other group and tries to understand their situation. Each subgroup adapts to the context other subgroup and the notion that both development teams are part of one “overarching subgroup” is enhanced. What steps can we take to achieve this?\\
+
+A good way to increase the ethno relativistic situation is to find the lines where our development team and the SMUs have something in common. \\
+
+\paragraph{Students}
+Both our development team and the SMU team consists of students. This gives us a lot of things in common. We all have to deal with exams, with the educational system, with deadlines and work. The fact that we have to deal with these things draws a faultline between us and them and the rest of the world, and thereby increases our sense of belonging to the same subgroup. This subgroup is further strengthened by the fact, that our educations are very much alike. \\
+
+\paragraph{Age}
+Both our team and the SMU team between 20 and 30 years old. Even though that the age in itself does not mean we have anything in common, it makes it likely that our general life situations are alike. We are more likely to have an outgoing lifestyle, to not have kids and to be somewhat “unsettled” in our lives so far. We will likely have many of the same pop-culture references and be interested in many of the same subjects. 
+
+\paragraph{Language}
+Both us and the SMUs have the english language in common. In both Singapore and in Denmark a reasonably high level of english is taught and spoken by the students. This gives us a good common ground for expressing ourselves and potentially enhances the feeling that we belong to the same subgroup. \\
+
+In our communication with the SMUs, we must remember these commonalities and share them with the SMUs. Information sharing[Reference] is a way to build a more moderate and accurate picture of another subgroup. Often, fault lines are build on prejudice and these can be removed by the sharing of information across the subgroups. We must share information about our background, our lives as students and ask them about theirs. Multural Positive Distinctiveness(MPD)[reference] is also a point we must address. If we define in our subgroup what we are good at, it is easier for us to accept another subgroup and respect their field of expertise. In our communication with the SMUs we must also give them credit for their field of expertise. \\
+
+\subsubsection{Conclusion of the SMU collaboration}
+
+We have analysed the Fault Lines and identified the ways to avoid them. How did the collaboration actually go? \\
+
+In our first video session with the SMUs, the communication was very formal. It was a timeboxed meeting and we both had a teacher present outside the meeting room. In the next meetings the tone became more relaxed and casual. It turned out that none of the members of the SMU team came from Singapore, but from Thailand, Qatar and Pakistan, and it most likely had a big impact on the collaboration. Because they were not from the same country, they did not see themselves as a part of the same cultural group and therefore the fault line between us and them was weakened. At their suggestion, we utilized a chat application called WhatsApp[Reference] which gave us direct communication with each individual member of the SMU team. In between meetings we used this to engage in formation sharing, both related to the project, but also casual talk. In this way we could learn about the members in the SMU team on a more personal level and helped to understand things from their perspective. Some of the members has even kept contact since we finished the project. \\
 
 
 
