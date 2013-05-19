@@ -122,15 +122,17 @@ namespace RentItServer.Utilities
         /// <summary>
         /// Writes the specified string to a file at the absolute file path. Can overwrite.
         /// </summary>
-        /// <param name="path">The path to the directory in which the file should be placed with the file name</param>
+        /// <param name="path">The path to the directory in which the file should be placed, including the file name and file ending</param>
         /// <param name="content">The string containing the content of the file</param>
         /// <exception cref="System.ArgumentNullException">
         /// Path was null
         /// </exception>
-        public void WriteFile(string content, string filePath)
+        public void WriteFile(string content, string absolutePath)
         {
-            if (filePath == null) throw new ArgumentNullException("absolutePath"); //WRITE A BETTER EXCEPTION STRING!!!!
-            FileStream fs = File.OpenWrite(filePath);
+            if (content == null) throw new ArgumentNullException("content");
+            if (absolutePath == null) throw new ArgumentNullException("absolutePath");
+
+            FileStream fs = File.OpenWrite(absolutePath);
             Byte[] bytes = GetBytes(content);
             fs.Write(bytes, 0, bytes.Length);
             fs.Flush();
@@ -139,6 +141,8 @@ namespace RentItServer.Utilities
 
         private byte[] GetBytes(string str)
         {
+            if (str == null) throw new ArgumentNullException("str");
+
             byte[] bytes = new byte[str.Length * sizeof(char)];
             System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
@@ -151,6 +155,10 @@ namespace RentItServer.Utilities
         /// <param name="playlist">The list of tracks which should be in the file</param>
         public void WriteM3UPlaylistFile(string absolutePath, List<Track> playlist)
         {
+            if (absolutePath == null) throw new ArgumentNullException("str");
+            if (playlist == null) throw new ArgumentNullException("playlist");
+            if (playlist.Count == 0) throw new ArgumentException("empty playlist");
+
             File.Create(absolutePath); //Create or overwrite the .m3u file
 
             if (File.Exists(absolutePath)) // Make sure the file exists
