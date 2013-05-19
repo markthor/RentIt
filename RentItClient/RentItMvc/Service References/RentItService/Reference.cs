@@ -1469,6 +1469,24 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteVote", ReplyAction="http://tempuri.org/IRentItService/DeleteVoteResponse")]
         System.Threading.Tasks.Task DeleteVoteAsync(int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllChannelsWithFilter", ReplyAction="http://tempuri.org/IRentItService/CountAllChannelsWithFilterResponse")]
+        int CountAllChannelsWithFilter(RentItMvc.RentItService.ChannelSearchArgs filter);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllChannelsWithFilter", ReplyAction="http://tempuri.org/IRentItService/CountAllChannelsWithFilterResponse")]
+        System.Threading.Tasks.Task<int> CountAllChannelsWithFilterAsync(RentItMvc.RentItService.ChannelSearchArgs filter);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllUpvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllUpvotesResponse")]
+        int CountAllUpvotes(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllUpvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllUpvotesResponse")]
+        System.Threading.Tasks.Task<int> CountAllUpvotesAsync(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllDownvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllDownvotesResponse")]
+        int CountAllDownvotes(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllDownvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllDownvotesResponse")]
+        System.Threading.Tasks.Task<int> CountAllDownvotesAsync(int trackId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1840,6 +1858,30 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task DeleteVoteAsync(int userId, int trackId) {
             return base.Channel.DeleteVoteAsync(userId, trackId);
+        }
+        
+        public int CountAllChannelsWithFilter(RentItMvc.RentItService.ChannelSearchArgs filter) {
+            return base.Channel.CountAllChannelsWithFilter(filter);
+        }
+        
+        public System.Threading.Tasks.Task<int> CountAllChannelsWithFilterAsync(RentItMvc.RentItService.ChannelSearchArgs filter) {
+            return base.Channel.CountAllChannelsWithFilterAsync(filter);
+        }
+        
+        public int CountAllUpvotes(int trackId) {
+            return base.Channel.CountAllUpvotes(trackId);
+        }
+        
+        public System.Threading.Tasks.Task<int> CountAllUpvotesAsync(int trackId) {
+            return base.Channel.CountAllUpvotesAsync(trackId);
+        }
+        
+        public int CountAllDownvotes(int trackId) {
+            return base.Channel.CountAllDownvotes(trackId);
+        }
+        
+        public System.Threading.Tasks.Task<int> CountAllDownvotesAsync(int trackId) {
+            return base.Channel.CountAllDownvotesAsync(trackId);
         }
     }
 }

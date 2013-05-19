@@ -60,17 +60,5 @@ namespace RentItMvc.Controllers
                 return Json("The channel name is already in use.", JsonRequestBehavior.AllowGet);
             }
         }
-
-        public JsonResult IsChannelNameAvailable(string name, string id)
-        {
-            using (RentItServiceClient proxy = new RentItServiceClient())
-            {
-                if (proxy.IsChannelNameAvailable(int.Parse(id), name))
-                {
-                    return Json(true, JsonRequestBehavior.AllowGet);
-                }
-                return Json("The channel name is already in use.", JsonRequestBehavior.AllowGet);
-            }
-        }
     }
 }

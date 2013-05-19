@@ -14,7 +14,7 @@ namespace RentItMvc.Controllers
         //
         // GET: /Comment/
 
-        public PartialViewResult CommentList(int channelId, int startIndex, int endIndex)
+        public PartialViewResult CommentList(int channelId)
         {
             Comment[] comments;
             using (RentItServiceClient proxy = new RentItServiceClient())

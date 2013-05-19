@@ -481,5 +481,16 @@ namespace RentItServer
         {
             return _controller.CountAllChannelsWithFilter(filter);
         }
+
+        public int CountAllUpvotes(int trackId)
+        {
+            return _controller.CountAllUpvotes(trackId);
+        }
+
+        public int CountAllDownvotes(int trackId)
+        {
+            return _controller.CountAllDownvotes(trackId);
+        }
+
     }
 }

@@ -638,6 +638,7 @@ namespace RentItServer.ITU
         public void RemoveTrack(int trackId)
         {
             if (trackId < 0) LogAndThrowException(new ArgumentException("trackId was below 0"), "RemoveTrack");
+            if (_streamHandler.IsChannelStreamRunning(_dao.GetTrack(trackId).ChannelId) == true) throw new ChannelRunningException("Cannot delete track while channel stream is running");
 
             try
             {
@@ -647,6 +648,7 @@ namespace RentItServer.ITU
                     _fileSystemHandler.DeleteFile(track.Path);
                 _dao.DeleteTrackEntry(track.GetTrack());
                 _dao.DeleteVotesForTrack(trackId);
+                _dao.DeleteTrackPlaysByTrackId(trackId);
                 //_logger.AddEntry(logEntry + "Deletion successful.");
             }
             catch (Exception e)
@@ -1029,6 +1031,16 @@ namespace RentItServer.ITU
         public void DeleteVote(int userId, int trackId)
         {
             _dao.DeleteVote(userId, trackId);
+        }
+
+        public int CountAllUpvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, 1);
+        }
+
+        public int CountAllDownvotes(int trackId)
+        {
+            return _dao.CountVotes(trackId, -1);
         }
     }
 }
