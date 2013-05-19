@@ -121,7 +121,7 @@ namespace RentItServer.Utilities
         {
             _path = path;
         }
-
+        
         /// <summary>
         /// Gets the path.
         /// </summary>
@@ -131,6 +131,11 @@ namespace RentItServer.Utilities
             return _path;
         }
 
+        /// <summary>
+        /// Return the path
+        /// Same as GetPath-method
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return _path;
