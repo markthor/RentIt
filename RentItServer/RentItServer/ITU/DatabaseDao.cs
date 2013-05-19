@@ -444,7 +444,6 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public IEnumerable<Channel> GetAllChannels()
         {
-            IEnumerable<Channel> allChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var channels = from channel in context.Channels select channel;
@@ -552,6 +551,19 @@ namespace RentItServer.ITU
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
+                if (filteredChannels.Count < filter.StartIndex)
+                {
+                    if (filteredChannels.Count < 10)
+                    {
+                        filter.StartIndex = 0;
+                    }
+                    else
+                    {
+                        filter.StartIndex = filteredChannels.Count - 10;
+                    }
+                    filter.EndIndex = filteredChannels.Count;
+                }
+
                 Channel[] range = new Channel[filter.EndIndex - filter.StartIndex];
                 if (filter.StartIndex < 0)
                 {   // Avoid OutOfBoundsException
@@ -1247,7 +1259,6 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                User user;
                 var users = from u in context.Users
                             where u.Id == userId
                             select u;

@@ -26,8 +26,6 @@ namespace RentItServer.ITU
         private static EventHandler _handler;
         //The logger
         private readonly Logger _logger;
-        // The dictionary for channel, mapping the id to the object. This is to ease database load as the "GetChannel(int channelId)" will be used very frequently.
-        private readonly Dictionary<int, Channel> _channelCache;
         //The streamhandler
         private readonly StreamHandler _streamHandler;
         //The url properties of the stream
@@ -88,17 +86,6 @@ namespace RentItServer.ITU
             User user = null;
             try
             {
-                /*try
-                {
-                    user = _userCache.Get(usernameOrEmail).GetUser();
-                }
-                catch (NullValueException)
-                {
-                    lock (_dbLock)
-                    {
-                        user = _dao.Login(usernameOrEmail, password);
-                    }
-                }*/
                 user = _dao.Login(usernameOrEmail, password);
                 _logger.AddEntry("Login succeeded. Local variables: usernameOrEmail = " + usernameOrEmail + ", password = " + password);
                 return user.GetUser();
@@ -266,7 +253,6 @@ namespace RentItServer.ITU
                 {
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
                     _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
-                    _channelCache[channel.Id] = channel;
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
             }
@@ -326,7 +312,6 @@ namespace RentItServer.ITU
                     channel = _dao.GetChannel(channelId);
                     string logEntry = "[" + channel.Name + "] with id [" + channelId + "] is being deleted.";
                     _dao.DeleteChannel(channel.GetChannel());
-                    _channelCache[channelId] = null;
                     _logger.AddEntry(logEntry + "Deletion successful.");
                 }
             }
@@ -373,20 +358,9 @@ namespace RentItServer.ITU
         {
             if (channelId < 0) LogAndThrowException(new ArgumentException("channelId was below 0"), "GetChannel");
 
-            /*if (_channelCache[channelId] != null)
-            {   // Attempt to use cache first
-                return _channelCache[channelId].GetChannel();
-            }*/
-
-            // cache might be outdated, query the database to be sure.
             Channel channel = _dao.GetChannel(channelId);
-            if (channel != null)
+            if (channel == null)
             {
-                // channel was found in the database, adding to cache
-                _channelCache[channelId] = channel;
-            }
-            else
-            {   // A channel with id = channelId does not exist in cache or in database nigga
                 LogAndThrowException(new ArgumentException("No channel with channelId = " + channelId + " exist."), "GetChannel");
             }
 
@@ -506,13 +480,21 @@ namespace RentItServer.ITU
                 _dao.DeleteTrackEntry(track.Id);
                 _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
-        }
 
+            _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId +"]");
+        }
         
+        /// <summary>
+        /// Uses Taglib to retreive information about the mp3 file from the filepath
+        /// </summary>
+        /// <param name="filePath">Absolute filepath to mp3 file</param>
+        /// <returns>A track with all properties set to the values of the mp3 file. NOTE: id and channel id is set to -1</returns>
         private Track GetTrackInfo(string filePath)
         {
+            //Create a taglib file containing all the information
             TagLib.File audioFile = TagLib.File.Create(filePath);
 
+            //Create a track entity and fill its properties
             Track track = new Track();
             track.Id = -1;
             track.ChannelId = -1;//FIX
@@ -524,6 +506,7 @@ namespace RentItServer.ITU
             track.Votes = new List<Vote>();
             track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
 
+            //An mp3 file may have several artists. This loop puts them into a singles string
             track.Artist = "";
             string[] artists = audioFile.Tag.AlbumArtists;
             if (artists.Any())

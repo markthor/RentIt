@@ -107,14 +107,14 @@ namespace RentItServer.ITU
             get
             {
                 //For testing!
-                //DateTime resetDate = DateTime.Now;
-                //resetDate = resetDate.AddMinutes(15);
-                //return resetDate;
+                DateTime resetDate = DateTime.Now;
+                resetDate = resetDate.AddMinutes(15);
+                return resetDate;
                 //endFor
 
 
                 //Creates the time now and adds to that value
-                DateTime resetDate = DateTime.Now;
+                /*DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
                 {
                     resetDate = resetDate.AddDays(1);
@@ -122,7 +122,7 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddHours(3 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
-                return resetDate;
+                return resetDate;*/
             }
         }
         #endregion
@@ -306,6 +306,11 @@ namespace RentItServer.ITU
 
             //Get all trackplays for the channel
             List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId);
+            if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
+            {
+                _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+                throw new ArgumentException("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
+            }
 
             //Generate the playlist
             List<Track> playlist = _trackPrioritizer.GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);
