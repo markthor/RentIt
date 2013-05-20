@@ -17,9 +17,16 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                if (proxy.IsEmailAvailable(newEmail))
+                try
                 {
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    if (proxy.IsEmailAvailable(newEmail))
+                    {
+                        return Json(true, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch
+                {
+                    return Json("Email is already in use.", JsonRequestBehavior.AllowGet);
                 }
                 return Json("Email is already in use.", JsonRequestBehavior.AllowGet);
             }
