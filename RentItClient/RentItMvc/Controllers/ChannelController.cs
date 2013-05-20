@@ -369,6 +369,16 @@ namespace RentItMvc.Controllers
             }
         }
 
+        public static int TotalChannelsWithFilter(AdvancedSearchModel model)
+        {
+            int count;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                count = proxy.CountAllChannelsWithFilter((ChannelSearchArgs) model);
+            }
+            return count;
+        }
+
         public ActionResult DeleteChannel(int channelId, int userId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
