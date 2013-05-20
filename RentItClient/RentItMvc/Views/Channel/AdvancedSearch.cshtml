@@ -1,7 +1,11 @@
-﻿<h2>Advanced Search</h2>
+﻿@model Tuple<int, int>
 
-@using (Html.BeginForm("SearchAdv", "Channel", FormMethod.Get, null))
+<h2>Advanced Search</h2>
+
+@using (Html.BeginForm("SearchAdv", "Channel", new { startIndex = Model.Item1, endIndex = Model.Item2 }, FormMethod.Get, null))
 {
+    @Html.Hidden("startIndex", Model.Item1)
+    @Html.Hidden("endIndex", Model.Item2)
     <div>
         <h5>Name</h5>
         @Html.TextBox("ChannelName", null, new { @class = "search-advanced-input", placeholder = "Name" })
@@ -34,7 +38,7 @@
     <div class="pull-left">
         <h5>Ordering</h5>
         <div class="pull-left">
-            @Html.DropDownList("SortingKey", new List<SelectListItem> { new SelectListItem { Text = "Name", Value = "name" }, new SelectListItem { Text = "Subscribers", Value = "subcribers" }, new SelectListItem { Text = "Comments", Value = "comments" }, new SelectListItem { Text = "Plays", Value = "plays" }, new SelectListItem { Text = "Votes", Value = "votes" } }, new { @class = "search-advanced-dropdown" })
+            @Html.DropDownList("SortingKey", new List<SelectListItem> { new SelectListItem { Text = "Name", Value = "nam " }, new SelectListItem { Text = "Subscribers", Value = "sub " }, new SelectListItem { Text = "Comments", Value = "com " }, new SelectListItem { Text = "Plays", Value = "ap " }, new SelectListItem { Text = "Votes", Value = "vot " } }, new { @class = "search-advanced-dropdown" })
         </div>
         <div class="pull-left">
             @Html.DropDownList("SortingBy", new List<SelectListItem> { new SelectListItem { Text = "Ascending", Value = "asc" }, new SelectListItem { Text = "Descending", Value = "desc" } }, new { @class = "search-advanced-dropdown" })

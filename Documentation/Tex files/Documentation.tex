@@ -34,9 +34,9 @@
 \begin{document}
 
 \section*{Abstract}
-{\em 
+{
 This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.\\ 
-
+}
 \title{RentIt}
 \author{Andreas P., Morten T., Mark T., Toke L. \& Mikkel F.}
 \date{28-05-2013}
@@ -175,7 +175,7 @@ It is of essential importance to create an account, since the functionality is p
 \\ \\
 
 \textbf{R7:}
-It shall be possible to sort channels by a number of parameters, including number of subscribers, number of listeners, genres and name.
+It shall be possible to search channels by a number of parameters, including number of subscribers, number of listeners, genres and name. \\*
 \textbf{Priority:} 
 It is of secondary importance as non of the requirements are dependent on it, and it does not provide any fundamental functionality.
 
@@ -231,9 +231,8 @@ If a channel on the server crashes:
 If upload of a track fails, everything about the track must be removed from the server and the user must be notified. \\*
 
 \textbf{Supportability} \\*
-The server architecture must not limit the ability to correct eventual errors. This means that no unnecessary coupling exists in the server.
-The server and website must be implemented modular so as to ease extendibility.
-This means that extensions such as video streaming or downloading of media or a non-browser-based client must not require extensive changes in the system architecture. \\*
+The server architecture must not limit the ability to correct eventual errors. This means that no unnecessary coupling exists in the server. \\*
+The server and website must be implemented modular so as to ease extendibility. This means that extensions such as video streaming or downloading of media or a non-browser-based client must not require extensive changes in the system architecture.\\*The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for a software developer. \\*
 The server will be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
 
 \textbf{Implementaion} \\*
@@ -246,7 +245,7 @@ The target audience of our RentIt Radio system is primarily users in the age 13-
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
 
-\section{Architecture}
+\subsection{Architecture}
 We have several different options to consider, when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so it is assumed that the program most have some kind of client server architecture. A basic client/server architecture is a possible solution. The client connects to our service with a browser and the server will contain all the backend functionality as well as the generation of HTML responses. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. The non-functional requirements states that the architecture must allow a non-browser-based client to connect to the server, which such a basic solution does not support. Another option is to make the core backend functionality, the functionality related to modifying, creating and deleting data, into a WCF webservice. It that case the webclient (handling all generation of HTML) makes calls to the server. A non-browser-based client could connect directly to the server without any modifications to the architecture. A disadvantage is that it makes the solution more complicated and the server responses must be designed to fit in a webservice. To even further modulate the program, you can use an external database apart from the webservice to store data. We choose to go with the most modulated solution. We let the browser call the webclient, which calls the WCF webservice, which then calls the database. More detailed description can be found in the Implementation section. \\*
 
 \textbf{Server architecture} \\*
@@ -271,9 +270,9 @@ Genre is an entity and not an attribute of channel because we want to make a fix
 For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an MP3 file is around 3-4 MB. A reference to the file system is placed in the database entities to connect files to table rows.
 
 \subsection{Webservice}
-In this section, we will analyse the WCF webservice. We will start be analyzing the architecture of the webservice and then we will analyse the design of the webservice methods. 
+In this section, we will analyse the WCF webservice. We will start be analyzing the architecture of the webservice and then we will analyse the design of the webservice methods.  \\*
 
-\paragraph{Webservice methods}
+\textbf{Webservice methods} \\*
 The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
 With methods which typically have more than one result, we have more options (methods like GetTrackIds and GetChannelIds). 
 The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option would be to return lazy objects, which were first completed (retrieved from the server) when the client called the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait until the objects are actually needed.
@@ -397,7 +396,33 @@ EzStream\cite{EzStream} is a source client used to transform audio files to audi
 Mikkel du skal skrive det her for det kan du lide
 Skriv om EzProcess, hvordan vi manager inputs or outputs fra process og hvordan vi restarter channels på bestemte tidspunkter.
 
-\section{Testing Strategy}
+\section{Testing}
+This section will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
+as it is; following with a description of how we tested against the requirements of the product, followed by our assessment on whether the program meets it's requirements.
+
+\subsection{Testing strategy}
+The most common way to test software, is by running unit tests, integration tests and system tests. Often it start with unit testing, which is about testing individual code units; following unit testing is integration testing that combine several software modules which are tested as a group. The RentIt project is not large enough be be comprised of
+several sub-modules, so integration testing would be equal to system testing which is basically to black box test the entire program which is already completed
+through the testing of GUI functionality.
+\\*
+That left us with unit testing on the server-side software. Contrary to usual test-driven development, we postponed the testing of many code units to near
+the end of the project. The rationale behind this decision was that there was no way of creating a viable prototype without having implemented most of the 
+functionality; in fact it was true for a large number of methods that simply implementing them on the spot would be just as fast as making method stubs 
+that contained the intended execution flow. One could even argue that it was better this way, as one was forced into re-evaluate the structure of the webservice
+interface, often resulting in an expansion or modification of operation contracts. \\*An important reason why unit tests are very relevant late in the process is the non-functional Supportability requirement 
+\textit{"The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for an educated software developer."}.
+This is achievable with unit tests because they take less than an hour to run and confirms that all server side functionality works as intended.
+\\*
+This postponing of testing have drawbacks though, resulting in not every code unit having an associated unit test. While developing methods which are dependent on other untested methods, eventual errors are harder to find. This can slow development. It was prioritized to unit test the
+critical code units in the "Controller" class and the "TrackPrioritizer" class because there complexity makes them very likely to be erroneous.\\ \\*
+\textbf{Format and purpose of unit tests}\\*
+Unit tests follow the following signature template:
+\\*
+\verb|public void <Tested class>_<Tested method>_<Parameter Type>_<Parameter Value>|
+\\*
+An example of a parameter type could be password for Login, and parameter value could be null. \\*
+This parameter testing approach insures that all exceptions are thrown and all correct behaviour are implemented. In between each unit test, all data in the database are removed and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple makes it easier to locate an error.
+
 
 \section{Collaboration with SMU}
 
