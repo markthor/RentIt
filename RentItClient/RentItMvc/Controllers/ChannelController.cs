@@ -43,6 +43,9 @@ namespace RentItMvc.Controllers
                 //Plays
                 searchArgs.MinAmountPlayed = minAmountOfPlays != null ? minAmountOfPlays.Value : -1;
                 searchArgs.MaxAmountPlayed = maxAmountOfPlays != null ? maxAmountOfPlays.Value : int.MaxValue;
+                //Votes
+                searchArgs.MinTotalVotes = minAmountOfVotes != null ? minAmountOfVotes.Value : -1;
+                searchArgs.MaxTotalVotes = maxAmountOfVotes != null ? maxAmountOfVotes.Value : int.MaxValue;
                 //Sorting
                 searchArgs.SortOption = sortingKey + sortingBy;
 
