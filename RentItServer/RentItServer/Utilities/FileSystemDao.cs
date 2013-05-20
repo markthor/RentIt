@@ -155,10 +155,10 @@ namespace RentItServer.Utilities
         /// <param name="playlist">The list of tracks which should be in the file</param>
         public void WriteM3UPlaylistFile(string absolutePath, List<Track> playlist)
         {
-            if (absolutePath == null) throw new ArgumentNullException("str");
             if (playlist == null) throw new ArgumentNullException("playlist");
             if (playlist.Count == 0) throw new ArgumentException("empty playlist");
 
+            //Check if the file exists and create the file if it doesn't
             FileStream fs = null;
             if (!File.Exists(absolutePath))
             {
