@@ -2096,7 +2096,7 @@ namespace RentItServer_UnitTests.ItuTests
                     Assert.IsTrue(_dao.GetChannelComments(theChannels[i - 1].Id, 0, int.MaxValue).Count < _dao.GetChannelComments(theChannels[i].Id, 0, int.MaxValue).Count);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail("An exception was raised");
             }

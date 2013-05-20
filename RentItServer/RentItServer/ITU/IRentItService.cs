@@ -316,5 +316,8 @@ namespace RentItServer.ITU
         
         [OperationContract]
         int GetCountChannelComments(int channelId);
+
+        [OperationContract]
+        int CountChannelsPassingFilter(ChannelSearchArgs filter);
     }
 }
