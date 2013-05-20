@@ -831,5 +831,10 @@ namespace RentItServer.ITU
         {
             return _dao.GetGenresForChannel(channelId);
         }
+
+        public int CountChannelsPassingFilter(ChannelSearchArgs filter)
+        {
+            return _dao.GetChannelsWithFilter(filter).Count;
+        }
     }
 }
