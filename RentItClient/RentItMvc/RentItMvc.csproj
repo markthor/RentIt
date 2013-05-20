@@ -140,6 +140,7 @@
     <Compile Include="Models\GuiChannel.cs" />
     <Compile Include="Models\GuiGenre.cs" />
     <Compile Include="Models\GuiTrack.cs" />
+    <Compile Include="Models\SelectGenreModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\RentItService\Reference.cs">
       <AutoGen>True</AutoGen>

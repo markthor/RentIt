@@ -187,11 +187,15 @@ input[type=file]::-webkit-file-upload-button {
     font-size: smaller;
 }
 
-.comment-section {
+.comment-section-wrapper {
     width: 475px;
-    max-height: 350px;
+}
+
+.comment-section {
+    max-height: 300px;
     overflow-x: hidden;
     overflow-y: auto;
+    margin-bottom: 5px;
 }
 
 .edit-account-label {
