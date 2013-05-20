@@ -11,6 +11,18 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
+        public ActionResult AdvancedSearch()
+        {
+            return View();
+        }
+
+        public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
+                                      int? maxAmountOfComments, int? minAmountOfPlays, int? maxAmountOfPlays, int? minAmountOfVotes,
+                                      int? maxAmountOfVotes, string sortingKey, string sortingBy)
+        {
+            return View("ChannelList", new List<GuiChannel>());
+        }
+
         public SelectGenreModel GetGenreModel(int channelId)
         {
             List<GuiGenre> chosenGenres;
