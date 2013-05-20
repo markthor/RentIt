@@ -88,51 +88,50 @@
             </tr>
         }
     </table>
+
+    @if (Model.Item2.StartIndex == 0)
+    {
+        <button class="btn btn-primary pull-left disabled" disabled="disabled" style="margin-left: 9px"><<</button>
+    }
+    else
+    {
+        using (Ajax.BeginForm("AdvancedSearchWithArgs", "Channel", new { StartIndex = Model.Item2.StartIndex - 10, EndIndex = Model.Item2.EndIndex - 10 }, new AjaxOptions { UpdateTargetId = "searchResultsDiv" }))
+        {
+        <input data-val="true" id="MaxAmountOfComments" name="MaxAmountOfComments" type="hidden" value="@Model.Item2.MaxAmountOfComments">
+        <input data-val="true" id="MaxAmountOfPlays" name="MaxAmountOfPlays" type="hidden" value="@Model.Item2.MaxAmountOfPlays">
+        <input data-val="true" id="MaxAmountOfSubscribers" name="MaxAmountOfSubscribers" type="hidden" value="@Model.Item2.MaxAmountOfSubscribers">
+        <input data-val="true" id="MaxAmountOfVotes" name="MaxAmountOfVotes" type="hidden" value="@Model.Item2.MaxAmountOfVotes">
+        <input data-val="true" id="MinAmountOfComments" name="MinAmountOfComments" type="hidden" value="@Model.Item2.MinAmountOfComments">
+        <input data-val="true" id="MinAmountOfPlays" name="MinAmountOfPlays" type="hidden" value="@Model.Item2.MinAmountOfPlays">
+        <input data-val="true" id="MinAmountOfSubscribers" name="MinAmountOfSubscribers" type="hidden" value="@Model.Item2.MinAmountOfSubscribers">
+        <input data-val="true" id="IMinAmountOfVotes" name="MinAmountOfVotes" type="hidden" value="@Model.Item2.MinAmountOfVotes">
+        <input id="SearchString" name="SearchString" type="hidden" value="@Model.Item2.SearchString">
+        <input id="SortingBy" name="SortingBy" type="hidden" value="@Model.Item2.SortingBy">
+        <input id="SortingKey" name="SortingKey" type="hidden" value="@Model.Item2.SortingKey">
+        <button class="btn btn-primary pull-left" type="submit"><<</button>
+        }
+    }
+
+    @if ((Model.Item1.Count + Model.Item2.StartIndex) == RentItMvc.Controllers.ChannelController.TotalChannels())
+    {
+        <button class="btn btn-primary pull-right disabled" disabled="disabled">>></button>
+    }
+    else
+    {
+        using (Ajax.BeginForm("AdvancedSearchWithArgs", "Channel", new { StartIndex = Model.Item2.StartIndex + 10, EndIndex = Model.Item2.EndIndex + 10 }, new AjaxOptions { UpdateTargetId = "searchResultsDiv" }))
+        {
+        <input data-val="true" id="MaxAmountOfComments" name="MaxAmountOfComments" type="hidden" value="@Model.Item2.MaxAmountOfComments">
+        <input data-val="true" id="MaxAmountOfPlays" name="MaxAmountOfPlays" type="hidden" value="@Model.Item2.MaxAmountOfPlays">
+        <input data-val="true" id="MaxAmountOfSubscribers" name="MaxAmountOfSubscribers" type="hidden" value="@Model.Item2.MaxAmountOfSubscribers">
+        <input data-val="true" id="MaxAmountOfVotes" name="MaxAmountOfVotes" type="hidden" value="@Model.Item2.MaxAmountOfVotes">
+        <input data-val="true" id="MinAmountOfComments" name="MinAmountOfComments" type="hidden" value="@Model.Item2.MinAmountOfComments">
+        <input data-val="true" id="MinAmountOfPlays" name="MinAmountOfPlays" type="hidden" value="@Model.Item2.MinAmountOfPlays">
+        <input data-val="true" id="MinAmountOfSubscribers" name="MinAmountOfSubscribers" type="hidden" value="@Model.Item2.MinAmountOfSubscribers">
+        <input data-val="true" id="MinAmountOfVotes" name="MinAmountOfVotes" type="hidden" value="@Model.Item2.MinAmountOfVotes">
+        <input id="SearchString" name="SearchString" type="hidden" value="@Model.Item2.SearchString">
+        <input id="SortingBy" name="SortingBy" type="hidden" value="@Model.Item2.SortingBy">
+        <input id="SortingKey" name="SortingKey" type="hidden" value="@Model.Item2.SortingKey">
+        <button class="btn btn-primary pull-right" type="submit">>></button>
+        }
+    }
 </div>
-
-
-@if (Model.Item2.StartIndex == 0)
-{
-    <button class="btn btn-primary pull-left disabled" disabled="disabled" style="margin-left: 9px"><<</button>
-}
-else
-{
-    using (Ajax.BeginForm("AdvancedSearchWithArgs", "Channel", new { StartIndex = Model.Item2.StartIndex - 10, EndIndex = Model.Item2.EndIndex - 10 }, new AjaxOptions { UpdateTargetId = "searchResultsDiv" }))
-    {
-    <input data-val="true" id="MaxAmountOfComments" name="MaxAmountOfComments" type="hidden" value="@Model.Item2.MaxAmountOfComments">
-    <input data-val="true" id="MaxAmountOfPlays" name="MaxAmountOfPlays" type="hidden" value="@Model.Item2.MaxAmountOfPlays">
-    <input data-val="true" id="Item2_MaxAmountOfSubscribers" name="MaxAmountOfSubscribers" type="hidden" value="@Model.Item2.MaxAmountOfSubscribers">
-    <input data-val="true" id="Item2_MaxAmountOfVotes" name="MaxAmountOfVotes" type="hidden" value="@Model.Item2.MaxAmountOfVotes">
-    <input data-val="true" id="Item2_MinAmountOfComments" name="MinAmountOfComments" type="hidden" value="@Model.Item2.MinAmountOfComments">
-    <input data-val="true" id="Item2_MinAmountOfPlays" name="MinAmountOfPlays" type="hidden" value="@Model.Item2.MinAmountOfPlays">
-    <input data-val="true" id="Item2_MinAmountOfSubscribers" name="MinAmountOfSubscribers" type="hidden" value="@Model.Item2.MinAmountOfSubscribers">
-    <input data-val="true" id="Item2_MinAmountOfVotes" name="MinAmountOfVotes" type="hidden" value="@Model.Item2.MinAmountOfVotes">
-    <input id="SearchString" name="SearchString" type="hidden" value="@Model.Item2.SearchString">
-    <input id="SortingBy" name="SortingBy" type="hidden" value="@Model.Item2.SortingBy">
-    <input id="SortingKey" name="SortingKey" type="hidden" value="@Model.Item2.SortingKey">
-    <button class="btn btn-primary pull-right" type="submit">>></button>
-    }
-}
-
-@if ((Model.Item1.Count + Model.Item2.StartIndex) == RentItMvc.Controllers.ChannelController.TotalChannels())
-{
-    <button class="btn btn-primary pull-right disabled" disabled="disabled">>></button>
-}
-else
-{
-    using (Ajax.BeginForm("AdvancedSearchWithArgs", "Channel", new { StartIndex = Model.Item2.StartIndex + 10, EndIndex = Model.Item2.EndIndex + 10 }, new AjaxOptions { UpdateTargetId = "searchResultsDiv" }))
-    {
-    <input data-val="true" id="MaxAmountOfComments" name="MaxAmountOfComments" type="hidden" value="@Model.Item2.MaxAmountOfComments">
-    <input data-val="true" id="MaxAmountOfPlays" name="MaxAmountOfPlays" type="hidden" value="@Model.Item2.MaxAmountOfPlays">
-    <input data-val="true" id="Item2_MaxAmountOfSubscribers" name="MaxAmountOfSubscribers" type="hidden" value="@Model.Item2.MaxAmountOfSubscribers">
-    <input data-val="true" id="Item2_MaxAmountOfVotes" name="MaxAmountOfVotes" type="hidden" value="@Model.Item2.MaxAmountOfVotes">
-    <input data-val="true" id="Item2_MinAmountOfComments" name="MinAmountOfComments" type="hidden" value="@Model.Item2.MinAmountOfComments">
-    <input data-val="true" id="Item2_MinAmountOfPlays" name="MinAmountOfPlays" type="hidden" value="@Model.Item2.MinAmountOfPlays">
-    <input data-val="true" id="Item2_MinAmountOfSubscribers" name="MinAmountOfSubscribers" type="hidden" value="@Model.Item2.MinAmountOfSubscribers">
-    <input data-val="true" id="Item2_MinAmountOfVotes" name="MinAmountOfVotes" type="hidden" value="@Model.Item2.MinAmountOfVotes">
-    <input id="SearchString" name="SearchString" type="hidden" value="@Model.Item2.SearchString">
-    <input id="SortingBy" name="SortingBy" type="hidden" value="@Model.Item2.SortingBy">
-    <input id="SortingKey" name="SortingKey" type="hidden" value="@Model.Item2.SortingKey">
-    <button class="btn btn-primary pull-right" type="submit">>></button>
-    }
-}

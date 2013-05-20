@@ -21,9 +21,9 @@ namespace RentItMvc.Controllers
             return View(model);
         }
 
-        public PartialViewResult ChannelListForAdvancedSearch(List<GuiChannel> channels)
+        public PartialViewResult ChannelListForAdvancedSearch(Tuple<List<GuiChannel>, AdvancedSearchModel> tuple)
         {
-            return PartialView(channels);
+            return PartialView(tuple);
         }
 
         public PartialViewResult AdvancedSearchWithArgs(AdvancedSearchModel model)
@@ -41,7 +41,8 @@ namespace RentItMvc.Controllers
                 ChannelSearchArgs searchArgs = (ChannelSearchArgs) model;
                 channels = proxy.GetChannels(searchArgs);
             }
-            return PartialView("ChannelListForAdvancedSearch", GuiClassConverter.ConvertChannels(channels));
+            Tuple<List<GuiChannel>, AdvancedSearchModel> tuple = new Tuple<List<GuiChannel>, AdvancedSearchModel>(GuiClassConverter.ConvertChannels(channels), model);
+            return PartialView("ChannelListForAdvancedSearch", tuple);
         }
 
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
@@ -151,7 +152,7 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, SelectGenreModel model, FormCollection form)
+        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, object value)
         {
             if (userId.HasValue)
             {
