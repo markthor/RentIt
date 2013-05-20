@@ -51,6 +51,16 @@ namespace RentItServer.ITU
         /// </summary>
         [DataMember]
         public readonly string NumberOfCommentsAsc = "com asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments descending
+        /// </summary>
+        [DataMember]
+        public readonly string NumberOfVotesDesc = "vot desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments ascending
+        /// </summary>
+        [DataMember]
+        public readonly string NumberOfVotesAsc = "vot asc";
 
         /// <summary>
         /// Gets the search string.
@@ -125,6 +135,24 @@ namespace RentItServer.ITU
         [DefaultValueAttribute(-1)]
         public int MaxNumberOfComments { get; set; }
         /// <summary>
+        /// Gets the number of comments to filter.
+        /// </summary>
+        /// <value>
+        /// The number of comments. Default is -1
+        /// </value>
+        [DataMember]
+        [DefaultValueAttribute(-1)]
+        public int MinTotalVotes { get; set; }
+        /// <summary>
+        /// Gets the number of comments to filter.
+        /// </summary>
+        /// <value>
+        /// The number of comments. Default is -1
+        /// </value>
+        [DataMember]
+        [DefaultValueAttribute(Int32.MaxValue)]
+        public int MaxTotalVotes { get; set; }
+        /// <summary>
         /// Gets the start index.
         /// </summary>
         /// <value>
@@ -150,7 +178,7 @@ namespace RentItServer.ITU
         /// The sort option.
         /// </value>
         [DataMember]
-        [DefaultValueAttribute("")]
+        [DefaultValueAttribute("nam desc")]
         public string SortOption { get; set; }
 
         /// <summary>
@@ -163,6 +191,11 @@ namespace RentItServer.ITU
             MinAmountPlayed = -1;
             MinNumberOfSubscriptions = -1;
             MinNumberOfComments = -1;
+            MinTotalVotes = -1;
+            MaxAmountPlayed = Int32.MaxValue;
+            MaxNumberOfComments = Int32.MaxValue;
+            MaxNumberOfSubscriptions = Int32.MaxValue;
+            MaxTotalVotes = Int32.MaxValue;
             StartIndex = -1;
             EndIndex = -1;
             SortOption = "";
