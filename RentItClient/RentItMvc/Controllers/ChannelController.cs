@@ -83,7 +83,7 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, SelectGenreModel model)
+        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, SelectGenreModel model, FormCollection form)
         {
             if (userId.HasValue)
             {
