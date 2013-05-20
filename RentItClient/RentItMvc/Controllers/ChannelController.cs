@@ -388,5 +388,13 @@ namespace RentItMvc.Controllers
             }
             return RedirectToAction("MyChannels", new { userId = userId });
         }
+
+        public static string GetChannelOwner(int userId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.GetUser(userId).Username;
+            }
+        }
     }
 }
