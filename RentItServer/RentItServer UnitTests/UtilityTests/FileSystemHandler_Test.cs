@@ -19,7 +19,7 @@ namespace RentItServer_UnitTests
             {
                 FileSystemDao.GetInstance().ReadFile("C:\\RentItServices\\test.txt");
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
                 Assert.Fail();
             }

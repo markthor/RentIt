@@ -402,5 +402,10 @@ namespace RentItServer
         {
             return _controller.GetCountChannelComments(channelId);
         }
+
+        public int CountChannelsPassingFilter(ChannelSearchArgs filter)
+        {
+            return _controller.CountChannelsPassingFilter(filter);
+        }
     }
 }

@@ -18,20 +18,6 @@ namespace RentItServer_UnitTests.UtilityTests
             logger.AddEntry("Entry two");
             Assert.IsTrue(fs.Exists(absolutePath));
         }
-        
-        [TestMethod]
-        public void Logger_Event()
-        {
-            EventHandler handler = null;
-            string absolutePath = FilePath.ITULogPath.GetPath() + "LogFile.txt";
-            Logger logger = new Logger(absolutePath, ref handler);
-            FileSystemDao fs = FileSystemDao.GetInstance();
-            if (handler != null)
-            {
-                handler(this, new RentItEventArgs("Entry one event"));
-                handler(this, new RentItEventArgs("Entry two event"));;
-            }
-            Assert.IsTrue(fs.Exists(absolutePath));
-        }
+
     }
 }

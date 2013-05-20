@@ -135,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AdvancedSearchModel.cs" />
     <Compile Include="Models\Audio.cs" />
     <Compile Include="Models\GuiComment.cs" />
     <Compile Include="Models\GuiChannel.cs" />
@@ -239,6 +240,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Views\Channel\SelectGenre.cshtml" />
+    <Content Include="Views\Channel\AdvancedSearch.cshtml" />
+    <Content Include="Views\Channel\SearchResults.cshtml" />
+    <Content Include="Views\Channel\ChannelListForAdvancedSearch.cshtml" />
     <None Include="Service References\RentItService\RentItServer.ITU.DatabaseWrapperObjects1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -258,7 +262,6 @@
     <None Include="Service References\RentItService\System1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Channel\AdvancedSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

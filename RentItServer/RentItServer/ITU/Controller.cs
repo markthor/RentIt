@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using RentItServer.ITU.Exceptions;
 using RentItServer.Utilities;
 using System.Text;
@@ -32,10 +34,6 @@ namespace RentItServer.ITU
         /// </summary>
         private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         /// <summary>
-        /// Event cast when log must make an _handler
-        /// </summary>
-        private static EventHandler _handler;
-        /// <summary>
         /// The logger
         /// </summary>
         private readonly Logger _logger;
@@ -57,17 +55,12 @@ namespace RentItServer.ITU
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         /// <summary>
-        /// The _DB lock
-        /// </summary>
-        private readonly object _dbLock = new object();
-
-        /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
         private Controller()
         {
             // Initialize the logger
-            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName);
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
@@ -104,7 +97,7 @@ namespace RentItServer.ITU
             if (usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
             if (password == null) LogAndThrowException(new ArgumentNullException("password"), "Login");
             if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
-
+          
             User user = null;
             try
             {
@@ -135,16 +128,17 @@ namespace RentItServer.ITU
             if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "CreateUser");
             if (email == null) LogAndThrowException(new ArgumentNullException("email"), "CreateUser");
             if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
-            // TODO use regex to better check mail validity
-
+            String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+            if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
             try
             {
                 User user = null;
-                lock (_dbLock)
-                {
-                    user = _dao.SignUp(username, email, password);
-                    _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
-                }
+
+                user = _dao.SignUp(username, email, password);
+                _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+
                 return user.GetUser();
             }
             catch (Exception e)
@@ -170,14 +164,13 @@ namespace RentItServer.ITU
             }
             try
             {
-                lock (_dbLock)
-                {
-                    user = _dao.GetUser(userId);
-                    _dao.DeleteUser(userId);
-                    _dao.DeleteVotesForUser(userId);
-                    _dao.DeleteUserComments(userId);
-                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
-                }
+
+                user = _dao.GetUser(userId);
+                _dao.DeleteUser(userId);
+                _dao.DeleteVotesForUser(userId);
+                _dao.DeleteUserComments(userId);
+                _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
+
             }
             catch (Exception e)
             {
@@ -221,6 +214,9 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsCorrectPassword(int userId, string password)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("User id was below 1"), "IsCorrectPassword");
+            if (password == null) LogAndThrowException(new ArgumentNullException("password"), "IsCorrectPassword");
+            if (password.Equals("")) LogAndThrowException(new ArgumentException("Password was empty"), "IsCorrectPassword");
             return _dao.IsCorrectPassword(userId, password);
         }
 
@@ -228,11 +224,18 @@ namespace RentItServer.ITU
         /// Updates the user.
         /// </summary>
         /// <param name="userId">The user id.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="username">The username. Can be null</param>
+        /// <param name="password">The password. Can be null</param>
+        /// <param name="email">The email. Can be null</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
+            if (email != null)
+            {
+                String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+                if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
+            }
             User user = null;
             User updatedUser = null;
             try
@@ -241,11 +244,11 @@ namespace RentItServer.ITU
                 _dao.UpdateUser(userId, username, password, email);
                 updatedUser = _dao.GetUser(userId);
             }
-            catch (Exception e)
+            catch (Exception e )
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", userId, username, password, email, user, updatedUser));
+                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", e, userId, username, password, email, user, updatedUser));
                 throw;
             }
         }
@@ -270,14 +273,13 @@ namespace RentItServer.ITU
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
-                lock (_dbLock)
-                {
-                    channel = _dao.CreateChannel(channelName, userId, description, genres);
-                    _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
-                    _logger.AddEntry(logEntry + "Channel creation succeeded.");
-                }
+
+                channel = _dao.CreateChannel(channelName, userId, description, genres);
+                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
+                _logger.AddEntry(logEntry + "Channel creation succeeded.");
+
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
@@ -298,13 +300,12 @@ namespace RentItServer.ITU
 
             try
             {
-                lock (_dbLock)
-                {
-                    _dao.CreateGenre(genreName);
-                    _logger.AddEntry(logEntry + "Genre creation succeeded.");
-                }
+
+                _dao.CreateGenre(genreName);
+                _logger.AddEntry(logEntry + "Genre creation succeeded.");
+
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _logger.AddEntry("GenreCreation failed with exception [{0}]. logEntry = " + logEntry + ".");
                 throw;
@@ -331,12 +332,11 @@ namespace RentItServer.ITU
             Channel channel = null;
             try
             {
-                lock (_dbLock)
-                {
-                    channel = _dao.GetChannel(channelId);
-                    _dao.DeleteChannel(channel.GetChannel());
-                    _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
-                }
+
+                channel = _dao.GetChannel(channelId);
+                _dao.DeleteChannel(channel.GetChannel());
+                _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
+
             }
             catch (Exception e)
             {
@@ -437,6 +437,8 @@ namespace RentItServer.ITU
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "CreateVote");
+            if (trackId < 1) LogAndThrowException(new ArgumentException("trackId was < 1"), "CreateVote");
             // ignore ratings different from -1 and 1
             if (rating != -1 && rating != 1) return;
             try
@@ -566,8 +568,8 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Track deletion failed with exception [" + e + "]."));
+
+                _logger.AddEntry("Track deletion failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -580,13 +582,9 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void CreateComment(string comment, int userId, int channelId)
         {
-            lock (_dbLock)
-            {
-                _dao.CreateComment(comment, userId, channelId);
-                //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
-            }
-            if (_handler != null)
-                _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
+            _dao.CreateComment(comment, userId, channelId);
+
+            _logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
         }
 
         /// <summary>
@@ -600,6 +598,7 @@ namespace RentItServer.ITU
         /// </returns>
         public DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "GetChannelComments");
             if (fromInclusive == null) fromInclusive = 0;
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
@@ -607,7 +606,7 @@ namespace RentItServer.ITU
                 List<Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
                 return Comment.GetComments(comments).ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -655,10 +654,9 @@ namespace RentItServer.ITU
         {
             try
             {
-                lock (_dbLock)
-                {
-                    _dao.Subscribe(userId, channelId);
-                }
+
+                _dao.Subscribe(userId, channelId);
+
             }
             catch (Exception e)
             {
@@ -678,11 +676,10 @@ namespace RentItServer.ITU
         {
             try
             {
-                lock (_dbLock)
-                {
-                    _dao.UnSubscribe(userId, channelId);
-                    _dao.DeleteVotesForUser(userId, channelId);
-                }
+
+                _dao.UnSubscribe(userId, channelId);
+                _dao.DeleteVotesForUser(userId, channelId);
+
             }
             catch (Exception e)
             {
@@ -715,7 +712,12 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsEmailAvailable(string email)
         {
-            if (email == null) LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
+            if (email == null) LogAndThrowException(new ArgumentNullException("email"), "IsEmailEavailable");
+            if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "IsEmailEavailable");
+            String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+            if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
@@ -783,7 +785,9 @@ namespace RentItServer.ITU
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "IsChannelNameAvailable");
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "IsChannelNameAvailable");
+            if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "IsChannelNameAvailable");
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
@@ -794,6 +798,7 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public int GetSubscriberCount(int channelId)
         {
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "GetSubscriberCount ");
             return _dao.GetSubscriberCount(channelId);
         }
 
@@ -850,6 +855,11 @@ namespace RentItServer.ITU
         public List<Genre> GetGenresForChannel(int channelId)
         {
             return _dao.GetGenresForChannel(channelId);
+        }
+
+        public int CountChannelsPassingFilter(ChannelSearchArgs filter)
+        {
+            return _dao.GetChannelsWithFilter(filter).Count;
         }
     }
 }

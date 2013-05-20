@@ -258,7 +258,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <param name="username">The username. Can be null.</param>
         /// <param name="password">The password. Can be null.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="email">The email. Can be null</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
         public void UpdateUser(int userId, string username, string password, string email)
         {
@@ -506,7 +506,6 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
-                //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
                 var channels = from c in context.Channels
                                where c.Name.Contains(filter.SearchString)
@@ -520,15 +519,11 @@ namespace RentItServer.ITU
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits <= filter.MaxAmountPlayed select channel;
                 }
-                if (filter.Genres.Any() == true)
-                {   // Apply genre filter
-                    channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
-                }
                 if (filter.MinNumberOfComments > -1)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
                 }
-                if (filter.MaxNumberOfComments > Int32.MaxValue)
+                if (filter.MaxNumberOfComments < Int32.MaxValue)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count <= filter.MaxNumberOfComments select channel;
                 }
@@ -536,29 +531,53 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count >= filter.MinNumberOfSubscriptions select channel;
                 }
-                if (filter.MaxNumberOfSubscriptions > Int32.MaxValue)
+                if (filter.MaxNumberOfSubscriptions < Int32.MaxValue)
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
                 if (filter.MinTotalVotes > -1)
                 {   // Apply votes filter
+                    IQueryable<Channel> noTracksChannels = null;
+                    if (filter.MinTotalVotes == 0)
+                    {
+                        noTracksChannels = from channel in channels
+                                           where channel.Tracks.Count == 0
+                                           select channel;
+                    }
+
                     channels = from channel in channels
-                               from t in channel.Tracks where
-                               (t.UpVotes + t.DownVotes) >= filter.MinTotalVotes
+                               where (from track in channel.Tracks
+                                      select track.UpVotes + track.DownVotes).Sum() >= filter.MinTotalVotes
                                select channel;
+
+                    if (filter.MinTotalVotes == 0 && noTracksChannels != null)
+                    {
+                        channels = channels.Concat(noTracksChannels);
+                    }
+                    channels = channels.Distinct();
                 }
                 if (filter.MaxTotalVotes < Int32.MaxValue)
                 {   // Apply votes filter
+                    IQueryable<Channel> noTracksChannels = null;
+                    if (filter.MinTotalVotes <= 0)
+                    {
+                        noTracksChannels = from channel in channels
+                                           where channel.Tracks.Count == 0
+                                           select channel;
+                    }
+
                     channels = from channel in channels
-                               from t in channel.Tracks where
-                               (t.UpVotes + t.DownVotes) <= filter.MaxTotalVotes
+                               where (from track in channel.Tracks
+                                      select track.UpVotes + track.DownVotes).Sum() <= filter.MaxTotalVotes
                                select channel;
+
+                    if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
+                    {
+                        channels = channels.Concat(noTracksChannels);
+                    }
+                    channels = channels.Distinct();
                 }
-                if (filter.SortOption.Equals(""))
-                {   // Apply default sort order
-                    channels = from channel in channels orderby channel.Name select channel;
-                }
-                else
+                if (!filter.SortOption.Equals(""))
                 {   // Apply specific sort order
                     if (filter.SortOption.Equals(filter.HitsAsc))
                     {
@@ -595,17 +614,22 @@ namespace RentItServer.ITU
                     else if (filter.SortOption.Equals(filter.NumberOfVotesAsc))
                     {
                         channels = from channel in channels
-                                   from t in channel.Tracks 
-                                   orderby (t.UpVotes + t.DownVotes) ascending
+                                   orderby (from track in channel.Tracks
+                                            select track.UpVotes + track.DownVotes).Sum() ascending
                                    select channel;
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesDesc))
                     {
                         channels = from channel in channels
-                                   from t in channel.Tracks
-                                   orderby (t.UpVotes + t.DownVotes) descending
+                                   orderby (from track in channel.Tracks
+                                            select track.UpVotes + track.DownVotes).Sum() descending
                                    select channel;
                     }
+                }
+                else
+                {
+                    // Apply default sort order
+                    channels = from channel in channels orderby channel.Name ascending select channel;
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
             }
@@ -614,12 +638,6 @@ namespace RentItServer.ITU
 
                 // The amount of channels
                 int count;
-
-                // If both index are negative, return empty list
-                if (filter.StartIndex < -1 && filter.EndIndex < -1)
-                {
-                    return new List<Channel>();
-                }
 
                 if (filter.StartIndex < -1)
                 {   // If start index is negative, start from 0
@@ -731,7 +749,8 @@ namespace RentItServer.ITU
                     if (v.Value < 0)
                     {
                         v.Track.DownVotes -= 1;
-                    }else if (v.Value > 0)
+                    }
+                    else if (v.Value > 0)
                     {
                         v.Track.UpVotes -= 1;
                     }
@@ -761,7 +780,8 @@ namespace RentItServer.ITU
                     if (v.Value < 0)
                     {
                         v.Track.DownVotes -= 1;
-                    }else if (v.Value > 0)
+                    }
+                    else if (v.Value > 0)
                     {
                         v.Track.UpVotes -= 1;
                     }
@@ -1658,7 +1678,7 @@ namespace RentItServer.ITU
                 if (votes.Any() == false) throw new ArgumentException("No vote with userId [" + userId + "] and trackId [" + trackId + "]");
 
                 Vote vote = votes.First();
-                
+
                 //remove the vote from the user
                 vote.User.Votes.Remove(vote);
 
@@ -1666,7 +1686,8 @@ namespace RentItServer.ITU
                 if (vote.Value < 0)
                 {
                     vote.Track.DownVotes -= 1;
-                }else if (vote.Value > 0)
+                }
+                else if (vote.Value > 0)
                 {
                     vote.Track.UpVotes -= 1;
                 }
@@ -1778,6 +1799,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes all comments.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         public void DeleteAllComments(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1793,6 +1818,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets all genres.
+        /// </summary>
+        /// <returns></returns>
         public List<Genre> GetAllGenres()
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1803,6 +1832,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the genres for channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public List<Genre> GetGenresForChannel(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1821,5 +1855,22 @@ namespace RentItServer.ITU
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the users votes.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
+        public List<Vote> GetUserVotes(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId
+                            select v;
+                if(votes.Any() == false)    return new List<Vote>();
+                return votes.ToList();
+            }
+        } 
     }
 }
