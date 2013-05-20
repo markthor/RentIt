@@ -29,7 +29,7 @@ namespace RentItMvc.Controllers
             }
             List<GuiComment> guiComments = GuiClassConverter.ConvertComments(comments);
             ViewBag.ChannelId = channelId;
-            return PartialView("CommentList", new Tuple<List<GuiComment>, int, int>(GuiClassConverter.ConvertComments(comments), startIndex, endIndex));
+            return PartialView("CommentList", new Tuple<List<GuiComment>, int, int>(guiComments, startIndex, endIndex));
         }
 
         public PartialViewResult Comment(GuiComment c)
