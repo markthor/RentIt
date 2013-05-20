@@ -53,12 +53,6 @@ namespace RentItServer.ITU
         public static string _defaultUrl = _defaultUri + ":" + _defaultPort + "/";
 
         /// <summary>
-        /// The _DB lock
-        /// </summary>
-        [Obsolete]
-        private readonly object _dbLock = new object();
-
-        /// <summary>
         /// Private to ensure local instantiation.
         /// </summary>
         private Controller()
