@@ -543,7 +543,7 @@ namespace RentItServer.ITU
                 if (filter.MinTotalVotes > -1)
                 {   // Apply votes filter
                     IQueryable<Channel> noTracksChannels = null;
-                    if (filter.MinTotalVotes <= 0)
+                    if (filter.MinTotalVotes == 0)
                     {
                         noTracksChannels = from channel in channels
                                            where channel.Tracks.Count == 0
@@ -555,7 +555,7 @@ namespace RentItServer.ITU
                                       select track.UpVotes + track.DownVotes).Sum() >= filter.MinTotalVotes
                                select channel;
 
-                    if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
+                    if (filter.MinTotalVotes == 0 && noTracksChannels != null)
                     {
                         channels = channels.Concat(noTracksChannels);
                     }
@@ -622,48 +622,17 @@ namespace RentItServer.ITU
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesAsc))
                     {
-                        IQueryable<Channel> noTracksChannels = null;
-                        if (filter.MinTotalVotes <= 0)
-                        {
-                            noTracksChannels = from channel in channels
-                                               where channel.Tracks.Count == 0
-                                               orderby channel.Name descending
-                                               select channel;
-                        }
-
                         channels = from channel in channels
                                    orderby (from track in channel.Tracks
                                             select track.UpVotes + track.DownVotes).Sum() ascending
                                    select channel;
-
-                        if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
-                        {
-                            channels = noTracksChannels.Concat(channels);
-                        }
-
-                        channels = channels.Distinct();
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesDesc))
                     {
-                        IQueryable<Channel> noTracksChannels = null;
-                        if (filter.MinTotalVotes <= 0)
-                        {
-                            noTracksChannels = from channel in channels
-                                               where channel.Tracks.Count == 0
-                                               orderby channel.Name descending
-                                               select channel;
-                        }
-
                         channels = from channel in channels
                                    orderby (from track in channel.Tracks
                                             select track.UpVotes + track.DownVotes).Sum() descending
                                    select channel;
-
-                        if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
-                        {
-                            channels = channels.Concat(noTracksChannels);
-                        }
-                        channels = channels.Distinct();
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
