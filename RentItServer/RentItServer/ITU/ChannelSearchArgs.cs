@@ -198,7 +198,7 @@ namespace RentItServer.ITU
             MaxTotalVotes = Int32.MaxValue;
             StartIndex = -1;
             EndIndex = -1;
-            SortOption = "";
+            SortOption = NameDesc;
         }
     }
 }
