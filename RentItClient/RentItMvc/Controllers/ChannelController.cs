@@ -21,7 +21,12 @@ namespace RentItMvc.Controllers
             return View(model);
         }
 
-        public List<GuiChannel> AdvancedSearchWithArgs(AdvancedSearchModel model)
+        public PartialViewResult ChannelListForAdvancedSearch(List<GuiChannel> channels)
+        {
+            return PartialView(channels);
+        }
+
+        public PartialViewResult AdvancedSearchWithArgs(AdvancedSearchModel model)
         {
             if (model.StartIndex < 0)
             {
@@ -33,9 +38,10 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channels = proxy.GetChannels((ChannelSearchArgs)model);
+                ChannelSearchArgs searchArgs = (ChannelSearchArgs) model;
+                channels = proxy.GetChannels(searchArgs);
             }
-            return GuiClassConverter.ConvertChannels(channels);
+            return PartialView("ChannelListForAdvancedSearch", GuiClassConverter.ConvertChannels(channels));
         }
 
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
@@ -64,7 +70,7 @@ namespace RentItMvc.Controllers
                 searchArgs.MinTotalVotes = minAmountOfVotes != null ? minAmountOfVotes.Value : -1;
                 searchArgs.MaxTotalVotes = maxAmountOfVotes != null ? maxAmountOfVotes.Value : int.MaxValue;
                 //Sorting
-                searchArgs.SortOption = sortingKey + sortingBy;
+                searchArgs.SortOption = sortingKey + " " + sortingBy;
 
                 channels = proxy.GetChannels(searchArgs);
             }
