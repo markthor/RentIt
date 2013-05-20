@@ -132,8 +132,8 @@ namespace RentItServer.ITU
             {
                 User user = null;
 
-                    user = _dao.SignUp(username, email, password);
-                    _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
+                user = _dao.SignUp(username, email, password);
+                _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
 
                 return user.GetUser();
             }
@@ -161,11 +161,11 @@ namespace RentItServer.ITU
             try
             {
 
-                    user = _dao.GetUser(userId);
-                    _dao.DeleteUser(userId);
-                    _dao.DeleteVotesForUser(userId);
-                    _dao.DeleteUserComments(userId);
-                    _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
+                user = _dao.GetUser(userId);
+                _dao.DeleteUser(userId);
+                _dao.DeleteVotesForUser(userId);
+                _dao.DeleteUserComments(userId);
+                _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
 
             }
             catch (Exception e)
@@ -260,9 +260,9 @@ namespace RentItServer.ITU
             try
             {
 
-                    channel = _dao.CreateChannel(channelName, userId, description, genres);
-                    _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
-                    _logger.AddEntry(logEntry + "Channel creation succeeded.");
+                channel = _dao.CreateChannel(channelName, userId, description, genres);
+                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
+                _logger.AddEntry(logEntry + "Channel creation succeeded.");
 
             }
             catch (Exception)
@@ -287,8 +287,8 @@ namespace RentItServer.ITU
             try
             {
 
-                    _dao.CreateGenre(genreName);
-                    _logger.AddEntry(logEntry + "Genre creation succeeded.");
+                _dao.CreateGenre(genreName);
+                _logger.AddEntry(logEntry + "Genre creation succeeded.");
 
             }
             catch (Exception)
@@ -319,9 +319,9 @@ namespace RentItServer.ITU
             try
             {
 
-                    channel = _dao.GetChannel(channelId);
-                    _dao.DeleteChannel(channel.GetChannel());
-                    _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
+                channel = _dao.GetChannel(channelId);
+                _dao.DeleteChannel(channel.GetChannel());
+                _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
 
             }
             catch (Exception e)
@@ -638,7 +638,7 @@ namespace RentItServer.ITU
             try
             {
 
-                    _dao.Subscribe(userId, channelId);
+                _dao.Subscribe(userId, channelId);
 
             }
             catch (Exception e)
@@ -660,8 +660,8 @@ namespace RentItServer.ITU
             try
             {
 
-                    _dao.UnSubscribe(userId, channelId);
-                    _dao.DeleteVotesForUser(userId, channelId);
+                _dao.UnSubscribe(userId, channelId);
+                _dao.DeleteVotesForUser(userId, channelId);
 
             }
             catch (Exception e)
