@@ -57,15 +57,22 @@
     StringBuilder sb = new StringBuilder();
     int genreCount = Model.Genres.Count();
     string[] genres = Model.Genres;
-    for (int i = 0; i < genreCount; i++)
+    if (genreCount == 0) 
     {
-        if (i + 1 == genreCount)
+        sb.Append("None");
+    }
+    else
+    {
+        for (int i = 0; i < genreCount; i++)
         {
-            sb.Append(genres[i]);
-        }
-        else
-        {
-            sb.Append(genres[i] + ", ");
+            if (i + 1 == genreCount)
+            {
+                sb.Append(genres[i]);
+            }
+            else
+            {
+                sb.Append(genres[i] + ", ");
+            }
         }
     }
     <div id="genres" style="font-size: x-small;">
@@ -124,4 +131,4 @@ else
 }
 
 @Html.Partial("Tracks", Model.Tracks)
-@Html.Action("CommentList", "Comment", new { channelId = Model.Id })
+@Html.Action("CommentListRange", "Comment", new { channelId = Model.Id, startIndex = 0, endIndex = 10 })

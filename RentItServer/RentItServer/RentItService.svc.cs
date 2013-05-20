@@ -10,6 +10,7 @@ namespace RentItServer
     public class RentItService : IRentItService
     {
         private static readonly Controller _controller = Controller.GetInstance();
+        private static readonly StreamHandler _streamHandler = StreamHandler.GetInstance();
 
         /// <summary>
         /// Logins the user with the specified usernameOrEmail and password.
@@ -352,7 +353,7 @@ namespace RentItServer
         /// <param name="cId">The id of the channel</param>
         public void StartChannelStream(int cId)
         {
-            _controller.StartChannelStream(cId);
+            _streamHandler.ManualStreamStart(cId);
         }
 
         /// <summary>
@@ -361,7 +362,7 @@ namespace RentItServer
         /// <param name="channelId">The id of the channel which stream should be stopped</param>
         public void StopChannelStream(int channelId)
         {
-            _controller.StopChannelStream(channelId);
+            _streamHandler.StopChannelStream(channelId);
         }
 
         /// <summary>
@@ -453,7 +454,7 @@ namespace RentItServer
         /// </returns>
         public bool IsChannelPlaying(int channelId)
         {
-            return _controller.IsChannelPlaying(channelId);
+            return _streamHandler.IsChannelStreamRunning(channelId);
         }
 
         /// <summary>
@@ -500,6 +501,11 @@ namespace RentItServer
         public ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId)
         {
             return Genre.GetTracks(_controller.GetGenresForChannel(channelId)).ToArray();
+        }
+        
+        public int GetCountChannelComments(int channelId)
+        {
+            return _controller.GetCountChannelComments(channelId);
         }
     }
 }

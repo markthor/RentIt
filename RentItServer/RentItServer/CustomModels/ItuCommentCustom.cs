@@ -16,7 +16,22 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Comment GetComment()
         {
-            return new ITU.DatabaseWrapperObjects.Comment(ChannelId, Date, Content, Channel.GetChannel(), User.GetUser());
+            return new ITU.DatabaseWrapperObjects.Comment(Id, Date, Content, ChannelId, UserId);
+        }
+
+        /// <summary>
+        /// Gets the wrappers for these comments.
+        /// </summary>
+        /// <param name="comments">The comments.</param>
+        /// <returns></returns>
+        public static List<ITU.DatabaseWrapperObjects.Comment> GetComments(IEnumerable<Comment> comments)
+        {
+            List<ITU.DatabaseWrapperObjects.Comment> convertedComments = new List<ITU.DatabaseWrapperObjects.Comment>();
+            foreach (Comment channel in comments)
+            {
+                convertedComments.Add(channel.GetComment());
+            }
+            return convertedComments;
         }
     }
 }

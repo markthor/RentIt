@@ -92,7 +92,7 @@ namespace RentItServer.ITU
             _streamHandler.InitTimer();
         }
 
-
+        /*
         /// <summary>
         /// Starts the channel stream.
         /// </summary>
@@ -102,7 +102,7 @@ namespace RentItServer.ITU
             if (!_dao.ChannelHasTracks(channelId)) throw new NoTracksOnChannelException("Channel with id: [" + channelId + "] has no associated tracks and cannot be started");
             _streamHandler.ManualStreamStart(channelId);
         }
-
+        */
         /// <summary>
         /// Login the specified user.
         /// </summary>
@@ -761,8 +761,8 @@ namespace RentItServer.ITU
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
             {
-                List<DatabaseWrapperObjects.Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
-                return comments.ToArray();
+                List<Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
+                return Comment.GetComments(comments).ToArray();
             }
             catch (Exception e)
             {
@@ -785,13 +785,19 @@ namespace RentItServer.ITU
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
             {
-                List<DatabaseWrapperObjects.Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
-                return comments.ToArray();
+                List<Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
+                return Comment.GetComments(comments).ToArray();
             }
             catch (Exception e)
             {
                 throw;
             }
+        }
+
+
+        public int GetCountChannelComments(int channelId)
+        {
+            return GetChannelComments(channelId, null, null).Length;
         }
 
         /// <summary>
@@ -989,7 +995,7 @@ namespace RentItServer.ITU
         {
             _dao.IncrementChannelPlays(channelId);
         }
-
+        /*
         /// <summary>
         /// Determines whether [is channel playing] [the specified channel id].
         /// </summary>
@@ -1001,7 +1007,8 @@ namespace RentItServer.ITU
         {
             return _streamHandler.IsChannelStreamRunning(channelId);
         }
-
+        */
+        /*
         /// <summary>
         /// Stops the channel stream.
         /// </summary>
@@ -1010,7 +1017,7 @@ namespace RentItServer.ITU
         {
             _streamHandler.StopChannelStream(channelId);
         }
-
+        */
         /// <summary>
         /// Gets the vote.
         /// </summary>
