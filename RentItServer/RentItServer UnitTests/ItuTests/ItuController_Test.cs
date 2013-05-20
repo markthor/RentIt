@@ -490,7 +490,7 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 List<Channel> userCreatedChannels = _dao.GetCreatedChannels(testId);
                 Assert.IsTrue(userCreatedChannels.Count == 0);
-                List<RentItServer.ITU.DatabaseWrapperObjects.Comment> userCreatedComments = _dao.GetUserComments(testId, 0, int.MaxValue);
+                List<Comment> userCreatedComments = _dao.GetUserComments(testId, 0, int.MaxValue);
                 Assert.IsTrue(userCreatedComments.Count == 0);
                 testId = int.MaxValue;
             }
