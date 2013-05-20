@@ -10,7 +10,6 @@
 \usepackage{amsmath}
 \usepackage{sidecap}
 \usepackage{hyperref}
-
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
 % Alter some LaTeX defaults for better treatment of figures:
@@ -30,7 +29,10 @@
     \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
 	% N.B.: floatpagefraction MUST be less than topfraction !!
     \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
-
+\usepackage{color, colortbl}
+\definecolor{Green}{rgb}{0.1,1,0.1}
+\definecolor{Gray}{gray}{0.5}
+\definecolor{LightGray}{gray}{0.9}
 
 \begin{document}
 
@@ -283,7 +285,7 @@ In the method GetChannelIds (the method used for searching in all channels) we h
 All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and which could be used for malicious purposes, for example filesystem paths.
 
 \subsection{GUI Technology}
-A major part of our web-client is the GUI(Graphical User Interface) and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
+A major part of our web-client is the GUI\footnote{Graphical User Interface} and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
 \begin{itemize}
 \item Familiarity - How familiar the programming team are with the technology or a related technology?
 \item Features - Does the technology have the features needed to support the features of our application?
@@ -305,8 +307,8 @@ Asp.Net is a server-side framework developed by Microsoft and is used to dynamic
 \subsubsection{Microsoft MVC}
 
 Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use.
-Our choice
-\\ \\
+
+\subsubsection{Our choice}
 We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh it.  It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
 
 \subsection{Track selection}
@@ -643,23 +645,119 @@ Cross-National Learning? } 2005
 \centering
 \includegraphics[width=17cm,keepaspectratio=true]{./LoginSD.pdf}
 \end{figure}
-
-<<<<<<< HEAD
 \begin{figure}[htp]
 \begin{tabular}{| l | l | l | l | l | l |}
   \hline
   Item & Mikkel & Mark & Toke & Morten & Andreas \\
   \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Documentation} \\
   \hline
-  Introduction & Mikkel & Mark & Toke & Morten & Andreas \\
+  Introduction &  &\cellcolor{Gray} &\cellcolor{Gray}&  & \\
   \hline
-  Introduction & 1 & 0 & 0 & 1 & 0 \\
+  Use cases & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  Functional requirements & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  Non-functional requirements & \cellcolor{Gray} &\cellcolor{Gray}  &  &  &  \\
+  \hline
+  Target audience &  &  &  &  & \cellcolor{Gray} \\
+  \hline
+  Architecture &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Data Model & & \cellcolor{Gray} & \cellcolor{Gray} &  &  \\
+  \hline
+  Data Storage &  &  &  &  & \cellcolor{Gray} \\
+  \hline
+  WebService & \cellcolor{Gray} &  &  &  &  \\
+  \hline
+  GUI Technology &  &  & \cellcolor{Gray} &  &  \\
+  \hline
+  Track Selection &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Major components &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  \hline
+  Class Diagram &  &  &  & \cellcolor{Gray} &  \\
+  \hline
+  Track Prioritizer &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Streaming Components &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Testing &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  \hline
+  Interaction with the ITU system &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Collaboration considerations &  &  & \cellcolor{Gray} &  &  \\
+  \hline
+  Sequence Diagrams &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Conclusion &  &  &  &  &  \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{ITU-Server Code} \\
+  \hline
+  Server Controller & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  DatabaseDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray}  \\
+  \hline
+  FileSystemDao &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  \hline
+  TrackPrioritizer &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  StreamHandler & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Logger &  &  &  & \cellcolor{Gray} &  \\
+  \hline
+  DatabaseWrapperObjects &  &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  XMLGenerator & \cellcolor{Gray} &  &  &  &  \\
+  \hline
+  IRentItService/RentItService & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  SearchArgs &  &  &  &  & \cellcolor{Gray} \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Webclient Code} \\
+  \hline
+  Models & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
+  \hline
+  Views & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
+  \hline
+  Controllers & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
+  \hline
+  Layouts & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
+  \hline
+  CSS & &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
+  \hline
+  JavaScript &  &  &  &  & \cellcolor{Gray} \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{SMU-System Code} \\
+  \hline
+  ISMURentItService/SMURentItService & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  SMUController & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  SMUDao & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Automated Test Code} \\
+  \hline
+  ItuController\_Test &  & \cellcolor{Gray} &  & \cellcolor{Gray}  & \\
+  \hline
+  ItuDao\_Test &  &  &  & \cellcolor{Gray}  &  \\
+  \hline
+  TrackPrioritizer\_Test & \cellcolor{Gray}  &  &  &  &  \\
+  \hline
+  FileSystemHandler\_Test &  &  &  & \cellcolor{Gray}  &  \\
+  \hline
+  Logger\_Test &  &  &  & \cellcolor{Gray}  &  \\
+  \hline
+  TestExtensions &  & \cellcolor{Gray}  &  & \cellcolor{Gray}  &  \\
+  \hline
+  SMUController\_Test &  & \cellcolor{Gray}  & \cellcolor{Gray}  &  & \cellcolor{Gray}  \\
+  \hline
+  SMUService\_Test & \cellcolor{Gray}  &  &  & \cellcolor{Gray}  &  \\
+  \hline
 \end{tabular}
 \end{figure}
-=======
 \section{Glossary}
 Track: An audio file that the users can listen to via channels. \\*
 Channel: A collection of tracks that is played infinity, and can be listened to by users. Managed by a channel host.
->>>>>>> 46c045df8ebf162888338bb47172981caf23cacd
 
 \end{document}
