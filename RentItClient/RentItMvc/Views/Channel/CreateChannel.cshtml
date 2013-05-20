@@ -10,24 +10,32 @@
 <div class="row-fluid">
     <div>
         @{
-            using (Html.BeginForm("CreateNewChannel", "Channel", new { channelId = Model.Id, userId = @Session["userId"] }, FormMethod.Post))
+            using (Html.BeginForm("CreateNewChannel", "Channel", new { channelId = Model.Id, userId = @Session["userId"] }, FormMethod.Post, new { name = "GenreForm", id = "GenreForm" }))
             {
-                @Html.HiddenFor(model => model.Id)
-                <h5>Name</h5>
-                @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level pull-left", type = "text", required = "required", placeholder = "Channel Name", style = "width: 400px" })
-                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "txt-error error-field", style = "padding-top: 4px" })
-                <div class="clearfix"></div>
-                <div style="width: 400px" class="input-block-level">
-                    <h5 style="">Description</h5>
-                    <div class="input-block-level">
-                        @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = "Description" })
-                    </div>
+            @Html.HiddenFor(model => model.Id)
+            <h5>Name</h5>
+            @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level pull-left", type = "text", required = "required", placeholder = "Channel Name", style = "width: 400px" })
+            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "txt-error error-field", style = "padding-top: 4px" })
+            <div class="clearfix"></div>
+            <div style="width: 400px" class="input-block-level">
+                <h5 style="">Description</h5>
+                <div class="input-block-level">
+                    @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = "Description" })
                 </div>
+            </div>
                 
-                @Html.Action("SelectGenre", new { channelId = -1 })
+            @Html.Action("SelectGenre", new { channelId = -1 })
             
-                <button class="btn">Create</button>
+            <button class="btn">Create</button>
             }
         }
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#GenreForm').submit(function () {
+            $('#ChosenGenres option').prop('selected', true);
+        });
+    });
+</script>
