@@ -10,7 +10,6 @@
 \usepackage{amsmath}
 \usepackage{sidecap}
 \usepackage{hyperref}
-
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
 % Alter some LaTeX defaults for better treatment of figures:
@@ -30,7 +29,10 @@
     \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
 	% N.B.: floatpagefraction MUST be less than topfraction !!
     \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
-
+\usepackage{color, colortbl}
+\definecolor{Green}{rgb}{0.1,1,0.1}
+\definecolor{Gray}{gray}{0.5}
+\definecolor{LightGray}{gray}{0.9}
 
 \begin{document}
 
@@ -643,23 +645,121 @@ Cross-National Learning? } 2005
 \centering
 \includegraphics[width=17cm,keepaspectratio=true]{./LoginSD.pdf}
 \end{figure}
-
-<<<<<<< HEAD
 \begin{figure}[htp]
 \begin{tabular}{| l | l | l | l | l | l |}
   \hline
   Item & Mikkel & Mark & Toke & Morten & Andreas \\
   \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Documentation} \\
   \hline
-  Introduction & Mikkel & Mark & Toke & Morten & Andreas \\
+  Introduction &  &\cellcolor{Gray} &\cellcolor{Gray}&  & \\
   \hline
-  Introduction & 1 & 0 & 0 & 1 & 0 \\
+  Use cases \cellcolor{Gray}& \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  Functional requirements \cellcolor{Gray}& \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
+  \hline
+  Non-functional requirements \cellcolor{Gray} & \cellcolor{Gray} &  &  &  &  \\
+  \hline
+  Target audience &  &  &  &  & \cellcolor{Gray} \\
+  \hline
+  Architecture &  & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Data Model & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Data Storage &  &  &  &  &  \\
+  \hline
+  WebService &  &  &  &  &  \\
+  \hline
+  GUI Technology &  &  &  &  &  \\
+  \hline
+  Track Selection &  &  &  &  &  \\
+  \hline
+  Major components &  &  &  &  &  \\
+  \hline
+  Class Diagram &  &  &  &  &  \\
+  \hline
+  Track Prioritizer &  &  &  &  &  \\
+  \hline
+  Streaming Components &  &  &  &  &  \\
+  \hline
+  Testing &  &  &  &  &  \\
+  \hline
+  Interaction with the ITU system &  &  &  &  &  \\
+  \hline
+  SMU webservice API &  &  &  &  &  \\
+  \hline
+  Collaboration considerations &  &  &  &  &  \\
+  \hline
+  Sequence Diagrams &  &  &  &  &  \\
+  \hline
+  Conclusion &  &  &  &  &  \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{ITU-Server Code} \\
+  \hline
+  Server Controller &  &  &  &  &  \\
+  \hline
+  DatabaseDao &  &  &  &  &  \\
+  \hline
+  FileSystemDao &  &  &  &  &  \\
+  \hline
+  TrackPrioritizer &  &  &  &  &  \\
+  \hline
+  StreamHandler &  &  &  &  &  \\
+  \hline
+  Logger &  &  &  &  &  \\
+  \hline
+  DatabaseWrapperObjects &  &  &  &  &  \\
+  \hline
+  XMLGenerator &  &  &  &  &  \\
+  \hline
+  IRentItService/RentItService &  &  &  &  &  \\
+  \hline
+  SearchArgs &  &  &  &  &  \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Webclient Code} \\
+  \hline
+  Model &  &  &  &  &  \\
+  \hline
+  Views &  &  &  &  &  \\
+  \hline
+  Controller &  &  &  &  &  \\
+  \hline
+  Layouts &  &  &  &  &  \\
+  \hline
+  CSS &  &  &  &  &  \\
+  \hline
+  JavaScript &  &  &  &  &  \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{SMU-System Code} \\
+  \hline
+  ISMURentItService/SMURentItService &  &  &  &  &  \\
+  \hline
+  SMUController &  &  &  &  &  \\
+  \hline
+  SMUDao &  &  &  &  &  \\
+  \hline
+  \rowcolor{LightGray}\multicolumn{6}{|l|}{Automated Test Code} \\
+  \hline
+  ItuController\_Test &  &  &  &  &  \\
+  \hline
+  ItuDao\_Test &  &  &  &  &  \\
+  \hline
+  TrackPrioritizer\_Test &  &  &  &  &  \\
+  \hline
+  FileSystemHandler\_Test &  &  &  &  &  \\
+  \hline
+  Logger\_Test &  &  &  &  &  \\
+  \hline
+  TestExtensions &  &  &  &  &  \\
+  \hline
+  SMUController\_Test &  &  &  &  &  \\
+  \hline
+  SMUService\_Test &  &  &  &  &  \\
+  \hline
 \end{tabular}
 \end{figure}
-=======
 \section{Glossary}
 Track: An audio file that the users can listen to via channels. \\*
 Channel: A collection of tracks that is played infinity, and can be listened to by users. Managed by a channel host.
->>>>>>> 46c045df8ebf162888338bb47172981caf23cacd
 
 \end{document}
