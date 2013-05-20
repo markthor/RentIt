@@ -293,6 +293,12 @@
   <wsdl:message name="IRentItService_GetGenresForChannel_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetGenresForChannelResponse" />
   </wsdl:message>
+  <wsdl:message name="IRentItService_GetCountChannelComments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountChannelComments" />
+  </wsdl:message>
+  <wsdl:message name="IRentItService_GetCountChannelComments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountChannelCommentsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IRentItService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/Login" message="tns:IRentItService_Login_InputMessage" />
@@ -481,6 +487,10 @@
     <wsdl:operation name="GetGenresForChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetGenresForChannel" message="tns:IRentItService_GetGenresForChannel_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetGenresForChannelResponse" message="tns:IRentItService_GetGenresForChannel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountChannelComments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRentItService/GetCountChannelComments" message="tns:IRentItService_GetCountChannelComments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRentItService/GetCountChannelCommentsResponse" message="tns:IRentItService_GetCountChannelComments_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IRentItService" type="tns:IRentItService">
@@ -901,6 +911,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetGenresForChannel">
       <soap:operation soapAction="http://tempuri.org/IRentItService/GetGenresForChannel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountChannelComments">
+      <soap:operation soapAction="http://tempuri.org/IRentItService/GetCountChannelComments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

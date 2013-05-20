@@ -131,4 +131,4 @@ else
 }
 
 @Html.Partial("Tracks", Model.Tracks)
-@Html.Action("CommentList", "Comment", new { channelId = Model.Id })
+@Html.Action("CommentListRange", "Comment", new { channelId = Model.Id, startIndex = 0, endIndex = 10 })

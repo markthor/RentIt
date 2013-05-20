@@ -761,8 +761,8 @@ namespace RentItServer.ITU
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
             {
-                List<DatabaseWrapperObjects.Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
-                return comments.ToArray();
+                List<Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
+                return Comment.GetComments(comments).ToArray();
             }
             catch (Exception e)
             {
@@ -785,13 +785,19 @@ namespace RentItServer.ITU
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
             {
-                List<DatabaseWrapperObjects.Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
-                return comments.ToArray();
+                List<Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
+                return Comment.GetComments(comments).ToArray();
             }
             catch (Exception e)
             {
                 throw;
             }
+        }
+
+
+        public int GetCountChannelComments(int channelId)
+        {
+            return GetChannelComments(channelId, null, null).Length;
         }
 
         /// <summary>
