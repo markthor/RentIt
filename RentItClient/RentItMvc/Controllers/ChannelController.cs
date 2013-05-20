@@ -28,7 +28,7 @@ namespace RentItMvc.Controllers
             return PartialView(GetGenreModel(channelId));
         }
 
-        public PartialViewResult AddGenres(List<GuiGenre> chosenGenres, int channelId)
+        public PartialViewResult AddGenres(List<GuiGenre> availableGenres, List<GuiGenre> chosenGenres, int channelId)
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {

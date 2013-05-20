@@ -12,7 +12,6 @@
         @{
             using (Html.BeginForm("CreateNewChannel", "Channel", new { channelId = Model.Id, userId = @Session["userId"] }, FormMethod.Post))
             {
-                Html.ValidationSummary(true);
                 @Html.HiddenFor(model => model.Id)
                 <h5>Name</h5>
                 @Html.TextBoxFor(model => model.Name, new { @class = "input-block-level pull-left", type = "text", required = "required", placeholder = "Channel Name", style = "width: 400px" })
@@ -29,8 +28,5 @@
         }
     </div>
 </div>
-
-
-@Ajax.ActionLink("AddFromOuterView", "AddGenres", "Channel", new { chosenGenres = new List<GuiGenre>(), channelId = -1 }, new AjaxOptions() { UpdateTargetId = "genreDiv" })
 
 @Html.Action("SelectGenre", new { channelId = -1 })
