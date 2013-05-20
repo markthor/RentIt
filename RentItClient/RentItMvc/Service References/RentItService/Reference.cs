@@ -278,6 +278,9 @@ namespace RentItMvc.RentItService {
         private int MaxNumberOfSubscriptionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MaxTotalVotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MinAmountPlayedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -285,6 +288,9 @@ namespace RentItMvc.RentItService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MinNumberOfSubscriptionsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MinTotalVotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameAscField;
@@ -297,6 +303,12 @@ namespace RentItMvc.RentItService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NumberOfCommentsDescField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfVotesAscField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfVotesDescField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SearchStringField;
@@ -415,6 +427,19 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MaxTotalVotes {
+            get {
+                return this.MaxTotalVotesField;
+            }
+            set {
+                if ((this.MaxTotalVotesField.Equals(value) != true)) {
+                    this.MaxTotalVotesField = value;
+                    this.RaisePropertyChanged("MaxTotalVotes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int MinAmountPlayed {
             get {
                 return this.MinAmountPlayedField;
@@ -449,6 +474,19 @@ namespace RentItMvc.RentItService {
                 if ((this.MinNumberOfSubscriptionsField.Equals(value) != true)) {
                     this.MinNumberOfSubscriptionsField = value;
                     this.RaisePropertyChanged("MinNumberOfSubscriptions");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MinTotalVotes {
+            get {
+                return this.MinTotalVotesField;
+            }
+            set {
+                if ((this.MinTotalVotesField.Equals(value) != true)) {
+                    this.MinTotalVotesField = value;
+                    this.RaisePropertyChanged("MinTotalVotes");
                 }
             }
         }
@@ -501,6 +539,32 @@ namespace RentItMvc.RentItService {
                 if ((object.ReferenceEquals(this.NumberOfCommentsDescField, value) != true)) {
                     this.NumberOfCommentsDescField = value;
                     this.RaisePropertyChanged("NumberOfCommentsDesc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfVotesAsc {
+            get {
+                return this.NumberOfVotesAscField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfVotesAscField, value) != true)) {
+                    this.NumberOfVotesAscField = value;
+                    this.RaisePropertyChanged("NumberOfVotesAsc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfVotesDesc {
+            get {
+                return this.NumberOfVotesDescField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfVotesDescField, value) != true)) {
+                    this.NumberOfVotesDescField = value;
+                    this.RaisePropertyChanged("NumberOfVotesDesc");
                 }
             }
         }

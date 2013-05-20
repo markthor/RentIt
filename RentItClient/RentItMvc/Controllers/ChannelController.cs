@@ -49,7 +49,7 @@ namespace RentItMvc.Controllers
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
-            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, AdvancedSearchModel.GetAdvancedSearchModel(searchArgs));
+            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, (AdvancedSearchModel) searchArgs);
             return View("SearchResults", model);
         }
 

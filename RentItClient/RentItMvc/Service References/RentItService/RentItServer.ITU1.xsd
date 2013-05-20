@@ -10,13 +10,17 @@
       <xs:element minOccurs="0" name="MaxAmountPlayed" type="xs:int" />
       <xs:element minOccurs="0" name="MaxNumberOfComments" type="xs:int" />
       <xs:element minOccurs="0" name="MaxNumberOfSubscriptions" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxTotalVotes" type="xs:int" />
       <xs:element minOccurs="0" name="MinAmountPlayed" type="xs:int" />
       <xs:element minOccurs="0" name="MinNumberOfComments" type="xs:int" />
       <xs:element minOccurs="0" name="MinNumberOfSubscriptions" type="xs:int" />
+      <xs:element minOccurs="0" name="MinTotalVotes" type="xs:int" />
       <xs:element minOccurs="0" name="NameAsc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NameDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NumberOfCommentsAsc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NumberOfCommentsDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfVotesAsc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfVotesDesc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SearchString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SortOption" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartIndex" type="xs:int" />
