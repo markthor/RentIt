@@ -16,14 +16,18 @@
 <script type="text/javascript">
     function addItem() {
         $("#Item1 option:selected").appendTo("#Item2");
+        $("#Item2 option").attr("selected", false);
     }
     function addallItems() {
         $("#Item1 option").appendTo("#Item2");
+        $("#Item2 option").attr("selected", false);
     }
     function removeItem() {
         $("#Item2 option:selected").appendTo("#Item1");
+        $("#Item1 option").attr("selected", false);
     }
     function removeallItems() {
         $("#Item2 option").appendTo("#Item1");
+        $("#Item1 option").attr("selected", false);
     }
 </script>
