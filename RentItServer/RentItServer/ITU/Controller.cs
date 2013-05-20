@@ -92,17 +92,6 @@ namespace RentItServer.ITU
             _streamHandler.InitTimer();
         }
 
-        /*
-        /// <summary>
-        /// Starts the channel stream.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        public void StartChannelStream(int channelId)
-        {
-            if (!_dao.ChannelHasTracks(channelId)) throw new NoTracksOnChannelException("Channel with id: [" + channelId + "] has no associated tracks and cannot be started");
-            _streamHandler.ManualStreamStart(channelId);
-        }
-        */
         /// <summary>
         /// Login the specified user.
         /// </summary>
@@ -233,32 +222,6 @@ namespace RentItServer.ITU
         public bool IsCorrectPassword(int userId, string password)
         {
             return _dao.IsCorrectPassword(userId, password);
-        }
-
-        /// <summary>
-        /// Gets all user ids.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<int> GetAllUserIds()
-        {
-            try
-            {
-                List<int> userIds = new List<int>();
-                var allUsers = _dao.GetAllUsers();
-                foreach (User user in allUsers)
-                {
-                    userIds.Add(user.Id);
-                }
-                _logger.AddEntry("GetAllUserIds succeeded.");
-                return userIds;
-            }
-            catch (Exception e)
-            {
-                //if (_handler != null)
-                //    _handler(this, new RentItEventArgs("GetAllUserIds failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("GetAllUserIds failed with exception [{0}].", e));
-                throw;
-            }
         }
 
         /// <summary>
@@ -410,15 +373,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Adds one to the hits of a channel.
-        /// </summary>
-        /// <param name="channelId">The id of the channel.</param>
-        public void IncrementHitsForChannel(int channelId)
-        {
-            _dao.IncrementHitsForChannel(channelId);
-        }
-
-        /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
@@ -434,32 +388,6 @@ namespace RentItServer.ITU
             }
 
             return channel.GetChannel();
-        }
-
-        /// <summary>
-        /// Gets the channel ids matching the given search arguments.
-        /// </summary>
-        /// <param name="args">The search arguments (used for filtering).</param>
-        /// <returns>An array of channel ids matching search criteria. If there are no matches, will return an empty array. </returns>
-        public IEnumerable<int> GetAllChannelIds()
-        {
-            try
-            {
-                List<int> allChannelIds = new List<int>();
-                IEnumerable<Channel> channels = _dao.GetAllChannels();
-                foreach (Channel channel in channels)
-                {
-                    allChannelIds.Add(channel.Id);
-                }
-                return allChannelIds;
-            }
-            catch (Exception e)
-            {
-                //if (_handler != null)
-                //    _handler(this, new RentItEventArgs("GetChannelIds failed with exception [" + e + "]."));
-                LogAndThrowException(e, "GetAllChannelIds");
-                throw;
-            }
         }
 
         /// <summary>
@@ -503,13 +431,15 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Creates the vote.
+        /// Creates a vote.
         /// </summary>
-        /// <param name="rating">The rating.</param>
+        /// <param name="rating">The rating. -1 for downvote, 1 for upvote. Any other value than -1 or 1 will be have no effect</param>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
+            // ignore ratings different from -1 and 1
+            if (rating != -1 && rating != 1) return;
             try
             {
                 _dao.CreateVote(rating, userId, trackId);
@@ -529,7 +459,8 @@ namespace RentItServer.ITU
         /// <param name="userId">User id of the owner of the track</param>
         /// <param name="channelId">Id of the channel which own the track</param>
         /// <param name="audioStream">MemoryStream of the mp3 file</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
+        /// <returns>The id of the track</returns>
+        public int AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
             //save file
             //get track info
@@ -559,7 +490,6 @@ namespace RentItServer.ITU
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
 
                 //Set track properties and update the track in the database
-                string filepath = FilePath.ITUTrackPath + fileName;
                 int tId = track.Id;
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
                 track.Id = tId;
@@ -572,8 +502,8 @@ namespace RentItServer.ITU
                 _dao.DeleteTrackEntry(track.Id);
                 _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
-
             _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
+            return track.Id;
         }
 
         /// <summary>
@@ -616,26 +546,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets the track info.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="trackname">The trackname.</param>
-        /// <returns></returns>
-        public DatabaseWrapperObjects.Track GetTrackInfo(int channelId, string trackname)
-        {
-            try
-            {
-                return _dao.GetTrack(channelId, trackname).GetTrack();
-            }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackInfoByTrackname deletion failed with exception [" + e + "]."));
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Removes the track.
         /// </summary>
         /// <param name="trackId">The track id.</param>
@@ -664,52 +574,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets the track ids.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns></returns>
-        public IEnumerable<int> GetTrackIds(int channelId)
-        {
-            try
-            {
-                List<int> theTrackIds = new List<int>();
-                IEnumerable<Track> theTracks = _dao.GetTrackList(channelId);
-                foreach (Track track in theTracks)
-                {
-                    theTrackIds.Add(track.Id);
-                }
-                return theTrackIds;
-            }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTrackIds failed with exception [" + e + "]."));
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the tracks.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="args">The args.</param>
-        /// <returns></returns>
-        public IEnumerable<ITU.DatabaseWrapperObjects.Track> GetTracks(int channelId, TrackSearchArgs args)
-        {
-            try
-            {
-                IEnumerable<Track> tracks = _dao.GetTracksWithFilter(channelId, args);
-                return ITU.DatabaseWrapperObjects.Track.GetTracks(tracks);
-            }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("GetTracks failed with exception [" + e + "]."));
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Comments on the specified channel.
         /// </summary>
         /// <param name="comment">The comment.</param>
@@ -724,50 +588,6 @@ namespace RentItServer.ITU
             }
             if (_handler != null)
                 _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
-        }
-
-        /// <summary>
-        /// Deletes the comment.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="date">The date.</param>
-        public void DeleteComment(int userId, int channelId, DateTime date)
-        {
-            try
-            {
-                _dao.DeleteComment(channelId, userId, date);
-            }
-            catch (Exception e)
-            {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("DeleteComment failed with exception [" + e + "]."));
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets comments associated with a user within the specified range. Ranges outside the size of the comment collection or null is interpreted as extremes.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// /// <param name="fromInclusive">The start index to retrieve comments from inclusive.</param>
-        /// /// <param name="toExclusive">The end index to retieve comments from exclusive.</param>
-        /// <returns>
-        /// Comments from a specific user in the specified range.
-        /// </returns>
-        public DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int? fromInclusive, int? toExclusive)
-        {
-            if (fromInclusive == null) fromInclusive = 0;
-            if (toExclusive == null) toExclusive = int.MaxValue;
-            try
-            {
-                List<Comment> comments = _dao.GetUserComments(userId, fromInclusive.Value, toExclusive.Value);
-                return Comment.GetComments(comments).ToArray();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
         }
 
         /// <summary>
@@ -924,15 +744,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets the default track search args.
-        /// </summary>
-        /// <returns></returns>
-        public TrackSearchArgs GetDefaultTrackSearchArgs()
-        {
-            return new TrackSearchArgs();
-        }
-
-        /// <summary>
         /// Gets the created channels.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -995,29 +806,7 @@ namespace RentItServer.ITU
         {
             _dao.IncrementChannelPlays(channelId);
         }
-        /*
-        /// <summary>
-        /// Determines whether [is channel playing] [the specified channel id].
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns>
-        ///   <c>true</c> if [is channel playing] [the specified channel id]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsChannelPlaying(int channelId)
-        {
-            return _streamHandler.IsChannelStreamRunning(channelId);
-        }
-        */
-        /*
-        /// <summary>
-        /// Stops the channel stream.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        public void StopChannelStream(int channelId)
-        {
-            _streamHandler.StopChannelStream(channelId);
-        }
-        */
+
         /// <summary>
         /// Gets the vote.
         /// </summary>

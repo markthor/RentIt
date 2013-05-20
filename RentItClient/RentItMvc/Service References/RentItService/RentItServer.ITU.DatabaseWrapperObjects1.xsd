@@ -28,25 +28,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfChannel" nillable="true" type="tns:ArrayOfChannel" />
-  <xs:complexType name="Track">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Artist" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ChannelId" type="xs:int" />
-      <xs:element minOccurs="0" name="DownVotes" type="xs:int" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Length" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Path" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UpVotes" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Track" nillable="true" type="tns:Track" />
-  <xs:complexType name="ArrayOfTrack">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Track" nillable="true" type="tns:Track" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfTrack" nillable="true" type="tns:ArrayOfTrack" />
   <xs:complexType name="ArrayOfComment">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Comment" nillable="true" type="tns:Comment" />
@@ -63,6 +44,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Comment" nillable="true" type="tns:Comment" />
+  <xs:complexType name="ArrayOfTrack">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Track" nillable="true" type="tns:Track" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTrack" nillable="true" type="tns:ArrayOfTrack" />
+  <xs:complexType name="Track">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Artist" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChannelId" type="xs:int" />
+      <xs:element minOccurs="0" name="DownVotes" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Length" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Path" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpVotes" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Track" nillable="true" type="tns:Track" />
   <xs:complexType name="Vote">
     <xs:sequence>
       <xs:element minOccurs="0" name="TrackId" type="xs:int" />

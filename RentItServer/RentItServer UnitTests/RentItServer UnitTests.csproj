@@ -141,6 +141,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Test Files\b.mp3" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

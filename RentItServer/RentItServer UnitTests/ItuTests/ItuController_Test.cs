@@ -484,17 +484,15 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 controller.DeleteUser(testId);
                 User user = _dao.GetUser(testId);
-                Assert.IsNull(user);
-                List<Channel> userCreatedChannels = controller.GetCreatedChannels(testId);
-                Assert.IsTrue(userCreatedChannels.Count == 0);
-                //TODO: assert that all user comments have been removed
-                testId = int.MaxValue;
-                //Cleanup();
-                //Initialize();
+                Assert.Fail("No exception was thrown. ");
             }
-            catch (Exception e)
+            catch
             {
-                Assert.Fail("An exception was thrown. " + e);
+                List<Channel> userCreatedChannels = _dao.GetCreatedChannels(testId);
+                Assert.IsTrue(userCreatedChannels.Count == 0);
+                List<Comment> userCreatedComments = _dao.GetUserComments(testId, 0, int.MaxValue);
+                Assert.IsTrue(userCreatedComments.Count == 0);
+                testId = int.MaxValue;
             }
         }
         #endregion
@@ -1245,7 +1243,6 @@ namespace RentItServer_UnitTests.ItuTests
             return false;
         }
         #endregion
-
         #region Controller_IsCorrectPassword
         [TestMethod]
         public void Controller_IsCorrectPassword_Parameter_InvalidNull()
@@ -1559,149 +1556,6 @@ namespace RentItServer_UnitTests.ItuTests
             Assert.IsTrue(controller.GetSubscriberCount(TestExtensions._testChannelId2) == 0);
         }
         #endregion
-        #region Controller_GetUserComments
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_InvalidNullNull()
-        {
-            try
-            {
-                controller.GetUserComments(-1, null, null);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidNullNull()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, null, null);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidInvalidNull()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, -1, null);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidValidNull()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, 0, null);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidNullInvalid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, null, -1);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidNullValid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, null, 1);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidInvalidInvalid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, -1, -1);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidInvalidValid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, -1, 1);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidValidInvalid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, 0, -1);
-                Assert.Fail("No exception was raised");
-            }
-            catch
-            {
-                //This is good
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Parameter_ValidValidValid()
-        {
-            try
-            {
-                controller.GetUserComments(TestExtensions._testUser1.Id, 0, 1);
-            }
-            catch
-            {
-                Assert.Fail("An exception was raised");
-            }
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Behavior_NoComments()
-        {
-            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetUserComments(TestExtensions._testUser2.Id, 0, 1);
-            Assert.IsTrue(comments.Length == 0);
-        }
-        [TestMethod]
-        public void Controller_GetUserComments_Behavior_Comments()
-        {
-            RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetUserComments(TestExtensions._testUser1.Id, 0, 1);
-            Assert.IsTrue(comments.Length > 0);
-        }
-        #endregion
         #region Controller_GetChannelComments
         [TestMethod]
         public void Controller_GetChannelComments_Parameter_InvalidNullNull()
@@ -1847,7 +1701,6 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
 
         /* R0 */
-
         #region Controller_CreateChannel
         [TestMethod]
         public void Controller_CreateChannel_Behavior_ChannelCreated()
@@ -1898,7 +1751,7 @@ namespace RentItServer_UnitTests.ItuTests
                 double? updatedRating = 10000;
                 controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
-                Assert.IsTrue(channel.ChannelOwner.Id == updatedOwnerId);
+                Assert.IsTrue(channel.UserId == updatedOwnerId);
                 Assert.IsTrue(channel.Description.Equals(updatedDescription));
                 Assert.IsTrue(channel.Hits == updatedHits);
                 Assert.IsTrue(channel.Rating == updatedRating);
@@ -1916,7 +1769,7 @@ namespace RentItServer_UnitTests.ItuTests
             {
                 controller.UpdateChannel(TestExtensions._testChannelId1, null, null, null, null, null);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
-                Assert.IsTrue(channel.ChannelOwner.Id == TestExtensions._testChannelId1);
+                Assert.IsTrue(channel.UserId == TestExtensions._testUser1.Id);
                 Assert.IsTrue(channel.Description.Equals(TestExtensions._testChannel1Description));
                 Assert.IsTrue(channel.Hits == TestExtensions._testChannel1Hits);
                 Assert.IsTrue(channel.Rating == TestExtensions._testChannel1Rating);
@@ -1930,10 +1783,314 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
 
         /* R2 */
-
         #region Controller_CreateVote
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_InvalidInvalidInvalid()
+        {
+            try
+            {
+                controller.CreateVote(0, -1, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_InvalidValidInvalid()
+        {
+            try
+            {
+                controller.CreateVote(0, TestExtensions._testUser2.Id, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_ValidInvalidInvalid()
+        {
+            try
+            {
+                controller.CreateVote(1, -1, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_ValidValidInvalid()
+        {
+            try
+            {
+                controller.CreateVote(1, TestExtensions._testUser2.Id, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_InvalidInvalidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.CreateVote(0, -1, track.Id);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_InvalidValidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.CreateVote(0, TestExtensions._testUser2.Id, track.Id);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_ValidInvalidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.CreateVote(1, -1, track.Id);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                //This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Parameter_ValidValidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.CreateVote(1, TestExtensions._testUser2.Id, track.Id);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Behavior_Upvoting()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                    {
+                        Artist = "testartist",
+                        Name = "testname",
+                        Path = ""
+                    });
+                controller.CreateVote(1, TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track aTrack = _dao.GetTrack(track.Id).GetTrack();
+                Assert.IsTrue(aTrack.UpVotes == 1);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateVote_Behavior_Downvoting()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.CreateVote(-1, TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track aTrack = _dao.GetTrack(track.Id).GetTrack();
+                Assert.IsTrue(aTrack.DownVotes == 1);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        #endregion
+        #region Controller_DeleteVote
+        [TestMethod]
+        public void Controller_DeleteVote_Parameter_InvalidInvalid()
+        {
+            try
+            {
+                controller.DeleteVote(-1, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteVote_Parameter_ValidInvalid()
+        {
+            try
+            {
+                controller.DeleteVote(TestExtensions._testUser2.Id, -1);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteVote_Parameter_InvalidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                controller.DeleteVote(-1, track.Id);
+                Assert.Fail("No exception was thrown ");
+            }
+            catch
+            {
+                // This is good
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteVote_Parameter_ValidValid()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                _dao.CreateVote(1, TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track aTrack = _dao.GetTrack(track.Id).GetTrack();
+                if (aTrack.UpVotes != 1) Assert.Fail("Only added 1 vote, but the track has more or less than 1");
+                controller.DeleteVote(TestExtensions._testUser2.Id, track.Id);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteVote_Behavior_DeleteUpvote()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                _dao.CreateVote(1, TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track aTrack = _dao.GetTrack(track.Id).GetTrack();
+                if (aTrack.UpVotes != 1) Assert.Fail("Only added 1 vote, but the track has more or less than 1");
+                controller.DeleteVote(TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track anotherTrack = _dao.GetTrack(track.Id).GetTrack();
+                Assert.IsTrue(anotherTrack.DownVotes == 0);
+                Assert.IsTrue(anotherTrack.UpVotes == 0);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_DeleteVote_Behavior_DeleteDownvote()
+        {
+            try
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                {
+                    Artist = "testartist",
+                    Name = "testname",
+                    Path = ""
+                });
+                _dao.CreateVote(-1, TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track aTrack = _dao.GetTrack(track.Id).GetTrack();
+                if (aTrack.DownVotes != 1) Assert.Fail("Only added 1 vote, but the track has more or less than 1");
+                controller.DeleteVote(TestExtensions._testUser2.Id, track.Id);
+                RentItServer.ITU.DatabaseWrapperObjects.Track anotherTrack = _dao.GetTrack(track.Id).GetTrack();
+                Assert.IsTrue(anotherTrack.DownVotes == 0);
+                Assert.IsTrue(anotherTrack.UpVotes == 0);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
         #endregion
 
+        /* R3 */
+        #region Controller_AddTrack
+        //[TestMethod]
+        //public void Controller_AddTrack_Behavior_Adding()
+        //{
+        //    using (FileStream fs = File.OpenRead(string.Format("RentItServer UnitTests{0}Test Files{0}test.mp3", Path.DirectorySeparatorChar)))
+        //    {
+        //        using (MemoryStream ms = new MemoryStream())
+        //        {
+        //            fs.CopyTo(ms);
+        //            controller.AddTrack(TestExtensions._testUser1.Id, TestExtensions._testChannelId1, ms);
+        //            RentItServer.ITU.DatabaseWrapperObjects.Track track = _dao.GetTrack()
+
+        //                Assert.IsTrue(aTrack.DownVotes == 0);
+        //            Assert.IsTrue(aTrack.ChannelId == TestExtensions._testChannelId1);
+        //            Assert.IsTrue(aTrack.Artist == "");
+        //            Assert.IsTrue(aTrack.Length == 0);
+        //            Assert.IsTrue(aTrack.Name == "");
+        //            Assert.IsTrue(aTrack.Path == "");
+        //        }
+        //    }
+        //}
+        #endregion
 
         //TODO:
         #region Controller_GetCreatedChannels
@@ -1967,16 +2124,7 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_IncrementChannelPlays
         #endregion
-        #region Controller_AddTrack
-        //[TestMethod]
-        //public void Controller_AddTrack()
-        //{
-        //    FileStream fs = File.OpenRead(string.Format("C:{0}Users{0}Public{0}Music{0}Sample Music{0}Kalimba.mp3", System.IO.Path.DirectorySeparatorChar));
-        //    MemoryStream ms = new MemoryStream();
-        //    fs.CopyTo(ms);
-        //    RentItServer.ITU.DatabaseWrapperObjects.Track track = Controller.GetInstance().GetTrackInfo(ms);
-        //}
-        #endregion
+
         #region Controller_GetTracks
         #endregion
         #region Controller_RemoveTrack

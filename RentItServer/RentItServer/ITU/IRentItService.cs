@@ -28,14 +28,6 @@ namespace RentItServer.ITU
         DatabaseWrapperObjects.User SignUp(string usernameOrEmail, string email, string password);
 
         /// <summary>
-        /// Delete the user.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <exception cref="System.ArgumentException">No user with user id [+userId+]</exception>
-        [OperationContract]
-        void DeleteUser(int userId);
-
-        /// <summary>
         /// Gets the user with specified user id.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -46,13 +38,6 @@ namespace RentItServer.ITU
 
         [OperationContract]
         bool IsCorrectPassword(int userId, string password);
-
-        /// <summary>
-        /// Gets all users
-        /// </summary>
-        /// <returns>The users</returns>
-        [OperationContract]
-        int[] GetAllUserIds();
 
         /// <summary>
         /// Updates the user.
@@ -100,26 +85,12 @@ namespace RentItServer.ITU
         void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating);
 
         /// <summary>
-        /// Increments the hits attribute for the specified channel.
-        /// </summary>
-        /// <param name="channelId">The id of the channel.</param>
-        [OperationContract]
-        void IncrementHitsForChannel(int channelId);
-
-        /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
         /// <returns>The channel matching the given id.</returns>
         [OperationContract]
         DatabaseWrapperObjects.Channel GetChannel(int channelId);
-
-        /// <summary>
-        /// Gets all channels.
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        int[] GetAllChannelIds();
 
         /// <summary>
         /// Gets the channel ids matching the given search arguments.
@@ -132,7 +103,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a vote.
         /// </summary>
-        /// <param name="rating">The rating.</param>
+        /// <param name="rating">The rating. -1 for downvote, 1 for upvote. Any other value than -1 or 1 will be have no effect</param>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         /// <exception cref="System.ArgumentException">
@@ -153,32 +124,12 @@ namespace RentItServer.ITU
         void AddTrack(int userId, int channelId, MemoryStream audioStream);
 
         /// <summary>
-        /// Gets the track info associated with the track.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="trackname">The trackname.</param>
-        /// <returns></returns>
-        [OperationContract]
-        DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname);
-        
-        /// <summary>
         /// Removes the track.
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         [OperationContract]
         void RemoveTrack(int trackId);
-
-        /// <summary>
-        /// Gets the track ids associated witht he channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns></returns>
-        [OperationContract]
-        int[] GetTrackIds(int channelId);
-
-        [OperationContract]
-        DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args);
 
         /// <summary>
         /// Comments on the specified channel.
@@ -195,16 +146,6 @@ namespace RentItServer.ITU
         void CreateComment(string comment, int userId, int channelId);
 
         /// <summary>
-        /// Deletes the comment.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="date">The date of the comment.</param>
-        /// <exception cref="System.ArgumentException">No comment with channelId [+channelId+] and userId [+userId+] and date [+date+]</exception>
-        [OperationContract]
-        void DeleteComment(int channelId, int userId, DateTime date);
-               
-        /// <summary>
         /// Gets all comments associated with a channel
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -214,16 +155,6 @@ namespace RentItServer.ITU
         [OperationContract]
         DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive);
 
-        /// <summary>
-        /// Gets all comments associated with a user
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <returns>
-        /// All comments from a specific user
-        /// </returns>
-        [OperationContract]
-        DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive);
-        
         /// <summary>
         /// Determines whether [is email available] [the specified email].
         /// </summary>
@@ -273,13 +204,6 @@ namespace RentItServer.ITU
         /// <returns></returns>
         [OperationContract]
         ChannelSearchArgs GetDefaultChannelSearchArgs();
-
-        /// <summary>
-        /// Gets a track search args object with all fields having default values.
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        TrackSearchArgs GetDefaultTrackSearchArgs();
 
         /// <summary>
         /// Gets the channels created by the user
