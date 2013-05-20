@@ -503,7 +503,7 @@ namespace RentItServer.ITU
                 // add process to list of active streams
 
             _logger.AddEntry("Start restart of all streams");
-            timer.Interval = 86400000; //Set timer interval to 24hours
+            timer.Interval = (ResetDate - DateTime.Now).TotalMilliseconds; //Set timer interval to 24hours
 
             // Close all streams
             CloseAllStreams();
@@ -534,9 +534,17 @@ namespace RentItServer.ITU
             }
             _logger.AddEntry("All ezstream processes have been killed");
 
+            //Remove future trackplays
+            foreach (EzProcess c in runningChannelIds.Values)
+            {
+                //Delete all the trackplays which have not yet been played
+                DeleteTrackPlays(c.ChannelId, DateTime.Now);
+            }
+
             // clear dictionary of active streams
-            _logger.AddEntry("Clearing all runningChannelIds");
+            _logger.AddEntry("Clearing all runningChannelIds and process ids");
             runningChannelIds.Clear();
+            ezstreamProcessIds.Clear();
         }
         #endregion
         #endregion
