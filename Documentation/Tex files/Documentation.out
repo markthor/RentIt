@@ -18,18 +18,17 @@
 \BOOKMARK [3][-]{subsubsection.3.4.4}{Microsoft MVC}{subsection.3.4}% 18
 \BOOKMARK [2][-]{subsection.3.5}{Track selection}{section.3}% 19
 \BOOKMARK [1][-]{section.4}{Implementation}{}% 20
-\BOOKMARK [2][-]{subsection.4.1}{Major classes}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Major components}{section.4}% 21
 \BOOKMARK [3][-]{subsubsection.4.1.1}{Class diagram}{subsection.4.1}% 22
 \BOOKMARK [3][-]{subsubsection.4.1.2}{TrackPrioritizer}{subsection.4.1}% 23
 \BOOKMARK [2][-]{subsection.4.2}{Third-party streaming components}{section.4}% 24
 \BOOKMARK [3][-]{subsubsection.4.2.1}{IceCast}{subsection.4.2}% 25
 \BOOKMARK [3][-]{subsubsection.4.2.2}{EzStream}{subsection.4.2}% 26
-\BOOKMARK [2][-]{subsection.4.3}{Sequence diagram}{section.4}% 27
-\BOOKMARK [1][-]{section.5}{Testing Strategy}{}% 28
-\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 29
-\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.2}{SMU webservice api}{section.6}% 31
-\BOOKMARK [2][-]{subsection.6.3}{Collaboration Considerations}{section.6}% 32
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Fault lines}{subsection.6.3}% 33
-\BOOKMARK [3][-]{subsubsection.6.3.2}{Solutions}{subsection.6.3}% 34
-\BOOKMARK [3][-]{subsubsection.6.3.3}{Conclusion of the SMU collaboration}{subsection.6.3}% 35
+\BOOKMARK [1][-]{section.5}{Testing Strategy}{}% 27
+\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 28
+\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.2}{SMU webservice api}{section.6}% 30
+\BOOKMARK [2][-]{subsection.6.3}{Collaboration Considerations}{section.6}% 31
+\BOOKMARK [3][-]{subsubsection.6.3.1}{Fault lines}{subsection.6.3}% 32
+\BOOKMARK [3][-]{subsubsection.6.3.2}{Solutions}{subsection.6.3}% 33
+\BOOKMARK [3][-]{subsubsection.6.3.3}{Conclusion of the SMU collaboration}{subsection.6.3}% 34
