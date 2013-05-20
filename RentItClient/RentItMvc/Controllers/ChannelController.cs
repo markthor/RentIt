@@ -21,6 +21,16 @@ namespace RentItMvc.Controllers
             return View(model);
         }
 
+        public List<GuiChannel> AdvancedSearchWithArgs(AdvancedSearchModel model)
+        {
+            Channel[] channels;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                channels = proxy.GetChannels((ChannelSearchArgs) model);
+            }
+            return GuiClassConverter.ConvertChannels(channels);
+        }
+
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
                                       int? maxAmountOfComments, int? minAmountOfPlays, int? maxAmountOfPlays, int? minAmountOfVotes,
                                       int? maxAmountOfVotes, string sortingKey, string sortingBy, int startIndex, int endIndex)
