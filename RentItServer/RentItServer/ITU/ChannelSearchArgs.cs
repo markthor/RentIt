@@ -51,6 +51,16 @@ namespace RentItServer.ITU
         /// </summary>
         [DataMember]
         public readonly string NumberOfCommentsAsc = "com asc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments descending
+        /// </summary>
+        [DataMember]
+        public readonly string NumberOfVotesDesc = "vot desc";
+        /// <summary>
+        /// Assign this value to SortOption in order to get the query sorted by number of comments ascending
+        /// </summary>
+        [DataMember]
+        public readonly string NumberOfVotesAsc = "vot asc";
 
         /// <summary>
         /// Gets the search string.
