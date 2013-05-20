@@ -110,7 +110,6 @@ namespace RentItMvc.Controllers
             return RedirectToAction("PopularChannels", "Channel", new { userId = Session["userId"] });
         }
 
-        [HttpPost]
         public ActionResult LogOut()
         {
             Session.RemoveAll();
