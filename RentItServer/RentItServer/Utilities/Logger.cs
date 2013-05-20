@@ -58,6 +58,7 @@ namespace RentItServer.Utilities
         /// Initializes a new instance of the Logger class.
         /// </summary>
         /// <exception cref="System.ArgumentException">Full must not target a directory. absolutePath =  + absolutePath</exception>
+        [Obsolete]
         public Logger(string absolutePath, ref EventHandler handler)
         {
             String directory = absolutePath.Substring(0, absolutePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
