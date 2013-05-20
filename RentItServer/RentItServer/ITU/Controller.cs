@@ -228,6 +228,8 @@ namespace RentItServer.ITU
         /// <param name="email">The email. Can be null</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
+            if (username != null && username.Equals("")) LogAndThrowException(new ArgumentException("username is empty"), "UpdateUser");
+            if (password != null && password.Equals("")) LogAndThrowException(new ArgumentException("password is empty"), "UpdateUser");
             if (email != null)
             {
                 String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
@@ -734,7 +736,7 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsUsernameAvailable(string username)
         {
-            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
+            if (username == null) LogAndThrowException(new ArgumentNullException("username"), "IsUsernameAvailable");
             if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
