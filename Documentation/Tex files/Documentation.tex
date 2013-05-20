@@ -285,7 +285,7 @@ In the method GetChannelIds (the method used for searching in all channels) we h
 All objects we return, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what we return to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by our entity framework, we would expose data which is not relevant for the user and which could be used for malicious purposes, for example filesystem paths.
 
 \subsection{GUI Technology}
-A major part of our web-client is the GUI(Graphical User Interface) and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
+A major part of our web-client is the GUI\footnote{Graphical User Interface} and the choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
 \begin{itemize}
 \item Familiarity - How familiar the programming team are with the technology or a related technology?
 \item Features - Does the technology have the features needed to support the features of our application?
@@ -307,8 +307,8 @@ Asp.Net is a server-side framework developed by Microsoft and is used to dynamic
 \subsubsection{Microsoft MVC}
 
 Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use.
-Our choice
-\\ \\
+
+\subsubsection{Our choice}
 We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh it.  It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
 
 \subsection{Track selection}
@@ -684,77 +684,75 @@ Cross-National Learning? } 2005
   \hline
   Testing &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
-  Interaction with the ITU system &  &  &  &  &  \\
+  Interaction with the ITU system &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  SMU webservice API &  &  &  &  &  \\
+  Collaboration considerations &  &  & \cellcolor{Gray} &  &  \\
   \hline
-  Collaboration considerations &  &  &  &  &  \\
-  \hline
-  Sequence Diagrams &  &  &  &  &  \\
+  Sequence Diagrams &  & \cellcolor{Gray} &  &  &  \\
   \hline
   Conclusion &  &  &  &  &  \\
   \hline
   \rowcolor{LightGray}\multicolumn{6}{|l|}{ITU-Server Code} \\
   \hline
-  Server Controller &  &  &  &  &  \\
+  Server Controller & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  DatabaseDao &  &  &  &  &  \\
+  DatabaseDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray}  \\
   \hline
-  FileSystemDao &  &  &  &  &  \\
+  FileSystemDao &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
-  TrackPrioritizer &  &  &  &  &  \\
+  TrackPrioritizer &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  StreamHandler &  &  &  &  &  \\
+  StreamHandler & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
   \hline
-  Logger &  &  &  &  &  \\
+  Logger &  &  &  & \cellcolor{Gray} &  \\
   \hline
-  DatabaseWrapperObjects &  &  &  &  &  \\
+  DatabaseWrapperObjects &  &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  XMLGenerator &  &  &  &  &  \\
+  XMLGenerator & \cellcolor{Gray} &  &  &  &  \\
   \hline
-  IRentItService/RentItService &  &  &  &  &  \\
+  IRentItService/RentItService & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  SearchArgs &  &  &  &  &  \\
+  SearchArgs &  &  &  &  & \cellcolor{Gray} \\
   \hline
   \rowcolor{LightGray}\multicolumn{6}{|l|}{Webclient Code} \\
   \hline
-  Model &  &  &  &  &  \\
+  Models & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
   \hline
-  Views &  &  &  &  &  \\
+  Views & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
   \hline
-  Controller &  &  &  &  &  \\
+  Controllers & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
   \hline
-  Layouts &  &  &  &  &  \\
+  Layouts & \cellcolor{Gray} &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
   \hline
-  CSS &  &  &  &  &  \\
+  CSS & &  & \cellcolor{Gray} &  & \cellcolor{Gray} \\
   \hline
-  JavaScript &  &  &  &  &  \\
+  JavaScript &  &  &  &  & \cellcolor{Gray} \\
   \hline
   \rowcolor{LightGray}\multicolumn{6}{|l|}{SMU-System Code} \\
   \hline
-  ISMURentItService/SMURentItService &  &  &  &  &  \\
+  ISMURentItService/SMURentItService & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  SMUController &  &  &  &  &  \\
+  SMUController & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  SMUDao &  &  &  &  &  \\
+  SMUDao & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   \rowcolor{LightGray}\multicolumn{6}{|l|}{Automated Test Code} \\
   \hline
-  ItuController\_Test &  &  &  &  &  \\
+  ItuController\_Test &  & \cellcolor{Gray} &  & \cellcolor{Gray}  & \\
   \hline
-  ItuDao\_Test &  &  &  &  &  \\
+  ItuDao\_Test &  &  &  & \cellcolor{Gray}  &  \\
   \hline
-  TrackPrioritizer\_Test &  &  &  &  &  \\
+  TrackPrioritizer\_Test & \cellcolor{Gray}  &  &  &  &  \\
   \hline
-  FileSystemHandler\_Test &  &  &  &  &  \\
+  FileSystemHandler\_Test &  &  &  & \cellcolor{Gray}  &  \\
   \hline
-  Logger\_Test &  &  &  &  &  \\
+  Logger\_Test &  &  &  & \cellcolor{Gray}  &  \\
   \hline
-  TestExtensions &  &  &  &  &  \\
+  TestExtensions &  & \cellcolor{Gray}  &  & \cellcolor{Gray}  &  \\
   \hline
-  SMUController\_Test &  &  &  &  &  \\
+  SMUController\_Test &  & \cellcolor{Gray}  & \cellcolor{Gray}  &  & \cellcolor{Gray}  \\
   \hline
-  SMUService\_Test &  &  &  &  &  \\
+  SMUService\_Test & \cellcolor{Gray}  &  &  & \cellcolor{Gray}  &  \\
   \hline
 \end{tabular}
 \end{figure}
