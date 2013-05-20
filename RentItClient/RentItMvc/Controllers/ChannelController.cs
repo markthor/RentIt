@@ -54,7 +54,7 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 searchArgs = proxy.GetDefaultChannelSearchArgs();
-                if (!channelName.Equals(""))
+                if (channelName != null && !channelName.Equals(""))
                     searchArgs.SearchString = channelName;
                 searchArgs.StartIndex = startIndex;
                 searchArgs.EndIndex = endIndex;
