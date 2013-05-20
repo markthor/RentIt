@@ -1876,7 +1876,7 @@ namespace RentItServer_UnitTests.ItuTests
                     //TODO fix this Assert.IsTrue(theChannels[i - 1].Comments.Count < theChannels[i].Comments.Count);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Assert.Fail("An exception was raised");
             }

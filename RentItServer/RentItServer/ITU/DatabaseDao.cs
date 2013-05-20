@@ -528,7 +528,7 @@ namespace RentItServer.ITU
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
                 }
-                if (filter.MaxNumberOfComments > Int32.MaxValue)
+                if (filter.MaxNumberOfComments < Int32.MaxValue)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count <= filter.MaxNumberOfComments select channel;
                 }
@@ -536,7 +536,7 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count >= filter.MinNumberOfSubscriptions select channel;
                 }
-                if (filter.MaxNumberOfSubscriptions > Int32.MaxValue)
+                if (filter.MaxNumberOfSubscriptions < Int32.MaxValue)
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
@@ -556,7 +556,7 @@ namespace RentItServer.ITU
                 }
                 if (filter.SortOption.Equals(""))
                 {   // Apply default sort order
-                    channels = from channel in channels orderby channel.Name select channel;
+                    channels = from channel in channels orderby channel.Name ascending select channel;
                 }
                 else
                 {   // Apply specific sort order
