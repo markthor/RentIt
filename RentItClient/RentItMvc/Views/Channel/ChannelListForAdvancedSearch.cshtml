@@ -104,7 +104,7 @@
         }
     }
 
-    @if ((Model.Item1.Count + Model.Item2.StartIndex) == RentItMvc.Controllers.ChannelController.TotalChannels())
+    @if ((Model.Item1.Count + Model.Item2.StartIndex) == RentItMvc.Controllers.ChannelController.TotalChannelsWithFilter(Model.Item2))
     {
         <button class="btn btn-primary pull-right disabled" disabled="disabled">>></button>
     }
