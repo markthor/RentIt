@@ -23,10 +23,17 @@ namespace RentItMvc.Controllers
 
         public List<GuiChannel> AdvancedSearchWithArgs(AdvancedSearchModel model)
         {
+            if (model.StartIndex < 0)
+            {
+                model.StartIndex = 0;
+                model.EndIndex = 10;
+            }
+            if (model.SearchString == null)
+                model.SearchString = "";
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                channels = proxy.GetChannels((ChannelSearchArgs) model);
+                channels = proxy.GetChannels((ChannelSearchArgs)model);
             }
             return GuiClassConverter.ConvertChannels(channels);
         }
@@ -62,7 +69,7 @@ namespace RentItMvc.Controllers
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
-            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, (AdvancedSearchModel) searchArgs);
+            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, (AdvancedSearchModel)searchArgs);
             return View("SearchResults", model);
         }
 
