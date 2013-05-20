@@ -27,7 +27,7 @@ namespace RentItMvc.Models
             return new ChannelSearchArgs
             {
                 SearchString = model.SearchString,
-                SortOption = model.SortingKey + model.SortingBy,
+                SortOption = model.SortingKey + " " + model.SortingBy,
                 StartIndex = model.StartIndex,
                 EndIndex = model.EndIndex,
                 MinNumberOfSubscriptions = model.MinAmountOfSubscribers != null ? model.MinAmountOfSubscribers.Value : -1,
