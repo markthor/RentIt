@@ -506,7 +506,6 @@ namespace RentItServer.ITU
             List<Channel> filteredChannels;
             using (RENTIT21Entities context = new RENTIT21Entities())
             {   // get all channels that starts with filter.Name
-                //var channels = from channel in context.Channels where channel.Name.StartsWith(filter.SearchString) select channel;
 
                 var channels = from c in context.Channels
                                where c.Name.Contains(filter.SearchString)
@@ -520,10 +519,6 @@ namespace RentItServer.ITU
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits <= filter.MaxAmountPlayed select channel;
                 }
-                /*if (filter.Genres.Any() == true)
-                {   // Apply genre filter
-                    channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
-                }*/
                 if (filter.MinNumberOfComments > -1)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
@@ -643,12 +638,6 @@ namespace RentItServer.ITU
 
                 // The amount of channels
                 int count;
-
-                // If both index are negative, return empty list
-                /*if (filter.StartIndex < -1 && filter.EndIndex < -1)
-                {
-                    return new List<Channel>();
-                }*/
 
                 if (filter.StartIndex < -1)
                 {   // If start index is negative, start from 0
