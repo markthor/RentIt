@@ -32,10 +32,6 @@ namespace RentItServer.ITU
         /// </summary>
         private readonly FileSystemDao _fileSystemHandler = FileSystemDao.GetInstance();
         /// <summary>
-        /// Event cast when log must make an _handler
-        /// </summary>
-        private static EventHandler _handler;
-        /// <summary>
         /// The logger
         /// </summary>
         private readonly Logger _logger;
@@ -59,6 +55,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// The _DB lock
         /// </summary>
+        [Obsolete]
         private readonly object _dbLock = new object();
 
         /// <summary>
@@ -67,7 +64,7 @@ namespace RentItServer.ITU
         private Controller()
         {
             // Initialize the logger
-            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName, ref _handler);
+            _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName);
 
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
@@ -140,11 +137,10 @@ namespace RentItServer.ITU
             try
             {
                 User user = null;
-                lock (_dbLock)
-                {
+
                     user = _dao.SignUp(username, email, password);
                     _logger.AddEntry("User created with username [" + username + "] and e-mail [" + email + "].");
-                }
+
                 return user.GetUser();
             }
             catch (Exception e)
@@ -170,14 +166,13 @@ namespace RentItServer.ITU
             }
             try
             {
-                lock (_dbLock)
-                {
+
                     user = _dao.GetUser(userId);
                     _dao.DeleteUser(userId);
                     _dao.DeleteVotesForUser(userId);
                     _dao.DeleteUserComments(userId);
                     _logger.AddEntry(string.Format("User successfully deleted. Local variables: userId = {0}, theUser = {1}", userId, user));
-                }
+
             }
             catch (Exception e)
             {
@@ -270,12 +265,11 @@ namespace RentItServer.ITU
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
             try
             {
-                lock (_dbLock)
-                {
+
                     channel = _dao.CreateChannel(channelName, userId, description, genres);
                     _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
-                }
+
             }
             catch (Exception)
             {
@@ -298,11 +292,10 @@ namespace RentItServer.ITU
 
             try
             {
-                lock (_dbLock)
-                {
+
                     _dao.CreateGenre(genreName);
                     _logger.AddEntry(logEntry + "Genre creation succeeded.");
-                }
+
             }
             catch (Exception)
             {
@@ -331,12 +324,11 @@ namespace RentItServer.ITU
             Channel channel = null;
             try
             {
-                lock (_dbLock)
-                {
+
                     channel = _dao.GetChannel(channelId);
                     _dao.DeleteChannel(channel.GetChannel());
                     _logger.AddEntry("Channel: [" + channel.Name + "] with id: [" + channelId + "] has been deleted");
-                }
+
             }
             catch (Exception e)
             {
@@ -566,8 +558,8 @@ namespace RentItServer.ITU
             }
             catch (Exception e)
             {
-                if (_handler != null)
-                    _handler(this, new RentItEventArgs("Track deletion failed with exception [" + e + "]."));
+
+                _logger.AddEntry("Track deletion failed with exception [" + e + "].");
                 throw;
             }
         }
@@ -580,13 +572,9 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void CreateComment(string comment, int userId, int channelId)
         {
-            lock (_dbLock)
-            {
-                _dao.CreateComment(comment, userId, channelId);
-                //_logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
-            }
-            if (_handler != null)
-                _handler(this, new RentItEventArgs("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "]."));
+            _dao.CreateComment(comment, userId, channelId);
+
+            _logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
         }
 
         /// <summary>
@@ -655,10 +643,9 @@ namespace RentItServer.ITU
         {
             try
             {
-                lock (_dbLock)
-                {
+
                     _dao.Subscribe(userId, channelId);
-                }
+
             }
             catch (Exception e)
             {
@@ -678,11 +665,10 @@ namespace RentItServer.ITU
         {
             try
             {
-                lock (_dbLock)
-                {
+
                     _dao.UnSubscribe(userId, channelId);
                     _dao.DeleteVotesForUser(userId, channelId);
-                }
+
             }
             catch (Exception e)
             {

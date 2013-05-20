@@ -19,7 +19,7 @@ namespace RentItServer_UnitTests.UtilityTests
             Assert.IsTrue(fs.Exists(absolutePath));
         }
         
-        [TestMethod]
+        /*[TestMethod]
         public void Logger_Event()
         {
             EventHandler handler = null;
@@ -32,6 +32,6 @@ namespace RentItServer_UnitTests.UtilityTests
                 handler(this, new RentItEventArgs("Entry two event"));;
             }
             Assert.IsTrue(fs.Exists(absolutePath));
-        }
+        }*/
     }
 }
