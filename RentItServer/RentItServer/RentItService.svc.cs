@@ -40,15 +40,6 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Delete the user.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        public void DeleteUser(int userId)
-        {
-            _controller.DeleteUser(userId);
-        }
-
-        /// <summary>
         /// Gets the user with specified user id.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -71,18 +62,6 @@ namespace RentItServer
         public bool IsCorrectPassword(int userId, string password)
         {
             return _controller.IsCorrectPassword(userId, password);
-        }
-
-        /// <summary>
-        /// Gets all users
-        /// </summary>
-        /// <returns>
-        /// The users
-        /// </returns>
-        public int[] GetAllUserIds()
-        {
-            IEnumerable<int> theUsers = _controller.GetAllUserIds();
-            return theUsers.ToArray();
         }
 
         /// <summary>
@@ -136,15 +115,6 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Increments the hits attribute for the specified channel.
-        /// </summary>
-        /// <param name="channelId">The id of the channel.</param>
-        public void IncrementHitsForChannel(int channelId)
-        {
-            _controller.IncrementHitsForChannel(channelId);
-        }
-
-        /// <summary>
         /// Gets a channel.
         /// </summary>
         /// <param name="channelId">The channel id for the channel to get.</param>
@@ -154,15 +124,6 @@ namespace RentItServer
         public ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
             return _controller.GetChannel(channelId);
-        }
-
-        /// <summary>
-        /// Gets all channels.
-        /// </summary>
-        /// <returns></returns>
-        public int[] GetAllChannelIds()
-        {
-            return _controller.GetAllChannelIds().ToArray();
         }
 
         /// <summary>
@@ -180,7 +141,7 @@ namespace RentItServer
         /// <summary>
         /// Creates a vote.
         /// </summary>
-        /// <param name="rating">The rating. -1 for downvote, 1 for upvote. Any other value than -1 or 1 will be have no effect</param>
+        /// <param name="rating">The rating.</param>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
@@ -200,33 +161,12 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the track info associated with the track.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="trackname">The trackname.</param>
-        /// <returns></returns>
-        public ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname)
-        {
-            return _controller.GetTrackInfo(channelId, trackname);
-        }
-
-        /// <summary>
         /// Removes the track.
         /// </summary>
         /// <param name="trackId">The track id.</param>
         public void RemoveTrack(int trackId)
         {
             _controller.RemoveTrack(trackId);
-        }
-
-        /// <summary>
-        /// Gets the track ids associated witht he channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <returns></returns>
-        public int[] GetTrackIds(int channelId)
-        {
-            return _controller.GetTrackIds(channelId).ToArray();
         }
 
         /// <summary>
@@ -243,17 +183,6 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the tracks.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="args">The args.</param>
-        /// <returns></returns>
-        public ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, TrackSearchArgs args)
-        {
-            return _controller.GetTracks(channelId, args).ToArray();
-        }
-
-        /// <summary>
         /// Comments on the specified channel.
         /// </summary>
         /// <param name="comment">The comment.</param>
@@ -262,17 +191,6 @@ namespace RentItServer
         public void CreateComment(string comment, int userId, int channelId)
         {
             _controller.CreateComment(comment, userId, channelId);
-        }
-
-        /// <summary>
-        /// Deletes the comment.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="date">The date of the comment.</param>
-        public void DeleteComment(int channelId, int userId, DateTime date)
-        {
-            _controller.DeleteComment(channelId, userId, date);
         }
 
         /// <summary>
@@ -287,20 +205,6 @@ namespace RentItServer
         public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
             return _controller.GetChannelComments(channelId, fromInclusive, toExclusive);
-        }
-
-        /// <summary>
-        /// Gets all comments associated with a user
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="fromInclusive"></param>
-        /// <param name="toExclusive"></param>
-        /// <returns>
-        /// All comments from a specific user
-        /// </returns>
-        public ITU.DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive)
-        {
-            return _controller.GetUserComments(userId, fromInclusive, toExclusive);
         }
 
         /// <summary>
@@ -372,15 +276,6 @@ namespace RentItServer
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
             return _controller.GetDefaultChannelSearchArgs();
-        }
-
-        /// <summary>
-        /// Gets a track search args object with all fields having default values.
-        /// </summary>
-        /// <returns></returns>
-        public TrackSearchArgs GetDefaultTrackSearchArgs()
-        {
-            return _controller.GetDefaultTrackSearchArgs();
         }
 
         /// <summary>

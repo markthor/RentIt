@@ -195,9 +195,6 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackSearchArgs.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -261,6 +258,7 @@
     <None Include="Service References\RentItService\System1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Channel\AdvancedSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
