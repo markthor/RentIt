@@ -1,4 +1,21 @@
-﻿.text-overflow {
+﻿.search-advanced-input {
+    width: 100px;
+    margin-right: 10px;
+    margin-left: 10px
+}
+
+.search-advanced-dropdown {
+    width: 114px;
+    margin-right: 14px;
+    margin-left: 10px
+}
+
+.search-advanced-button {
+    margin-top: 40px;
+    margin-left: 14px;
+}
+
+.text-overflow {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;

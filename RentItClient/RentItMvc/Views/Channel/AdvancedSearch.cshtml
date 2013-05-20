@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "AdvancedSearch";
+}
+
+<h2>AdvancedSearch</h2>
+@using (Html.BeginForm("SearchAdv", "Channel", FormMethod.Get, null))
+{
+    
+
+    <div class="pull-left" style="text-align: center">
+    
+        <h5>Amount of subscribers</h5>
+        @Html.TextBox("MinAmountOfSubscribers", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
+        @Html.TextBox("MaxAmountOfSubscribers", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
+    </div>
+
+    <div class="pull-left" style="text-align: center">
+    
+        <h5>Amount of comments</h5>
+        @Html.TextBox("MinAmountOfComments", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
+        @Html.TextBox("MaxAmountOfComments", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
+    </div>
+    <div class="clearfix" />
+
+    <div class="pull-left" style="text-align: center">
+    
+        <h5>Amount of plays</h5>
+        @Html.TextBox("MinAmountOfPlays", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
+        @Html.TextBox("MaxAmountOfPlays", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
+    </div>
+
+    <div class="pull-left" style="text-align: center">
+    
+    <h5>Amount of votes</h5>
+    @Html.TextBox("MinAmountOfVotes", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
+    @Html.TextBox("MaxAmountOfVotes", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
+        </div>
+
+    <div class="pull-left" style="text-align: center">
+    
+        <h5>Ordering</h5>
+        <div class="pull-left">
+            @Html.DropDownList("SortingKey", new List<SelectListItem> { new SelectListItem { Text = "Name", Value = "name" }, new SelectListItem { Text = "Subscribers", Value = "subcribers" }, new SelectListItem { Text = "Comments", Value = "comments" }, new SelectListItem { Text = "Plays", Value = "plays" }, new SelectListItem { Text = "Votes", Value = "votes" } }, new { @class = "search-advanced-dropdown" })
+        </div>
+        <div class="pull-left">
+            @Html.DropDownList("SortingBy", new List<SelectListItem> { new SelectListItem { Text = "Ascending", Value = "asc" }, new SelectListItem { Text = "Descending", Value = "desc" } }, new { @class = "search-advanced-dropdown" })
+        </div>
+    </div>
+    
+    <div class="pull-left" style="text-align: center; margin-left: -4px">
+        <h5>Name</h5>
+        @Html.TextBox("ChannelName", null, new { @class = "search-advanced-input", placeholder = "Name" })
+    </div>
+    
+    <div class="clearfix" />
+    <button class="btn btn-primary search-advanced-button" type="submit">
+        <i class="icon-search icon-white"></i>
+    </button>
+}

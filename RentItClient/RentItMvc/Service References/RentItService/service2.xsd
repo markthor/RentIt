@@ -35,18 +35,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeleteUser">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="userId" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DeleteUserResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetUser">
     <xs:complexType>
       <xs:sequence>
@@ -76,18 +64,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllUserIds">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllUserIdsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllUserIdsResult" nillable="true" type="q4:ArrayOfint" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="UpdateUser">
     <xs:complexType>
       <xs:sequence>
@@ -109,7 +85,7 @@
         <xs:element minOccurs="0" name="channelName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="genres" nillable="true" type="q5:ArrayOfstring" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="genres" nillable="true" type="q4:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -149,18 +125,6 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="IncrementHitsForChannel">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="IncrementHitsForChannelResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetChannel">
     <xs:complexType>
       <xs:sequence>
@@ -171,33 +135,21 @@
   <xs:element name="GetChannelResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelResult" nillable="true" type="q6:Channel" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllChannelIds">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllChannelIdsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllChannelIdsResult" nillable="true" type="q7:ArrayOfint" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelResult" nillable="true" type="q5:Channel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetChannels">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="args" nillable="true" type="q8:ChannelSearchArgs" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="args" nillable="true" type="q6:ChannelSearchArgs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetChannelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelsResult" nillable="true" type="q9:ArrayOfChannel" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelsResult" nillable="true" type="q7:ArrayOfChannel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -220,28 +172,13 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userId" type="xs:int" />
         <xs:element minOccurs="0" name="channelId" type="xs:int" />
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="audioStream" nillable="true" type="q10:MemoryStream" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="audioStream" nillable="true" type="q8:MemoryStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddTrackResponse">
     <xs:complexType>
       <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTrackInfoByTrackname">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-        <xs:element minOccurs="0" name="trackname" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTrackInfoByTracknameResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetTrackInfoByTracknameResult" nillable="true" type="q11:Track" />
-      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveTrack">
@@ -254,35 +191,6 @@
   <xs:element name="RemoveTrackResponse">
     <xs:complexType>
       <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTrackIds">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTrackIdsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetTrackIdsResult" nillable="true" type="q12:ArrayOfint" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTracks">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="args" nillable="true" type="q13:TrackSearchArgs" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTracksResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetTracksResult" nillable="true" type="q14:ArrayOfTrack" />
-      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateComment">
@@ -299,20 +207,6 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="DeleteComment">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="channelId" type="xs:int" />
-        <xs:element minOccurs="0" name="userId" type="xs:int" />
-        <xs:element minOccurs="0" name="date" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DeleteCommentResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetChannelComments">
     <xs:complexType>
       <xs:sequence>
@@ -325,23 +219,7 @@
   <xs:element name="GetChannelCommentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelCommentsResult" nillable="true" type="q15:ArrayOfComment" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetUserComments">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="userId" type="xs:int" />
-        <xs:element minOccurs="0" name="fromInclusive" type="xs:int" />
-        <xs:element minOccurs="0" name="toExclusive" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetUserCommentsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetUserCommentsResult" nillable="true" type="q16:ArrayOfComment" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetChannelCommentsResult" nillable="true" type="q9:ArrayOfComment" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -419,19 +297,7 @@
   <xs:element name="GetDefaultChannelSearchArgsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetDefaultChannelSearchArgsResult" nillable="true" type="q17:ChannelSearchArgs" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetDefaultTrackSearchArgs">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetDefaultTrackSearchArgsResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetDefaultTrackSearchArgsResult" nillable="true" type="q18:TrackSearchArgs" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="GetDefaultChannelSearchArgsResult" nillable="true" type="q10:ChannelSearchArgs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -445,7 +311,7 @@
   <xs:element name="GetCreatedChannelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetCreatedChannelsResult" nillable="true" type="q19:ArrayOfChannel" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetCreatedChannelsResult" nillable="true" type="q11:ArrayOfChannel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -459,7 +325,7 @@
   <xs:element name="GetSubscribedChannelsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetSubscribedChannelsResult" nillable="true" type="q20:ArrayOfChannel" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetSubscribedChannelsResult" nillable="true" type="q12:ArrayOfChannel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -473,7 +339,7 @@
   <xs:element name="GetTrackByChannelIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetTrackByChannelIdResult" nillable="true" type="q21:ArrayOfTrack" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetTrackByChannelIdResult" nillable="true" type="q13:ArrayOfTrack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -488,7 +354,7 @@
   <xs:element name="GetRecentlyPlayedTracksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetRecentlyPlayedTracksResult" nillable="true" type="q22:ArrayOfTrack" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetRecentlyPlayedTracksResult" nillable="true" type="q14:ArrayOfTrack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -570,7 +436,7 @@
   <xs:element name="GetVoteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetVoteResult" nillable="true" type="q23:Vote" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetVoteResult" nillable="true" type="q15:Vote" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -590,7 +456,7 @@
   <xs:element name="CountAllChannelsWithFilter">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="filter" nillable="true" type="q24:ChannelSearchArgs" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/RentItServer.ITU" minOccurs="0" name="filter" nillable="true" type="q16:ChannelSearchArgs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -637,7 +503,7 @@
   <xs:element name="GetAllGenresResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetAllGenresResult" nillable="true" type="q25:ArrayOfGenre" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetAllGenresResult" nillable="true" type="q17:ArrayOfGenre" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -651,7 +517,7 @@
   <xs:element name="GetGenresForChannelResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetGenresForChannelResult" nillable="true" type="q26:ArrayOfGenre" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/RentItServer.ITU.DatabaseWrapperObjects" minOccurs="0" name="GetGenresForChannelResult" nillable="true" type="q18:ArrayOfGenre" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

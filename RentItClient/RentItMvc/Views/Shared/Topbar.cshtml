@@ -26,8 +26,9 @@
                 <button class="btn btn-primary" type="submit">
                     <i class="icon-search icon-white"></i>
                 </button>    
-            
-                @Html.ActionLink("SearchResult", "Channel", "Channel", new { userId = Session["userId"] }, null)
+                <small>
+                    @Html.ActionLink("Advanced Search", "BrowsableChannels", "Channel", new { userId = Session["userId"], startIndex = 0, endIndex = 10  }, null)
+                </small>
             }
         
             using (@Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
