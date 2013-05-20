@@ -292,23 +292,21 @@ A major part of our web-client is the GUI\footnote{Graphical User Interface} and
 \item Support - Is the technology widely supported on different browsers and in different web environments?
 \item Extensibility/maintainability - Is the technology easy to maintain and extend and does it live up to common principles for good coding style, such as GRASP(General Responsibility Assignment Software Patterns)?
 \end{itemize}
-With these criteria defined, we consider several different GUI options:
+With these criteria defined, we consider several different GUI options: \\ \\
 
-\subsubsection{Silverlight}
-Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C\# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies.
+\textbf{Silverlight} \\
+Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C\# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies. \\ \\
 
-\subsubsection{HTML5}
+\textbf{HTML5} \\
+HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it would still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. \\ \\
 
-HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it would still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations.
+\textbf{ASP.NET} \\
+Asp.Net is a server-side framework developed by Microsoft and is used to dynamical create web-sites. It is a complete solution to creating a website with a build-in code-behind file written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE, that the development team is mostly familiar with. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. The styling of components are not that pretty and might require some extra work. \\ \\
 
-\subsubsection{ASP.NET}
-Asp.Net is a server-side framework developed by Microsoft and is used to dynamical create web-sites. It is a complete solution to creating a website with a build-in code-behind file written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE, that the development team is mostly familiar with. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. The styling of components are not that pretty and might require some extra work.
+\textbf{Microsoft MVC} \\
+Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use. \\ \\
 
-\subsubsection{Microsoft MVC}
-
-Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use.
-
-\subsubsection{Our choice}
+\textbf{Our choice} \\
 We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh it.  It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
 
 \subsection{Track selection}
@@ -325,7 +323,7 @@ The persistence of plays on a channel can be limited to Z days to limit the amou
 This section describes how the system is implemented by describing class responsibilities and collaborators, as well as the functional dynamics of the system. Complicated functionality and use of third party software will be explained.
 
 \subsection{Major components}
-Here is a list of the major components of the server:
+The most important classes for the server are listed and described below. All of them are made with the singleton design pattern and lazy instantiation.
 
 \textbf{DatabaseDao} \\*
 Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD\footnote{Abbreviation for Create, Read, Update \& Delete} operations on the database for the server program. This class deals with objects generated by the entity framework. \\*
@@ -388,6 +386,8 @@ As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call
 \theta (g(n + m))
 \end{align*}
 Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays. As the time complexity is linear in the number of track plays there is no need for frequent removal of track play entities from the database.
+
+\subsection{GUI Architecture}
 
 \subsection{Third-party streaming components}
 Two third party components have been used to to stream audio.
@@ -505,40 +505,11 @@ The genre aspect of the functional requirements are implemented server side, but
 As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server, some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
 The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemDao and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
 A success criteria for our systems is that an error or change in one system should not affect the other if not intended. Two different web services have been used to avoid that an erroneous method affects the other system.
-The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. 
-
-\subsection{SMU webservice api}
-The group from Singapore Management University requested the following API.
-
-\begin{itemize}
-	\item \texttt{int SignUp(string email, string name, string password, bool isAdmin)}
-	\item \texttt{int LogIn(string email, string password)}
-	\item \texttt{User GetUserInfo(int userId)}
-	\item \texttt{User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)}
-	\item \texttt{void DeleteAccount(int userId)}
-	\item \texttt{Book[] GetAllBooks()}
-	\item \texttt{Book[] GetPopularBooks()}
-	\item \texttt{Book[] GetNewBooks()}
-	\item \texttt{Book[] SearchBooks(String searchString)}
-	\item \texttt{Book[] GetBooksByGenre(String genre)}
-	\item \texttt{Book GetBookInfo(int bookId)}
-	\item \texttt{int HasRental(int userId, int bookId)}
-	\item \texttt{Rental[] GetRental(int userId, int bookId)}
-	\item \texttt{int RentBook(int userId, int bookId, int mediaType)}
-	\item \texttt{MemoryStream DownloadPdf(int bookId)}
-	\item \texttt{MemoryStream DownloadAudio(int bookId)}
-	\item \texttt{MemoryStream DownloadImage(int bookId)}
-	\item \texttt{Rental[] GetActiveUserRentals(int userId)}
-	\item \texttt{Rental[] GetAllUserRentals(int userId)}
-	\item \texttt{void DeleteBook(int bookId)}
-	\item \texttt{int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)}
-	\item \texttt{Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)}
-	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
-	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
-\end{itemize}
+The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. \\ \\
+The API we made for SMU is in the appendix.
 
 \subsection{Collaboration Considerations}
-One of the main focuses of the RentIt project was our collaboration with another development team at Singapore university(SMU)[reference]. There are many risk factors and challenges associated with international collaboration, especially when the collaborators do not come from the same cultural background. Simple communication tasks, that we take for granted when communication within our own team, can easily become an issue when collaboration with a foreign team and the differences in work routines, traditions and culture often leads to frustrations and project setbacks. \\
+One of the main focuses of the RentIt project was our collaboration with another development team at SMU\footnote{Abbreviation for Singapore Management University}. There are many risk factors and challenges associated with international collaboration, especially when the collaborators do not come from the same cultural background. Simple communication tasks, that we take for granted when communication within our own team, can easily become an issue when collaboration with a foreign team and the differences in work routines, traditions and culture often leads to frustrations and project setbacks. \\
 
 In this section, we will not cover any of the technical details about the program we developed with the SMU. We will focus on how the communication went and how well we worked together as part of an international collaboration. We will use a lot of the theory from the book "Subgroups dynamics in internationally distributed teams" by Crampton and Hinds. We will first analyse the potential faultlines\cite{smu} between our development team and the team at SMU. Then we will discuss what we can do as team to avoid that these faulines evolves into problems. Last, we will conclude on how successful our collaboration with the SMU team were and suggest changes we would make in an potential future collaboration.\\
 
@@ -634,6 +605,39 @@ Cross-National Learning? } 2005
 \end{thebibliography}
 \newpage
 \appendix
+\section{Textual items}
+\subsection{Glossary}
+Track: An audio file that the users can listen to via channels. \\*
+Channel: A collection of tracks that is played infinity, and can be listened to by users. Managed by a channel host.
+\subsection{SMU webservice API}
+The group from Singapore Management University requested the following API.
+\begin{itemize}
+	\item \texttt{int SignUp(string email, string name, string password, bool isAdmin)}
+	\item \texttt{int LogIn(string email, string password)}
+	\item \texttt{User GetUserInfo(int userId)}
+	\item \texttt{User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)}
+	\item \texttt{void DeleteAccount(int userId)}
+	\item \texttt{Book[] GetAllBooks()}
+	\item \texttt{Book[] GetPopularBooks()}
+	\item \texttt{Book[] GetNewBooks()}
+	\item \texttt{Book[] SearchBooks(String searchString)}
+	\item \texttt{Book[] GetBooksByGenre(String genre)}
+	\item \texttt{Book GetBookInfo(int bookId)}
+	\item \texttt{int HasRental(int userId, int bookId)}
+	\item \texttt{Rental[] GetRental(int userId, int bookId)}
+	\item \texttt{int RentBook(int userId, int bookId, int mediaType)}
+	\item \texttt{MemoryStream DownloadPdf(int bookId)}
+	\item \texttt{MemoryStream DownloadAudio(int bookId)}
+	\item \texttt{MemoryStream DownloadImage(int bookId)}
+	\item \texttt{Rental[] GetActiveUserRentals(int userId)}
+	\item \texttt{Rental[] GetAllUserRentals(int userId)}
+	\item \texttt{void DeleteBook(int bookId)}
+	\item \texttt{int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)}
+	\item \texttt{Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)}
+	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
+	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
+\end{itemize}
+\newpage
 \section{Diagrams}
 
 \begin{figure}[htp]
@@ -740,8 +744,6 @@ Cross-National Learning? } 2005
   \hline
   ItuController\_Test &  & \cellcolor{Gray} &  & \cellcolor{Gray}  & \\
   \hline
-  ItuDao\_Test &  &  &  & \cellcolor{Gray}  &  \\
-  \hline
   TrackPrioritizer\_Test & \cellcolor{Gray}  &  &  &  &  \\
   \hline
   FileSystemHandler\_Test &  &  &  & \cellcolor{Gray}  &  \\
@@ -756,8 +758,5 @@ Cross-National Learning? } 2005
   \hline
 \end{tabular}
 \end{figure}
-\section{Glossary}
-Track: An audio file that the users can listen to via channels. \\*
-Channel: A collection of tracks that is played infinity, and can be listened to by users. Managed by a channel host.
 
 \end{document}
