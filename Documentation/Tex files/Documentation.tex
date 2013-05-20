@@ -32,6 +32,11 @@
 
 
 \begin{document}
+
+\section*{Abstract}
+{\em 
+This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.\\ 
+
 \title{RentIt}
 \author{Andreas P., Morten T., Mark T., Toke L. \& Mikkel F.}
 \date{28-05-2013}
@@ -245,10 +250,6 @@ We have several different options to consider, when choosing the right architect
 \paragraph{Server architecture}
 The largest part of our server functionality lies within the WCF webservice. It is therefore important that we analyse how this can be structured in the best way.
 A WFC webservice consists of the service contracts, which defines the signatures of the webservice methods, and the actual service which contains the actual implementation of the methods. In a simple architecture you can let the webservice contain all the functionality of the service methods. This would be simple, but it would prevent the service from living up to many of the requirements we have defined in our non-functional requirements section, especially about supportability. We want the server architecture to be less coupled and more modular. The first step in modulation is to add a controller, which controls the general flow of the program. It does not contain any logic in itself, but delegates the program flow to other parts of the program, where the logic lies. It also makes sense to seperate the datastorage and the communication with the database into two different DAOs(Data Access Objects). In this way, you abstract away from the actual implementation and you make it possible to change these modules without affecting the rest of the program. Another component that it makes sense to have as a seperate module is the component responsible for handeling radio channels. Since streaming is a high-risk component of our program, it makes a lot of sense to seperate this. It open up for the possibility to modify and test the module seperately. 
-
-\paragraph{GUI architecture}
-
-
 
 \subsection{Data model}
 The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
