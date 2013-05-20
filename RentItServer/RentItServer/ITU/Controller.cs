@@ -241,7 +241,7 @@ namespace RentItServer.ITU
                 _dao.UpdateUser(userId, username, password, email);
                 updatedUser = _dao.GetUser(userId);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
@@ -277,7 +277,7 @@ namespace RentItServer.ITU
                     _logger.AddEntry(logEntry + "Channel creation succeeded.");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
@@ -304,7 +304,7 @@ namespace RentItServer.ITU
                     _logger.AddEntry(logEntry + "Genre creation succeeded.");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _logger.AddEntry("GenreCreation failed with exception [{0}]. logEntry = " + logEntry + ".");
                 throw;
@@ -607,7 +607,7 @@ namespace RentItServer.ITU
                 List<Comment> comments = _dao.GetChannelComments(channelId, fromInclusive.Value, toExclusive.Value);
                 return Comment.GetComments(comments).ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
