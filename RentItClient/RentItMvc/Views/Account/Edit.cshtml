@@ -5,7 +5,16 @@
 }
 
 
-<h2>Account details</h2>
+<h2 class="pull-left">Account details</h2>
+
+@if (Session["userId"] != null && (int)Session["userId"] == Model.UserId)
+{
+    <button class="btn btn-small btn-danger pull-right" style="margin-top: 15px" title="Delete channel" onclick="location.href='@(Url.Action("DeleteAccount", "Account", new { userId = Model.UserId }))'">
+        Delete Account
+    </button>
+}
+<div class="clearfix"></div>
+
 <div class="editor-label">
     @Html.DisplayFor(model => model.CurrentUsername)
 </div>
@@ -75,5 +84,3 @@
     <div class="clearfix"></div>
     <button class="btn btn-success" type="submit">Save changes</button>
 }
-
-@Html.ActionLink("Download", "Download", "DownloadLog")
