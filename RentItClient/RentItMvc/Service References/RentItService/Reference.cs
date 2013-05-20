@@ -1295,6 +1295,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCountChannelComments", ReplyAction="http://tempuri.org/IRentItService/GetCountChannelCommentsResponse")]
         System.Threading.Tasks.Task<int> GetCountChannelCommentsAsync(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountChannelsPassingFilter", ReplyAction="http://tempuri.org/IRentItService/CountChannelsPassingFilterResponse")]
+        int CountChannelsPassingFilter(RentItMvc.RentItService.ChannelSearchArgs filter);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountChannelsPassingFilter", ReplyAction="http://tempuri.org/IRentItService/CountChannelsPassingFilterResponse")]
+        System.Threading.Tasks.Task<int> CountChannelsPassingFilterAsync(RentItMvc.RentItService.ChannelSearchArgs filter);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1626,6 +1632,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task<int> GetCountChannelCommentsAsync(int channelId) {
             return base.Channel.GetCountChannelCommentsAsync(channelId);
+        }
+        
+        public int CountChannelsPassingFilter(RentItMvc.RentItService.ChannelSearchArgs filter) {
+            return base.Channel.CountChannelsPassingFilter(filter);
+        }
+        
+        public System.Threading.Tasks.Task<int> CountChannelsPassingFilterAsync(RentItMvc.RentItService.ChannelSearchArgs filter) {
+            return base.Channel.CountChannelsPassingFilterAsync(filter);
         }
     }
 }
