@@ -246,7 +246,7 @@ The target audience of our RentIt Radio system is primarily users in the age 13-
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements. This includes the possible solutions, the chosen solution and the reasoning for the choice.
 
-\section{Architecture}
+\subsection{Architecture}
 We have several different options to consider, when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so assume that program most have some kind of client server architecture. A basic client/server architecture is one. The client will be a webclient run in a browser and the server will contain all the backend functionality. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. Another option is to make the core backend functionality, the functionality related to modifing, creating and deleting data, into a WCF webservice. It that case the webclient makes calls to the server, which then calls the webservice. This makes the program more modular and enables other the service to be used by other clients idependently from our solution. A disadvantage is that it makes the solution more complicated and makes it rely on more hardware. To even further modulate the program, you can use an external database apart from the webservice to store data. We choose to go with the most modulated solution. We let the webclient call the server, which calls the WCF webservice, which then calls the database. More detailed description can be found in the implementation section.
 
 \paragraph{Server architecture}
