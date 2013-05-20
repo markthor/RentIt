@@ -28,7 +28,7 @@
         </button>    
         }
         <div class="pull-left" style="margin-left: 10px; margin-top: 18px; font-size: x-small">
-            @Html.ActionLink("Advanced Search", "AdvancedSearch", "Channel", new { startIndex = 0, endIndex = 10 })
+            @Html.ActionLink("Advanced Search", "AdvancedSearch", "Channel", new { startIndex = 0, endIndex = 10 }, null)
         </div>
         
         using (@Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "navbar-form pull-right" }))
