@@ -699,52 +699,6 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_GetChannelsWithFilter_Parameter_SortRatingDescending()
-        {
-            controller = Controller.GetInstance();
-            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = csa.RatingDesc;
-            try
-            {
-                CreateChannelsForTests();
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
-                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
-                Assert.IsTrue(theChannels.Count >= interval);
-                for (int i = 1; i < theChannels.Count; i++)
-                {   // The previous should be larger then current
-                    Assert.IsTrue(theChannels[i - 1].Rating >= theChannels[i].Rating);
-                }
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("An exception was raised. " + e);
-            }
-        }
-
-        [TestMethod]
-        public void Controller_GetChannelsWithFilter_Parameter_SortRatingAscending()
-        {
-            controller = Controller.GetInstance();
-            ChannelSearchArgs csa = controller.GetDefaultChannelSearchArgs();
-            csa.SortOption = csa.RatingAsc;
-            try
-            {
-                CreateChannelsForTests();
-                IEnumerable<RentItServer.ITU.DatabaseWrapperObjects.Channel> channels = controller.GetChannels(csa);
-                List<RentItServer.ITU.DatabaseWrapperObjects.Channel> theChannels = new List<RentItServer.ITU.DatabaseWrapperObjects.Channel>(channels);
-                Assert.IsTrue(theChannels.Count >= interval);
-                for (int i = 1; i < theChannels.Count; i++)
-                {   // The previous should be less then current
-                    Assert.IsTrue(theChannels[i - 1].Rating <= theChannels[i].Rating);
-                }
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("An exception was raised." + e);
-            }
-        }
-
-        [TestMethod]
         public void Controller_GetChannelsWithFilter_Parameter_SortSubscriptionsDescending()
         {
             controller = Controller.GetInstance();

@@ -512,25 +512,33 @@ namespace RentItServer.ITU
                                where c.Name.Contains(filter.SearchString)
                                select c;
 
-                if (filter.AmountPlayed > -1)
+                if (filter.MinAmountPlayed > -1)
                 {   // Apply amount played filter
-                    channels = from channel in channels where channel.Hits >= filter.AmountPlayed select channel;
+                    channels = from channel in channels where channel.Hits >= filter.MinAmountPlayed select channel;
+                }
+                if (filter.MaxAmountPlayed < Int32.MaxValue)
+                {   // Apply amount played filter
+                    channels = from channel in channels where channel.Hits <= filter.MaxAmountPlayed select channel;
                 }
                 if (filter.Genres.Any() == true)
                 {   // Apply genre filter
                     channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
                 }
-                if (filter.NumberOfComments > -1)
+                if (filter.MinNumberOfComments > -1)
                 {   // Apply comment filter
-                    channels = from channel in channels where channel.Comments.Count >= filter.NumberOfComments select channel;
+                    channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
                 }
-                if (filter.NumberOfSubscriptions > -1)
+                if (filter.MaxNumberOfComments > Int32.MaxValue)
+                {   // Apply comment filter
+                    channels = from channel in channels where channel.Comments.Count <= filter.MaxNumberOfComments select channel;
+                }
+                if (filter.MinNumberOfSubscriptions > -1)
                 {   // Apply subscription filter
-                    channels = from channel in channels where channel.Subscribers.Count >= filter.NumberOfSubscriptions select channel;
+                    channels = from channel in channels where channel.Subscribers.Count >= filter.MinNumberOfSubscriptions select channel;
                 }
-                if (filter.Rating > -1)
-                {   // Apply rating filter
-                    channels = from channel in channels where channel.Rating >= filter.Rating select channel;
+                if (filter.MaxNumberOfSubscriptions > Int32.MaxValue)
+                {   // Apply subscription filter
+                    channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
                 if (filter.SortOption.Equals(""))
                 {   // Apply default sort order
@@ -561,14 +569,6 @@ namespace RentItServer.ITU
                     else if (filter.SortOption.Equals(filter.NumberOfCommentsDesc))
                     {
                         channels = from channel in channels orderby channel.Comments.Count descending select channel;
-                    }
-                    else if (filter.SortOption.Equals(filter.RatingAsc))
-                    {
-                        channels = from channel in channels orderby channel.Rating ascending select channel;
-                    }
-                    else if (filter.SortOption.Equals(filter.RatingDesc))
-                    {
-                        channels = from channel in channels orderby channel.Rating descending select channel;
                     }
                     else if (filter.SortOption.Equals(filter.SubscriptionsAsc))
                     {
