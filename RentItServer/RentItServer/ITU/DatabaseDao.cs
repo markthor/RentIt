@@ -258,7 +258,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         /// <param name="username">The username. Can be null.</param>
         /// <param name="password">The password. Can be null.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="email">The email. Can be null</param>
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
         public void UpdateUser(int userId, string username, string password, string email)
         {
@@ -1778,6 +1778,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Deletes all comments.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
         public void DeleteAllComments(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1793,6 +1797,10 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets all genres.
+        /// </summary>
+        /// <returns></returns>
         public List<Genre> GetAllGenres()
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1803,6 +1811,11 @@ namespace RentItServer.ITU
             }
         }
 
+        /// <summary>
+        /// Gets the genres for channel.
+        /// </summary>
+        /// <param name="channelId">The channel id.</param>
+        /// <returns></returns>
         public List<Genre> GetGenresForChannel(int channelId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1821,5 +1834,22 @@ namespace RentItServer.ITU
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the users votes.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
+        public List<Vote> GetUserVotes(int userId)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var votes = from v in context.Votes
+                            where v.UserId == userId
+                            select v;
+                if(votes.Any() == false)    return new List<Vote>();
+                return votes.ToList();
+            }
+        } 
     }
 }
