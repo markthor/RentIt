@@ -1,5 +1,5 @@
 Testing.
-This paragraph will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
+This section will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
 as it is; following with a description of how we tested against the requirements of the product, followed by our argumentation that the tests indicate that 
 the product meets the requirements.
 
@@ -21,6 +21,13 @@ critical code units in the "Controller" class and the "TrackPrioritizer" class, 
 
 **** public void <Tested class>_<Tested method>_<Parameter or Behavior>_<The parameters/behavior tested> ****
 
+
+
+
+
+kom ind på at vi nu har forholdsvis solide unit tests, og at de implicit gør det lettere at extende/ændre på programmet da man hurtigt kan opdage om 
+det man har lavet giver fejlede tests. Set i det store billede som beskrevet i visionen, så er produktet som det er nu blot starten, en slags proof of 
+concept - og set i det lys er testsne pludseligt ikke postponet til slut i produktet produktionstid, men faktisk i starten.
 
 
 
