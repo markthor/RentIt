@@ -1,18 +1,16 @@
 ﻿.search-advanced-input {
     width: 100px;
-    margin-right: 10px;
-    margin-left: 10px
+    margin-right: 20px;
 }
 
 .search-advanced-dropdown {
     width: 114px;
-    margin-right: 14px;
-    margin-left: 10px
+    margin-right: 24px;
 }
 
 .search-advanced-button {
     margin-top: 40px;
-    margin-left: 14px;
+    margin-left: 177px;
 }
 
 .text-overflow {
