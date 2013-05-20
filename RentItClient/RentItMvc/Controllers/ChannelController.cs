@@ -21,6 +21,23 @@ namespace RentItMvc.Controllers
             return View(model);
         }
 
+        public List<GuiChannel> AdvancedSearchWithArgs(AdvancedSearchModel model)
+        {
+            if (model.StartIndex < 0)
+            {
+                model.StartIndex = 0;
+                model.EndIndex = 10;
+            }
+            if (model.SearchString == null)
+                model.SearchString = "";
+            Channel[] channels;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                channels = proxy.GetChannels((ChannelSearchArgs)model);
+            }
+            return GuiClassConverter.ConvertChannels(channels);
+        }
+
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
                                       int? maxAmountOfComments, int? minAmountOfPlays, int? maxAmountOfPlays, int? minAmountOfVotes,
                                       int? maxAmountOfVotes, string sortingKey, string sortingBy, int startIndex, int endIndex)
@@ -43,13 +60,16 @@ namespace RentItMvc.Controllers
                 //Plays
                 searchArgs.MinAmountPlayed = minAmountOfPlays != null ? minAmountOfPlays.Value : -1;
                 searchArgs.MaxAmountPlayed = maxAmountOfPlays != null ? maxAmountOfPlays.Value : int.MaxValue;
+                //Votes
+                searchArgs.MinTotalVotes = minAmountOfVotes != null ? minAmountOfVotes.Value : -1;
+                searchArgs.MaxTotalVotes = maxAmountOfVotes != null ? maxAmountOfVotes.Value : int.MaxValue;
                 //Sorting
                 searchArgs.SortOption = sortingKey + sortingBy;
 
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
-            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, AdvancedSearchModel.GetAdvancedSearchModel(searchArgs));
+            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, (AdvancedSearchModel)searchArgs);
             return View("SearchResults", model);
         }
 

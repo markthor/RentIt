@@ -528,7 +528,7 @@ namespace RentItServer.ITU
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
                 }
-                if (filter.MaxNumberOfComments > Int32.MaxValue)
+                if (filter.MaxNumberOfComments < Int32.MaxValue)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count <= filter.MaxNumberOfComments select channel;
                 }
@@ -536,27 +536,55 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count >= filter.MinNumberOfSubscriptions select channel;
                 }
-                if (filter.MaxNumberOfSubscriptions > Int32.MaxValue)
+                if (filter.MaxNumberOfSubscriptions < Int32.MaxValue)
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
                 if (filter.MinTotalVotes > -1)
                 {   // Apply votes filter
+                    IQueryable<Channel> noTracksChannels = null;
+                    if (filter.MinTotalVotes == 0)
+                    {
+                        noTracksChannels = from channel in channels
+                                           where channel.Tracks.Count == 0
+                                           select channel;
+                    }
+
                     channels = from channel in channels
-                               from t in channel.Tracks where
-                               (t.UpVotes + t.DownVotes) >= filter.MinTotalVotes
+                               where (from track in channel.Tracks
+                                      select track.UpVotes + track.DownVotes).Sum() >= filter.MinTotalVotes
                                select channel;
+
+                    if (filter.MinTotalVotes == 0 && noTracksChannels != null)
+                    {
+                        channels = channels.Concat(noTracksChannels);
+                    }
+                    channels = channels.Distinct();
                 }
                 if (filter.MaxTotalVotes < Int32.MaxValue)
                 {   // Apply votes filter
+                    IQueryable<Channel> noTracksChannels = null;
+                    if (filter.MinTotalVotes <= 0)
+                    {
+                        noTracksChannels = from channel in channels
+                                           where channel.Tracks.Count == 0
+                                           select channel;
+                    }
+
                     channels = from channel in channels
-                               from t in channel.Tracks where
-                               (t.UpVotes + t.DownVotes) <= filter.MaxTotalVotes
+                               where (from track in channel.Tracks
+                                      select track.UpVotes + track.DownVotes).Sum() <= filter.MaxTotalVotes
                                select channel;
+
+                    if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
+                    {
+                        channels = channels.Concat(noTracksChannels);
+                    }
+                    channels = channels.Distinct();
                 }
                 if (filter.SortOption.Equals(""))
                 {   // Apply default sort order
-                    channels = from channel in channels orderby channel.Name select channel;
+                    channels = from channel in channels orderby channel.Name ascending select channel;
                 }
                 else
                 {   // Apply specific sort order
@@ -595,15 +623,15 @@ namespace RentItServer.ITU
                     else if (filter.SortOption.Equals(filter.NumberOfVotesAsc))
                     {
                         channels = from channel in channels
-                                   from t in channel.Tracks 
-                                   orderby (t.UpVotes + t.DownVotes) ascending
+                                   orderby (from track in channel.Tracks
+                                            select track.UpVotes + track.DownVotes).Sum() ascending
                                    select channel;
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesDesc))
                     {
                         channels = from channel in channels
-                                   from t in channel.Tracks
-                                   orderby (t.UpVotes + t.DownVotes) descending
+                                   orderby (from track in channel.Tracks
+                                            select track.UpVotes + track.DownVotes).Sum() descending
                                    select channel;
                     }
                 }
@@ -731,7 +759,8 @@ namespace RentItServer.ITU
                     if (v.Value < 0)
                     {
                         v.Track.DownVotes -= 1;
-                    }else if (v.Value > 0)
+                    }
+                    else if (v.Value > 0)
                     {
                         v.Track.UpVotes -= 1;
                     }
@@ -761,7 +790,8 @@ namespace RentItServer.ITU
                     if (v.Value < 0)
                     {
                         v.Track.DownVotes -= 1;
-                    }else if (v.Value > 0)
+                    }
+                    else if (v.Value > 0)
                     {
                         v.Track.UpVotes -= 1;
                     }
@@ -1658,7 +1688,7 @@ namespace RentItServer.ITU
                 if (votes.Any() == false) throw new ArgumentException("No vote with userId [" + userId + "] and trackId [" + trackId + "]");
 
                 Vote vote = votes.First();
-                
+
                 //remove the vote from the user
                 vote.User.Votes.Remove(vote);
 
@@ -1666,7 +1696,8 @@ namespace RentItServer.ITU
                 if (vote.Value < 0)
                 {
                     vote.Track.DownVotes -= 1;
-                }else if (vote.Value > 0)
+                }
+                else if (vote.Value > 0)
                 {
                     vote.Track.UpVotes -= 1;
                 }

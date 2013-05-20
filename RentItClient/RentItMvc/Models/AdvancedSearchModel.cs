@@ -22,7 +22,26 @@ namespace RentItMvc.Models
         public int? MinAmountOfVotes { get; set; }
         public int? MaxAmountOfVotes { get; set; }
 
-        public static AdvancedSearchModel GetAdvancedSearchModel(ChannelSearchArgs args)
+        public static explicit operator ChannelSearchArgs(AdvancedSearchModel model)
+        {
+            return new ChannelSearchArgs
+            {
+                SearchString = model.SearchString,
+                SortOption = model.SortingKey + model.SortingBy,
+                StartIndex = model.StartIndex,
+                EndIndex = model.EndIndex,
+                MinNumberOfSubscriptions = model.MinAmountOfSubscribers != null ? model.MinAmountOfSubscribers.Value : -1,
+                MaxNumberOfSubscriptions = model.MaxAmountOfSubscribers != null ? model.MaxAmountOfSubscribers.Value : int.MaxValue,
+                MinNumberOfComments = model.MinAmountOfComments != null ? model.MinAmountOfComments.Value : -1,
+                MaxNumberOfComments = model.MaxAmountOfComments != null ? model.MaxAmountOfComments.Value : int.MaxValue,
+                MinAmountPlayed = model.MinAmountOfPlays != null ? model.MinAmountOfPlays.Value : -1,
+                MaxAmountPlayed = model.MaxAmountOfPlays != null ? model.MaxAmountOfPlays.Value : int.MaxValue,
+                MinTotalVotes = model.MinAmountOfVotes != null ? model.MinAmountOfVotes.Value : -1,
+                MaxTotalVotes = model.MaxAmountOfVotes != null ? model.MaxAmountOfVotes.Value : int.MaxValue
+            };
+        }
+
+        public static explicit operator AdvancedSearchModel(ChannelSearchArgs args)
         {
             return new AdvancedSearchModel
             {
@@ -36,7 +55,9 @@ namespace RentItMvc.Models
                 MinAmountOfComments = args.MinNumberOfComments,
                 MaxAmountOfComments = args.MaxNumberOfComments,
                 MinAmountOfPlays = args.MinAmountPlayed,
-                MaxAmountOfPlays = args.MaxAmountPlayed
+                MaxAmountOfPlays = args.MaxAmountPlayed,
+                MinAmountOfVotes = args.MinTotalVotes,
+                MaxAmountOfVotes = args.MaxTotalVotes
             };
         }
     }
