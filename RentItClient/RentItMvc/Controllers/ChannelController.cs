@@ -13,7 +13,7 @@ namespace RentItMvc.Controllers
     {
         public ActionResult AdvancedSearch(int startIndex, int endIndex)
         {
-            return View(new Tuple<int, int>(startIndex, endIndex));
+            return View(new Tuple<int, int, string>(startIndex, endIndex, null));
         }
 
         public ActionResult SearchResults(Tuple<List<GuiChannel>, AdvancedSearchModel> model)
@@ -54,7 +54,7 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 searchArgs = proxy.GetDefaultChannelSearchArgs();
-                if (!channelName.Equals(""))
+                if (channelName != null && !channelName.Equals(""))
                     searchArgs.SearchString = channelName;
                 searchArgs.StartIndex = startIndex;
                 searchArgs.EndIndex = endIndex;
@@ -152,7 +152,7 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, object value)
+        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, SelectedGenrePostModel model)
         {
             if (userId.HasValue)
             {
@@ -285,6 +285,7 @@ namespace RentItMvc.Controllers
         {
             if (userId.HasValue)
             {
+                return SearchAdv(searchArgs, null, null, null, null, null, null, null, null, "nam", "asc", 0, 10);
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     ChannelSearchArgs channelSearchArgs = proxy.GetDefaultChannelSearchArgs();
@@ -386,6 +387,14 @@ namespace RentItMvc.Controllers
                 proxy.DeleteChannel(channelId);
             }
             return RedirectToAction("MyChannels", new { userId = userId });
+        }
+
+        public static string GetChannelOwner(int userId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.GetUser(userId).Username;
+            }
         }
     }
 }

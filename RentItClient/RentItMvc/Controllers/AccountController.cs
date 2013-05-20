@@ -242,5 +242,14 @@ namespace RentItMvc.Controllers
                 proxy.DeleteVote(userId, trackId);
             }
         }
+
+        public ActionResult DeleteAccount(int userId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                proxy.DeleteAccount(userId);
+            }
+            return RedirectToAction("LogOut", "Account");
+        }
     }
 }
