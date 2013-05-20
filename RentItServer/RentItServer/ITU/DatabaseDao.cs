@@ -540,6 +540,20 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
+                if (filter.MinTotalVotes > -1)
+                {   // Apply votes filter
+                    channels = from channel in channels
+                               from t in context.Tracks where
+                               channel.Id == t.ChannelId && (t.UpVotes + t.DownVotes) >= filter.MinTotalVotes
+                               select channel;
+                }
+                if (filter.MaxTotalVotes < Int32.MaxValue)
+                {   // Apply votes filter
+                    channels = from channel in channels
+                               from t in context.Tracks where
+                               channel.Id == t.ChannelId && (t.UpVotes + t.DownVotes) <= filter.MaxTotalVotes
+                               select channel;
+                }
                 if (filter.SortOption.Equals(""))
                 {   // Apply default sort order
                     channels = from channel in channels orderby channel.Name select channel;
