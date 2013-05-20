@@ -25,7 +25,7 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         public const string _user1name = "Prechtig";
         public const string _user2name = "TestMan Jr";
         public const string _user1email = "andreas.p.poulsen@gmail.com";
-        public const string _user2email = "test";
+        public const string _user2email = "test@test.dk";
         public const string _userpassword = "test";
         public const string genreName1 = "Electro";
         public const string genreName2 = "Heavy Metal";

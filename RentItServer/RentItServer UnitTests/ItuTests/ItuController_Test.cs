@@ -1149,6 +1149,33 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.Fail("An exception was raised");
             }
         }
+        [TestMethod]
+        public void Controller_UnSubscribe_State_RemovedVotes()
+        {
+            for (int i = 0; i < interval; i++)
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                    {
+                        Artist = "testartist"+i,
+                        Name = "testname"+i,
+                        Path = ""
+                    });
+                controller.CreateVote(1, TestExtensions._testUser1.Id, track.Id);
+            }
+            int votesBefore = _dao.GetUserVotes(TestExtensions._testUser1.Id).Count;
+            // precondition check
+            Assert.IsTrue(votesBefore == interval);
+            try
+            {
+                controller.UnSubscribe(TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
+                int votesAfter = _dao.GetUserVotes(TestExtensions._testUser1.Id).Count;
+                Assert.IsTrue(votesAfter == 0);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
         #endregion
         #region Controller_Subscribe
         [TestMethod]
@@ -1278,6 +1305,19 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.CreateComment("", -1, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch (ArgumentException)
+            {
+                //This is Expected
+            }
+        }
+        [TestMethod]
+        public void Controller_CreateComment_Parameter_WhitespaceInvalidInvalid()
+        {
+            try
+            {
+                controller.CreateComment("  ", -1, -1);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
