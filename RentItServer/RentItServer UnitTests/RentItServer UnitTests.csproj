@@ -65,8 +65,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ItuTests\ItuController_Test.cs" />
-    <Compile Include="ItuTests\ItuDao_Test.cs" />
-    <Compile Include="ItuTests\StreamHandler_Test.cs" />
     <Compile Include="ItuTestUtilities\TestExtensions.cs" />
     <Compile Include="Service References\ITUServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

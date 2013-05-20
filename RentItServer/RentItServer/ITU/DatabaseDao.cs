@@ -238,21 +238,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets all users in the database
-        /// </summary>
-        /// <returns>The users</returns>
-        public List<User> GetAllUsers()
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var users = from user in context.Users
-                            select user;
-
-                return users.ToList();
-            }
-        }
-
-        /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -273,31 +258,6 @@ namespace RentItServer.ITU
                 if (username != null) theUser.Username = username;
                 if (password != null) theUser.Password = password;
                 if (email != null) theUser.Email = email;
-                context.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// Persists the modifications to this user object in the database.
-        /// </summary>
-        /// <param name="theUser">The user object to persist.</param>
-        /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
-        public void UpdateUser(User theUser)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var users = from user in context.Users
-                            where user.Id == theUser.Id
-                            select user;
-                if (users.Any() == false) throw new ArgumentException("No user with user id[" + theUser.Id + "]");
-
-                User theUpdatedUser = users.First();
-                theUpdatedUser.Username = theUser.Username;
-                theUpdatedUser.Password = theUser.Password;
-                theUpdatedUser.Channels = theUser.Channels;
-                theUpdatedUser.Comments = theUser.Comments;
-                theUpdatedUser.SubscribedChannels = theUser.SubscribedChannels;
-                theUpdatedUser.Votes = theUser.Votes;
                 context.SaveChanges();
             }
         }
@@ -436,16 +396,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Adds one to the hits of a channel.
-        /// </summary>
-        /// <param name="channelId">The id of the channel.</param>
-        public void IncrementHitsForChannel(int channelId)
-        {
-            Channel channel = GetChannel(channelId);
-            UpdateChannel(channelId, null, null, null, channel.Hits + 1, null, null);
-        }
-
-        /// <summary>
         /// Gets the channel.
         /// </summary>
         /// <param name="channelId">The channel id.</param>
@@ -467,24 +417,6 @@ namespace RentItServer.ITU
                     // Won't happen
                 }
                 return channels.First();
-            }
-        }
-
-        /// <summary>
-        /// Gets all channels.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Channel> GetAllChannels()
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var channels = from channel in context.Channels select channel;
-
-                if (channels.Any() == false)
-                {
-                    return new List<Channel>();
-                }
-                return channels.ToList();
             }
         }
 
@@ -842,33 +774,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Gets the track associated with a channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="trackname">The trackname.</param>
-        /// <returns>
-        /// The track, or null if no track with trackname exists in channel
-        /// </returns>
-        /// <exception cref="System.ArgumentException">No channel with channelId [+channelId+]</exception>
-        public Track GetTrack(int channelId, string trackname)
-        {
-            Track theTrack;
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var channels = from channel in context.Channels
-                               where channel.Id == channelId
-                               select channel;
-
-                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
-
-                Channel theChannel = channels.First();
-
-                theTrack = theChannel.Tracks.SingleOrDefault(t => t.Name.Equals(trackname));
-            }
-            return theTrack;
-        }
-
-        /// <summary>
         /// Gets the track.
         /// </summary>
         /// <param name="trackId">The track id.</param>
@@ -888,88 +793,6 @@ namespace RentItServer.ITU
                 theTrack = tracks.First();
             }
             return theTrack;
-        }
-
-        /// <summary>
-        /// Gets the tracks associated with a channel with filter options.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public List<Track> GetTracksWithFilter(int channelId, TrackSearchArgs filter)
-        {
-            List<Track> filteredTracks;
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {   // get all tracks that starts with filter.Name
-                var tracks = from track in context.Tracks where track.Name.StartsWith(filter.SearchString) select track;
-
-                if (string.IsNullOrEmpty(filter.Artist) == false)
-                {   // Apply artist filter
-                    tracks = from track in tracks where track.Artist.StartsWith(filter.Artist) select track;
-                }
-                if (string.IsNullOrEmpty(filter.SearchString) == false)
-                {   // Apply name filter
-                    tracks = from track in tracks where track.Name.StartsWith(filter.SearchString) select track;
-                }
-                if (filter.Downvotes > -1)
-                {   // Apply downvotes filter
-                    tracks = from track in tracks where track.DownVotes >= filter.Downvotes select track;
-                }
-                if (filter.Upvotes > -1)
-                {   // Apply upvotes filter
-                    tracks = from track in tracks where track.UpVotes >= filter.Upvotes select track;
-                }
-                if (filter.SortOption.Equals(""))
-                {   // Apply default sort order
-                    tracks = from track in tracks orderby track.Name select track;
-                }
-                else
-                {   // Apply specific sort order
-                    if (filter.SortOption.Equals(filter.ArtistAsc))
-                    {
-                        tracks = from track in tracks orderby track.Artist ascending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.ArtistDesc))
-                    {
-                        tracks = from track in tracks orderby track.Artist descending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.DownvotesAsc))
-                    {
-                        tracks = from track in tracks orderby track.DownVotes ascending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.DownvotesDesc))
-                    {
-                        tracks = from track in tracks orderby track.DownVotes descending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.NameAsc))
-                    {
-                        tracks = from track in tracks orderby track.Name ascending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.NameDesc))
-                    {
-                        tracks = from track in tracks orderby track.Name descending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.UpvotesAsc))
-                    {
-                        tracks = from track in tracks orderby track.UpVotes ascending select track;
-                    }
-                    else if (filter.SortOption.Equals(filter.UpvotesDesc))
-                    {
-                        tracks = from track in tracks orderby track.UpVotes descending select track;
-                    }
-                }
-
-                // Execute the query before leaving "using" block
-                filteredTracks = tracks.ToList();
-            }
-
-            if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
-            {   // Only get the tracks within the specified interval [filter.startIndex, ..., filter.endIndex]
-                Track[] range = new Track[filter.EndIndex - filter.StartIndex];
-                filteredTracks.CopyTo(filter.StartIndex, range, 0, filter.EndIndex - filter.StartIndex);
-                filteredTracks = new List<Track>(range);
-            }
-            return filteredTracks;
         }
 
         /// <summary>
@@ -1096,44 +919,6 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Deletes the comment.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="date">The date of the comment.</param>
-        /// <exception cref="System.ArgumentException">No comment with channelId [+channelId+] and userId [+userId+] and date [+date+]</exception>
-        public void DeleteComment(int channelId, int userId, DateTime date)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var comments = from comment in context.Comments
-                               where comment.ChannelId == channelId && comment.UserId == userId && comment.Date == date
-                               select comment;
-                if (comments.Any() == false) throw new ArgumentException("No comment with channelId [" + channelId + "] and userId [" + userId + "] and date [" + date + "]");
-
-                var channels = from channel in context.Channels
-                               where channel.Id == channelId
-                               select channel;
-
-                if (channels.Any() == false) throw new ArgumentException("No channel with channelId [" + channelId + "]");
-
-                var users = from user in context.Users
-                            where user.Id == userId
-                            select user;
-
-                if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
-
-                Comment theComment = comments.First();
-                context.Comments.Remove(theComment);
-                Channel theChannel = channels.First();
-                theChannel.Comments.Remove(theComment);
-                User theUser = users.First();
-                theUser.Comments.Remove(theComment);
-                context.SaveChanges();
-            }
-        }
-
-        /// <summary>
         /// Deletes all comments from a specific user.
         /// </summary>
         /// <param name="userId">The id of the user</param>
@@ -1150,45 +935,6 @@ namespace RentItServer.ITU
                     context.Comments.Remove(c);
                 }
                 context.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific comment.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="date">The date of the comment.</param>
-        /// <returns>The comment</returns>
-        public Comment GetComment(int channelId, int userId, DateTime date)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var comments = from comment in context.Comments
-                               where comment.ChannelId == channelId && comment.UserId == userId && comment.Date == date
-                               select comment;
-                if (comments.Any() == false) throw new ArgumentException("No comment with channelId [" + channelId + "] and userId [" + userId + "] and date [" + date + "]");
-
-                return comments.First();
-            }
-        }
-
-        /// <summary>
-        /// Gets the comments from a specific user in a specific channel.
-        /// </summary>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <returns>All comments from a channel made by a specific user</returns>
-        public List<Comment> GetComments(int channelId, int userId)
-        {
-            using (RENTIT21Entities context = new RENTIT21Entities())
-            {
-                var comments = from comment in context.Comments
-                               where comment.ChannelId == channelId && comment.UserId == userId
-                               select comment;
-
-                // It doesn't matter if there are no comments
-                return comments.ToList();
             }
         }
 
@@ -1229,6 +975,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// Comments from a specific user in the specified range.
         /// </returns>
+        [Obsolete]
         public List<Comment> GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
             if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");
