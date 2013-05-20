@@ -1447,7 +1447,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.CreateComment("", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
+                controller.CreateComment("testcomment", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
             }
             catch (Exception e)
             {
@@ -1459,7 +1459,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.CreateComment("", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
+                controller.CreateComment("testcomment", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
                 RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetChannelComments(TestExtensions._testChannelId1, 0, int.MaxValue);
 
             }
