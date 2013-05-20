@@ -23,10 +23,12 @@
                         @Html.TextAreaFor(model => model.Description, 5, 60, new { @class = "input-block-level", type = "textarea", required = "required", placeholder = "Description" })
                     </div>
                 </div>
+                
+                @Html.Action("SelectGenre", new { channelId = -1 })
+            
                 <button class="btn">Create</button>
             }
         }
     </div>
 </div>
 
-@Html.Action("SelectGenre", new { channelId = -1 })

@@ -16,7 +16,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Comment GetComment()
         {
-            return new ITU.DatabaseWrapperObjects.Comment(ChannelId, Date, Content, Channel.GetChannel(), User.GetUser());
+            return new ITU.DatabaseWrapperObjects.Comment(Id, Date, Content, ChannelId, UserId);
         }
     }
 }
