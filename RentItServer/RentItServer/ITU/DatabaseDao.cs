@@ -520,10 +520,10 @@ namespace RentItServer.ITU
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits <= filter.MaxAmountPlayed select channel;
                 }
-                if (filter.Genres.Any() == true)
+                /*if (filter.Genres.Any() == true)
                 {   // Apply genre filter
                     channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
-                }
+                }*/
                 if (filter.MinNumberOfComments > -1)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
@@ -543,7 +543,7 @@ namespace RentItServer.ITU
                 if (filter.MinTotalVotes > -1)
                 {   // Apply votes filter
                     IQueryable<Channel> noTracksChannels = null;
-                    if (filter.MinTotalVotes <= 0)
+                    if (filter.MinTotalVotes == 0)
                     {
                         noTracksChannels = from channel in channels
                                            where channel.Tracks.Count == 0
@@ -555,7 +555,7 @@ namespace RentItServer.ITU
                                       select track.UpVotes + track.DownVotes).Sum() >= filter.MinTotalVotes
                                select channel;
 
-                    if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
+                    if (filter.MinTotalVotes == 0 && noTracksChannels != null)
                     {
                         channels = channels.Concat(noTracksChannels);
                     }
@@ -582,11 +582,7 @@ namespace RentItServer.ITU
                     }
                     channels = channels.Distinct();
                 }
-                if (filter.SortOption.Equals(""))
-                {   // Apply default sort order
-                    channels = from channel in channels orderby channel.Name ascending select channel;
-                }
-                else
+                if (!filter.SortOption.Equals(""))
                 {   // Apply specific sort order
                     if (filter.SortOption.Equals(filter.HitsAsc))
                     {
@@ -622,49 +618,23 @@ namespace RentItServer.ITU
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesAsc))
                     {
-                        IQueryable<Channel> noTracksChannels = null;
-                        if (filter.MinTotalVotes <= 0)
-                        {
-                            noTracksChannels = from channel in channels
-                                               where channel.Tracks.Count == 0
-                                               orderby channel.Name descending
-                                               select channel;
-                        }
-
                         channels = from channel in channels
                                    orderby (from track in channel.Tracks
                                             select track.UpVotes + track.DownVotes).Sum() ascending
                                    select channel;
-
-                        if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
-                        {
-                            channels = noTracksChannels.Concat(channels);
-                        }
-
-                        channels = channels.Distinct();
                     }
                     else if (filter.SortOption.Equals(filter.NumberOfVotesDesc))
                     {
-                        IQueryable<Channel> noTracksChannels = null;
-                        if (filter.MinTotalVotes <= 0)
-                        {
-                            noTracksChannels = from channel in channels
-                                               where channel.Tracks.Count == 0
-                                               orderby channel.Name descending
-                                               select channel;
-                        }
-
                         channels = from channel in channels
                                    orderby (from track in channel.Tracks
                                             select track.UpVotes + track.DownVotes).Sum() descending
                                    select channel;
-
-                        if (filter.MinTotalVotes <= 0 && noTracksChannels != null)
-                        {
-                            channels = channels.Concat(noTracksChannels);
-                        }
-                        channels = channels.Distinct();
                     }
+                }
+                else
+                {
+                    // Apply default sort order
+                    channels = from channel in channels orderby channel.Name ascending select channel;
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
             }
@@ -675,10 +645,10 @@ namespace RentItServer.ITU
                 int count;
 
                 // If both index are negative, return empty list
-                if (filter.StartIndex < -1 && filter.EndIndex < -1)
+                /*if (filter.StartIndex < -1 && filter.EndIndex < -1)
                 {
                     return new List<Channel>();
-                }
+                }*/
 
                 if (filter.StartIndex < -1)
                 {   // If start index is negative, start from 0
