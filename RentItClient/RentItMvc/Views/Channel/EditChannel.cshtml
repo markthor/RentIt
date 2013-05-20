@@ -11,6 +11,8 @@
 <div style="margin-top: 16px;">
     @if (Session["userId"] != null && (int)Session["userId"] == Model.OwnerId)
     {
+        @Html.ActionLink("Back to channel", "SelectChannel", "Channel", new { channelId = Model.Id, userId = Model.OwnerId }, new { @class = "btn btn-primary", style = "margin-left: 20px" })
+        
         if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
         {
             <button class="btn btn-small btn-danger" title="Stop channel prior to deleting" disabled="disabled">
@@ -19,8 +21,8 @@
         }
         else
         {
-            <button class="btn btn-small btn-danger" title="Delete channel" onclick="location.href='@(Url.Action("DeleteChannel", "Channel", new { channelId = Model.Id, userId = Model.OwnerId }))'">
-                <i class="icon-remove icon-white"></i>
+            <button class="btn btn-small btn-danger pull-right" title="Delete channel" onclick="location.href='@(Url.Action("DeleteChannel", "Channel", new { channelId = Model.Id, userId = Model.OwnerId }))'">
+                Delete Channel
             </button>
         }
     }
