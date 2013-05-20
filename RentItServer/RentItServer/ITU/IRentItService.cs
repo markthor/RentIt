@@ -132,7 +132,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Creates a vote.
         /// </summary>
-        /// <param name="rating">The rating.</param>
+        /// <param name="rating">The rating. -1 for downvote, 1 for upvote. Any other value than -1 or 1 will be have no effect</param>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         /// <exception cref="System.ArgumentException">

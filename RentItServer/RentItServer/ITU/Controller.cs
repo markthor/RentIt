@@ -503,13 +503,15 @@ namespace RentItServer.ITU
         }
 
         /// <summary>
-        /// Creates the vote.
+        /// Creates a vote.
         /// </summary>
-        /// <param name="rating">The rating.</param>
+        /// <param name="rating">The rating. -1 for downvote, 1 for upvote. Any other value than -1 or 1 will be have no effect</param>
         /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
+            // ignore ratings different from -1 and 1
+            if (rating != -1 && rating != 1) return;
             try
             {
                 _dao.CreateVote(rating, userId, trackId);
@@ -529,7 +531,8 @@ namespace RentItServer.ITU
         /// <param name="userId">User id of the owner of the track</param>
         /// <param name="channelId">Id of the channel which own the track</param>
         /// <param name="audioStream">MemoryStream of the mp3 file</param>
-        public void AddTrack(int userId, int channelId, MemoryStream audioStream)
+        /// <returns>The id of the track</returns>
+        public int AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
             //save file
             //get track info
@@ -559,7 +562,6 @@ namespace RentItServer.ITU
                 _fileSystemHandler.WriteFile(FilePath.ITUTrackPath, fileName, audioStream);
 
                 //Set track properties and update the track in the database
-                string filepath = FilePath.ITUTrackPath + fileName;
                 int tId = track.Id;
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
                 track.Id = tId;
@@ -572,8 +574,8 @@ namespace RentItServer.ITU
                 _dao.DeleteTrackEntry(track.Id);
                 _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
             }
-
             _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
+            return track.Id;
         }
 
         /// <summary>

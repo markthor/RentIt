@@ -584,8 +584,25 @@ namespace RentItServer.ITU
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
             {   // Only get the channels within the specified interval [filter.startIndex, ..., filter.endIndex-1]
 
-                //The amount of channels to retreive
-                int count = filter.EndIndex - filter.StartIndex;
+                // The amount of channels
+                int count;
+
+                // If both index are negative, return empty list
+                if (filter.StartIndex < -1 && filter.EndIndex < -1)
+                {
+                    return new List<Channel>();
+                }
+
+                if (filter.StartIndex < -1)
+                {   // If start index is negative, start from 0
+                    count = filter.EndIndex;
+                    filter.StartIndex = 0;
+                }
+                else
+                {   // If both start and endindex are positive, 
+                    count = filter.EndIndex - filter.StartIndex;
+                }
+
                 if (filteredChannels.Count < filter.EndIndex) //Check if endindex is higher than the amount of channels found
                 {
                     //Set endindex to the amount of channels found
@@ -598,7 +615,7 @@ namespace RentItServer.ITU
                     //Set endindex to the amount of channels found
                     filter.EndIndex = filteredChannels.Count;
                 }
-                
+
                 //Create array to contain the result channels
                 Channel[] result = new Channel[filter.EndIndex - filter.StartIndex];
                 //Copy the channels to the result array
@@ -653,6 +670,17 @@ namespace RentItServer.ITU
 
                 // Update the user with the new vote. 
                 theUser.Votes.Add(vote);
+
+                //Update the track
+                if (rating < 0)
+                {
+                    theTrack.DownVotes += 1;
+                }
+                else if (rating > 0)
+                {
+                    theTrack.UpVotes += 1;
+                }
+
                 context.SaveChanges();
             }
         }
@@ -670,6 +698,17 @@ namespace RentItServer.ITU
                             select v;
                 foreach (Vote v in votes)
                 {
+                    // remove vote from the track
+                    v.Track.Votes.Remove(v);
+                    if (v.Value < 0)
+                    {
+                        v.Track.DownVotes -= 1;
+                    }else if (v.Value > 0)
+                    {
+                        v.Track.UpVotes -= 1;
+                    }
+
+                    //remove the vote itself
                     context.Votes.Remove(v);
                 }
                 context.SaveChanges();
@@ -689,6 +728,16 @@ namespace RentItServer.ITU
                             select v;
                 foreach (Vote v in votes)
                 {
+                    //remove the vote from the track
+                    v.Track.Votes.Remove(v);
+                    if (v.Value < 0)
+                    {
+                        v.Track.DownVotes -= 1;
+                    }else if (v.Value > 0)
+                    {
+                        v.Track.UpVotes -= 1;
+                    }
+                    // remove the vote itself
                     context.Votes.Remove(v);
                 }
                 context.SaveChanges();
@@ -996,7 +1045,7 @@ namespace RentItServer.ITU
                 }
                 return genres;
             }
-        } 
+        }
 
         /// <summary>
         /// Deletes the comment.
@@ -1548,7 +1597,7 @@ namespace RentItServer.ITU
                 }
                 List<Track> result = new List<Track>();
 
-                foreach(TrackPlay tp in trackPlaysList)
+                foreach (TrackPlay tp in trackPlaysList)
                 {
                     result.Add(GetTrack(tp.TrackId));
                 }
@@ -1590,10 +1639,25 @@ namespace RentItServer.ITU
                 var votes = from v in context.Votes
                             where v.UserId == userId && v.TrackId == trackId
                             select v;
-                if (votes.Any())
+                if (votes.Any() == false) throw new ArgumentException("No vote with userId [" + userId + "] and trackId [" + trackId + "]");
+
+                Vote vote = votes.First();
+                
+                //remove the vote from the user
+                vote.User.Votes.Remove(vote);
+
+                //remove the vote from the track
+                if (vote.Value < 0)
                 {
-                    context.Votes.Remove(votes.First());
+                    vote.Track.DownVotes -= 1;
+                }else if (vote.Value > 0)
+                {
+                    vote.Track.UpVotes -= 1;
                 }
+                vote.Track.Votes.Remove(vote);
+
+                //remove the vote itself
+                context.Votes.Remove(vote);
                 context.SaveChanges();
             }
         }
@@ -1610,11 +1674,11 @@ namespace RentItServer.ITU
                 var trackplays = from tp in context.TrackPlays
                                  where tp.Track.ChannelId == channelId && tp.TimePlayed > datetime
                                  select tp;
-                
+
                 foreach (TrackPlay tp in trackplays)
-	            {
+                {
                     context.TrackPlays.Remove(tp);
-	            }
+                }
 
                 context.SaveChanges();
             }
@@ -1632,7 +1696,7 @@ namespace RentItServer.ITU
                                  where tp.TrackId == trackId
                                  select tp;
 
-                foreach(TrackPlay tp in trackplays)
+                foreach (TrackPlay tp in trackplays)
                 {
                     context.TrackPlays.Remove(tp);
                 }
