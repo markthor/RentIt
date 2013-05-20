@@ -11,16 +11,46 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
-        public ActionResult AdvancedSearch()
+        public ActionResult AdvancedSearch(int startIndex, int endIndex)
         {
-            return View();
+            return View(new Tuple<int, int>(startIndex, endIndex));
+        }
+
+        public ActionResult SearchResults(Tuple<List<GuiChannel>, AdvancedSearchModel> model)
+        {
+            return View(model);
         }
 
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
                                       int? maxAmountOfComments, int? minAmountOfPlays, int? maxAmountOfPlays, int? minAmountOfVotes,
-                                      int? maxAmountOfVotes, string sortingKey, string sortingBy)
+                                      int? maxAmountOfVotes, string sortingKey, string sortingBy, int startIndex, int endIndex)
         {
-            return View("ChannelList", new List<GuiChannel>());
+            Channel[] channels;
+            ChannelSearchArgs searchArgs;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                searchArgs = proxy.GetDefaultChannelSearchArgs();
+                if (!channelName.Equals(""))
+                    searchArgs.SearchString = channelName;
+                searchArgs.StartIndex = startIndex;
+                searchArgs.EndIndex = endIndex;
+                //Subscribers
+                searchArgs.MinNumberOfSubscriptions = minAmountOfSubscribers != null ? minAmountOfSubscribers.Value : -1;
+                searchArgs.MaxNumberOfSubscriptions = maxAmountOfSubscribers != null ? maxAmountOfSubscribers.Value : int.MaxValue;
+                //Comments
+                searchArgs.MinNumberOfComments = minAmountOfComments != null ? minAmountOfComments.Value : -1;
+                searchArgs.MaxNumberOfComments = maxAmountOfComments != null ? maxAmountOfComments.Value : int.MaxValue;
+                //Plays
+                searchArgs.MinAmountPlayed = minAmountOfPlays != null ? minAmountOfPlays.Value : -1;
+                searchArgs.MaxAmountPlayed = maxAmountOfPlays != null ? maxAmountOfPlays.Value : int.MaxValue;
+                //Sorting
+                searchArgs.SortOption = sortingKey + sortingBy;
+
+                channels = proxy.GetChannels(searchArgs);
+            }
+            List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
+            Tuple<List<GuiChannel>, AdvancedSearchModel> model = new Tuple<List<GuiChannel>, AdvancedSearchModel>(guiChannels, AdvancedSearchModel.GetAdvancedSearchModel(searchArgs));
+            return View("SearchResults", model);
         }
 
         public SelectGenreModel GetGenreModel(int channelId)

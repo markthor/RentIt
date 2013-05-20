@@ -540,6 +540,20 @@ namespace RentItServer.ITU
                 {   // Apply subscription filter
                     channels = from channel in channels where channel.Subscribers.Count <= filter.MaxNumberOfSubscriptions select channel;
                 }
+                if (filter.MinTotalVotes > -1)
+                {   // Apply votes filter
+                    channels = from channel in channels
+                               from t in channel.Tracks where
+                               (t.UpVotes + t.DownVotes) >= filter.MinTotalVotes
+                               select channel;
+                }
+                if (filter.MaxTotalVotes < Int32.MaxValue)
+                {   // Apply votes filter
+                    channels = from channel in channels
+                               from t in channel.Tracks where
+                               (t.UpVotes + t.DownVotes) <= filter.MaxTotalVotes
+                               select channel;
+                }
                 if (filter.SortOption.Equals(""))
                 {   // Apply default sort order
                     channels = from channel in channels orderby channel.Name select channel;
@@ -577,6 +591,20 @@ namespace RentItServer.ITU
                     else if (filter.SortOption.Equals(filter.SubscriptionsDesc))
                     {
                         channels = from channel in channels orderby channel.Subscribers.Count descending select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NumberOfVotesAsc))
+                    {
+                        channels = from channel in channels
+                                   from t in channel.Tracks 
+                                   orderby (t.UpVotes + t.DownVotes) ascending
+                                   select channel;
+                    }
+                    else if (filter.SortOption.Equals(filter.NumberOfVotesDesc))
+                    {
+                        channels = from channel in channels
+                                   from t in channel.Tracks
+                                   orderby (t.UpVotes + t.DownVotes) descending
+                                   select channel;
                     }
                 }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();

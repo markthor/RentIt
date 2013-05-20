@@ -211,7 +211,7 @@ namespace RentItServer_UnitTests
                 //No exception was thrown.
                 Assert.Fail();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //This is expected.
             }
