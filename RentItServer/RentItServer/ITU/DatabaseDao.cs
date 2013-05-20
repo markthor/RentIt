@@ -520,10 +520,10 @@ namespace RentItServer.ITU
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits <= filter.MaxAmountPlayed select channel;
                 }
-                if (filter.Genres.Any() == true)
+                /*if (filter.Genres.Any() == true)
                 {   // Apply genre filter
                     channels = from channel in channels where channel.Genres.Any(genre => filter.Genres.Contains(genre.Name)) select channel;
-                }
+                }*/
                 if (filter.MinNumberOfComments > -1)
                 {   // Apply comment filter
                     channels = from channel in channels where channel.Comments.Count >= filter.MinNumberOfComments select channel;
@@ -582,11 +582,7 @@ namespace RentItServer.ITU
                     }
                     channels = channels.Distinct();
                 }
-                if (filter.SortOption.Equals(""))
-                {   // Apply default sort order
-                    channels = from channel in channels orderby channel.Name ascending select channel;
-                }
-                else
+                if (!filter.SortOption.Equals(""))
                 {   // Apply specific sort order
                     if (filter.SortOption.Equals(filter.HitsAsc))
                     {
@@ -635,6 +631,11 @@ namespace RentItServer.ITU
                                    select channel;
                     }
                 }
+                else
+                {
+                    // Apply default sort order
+                    channels = from channel in channels orderby channel.Name ascending select channel;
+                }
                 filteredChannels = channels.Any() == false ? new List<Channel>() : channels.ToList();
             }
             if (filter.StartIndex != -1 && filter.EndIndex != -1 && filter.StartIndex <= filter.EndIndex)
@@ -644,10 +645,10 @@ namespace RentItServer.ITU
                 int count;
 
                 // If both index are negative, return empty list
-                if (filter.StartIndex < -1 && filter.EndIndex < -1)
+                /*if (filter.StartIndex < -1 && filter.EndIndex < -1)
                 {
                     return new List<Channel>();
-                }
+                }*/
 
                 if (filter.StartIndex < -1)
                 {   // If start index is negative, start from 0
