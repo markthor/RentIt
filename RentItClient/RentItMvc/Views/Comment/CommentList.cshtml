@@ -1,13 +1,32 @@
-﻿@model List<RentItMvc.Models.GuiComment>
+﻿@model Tuple<List<RentItMvc.Models.GuiComment>, int, int>
 
 <hr style="margin-bottom: -5px;" />
 <h4>Comments</h4>
 <div class="comment-section">
-    @foreach (RentItMvc.Models.GuiComment c in Model)
+    @foreach (RentItMvc.Models.GuiComment c in Model.Item1)
     {
         <div>
             @Html.Partial("Comment", c)
         </div>
     }
 </div>
+
+    @if (Model.Item2 == 0)
+    {
+        <button class="btn btn-primary pull-left disabled" disabled="disabled" style="margin-left: 9px"><<</button>
+    }
+    else
+    {
+        @Html.ActionLink("<<", "CommentListRange", "Comment", new { ViewBag.ChannelId, startIndex = Model.Item2 - 10, endIndex = Model.Item3 - 10 }, new { @class = "btn btn-primary pull-left", style = "margin-left: 9px"})
+    }
+
+    @if ((Model.Item1.Count + Model.Item2) == RentItMvc.Controllers.CommentController.GetCountChannelComments(ViewBag.ChannelId))
+    {
+          <button class="btn btn-primary pull-right disabled" disabled="disabled" style="margin-left: 9px">>></button>
+    }
+    else
+    {
+        @Html.ActionLink(">>", "CommentListRange", "Comment", new { ViewBag.ChannelId, startIndex = Model.Item2 + 10, endIndex = Model.Item3 + 10 }, new { @class = "btn btn-primary pull-right", style = "margin-right: 13px"})
+    }
+
 @Html.Partial("AddCommentForm", new RentItMvc.Models.GuiComment(), new ViewDataDictionary(new { channelId = ViewBag.ChannelId }))

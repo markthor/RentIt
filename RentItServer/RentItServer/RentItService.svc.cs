@@ -501,5 +501,15 @@ namespace RentItServer
         {
             return Genre.GetTracks(_controller.GetGenresForChannel(channelId)).ToArray();
         }
+
+        /*public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int startIndex, int endIndex)
+        {
+            return _controller.GetChannelComments(channelId, startIndex, endIndex);
+        }*/
+
+        public int GetCountChannelComments(int channelId)
+        {
+            return _controller.GetCountChannelComments(channelId);
+        }
     }
 }
