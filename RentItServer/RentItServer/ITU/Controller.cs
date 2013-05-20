@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using RentItServer.ITU.Exceptions;
 using RentItServer.Utilities;
 using System.Text;
@@ -95,7 +97,7 @@ namespace RentItServer.ITU
             if (usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
             if (password == null) LogAndThrowException(new ArgumentNullException("password"), "Login");
             if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
-
+          
             User user = null;
             try
             {
@@ -126,8 +128,10 @@ namespace RentItServer.ITU
             if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "CreateUser");
             if (email == null) LogAndThrowException(new ArgumentNullException("email"), "CreateUser");
             if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "CreateUser");
-            // TODO use regex to better check mail validity
-
+            String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+            if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
             try
             {
                 User user = null;
@@ -210,6 +214,9 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsCorrectPassword(int userId, string password)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("User id was below 1"), "IsCorrectPassword");
+            if (password == null) LogAndThrowException(new ArgumentNullException("password"), "IsCorrectPassword");
+            if (password.Equals("")) LogAndThrowException(new ArgumentException("Password was empty"), "IsCorrectPassword");
             return _dao.IsCorrectPassword(userId, password);
         }
 
@@ -217,11 +224,18 @@ namespace RentItServer.ITU
         /// Updates the user.
         /// </summary>
         /// <param name="userId">The user id.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="email">The email.</param>
+        /// <param name="username">The username. Can be null</param>
+        /// <param name="password">The password. Can be null</param>
+        /// <param name="email">The email. Can be null</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
+            if (email != null)
+            {
+                String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+                if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
+            }
             User user = null;
             User updatedUser = null;
             try
@@ -230,11 +244,11 @@ namespace RentItServer.ITU
                 _dao.UpdateUser(userId, username, password, email);
                 updatedUser = _dao.GetUser(userId);
             }
-            catch (Exception)
+            catch (Exception e )
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
-                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", userId, username, password, email, user, updatedUser));
+                _logger.AddEntry(string.Format("UpdateUser failed with exception [{0}]. Local variables: userId = {1}, username = {2}, password = {3}, email = {4}, user = {5}, updatedUser = {6}", e, userId, username, password, email, user, updatedUser));
                 throw;
             }
         }
@@ -423,6 +437,8 @@ namespace RentItServer.ITU
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "CreateVote");
+            if (trackId < 1) LogAndThrowException(new ArgumentException("trackId was < 1"), "CreateVote");
             // ignore ratings different from -1 and 1
             if (rating != -1 && rating != 1) return;
             try
@@ -582,6 +598,7 @@ namespace RentItServer.ITU
         /// </returns>
         public DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "GetChannelComments");
             if (fromInclusive == null) fromInclusive = 0;
             if (toExclusive == null) toExclusive = int.MaxValue;
             try
@@ -695,7 +712,12 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsEmailAvailable(string email)
         {
-            if (email == null) LogAndThrowException(new ArgumentException("email"), "IsEmailEavailable");
+            if (email == null) LogAndThrowException(new ArgumentNullException("email"), "IsEmailEavailable");
+            if (email.Equals("")) LogAndThrowException(new ArgumentException("email was empty"), "IsEmailEavailable");
+            String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                       + "@"
+                       + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+            if (Regex.IsMatch(email, theEmailPattern) == false) LogAndThrowException(new ArgumentException("email is invalid"), "IsEmailEavailable");
             return _dao.IsEmailAvailable(email);
         }
 
@@ -763,7 +785,9 @@ namespace RentItServer.ITU
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "IsChannelNameAvailable");
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "IsChannelNameAvailable");
+            if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "IsChannelNameAvailable");
             return _dao.IsChannelNameAvailable(channelId, channelName);
         }
 
@@ -774,6 +798,7 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public int GetSubscriberCount(int channelId)
         {
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "GetSubscriberCount ");
             return _dao.GetSubscriberCount(channelId);
         }
 
@@ -830,6 +855,11 @@ namespace RentItServer.ITU
         public List<Genre> GetGenresForChannel(int channelId)
         {
             return _dao.GetGenresForChannel(channelId);
+        }
+
+        public int CountChannelsPassingFilter(ChannelSearchArgs filter)
+        {
+            return _dao.GetChannelsWithFilter(filter).Count;
         }
     }
 }
