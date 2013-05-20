@@ -1153,7 +1153,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// Comments from a specific channel in the specified range.
         /// </returns>
-        public List<DatabaseWrapperObjects.Comment> GetChannelComments(int channelId, int fromInclusive, int toExclusive)
+        public List<Comment> GetChannelComments(int channelId, int fromInclusive, int toExclusive)
         {
             if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1168,13 +1168,7 @@ namespace RentItServer.ITU
                 int sizeOfRange = toExclusive - fromInclusive;
                 //Gets the specified range
                 List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
-                //Converts from entity object to wrapper object
-                List<DatabaseWrapperObjects.Comment> result = new List<DatabaseWrapperObjects.Comment>(listComments.Count);
-                foreach (Comment c in listComments)
-                {
-                    result.Add(c.GetComment());
-                }
-                return result;
+                return listComments;
             }
         }
 
@@ -1187,7 +1181,7 @@ namespace RentItServer.ITU
         /// <returns>
         /// Comments from a specific user in the specified range.
         /// </returns>
-        public List<DatabaseWrapperObjects.Comment> GetUserComments(int userId, int fromInclusive, int toExclusive)
+        public List<Comment> GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
             if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -1201,13 +1195,7 @@ namespace RentItServer.ITU
                 int sizeOfRange = toExclusive - fromInclusive;
                 //Gets the specified range
                 List<Comment> listComments = comments.ToList().GetRange(fromInclusive, sizeOfRange);
-                //Converts from entity object to wrapper object
-                List<DatabaseWrapperObjects.Comment> result = new List<DatabaseWrapperObjects.Comment>(listComments.Count);
-                foreach (Comment c in listComments)
-                {
-                    result.Add(c.GetComment());
-                }
-                return result;
+                return listComments;
             }
         }
 

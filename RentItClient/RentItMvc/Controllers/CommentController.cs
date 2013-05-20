@@ -14,16 +14,22 @@ namespace RentItMvc.Controllers
         //
         // GET: /Comment/
 
-        public PartialViewResult CommentList(int channelId)
+        public PartialViewResult CommentListRange(int channelId, int startIndex, int endIndex)
         {
+            if (startIndex <= 0)
+            {
+                startIndex = 0;
+                endIndex = 10;
+            }
+
             Comment[] comments;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                comments = proxy.GetChannelComments(channelId, null, null);
+                comments = proxy.GetChannelComments(channelId, startIndex, endIndex);
             }
             List<GuiComment> guiComments = GuiClassConverter.ConvertComments(comments);
             ViewBag.ChannelId = channelId;
-            return PartialView(guiComments);
+            return PartialView("CommentList", new Tuple<List<GuiComment>, int, int>(guiComments, startIndex, endIndex));
         }
 
         public PartialViewResult Comment(GuiComment c)
@@ -44,6 +50,14 @@ namespace RentItMvc.Controllers
         public PartialViewResult AddCommentForm()
         {
             return PartialView();
+        }
+
+        public static int GetCountChannelComments(int channelId)
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.GetCountChannelComments(channelId);
+            }
         }
     }
 }

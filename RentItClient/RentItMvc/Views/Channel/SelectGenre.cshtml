@@ -1,11 +1,33 @@
 ﻿@using RentItMvc.Models;
 
-@model Tuple<List<GuiGenre>, List<GuiGenre>, int>
+@model SelectGenreModel
 
 <div id="genreDiv">
-    @Html.ListBoxFor(model => model.Item1, new MultiSelectList(Model.Item1, "Id", "Name"), new { size = "10" })
+    @Html.ListBoxFor(model => model.AvailableGenres, new MultiSelectList(Model.AvailableGenres, "Id", "Name"), new { size = "10" })
     
-    @Html.ListBoxFor(model => model.Item2, new MultiSelectList(Model.Item2, "Id", "Name"), new { size = "10" })
-    
-    @Ajax.ActionLink("Add", "AddGenres", "Channel", new { chosenGenres = Model.Item2, channelId = Model.Item3 }, new AjaxOptions() { UpdateTargetId = "genreDiv" })
+    <input id="btnAddAll" type="button" value=" >> " onclick="addallItems();" />
+    <input id="btnAdd" type="button" value=" > " onclick="addItem();" />
+    <input id="btnRemove" type="button" value=" < "  onclick="removeItem();" />
+    <input id="btnRemoveAll"type="button" value=" << "  onclick="removeallItems();" />
+
+    @Html.ListBoxFor(model => model.ChosenGenres, new MultiSelectList(Model.ChosenGenres, "Id", "Name"), new { size = "10" })
 </div>
+
+<script type="text/javascript">
+    function addItem() {
+        $("#AvailableGenres option:selected").appendTo("#ChosenGenres");
+        $("#ChosenGenres option").attr("selected", false);
+    }
+    function addallItems() {
+        $("#AvailableGenres option").appendTo("#ChosenGenres");
+        $("#ChosenGenres option").attr("selected", false);
+    }
+    function removeItem() {
+        $("#ChosenGenres option:selected").appendTo("#AvailableGenres");
+        $("#AvailableGenres option").attr("selected", false);
+    }
+    function removeallItems() {
+        $("#ChosenGenres option").appendTo("#AvailableGenres");
+        $("#AvailableGenres option").attr("selected", false);
+    }
+</script>

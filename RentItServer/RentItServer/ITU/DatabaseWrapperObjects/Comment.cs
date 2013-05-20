@@ -18,15 +18,15 @@ namespace RentItServer.ITU.DatabaseWrapperObjects
         /// <param name="id">The id.</param>
         /// <param name="postTime">The post time.</param>
         /// <param name="content">The content.</param>
-        /// <param name="channel">The channel.</param>
-        /// <param name="user">The user.</param>
-        public Comment(int id, DateTime postTime, string content, Channel channel, User user)
+        /// <param name="channelId">The id of the channel.</param>
+        /// <param name="userId">The id of the user.</param>
+        public Comment(int id, DateTime postTime, string content, int channelId, int userId)
         {
             Id = id;
             PostTime = postTime;
             Content = content;
-            ChannelId = channel.Id;
-            UserId = user.Id;
+            ChannelId = channelId;
+            UserId = userId;
         }
 
         /// <summary>

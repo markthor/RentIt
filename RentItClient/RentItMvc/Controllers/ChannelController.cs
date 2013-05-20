@@ -11,7 +11,7 @@ namespace RentItMvc.Controllers
 {
     public class ChannelController : Controller
     {
-        public Tuple<List<GuiGenre>, List<GuiGenre>, int> GetGenreModel(int channelId)
+        public SelectGenreModel GetGenreModel(int channelId)
         {
             List<GuiGenre> chosenGenres;
             List<GuiGenre> availableGenres;
@@ -20,7 +20,13 @@ namespace RentItMvc.Controllers
                 chosenGenres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
                 availableGenres = GuiClassConverter.ConvertGenres(proxy.GetAllGenres()).Except(chosenGenres).ToList();
             }
-            return new Tuple<List<GuiGenre>, List<GuiGenre>, int>(availableGenres, chosenGenres, channelId);
+            SelectGenreModel model = new SelectGenreModel
+            {
+                AvailableGenres = availableGenres,
+                ChosenGenres = chosenGenres,
+                ChannelId = channelId,
+            };
+            return model;
         }
 
         public PartialViewResult SelectGenre(int channelId)
@@ -28,12 +34,8 @@ namespace RentItMvc.Controllers
             return PartialView(GetGenreModel(channelId));
         }
 
-        public PartialViewResult AddGenres(List<GuiGenre> chosenGenres, int channelId)
+        public PartialViewResult AddGenres(List<GuiGenre> availableGenres, List<GuiGenre> chosenGenres, int channelId)
         {
-            using (RentItServiceClient proxy = new RentItServiceClient())
-            {
-                
-            }
             return PartialView("SelectGenre", GetGenreModel(channelId));
         }
 
@@ -81,7 +83,7 @@ namespace RentItMvc.Controllers
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        public ActionResult CreateNewChannel(GuiChannel channel, int? userId)
+        public ActionResult CreateNewChannel(GuiChannel channel, int? userId, SelectGenreModel model, FormCollection form)
         {
             if (userId.HasValue)
             {

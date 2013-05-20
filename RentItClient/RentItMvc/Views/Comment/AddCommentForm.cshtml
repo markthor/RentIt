@@ -1,7 +1,7 @@
 ﻿@model RentItMvc.Models.GuiComment
 
 
-<div style="width: 456px; padding-top: 10px">
+<div style="width: 456px;">
     @using (Html.BeginForm("AddComment", "Comment", new { userId = Session["userId"], channelId = ViewBag.ChannelId }, FormMethod.Post, null))
     {
         @Html.TextAreaFor(comment => comment.Content, new { @class = "input-block-level comment-text", rows = "3", type = "textarea", required = "required", placeholder = "Write your comment" })

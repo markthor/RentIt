@@ -389,5 +389,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId);
+        
+        [OperationContract]
+        int GetCountChannelComments(int channelId);
     }
 }
