@@ -2,7 +2,7 @@
 
 @model Tuple<List<GuiChannel>, AdvancedSearchModel>
 
-@Html.Partial("AdvancedSearch", new Tuple<int, int>(Model.Item2.StartIndex, Model.Item2.EndIndex))
+@Html.Partial("AdvancedSearch", new Tuple<int, int, string>(Model.Item2.StartIndex, Model.Item2.EndIndex, Model.Item2.SearchString))
 
 <h2>Search Results</h2>
 
