@@ -51,16 +51,6 @@ namespace RentItServer.ITU
         /// </summary>
         [DataMember]
         public readonly string NumberOfCommentsAsc = "com asc";
-        /// <summary>
-        /// Assign this value to SortOption in order to get the query sorted by rating descending
-        /// </summary>
-        [DataMember]
-        public readonly string RatingDesc = "rat desc";
-        /// <summary>
-        /// Assign this value to SortOption in order to get the query sorted by rating ascending
-        /// </summary>
-        [DataMember]
-        public readonly string RatingAsc = "rat asc";
 
         /// <summary>
         /// Gets the search string.
@@ -78,7 +68,7 @@ namespace RentItServer.ITU
         /// The genres to include in search. Default is an emoty string array
         /// </value>
         [DataMember]
-        [DefaultValueAttribute(new string[] { "jazz" })]
+        [DefaultValueAttribute(new string[] { "" })]
         public string[] Genres { get; set; }
         /// <summary>
         /// Gets the amount played filter.
@@ -88,7 +78,16 @@ namespace RentItServer.ITU
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
-        public int AmountPlayed { get; set; }
+        public int MinAmountPlayed { get; set; }
+        /// <summary>
+        /// Gets the amount played filter.
+        /// </summary>
+        /// <value>
+        /// The amount played. Default is -1
+        /// </value>
+        [DataMember]
+        [DefaultValueAttribute(Int32.MaxValue)]
+        public int MaxAmountPlayed { get; set; }
         /// <summary>
         /// Gets the number of subscriptions filter.
         /// </summary>
@@ -97,7 +96,16 @@ namespace RentItServer.ITU
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
-        public int NumberOfSubscriptions { get; set; }
+        public int MinNumberOfSubscriptions { get; set; }
+        /// <summary>
+        /// Gets the number of subscriptions filter.
+        /// </summary>
+        /// <value>
+        /// The number of subscriptions. Default is -1
+        /// </value>
+        [DataMember]
+        [DefaultValueAttribute(Int32.MaxValue)]
+        public int MaxNumberOfSubscriptions { get; set; }
         /// <summary>
         /// Gets the number of comments to filter.
         /// </summary>
@@ -106,16 +114,16 @@ namespace RentItServer.ITU
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
-        public int NumberOfComments { get; set; }
+        public int MinNumberOfComments { get; set; }
         /// <summary>
-        /// Gets the sort option filter.
+        /// Gets the number of comments to filter.
         /// </summary>
         /// <value>
-        /// The channels rating. Default is -1
+        /// The number of comments. Default is -1
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
-        public double Rating { get; set; }
+        public int MaxNumberOfComments { get; set; }
         /// <summary>
         /// Gets the start index.
         /// </summary>
@@ -152,10 +160,9 @@ namespace RentItServer.ITU
         {
             SearchString = "";
             Genres = new string[] {};
-            AmountPlayed = -1;
-            NumberOfSubscriptions = -1;
-            NumberOfComments = -1;
-            Rating = -1;
+            MinAmountPlayed = -1;
+            MinNumberOfSubscriptions = -1;
+            MinNumberOfComments = -1;
             StartIndex = -1;
             EndIndex = -1;
             SortOption = "";
