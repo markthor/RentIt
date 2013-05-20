@@ -3,10 +3,10 @@
 \BOOKMARK [2][-]{subsection.1.2}{Application scope}{section.1}% 3
 \BOOKMARK [2][-]{subsection.1.3}{Glossary}{section.1}% 4
 \BOOKMARK [1][-]{section.2}{Specification}{}% 5
-\BOOKMARK [2][-]{subsection.2.1}{Use Cases}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.1}{Use cases}{section.2}% 6
 \BOOKMARK [2][-]{subsection.2.2}{Functional requirements}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.3}{Non-functional requirements}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.4}{Target Audience}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.4}{Target audience}{section.2}% 9
 \BOOKMARK [1][-]{section.3}{Analysis}{}% 10
 \BOOKMARK [2][-]{subsection.3.1}{Architecture}{section.3}% 11
 \BOOKMARK [2][-]{subsection.3.2}{Data model}{section.3}% 12
@@ -27,11 +27,13 @@
 \BOOKMARK [3][-]{subsubsection.4.2.2}{EzStream}{subsection.4.2}% 27
 \BOOKMARK [1][-]{section.5}{Testing}{}% 28
 \BOOKMARK [2][-]{subsection.5.1}{Testing strategy}{section.5}% 29
-\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 30
-\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 31
-\BOOKMARK [2][-]{subsection.6.2}{SMU webservice api}{section.6}% 32
-\BOOKMARK [2][-]{subsection.6.3}{Collaboration Considerations}{section.6}% 33
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Fault lines}{subsection.6.3}% 34
-\BOOKMARK [3][-]{subsubsection.6.3.2}{Solutions}{subsection.6.3}% 35
-\BOOKMARK [3][-]{subsubsection.6.3.3}{Conclusion of the SMU collaboration}{subsection.6.3}% 36
-\BOOKMARK [1][-]{appendix.A}{Diagrams}{}% 37
+\BOOKMARK [2][-]{subsection.5.2}{Testing of specific requirements}{section.5}% 30
+\BOOKMARK [2][-]{subsection.5.3}{Testing conclusion}{section.5}% 31
+\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 32
+\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 33
+\BOOKMARK [2][-]{subsection.6.2}{SMU webservice api}{section.6}% 34
+\BOOKMARK [2][-]{subsection.6.3}{Collaboration Considerations}{section.6}% 35
+\BOOKMARK [3][-]{subsubsection.6.3.1}{Fault lines}{subsection.6.3}% 36
+\BOOKMARK [3][-]{subsubsection.6.3.2}{Solutions}{subsection.6.3}% 37
+\BOOKMARK [3][-]{subsubsection.6.3.3}{Conclusion of the SMU collaboration}{subsection.6.3}% 38
+\BOOKMARK [1][-]{appendix.A}{Diagrams}{}% 39

@@ -10,6 +10,7 @@
 \usepackage{amsmath}
 \usepackage{sidecap}
 \usepackage{hyperref}
+
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.eps}
 \setlength{\parindent}{0in}
 % Alter some LaTeX defaults for better treatment of figures:
@@ -32,15 +33,15 @@
 
 
 \begin{document}
-
-\section*{Abstract}
-{
-This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.\\ 
-
 \title{RentIt}
 \author{Andreas P., Morten T., Mark T., Toke L. \& Mikkel F.}
 \date{28-05-2013}
 \maketitle
+
+\section*{Abstract}
+{
+This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.\\ 
+\newpage
 
 \tableofcontents
 
@@ -66,7 +67,7 @@ Channel: A collection of tracks that is played infinity, and can be listened to 
 
 \section{Specification}
 In this section we elaborate on the features discussed in the program scope section and we define the requirements and use cases. We start by defining the use cases and then we define the actual requirements based on these. 
-\subsection{Use Cases}
+\subsection{Use cases}
 \textbf{Create account:}
 The user navigates to the "create account"/"register" page. He fills out required information and agrees on possible conditions.
 
@@ -107,7 +108,7 @@ The listener of a channel selects up- or down vote on a list of the last tracks 
 The functional requirements describe the required functionality of the system and defines enumerations for reference.
 \\ \\
 \textbf{R0:}
-The system shall allow all users to create a channel, add attributes and edit the channel. \\*
+The system shall allow all users to create a channel, add attributes, edit and delete the channel. \\*
 \textbf{Domain concepts:}
 The channel shall have its own collection of tracks that it plays. It is created and maintained by the channel host(the creator of the channel).
 The channel shall have genres, a description and comments posted by users.
@@ -184,23 +185,25 @@ The non-functional requirements describes how the functionality shall work in mu
 
 \textbf{Functionality} \\*
 \textit{Channels} \\*
-Channel owners must be able to assign genre tags to the channels they control/own. \\*
-Two users listening to the same channel at the same time must hear the same song with same amount of elapsed time (\(\Delta\) 1s), in other words, a channel is "playing" the same track for all listeners. \\*
-A function for searching for channels must be implemented. \\*
-A list of the most popular channels should be available to all users. Popularity must be based an attribute or a combination of attributes of channels and must me documented. \\*
+\textbf{F1:} Channel owners must be able to assign genre tags to the channels they control/own. \\*
+\textbf{F2:} Users must not be required to subscribe to a channel in order to listen to it. \\*
+\textbf{F3:} Users must be required to be subscribed to a channel in order to vote on the channel. \\*
+\textbf{F4:} If a user unsubscribes from a channel, all votes made by that user must be removed.\\*
+\textbf{F5:} Multiple users listening to the same channel at the same time must hear the same song with same amount of elapsed time (\(\Delta\) 1s), in other words, a channel is "playing" the same track for all listeners. \\*
+\textbf{F6:} A list of the most popular channels should be available to all users. Popularity must be based an attribute or a combination of attributes of channels and must me documented. \\*
 
 \textit{Tracks} \\*
-The service must support tracks in .mp3 format. \\*
+\textbf{F7:} The service must support tracks in .mp3 format. \\*
 
 \textit{Logging and Error Handling} \\*
-All exceptional states must be logged.\\*
-All state changes must be logged.\\*
+\textbf{F8:} All exceptional states must be logged.\\*
+\textbf{F9:} All state changes must be logged.\\*
 
 \textit{Security} \\*
-All usage requires authentication. (usage meaning the use of any services related to the program)\\*
+\textbf{F10:} All usage requires authentication. (usage meaning the use of any services related to the program)\\*
 
 \textbf{Usability} \\*
-The website shall be intuitive to use for 90\% of persons above the age of 12 to appeal to our target audience. Intuitive means that no use case may take more than 3 minutes to complete.
+\textbf{U1:} The website shall be intuitive to use for 90\% of persons above the age of 12 to appeal to our target audience. Intuitive means that the following use cases may take more than 3 minutes to complete.
 \begin{itemize}
 \item listening to a channel
 \item maintaining one 
@@ -209,17 +212,14 @@ The website shall be intuitive to use for 90\% of persons above the age of 12 to
 \item subscribing
 \end{itemize}
 
-There must be help available for all functions in the form of text. This help must be accessible from within the client \\*
-Users must not be required to subscribe to a channel in order to listen to it. \\*
-Users must be required to be subscribed to a channel in order to vote on the channel. \\*
-If a user unsubscribes from a channel, all votes made by that user must be removed so as to not affect track ordering. \\*
-Users must be able to see all the songs contained in a channel. \\*
-Users must be able to up vote and down vote the last 5 songs that have been played on the channel while they were listening. \\*
-Users must not be required to download or install any third party software in order to listen to a channel. \\*
+\textbf{U2:} There must be help available for all functions in the form of text. This help must be accessible from within the client \\*
+\textbf{U3:} Users must be able to see all the songs contained in a channel. \\*
+\textbf{U4:} Users must be able to up vote and down vote the last 5 songs that have been played on the channel while they were listening. \\*
 
 \textbf{Reliability} \\*
-The server must not be affected by any errors client-side. All operations requires internet connection. No system failure of any kind should affect any track in the persistence storage. \\*
-If a channel on the server crashes:
+\textbf{Re1:} The server must not be affected by any errors client-side. \\*
+\textbf{Re2:} No system failure of any kind should affect any track in the persistence storage. \\*
+\textbf{Re3:} If a channel on the server crashes:
 \begin{itemize}
 \item all clients must be notified about the failure.
 \item the website must not be affected by the crash.
@@ -228,18 +228,20 @@ If a channel on the server crashes:
 \item the error must be logged and reported automatically. 
 \item the channel must be safe to use again when all track's identity have been confirmed(via hashing), and none of them are in use.
 \end{itemize}
-If upload of a track fails, everything about the track must be removed from the server and the user must be notified. \\*
+\textbf{Re4:} If upload of a track fails, everything about the track must be removed from the server and the user must be notified. \\*
 
 \textbf{Supportability} \\*
-The server architecture must not limit the ability to correct eventual errors. This means that no unnecessary coupling exists in the server. \\*
-The server and website must be implemented modular so as to ease extendibility. This means that extensions such as video streaming or downloading of media or a non-browser-based client must not require extensive changes in the system architecture.\\*The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for a software developer. \\*
-The server will be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
+\textbf{S1:} The server architecture must not limit the ability to correct eventual errors. This means that no unnecessary coupling exists in the server. \\*
+\textbf{S2:} The server and website must be implemented modular so as to ease extendibility. This means that extensions such as video streaming or downloading of media or a non-browser-based client must not require extensive changes in the system architecture.\\*
+\textbf{S3:} The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for a software developer. \\*
+\textbf{S4:} The server shall be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
 
 \textbf{Implementaion} \\*
-The server will be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation.
-The website will be written in ASP.NET and must work in all popular browsers.
+\textbf{I1:} Users must not be required to download or install any third party software in order to listen to a channel. \\*
+\textbf{I2:} The website shall work in Google Chrome browser. \\*
+\textbf{I3:} The server shall be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation. \\*
 
-\subsection{Target Audience}
+\subsection{Target audience}
 The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radio stations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
 
 \section{Analysis}
@@ -420,9 +422,81 @@ Unit tests follow the following signature template:
 \\*
 \verb|public void <Tested class>_<Tested method>_<Parameter Type>_<Parameter Value>|
 \\*
+\verb|public void <Tested class>_<Tested method>_<State>_<State Value>|
+\\*
 An example of a parameter type could be password for Login, and parameter value could be null. \\*
-This parameter testing approach insures that all exceptions are thrown and all correct behaviour are implemented. In between each unit test, all data in the database are removed and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple makes it easier to locate an error.
+This parameter testing approach insures that all exceptions are thrown and all correct behaviour are implemented. In between each unit test, all data in the database are removed and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple makes it easier to locate an error. \\ \\
+\textbf{System testing}\\*
+Every test not contained in the unit test project are done manually. All testing on the graphical user interface are done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
 
+\subsection{Testing of specific requirements}
+In this section, the fulfilment of each functional requirement are assessed and any directly related non-functional requirement are considered. \\ \\*
+\textbf{General notes on the requirements} \\*
+The non-functional requirements, U1 and U2 has not been meet for any of the functional requirements. \\ \\
+\textbf{R0} \\*
+\textit{The system shall allow all users to create a channel, add attributes, edit and delete the channel.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateChannel\_...
+\item Controller\_UpdateChannel\_...
+\item Controller\_DeleteChannel\_...
+\item Controller\_IsChannelNameAvailable\_...
+\end{itemize}
+UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, except for adding genres(F1), which is not implemented. Therefore more functionality has to be added and more usability testing has to be done before this requirement is fulfilled.\\ \\
+\textbf{R1} \\*
+\textit{The system shall allow users to listen to an online radio-channel that streams audio.} \\*
+This requirement are not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement have been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality more expensive. \\ \\
+\textbf{R2:} \\*
+\textit{The user shall be able to rate a track associated with a channel by up voting and down voting.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateVote\_...
+\item Controller\_DeleteVote\_...
+\end{itemize}
+With the manual GUI tests, this requirement has been fulfilled. Simple empirical testing reveals that the directly related functional requirement F3, F4 and U4 has been meet. \\ \\
+\textbf{R3:} \\*
+\textit{It shall be possible for users with a channel to upload a track to it.} \\*
+This requirement clearly lack automated tests. The manual testing confirms that it works and that Re4 and F7 has been fulfilled. It is hard to test Re2, because of the various ways a server could fail. However our best assessment is that the Re2 is fulfilled and the implementation of the requirement is sufficient for the current state of the system. \\ \\
+\textbf{R4:} \\*
+\textit{It shall be possible for users to subscribe and unsubscribe to channels.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_Unsubscribe\_...
+\item Controller\_Subscribe\_...
+\item Controller\_SubscribeGetSubscriptions\_...
+\end{itemize}
+The very thorough unit tests made for the requirement confirms that the server side has meet the requirement. The manual tests shows similar results for the GUI. F4 are tested with unsubscribe state unit tests. All aspects of this requirement has been meet. \\ \\
+\textbf{R5:} \\*
+\textit{It shall be possible for user to comment on channels.} \\
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateComment\_...
+\item Controller\_DeleteComment\_...
+\end{itemize}
+The unit test confirms that the server side meets the requirement. Manual testing has been done and because of the limited amounts of outcome, we are very sure that this requirement has been completely fulfilled. \\ \\
+\textbf{R6:} \\*
+\textit{It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_Login\_...
+\item Controller\_SignUp\_...
+\item Controller\_DeleteUser\_...
+\item Controller\_IsCorrectPassword\_...
+\item Controller\_IsUsernameAvailable\_...
+\item Controller\_IsEmailAvailable\_...
+\end{itemize}
+According to automated and manual test this requirement has been meet. However it is questionable whether F10 has been meet. All intended usage requires authentication, but because our system is so insecure, it is easy to use it without authentication. \\ \\
+\textbf{R7:} \\*
+\textit{It shall be possible to search channels by a number of parameters, including number of subscribers, number of listeners, genres and name.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_GetChannelsWithFilter\_...
+\end{itemize}
+According to automated and manual test this requirement has been meet, except for searching for genres.
+
+\subsection{Testing conclusion}
+The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
+The genre aspect of the functional requirements are implemented server side, but not client side, making every functional requirement related to it incomplete. Every other fundamental functionality has been implemented and tested. \\*The automated testing of some of the functional requirements lacks, making the S3 non-functional requirement unfulfilled, and the general certainty of whether the system is flawless unsatisfying.\\*The logging requirements F8 and F9 are mostly meet. Not every exceptional state and state change are logged, but most are. U1 and U2 are totally unfulfilled, while U3 and U4 are completely fulfilled. The reliability requirements requires a lot of effort to test, which we have not done. However we have not experienced any violation of it. Therefore we assess that they are meet, but also that we cannot be sure of it. The implementation non-functional requirements are meet.
 
 \section{Collaboration with SMU}
 
@@ -436,30 +510,30 @@ The drawback to this decision is that the clients cannot share web service metho
 The group from Singapore Management University requested the following API.
 
 \begin{itemize}
-	\item int SignUp(string email, string name, string password, bool isAdmin)
-	\item int LogIn(string email, string password)
-	\item User GetUserInfo(int userId)
-	\item User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)
-	\item void DeleteAccount(int userId)
-	\item Book[] GetAllBooks()
-	\item Book[] GetPopularBooks()
-	\item Book[] GetNewBooks()
-	\item Book[] SearchBooks(String searchString)
-	\item Book[] GetBooksByGenre(String genre)
-	\item Book GetBookInfo(int bookId)
-	\item int HasRental(int userId, int bookId)
-	\item Rental[] GetRental(int userId, int bookId)
-	\item int RentBook(int userId, int bookId, int mediaType)
-	\item MemoryStream DownloadPdf(int bookId)
-	\item MemoryStream DownloadAudio(int bookId)
-	\item MemoryStream DownloadImage(int bookId)
-	\item Rental[] GetActiveUserRentals(int userId)
-	\item Rental[] GetAllUserRentals(int userId)
-	\item void DeleteBook(int bookId)
-	\item int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)
-	\item Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)
-	\item void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)
-	\item void UploadPdf(int bookId, MemoryStream pdf)
+	\item \texttt{int SignUp(string email, string name, string password, bool isAdmin)}
+	\item \texttt{int LogIn(string email, string password)}
+	\item \texttt{User GetUserInfo(int userId)}
+	\item \texttt{User UpdateUserInfo(int userId, string email, string username, string password, bool? isAdmin)}
+	\item \texttt{void DeleteAccount(int userId)}
+	\item \texttt{Book[] GetAllBooks()}
+	\item \texttt{Book[] GetPopularBooks()}
+	\item \texttt{Book[] GetNewBooks()}
+	\item \texttt{Book[] SearchBooks(String searchString)}
+	\item \texttt{Book[] GetBooksByGenre(String genre)}
+	\item \texttt{Book GetBookInfo(int bookId)}
+	\item \texttt{int HasRental(int userId, int bookId)}
+	\item \texttt{Rental[] GetRental(int userId, int bookId)}
+	\item \texttt{int RentBook(int userId, int bookId, int mediaType)}
+	\item \texttt{MemoryStream DownloadPdf(int bookId)}
+	\item \texttt{MemoryStream DownloadAudio(int bookId)}
+	\item \texttt{MemoryStream DownloadImage(int bookId)}
+	\item \texttt{Rental[] GetActiveUserRentals(int userId)}
+	\item \texttt{Rental[] GetAllUserRentals(int userId)}
+	\item \texttt{void DeleteBook(int bookId)}
+	\item \texttt{int UploadBook(string title, string author, string description, string genre, double price, MemoryStream image)}
+	\item \texttt{Book UpdateBook(int bookId, string title, string author, string description, string genre, double? price, MemoryStream image)}
+	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
+	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
 \end{itemize}
 
 \subsection{Collaboration Considerations}
@@ -564,5 +638,16 @@ Large Object Storage in a Database or a Filesystem}.
 \includegraphics[width=17cm,keepaspectratio=true]{./LoginSD.pdf}
 \end{figure}
 
+\begin{figure}[htp]
+\begin{tabular}{| l | l | l | l | l | l |}
+  \hline
+  Item & Mikkel & Mark & Toke & Morten & Andreas \\
+  \hline
+  \hline
+  Introduction & Mikkel & Mark & Toke & Morten & Andreas \\
+  \hline
+  Introduction & 1 & 0 & 0 & 1 & 0 \\
+\end{tabular}
+\end{figure}
 
 \end{document}
