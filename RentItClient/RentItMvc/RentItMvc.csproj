@@ -195,9 +195,6 @@
     <Content Include="Service References\RentItService\RentItMvc.RentItService.Track.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\RentItService\RentItMvc.RentItService.TrackSearchArgs.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\RentItService\RentItMvc.RentItService.User.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
