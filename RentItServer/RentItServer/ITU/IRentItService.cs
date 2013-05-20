@@ -319,5 +319,8 @@ namespace RentItServer.ITU
 
         [OperationContract]
         int CountChannelsPassingFilter(ChannelSearchArgs filter);
+
+        [OperationContract]
+        void DeleteAccount(int userId);
     }
 }

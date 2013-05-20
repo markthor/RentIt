@@ -407,5 +407,10 @@ namespace RentItServer
         {
             return _controller.CountChannelsPassingFilter(filter);
         }
+
+        public void DeleteAccount(int userId)
+        {
+            _controller.DeleteUser(userId);
+        }
     }
 }
