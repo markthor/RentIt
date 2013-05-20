@@ -150,7 +150,7 @@ namespace RentItServer.ITU
         /// The sort option.
         /// </value>
         [DataMember]
-        [DefaultValueAttribute("")]
+        [DefaultValueAttribute("nam desc")]
         public string SortOption { get; set; }
 
         /// <summary>
