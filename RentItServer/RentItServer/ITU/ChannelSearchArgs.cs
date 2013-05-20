@@ -163,6 +163,9 @@ namespace RentItServer.ITU
             MinAmountPlayed = -1;
             MinNumberOfSubscriptions = -1;
             MinNumberOfComments = -1;
+            MaxAmountPlayed = Int32.MaxValue;
+            MaxNumberOfComments = Int32.MaxValue;
+            MaxNumberOfSubscriptions = Int32.MaxValue;
             StartIndex = -1;
             EndIndex = -1;
             SortOption = "";
