@@ -1,4 +1,8 @@
-﻿.search-advanced-input {
+﻿.channel-owner {
+
+}
+
+.search-advanced-input {
     width: 100px;
     margin-right: 20px;
 }
@@ -205,9 +209,9 @@ input[type=file]::-webkit-file-upload-button {
 .comment-section-wrapper {
     width: 475px;
 }
-
+a
 .comment-section {
-    max-height: 300px;
+    max-height: 475px;
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 5px;
