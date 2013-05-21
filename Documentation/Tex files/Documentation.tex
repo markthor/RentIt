@@ -655,7 +655,7 @@ The group from Singapore Management University requested the following API.
 \end{itemize}
 
 \subsection{Known bugs}
-This section contains a list of all known bugs in the system, not related to the implementation.
+This section contains a list of all known bugs in the system.
 \begin{itemize}
 \item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
 \end{itemize}
@@ -670,7 +670,7 @@ On the server side this is ensured with the unit tests:
 \item Controller\_DeleteChannel\_...
 \item Controller\_IsChannelNameAvailable\_...
 \end{itemize}
-UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, except for adding genres(F1), which is not implemented. Therefore more functionality has to be added and more usability testing has to be done before this requirement is fulfilled.\\ \\
+UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, as well as adding genres(F1).\\ \\
 \textbf{R1} \\*
 \textit{The system shall allow users to listen to an online radio-channel that streams audio.} \\*
 This requirement are not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement have been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality more expensive. \\ \\
@@ -720,13 +720,7 @@ On the server side this is ensured with the unit tests:
 \begin{itemize}
 \item Controller\_GetChannelsWithFilter\_...
 \end{itemize}
-According to automated and manual test this requirement has been meet, except for searching for genres.
-\subsection{Known bugs}
-This section contains a list of all known bugs in the system, not related to the implementation.
-\begin{itemize}
-\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
-\end{itemize}
-
+According to automated and manual test this requirement has been meet.
 \newpage
 \section{Diagrams}
 
