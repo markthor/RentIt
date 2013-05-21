@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RentItServer.Utilities
+namespace RentItServer.SMU
 {
     /// <summary>
     /// This class is used to generate filenames for the different files that can be associated with a book.
@@ -35,21 +35,6 @@ namespace RentItServer.Utilities
         public static string SmuGenerateImageFileName(int bookId)
         {
             return string.Format("Image_BookId_{0}.jpg", bookId);
-        }
-
-        /// <summary>
-        /// Generates a filename for the audio
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <param name="channelId">The channel id.</param>
-        /// <param name="artist">The artist.</param>
-        /// <param name="duration">The duration.</param>
-        /// <returns>
-        /// The filename of the audio uploaded by specified user belonging to the specified channel
-        /// </returns>
-        public static string ItuGenerateAudioFileName(int trackId)
-        {
-            return (Convert.ToString(trackId) + ".mp3");
         }
     }
 }
