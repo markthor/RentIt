@@ -15,7 +15,7 @@
 \contentsline {subsection}{\numberline {3.6}Track selection}{13}{subsection.3.6}
 \contentsline {section}{\numberline {4}Implementation}{14}{section.4}
 \contentsline {subsection}{\numberline {4.1}System Architecture}{14}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Server Architecture}{14}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.2}Server Structure}{14}{subsection.4.2}
 \contentsline {subsubsection}{\numberline {4.2.1}Class diagram}{16}{subsubsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2}TrackPrioritizer}{17}{subsubsection.4.2.2}
 \contentsline {subsection}{\numberline {4.3}Webclient Architecture}{18}{subsection.4.3}

@@ -15,7 +15,7 @@
 \BOOKMARK [2][-]{subsection.3.6}{Track selection}{section.3}% 15
 \BOOKMARK [1][-]{section.4}{Implementation}{}% 16
 \BOOKMARK [2][-]{subsection.4.1}{System Architecture}{section.4}% 17
-\BOOKMARK [2][-]{subsection.4.2}{Server Architecture}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Server Structure}{section.4}% 18
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Class diagram}{subsection.4.2}% 19
 \BOOKMARK [3][-]{subsubsection.4.2.2}{TrackPrioritizer}{subsection.4.2}% 20
 \BOOKMARK [2][-]{subsection.4.3}{Webclient Architecture}{section.4}% 21
