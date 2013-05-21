@@ -1,0 +1,5 @@
+The StreamHandler handles all instances of the EzStream process, both creation and maintaining, and keeps track of all running EzStream-processes and the channel that they serve. Every channel which is streaming have an associated EzStream process(represented with the EzProcess-class) running. Hereby the StreamHandler is also responsible for createing config-files for all channels and creation of playlist files(.m3u) via communication with the TrackPrioritizer.
+
+The streamhandler has a timer which ticks once a day(4AM server time). At this time, all streams are reset, meaning that all EzStream-processes are being killed on the server-computer and all information about them in the StreamHandler is being disposed. After this, all channels, which have at least 1 track associated, will start with newly playlists with a length of 24 hours. This reset unfortunately also requires all clients to reconnect to the stream.
+
+See appendix ?? for a sequence diagram of StartChannel-method in the StramHandler.
