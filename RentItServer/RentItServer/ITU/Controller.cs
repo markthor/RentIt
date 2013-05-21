@@ -610,7 +610,11 @@ namespace RentItServer.ITU
             }
         }
 
-
+        /// <summary>
+        /// Counts the total amount of comments for a channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>The total amount of comments</returns>
         public int GetCountChannelComments(int channelId)
         {
             return GetChannelComments(channelId, null, null).Length;
@@ -835,26 +839,50 @@ namespace RentItServer.ITU
             _dao.DeleteVote(userId, trackId);
         }
 
+        /// <summary>
+        /// Counts the total amount of upvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of upvotes</returns>
         public int CountAllUpvotes(int trackId)
         {
             return _dao.CountTrackVotes(trackId, 1);
         }
 
+        /// <summary>
+        /// Counts the total amount of downvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of dwonvotes</returns>
         public int CountAllDownvotes(int trackId)
         {
             return _dao.CountTrackVotes(trackId, -1);
         }
 
+        /// <summary>
+        /// Retreives all genres
+        /// </summary>
+        /// <returns>A list of all genres in the database</returns>
         public List<Genre> GetAllGenres()
         {
             return _dao.GetAllGenres();
         }
 
+        /// <summary>
+        /// Retreives all genres associated with the given channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>List of asociated genres</returns>
         public List<Genre> GetGenresForChannel(int channelId)
         {
             return _dao.GetGenresForChannel(channelId);
         }
 
+        /// <summary>
+        /// Counts the amount of channels which pass the given ChannelSearchArgs filter
+        /// </summary>
+        /// <param name="filter">ChannelSearchArgs filter to apply to all channels</param>
+        /// <returns>The amount of channels passing the filter</returns>
         public int CountChannelsPassingFilter(ChannelSearchArgs filter)
         {
             return _dao.GetChannelsWithFilter(filter).Count;
