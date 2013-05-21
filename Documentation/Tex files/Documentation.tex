@@ -351,13 +351,13 @@ This section describes how the system is implemented by describing class respons
 
 \subsection{System Architecture}
 The overall system architecture consists of four possibly separated parts. The SQL database, which the server connects to with the entity framework. The server, which exposes webservices to the web client and the SMU client. The web client which generates HTML responses to the users and calls the webservice. The database, the server and the web client are all deployed on rentit.itu.dk.
-\iffalse
+
 \begin{figure}[H]
   \centering
 \includegraphics[keepaspectratio=true,trim=60pt 650pt 60pt 50pt]{./overallArchitecture.pdf}
 \caption{Architecture of the entire system}
 \end{figure}
-\fi
+
 \subsection{Server Structure}
 The most important classes for RentItServer are listed and described below. All of them except the wrapper objects are made with the singleton design pattern and lazy instantiation.\\*
 
@@ -555,6 +555,17 @@ Our collaboration with the SMUs was a success. We did not run into major issues,
 
 \paragraph{Changes in a future collaboration}
 What would we do different in a potential future collaboration? One of things that would have helped the collaboration would have been access to the SMU website. Not so much because we wanted to influence any of their design choices, but because it would have given us a better understanding of the problems they were facing. Understanding the problems of the other team can help for a much better collaboration. The SMU team did supply us with information about what services they needed, but access to the actual website they developed would have been even better. In a future collaboration we would also emphasize direct communication, like the one we had through WHatsApp, even more. We would make sure that at least one member of our development team would always be available for questions. He would not have to be able to give a correct answer all the time, but the fact that you get a very quick response as soon as possible really helps to increase the feeling of collaboration. It is important that the team feels as less secluded as possible and that the waiting period between questions and answer is limited as much as possible. 
+
+\section{Conclusion}
+In this section it is assessed how well our project went, taking into consideration which system the requirements sets the stage for, and in which degree the system meets them. Future extensions of the program are considered and the overall usability of the program is assessed. Furthermore the success of the collaboration with SMU \footnote{Singapore Management University} is considered. \\
+The functional requirements matches the idea we had with the system in vision and application scope. There are no obvious use cases that the program should support, not described in the functional requirements. However, the non-functional requirements does not describe a system that addresses common issues in a software product. Security and performance requirements are non-existing. The performance of the system are sufficient, but the security is almost as lacking at it can possibly be. The only security concern addressed is the authentication of users, making it less likely that an unintended user can access user specific content. However this is no guarantee as no passwords are encrypted, and therefore they are easily obtainable. \\
+The non-functional usability requirements describes a user friendly system, which the system is in some degree. The usability have been greatly improved by the careful design of the GUI, but as no usability tests have been made, it is uncertain how well it is suited for the target audience. The GUI lacks help text, possibly resulting in loss of some users. Overall we are satisfied with the GUI, but oblivious about the opinion of our target audience. \\
+The streaming of audio are sufficient for the requirements, however the implementation does not allow votes to take immediate effect, which would be optimal. The current handling of EzStream loads the server heavily at some points of a fixed time cycle, which hypothetically could result in problems with a large number of channels and tracks and limited CPU resources. In a future extension we would like to make the server select the track to be played as late as possible, both to make votes affect the track selection faster, and to even out the server load. \\
+A desirable extension is to expand the user communication part of the system. Forums where users can discuss independent of a specific channel would strengthen the community and make room for general discussions of creation of channels as well as system feedback. Styling of channels to personalize and visualize the musical theme could make channels easier distinguishable and more attractive. \\
+Uploading of tracks are in many ways limited in the current system. To make creation of channels easier the system could accept more formats, track of other channels or possibly URL to another streaming service. \\
+Our current server architecture only involves one controller and one DatabaseDao, which is confusing because both classes are of around a thousand lines of codes. To make the server more extensible, we would like to have multiple Controllers and DatabaseDaos, reflecting use cases and database tables respectively. \\
+
+
 
 \begin{thebibliography}{9}
 \bibitem{Russel}
