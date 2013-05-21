@@ -276,6 +276,7 @@ namespace RentItMvc.Controllers
         {
             if (userId.HasValue)
             {
+                if(model.ChosenGenres == null) model.ChosenGenres = new List<int>();
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0, model.ChosenGenres.ToArray());
