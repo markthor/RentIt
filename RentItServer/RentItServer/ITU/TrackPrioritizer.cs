@@ -67,18 +67,6 @@ namespace RentItServer.ITU
             return playlist;
         }
 
-        public Boolean ContainsTrackPlaysFromFuture(List<TrackPlay> trackPlays)
-        {
-            foreach (TrackPlay tp in trackPlays)
-            {
-                if (tp.TimePlayed > DateTime.Now)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         /// <summary>
         /// Gets the id of the next track to be played from predefined selection criteria.
         /// These includes the ratio between the upvotes and downvotes, the percentage of plays and whether the track has been played recently.
