@@ -20,13 +20,13 @@ namespace RentItServer.ITU
         {
             //Set all values
             string startElement = "ezstream";
-            string url = Controller._defaultUrl + Convert.ToString(cId);
-            string sourcepassword = "hackme";
+            string url = Controller._defaultUrl + Convert.ToString(cId); //Mounting point
+            string sourcepassword = "hackme"; // Password to icecast
             string format = "MP3";
-            string filename = filePath;
-            string stream_once = "0";
-            string svrinfoname = "Channel id: " + cId;
-            string svrinfourl = "rentit.itu.dk/blobfishradio";
+            string filename = filePath; //path to playlistfile
+            string stream_once = "0"; //keep streaming going
+            string svrinfoname = "Channel id: " + cId; //optional info
+            string svrinfourl = "rentit.itu.dk/blobfishradio"; //optional info
             string svrinfogenre = "";
             string svrinfodescription = "";
             string svrinfobitrate = "128";
