@@ -20,9 +20,9 @@ namespace RentItServer
         }
 
         /// <summary>
-        /// Gets the wrappers for these tracks.
+        /// Gets the wrappers for these genres.
         /// </summary>
-        /// <param name="tracks">The tracks.</param>
+        /// <param name="genres">The Genres.</param>
         /// <returns></returns>
         public static List<ITU.DatabaseWrapperObjects.Genre> GetTracks(IEnumerable<Genre> genres)
         {

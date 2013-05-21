@@ -10,7 +10,7 @@ namespace RentItServer.ITU.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="ChannelRunningException"/> class.
         /// </summary>
-        /// <param name="message">The message that describes the error.</param>
+        /// <param name="message">Message that describes the error.</param>
         public ChannelRunningException(string message)
             : base(message)
         { }

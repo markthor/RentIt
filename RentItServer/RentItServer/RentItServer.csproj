@@ -116,7 +116,6 @@
     <Compile Include="ITU\DatabaseWrapperObjects\User.cs" />
     <Compile Include="ITU\DatabaseWrapperObjects\Vote.cs" />
     <Compile Include="ITU\EzProcess.cs" />
-    <Compile Include="ITU\TrackSearchArgs.cs" />
     <Compile Include="ITU\XMLGenerator.cs" />
     <Compile Include="SMUbook.cs">
       <DependentUpon>RentItModel.tt</DependentUpon>
@@ -173,9 +172,8 @@
     <Compile Include="SMU\SMUController.cs" />
     <Compile Include="SMU\SMUDao.cs" />
     <Compile Include="SMU\User.cs" />
-    <Compile Include="Utilities\FileName.cs" />
+    <Compile Include="SMU\FileName.cs" />
     <Compile Include="Utilities\FilePath.cs" />
-    <Compile Include="Utilities\RentItEventArgs.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="CustomModels\TrackCustom.cs" />
     <Compile Include="CustomModels\TrackPlayCustom.cs" />

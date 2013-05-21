@@ -107,14 +107,14 @@ namespace RentItServer.ITU
         {
             get
             {
-                //For testing!
+                //For testing
                 //DateTime resetDate = DateTime.Now;
                 //resetDate = resetDate.AddMinutes(5);
                 //return resetDate;
                 //endFor
 
 
-                //Creates the time now and adds to that value
+                //Creates the time now and adds to that value so that it is set to the next occourence of 3AM
                 DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
                 {
