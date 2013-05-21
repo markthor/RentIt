@@ -320,6 +320,35 @@ The functionality of choosing tracks that users prefer to listen to are crucial 
 \end{itemize}
 The persistence of plays on a channel can be limited to Z days to limit the amount of data in the database. This does not limit the ability to choose a preferable track. The track selection shall happen as late as possible to make votes have an immediate effect on the track selection. 
 
+\section{GUI design}
+In this section we will go through the GUI(Graphical User Interface) of the webclient and discuss the design of the different windows in relation to the use cases.
+
+\subsection{Tasks}
+In this section we will analyze, where in the graphical user interface we have supported the requirements defined in the requirements chapter.\\
+
+At the top of the GUI window, we have a fixed top-bar, that is present in every window of the client. It supports the tasks of logging in and out of the website, searching for a channel (R7), as well as a button that returns to the homepage. To the right of the search input field, there is a button which takes the user to a page where advanced search options are available. We have collected these tasks in a fixed top-bar, because it is tasks that are relevant for the user no matter what window of the webpage he is currently on.\\
+
+The first window that is presented to the user is the sign up window. It supports the task of creating a new user in the system (R6). If the user wants to log in with an existing user, he will use the login option in the top-bar. We have separated the creation of a user into a different window, because we want to make it clear that you need a valid user to be able to utilize any of the features of the solution.\\
+
+When a user logs in (either through the login or by creating a new user), he is presented with a new window that shows a list of the most popular channels. Every channel is represented as a row in a table, that contains the the name of the channel and a short description of the channel. At the end of every row, there are two buttons. A subscribe button, that adds the channel to the users list of subscriptions(R4) and a play channel button. When the user clicks the play button, a pop-up window opens and the channel (if running) start to stream music. The pop up window supports the task of listening to a channel(R1) and below the stream player the user is able to up-vote and down-vote the different tracks on the playlist (R2).\\
+
+On the left side of the main window, there is a menu that represents the different windows of the website. There is a link to the popular channels window and below that a link called all channels, thats take to user to a window similar to the poplar channels window, that shows all the channels in the system. Below that is the link to the My Channels window, which shows a list of channels currently belonging to the user. Below that is the My Subscriptions window, which shows the channel currently subscribed to the user. None of these windows supports any specific requirements, but serves as a way for the user to sort the channels. You could argue, that these different views of the channels should have been collected into one window with different sort options. The reason why we choose to put them into a menu is because, we want to separate the channels, that the user owns and is able to edit, from the channels that the user is only able to listen or to subscribe to.\\
+
+At the bottom of the menu, we have the link to the create channel page. The create channel channel page support the task of creating a channel(R0). When the channel is created, you are redirected to the view channel page, where you are able to view channel attributes. From there there is a link(edit tracks) that takes you to the track page, where you are able to add, edit and delete tracks(R3).\\
+
+At the bottom of the view channel page, the user is able to comment of the channels(R5). \\
+
+\subsection{Design}
+In this section we will analyze what design choices we have made in the GUI design, to make the GUI as intuitive and user friendly as possible. We have used the Bootstrap as the general design, but there has still been significant design decisions to be made. We have used the gestalt laws [REFERENCE] as a guideline for designing and placing the GUI elements. We want the GUI to be as self explanatory as possible and the gestalt laws can help to make the user to perceive the different GUI elements in the right way. \\
+
+The rule of proximity, one of the gestalt laws, says that a user perceives objects that are in close proximity to each other as related, and that aligns well with the positioning of the buttons. We have used the rule of proximity in several places. In the menu, we have put the menu items, that are related to each other, closer together than the others. We have also put a line between the groups to further signify that the belong to the same area of functionality. \\
+
+In the top-bar of the page, we have also used the rule of proximity to group the actions related to the user and the actions related to searching in to two different groups. \\
+
+The rule of similarity says that object of the same shape or color are perceived as belonging to the same group. We have used this rule in the design of the subscribe button. When you subscribe to a channel the button changes color from green to orange. In this way, we signify that the button has changed functionality, but we keep the shape and the positioning of the button so the button still is perceived to be related to subscription of a channel. We have also used the law in the two badges, that shows the number of subscribers and the number of plays. They have the same shape to signify that they are both counting an attribute of the channel, but have different colors to signify that they are counting two different things. \\
+
+The rule of past experience says that user perceives visual stimuli according to past experience. We have kept all input boxes and lists in the same visual design, so it is obvious to the user that the different elements have the same kind of functionality. We have kept all submit buttons in generally the same design, so it is quickly obvious to the user what the functionality of the button is. \\ 
+
 \section{Implementation}
 This section describes how the system is implemented by describing class responsibilities and collaborators, as well as the functional dynamics of the entire system. Complicated functionality and use of third party software is also explained.
 
