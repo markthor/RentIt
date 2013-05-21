@@ -272,7 +272,15 @@ namespace RentItServer.ITU
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
             Channel channel = null;
-            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + genreIds + "]. ";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < genreIds.Length; i++)
+            {
+                if (i + 1 == genreIds.Length)
+                    sb.Append(genreIds[i]);
+                else
+                    sb.Append(genreIds[i] + ", ");
+            }
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + sb.ToString() + "]. ";
             try
             {
 
@@ -281,11 +289,11 @@ namespace RentItServer.ITU
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
-                _logger.AddEntry("ChannelCreation failed with exception [{0}]. logEntry = " + logEntry + ". Local variable: channel = " + channel + ".");
+                _logger.AddEntry("ChannelCreation failed with exception [" + e + "]. logEntry = " + logEntry + ". Local variable: channel = " + channel + ".");
                 throw;
             }
             return channel.Id;
@@ -295,17 +303,17 @@ namespace RentItServer.ITU
         /// Creates a genre with the name.
         /// </summary>
         /// <param name="genreName">The name of the genre.</param>
-        public void CreateGenre(string genreName)
+        /// <returns>The id of the genre</returns>
+        public int CreateGenre(string genreName)
         {
             if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
             string logEntry = "Genre with name: " + " [" + genreName + "] has been created.";
 
             try
             {
-
-                _dao.CreateGenre(genreName);
+                int genreId = _dao.CreateGenre(genreName);
                 _logger.AddEntry(logEntry + "Genre creation succeeded.");
-
+                return genreId;
             }
             catch (Exception)
             {

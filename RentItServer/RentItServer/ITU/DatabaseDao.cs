@@ -885,7 +885,8 @@ namespace RentItServer.ITU
         /// Creates a genre with the name.
         /// </summary>
         /// <param name="genreName">The name of the genre.</param>
-        public void CreateGenre(string genreName)
+        /// <returns>The id of the genre</returns>
+        public int CreateGenre(string genreName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -899,6 +900,7 @@ namespace RentItServer.ITU
                 genre.Name = genreName;
                 context.Genres.Add(genre);
                 context.SaveChanges();
+                return genre.Id;
             }
         }
 
