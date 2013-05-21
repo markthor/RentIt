@@ -11,7 +11,15 @@
         @Html.TextBox("ChannelName", Model.Item3, new { @class = "navbar-form", placeholder = "Name" })
     </div>
 
-    <div class="pull-left">
+    <div class="pull-right" style="margin-right: 60px">
+        <h5>Genres</h5>
+        @{
+    List<RentItMvc.Models.GuiGenre> availableGenres = RentItMvc.Controllers.ChannelController.GetAllAvailableGenres();
+            @Html.ListBox("ChosenGenres", new MultiSelectList(availableGenres, "Id", "Name"), new { size = "6" })
+        }
+    </div>
+    
+    <div class="input-min-max-wrapper pull-left">
         <h5>Amount of subscribers</h5>
         @Html.TextBox("MinAmountOfSubscribers", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
         @Html.TextBox("MaxAmountOfSubscribers", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
@@ -23,7 +31,7 @@
         @Html.TextBox("MaxAmountOfComments", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
     </div>
 
-    <div class="pull-left">
+    <div class="input-min-max-wrapper pull-left">
         <h5>Amount of plays</h5>
         @Html.TextBox("MinAmountOfPlays", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
         @Html.TextBox("MaxAmountOfPlays", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
@@ -33,7 +41,7 @@
         <h5>Amount of votes</h5>
         @Html.TextBox("MinAmountOfVotes", null, new { @class = "search-advanced-input", placeholder = "Min", type = "number", min = "0" })
         @Html.TextBox("MaxAmountOfVotes", null, new { @class = "search-advanced-input", placeholder = "Max", type = "number", min = "0" })
-    </div>
+    </div> 
 
     <div class="pull-left">
         <h5>Ordering</h5>

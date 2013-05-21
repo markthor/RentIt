@@ -6,6 +6,10 @@
 
 }
 
+.input-min-max-wrapper {
+    margin-right: 20px;
+}
+
 .search-advanced-input {
     width: 100px;
     margin-right: 20px;
@@ -18,7 +22,7 @@
 
 .search-advanced-button {
     margin-top: 40px;
-    margin-left: 177px;
+    margin-left: 197px;
 }
 
 .text-overflow {
