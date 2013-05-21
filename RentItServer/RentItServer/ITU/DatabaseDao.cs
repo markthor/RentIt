@@ -1468,6 +1468,23 @@ namespace RentItServer.ITU
             }
         }
 
+        public void DeleteOlderTrackPlays(DateTime datetime)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackplays = from tp in context.TrackPlays
+                                 where tp.TimePlayed > datetime
+                                 select tp;
+
+                foreach (TrackPlay tp in trackplays)
+                {
+                    context.TrackPlays.Remove(tp);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Deletes the trackplays associated with track id.
         /// </summary>
