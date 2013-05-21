@@ -2,7 +2,7 @@
 @using RentItMvc.Models
 @model RentItMvc.Models.GuiChannel
 
-<h2 class="text-overflow pull-left" title="@Model.Name" style="width: 500px; margin-top: 8px; margin-right: 16px">@Html.DisplayFor(model => model.Name)</h2>
+<h2 class="text-overflow pull-left" title="@Model.Name" style="max-width: 500px; margin-top: 8px; margin-right: 16px">@Html.DisplayFor(model => model.Name)</h2>
 
 <div class="pull-left" style="margin-top: 16px;">
     @if (Session["userId"] != null && RentItMvc.Controllers.AccountController.IsSubscribed(Model.Id, (int)Session["userId"]))
