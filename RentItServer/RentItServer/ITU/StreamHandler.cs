@@ -103,24 +103,18 @@ namespace RentItServer.ITU
         /// <summary>
         /// The date that the reset of all channel streams should take place
         /// </summary>
+        
         private DateTime ResetDate
         {
             get
             {
-                //For testing
-                //DateTime resetDate = DateTime.Now;
-                //resetDate = resetDate.AddMinutes(5);
-                //return resetDate;
-                //endFor
-
-
-                //Creates the time now and adds to that value so that it is set to the next occourence of 3AM
+                //Creates the time now and adds to that value so that it is set to the next occourence of 4AM
                 DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
+                if (resetDate.Hour >= 4) // in case the server is restarted before 4AM one day
                 {
                     resetDate = resetDate.AddDays(1);
                 }
-                resetDate = resetDate.AddHours(3 - resetDate.Hour);
+                resetDate = resetDate.AddHours(4 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
@@ -503,7 +497,8 @@ namespace RentItServer.ITU
                 // add process to list of active streams
 
             _logger.AddEntry("Start restart of all streams");
-            timer.Interval = (ResetDate - DateTime.Now).TotalMilliseconds; //Set timer interval to 24hours
+            timer.Interval = (ResetDate - DateTime.Now).TotalMilliseconds;//86400000;//Set timer interval to 24hours 
+
 
             // Close all streams
             CloseAllStreams();
