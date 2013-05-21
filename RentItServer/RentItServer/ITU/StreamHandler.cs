@@ -108,7 +108,17 @@ namespace RentItServer.ITU
         {
             get
             {
-                //Creates the time now and adds to that value so that it is set to the next occourence of 4AM
+                DateTime resetDate = DateTime.Now;
+                if (resetDate.Hour >= 11) // in case the server is restarted before 4AM one day
+                {
+                    resetDate = resetDate.AddDays(1);
+                }
+                resetDate = resetDate.AddHours(11 - resetDate.Hour);
+                resetDate = resetDate.AddMinutes(-resetDate.Minute);
+                resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
+                return resetDate;
+
+                /*//Creates the time now and adds to that value so that it is set to the next occourence of 4AM
                 DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour >= 4) // in case the server is restarted before 4AM one day
                 {
@@ -117,7 +127,7 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddHours(4 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
-                return resetDate;
+                return resetDate;*/
             }
         }
         #endregion
