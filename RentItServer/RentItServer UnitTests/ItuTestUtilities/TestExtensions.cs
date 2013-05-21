@@ -107,7 +107,7 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         /// <summary>
         /// Creates all genres in the database.
         /// </summary>
-        public void AddAllGenres()
+        public static void AddAllGenres()
         {
             ///Initialize all genres
             Controller.GetInstance().CreateGenre("Pop");
