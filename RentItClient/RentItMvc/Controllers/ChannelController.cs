@@ -161,6 +161,7 @@ namespace RentItMvc.Controllers
             {
                 channel.OwnerId = userId.Value;
                 int channelId;
+                if(model.ChosenGenres == null) model.ChosenGenres = new List<int>();
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     channelId = proxy.CreateChannel(channel.Name, userId.Value, channel.Description, model.ChosenGenres.ToArray());
