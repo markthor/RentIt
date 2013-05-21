@@ -123,11 +123,11 @@ namespace RentItServer.ITU
             get
             {
                 DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour >= 12) // in case the server is restarted before 4AM one day
+                if (resetDate.Hour >= 14) // in case the server is restarted before 4AM one day
                 {
                     resetDate = resetDate.AddDays(1);
                 }
-                resetDate = resetDate.AddHours(12 - resetDate.Hour);
+                resetDate = resetDate.AddHours(14 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
