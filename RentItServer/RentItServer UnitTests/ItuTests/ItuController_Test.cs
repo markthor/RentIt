@@ -83,7 +83,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentNullException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -98,7 +98,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -113,7 +113,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentNullException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -128,7 +128,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -143,7 +143,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -158,7 +158,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -173,7 +173,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -216,7 +216,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -229,7 +229,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -242,7 +242,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -255,7 +255,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -268,7 +268,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -288,7 +288,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentNullException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -301,7 +301,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -314,7 +314,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -351,7 +351,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentNullException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -364,7 +364,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -402,7 +402,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
 
@@ -416,7 +416,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -429,7 +429,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -442,7 +442,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentNullException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -455,7 +455,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -492,7 +492,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -529,7 +529,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -751,7 +751,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -764,7 +764,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -777,7 +777,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -790,7 +790,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -809,7 +809,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -846,7 +846,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -976,7 +976,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -989,7 +989,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -1008,7 +1008,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                // This is good
+                // This is expected
             }
         }
         [TestMethod]
@@ -1722,7 +1722,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -1737,7 +1737,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]
@@ -1752,7 +1752,7 @@ namespace RentItServer_UnitTests.ItuTests
             }
             catch (ArgumentException)
             {
-                //This is good
+                //This is expected
             }
         }
         [TestMethod]

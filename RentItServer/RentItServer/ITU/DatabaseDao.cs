@@ -392,17 +392,18 @@ namespace RentItServer.ITU
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
                 if (streamUri != null) theChannel.StreamUri = streamUri;
-
-                //Set the genres of the channel
-                theChannel.Genres.Clear();
-                if (genreIds.Length > 0)
-                {
-                    var genres = from genre in context.Genres
-                                 where genreIds.Contains(genre.Id)
-                                 select genre;
-                    foreach (Genre g in genres)
+                if (genreIds != null)
+                {   //Set the genres of the channel
+                    theChannel.Genres.Clear();
+                    if (genreIds.Length > 0)
                     {
-                        theChannel.Genres.Add(g);
+                        var genres = from genre in context.Genres
+                                     where genreIds.Contains(genre.Id)
+                                     select genre;
+                        foreach (Genre g in genres)
+                        {
+                            theChannel.Genres.Add(g);
+                        }
                     }
                 }
                 context.SaveChanges();
@@ -1120,39 +1121,37 @@ namespace RentItServer.ITU
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                //Delete all users
-                context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
+                // Remove all collection navigation properties
+                var genres = context.Genres;
+                foreach (Genre g in genres)
+                {
+                    g.Channels.Clear();
+                }
+
                 var users = context.Users;
                 foreach (User u in users)
                 {
                     context.Users.Remove(u);
                 }
 
-                //Delete all channels
                 var channels = context.Channels;
                 foreach (Channel c in channels)
                 {
                     c.Subscribers.Clear();
                     c.Genres.Clear();
-                    context.Channels.Remove(c);
+                    c.Comments.Clear();
+                    c.Tracks.Clear();
                 }
 
-                //Delete all genres
-                var genres = context.Genres;
-                foreach (Genre g in genres)
-                {
-                    context.Genres.Remove(g);
-                }
-
-                //Delete all tracks
                 var tracks = context.Tracks;
                 foreach (Track t in tracks)
                 {
-                    context.Tracks.Remove(t);
+                    t.TrackPlays.Clear();
                 }
 
-                //Delete all trackPlays
-                /*
+                //context.SaveChanges();
+
+                // Delete all entries
                 var trackPlays = context.TrackPlays;
                 if (trackPlays.Any())
                 {
@@ -1160,21 +1159,48 @@ namespace RentItServer.ITU
                     {
                         context.TrackPlays.Remove(tp);
                     }
-                }*/
-                context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
-                //Delete all comments
-                var comments = context.Comments;
-                foreach (Comment c in comments)
-                {
-                    context.Comments.Remove(c);
                 }
-
-                //Delete all votes
+                genres = context.Genres;
+                if (genres.Any())
+                {
+                    foreach (Genre g in genres)
+                    {
+                        context.Genres.Remove(g);
+                    }
+                }
                 var votes = context.Votes;
                 foreach (Vote v in votes)
                 {
                     context.Votes.Remove(v);
                 }
+                var comments = context.Comments;
+                foreach (Comment c in comments)
+                {
+                    context.Comments.Remove(c);
+                }
+                tracks = context.Tracks;
+                foreach (Track t in tracks)
+                {
+                    context.Tracks.Remove(t);
+                }
+                channels = context.Channels;
+                foreach (Channel c in channels)
+                {
+                    context.Channels.Remove(c);
+                }
+                users = context.Users;
+                foreach (User u in users)
+                {
+                    context.Users.Remove(u);
+                }
+                
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Genres");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Votes");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Comments");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Tracks");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Channels");
+                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
 
                 context.SaveChanges();
             }
