@@ -120,8 +120,7 @@ else
     </button>
 }
 
-
-<p style="clear: left; padding-top: 20px">@Html.DisplayFor(model => model.Description)</p>
+<p style="clear: left; padding-top: 20px">@Html.Raw(Html.Encode(Model.Description).Replace("\r\n", "<br />"))</p>
 
 <div style="margin-top: 30px"></div>
 
