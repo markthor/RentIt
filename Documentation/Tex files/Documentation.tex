@@ -434,8 +434,12 @@ To stream music we use a third-party server component named IceCast\cite{IceCast
 \subsubsection{EzStream}
 EzStream\cite{EzStream} is a source client used to transform audio files to audio streams. EzStream does not re-encode the audio stream, making it consume very few CPU resources. As we want to run as many channels as possible, and one channel requires one EzStream process, this is very important for keeping the server processor requirements low. To stream audio, EzStream takes a command line input referring to an XML document, specifying where the MP3 file or m3u file is located and which properties it shall use to connect to IceCast. \\ \\
 \textbf{Interfacing with the server} \\
-Mikkel du skal skrive det her for det kan du lide
-Skriv om EzProcess, hvordan vi manager inputs or outputs fra process og hvordan vi restarter channels på bestemte tidspunkter.
+The StreamHandler handles all instances of the EzStream process, both creation and maintaining, and keeps track of all running EzStream-processes and the channel that they serve. Every channel which is streaming have an associated EzStream process(represented with the EzProcess-class) running. Hereby the StreamHandler is also responsible for creating config-files for all channels and creation of playlist files(.m3u) by calling the TrackPrioritizer and make the FileSystemDao write the result. \\
+
+The streamhandler has a timer which ticks once a day(4AM server time). At this time, all streams are reset, meaning that all EzStream-processes are being killed on the server-computer and all information about them in the StreamHandler is being disposed. After this, all channels, which have at least 1 track associated, will start with newly created playlists with a length of 24 hours. This reset unfortunately also requires all clients to reconnect to the stream. \\
+
+See appendix under diagram for a sequence diagram of \texttt{StartChannel(int cId)} in the StramHandler.
+
 
 \section{Testing}
 This section will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
@@ -468,17 +472,11 @@ This parameter testing approach insures that all exceptions are thrown and all c
 \textbf{System testing}\\*
 Every test not contained in the unit test project are done manually. All testing on the graphical user interface are done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
 
-\subsection{Known bugs}
-This section contains a list of all known bugs in the system, not related to the implementation.
-\begin{itemize}
-\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
-\end{itemize}
-
 \subsection{Testing of specific requirements}
 In this section, the fulfilment of each functional requirement are assessed and any directly related non-functional requirement are considered. \\ \\*
 \textbf{General notes on the requirements} \\*
 The non-functional requirements, U1 and U2 has not been meet for any of the functional requirements. \\ \\
-All results on testing of specific requirements are in the appendix under textual items.
+All results on testing of specific requirements are in the appendix under textual items. Known bugs are also included in appendix.
 
 \subsection{Testing conclusion}
 The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
@@ -633,6 +631,13 @@ The group from Singapore Management University requested the following API.
 	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
 	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
 \end{itemize}
+
+\subsection{Known bugs}
+This section contains a list of all known bugs in the system, not related to the implementation.
+\begin{itemize}
+\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
+\end{itemize}
+
 \subsection{Results for specific testing of requirements}
 \textbf{R0} \\*
 \textit{The system shall allow all users to create a channel, add attributes, edit and delete the channel.} \\*
