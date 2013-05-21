@@ -30,6 +30,9 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         public const string genreName1 = "Electro";
         public const string genreName2 = "Heavy Metal";
         public const string genreName3 = "Jazz";
+        public static int genreId1;
+        public static int genreId2;
+        public static int genreId3;
         //The first user created the last time the database was populated.
         public static RentItServer.ITU.DatabaseWrapperObjects.User _testUser1;
         //The second user created the last time the database was populated.
@@ -49,19 +52,19 @@ namespace RentItServer_UnitTests.ItuTestUtilities
         {
             _testUser1 = Controller.GetInstance().SignUp(_user1name, _user1email, _userpassword);
             _testUser2 = Controller.GetInstance().SignUp(_user2name, _user2email, _userpassword);
-            Controller.GetInstance().CreateGenre(genreName1);
-            Controller.GetInstance().CreateGenre(genreName2);
-            Controller.GetInstance().CreateGenre(genreName3);
-            int channelId1 = Controller.GetInstance().CreateChannel(_testChannel1Name, _testUser1.Id, _testChannel1Description, new List<string>() { genreName1 });
-            Controller.GetInstance().UpdateChannel(channelId1, null, null, null, _testChannel1Hits, _testChannel1Rating);
-            int channelId2 = Controller.GetInstance().CreateChannel("Hard Hitting Iron Bass", _testUser1.Id, "Metal with a density over 9000.", new List<string>() { genreName2 });
-            Controller.GetInstance().UpdateChannel(channelId2, null, null, null, 4, 2);
-            int channelId3 = Controller.GetInstance().CreateChannel("Nine Inch Nails", _testUser1.Id, "Soft rock for your soul.", new List<string>() { genreName2 });
-            Controller.GetInstance().UpdateChannel(channelId3, null, null, null, 75, 7);
-            int channelId4 = Controller.GetInstance().CreateChannel("Pegasus Pop", _testUser1.Id, "Not for kids.", new List<string>() { genreName3 });
-            Controller.GetInstance().UpdateChannel(channelId4, null, null, null, 30, 9);
-            int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", _testUser1.Id, "No description for you.", new List<string>() { genreName2 });
-            Controller.GetInstance().UpdateChannel(channelId5, null, null, null, 102, 1);
+            genreId1 = Controller.GetInstance().CreateGenre(genreName1);
+            genreId2 = Controller.GetInstance().CreateGenre(genreName2);
+            genreId3 = Controller.GetInstance().CreateGenre(genreName3);
+            int channelId1 = Controller.GetInstance().CreateChannel(_testChannel1Name, _testUser1.Id, _testChannel1Description, new int[] { genreId1 });
+            Controller.GetInstance().UpdateChannel(channelId1, null, null, null, _testChannel1Hits, _testChannel1Rating, null);
+            int channelId2 = Controller.GetInstance().CreateChannel("Hard Hitting Iron Bass", _testUser1.Id, "Metal with a density over 9000.", new int[] { genreId2 });
+            Controller.GetInstance().UpdateChannel(channelId2, null, null, null, 4, 2, null);
+            int channelId3 = Controller.GetInstance().CreateChannel("Nine Inch Nails", _testUser1.Id, "Soft rock for your soul.", new int[] { genreId2 });
+            Controller.GetInstance().UpdateChannel(channelId3, null, null, null, 75, 7, null);
+            int channelId4 = Controller.GetInstance().CreateChannel("Pegasus Pop", _testUser1.Id, "Not for kids.", new int[] { genreId3 });
+            Controller.GetInstance().UpdateChannel(channelId4, null, null, null, 30, 9, null);
+            int channelId5 = Controller.GetInstance().CreateChannel("Sick Drops", _testUser1.Id, "No description for you.", new int[] { genreId3 });
+            Controller.GetInstance().UpdateChannel(channelId5, null, null, null, 102, 1, null);
             Controller.GetInstance().Subscribe(_testUser1.Id, channelId1);
             RentItServer.ITU.DatabaseWrapperObjects.Track t1 = new RentItServer.ITU.DatabaseWrapperObjects.Track();
             t1.Artist = "Kiss";

@@ -669,7 +669,7 @@ namespace RentItServer_UnitTests.ItuTests
                 string channelName = "thischannelisatestchannel";
                 string channelDescr = "a description";
                 int channelId = controller.CreateChannel(channelName, TestExtensions._testUser1.Id,
-                                                         channelDescr, new string[] { TestExtensions.genreName1 });
+                                                         channelDescr, new int[] { TestExtensions.genreId1 });
                 RentItServer.ITU.DatabaseWrapperObjects.Channel channel = _dao.GetChannel(channelId).GetChannel();
                 Assert.IsTrue(channel.OwnerId == TestExtensions._testUser1.Id);
                 Assert.IsTrue(channel.Description.Equals(channelDescr));
@@ -708,7 +708,7 @@ namespace RentItServer_UnitTests.ItuTests
                 string updatedDescription = "thisisanewandupdateddescriptionofatestchannel";
                 double? updatedHits = 1000;
                 double? updatedRating = 10000;
-                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating);
+                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating, null);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
                 Assert.IsTrue(channel.UserId == updatedOwnerId);
                 Assert.IsTrue(channel.Description.Equals(updatedDescription));
@@ -726,7 +726,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.UpdateChannel(TestExtensions._testChannelId1, null, null, null, null, null);
+                controller.UpdateChannel(TestExtensions._testChannelId1, null, null, null, null, null, null);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
                 Assert.IsTrue(channel.UserId == TestExtensions._testUser1.Id);
                 Assert.IsTrue(channel.Description.Equals(TestExtensions._testChannel1Description));
@@ -2034,8 +2034,8 @@ namespace RentItServer_UnitTests.ItuTests
             Channel channel = null;
             for (int i = 0; i < interval; i++)
             {
-                channel = _dao.CreateChannel(testchannelnames[i], TestExtensions._testUser1.Id, testchanneldescrs[i], new string[] { testGenre });
-                _dao.UpdateChannel(channel.Id, null, null, null, i, i, null);
+                channel = _dao.CreateChannel(testchannelnames[i], TestExtensions._testUser1.Id, testchanneldescrs[i], new int[] { TestExtensions.genreId1 });
+                _dao.UpdateChannel(channel.Id, null, null, null, i, i, null, null);
                 testchannels.Add(channel);
             }
         }
