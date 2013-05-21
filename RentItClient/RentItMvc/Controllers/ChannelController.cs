@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using RentItMvc.Models;
@@ -87,7 +88,9 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 chosenGenres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
-                availableGenres = GuiClassConverter.ConvertGenres(proxy.GetAllGenres()).Except(chosenGenres).ToList();
+                Genre[] allGenres = proxy.GetAllGenres();
+                availableGenres = GuiClassConverter.ConvertGenres(allGenres);
+                availableGenres = availableGenres.Except(chosenGenres).ToList();
             }
             SelectGenreModel model = new SelectGenreModel
             {
@@ -268,7 +271,7 @@ namespace RentItMvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SaveEditChannel(GuiChannel channel, int channelId, int? userId)
+        public ActionResult SaveEditChannel(GuiChannel channel, int channelId, int? userId, SelectedGenrePostModel model)
         {
             if (userId.HasValue)
             {
