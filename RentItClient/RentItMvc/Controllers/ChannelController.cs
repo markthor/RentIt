@@ -310,6 +310,7 @@ namespace RentItMvc.Controllers
                 {
                     Channel serviceChan = proxy.GetChannel(channelId);
                     GuiChannel chan = GuiClassConverter.ConvertChannel(serviceChan);
+                    chan.Genres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
                     if (chan != null)
                     {
                         Session["channelId"] = chan.Id;
