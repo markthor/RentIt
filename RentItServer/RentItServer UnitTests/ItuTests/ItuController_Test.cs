@@ -57,14 +57,12 @@ namespace RentItServer_UnitTests.ItuTests
         public static void CleanDataBaseFinish()
         {
             DatabaseDao.GetInstance().DeleteDatabaseData();
-            TestExtensions.PopulateDatabase();
+            TestExtensions.AddAllGenres();
         }
 
         [ClassInitialize]
         public static void CleanDataBaseStart(TestContext tc)
         {
-            //DatabaseDao.GetInstance().DeleteDatabaseData();
-            //TestExtensions.PopulateDatabase();
             controller = Controller.GetInstance();
             for (int i = 0; i < interval; i++)
             {
