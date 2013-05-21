@@ -394,11 +394,17 @@ namespace RentItServer.ITU
                 if (streamUri != null) theChannel.StreamUri = streamUri;
 
                 //Set the genres of the channel
-                var genres = from genre in context.Genres
-                             where genreIds.Contains(genre.Id)
-                             select genre;
-                theChannel.Genres = genres.Any() ? genres.ToList() : new List<Genre>();
-
+                theChannel.Genres.Clear();
+                if (genreIds.Length > 0)
+                {
+                    var genres = from genre in context.Genres
+                                 where genreIds.Contains(genre.Id)
+                                 select genre;
+                    foreach (Genre g in genres)
+                    {
+                        theChannel.Genres.Add(g);
+                    }
+                }
                 context.SaveChanges();
             }
         }
@@ -448,7 +454,7 @@ namespace RentItServer.ITU
             {   // get all channels that starts with filter.Name
 
                 var channels = from c in context.Channels
-                               where c.Name.Contains(filter.SearchString)
+                               where c.Name.Contains(filter.SearchString) || c.Description.Contains(filter.SearchString)
                                select c;
 
                 if (filter.MinAmountPlayed > -1)
