@@ -504,10 +504,8 @@ namespace RentItServer.ITU
                 //Set track properties and update the track in the database
                 int tId = track.Id;
                 track = GetTrackInfo(FilePath.ITUTrackPath + fileName);
-                track.Name.Trim();
-                track.Artist.Trim();
-                if (track.Name == null || track.Name == "") { track.Name = "Unknown"; }
-                if (track.Artist == null || track.Artist == "") { track.Artist = "Unknown"; }
+                if (track.Name == null || track.Name.Trim() == "") { track.Name = "Unknown"; }
+                if (track.Artist == null || track.Artist.Trim() == "") { track.Artist = "Unknown"; }
                 track.Id = tId;
                 track.ChannelId = channelId;
                 _dao.UpdateTrack(track);
