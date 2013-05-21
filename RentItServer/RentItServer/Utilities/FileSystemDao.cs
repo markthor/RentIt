@@ -139,6 +139,11 @@ namespace RentItServer.Utilities
             fs.Close();
         }
 
+        /// <summary>
+        /// Converts a string to an array of bytes.
+        /// </summary>
+        /// <param name="str">The string to be converted</param>
+        /// <returns>The byte array representing the string</returns>
         private byte[] GetBytes(string str)
         {
             if (str == null) throw new ArgumentNullException("str");
