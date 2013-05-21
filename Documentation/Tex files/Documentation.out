@@ -15,10 +15,10 @@
 \BOOKMARK [2][-]{subsection.3.6}{Track selection}{section.3}% 15
 \BOOKMARK [1][-]{section.4}{Implementation}{}% 16
 \BOOKMARK [2][-]{subsection.4.1}{System Architecture}{section.4}% 17
-\BOOKMARK [2][-]{subsection.4.2}{Major components}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Server Architecture}{section.4}% 18
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Class diagram}{subsection.4.2}% 19
 \BOOKMARK [3][-]{subsubsection.4.2.2}{TrackPrioritizer}{subsection.4.2}% 20
-\BOOKMARK [2][-]{subsection.4.3}{GUI Architecture}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.3}{Webclient Architecture}{section.4}% 21
 \BOOKMARK [2][-]{subsection.4.4}{Third-party streaming components}{section.4}% 22
 \BOOKMARK [3][-]{subsubsection.4.4.1}{IceCast}{subsection.4.4}% 23
 \BOOKMARK [3][-]{subsubsection.4.4.2}{EzStream}{subsection.4.4}% 24
