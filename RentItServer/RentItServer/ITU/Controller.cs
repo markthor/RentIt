@@ -273,13 +273,12 @@ namespace RentItServer.ITU
 
             Channel channel = null;
             StringBuilder sb = new StringBuilder();
-            sb.Append("[");
             for (int i = 0; i < genreIds.Length; i++)
             {
                 if (i + 1 == genreIds.Length)
-                    sb.Append(", " + genreIds[i] + "]");
+                    sb.Append(genreIds[i]);
                 else
-                    sb.Append(", " + genreIds[i]);
+                    sb.Append(genreIds[i] + ", ");
             }
             string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + sb.ToString() + "]. ";
             try
