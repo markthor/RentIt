@@ -1121,6 +1121,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 //Delete all users
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
                 var users = context.Users;
                 foreach (User u in users)
                 {
@@ -1151,6 +1152,7 @@ namespace RentItServer.ITU
                 }
 
                 //Delete all trackPlays
+                /*
                 var trackPlays = context.TrackPlays;
                 if (trackPlays.Any())
                 {
@@ -1158,7 +1160,8 @@ namespace RentItServer.ITU
                     {
                         context.TrackPlays.Remove(tp);
                     }
-                }
+                }*/
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
                 //Delete all comments
                 var comments = context.Comments;
                 foreach (Comment c in comments)
