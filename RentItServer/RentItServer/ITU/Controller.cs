@@ -531,7 +531,7 @@ namespace RentItServer.ITU
             track.TrackPlays = new List<TrackPlay>();
             track.Votes = new List<Vote>();
             track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
-
+            
             //An mp3 file may have several artists. This loop puts them into a singles string
             track.Artist = "";
             string[] artists = audioFile.Tag.AlbumArtists;
