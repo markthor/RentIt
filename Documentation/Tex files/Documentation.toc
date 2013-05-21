@@ -1,11 +1,11 @@
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}
 \contentsline {subsection}{\numberline {1.1}Vision}{3}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}Application scope}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Target audience}{4}{subsection.1.3}
 \contentsline {section}{\numberline {2}Specification}{4}{section.2}
 \contentsline {subsection}{\numberline {2.1}Use cases}{4}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Functional requirements}{5}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Non-functional requirements}{6}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Target audience}{8}{subsection.2.4}
 \contentsline {section}{\numberline {3}Analysis}{8}{section.3}
 \contentsline {subsection}{\numberline {3.1}Architecture}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Data model}{9}{subsection.3.2}
@@ -27,29 +27,31 @@
 \contentsline {subsubsection}{\numberline {5.4.2}EzStream}{20}{subsubsection.5.4.2}
 \contentsline {section}{\numberline {6}Testing}{21}{section.6}
 \contentsline {subsection}{\numberline {6.1}Testing strategy}{21}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Known bugs}{22}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Testing of specific requirements}{22}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Testing conclusion}{22}{subsection.6.4}
-\contentsline {section}{\numberline {7}Collaboration with SMU}{22}{section.7}
-\contentsline {subsection}{\numberline {7.1}Interaction with the ITU system}{22}{subsection.7.1}
+\contentsline {subsection}{\numberline {6.2}Testing of specific requirements}{22}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Testing conclusion}{22}{subsection.6.3}
+\contentsline {section}{\numberline {7}Collaboration with SMU}{23}{section.7}
+\contentsline {subsection}{\numberline {7.1}Interaction with the ITU system}{23}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Collaboration Considerations}{23}{subsection.7.2}
 \contentsline {paragraph}{Data on SMU team}{23}{section*.3}
-\contentsline {subsubsection}{\numberline {7.2.1}Fault lines}{23}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.1}Fault lines}{24}{subsubsection.7.2.1}
 \contentsline {paragraph}{Geographical location}{24}{section*.4}
 \contentsline {paragraph}{Gender diversity}{24}{section*.5}
 \contentsline {paragraph}{Engineers/Designers}{24}{section*.6}
 \contentsline {paragraph}{Social etiquette}{24}{section*.7}
 \contentsline {subsubsection}{\numberline {7.2.2}Solutions}{24}{subsubsection.7.2.2}
-\contentsline {paragraph}{Students}{24}{section*.8}
+\contentsline {paragraph}{Students}{25}{section*.8}
 \contentsline {paragraph}{Age}{25}{section*.9}
 \contentsline {paragraph}{Language}{25}{section*.10}
 \contentsline {subsubsection}{\numberline {7.2.3}Conclusion of the SMU collaboration}{25}{subsubsection.7.2.3}
 \contentsline {paragraph}{Description of the collaboration }{25}{section*.11}
 \contentsline {paragraph}{Conclusion on fault lines and solutions}{26}{section*.12}
-\contentsline {paragraph}{Final conclusion}{26}{section*.13}
+\contentsline {paragraph}{Final conclusion}{27}{section*.13}
 \contentsline {paragraph}{Changes in a future collaboration}{27}{section*.14}
-\contentsline {section}{\numberline {A}Textual items}{28}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}Glossary}{28}{subsection.A.1}
-\contentsline {subsection}{\numberline {A.2}SMU webservice API}{28}{subsection.A.2}
-\contentsline {subsection}{\numberline {A.3}Results for specific testing of requirements}{29}{subsection.A.3}
-\contentsline {section}{\numberline {B}Diagrams}{31}{appendix.B}
+\contentsline {section}{\numberline {8}Conclusion}{27}{section.8}
+\contentsline {section}{\numberline {A}Textual items}{29}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}Glossary}{29}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}SMU webservice API}{29}{subsection.A.2}
+\contentsline {subsection}{\numberline {A.3}Known bugs}{30}{subsection.A.3}
+\contentsline {subsection}{\numberline {A.4}Results for specific testing of requirements}{30}{subsection.A.4}
+\contentsline {subsection}{\numberline {A.5}Known bugs}{32}{subsection.A.5}
+\contentsline {section}{\numberline {B}Diagrams}{33}{appendix.B}

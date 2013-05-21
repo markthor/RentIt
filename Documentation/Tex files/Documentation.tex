@@ -43,8 +43,8 @@
 \maketitle
 
 \section*{Abstract}
-{
-This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.\\ 
+\emph{
+This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(RentIt), as well as our implementation of a book rental service, which we did in collaboration with students from SMU university in Singapore.}\\ 
 \newpage
 
 \tableofcontents
@@ -57,13 +57,16 @@ It is a system intended to be used by the common user, without any special knowl
 \subsection{Application scope}
 In this section we will analyse what features that are needed to make a successful internet radio hosting service. We will go through the overall components that the service needs. In the requirements and use case section, we will go into more detail.
 
-We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The access to the service must be accessible through a browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and uncomplicated way. An internet radio service is different from a normal media streaming service, because several users who listen to the same radio channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
+We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The service must be accessible through a browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and uncomplicated way. An internet radio service is different from a normal media streaming service, because several users who listen to the same radio channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
 
-Another crucial component is to find ways differentiate the radio stations from one another. In a radio hosting service, where users can create their own radio stations and all content on the website essentially is user created, it is important to make ways to sort the radio stations so a listener easily can find a radio station that he wants to listen to. One way to differentiate radio stations is to attach genres to the stations. This is a way for the radio hosts, to describe what kind of content a listener can expect when listening to the radio station. Another way is through subscriptions. Subscriptions serves two purposes: It gives the listener an ability to flag his favorite radio stations and enables him to access them in an easy way. It also serves as a way to rank the stations after popularity. A listener can use the subscriptions as an indication for how popular a radio stations are and use it as a guideline for finding new stations to listen to. Number of comments is also a way to find the channels that has caused the most discussions and community activity. 
+Another crucial component is to find ways differentiate the radio stations from one another. In a radio hosting service, where users can create their own radio stations and all content on the website essentially is user created, it is important to make ways to sort the radio stations so a listener easily can find a radio station that he wants to listen to. One way to differentiate radio stations is to attach genres to the stations. This is a way for the radio hosts, to describe what kind of content a listener can expect when listening to the radio station. Another way is through subscriptions. Subscriptions serves two purposes: It gives the listener ability to flag his favorite radio stations and enables him to access them in an easy way. It also serves as a way to rank the stations after popularity. A listener can use the subscriptions as an indication for how popular a radio stations are and use it as a guideline for finding new stations to listen to. Number of comments is also a way to find the channels that has caused the most discussions and community activity. 
 
 This brings us to another component which is the ability for community activity between the listeners. Other user driven services, such as YouTube\footnote{Hosted at www.YouTube.com} are very driven by their user community, and it is crucial to get a stable and active user base if your service is to be successful. To support this activity, we need to give the users the ability to make comments to channels.
 
-We must also address the question of channel selection. How do we determine in what order the tracks on a channel should be played? On an original FM radio channel, the order of tracks is determined manually by the radio host, but on an internet radio station that is rarely an option. One solution is that the radio host makes a list of tracks and that becomes the list that is played over and over until it is changed again. This would work, but it essentially makes the radio service into an online playlist service, and that is not quite what we are going for. On a radio station the order of tracks should not be fixed and should from one hearing to another. It would be easy to do with a random generator, that simply generated a new random playlist every time the station had played through the tracks, but this would mean that popular tracks had the same chance of being played as a non popular song. Essentially, we want users to influence in what order the songs are to be played and a program that selects the songs in an intelligent and dynamic way. 
+We must also address the question of channel selection. How do we determine in what order the tracks on a channel should be played? On a FM radio channel, the order of tracks is determined manually by the radio host, but on an internet radio station that is rarely an option. One solution is that the radio host makes a list of tracks and that becomes the list that is played over and over until it is changed again. This would work, but it essentially makes the radio service into an online playlist service, and that is not quite what we are going for. On a radio station the order of tracks should not be fixed and should from one hearing to another. It would be easy to do with a random generator, that simply generated a new random playlist every time the station had played through the tracks, but this would mean that popular tracks had the same chance of being played as a non popular song. Essentially, we want users to influence in what order the songs are to be played and a program that selects the songs in an intelligent and dynamic way. 
+
+\subsection{Target audience}
+The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radio stations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
 
 \section{Specification}
 In this section we elaborate on the features discussed in the program scope section and we define the requirements and use cases. We start by defining the use cases and then we define the actual requirements based on these. 
@@ -241,14 +244,11 @@ The non-functional requirements describes how the functionality shall work in mu
 \textbf{I2:} The website shall work in Google Chrome browser. \\*
 \textbf{I3:} The server shall be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation. \\*
 
-\subsection{Target audience}
-The target audience of our RentIt Radio system is primarily users in the age 13-35. Since our system is not just a place to listen to music, but also a place to discuss music,  older users might choose ordinary radio stations. Younger people are more used to social networks and the radio system is designed to be a social network combined with radio.
-
 \section{Analysis}
 This section contains considerations on how to implement the functional and non-functional requirements, as defined in the previous chapter. This includes the possible solutions, the chosen solution and the reasoning for the choice. We will not go into any technical specifics about the implementation, this will be covered in another chapter, but we will analyze what designs patterns, architecture and frameworks that will create the best solution. 
 
 \subsection{Architecture}
-We have several different options to consider, when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so it is assumed that the program most have some kind of client server architecture. A basic client/server architecture is a possible solution. The client connects to our service with a browser and the server will contain all the backend functionality as well as the generation of HTML responses. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. The non-functional requirements states that the architecture must allow a non-browser-based client to connect to the server, which such a basic solution does not support. Another option is to make the core backend functionality, the functionality related to modifying, creating and deleting data, into a WCF webservice. It that case the webclient (handling all generation of HTML) makes calls to the server. A non-browser-based client could connect directly to the server without any modifications to the architecture. A disadvantage is that it makes the solution more complicated and the server responses must be designed to fit in a webservice. To even further modulate the program, you can use an external database apart from the webservice to store data. We choose to go with the most modulated solution. We let the browser call the webclient, which calls the WCF webservice, which then calls the database. More detailed description can be found in the Implementation section. \\*
+We have several different options to consider, when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so it is assumed that the program most have some kind of client/server architecture. A basic client/server architecture is a possible solution. The client connects to our service with a browser and the server will contain all the backend functionality as well as the generation of HTML responses. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. The non-functional requirements states that the architecture must allow a non-browser-based client to connect to the server, which such a basic solution does not support. Another option is to make the core backend functionality, the functionality related to modifying, creating and deleting data, into a WCF webservice. In that case the webclient (handling all generation of HTML) makes calls to the server. A non-browser-based client could connect directly to the server without any modifications to the architecture. A disadvantage is that it makes the solution more complicated and the server responses must be designed to fit in a webservice. To even further modulate the program, you can use an external database apart from the webservice to store data. We choose to go with the most modulated solution. We let the browser call the webclient, which calls the WCF webservice, which then calls the database. More detailed description can be found in the Implementation section. \\*
 
 \textbf{Server architecture} \\*
 The largest part of our server functionality lies within the WCF webservice. It is therefore important that we analyse how this can be structured in the best way.
@@ -261,7 +261,7 @@ The decision to not let channels share tracks is because it would require analys
 This design does not limit a possible extension of the system to measure similar MP3 files and update references to avoid redundant data in the file system, but such an extension will not remove redundant data in the database, as our data model does not support it. 
 Track has an up vote and a down vote count, which vote entities have a functional dependency to, because each vote on a track causes up vote or down vote to increase. This duplication is made in order to speed up the algorithm, because it does not need to count vote entities when it has up- and down- vote counters. \\*
 The vote entity exists in order to prevent users from voting one track several times.
-TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date that the track was played. \\*
+TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date on which track was played. \\*
 Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
 \begin{figure}[H]
   \centering
@@ -272,9 +272,8 @@ Genre is an entity and not an attribute of channel because we want to make a fix
 For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Due to the knowledge acquired from the paper we chose to store our music files on the file system, because the average size of an MP3 file is around 3-4 MB. A reference to the file system is placed in the database entities to connect files to table rows.
 
 \subsection{Webservice}
-In this section, we will analyse the WCF webservice. We will start be analyzing the architecture of the webservice and then we will analyse the design of the webservice methods.  \\*
+In this section, we will analyse the design of the webservice methods.  \\*
 
-\textbf{Webservice methods} \\*
 The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
 With methods which typically have more than one result, we have more options (methods like GetTrackIds and GetChannelIds). 
 The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option would be to return lazy objects, which were first completed (retrieved from the server) when the client called the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. And by using lazy objects we allow low bandwidth and only a single network transfer at first and wait until the objects are actually needed.
@@ -296,10 +295,10 @@ A major part of our web-client is the GUI\footnote{Graphical User Interface} and
 With these criteria defined, we consider several different GUI options: \\ \\
 
 \textbf{Silverlight} \\
-Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C\# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies. \\ \\
+Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix among others)\cite{netflix}. A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our web-service and the rest of our program. The developers in our team are very familiar with C\# and the .NET framework and has previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight on future products, in favor of newer technologies. \\ \\
 
 \textbf{HTML5} \\
-HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it would still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. \\ \\
+HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language more advanced and now supports both video and audio-streaming, as well as SVG-graphics. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, almost every other technology plugs well into it and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it will still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. \\ \\
 
 \textbf{ASP.NET} \\
 Asp.Net is a server-side framework developed by Microsoft and is used to dynamical create web-sites. It is a complete solution to creating a website with a build-in code-behind file written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE, that the development team is mostly familiar with. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. The styling of components are not that pretty and might require some extra work. \\ \\
@@ -308,10 +307,10 @@ Asp.Net is a server-side framework developed by Microsoft and is used to dynamic
 Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use. \\ \\
 
 \textbf{Our choice} \\
-We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh it.  It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
+We choose to use the MVC framework. Even though that it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh the potentially steaper kearning curve. It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we need.
 
 \subsection{Track selection}
-The functionality of choosing tracks that users prefer to listen to are crucial to the success of the system, as defined in the requirements R1 and R2. To make a preferable choice of which track to play next, the parameters that are considered when choosing are defined. The data model allows storage of when tracks has been played, up votes and down votes and tracks. From these entities, the following constraints are defined:
+The functionality of choosing tracks that users prefer to listen to is a crucial factors in the success of the system, as defined in the requirements R1 and R2. To make a preferable choice of which track to play next, the parameters that are considered when choosing are defined. The data model allows storage of when tracks has been played, up votes and down votes and tracks. From these entities, the following constraints are defined:
 \begin{itemize}
 \item The last X tracks played cannot be played again, as users want to listen to a variety of tracks in a short time perspective.
 \item A track cannot be played more times than Y percentage of the total number of plays of a channel, to force variety in a long time perspective.
@@ -321,7 +320,7 @@ The functionality of choosing tracks that users prefer to listen to are crucial 
 The persistence of plays on a channel can be limited to Z days to limit the amount of data in the database. This does not limit the ability to choose a preferable track. The track selection shall happen as late as possible to make votes have an immediate effect on the track selection. 
 
 \section{GUI design}
-In this section we will go through the GUI(Graphical User Interface) of the webclient and discuss the design of the different windows in relation to the use cases.
+In this section we will go through the GUI(Graphical User Interface) of the webclient and discuss the design of the different windows in relation to the requirements.
 
 \subsection{Tasks}
 In this section we will analyze, where in the graphical user interface we have supported the requirements defined in the requirements chapter.\\
@@ -339,11 +338,9 @@ At the bottom of the menu, we have the link to the create channel page. The crea
 At the bottom of the view channel page, the user is able to comment of the channels(R5). \\
 
 \subsection{Design}
-In this section we will analyze what design choices we have made in the GUI design, to make the GUI as intuitive and user friendly as possible. We have used the Bootstrap as the general design, but there has still been significant design decisions to be made. We have used the gestalt laws [REFERENCE] as a guideline for designing and placing the GUI elements. We want the GUI to be as self explanatory as possible and the gestalt laws can help to make the user to perceive the different GUI elements in the right way. \\
+In this section we will analyze what design choices we have made in the GUI design, to make the GUI as intuitive and user friendly as possible. We have used the Bootstrap as the general design, but there has still been significant design decisions to be made. We have used the gestalt laws\cite{gestalt} as a guideline for designing and placing the GUI elements. We want the GUI to be as self explanatory as possible and the gestalt laws can help to make the user to perceive the different GUI elements in the right way. \\
 
-The rule of proximity, one of the gestalt laws, says that a user perceives objects that are in close proximity to each other as related, and that aligns well with the positioning of the buttons. We have used the rule of proximity in several places. In the menu, we have put the menu items, that are related to each other, closer together than the others. We have also put a line between the groups to further signify that the belong to the same area of functionality. \\
-
-In the top-bar of the page, we have also used the rule of proximity to group the actions related to the user and the actions related to searching in to two different groups. \\
+The rule of proximity, one of the gestalt laws, says that a user perceives objects that are in close proximity to each other as related, and that aligns well with the positioning of the buttons. We have used the rule of proximity in several places. In the menu, we have put the menu items, that are related to each other, closer together than the others. We have also put a line between the groups to further signify that the belong to the same area of functionality. In the top-bar of the page, we have also used the rule of proximity to group the actions related to the user and the actions related to searching in to two different groups. \\
 
 The rule of similarity says that object of the same shape or color are perceived as belonging to the same group. We have used this rule in the design of the subscribe button. When you subscribe to a channel the button changes color from green to orange. In this way, we signify that the button has changed functionality, but we keep the shape and the positioning of the button so the button still is perceived to be related to subscription of a channel. We have also used the law in the two badges, that shows the number of subscribers and the number of plays. They have the same shape to signify that they are both counting an attribute of the channel, but have different colors to signify that they are counting two different things. \\
 
@@ -354,13 +351,13 @@ This section describes how the system is implemented by describing class respons
 
 \subsection{System Architecture}
 The overall system architecture consists of four possibly separated parts. The SQL database, which the server connects to with the entity framework. The server, which exposes webservices to the web client and the SMU client. The web client which generates HTML responses to the users and calls the webservice. The database, the server and the web client are all deployed on rentit.itu.dk.
-\iffalse
+
 \begin{figure}[H]
   \centering
 \includegraphics[keepaspectratio=true,trim=60pt 650pt 60pt 50pt]{./overallArchitecture.pdf}
 \caption{Architecture of the entire system}
 \end{figure}
-\fi
+
 \subsection{Server Structure}
 The most important classes for RentItServer are listed and described below. All of them except the wrapper objects are made with the singleton design pattern and lazy instantiation.\\*
 
@@ -434,8 +431,12 @@ To stream music we use a third-party server component named IceCast\cite{IceCast
 \subsubsection{EzStream}
 EzStream\cite{EzStream} is a source client used to transform audio files to audio streams. EzStream does not re-encode the audio stream, making it consume very few CPU resources. As we want to run as many channels as possible, and one channel requires one EzStream process, this is very important for keeping the server processor requirements low. To stream audio, EzStream takes a command line input referring to an XML document, specifying where the MP3 file or m3u file is located and which properties it shall use to connect to IceCast. \\ \\
 \textbf{Interfacing with the server} \\
-Mikkel du skal skrive det her for det kan du lide
-Skriv om EzProcess, hvordan vi manager inputs or outputs fra process og hvordan vi restarter channels på bestemte tidspunkter.
+The StreamHandler handles all instances of the EzStream process, both creation and maintaining, and keeps track of all running EzStream-processes and the channel that they serve. Every channel which is streaming have an associated EzStream process(represented with the EzProcess-class) running. Hereby the StreamHandler is also responsible for creating config-files for all channels and creation of playlist files(.m3u) by calling the TrackPrioritizer and make the FileSystemDao write the result. \\
+
+The streamhandler has a timer which ticks once a day(4AM server time). At this time, all streams are reset, meaning that all EzStream-processes are being killed on the server-computer and all information about them in the StreamHandler is being disposed. After this, all channels, which have at least 1 track associated, will start with newly created playlists with a length of 24 hours. This reset unfortunately also requires all clients to reconnect to the stream. \\
+
+See appendix under diagram for a sequence diagram of \texttt{StartChannel(int cId)} in the StramHandler.
+
 
 \section{Testing}
 This section will explain how we went about testing our software; it will start with a description of our testing strategy and the reasons behind it being
@@ -468,17 +469,11 @@ This parameter testing approach insures that all exceptions are thrown and all c
 \textbf{System testing}\\*
 Every test not contained in the unit test project are done manually. All testing on the graphical user interface are done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
 
-\subsection{Known bugs}
-This section contains a list of all known bugs in the system, not related to the implementation.
-\begin{itemize}
-\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
-\end{itemize}
-
 \subsection{Testing of specific requirements}
 In this section, the fulfilment of each functional requirement are assessed and any directly related non-functional requirement are considered. \\ \\*
 \textbf{General notes on the requirements} \\*
 The non-functional requirements, U1 and U2 has not been meet for any of the functional requirements. \\ \\
-All results on testing of specific requirements are in the appendix under textual items.
+All results on testing of specific requirements are in the appendix under textual items. Known bugs are also included in appendix.
 
 \subsection{Testing conclusion}
 The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
@@ -565,6 +560,18 @@ Our collaboration with the SMUs was a success. We did not run into major issues,
 \paragraph{Changes in a future collaboration}
 What would we do different in a potential future collaboration? One of things that would have helped the collaboration would have been access to the SMU website. Not so much because we wanted to influence any of their design choices, but because it would have given us a better understanding of the problems they were facing. Understanding the problems of the other team can help for a much better collaboration. The SMU team did supply us with information about what services they needed, but access to the actual website they developed would have been even better. In a future collaboration we would also emphasize direct communication, like the one we had through WHatsApp, even more. We would make sure that at least one member of our development team would always be available for questions. He would not have to be able to give a correct answer all the time, but the fact that you get a very quick response as soon as possible really helps to increase the feeling of collaboration. It is important that the team feels as less secluded as possible and that the waiting period between questions and answer is limited as much as possible. 
 
+\section{Conclusion}
+In this section it is assessed how well our project went, taking into consideration which system the requirements sets the stage for, and in which degree the system meets them. Future extensions of the program are considered and the overall usability of the program is assessed. Furthermore the success of the collaboration with SMU \footnote{Singapore Management University} is considered. \\
+The functional requirements matches the idea we had with the system in vision and application scope. There are no obvious use cases that the program should support, not described in the functional requirements. However, the non-functional requirements does not describe a system that addresses common issues in a software product. Security and performance requirements are non-existing. The performance of the system are sufficient, but the security is almost as lacking at it can possibly be. The only security concern addressed is the authentication of users, making it less likely that an unintended user can access user specific content. However this is no guarantee as no passwords are encrypted, and therefore they are easily obtainable. \\
+The non-functional usability requirements describes a user friendly system, which the system is in some degree. The usability have been greatly improved by the careful design of the GUI, but as no usability tests have been made, it is uncertain how well it is suited for the target audience. The GUI lacks help text, possibly resulting in loss of some users. Overall we are satisfied with the GUI, but oblivious about the opinion of our target audience. \\
+The streaming of audio are sufficient for the requirements, however the implementation does not allow votes to take immediate effect, which would be optimal. The current handling of EzStream loads the server heavily at some points of a fixed time cycle, which hypothetically could result in problems with a large number of channels and tracks and limited CPU resources. In a future extension we would like to make the server select the track to be played as late as possible, both to make votes affect the track selection faster, and to even out the server load. \\
+A desirable extension is to expand the user communication part of the system. Forums where users can discuss independent of a specific channel would strengthen the community and make room for general discussions of creation of channels as well as system feedback. Styling of channels to personalize and visualize the musical theme could make channels easier distinguishable and more attractive. \\
+Uploading of tracks are in many ways limited in the current system. To make creation of channels easier the system could accept more formats, track of other channels or possibly URL to another streaming service. \\
+Our current server architecture only involves one controller and one DatabaseDao, which is confusing because both classes are of around a thousand lines of codes. To make the server more extensible, we would like to have multiple Controllers and DatabaseDaos, reflecting use cases and database tables respectively. \\
+The collaboration with the team at SMU university, went well given the circumstances, but a lot of the reason for that can be found in the fact that the members of the SMU were well prepared and handeled the challenges of communication well. Had the communication situation been more difficult, the fault lines between us and them would likely have been more significant, and caused a lot more problems. To be sure that a future collaboration to go just as well, we have to prepare even more and analyse all the pittfalls and potential probems beforehand.
+
+
+
 \begin{thebibliography}{9}
 \bibitem{Russel}
   Russell Sears, Catharine van Ingen, Jim Gray
@@ -579,6 +586,10 @@ Teams: Ethnocentrism Or
 Cross-National Learning? } 2005
 	
 \bibitem{whatsapp} http://www.whatsapp.com \emph{www.WhatsApp.com}
+	
+\bibitem{netflix} Netflix \emph{https://netflix.com/HowItWorks}
+
+\bibitem{gestalt} Gestalt Laws \emph{http://www.interaction-design.org/encyclopedia/gestalt\_principles\_of\_form\_perception.html}
 	
 \bibitem{IceCast}
   www.xiph.org, the xiph open source community
@@ -622,6 +633,13 @@ The group from Singapore Management University requested the following API.
 	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
 	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
 \end{itemize}
+
+\subsection{Known bugs}
+This section contains a list of all known bugs in the system, not related to the implementation.
+\begin{itemize}
+\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
+\end{itemize}
+
 \subsection{Results for specific testing of requirements}
 \textbf{R0} \\*
 \textit{The system shall allow all users to create a channel, add attributes, edit and delete the channel.} \\*
@@ -683,6 +701,12 @@ On the server side this is ensured with the unit tests:
 \item Controller\_GetChannelsWithFilter\_...
 \end{itemize}
 According to automated and manual test this requirement has been meet, except for searching for genres.
+\subsection{Known bugs}
+This section contains a list of all known bugs in the system, not related to the implementation.
+\begin{itemize}
+\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
+\end{itemize}
+
 \newpage
 \section{Diagrams}
 
