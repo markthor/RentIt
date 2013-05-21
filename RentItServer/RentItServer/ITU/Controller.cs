@@ -83,6 +83,7 @@ namespace RentItServer.ITU
         {
             _streamHandler.SetLogger(_logger);
             _streamHandler.InitTimer();
+            _streamHandler.Cleanup();
         }
 
         /// <summary>
@@ -262,7 +263,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
-        public int CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
+        public int CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
@@ -271,12 +272,12 @@ namespace RentItServer.ITU
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
             Channel channel = null;
-            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + genreIds + "]. ";
             try
             {
 
-                channel = _dao.CreateChannel(channelName, userId, description, genres);
-                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
+                channel = _dao.CreateChannel(channelName, userId, description, genreIds);
+                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id, genreIds);
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
 
             }
@@ -358,11 +359,11 @@ namespace RentItServer.ITU
         /// <param name="hits">The hits.</param>
         /// <param name="rating">The rating.</param>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits,
-                                  double? rating)
+                                  double? rating, int[] genreIds)
         {
             try
             {
-                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null);
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null, genreIds);
             }
             catch (Exception e)
             {

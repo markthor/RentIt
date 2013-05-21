@@ -97,6 +97,19 @@ namespace RentItServer.ITU
         {
             _logger = logger;
         }
+
+        /// <summary>
+        /// Stops all running ezstream processes
+        /// Removes all trackplays with playtime after the time of method call
+        /// </summary>
+        public void Cleanup()
+        {
+            _logger.AddEntry("Starting cleanup");
+            //stop all ezprocesses
+            CloseAllStreams();
+            //remove all deletetracks
+            DeleteAllFutureTrackPlays();
+        }
         #endregion
 
         #region Properties
@@ -104,16 +117,17 @@ namespace RentItServer.ITU
         /// The date that the reset of all channel streams should take place
         /// </summary>
         
+        //The next reset date for all streams
         private DateTime ResetDate
         {
             get
             {
                 DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour >= 11) // in case the server is restarted before 4AM one day
+                if (resetDate.Hour >= 12) // in case the server is restarted before 4AM one day
                 {
                     resetDate = resetDate.AddDays(1);
                 }
-                resetDate = resetDate.AddHours(11 - resetDate.Hour);
+                resetDate = resetDate.AddHours(12 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
@@ -555,7 +569,12 @@ namespace RentItServer.ITU
 
         #region Methods to restart all channels
         #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //Reset all streams
+        /// <summary>
+        /// Method called when timer elapses.
+        /// It resets all ezstreams appropriately and start all channels with associated tracks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             // Game plan:
@@ -574,6 +593,18 @@ namespace RentItServer.ITU
 
             // Close all streams
             CloseAllStreams();
+
+            //Remove future trackplays
+            foreach (EzProcess c in runningChannelIds.Values)
+            {
+                //Delete all the trackplays which have not yet been played
+                DeleteTrackPlays(c.ChannelId, DateTime.Now);
+            }
+
+            // clear dictionary of active streams
+            _logger.AddEntry("Clearing all runningChannelIds and process ids");
+            runningChannelIds.Clear();
+            ezstreamProcessIds.Clear();
             
             // Find all channels with tracks associated
             List<Channel> channels = _dao.GetChannelsWithTracks();
@@ -589,7 +620,11 @@ namespace RentItServer.ITU
         }
         #endregion
 
+        #region Cleanup
         #region CloseAllStreams()
+        /// <summary>
+        /// Closes all windows processes with the name "ezstream"
+        /// </summary>
         private void CloseAllStreams()
         {
             _logger.AddEntry("Start killing all running ezstream processes");
@@ -608,19 +643,26 @@ namespace RentItServer.ITU
                 }
             }
             _logger.AddEntry("All ezstream processes have been killed");
-
-            //Remove future trackplays
-            foreach (EzProcess c in runningChannelIds.Values)
-            {
-                //Delete all the trackplays which have not yet been played
-                DeleteTrackPlays(c.ChannelId, DateTime.Now);
-            }
-
-            // clear dictionary of active streams
-            _logger.AddEntry("Clearing all runningChannelIds and process ids");
-            runningChannelIds.Clear();
-            ezstreamProcessIds.Clear();
         }
+
+        /// <summary>
+        /// Delete all future trackplays in the database
+        /// </summary>
+        private void DeleteAllFutureTrackPlays()
+        {
+            DateTime datetime = DateTime.Now;
+            _logger.AddEntry("Start deleting trackplays after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "]");
+            try
+            {
+                _dao.DeleteOlderTrackPlays(datetime);
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Error occoured while trying to delete trackplays in database after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "] Exception: " + e);
+                throw e;
+            }
+        }
+        #endregion
         #endregion
         #endregion
     }
