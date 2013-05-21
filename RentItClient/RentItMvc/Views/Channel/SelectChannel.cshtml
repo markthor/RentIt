@@ -1,7 +1,8 @@
 ﻿@using System.Text
+@using RentItMvc.Models
 @model RentItMvc.Models.GuiChannel
 
-<h2 class="pull-left" style="margin-top: 8px; margin-right: 16px">@Html.DisplayFor(model => model.Name)</h2>
+<h2 class="text-overflow pull-left" title="@Model.Name" style="max-width: 500px; margin-top: 8px; margin-right: 16px">@Html.DisplayFor(model => model.Name)</h2>
 
 <div class="pull-left" style="margin-top: 16px;">
     @if (Session["userId"] != null && RentItMvc.Controllers.AccountController.IsSubscribed(Model.Id, (int)Session["userId"]))
@@ -24,7 +25,7 @@
         <div style="margin-left: 16px" class="pull-right">
             @Html.ActionLink("Edit channel", "EditChannel", "Channel", new { channelId = Model.Id, userId = Session["userId"] }, new { @class = "btn btn-small btn-warning" })
         </div>
-    
+
         <div class="pull-right">
             @if (RentItMvc.Controllers.ChannelController.IsChannelPlaying(Model.Id))
             {
@@ -36,15 +37,15 @@
             {
                 if (RentItMvc.Controllers.ChannelController.HasChannelTracks(Model.Id))
                 {
-                    <button class="btn btn-small btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new { channelId = Model.Id }))' ">
-                        <i class="icon-play icon-white"></i>
-                    </button>
+                <button class="btn btn-small btn-success" title="Start channel" onclick=" location.href = '@(Url.Action("StartChannel", "Channel", new { channelId = Model.Id }))' ">
+                    <i class="icon-play icon-white"></i>
+                </button>
                 }
                 else
                 {
-                    <button class="btn btn-small btn-success disabled" title="Add tracks in order to start the channel" disabled="disabled">
-                        <i class="icon-play icon-white"></i>
-                    </button>
+                <button class="btn btn-small btn-success disabled" title="Add tracks in order to start the channel" disabled="disabled">
+                    <i class="icon-play icon-white"></i>
+                </button>
                 }
             }
         </div>
@@ -59,8 +60,8 @@
 @{
     StringBuilder sb = new StringBuilder();
     int genreCount = Model.Genres.Count();
-    string[] genres = Model.Genres;
-    if (genreCount == 0) 
+    List<GuiGenre> genres = Model.Genres;
+    if (genreCount == 0)
     {
         sb.Append("None");
     }
@@ -70,11 +71,11 @@
         {
             if (i + 1 == genreCount)
             {
-                sb.Append(genres[i]);
+                sb.Append(genres[i].Name);
             }
             else
             {
-                sb.Append(genres[i] + ", ");
+                sb.Append(genres[i].Name + ", ");
             }
         }
     }
@@ -119,8 +120,7 @@ else
     </button>
 }
 
-
-<p style="clear: left; padding-top: 20px">@Html.DisplayFor(model => model.Description)</p>
+<p style="clear: left; padding-top: 20px">@Html.Raw(Html.Encode(Model.Description).Replace("\r\n", "<br />"))</p>
 
 <div style="margin-top: 30px"></div>
 

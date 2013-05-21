@@ -86,9 +86,9 @@ namespace RentItServer
         /// <returns>
         /// The id of the created channel. -1 if the channel creation failed.
         /// </returns>
-        public int CreateChannel(string channelName, int userId, string description, string[] genres)
+        public int CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
-            return _controller.CreateChannel(channelName, userId, description, genres);
+            return _controller.CreateChannel(channelName, userId, description, genreIds);
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace RentItServer
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, int[] genreIds)
         {
-            _controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
+            _controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, genreIds);
         }
 
         /// <summary>

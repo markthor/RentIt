@@ -270,7 +270,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The created channel.</returns>
-        public Channel CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
+        public Channel CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -286,17 +286,17 @@ namespace RentItServer.ITU
 
                 if (users.Any() == false) throw new ArgumentException("No user with userId [" + userId + "]");
 
-                var someGenres = from genre in context.Genres.Where(genre => genres.Contains(genre.Name))
-                                 select genre;
-
-                //if (someGenres.Any() == false && genres != null) throw new EmptyTableException("Genres");
+                //Set the genres of the channel
+                var genres = from genre in context.Genres
+                             where genreIds.Contains(genre.Id)
+                             select genre;
 
                 // Create the channel object
                 Channel theChannel = new Channel()
                 {
                     Comments = new Collection<Comment>(),
                     Description = description,
-                    Genres = someGenres.ToList(),
+                    Genres = genres.Any() ? genres.ToList() : new List<Genre>(),
                     UserId = userId,
                     Name = channelName,
                     ChannelOwner = users.First(),
@@ -365,7 +365,7 @@ namespace RentItServer.ITU
         /// <exception cref="System.ArgumentException">No channel with channel id [ + channelId + ]
         /// or
         /// No user with user id [ + ownerId + ]</exception>
-        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri)
+        public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, string streamUri, int[] genreIds)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -374,7 +374,9 @@ namespace RentItServer.ITU
                                select channel;
                 if (channels.Any() == false) throw new ArgumentException("No channel with channel id [" + channelId + "]");
 
+
                 Channel theChannel = channels.First();
+
                 if (ownerId != null)
                 {
                     var users = from user in context.Users
@@ -391,6 +393,18 @@ namespace RentItServer.ITU
                 if (rating != null) theChannel.Rating = rating;
                 if (streamUri != null) theChannel.StreamUri = streamUri;
 
+                //Set the genres of the channel
+                theChannel.Genres.Clear();
+                if (genreIds.Length > 0)
+                {
+                    var genres = from genre in context.Genres
+                                 where genreIds.Contains(genre.Id)
+                                 select genre;
+                    foreach (Genre g in genres)
+                    {
+                        theChannel.Genres.Add(g);
+                    }
+                }
                 context.SaveChanges();
             }
         }
@@ -440,7 +454,7 @@ namespace RentItServer.ITU
             {   // get all channels that starts with filter.Name
 
                 var channels = from c in context.Channels
-                               where c.Name.Contains(filter.SearchString)
+                               where c.Name.Contains(filter.SearchString) || c.Description.Contains(filter.SearchString)
                                select c;
 
                 if (filter.MinAmountPlayed > -1)
@@ -877,7 +891,8 @@ namespace RentItServer.ITU
         /// Creates a genre with the name.
         /// </summary>
         /// <param name="genreName">The name of the genre.</param>
-        public void CreateGenre(string genreName)
+        /// <returns>The id of the genre</returns>
+        public int CreateGenre(string genreName)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
@@ -891,6 +906,7 @@ namespace RentItServer.ITU
                 genre.Name = genreName;
                 context.Genres.Add(genre);
                 context.SaveChanges();
+                return genre.Id;
             }
         }
 
@@ -1105,6 +1121,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 //Delete all users
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
                 var users = context.Users;
                 foreach (User u in users)
                 {
@@ -1135,6 +1152,7 @@ namespace RentItServer.ITU
                 }
 
                 //Delete all trackPlays
+                /*
                 var trackPlays = context.TrackPlays;
                 if (trackPlays.Any())
                 {
@@ -1142,7 +1160,8 @@ namespace RentItServer.ITU
                     {
                         context.TrackPlays.Remove(tp);
                     }
-                }
+                }*/
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
                 //Delete all comments
                 var comments = context.Comments;
                 foreach (Comment c in comments)
@@ -1468,6 +1487,23 @@ namespace RentItServer.ITU
             }
         }
 
+        public void DeleteOlderTrackPlays(DateTime datetime)
+        {
+            using (RENTIT21Entities context = new RENTIT21Entities())
+            {
+                var trackplays = from tp in context.TrackPlays
+                                 where tp.TimePlayed > datetime
+                                 select tp;
+
+                foreach (TrackPlay tp in trackplays)
+                {
+                    context.TrackPlays.Remove(tp);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// Deletes the trackplays associated with track id.
         /// </summary>
@@ -1574,6 +1610,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var genres = from g in context.Genres
+                             orderby g.Name ascending
                              select g;
                 return genres.ToList();
             }

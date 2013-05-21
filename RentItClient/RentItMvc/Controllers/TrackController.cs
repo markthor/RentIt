@@ -23,19 +23,25 @@ namespace RentItMvc.Controllers
         {
             if (userId.HasValue)
             {
-                // Verify that the user selected a file
-                if (file != null && file.ContentLength > 0)
+                try
                 {
-                    Stream stream = file.InputStream;
-                    MemoryStream memory = new MemoryStream();
-                    stream.CopyTo(memory);
-                    Track track = new Track();
-                    track.Artist = artistName;
-                    track.Name = trackName;
-                    using (RentItServiceClient proxy = new RentItServiceClient())
+                    // Verify that the user selected a file
+                    if (file != null && file.ContentLength > 0)
                     {
-                        proxy.AddTrack(userId.Value, channelId, memory);
+                        Stream stream = file.InputStream;
+                        MemoryStream memory = new MemoryStream();
+                        stream.CopyTo(memory);
+                        Track track = new Track();
+                        track.Artist = artistName;
+                        track.Name = trackName;
+                        using (RentItServiceClient proxy = new RentItServiceClient())
+                        {
+                            proxy.AddTrack(userId.Value, channelId, memory);
+                        }
                     }
+                }
+                catch (Exception)
+                {
                 }
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
@@ -85,7 +91,7 @@ namespace RentItMvc.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
- 
+
         public static int GetUpvotes(int trackId)
         {
             int upvotes;

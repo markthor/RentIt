@@ -83,6 +83,7 @@ namespace RentItServer.ITU
         {
             _streamHandler.SetLogger(_logger);
             _streamHandler.InitTimer();
+            _streamHandler.Cleanup();
         }
 
         /// <summary>
@@ -262,7 +263,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description of the channel.</param>
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
-        public int CreateChannel(string channelName, int userId, string description, IEnumerable<string> genres)
+        public int CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "CreateChannel");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "CreateChannel");
@@ -271,20 +272,28 @@ namespace RentItServer.ITU
             //if (genres == null) LogAndThrowException(new ArgumentNullException("genres"), "CreateChannel");
 
             Channel channel = null;
-            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genres [" + genres + "]. ";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < genreIds.Length; i++)
+            {
+                if (i + 1 == genreIds.Length)
+                    sb.Append(genreIds[i]);
+                else
+                    sb.Append(genreIds[i] + ", ");
+            }
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + sb.ToString() + "]. ";
             try
             {
 
-                channel = _dao.CreateChannel(channelName, userId, description, genres);
-                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id);
+                channel = _dao.CreateChannel(channelName, userId, description, genreIds);
+                _dao.UpdateChannel(channel.Id, null, null, null, null, null, _defaultUrl + channel.Id, genreIds);
                 _logger.AddEntry(logEntry + "Channel creation succeeded.");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs(logEntry + "Channel creation failed with exception [" + e + "]."));
-                _logger.AddEntry("ChannelCreation failed with exception [{0}]. logEntry = " + logEntry + ". Local variable: channel = " + channel + ".");
+                _logger.AddEntry("ChannelCreation failed with exception [" + e + "]. logEntry = " + logEntry + ". Local variable: channel = " + channel + ".");
                 throw;
             }
             return channel.Id;
@@ -294,17 +303,17 @@ namespace RentItServer.ITU
         /// Creates a genre with the name.
         /// </summary>
         /// <param name="genreName">The name of the genre.</param>
-        public void CreateGenre(string genreName)
+        /// <returns>The id of the genre</returns>
+        public int CreateGenre(string genreName)
         {
             if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
             string logEntry = "Genre with name: " + " [" + genreName + "] has been created.";
 
             try
             {
-
-                _dao.CreateGenre(genreName);
+                int genreId = _dao.CreateGenre(genreName);
                 _logger.AddEntry(logEntry + "Genre creation succeeded.");
-
+                return genreId;
             }
             catch (Exception)
             {
@@ -358,11 +367,11 @@ namespace RentItServer.ITU
         /// <param name="hits">The hits.</param>
         /// <param name="rating">The rating.</param>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits,
-                                  double? rating)
+                                  double? rating, int[] genreIds)
         {
             try
             {
-                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null);
+                _dao.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, null, genreIds);
             }
             catch (Exception e)
             {
@@ -498,14 +507,15 @@ namespace RentItServer.ITU
                 track.Id = tId;
                 track.ChannelId = channelId;
                 _dao.UpdateTrack(track);
+                _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
             }
             catch (Exception e)
             {
                 _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
                 _dao.DeleteTrackEntry(track.Id);
-                _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
+                _logger.AddEntry("exception: " + e);
+                throw e;
             }
-            _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
             return track.Id;
         }
 
@@ -530,7 +540,7 @@ namespace RentItServer.ITU
             track.TrackPlays = new List<TrackPlay>();
             track.Votes = new List<Vote>();
             track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
-
+            
             //An mp3 file may have several artists. This loop puts them into a singles string
             track.Artist = "";
             string[] artists = audioFile.Tag.AlbumArtists;

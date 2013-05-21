@@ -19,7 +19,7 @@ namespace RentItMvc.Models
             OwnerId = -1;
             Tracks = new List<GuiTrack>();
             StreamUri = "";
-            Genres = new string[0];
+            Genres = new List<GuiGenre>();
         }
         [Required]
         [Display(Name = "Id")]
@@ -50,6 +50,6 @@ namespace RentItMvc.Models
 
         public int Subscribers { get; set; }
 
-        public string[] Genres { get; set; }
+        public List<GuiGenre> Genres { get; set; }
     }
 }

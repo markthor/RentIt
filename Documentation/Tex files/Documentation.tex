@@ -116,7 +116,7 @@ The channel must be visible to other users with proper search parameters. \\*
 \textbf{Dependencies:} 
 The requirement is necessary for "upload track" and "listen to channel" because a track is associated with a channel. \\*
 \textbf{Priority:} 
-It is of essential importance, since the functionality is prerequested for other fundamentally important requirements.
+It is of essential importance, since the functionality is prerequisite for other fundamentally important requirements.
 \\ \\
 
 \textbf{R1:}
@@ -236,7 +236,7 @@ The non-functional requirements describes how the functionality shall work in mu
 \textbf{S3:} The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for a software developer. \\*
 \textbf{S4:} The server shall be running on Windows Server 2008 R2 Enterprise OS with support of .NET 4.0 Framework.\\*
 
-\textbf{Implementaion} \\*
+\textbf{Implementation} \\*
 \textbf{I1:} Users must not be required to download or install any third party software in order to listen to a channel. \\*
 \textbf{I2:} The website shall work in Google Chrome browser. \\*
 \textbf{I3:} The server shall be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation. \\*
@@ -354,13 +354,14 @@ This section describes how the system is implemented by describing class respons
 
 \subsection{System Architecture}
 The overall system architecture consists of four possibly separated parts. The SQL database, which the server connects to with the entity framework. The server, which exposes webservices to the web client and the SMU client. The web client which generates HTML responses to the users and calls the webservice. The database, the server and the web client are all deployed on rentit.itu.dk.
+\iffalse
 \begin{figure}[H]
   \centering
 \includegraphics[keepaspectratio=true,trim=60pt 650pt 60pt 50pt]{./overallArchitecture.pdf}
 \caption{Architecture of the entire system}
 \end{figure}
-
-\subsection{Server Architecture}
+\fi
+\subsection{Server Structure}
 The most important classes for RentItServer are listed and described below. All of them except the wrapper objects are made with the singleton design pattern and lazy instantiation.\\*
 
 \textbf{DatabaseDao} \\*
@@ -370,7 +371,7 @@ Communication with the database is done through a single data access object. Thi
 Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the file system and the program on the server. It enables the same basic operations on the filesystem as the DatabaseDao does on the database, however it has fewer responsibilities, because most of our data is stored in the database. This class is often used in the same context as the FilePath class because all file paths are stored as fields of FilePath instances. \\*
 
 \textbf{RentItService} \\*
-All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfil the requirements for the program. All calls to this class are either propagated to the Controller or the StreamHandler \\*
+All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfil the requirements for the program. All calls to this class are either propagated to the Controller or the StreamHandler. System sequence diagrams of \texttt{Login(...)} and \texttt{StartStream(...)} are included in the appendix under diagrams. \\*
 
 \textbf{TrackPrioritizer} \\*
 This class selects tracks to be played based on the constraints defined in the track selection analysis. The track prioritizer are described in ~\nameref{sec:tp}. \\*
@@ -387,7 +388,7 @@ These classes are used to limit the data that are transferred with the webservic
 \subsubsection{Class diagram}
 \begin{figure}[H]
   \centering
-\includegraphics[width=450pt,keepaspectratio=true,trim=80pt 170pt 80pt 50pt]{./ClassDiagramv2.pdf}
+\includegraphics[width=400pt,keepaspectratio=true,trim=80pt 170pt 80pt 50pt]{./ClassDiagramv2.pdf}
 \caption{Class diagram of important methods and all classes}
 \end{figure}
 
@@ -467,70 +468,17 @@ This parameter testing approach insures that all exceptions are thrown and all c
 \textbf{System testing}\\*
 Every test not contained in the unit test project are done manually. All testing on the graphical user interface are done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
 
+\subsection{Known bugs}
+This section contains a list of all known bugs in the system, not related to the implementation.
+\begin{itemize}
+\item When the same track has been played twice in the last five plays and the user votes on it, only the track that the user pressed is highlighted, while the intention is to make both highlighted.
+\end{itemize}
+
 \subsection{Testing of specific requirements}
 In this section, the fulfilment of each functional requirement are assessed and any directly related non-functional requirement are considered. \\ \\*
 \textbf{General notes on the requirements} \\*
 The non-functional requirements, U1 and U2 has not been meet for any of the functional requirements. \\ \\
-\textbf{R0} \\*
-\textit{The system shall allow all users to create a channel, add attributes, edit and delete the channel.} \\*
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_CreateChannel\_...
-\item Controller\_UpdateChannel\_...
-\item Controller\_DeleteChannel\_...
-\item Controller\_IsChannelNameAvailable\_...
-\end{itemize}
-UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, except for adding genres(F1), which is not implemented. Therefore more functionality has to be added and more usability testing has to be done before this requirement is fulfilled.\\ \\
-\textbf{R1} \\*
-\textit{The system shall allow users to listen to an online radio-channel that streams audio.} \\*
-This requirement are not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement have been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality more expensive. \\ \\
-\textbf{R2:} \\*
-\textit{The user shall be able to rate a track associated with a channel by up voting and down voting.} \\*
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_CreateVote\_...
-\item Controller\_DeleteVote\_...
-\end{itemize}
-With the manual GUI tests, this requirement has been fulfilled. Simple empirical testing reveals that the directly related functional requirement F3, F4 and U4 has been meet. \\ \\
-\textbf{R3:} \\*
-\textit{It shall be possible for users with a channel to upload a track to it.} \\*
-This requirement clearly lack automated tests. The manual testing confirms that it works and that Re4 and F7 has been fulfilled. It is hard to test Re2, because of the various ways a server could fail. However our best assessment is that the Re2 is fulfilled and the implementation of the requirement is sufficient for the current state of the system. \\ \\
-\textbf{R4:} \\*
-\textit{It shall be possible for users to subscribe and unsubscribe to channels.} \\*
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_Unsubscribe\_...
-\item Controller\_Subscribe\_...
-\item Controller\_SubscribeGetSubscriptions\_...
-\end{itemize}
-The very thorough unit tests made for the requirement confirms that the server side has meet the requirement. The manual tests shows similar results for the GUI. F4 are tested with unsubscribe state unit tests. All aspects of this requirement has been meet. \\ \\
-\textbf{R5:} \\*
-\textit{It shall be possible for user to comment on channels.} \\
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_CreateComment\_...
-\item Controller\_DeleteComment\_...
-\end{itemize}
-The unit test confirms that the server side meets the requirement. Manual testing has been done and because of the limited amounts of outcome, we are very sure that this requirement has been completely fulfilled. \\ \\
-\textbf{R6:} \\*
-\textit{It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable.} \\*
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_Login\_...
-\item Controller\_SignUp\_...
-\item Controller\_DeleteUser\_...
-\item Controller\_IsCorrectPassword\_...
-\item Controller\_IsUsernameAvailable\_...
-\item Controller\_IsEmailAvailable\_...
-\end{itemize}
-According to automated and manual test this requirement has been meet. However it is questionable whether F10 has been meet. All intended usage requires authentication, but because our system is so insecure, it is easy to use it without authentication. \\ \\
-\textbf{R7:} \\*
-\textit{It shall be possible to search channels by a number of parameters, including number of subscribers, number of listeners, genres and name.} \\*
-On the server side this is ensured with the unit tests:
-\begin{itemize}
-\item Controller\_GetChannelsWithFilter\_...
-\end{itemize}
-According to automated and manual test this requirement has been meet, except for searching for genres.
+All results on testing of specific requirements are in the appendix under textual items.
 
 \subsection{Testing conclusion}
 The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
@@ -674,6 +622,67 @@ The group from Singapore Management University requested the following API.
 	\item \texttt{void UploadAudio(int bookId, MemoryStream mpMP3, string narrator)}
 	\item \texttt{void UploadPdf(int bookId, MemoryStream pdf)}
 \end{itemize}
+\subsection{Results for specific testing of requirements}
+\textbf{R0} \\*
+\textit{The system shall allow all users to create a channel, add attributes, edit and delete the channel.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateChannel\_...
+\item Controller\_UpdateChannel\_...
+\item Controller\_DeleteChannel\_...
+\item Controller\_IsChannelNameAvailable\_...
+\end{itemize}
+UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, except for adding genres(F1), which is not implemented. Therefore more functionality has to be added and more usability testing has to be done before this requirement is fulfilled.\\ \\
+\textbf{R1} \\*
+\textit{The system shall allow users to listen to an online radio-channel that streams audio.} \\*
+This requirement are not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement have been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality more expensive. \\ \\
+\textbf{R2:} \\*
+\textit{The user shall be able to rate a track associated with a channel by up voting and down voting.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateVote\_...
+\item Controller\_DeleteVote\_...
+\end{itemize}
+With the manual GUI tests, this requirement has been fulfilled. Simple empirical testing reveals that the directly related functional requirement F3, F4 and U4 has been meet. \\ \\
+\textbf{R3:} \\*
+\textit{It shall be possible for users with a channel to upload a track to it.} \\*
+This requirement clearly lack automated tests. The manual testing confirms that it works and that Re4 and F7 has been fulfilled. It is hard to test Re2, because of the various ways a server could fail. However our best assessment is that the Re2 is fulfilled and the implementation of the requirement is sufficient for the current state of the system. \\ \\
+\textbf{R4:} \\*
+\textit{It shall be possible for users to subscribe and unsubscribe to channels.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_Unsubscribe\_...
+\item Controller\_Subscribe\_...
+\item Controller\_SubscribeGetSubscriptions\_...
+\end{itemize}
+The very thorough unit tests made for the requirement confirms that the server side has meet the requirement. The manual tests shows similar results for the GUI. F4 are tested with unsubscribe state unit tests. All aspects of this requirement has been meet. \\ \\
+\textbf{R5:} \\*
+\textit{It shall be possible for user to comment on channels.} \\
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_CreateComment\_...
+\item Controller\_DeleteComment\_...
+\end{itemize}
+The unit test confirms that the server side meets the requirement. Manual testing has been done and because of the limited amounts of outcome, we are very sure that this requirement has been completely fulfilled. \\ \\
+\textbf{R6:} \\*
+\textit{It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_Login\_...
+\item Controller\_SignUp\_...
+\item Controller\_DeleteUser\_...
+\item Controller\_IsCorrectPassword\_...
+\item Controller\_IsUsernameAvailable\_...
+\item Controller\_IsEmailAvailable\_...
+\end{itemize}
+According to automated and manual test this requirement has been meet. However it is questionable whether F10 has been meet. All intended usage requires authentication, but because our system is so insecure, it is easy to use it without authentication. \\ \\
+\textbf{R7:} \\*
+\textit{It shall be possible to search channels by a number of parameters, including number of subscribers, number of listeners, genres and name.} \\*
+On the server side this is ensured with the unit tests:
+\begin{itemize}
+\item Controller\_GetChannelsWithFilter\_...
+\end{itemize}
+According to automated and manual test this requirement has been meet, except for searching for genres.
 \newpage
 \section{Diagrams}
 
