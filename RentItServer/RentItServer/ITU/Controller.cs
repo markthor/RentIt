@@ -83,6 +83,7 @@ namespace RentItServer.ITU
         {
             _streamHandler.SetLogger(_logger);
             _streamHandler.InitTimer();
+            _streamHandler.Cleanup();
         }
 
         /// <summary>
