@@ -392,17 +392,18 @@ namespace RentItServer.ITU
                 if (hits != null) theChannel.Hits = (int)hits;
                 if (rating != null) theChannel.Rating = rating;
                 if (streamUri != null) theChannel.StreamUri = streamUri;
-
-                //Set the genres of the channel
-                theChannel.Genres.Clear();
-                if (genreIds.Length > 0)
-                {
-                    var genres = from genre in context.Genres
-                                 where genreIds.Contains(genre.Id)
-                                 select genre;
-                    foreach (Genre g in genres)
+                if (genreIds != null)
+                {   //Set the genres of the channel
+                    theChannel.Genres.Clear();
+                    if (genreIds.Length > 0)
                     {
-                        theChannel.Genres.Add(g);
+                        var genres = from genre in context.Genres
+                                     where genreIds.Contains(genre.Id)
+                                     select genre;
+                        foreach (Genre g in genres)
+                        {
+                            theChannel.Genres.Add(g);
+                        }
                     }
                 }
                 context.SaveChanges();
