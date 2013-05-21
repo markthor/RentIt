@@ -103,27 +103,31 @@ namespace RentItServer.ITU
         /// <summary>
         /// The date that the reset of all channel streams should take place
         /// </summary>
+        
         private DateTime ResetDate
         {
             get
             {
-                //For testing!
-                //DateTime resetDate = DateTime.Now;
-                //resetDate = resetDate.AddMinutes(5);
-                //return resetDate;
-                //endFor
-
-
-                //Creates the time now and adds to that value
                 DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour > 3) // in case the server is restarted before 3AM one day
+                if (resetDate.Hour >= 11) // in case the server is restarted before 4AM one day
                 {
                     resetDate = resetDate.AddDays(1);
                 }
-                resetDate = resetDate.AddHours(3 - resetDate.Hour);
+                resetDate = resetDate.AddHours(11 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
                 return resetDate;
+
+                /*//Creates the time now and adds to that value so that it is set to the next occourence of 4AM
+                DateTime resetDate = DateTime.Now;
+                if (resetDate.Hour >= 4) // in case the server is restarted before 4AM one day
+                {
+                    resetDate = resetDate.AddDays(1);
+                }
+                resetDate = resetDate.AddHours(4 - resetDate.Hour);
+                resetDate = resetDate.AddMinutes(-resetDate.Minute);
+                resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
+                return resetDate;*/
             }
         }
         #endregion
@@ -258,7 +262,15 @@ namespace RentItServer.ITU
 
             _logger.AddEntry("Writing config file for channel with id: [" + channelId + "] to file system");
             //Write the config file to the system
-            FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+            try
+            {
+                FileSystemDao.GetInstance().WriteFile(xml, xmlFilePath);
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Exception when trying to write config file for channel with id: [" + channelId + "]. Xml content: [" + xml + "] to filepath: [" + xmlFilePath + "]. Exception: " + e);
+                throw e;
+            }
         }
         #endregion
 
@@ -282,7 +294,14 @@ namespace RentItServer.ITU
             _logger.AddEntry("Start writing m3u for channel with id: [" + channelId + "] file to filesystem");
             //Write the m3u file to the filesystem
             string filePath = FilePath.ITUM3uPath.GetPath() + channelId + ".m3u";
-            _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
+            try
+            {
+                _fileSystemHandler.WriteM3UPlaylistFile(filePath, playlist);
+            }
+            catch(Exception e)
+            {
+                _logger.AddEntry("Exception when trying to write m3u file for channel with id: [" + channelId + "] to filepath: [" + filePath + "]. m3u contains: [" + playlist.Count + "] tracks. Exception: " + e);
+            }
         }
         #endregion
 
@@ -353,7 +372,15 @@ namespace RentItServer.ITU
                 p.StartInfo = startInfo;
 
                 _logger.AddEntry("Starting process for channel with id: [" + channelId + "]");
-                p.Start();
+                try
+                {
+                    p.Start();
+                }
+                catch (Exception e)
+                {
+                    _logger.AddEntry("Exception when trying to start ezprocess for channel with id: [" + channelId + "]. EzStream path: [" + ezPath + "] - XmlFilePath: [" + xmlFilePath + "] - Arguments: [" + arguments + "]. Exception: " + e);
+                    throw e;
+                }
                 _logger.AddEntry("Process started for channel with id: [" + channelId + "]");
 
                 //Start asynchronous assignment of process id to the newly created process
@@ -383,6 +410,7 @@ namespace RentItServer.ITU
             Thread.Sleep(1000);
             _logger.AddEntry("Sleep has finished for channel with id: [" + p.ChannelId + "]");
             //Loop through all windows processes names "ezstream"
+            bool sucess = false;
             foreach (Process process in Process.GetProcessesByName("ezstream"))
             {
                 if (!ezstreamProcessIds.Contains(process.Id)) //If the windows process has an id which is not in the list of already running process ids
@@ -391,9 +419,14 @@ namespace RentItServer.ITU
                     p.RealProcessId = process.Id;
                     //Add the id to the list of running processes ids
                     ezstreamProcessIds.Add(process.Id);
+                    sucess = true;
                     _logger.AddEntry("Process for channel with id: [" + p.ChannelId + "] has been assigned process id: [" + p.RealProcessId + "]");
                     break;
                 }
+            }
+            if (!sucess)
+            {
+                _logger.AddEntry("Unable to find process id for channel with id: [" + p.ChannelId + "]");
             }
         }
         #endregion
@@ -427,17 +460,34 @@ namespace RentItServer.ITU
             {
                 if (process.Id == p.RealProcessId) //if the windows process has the same id as the process associated with the given channel id
                 {
-                    //Kill the process
-                    process.Kill();
-                    //Remove the id from active processes' widnows ids
-                    ezstreamProcessIds.Remove(p.RealProcessId);
-                    //Remove
-                    runningChannelIds.Remove(channelId);
-                    //Delete all the trackplays which have not yet been played
-                    DeleteTrackPlays(channelId, DateTime.Now);
-                    //Set success to true
-                    success = true;
-                    _logger.AddEntry("Ezstream process for channel with id: [" + channelId + "] has been killed");
+                    try
+                    {
+                        //Kill the process
+                        process.Kill();
+                    }
+                    catch (System.ComponentModel.Win32Exception e)
+                    {
+                        _logger.AddEntry("Unable to kill ezstream process for channel with id: [" + channelId + "]. Exception: " + e);
+                        throw e;
+                    }
+                    try
+                    {
+                        //Remove the id from active processes' widnows ids
+                        ezstreamProcessIds.Remove(p.RealProcessId);
+                        //Remove
+                        runningChannelIds.Remove(channelId);
+                        //Delete all the trackplays which have not yet been played
+                        DeleteTrackPlays(channelId, DateTime.Now);
+                        //Set success to true
+                        success = true;
+                        _logger.AddEntry("Ezstream process for channel with id: [" + channelId + "] has been killed");
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.AddEntry("Unable to cleanup after killing ezstream process for channel with id: [" + channelId + "]. Exception: " + e);
+                        throw e;
+                    }
+
                 }
             }
             if (!success)
@@ -456,7 +506,15 @@ namespace RentItServer.ITU
         public void DeleteTrackPlays(int channelId, DateTime datetime)
         {
             _logger.AddEntry("Start deleting trackplays for channel with id: [" + channelId + "] after datetime: [" + datetime.ToLongDateString() + " " + datetime.ToLongTimeString() + "]");
-            _dao.DeleteTrackPlaysByChannelId(channelId, datetime);
+            try
+            {
+                _dao.DeleteTrackPlaysByChannelId(channelId, datetime);
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Error occoured while trying to delete trackplays in database for channel with id: [" + channelId + "]. Exception: " + e);
+                throw e;
+            }
         }
         #endregion
         #endregion
@@ -482,7 +540,15 @@ namespace RentItServer.ITU
         private void AddTrackPlayList(List<TrackPlay> trackPlayList)
         {
             _logger.AddEntry("Starting adding count: [" + trackPlayList.Count + "] trackplays from given list to database");
-            _dao.AddTrackPlayList(trackPlayList);
+            try
+            {
+                _dao.AddTrackPlayList(trackPlayList);
+            }
+            catch (Exception e)
+            {
+                _logger.AddEntry("Error occoured while trying to add trackplays in database. Tracklist contains: [" + trackPlayList.Count + "] tracks. Exception: " + e);
+                throw e;
+            }
         }
         #endregion
         #endregion
@@ -503,7 +569,8 @@ namespace RentItServer.ITU
                 // add process to list of active streams
 
             _logger.AddEntry("Start restart of all streams");
-            timer.Interval = (ResetDate - DateTime.Now).TotalMilliseconds; //Set timer interval to 24hours
+            timer.Interval = (ResetDate - DateTime.Now).TotalMilliseconds;//86400000;//Set timer interval to 24hours 
+            _logger.AddEntry("New timer interval: [" + timer.Interval + "]");
 
             // Close all streams
             CloseAllStreams();
@@ -530,7 +597,15 @@ namespace RentItServer.ITU
             //Loop trhough all windows processes called "ezstream" and kill them
             foreach (Process p in System.Diagnostics.Process.GetProcessesByName("ezstream"))
             {
-                p.Kill();
+                try
+                {
+                    p.Kill();
+                }
+                catch(Exception e)
+                {
+                    _logger.AddEntry("Unable to kill ezstream process with id: [" + p.Id + "]. Process name: [" + p.ProcessName + "]. Exception: " + e);
+                    throw e;
+                }
             }
             _logger.AddEntry("All ezstream processes have been killed");
 

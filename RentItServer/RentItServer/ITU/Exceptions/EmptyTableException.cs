@@ -13,8 +13,9 @@ namespace RentItServer.ITU.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="EmptyTableException"/> class.
         /// </summary>
-        /// <param name="msg">The MSG.</param>
-        public EmptyTableException(string msg) : base(msg)
+        /// <param name="message">Message that describes the error.</param>
+        public EmptyTableException(string message)
+            : base(message)
         {
         }
     }

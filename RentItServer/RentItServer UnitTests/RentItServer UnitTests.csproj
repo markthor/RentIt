@@ -65,8 +65,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ItuTests\ItuController_Test.cs" />
-    <Compile Include="ItuTests\ItuDao_Test.cs" />
-    <Compile Include="ItuTests\StreamHandler_Test.cs" />
     <Compile Include="ItuTestUtilities\TestExtensions.cs" />
     <Compile Include="Service References\ITUServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -96,6 +94,7 @@
     <None Include="Properties\DataSources\RentItServer.ITU.ChannelSearchArgs.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Channel.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Comment.datasource" />
+    <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Genre.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Track.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.User.datasource" />
     <None Include="Properties\DataSources\RentItServer.ITU.DatabaseWrapperObjects.Vote.datasource" />

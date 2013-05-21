@@ -302,24 +302,57 @@ namespace RentItServer.ITU
         [OperationContract]
         int CountAllChannelsWithFilter(ChannelSearchArgs filter);
 
+        /// <summary>
+        /// Counts the total amount of upvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of upvotes</returns>
         [OperationContract]
         int CountAllUpvotes(int trackId);
 
+        /// <summary>
+        /// Counts the total amount of downvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of dwonvotes</returns>
         [OperationContract]
         int CountAllDownvotes(int trackId);
 
+        /// <summary>
+        /// Retreives all genres
+        /// </summary>
+        /// <returns>An array of all genres in the database</returns>
         [OperationContract]
         ITU.DatabaseWrapperObjects.Genre[] GetAllGenres();
 
+        /// <summary>
+        /// Retreives all genres associated with the given channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>Array of asociated genres</returns>
         [OperationContract]
         ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId);
-        
+
+        /// <summary>
+        /// Counts the total amount of comments for a channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>The total amount of comments</returns>
         [OperationContract]
         int GetCountChannelComments(int channelId);
 
+        /// <summary>
+        /// Counts the amount of channels which pass the given ChannelSearchArgs filter
+        /// </summary>
+        /// <param name="filter">ChannelSearchArgs filter to apply to all channels</param>
+        /// <returns>The amount of channels passing the filter</returns>
         [OperationContract]
         int CountChannelsPassingFilter(ChannelSearchArgs filter);
 
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
         [OperationContract]
         void DeleteAccount(int userId);
     }

@@ -21,17 +21,11 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/SignUp", ReplyAction="http://tempuri.org/IRentItService/SignUpResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.User SignUp(string usernameOrEmail, string email, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteUser", ReplyAction="http://tempuri.org/IRentItService/DeleteUserResponse")]
-        void DeleteUser(int userId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUser", ReplyAction="http://tempuri.org/IRentItService/GetUserResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.User GetUser(int userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsCorrectPassword", ReplyAction="http://tempuri.org/IRentItService/IsCorrectPasswordResponse")]
         bool IsCorrectPassword(int userId, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllUserIds", ReplyAction="http://tempuri.org/IRentItService/GetAllUserIdsResponse")]
-        int[] GetAllUserIds();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateUser", ReplyAction="http://tempuri.org/IRentItService/UpdateUserResponse")]
         void UpdateUser(int userId, string username, string password, string email);
@@ -45,14 +39,8 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/UpdateChannel", ReplyAction="http://tempuri.org/IRentItService/UpdateChannelResponse")]
         void UpdateChannel(int channelId, System.Nullable<int> ownerId, string channelName, string description, System.Nullable<double> hits, System.Nullable<double> rating);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IncrementHitsForChannel", ReplyAction="http://tempuri.org/IRentItService/IncrementHitsForChannelResponse")]
-        void IncrementHitsForChannel(int channelId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannel", ReplyAction="http://tempuri.org/IRentItService/GetChannelResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllChannelIds", ReplyAction="http://tempuri.org/IRentItService/GetAllChannelIdsResponse")]
-        int[] GetAllChannelIds();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannels", ReplyAction="http://tempuri.org/IRentItService/GetChannelsResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.Channel[] GetChannels(RentItServer.ITU.ChannelSearchArgs args);
@@ -63,29 +51,14 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/AddTrack", ReplyAction="http://tempuri.org/IRentItService/AddTrackResponse")]
         void AddTrack(int userId, int channelId, System.IO.MemoryStream audioStream);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackInfoByTrackname", ReplyAction="http://tempuri.org/IRentItService/GetTrackInfoByTracknameResponse")]
-        RentItServer.ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/RemoveTrack", ReplyAction="http://tempuri.org/IRentItService/RemoveTrackResponse")]
         void RemoveTrack(int trackId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTrackIds", ReplyAction="http://tempuri.org/IRentItService/GetTrackIdsResponse")]
-        int[] GetTrackIds(int channelId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetTracks", ReplyAction="http://tempuri.org/IRentItService/GetTracksResponse")]
-        RentItServer.ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, RentItServer.ITU.TrackSearchArgs args);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CreateComment", ReplyAction="http://tempuri.org/IRentItService/CreateCommentResponse")]
         void CreateComment(string comment, int userId, int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteComment", ReplyAction="http://tempuri.org/IRentItService/DeleteCommentResponse")]
-        void DeleteComment(int channelId, int userId, System.DateTime date);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelComments", ReplyAction="http://tempuri.org/IRentItService/GetChannelCommentsResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetUserComments", ReplyAction="http://tempuri.org/IRentItService/GetUserCommentsResponse")]
-        RentItServer.ITU.DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/IsEmailAvailable", ReplyAction="http://tempuri.org/IRentItService/IsEmailAvailableResponse")]
         bool IsEmailAvailable(string email);
@@ -99,17 +72,11 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/Unsubscribe", ReplyAction="http://tempuri.org/IRentItService/UnsubscribeResponse")]
         void Unsubscribe(int userId, int channelId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetChannelPort", ReplyAction="http://tempuri.org/IRentItService/GetChannelPortResponse")]
-        int GetChannelPort(int channelId, int ipAddress, int port);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/StartChannelStream", ReplyAction="http://tempuri.org/IRentItService/StartChannelStreamResponse")]
         void StartChannelStream(int cId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultChannelSearchArgsResponse")]
         RentItServer.ITU.ChannelSearchArgs GetDefaultChannelSearchArgs();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgs", ReplyAction="http://tempuri.org/IRentItService/GetDefaultTrackSearchArgsResponse")]
-        RentItServer.ITU.TrackSearchArgs GetDefaultTrackSearchArgs();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCreatedChannels", ReplyAction="http://tempuri.org/IRentItService/GetCreatedChannelsResponse")]
         RentItServer.ITU.DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId);
@@ -143,6 +110,30 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteVote", ReplyAction="http://tempuri.org/IRentItService/DeleteVoteResponse")]
         void DeleteVote(int userId, int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllChannelsWithFilter", ReplyAction="http://tempuri.org/IRentItService/CountAllChannelsWithFilterResponse")]
+        int CountAllChannelsWithFilter(RentItServer.ITU.ChannelSearchArgs filter);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllUpvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllUpvotesResponse")]
+        int CountAllUpvotes(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountAllDownvotes", ReplyAction="http://tempuri.org/IRentItService/CountAllDownvotesResponse")]
+        int CountAllDownvotes(int trackId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetAllGenres", ReplyAction="http://tempuri.org/IRentItService/GetAllGenresResponse")]
+        RentItServer.ITU.DatabaseWrapperObjects.Genre[] GetAllGenres();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetGenresForChannel", ReplyAction="http://tempuri.org/IRentItService/GetGenresForChannelResponse")]
+        RentItServer.ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/GetCountChannelComments", ReplyAction="http://tempuri.org/IRentItService/GetCountChannelCommentsResponse")]
+        int GetCountChannelComments(int channelId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CountChannelsPassingFilter", ReplyAction="http://tempuri.org/IRentItService/CountChannelsPassingFilterResponse")]
+        int CountChannelsPassingFilter(RentItServer.ITU.ChannelSearchArgs filter);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteAccount", ReplyAction="http://tempuri.org/IRentItService/DeleteAccountResponse")]
+        void DeleteAccount(int userId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -180,20 +171,12 @@ namespace RentItServer_UnitTests.ITUServiceReference {
             return base.Channel.SignUp(usernameOrEmail, email, password);
         }
         
-        public void DeleteUser(int userId) {
-            base.Channel.DeleteUser(userId);
-        }
-        
         public RentItServer.ITU.DatabaseWrapperObjects.User GetUser(int userId) {
             return base.Channel.GetUser(userId);
         }
         
         public bool IsCorrectPassword(int userId, string password) {
             return base.Channel.IsCorrectPassword(userId, password);
-        }
-        
-        public int[] GetAllUserIds() {
-            return base.Channel.GetAllUserIds();
         }
         
         public void UpdateUser(int userId, string username, string password, string email) {
@@ -212,16 +195,8 @@ namespace RentItServer_UnitTests.ITUServiceReference {
             base.Channel.UpdateChannel(channelId, ownerId, channelName, description, hits, rating);
         }
         
-        public void IncrementHitsForChannel(int channelId) {
-            base.Channel.IncrementHitsForChannel(channelId);
-        }
-        
         public RentItServer.ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId) {
             return base.Channel.GetChannel(channelId);
-        }
-        
-        public int[] GetAllChannelIds() {
-            return base.Channel.GetAllChannelIds();
         }
         
         public RentItServer.ITU.DatabaseWrapperObjects.Channel[] GetChannels(RentItServer.ITU.ChannelSearchArgs args) {
@@ -236,36 +211,16 @@ namespace RentItServer_UnitTests.ITUServiceReference {
             base.Channel.AddTrack(userId, channelId, audioStream);
         }
         
-        public RentItServer.ITU.DatabaseWrapperObjects.Track GetTrackInfoByTrackname(int channelId, string trackname) {
-            return base.Channel.GetTrackInfoByTrackname(channelId, trackname);
-        }
-        
         public void RemoveTrack(int trackId) {
             base.Channel.RemoveTrack(trackId);
-        }
-        
-        public int[] GetTrackIds(int channelId) {
-            return base.Channel.GetTrackIds(channelId);
-        }
-        
-        public RentItServer.ITU.DatabaseWrapperObjects.Track[] GetTracks(int channelId, RentItServer.ITU.TrackSearchArgs args) {
-            return base.Channel.GetTracks(channelId, args);
         }
         
         public void CreateComment(string comment, int userId, int channelId) {
             base.Channel.CreateComment(comment, userId, channelId);
         }
         
-        public void DeleteComment(int channelId, int userId, System.DateTime date) {
-            base.Channel.DeleteComment(channelId, userId, date);
-        }
-        
         public RentItServer.ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, System.Nullable<int> fromInclusive, System.Nullable<int> toExclusive) {
             return base.Channel.GetChannelComments(channelId, fromInclusive, toExclusive);
-        }
-        
-        public RentItServer.ITU.DatabaseWrapperObjects.Comment[] GetUserComments(int userId, int fromInclusive, int toExclusive) {
-            return base.Channel.GetUserComments(userId, fromInclusive, toExclusive);
         }
         
         public bool IsEmailAvailable(string email) {
@@ -284,20 +239,12 @@ namespace RentItServer_UnitTests.ITUServiceReference {
             base.Channel.Unsubscribe(userId, channelId);
         }
         
-        public int GetChannelPort(int channelId, int ipAddress, int port) {
-            return base.Channel.GetChannelPort(channelId, ipAddress, port);
-        }
-        
         public void StartChannelStream(int cId) {
             base.Channel.StartChannelStream(cId);
         }
         
         public RentItServer.ITU.ChannelSearchArgs GetDefaultChannelSearchArgs() {
             return base.Channel.GetDefaultChannelSearchArgs();
-        }
-        
-        public RentItServer.ITU.TrackSearchArgs GetDefaultTrackSearchArgs() {
-            return base.Channel.GetDefaultTrackSearchArgs();
         }
         
         public RentItServer.ITU.DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId) {
@@ -342,6 +289,38 @@ namespace RentItServer_UnitTests.ITUServiceReference {
         
         public void DeleteVote(int userId, int trackId) {
             base.Channel.DeleteVote(userId, trackId);
+        }
+        
+        public int CountAllChannelsWithFilter(RentItServer.ITU.ChannelSearchArgs filter) {
+            return base.Channel.CountAllChannelsWithFilter(filter);
+        }
+        
+        public int CountAllUpvotes(int trackId) {
+            return base.Channel.CountAllUpvotes(trackId);
+        }
+        
+        public int CountAllDownvotes(int trackId) {
+            return base.Channel.CountAllDownvotes(trackId);
+        }
+        
+        public RentItServer.ITU.DatabaseWrapperObjects.Genre[] GetAllGenres() {
+            return base.Channel.GetAllGenres();
+        }
+        
+        public RentItServer.ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId) {
+            return base.Channel.GetGenresForChannel(channelId);
+        }
+        
+        public int GetCountChannelComments(int channelId) {
+            return base.Channel.GetCountChannelComments(channelId);
+        }
+        
+        public int CountChannelsPassingFilter(RentItServer.ITU.ChannelSearchArgs filter) {
+            return base.Channel.CountChannelsPassingFilter(filter);
+        }
+        
+        public void DeleteAccount(int userId) {
+            base.Channel.DeleteAccount(userId);
         }
     }
 }

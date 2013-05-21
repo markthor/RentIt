@@ -71,6 +71,7 @@ namespace RentItServer.ITU
         [DataMember]
         [DefaultValueAttribute("")]
         public string SearchString { get; set; }
+
         /// <summary>
         /// Gets the genres to include in search.
         /// </summary>
@@ -80,78 +81,87 @@ namespace RentItServer.ITU
         [DataMember]
         [DefaultValueAttribute(new string[] { "" })]
         public string[] Genres { get; set; }
+
         /// <summary>
-        /// Gets the amount played filter.
+        /// Gets/sets the lower bound of amount played to filter.
         /// </summary>
         /// <value>
-        /// The amount played. Default is -1
+        /// The least amount played. Default is -1
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
         public int MinAmountPlayed { get; set; }
+
         /// <summary>
-        /// Gets the amount played filter.
+        /// Gets/sets the higher bound of amount played to filter.
         /// </summary>
         /// <value>
-        /// The amount played. Default is -1
+        /// The top amount played. Default is Int32.MaxValue
         /// </value>
         [DataMember]
         [DefaultValueAttribute(Int32.MaxValue)]
         public int MaxAmountPlayed { get; set; }
+
         /// <summary>
-        /// Gets the number of subscriptions filter.
+        /// Gets/sets the lower bound of subscriptions to filter.
         /// </summary>
         /// <value>
-        /// The number of subscriptions. Default is -1
+        /// The least number of subscriptions. Default is -1
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
         public int MinNumberOfSubscriptions { get; set; }
+
         /// <summary>
-        /// Gets the number of subscriptions filter.
+        /// Gets/sets the higher bound of subscriptions to filter.
         /// </summary>
         /// <value>
-        /// The number of subscriptions. Default is -1
+        /// The higesht number of subscriptions. Default is Int32.MaxValue
         /// </value>
         [DataMember]
         [DefaultValueAttribute(Int32.MaxValue)]
         public int MaxNumberOfSubscriptions { get; set; }
+
         /// <summary>
-        /// Gets the number of comments to filter.
+        /// Gets/sets the lower bound of comments to filter.
         /// </summary>
         /// <value>
-        /// The number of comments. Default is -1
+        /// The least number of comments. Default is -1
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
         public int MinNumberOfComments { get; set; }
+
         /// <summary>
-        /// Gets the number of comments to filter.
+        /// Gets/sets the higher bound of comments to filter.
         /// </summary>
         /// <value>
-        /// The number of comments. Default is -1
+        /// The higesht number of comments. Default is Int32.MaxValue
         /// </value>
         [DataMember]
-        [DefaultValueAttribute(-1)]
+        [DefaultValueAttribute(Int32.MaxValue)]
         public int MaxNumberOfComments { get; set; }
+
         /// <summary>
-        /// Gets the number of comments to filter.
+        /// Gets/sets the lower bound of votes casted in total on channel tracks to filter.
         /// </summary>
         /// <value>
-        /// The number of comments. Default is -1
+        /// The least number of votes. Default is -1
         /// </value>
         [DataMember]
         [DefaultValueAttribute(-1)]
         public int MinTotalVotes { get; set; }
+
         /// <summary>
-        /// Gets the number of comments to filter.
+        /// Gets/sets the higher bound of votes casted in total on channel tracks to filter.
         /// </summary>
         /// <value>
-        /// The number of comments. Default is -1
+        /// The higesht number of votes. Default is Int.MaxValue
         /// </value>
         [DataMember]
         [DefaultValueAttribute(Int32.MaxValue)]
         public int MaxTotalVotes { get; set; }
+
         /// <summary>
         /// Gets the start index.
         /// </summary>
@@ -161,6 +171,7 @@ namespace RentItServer.ITU
         [DataMember]
         [DefaultValueAttribute(-1)]
         public int StartIndex { get; set; }
+
         /// <summary>
         /// Gets the end index.
         /// </summary>

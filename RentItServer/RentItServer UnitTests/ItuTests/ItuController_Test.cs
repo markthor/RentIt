@@ -21,7 +21,7 @@ namespace RentItServer_UnitTests.ItuTests
         private const string testpw = TestExtensions._userpassword;
         private const string testGenre = TestExtensions.genreName1;
         private const string testNameSignup = "testname";
-        private const string testEmailSignup = "testemail";
+        private const string testEmailSignup = "testemail@mail.dk";
         private const string testPasswordSignup = "testpw";
         private static RentItServer.ITU.DatabaseWrapperObjects.User _testUser = TestExtensions._testUser1;
         private int testId = int.MaxValue;
@@ -426,7 +426,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.IsChannelNameAvailable(-1, TestExtensions._testChannel1.Name);
+                controller.IsChannelNameAvailable(-2, TestExtensions._testChannel1.Name);
                 Assert.Fail("No exception was raised");
             }
             catch (ArgumentException)
@@ -576,10 +576,11 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.GetChannelComments(TestExtensions._testChannelId1, null, -1);
-            }
-            catch
-            {
                 Assert.Fail("An exception was raised");
+            }
+            catch (ArgumentException)
+            {
+                //This is expected
             }
         }
         [TestMethod]
@@ -600,10 +601,11 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.GetChannelComments(TestExtensions._testChannelId1, -1, -1);
-            }
-            catch
-            {
                 Assert.Fail("An exception was raised");
+            }
+            catch (ArgumentException)
+            {
+                //This is expected
             }
         }
         [TestMethod]
@@ -624,10 +626,11 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.GetChannelComments(TestExtensions._testChannelId1, 0, -1);
-            }
-            catch 
-            {
                 Assert.Fail("An exception was raised");
+            }
+            catch (ArgumentException)
+            {
+                // This is expected
             }
         }
         [TestMethod]
@@ -1149,6 +1152,33 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.Fail("An exception was raised");
             }
         }
+        [TestMethod]
+        public void Controller_UnSubscribe_State_RemovedVotes()
+        {
+            for (int i = 0; i < interval; i++)
+            {
+                Track track = _dao.CreateTrackEntry(TestExtensions._testChannelId1, new Track()
+                    {
+                        Artist = "testartist"+i,
+                        Name = "testname"+i,
+                        Path = ""
+                    });
+                controller.CreateVote(1, TestExtensions._testUser1.Id, track.Id);
+            }
+            int votesBefore = _dao.GetUserVotes(TestExtensions._testUser1.Id).Count;
+            // precondition check
+            Assert.IsTrue(votesBefore == interval);
+            try
+            {
+                controller.UnSubscribe(TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
+                int votesAfter = _dao.GetUserVotes(TestExtensions._testUser1.Id).Count;
+                Assert.IsTrue(votesAfter == 0);
+            }
+            catch
+            {
+                Assert.Fail("An exception was raised");
+            }
+        }
         #endregion
         #region Controller_Subscribe
         [TestMethod]
@@ -1286,6 +1316,19 @@ namespace RentItServer_UnitTests.ItuTests
             }
         }
         [TestMethod]
+        public void Controller_CreateComment_Parameter_WhitespaceInvalidInvalid()
+        {
+            try
+            {
+                controller.CreateComment("  ", -1, -1);
+                Assert.Fail("No exception was raised");
+            }
+            catch (ArgumentException)
+            {
+                //This is Expected
+            }
+        }
+        [TestMethod]
         public void Controller_CreateComment_Parameter_ValidInvalidInvalid()
         {
             try
@@ -1407,7 +1450,7 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.CreateComment("", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
+                controller.CreateComment("testcomment", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
             }
             catch (Exception e)
             {
@@ -1419,9 +1462,9 @@ namespace RentItServer_UnitTests.ItuTests
         {
             try
             {
-                controller.CreateComment("", TestExtensions._testUser1.Id, TestExtensions._testChannelId1);
-                RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetChannelComments(TestExtensions._testChannelId1, 0, int.MaxValue);
-
+                controller.CreateComment("testcomment", TestExtensions._testUser1.Id, TestExtensions._testChannelId2);
+                RentItServer.ITU.DatabaseWrapperObjects.Comment[] comments = controller.GetChannelComments(TestExtensions._testChannelId2, 0, int.MaxValue);
+                Assert.IsTrue(comments.Length == 1);
             }
             catch
             {
@@ -1646,6 +1689,21 @@ namespace RentItServer_UnitTests.ItuTests
         public void Controller_SignUp_Parameter_ValidValidValid()
         {
             controller = Controller.GetInstance();
+            try
+            {
+                RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testNameSignup, testEmailSignup,
+                                                                                      testPasswordSignup);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown " + e);
+            }
+        }
+
+        [TestMethod]
+        public void Controller_SignUp_State_ProperAttributes()
+        {
+            controller = Controller.GetInstance();
             RentItServer.ITU.DatabaseWrapperObjects.User user = controller.SignUp(testNameSignup, testEmailSignup, testPasswordSignup);
             testId = user.Id;
             Assert.IsNotNull(user);
@@ -1748,7 +1806,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(-1, null, null, null);
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
             catch (ArgumentException)
             {
@@ -1763,9 +1821,6 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(user.Id, null, null, null);
-                User updatedUser = _dao.GetUser(user.Id);
-                Assert.IsTrue(user.Username.Equals(updatedUser.Username));
-                Assert.IsTrue(user.Email.Equals(updatedUser.Email));
             }
             catch (ArgumentNullException e)
             {
@@ -1781,7 +1836,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, "", null, null);
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
             catch (ArgumentException)
             {
@@ -1797,9 +1852,9 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, null, "", null);
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException)
             {
                 //This is expected
             }
@@ -1813,9 +1868,9 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, null, null, "");
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException)
             {
                 //This is expected
             }
@@ -1829,7 +1884,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, "", "", null);
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
             catch (ArgumentException)
             {
@@ -1845,9 +1900,9 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, null, "", "");
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException)
             {
                 //This is expected
             }
@@ -1861,7 +1916,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, null, "", "");
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
             catch (ArgumentException)
             {
@@ -1877,7 +1932,7 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, "", "", "");
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
             catch (ArgumentException)
             {
@@ -1893,11 +1948,49 @@ namespace RentItServer_UnitTests.ItuTests
             try
             {
                 controller.UpdateUser(testId, null, null, testpw);
-                Assert.Fail("An exception was thrown");
+                Assert.Fail("No exception was thrown");
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException)
             {
                 //This is expected
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_State_NothingUpdated()
+        {
+            controller = Controller.GetInstance();
+            RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
+            try
+            {
+                controller.UpdateUser(user.Id, null, null, null);
+                User updatedUser = _dao.GetUser(user.Id);
+                Assert.IsTrue(user.Username.Equals(updatedUser.Username));
+                Assert.IsTrue(user.Email.Equals(updatedUser.Email));
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown. " + e);
+            }
+        }
+        [TestMethod]
+        public void Controller_UpdateUser_State_EverythingUpdated()
+        {
+            controller = Controller.GetInstance();
+            RentItServer.ITU.DatabaseWrapperObjects.User user = TestExtensions._testUser1;
+            try
+            {
+                string newName = "newtestname";
+                string newPw = "thisisanewpassword";
+                string newEmail = "thisisanewemail@newmail.dk";
+                controller.UpdateUser(user.Id, newName, newPw, newEmail);
+                User updatedUser = _dao.GetUser(user.Id);
+                Assert.IsTrue(updatedUser.Username.Equals(newName));
+                Assert.IsTrue(updatedUser.Email.Equals(newEmail));
+                Assert.IsTrue(updatedUser.Password.Equals(newPw));
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("An exception was thrown. " + e);
             }
         }
         #endregion
@@ -2093,7 +2186,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
-                    Assert.IsTrue(_dao.GetChannelComments(theChannels[i - 1].Id, 0, int.MaxValue).Count < _dao.GetChannelComments(theChannels[i].Id, 0, int.MaxValue).Count);
+                    Assert.IsTrue(_dao.GetChannelComments(theChannels[i - 1].Id, 0, int.MaxValue).Count <= _dao.GetChannelComments(theChannels[i].Id, 0, int.MaxValue).Count);
                 }
             }
             catch (Exception)
@@ -2116,7 +2209,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be larger then current
-                    Assert.IsTrue(_dao.GetSubscriberCount(theChannels[i - 1].Id) > _dao.GetSubscriberCount(theChannels[i].Id));
+                    Assert.IsTrue(_dao.GetSubscriberCount(theChannels[i - 1].Id) >= _dao.GetSubscriberCount(theChannels[i].Id));
                 }
             }
             catch
@@ -2139,7 +2232,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(theChannels.Count >= interval);
                 for (int i = 1; i < theChannels.Count; i++)
                 {   // The previous should be less then current
-                    Assert.IsTrue(_dao.GetSubscriberCount(theChannels[i - 1].Id) < _dao.GetSubscriberCount(theChannels[i].Id));
+                    Assert.IsTrue(_dao.GetSubscriberCount(theChannels[i - 1].Id) <= _dao.GetSubscriberCount(theChannels[i].Id));
                 }
             }
             catch
@@ -2151,18 +2244,6 @@ namespace RentItServer_UnitTests.ItuTests
 
         //TODO:
         #region Controller_GetCreatedChannels
-        //public void Controller_GetCreatedChannels_Parameter_Invalid()
-        //{
-        //    controller.GetCreatedChannels()
-        //}
-        //public void Controller_GetCreatedChannels_Parameter_Valid()
-        //{
-        //    controller.GetCreatedChannels()
-        //}
-        //public void Controller_GetCreatedChannels_State_Invalid()
-        //{
-        //    controller.GetCreatedChannels()
-        //}
         #endregion
         #region Controller_GetSubscribedChannels
         #endregion
@@ -2170,12 +2251,12 @@ namespace RentItServer_UnitTests.ItuTests
         #endregion
         #region Controller_GetChannel
         #endregion
-
         #region Controller_GetTracksByChannelId
         #endregion
         #region Controller_IncrementChannelPlays
         #endregion
-
+        #region Controller_AddTrack
+        #endregion
         #region Controller_GetTracks
         #endregion
         #region Controller_RemoveTrack
