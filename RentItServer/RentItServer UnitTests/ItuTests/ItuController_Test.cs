@@ -706,7 +706,7 @@ namespace RentItServer_UnitTests.ItuTests
                 string updatedDescription = "thisisanewandupdateddescriptionofatestchannel";
                 double? updatedHits = 1000;
                 double? updatedRating = 10000;
-                string[] updatedGenres = new string[]{TestExtensions.genreName3};
+                int[] updatedGenres = new int[]{TestExtensions.genreId3};
                 controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating, updatedGenres);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
                 Assert.IsTrue(channel.UserId == updatedOwnerId);
@@ -714,7 +714,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(channel.Hits == updatedHits);
                 Assert.IsTrue(channel.Rating == updatedRating);
                 Assert.IsTrue(channel.Name.Equals(updatedChannelName));
-                Assert.IsTrue(channel.GetChannel().Genres[0] == updatedGenres[0]);
+                Assert.IsTrue(channel.GetChannel().Genres[0] == TestExtensions.genreName3);
             }
             catch
             {
