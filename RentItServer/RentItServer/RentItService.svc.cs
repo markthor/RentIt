@@ -378,36 +378,69 @@ namespace RentItServer
             return _controller.CountAllChannelsWithFilter(filter);
         }
 
+        /// <summary>
+        /// Counts the total amount of upvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of upvotes</returns>
         public int CountAllUpvotes(int trackId)
         {
             return _controller.CountAllUpvotes(trackId);
         }
 
+        /// <summary>
+        /// Counts the total amount of downvotes given to a track
+        /// </summary>
+        /// <param name="trackId">The id of the track</param>
+        /// <returns>The total amount of dwonvotes</returns>
         public int CountAllDownvotes(int trackId)
         {
             return _controller.CountAllDownvotes(trackId);
         }
 
+        /// <summary>
+        /// Retreives all genres
+        /// </summary>
+        /// <returns>An array of all genres in the database</returns>
         public ITU.DatabaseWrapperObjects.Genre[] GetAllGenres()
         {
             return Genre.GetTracks(_controller.GetAllGenres()).ToArray();
         }
 
+        /// <summary>
+        /// Retreives all genres associated with the given channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>Array of asociated genres</returns>
         public ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId)
         {
             return Genre.GetTracks(_controller.GetGenresForChannel(channelId)).ToArray();
         }
-        
+
+        /// <summary>
+        /// Counts the total amount of comments for a channel
+        /// </summary>
+        /// <param name="channelId">The id of the channel</param>
+        /// <returns>The total amount of comments</returns>
         public int GetCountChannelComments(int channelId)
         {
             return _controller.GetCountChannelComments(channelId);
         }
 
+        /// <summary>
+        /// Counts the amount of channels which pass the given ChannelSearchArgs filter
+        /// </summary>
+        /// <param name="filter">ChannelSearchArgs filter to apply to all channels</param>
+        /// <returns>The amount of channels passing the filter</returns>
         public int CountChannelsPassingFilter(ChannelSearchArgs filter)
         {
             return _controller.CountChannelsPassingFilter(filter);
         }
 
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
         public void DeleteAccount(int userId)
         {
             _controller.DeleteUser(userId);
