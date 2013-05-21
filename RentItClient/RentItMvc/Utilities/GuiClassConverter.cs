@@ -51,7 +51,6 @@ namespace RentItMvc.Utilities
                 Name = c.Name,
                 StreamUri = c.StreamUri,
                 OwnerId = c.OwnerId,
-                Genres = c.Genres,
             };
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
@@ -59,6 +58,8 @@ namespace RentItMvc.Utilities
                 chan.Subscribers = proxy.GetSubscriberCount(chan.Id);
                 //Get the channels
                 chan.Tracks = ConvertTracks(proxy.GetTrackByChannelId(c.Id));
+                //Get the genres
+                chan.Genres = ConvertGenres(proxy.GetGenresForChannel(c.Id));
             }
             return chan;
         }

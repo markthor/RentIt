@@ -507,14 +507,15 @@ namespace RentItServer.ITU
                 track.Id = tId;
                 track.ChannelId = channelId;
                 _dao.UpdateTrack(track);
+                _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
             }
             catch (Exception e)
             {
                 _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
                 _dao.DeleteTrackEntry(track.Id);
-                _logger.AddEntry("exception: " + e); //LAV ORDENTLY EXCEPTION HANDLING
+                _logger.AddEntry("exception: " + e);
+                throw e;
             }
-            _logger.AddEntry("Added track with id: [" + track.Id + "], artist: [" + track.Artist + "] and title: [" + track.Name + "] for userid: [" + userId + "] to channel with id: [" + channelId + "]");
             return track.Id;
         }
 
@@ -539,7 +540,7 @@ namespace RentItServer.ITU
             track.TrackPlays = new List<TrackPlay>();
             track.Votes = new List<Vote>();
             track.Length = (int)audioFile.Properties.Duration.TotalMilliseconds;
-
+            
             //An mp3 file may have several artists. This loop puts them into a singles string
             track.Artist = "";
             string[] artists = audioFile.Tag.AlbumArtists;
