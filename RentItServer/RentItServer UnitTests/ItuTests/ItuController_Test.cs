@@ -47,7 +47,7 @@ namespace RentItServer_UnitTests.ItuTests
         [TestCleanup]
         public void Cleanup()
         {
-            DatabaseDao.GetInstance().DeleteDatabaseData();
+            //DatabaseDao.GetInstance().DeleteDatabaseData();
         }
 
         /// <summary>
@@ -706,13 +706,15 @@ namespace RentItServer_UnitTests.ItuTests
                 string updatedDescription = "thisisanewandupdateddescriptionofatestchannel";
                 double? updatedHits = 1000;
                 double? updatedRating = 10000;
-                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating, null);
+                int[] updatedGenres = new int[]{TestExtensions.genreId3};
+                controller.UpdateChannel(TestExtensions._testChannelId1, updatedOwnerId, updatedChannelName, updatedDescription, updatedHits, updatedRating, updatedGenres);
                 Channel channel = _dao.GetChannel(TestExtensions._testChannelId1);
                 Assert.IsTrue(channel.UserId == updatedOwnerId);
                 Assert.IsTrue(channel.Description.Equals(updatedDescription));
                 Assert.IsTrue(channel.Hits == updatedHits);
                 Assert.IsTrue(channel.Rating == updatedRating);
                 Assert.IsTrue(channel.Name.Equals(updatedChannelName));
+                Assert.IsTrue(channel.GetChannel().Genres[0] == TestExtensions.genreName3);
             }
             catch
             {
@@ -731,6 +733,7 @@ namespace RentItServer_UnitTests.ItuTests
                 Assert.IsTrue(channel.Hits == TestExtensions._testChannel1Hits);
                 Assert.IsTrue(channel.Rating == TestExtensions._testChannel1Rating);
                 Assert.IsTrue(channel.Name.Equals(TestExtensions._testChannel1Name));
+                Assert.IsTrue(channel.GetChannel().Genres[0].Equals(TestExtensions.genreName1));
             }
             catch
             {
@@ -1238,7 +1241,7 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_SubscribeGetSubscriptions_State_OneChannel()
+        public void Controller_GetSubscribedChannels_State_OneChannel()
         {
             try
             {
@@ -1254,7 +1257,7 @@ namespace RentItServer_UnitTests.ItuTests
         }
 
         [TestMethod]
-        public void Controller_SubscribeGetSubscriptions_State_MultipleChannels()
+        public void Controller_GetSubscribedChannels_State_MultipleChannels()
         {
             try
             {

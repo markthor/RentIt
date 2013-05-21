@@ -495,31 +495,35 @@ functionality; in fact it was true for a large number of methods that simply imp
 that contained the intended execution flow. One could even argue that it was better this way, as one was forced into re-evaluate the structure of the webservice
 interface, often resulting in an expansion or modification of operation contracts. \\*An important reason why unit tests are relevant late in the process is the non-functional Supportability requirement 
 ()\textit{"The impact on existing functionality of extensions and modifications shall not take more than an hour to discover for an educated software developer."}).
+
 This is achievable with unit tests because they take less than an hour to run and confirms that all server side functionality works as intended.
 \\*
 The postponing of testing have drawbacks though, resulting in not every code unit having an associated unit test. While developing methods which are dependent on other untested methods, eventual errors are harder to find. This can slow down development. It was prioritized to unit test the
 critical code units in the "Controller" class and the "TrackPrioritizer" class because their complexity makes them very likely to be erroneous.\\ \\*
 \textbf{Format and purpose of unit tests}\\*
+
 Unit tests follow this signature template:
 \\*
-\verb|public void <Tested class>_<Tested method>_<Parameter Type>_<Parameter Value>|
+\verb|public void <Tested class>_<Tested method>_<Parameter>_<Parameter Value(s)>|
 \\*
-\verb|public void <Tested class>_<Tested method>_<State>_<State Value>|
+\verb|public void <Tested class>_<Tested method>_<State>_<State changing operation>|
 \\*
-An example of a parameter type could be "password" for "Login", and parameter value could be "null". \\*
-This parameter testing approach ensures that all exceptions are thrown and all correct behaviour are implemented. Between each unit test, all data in the database are deleted and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple and decoupled makes it easier to locate an error. \\ \\
+
+Where the parameter testing approach helps verifying that all exceptions are thrown as expected. The state testing approach helps verifying that state changing operations affect the state of the system as expected. In between each unit test, all data in the database is removed and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple makes it easier to locate an error. \\ \\
 \textbf{System testing}\\*
-Every test not contained in the unit test project are done manually. All testing on the GUI are done by reviewing every single use case and trying all possible outcomes. The unit tests ensures that the server functionality works, making it easier to locate errors with manual GUI testing. This is further described in the testing of functional requirements.
+Every test not contained in the unit test project are done manually. All testing on the graphical user interface is done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
+
 
 \subsection{Testing of specific requirements}
-In this section, the fulfilment of each functional requirement are assessed and any directly related non-functional requirement are considered. \\ \\*
+In this section, the fulfilment of each functional requirement is assessed and any directly related non-functional requirement are considered. \\ \\*
 \textbf{General notes on the requirements} \\*
 The non-functional requirements, U1 and U2 has not been meet for any of the functional requirements. \\ \\
 All results on testing of specific requirements are in the appendix under textual items. Known bugs are also included in appendix.
 
 \subsection{Testing conclusion}
-The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been met and in which degree it is possible to assess it. \\*
-The genre aspect of the functional requirements are implemented server side, but not client side, making every functional requirement related to it incomplete. Every other fundamental functionality has been implemented and tested. \\*The automated testing of some of the functional requirements lacks, making the S3 non-functional requirement unfulfilled, and the general certainty of whether the system is flawless unsatisfying.\\*The logging requirements F8 and F9 are mostly met. Not every exceptional state and state change are logged, but most are. U1 and U2 are totally unfulfilled, while U3 and U4 are completely fulfilled. The reliability requirements requires a lot of effort to test, which we have not been done. However we have not experienced any violation of it. Therefore we assess that they are met, but also that we cannot be sure of it. The implementations non-functional requirements are met.
+The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
+All fundamental functionality has been implemented and tested. \\*The automated testing of some of the functional requirements lacks, making the S3 non-functional requirement unfulfilled, and the general certainty of the systems correctness unsatisfying.\\*The logging requirements F8 and F9 are mostly meet. Not every exceptional state and state change are logged, but most are. U1 and U2 are totally unfulfilled, while U3 and U4 are completely fulfilled. The reliability requirements requires a lot of effort to test, which we have not done. However we have not experienced any violation of it. Therefore we assess that they are meet, but also that we cannot be sure of it. Requirements contained in the implementation section of the non-functional requirements are met.
+
 
 \section{Collaboration with SMU(Singapore Management University)}
 
@@ -688,12 +692,11 @@ On the server side this is ensured with the unit tests:
 \item Controller\_CreateChannel\_...
 \item Controller\_UpdateChannel\_...
 \item Controller\_DeleteChannel\_...
-\item Controller\_IsChannelNameAvailable\_...
 \end{itemize}
-UpdateChannel does also contain functionality for adding genres to it. In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed, as well as adding genres(F1).\\ \\
+In combination with the manual testing of the GUI, we assess that all the functional aspects has been completed.\\ \\
 \textbf{R1} \\*
 \textit{The system shall allow users to listen to an online radio-channel that streams audio.} \\*
-This requirement are not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement have been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality more expensive. \\ \\
+This requirement is not automatically tested, because there is no verifiable output that unit tests can assert on. However the requirement has been manually tested in context of the I2 non-functional requirement, which we feel has been meet. The F2 and F5 requirements has been manually tested and has been meet. F5 was tested by gathering multiple computers connected to different networks and make them stream the same channel. For the current state of the system we feel that this is sufficient, however the lack of automated tests violates the S3 requirement, hence making the extension of functionality potentially more expensive. \\ \\
 \textbf{R2:} \\*
 \textit{The user shall be able to rate a track associated with a channel by up voting and down voting.} \\*
 On the server side this is ensured with the unit tests:
@@ -711,7 +714,7 @@ On the server side this is ensured with the unit tests:
 \begin{itemize}
 \item Controller\_Unsubscribe\_...
 \item Controller\_Subscribe\_...
-\item Controller\_SubscribeGetSubscriptions\_...
+\item Controller\_GetSubscribedChannels\_...
 \end{itemize}
 The very thorough unit tests made for the requirement confirms that the server side has meet the requirement. The manual tests shows similar results for the GUI. F4 are tested with unsubscribe state unit tests. All aspects of this requirement has been meet. \\ \\
 \textbf{R5:} \\*
@@ -719,19 +722,15 @@ The very thorough unit tests made for the requirement confirms that the server s
 On the server side this is ensured with the unit tests:
 \begin{itemize}
 \item Controller\_CreateComment\_...
-\item Controller\_DeleteComment\_...
 \end{itemize}
 The unit test confirms that the server side meets the requirement. Manual testing has been done and because of the limited amounts of outcome, we are very sure that this requirement has been completely fulfilled. \\ \\
 \textbf{R6:} \\*
 \textit{It shall be possible to create, delete and edit accounts. All attributes of an account shall be editable.} \\*
 On the server side this is ensured with the unit tests:
 \begin{itemize}
-\item Controller\_Login\_...
 \item Controller\_SignUp\_...
 \item Controller\_DeleteUser\_...
-\item Controller\_IsCorrectPassword\_...
-\item Controller\_IsUsernameAvailable\_...
-\item Controller\_IsEmailAvailable\_...
+\item Controller\_UpdateUser\_...
 \end{itemize}
 According to automated and manual test this requirement has been meet. However it is questionable whether F10 has been meet. All intended usage requires authentication, but because our system is so insecure, it is easy to use it without authentication. \\ \\
 \textbf{R7:} \\*

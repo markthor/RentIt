@@ -122,17 +122,7 @@ namespace RentItServer.ITU
         {
             get
             {
-                DateTime resetDate = DateTime.Now;
-                if (resetDate.Hour >= 14) // in case the server is restarted before 4AM one day
-                {
-                    resetDate = resetDate.AddDays(1);
-                }
-                resetDate = resetDate.AddHours(14 - resetDate.Hour);
-                resetDate = resetDate.AddMinutes(-resetDate.Minute);
-                resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
-                return resetDate;
-
-                /*//Creates the time now and adds to that value so that it is set to the next occourence of 4AM
+                //Creates the time now and adds to that value so that it is set to the next occourence of 4AM
                 DateTime resetDate = DateTime.Now;
                 if (resetDate.Hour >= 4) // in case the server is restarted before 4AM one day
                 {
@@ -141,7 +131,7 @@ namespace RentItServer.ITU
                 resetDate = resetDate.AddHours(4 - resetDate.Hour);
                 resetDate = resetDate.AddMinutes(-resetDate.Minute);
                 resetDate = resetDate.AddMilliseconds(-resetDate.Millisecond);
-                return resetDate;*/
+                return resetDate;
             }
         }
         #endregion
@@ -340,11 +330,6 @@ namespace RentItServer.ITU
 
             //Get all trackplays for the channel
             List<TrackPlay> trackPlays = _dao.GetTrackPlays(channelId, DateTime.Now.AddDays(-2));
-            if (_trackPrioritizer.ContainsTrackPlaysFromFuture(trackPlays))
-            {
-                _logger.AddEntry("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
-                throw new ArgumentException("CONTAINS TRACKPLAY FROM FUTURE! Channel with id: [" + channelId + "]");
-            }
 
             //Generate the playlist
             List<Track> playlist = _trackPrioritizer.GetNextPlayList(channelTracks, trackPlays, playTime, out addedTrackPlays);

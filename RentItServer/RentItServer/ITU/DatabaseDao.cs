@@ -992,7 +992,6 @@ namespace RentItServer.ITU
         /// <returns>
         /// Comments from a specific user in the specified range.
         /// </returns>
-        [Obsolete]
         public List<Comment> GetUserComments(int userId, int fromInclusive, int toExclusive)
         {
             if (fromInclusive >= toExclusive) throw new ArgumentException("fromInclusive has to be lesser than to toExclusive.");

@@ -421,8 +421,8 @@ namespace RentItServer.ITU
                 if (args != null)
                     entry =
                         string.Format(
-                            "{0}, args.AmountPlayed = {1}, args.Genres = {2}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
-                            entry, args.MinAmountPlayed, args.Genres, args.MinNumberOfComments, args.MinNumberOfSubscriptions, args.SearchString.Equals("") ? "\"\"" : args.SearchString, args.SortOption.Equals("") ? "\"\"" : args.SortOption, args.StartIndex, args.EndIndex);
+                            "{0}, args.AmountPlayed = {1}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
+                            entry, args.MinAmountPlayed, args.MinNumberOfComments, args.MinNumberOfSubscriptions, args.SearchString.Equals("") ? "\"\"" : args.SearchString, args.SortOption.Equals("") ? "\"\"" : args.SortOption, args.StartIndex, args.EndIndex);
                 _logger.AddEntry(entry);
                 throw;
             }
