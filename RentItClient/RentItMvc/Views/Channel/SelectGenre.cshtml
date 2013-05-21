@@ -3,14 +3,27 @@
 @model SelectGenreModel
 
 <div id="genreDiv">
-    @Html.ListBoxFor(model => model.AvailableGenres, new MultiSelectList(Model.AvailableGenres, "Id", "Name"), new { size = "10" })
-    
-    <input id="btnAddAll" type="button" value=" >> " onclick="addallItems();" />
-    <input id="btnAdd" type="button" value=" > " onclick="addItem();" />
-    <input id="btnRemove" type="button" value=" < "  onclick="removeItem();" />
-    <input id="btnRemoveAll"type="button" value=" << "  onclick="removeallItems();" />
+    <table>
+        <tr>
+            <td>
+                @Html.ListBoxFor(model => model.AvailableGenres, new MultiSelectList(Model.AvailableGenres, "Id", "Name"), new { size = "10" })
+            </td>
+            <td>
+                <!--<input class="btn btn-small btn-genre" id="btnAddAll" type="button" value=" >> " onclick="addallItems();" />-->
+                <input class="btn btn-small btn-success btn-genre" style="width: 44px" id="btnAdd" type="button" value="  >  " onclick="addItem();" />
+                <br/>
+                <input class="btn btn-small btn-danger btn-genre" style="width: 44px" id="btnRemove" type="button" value="  <  " onclick="removeItem();" />
+                <br/>
+                <input class="btn btn-small btn-danger btn-genre" style="width: 44px" id="btnRemoveAll" type="button" value="<<<" onclick="removeallItems();" />
+            </td>
+            <td>
+                @Html.ListBoxFor(model => model.ChosenGenres, new MultiSelectList(Model.ChosenGenres, "Id", "Name"), new { size = "10" })
+            </td>
+        </tr>
+    </table>
 
-    @Html.ListBoxFor(model => model.ChosenGenres, new MultiSelectList(Model.ChosenGenres, "Id", "Name"), new { size = "10" })
+
+
 </div>
 
 <script type="text/javascript">

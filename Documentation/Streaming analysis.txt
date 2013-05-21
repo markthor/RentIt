@@ -1,0 +1,21 @@
+Analysis
+Streaming
+This section contains reflections over the implementation of the streaming part of the server
+
+Challenges with radio streaming
+The main functionality of the service is the radio-channels which has tight requirements regarding output, meaning that all clients should essentially hear the same sound at the same time, given that they are listening to the same channel.
+This is in contrast to a streaming services, such as Netflix (Video on demand service) or Spotify (Music on demand service), where clients control what they want to see/hear themself when they want. Doing such a service does not require as strict control of the output to the clients as all clients are on their own, and streaming a single file from a server to a single client is a trivial procedure. Such services also allow jumping in time and pausing of the media material. That is not possible with ??the?? radio service.
+
+Choice of streaming server
+There are several options when choosing a central streaming server for our service.
+We considered writing the entire streaming server, but lack of experience and time quickly stopped that idea. Instead there are two popular third party streaming servers Icecast and SHOUTcast. Both options allow the hosting of live sound streaming to several clients which is the most important functionality. SHOUTcast only allows streaming of a single channel at a time, which is completely unacceptable for this service. SHOUTcast also forces the streaming channel to be published on a third party website, which is something our service should try and avoid in order to keep the user-base at one place.
+Icecast allows streaming of a high amount of channels simultaneously while it also makes it optional if the streams should be exposed through their own website. That combined with the level of detail channels can be modified, such as streaming bit rate and channels for each individual running stream, makes icecast the best choice for the purpose of this service.
+
+Choice of source client
+Icecast requires a “source client” to feed it audio input. A source client is an external program which mounts to the icecast server’s mount point, so that icecast can start streaming the input it retrieves from the source client. There is a rich variety of source clients, all with different possibilities. The source client needed for our service has to be lightweight, even if several instances are running, and allow streaming of .mp3-files (see Coice of filetype). The source client EzStream allows this and is a free solution which is easily maintainable.
+
+Choice of streaming file format
+When streaming with icecast there are two popular choices of filetype to stream:
+.ogg (vorbis): High sound quality even at low bitrates (would reduce the network load) but would require EzStream to reencode it from another audio-file, such as .mp3, which would use a lot of CPU.
+.mp3: Has the same sound quality as .ogg, but with a little higher bitrate but it does not require the server to reencode anything.
+For this purpose server CPU is the most expensive resource and EzStream is therefore not set to reencode the .mp3 files it is streaming.
