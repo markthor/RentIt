@@ -423,6 +423,26 @@ As the algorithm runs often, and in case of a \texttt{GetNextPlayList(...)} call
 Where \begin{math}n\end{math}, is tracks and \begin{math}m\end{math} is trackplays. As the time complexity is linear in the number of track plays there is no need for frequent removal of track play entities from the database.
 
 \subsection{Webclient Architecture}
+In this section the structure of the web client, henceforth referred to as client, is explained.
+The client is developed using Microsoft ASP.NET MVC 4 framework. The framework applies the MVC design pattern to structure of the client.
+We split our client into six primary folders; models, views, controllers, scripts, content and utilities.
+
+The view folder contains all of the views which is displayable by client. Besides the views we have two different master layouts which all the other views are wrapped inside. Layouts are essentially just views which wraps other views.
+The layouts help with giving all pages the same layout without having to write the layout over and over again. The first layout, called BaseLayout, is used for our index page. It adds a topbar and a footer. The second layout, called MasterLayout, extends the BaseLayout and adds a sidebar for easy navigation.
+The view are arranged into folders according to where they are used, in order to make it clear what the views are used for. For instance the view to display a single channel is in a folder called Channel and the view to edit your account is in a folder called Account.
+The framework supports partial views, which enables reusing views in multiple other views.
+The views are generally designed to be reusable. For instance, the view to select genres for a channel is made as a partial view, which is added in the views used to create and edit channels. This approach is applied to the views where it is relevant.
+
+The model folder contains the models used to transfer data to the views. There is a model called GuiChannel which stores information needed by the view which shows a channel. The webservice consumed by the client returns an object with name Channel. In order to add validation and other features provided by the framework, we needed to make another object - the GuiChannel object. This object is annotated to fit our needs. In the utilities folder theres a class which can convert the Channel object received from the webservice to a GuiChannel object.
+As with GuiChannel we have other objects which provide information needed by the different views.
+
+The controller folder contains controllers used to control the program flow. More or less there is a controller for each model. A few models is only used to transfer data back and forth between the view and the controller, which is why they don’t have a specific controller. Controller methods are called when someone enters an url, and decides what view should be returned based on different parameters. For instance we have a controller called AudioController which controls the flow regarding the audio player. There is a special controller called ValidationController which is not used to return views but used to validate different attributes on the models.
+
+The scripts folder contains all the javascript files. All files are third party libraries except one. This one is called audioplayer.js and is used to control the player that plays the stream. The audioplayer should not provide functionality to pause the stream, only stop it. Since the default HTML5 audio tag controls only supplies functions to pause and play a stream we needed to write our own audioplayer controls.
+
+The content folder contains the CSS files as well as the icons used on the page. The client is styled using the Bootstrap framework written by Twitter. Besides bootstrap we wrote our own CSS document called custom.css. This style sheet includes our custom css classes needed for the page to look as we would like.
+
+The utilities folder contains a single class used to wrap the objects received by the webservice. We wrap the objects in order for them to fit our need and annotate properties.
 
 \subsection{Third-party streaming components}
 Two third party components have been used in the server to stream audio.

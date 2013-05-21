@@ -22,36 +22,36 @@
 \contentsline {subsubsection}{\numberline {5.2.1}Class diagram}{18}{subsubsection.5.2.1}
 \contentsline {subsubsection}{\numberline {5.2.2}TrackPrioritizer}{19}{subsubsection.5.2.2}
 \contentsline {subsection}{\numberline {5.3}Webclient Architecture}{20}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Third-party streaming components}{20}{subsection.5.4}
-\contentsline {subsubsection}{\numberline {5.4.1}IceCast}{20}{subsubsection.5.4.1}
-\contentsline {subsubsection}{\numberline {5.4.2}EzStream}{20}{subsubsection.5.4.2}
-\contentsline {section}{\numberline {6}Testing}{21}{section.6}
-\contentsline {subsection}{\numberline {6.1}Testing strategy}{21}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Testing of specific requirements}{22}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Testing conclusion}{22}{subsection.6.3}
+\contentsline {subsection}{\numberline {5.4}Third-party streaming components}{21}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}IceCast}{21}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}EzStream}{21}{subsubsection.5.4.2}
+\contentsline {section}{\numberline {6}Testing}{22}{section.6}
+\contentsline {subsection}{\numberline {6.1}Testing strategy}{22}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Testing of specific requirements}{23}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Testing conclusion}{23}{subsection.6.3}
 \contentsline {section}{\numberline {7}Collaboration with SMU}{23}{section.7}
 \contentsline {subsection}{\numberline {7.1}Interaction with the ITU system}{23}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Collaboration Considerations}{23}{subsection.7.2}
-\contentsline {paragraph}{Data on SMU team}{23}{section*.3}
+\contentsline {subsection}{\numberline {7.2}Collaboration Considerations}{24}{subsection.7.2}
+\contentsline {paragraph}{Data on SMU team}{24}{section*.3}
 \contentsline {subsubsection}{\numberline {7.2.1}Fault lines}{24}{subsubsection.7.2.1}
-\contentsline {paragraph}{Geographical location}{24}{section*.4}
-\contentsline {paragraph}{Gender diversity}{24}{section*.5}
-\contentsline {paragraph}{Engineers/Designers}{24}{section*.6}
-\contentsline {paragraph}{Social etiquette}{24}{section*.7}
-\contentsline {subsubsection}{\numberline {7.2.2}Solutions}{24}{subsubsection.7.2.2}
+\contentsline {paragraph}{Geographical location}{25}{section*.4}
+\contentsline {paragraph}{Gender diversity}{25}{section*.5}
+\contentsline {paragraph}{Engineers/Designers}{25}{section*.6}
+\contentsline {paragraph}{Social etiquette}{25}{section*.7}
+\contentsline {subsubsection}{\numberline {7.2.2}Solutions}{25}{subsubsection.7.2.2}
 \contentsline {paragraph}{Students}{25}{section*.8}
-\contentsline {paragraph}{Age}{25}{section*.9}
-\contentsline {paragraph}{Language}{25}{section*.10}
-\contentsline {subsubsection}{\numberline {7.2.3}Conclusion of the SMU collaboration}{25}{subsubsection.7.2.3}
-\contentsline {paragraph}{Description of the collaboration }{25}{section*.11}
-\contentsline {paragraph}{Conclusion on fault lines and solutions}{26}{section*.12}
+\contentsline {paragraph}{Age}{26}{section*.9}
+\contentsline {paragraph}{Language}{26}{section*.10}
+\contentsline {subsubsection}{\numberline {7.2.3}Conclusion of the SMU collaboration}{26}{subsubsection.7.2.3}
+\contentsline {paragraph}{Description of the collaboration }{26}{section*.11}
+\contentsline {paragraph}{Conclusion on fault lines and solutions}{27}{section*.12}
 \contentsline {paragraph}{Final conclusion}{27}{section*.13}
-\contentsline {paragraph}{Changes in a future collaboration}{27}{section*.14}
-\contentsline {section}{\numberline {8}Conclusion}{27}{section.8}
-\contentsline {section}{\numberline {A}Textual items}{29}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}Glossary}{29}{subsection.A.1}
-\contentsline {subsection}{\numberline {A.2}SMU webservice API}{29}{subsection.A.2}
-\contentsline {subsection}{\numberline {A.3}Known bugs}{30}{subsection.A.3}
-\contentsline {subsection}{\numberline {A.4}Results for specific testing of requirements}{30}{subsection.A.4}
-\contentsline {subsection}{\numberline {A.5}Known bugs}{32}{subsection.A.5}
-\contentsline {section}{\numberline {B}Diagrams}{33}{appendix.B}
+\contentsline {paragraph}{Changes in a future collaboration}{28}{section*.14}
+\contentsline {section}{\numberline {8}Conclusion}{28}{section.8}
+\contentsline {section}{\numberline {A}Textual items}{30}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}Glossary}{30}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}SMU webservice API}{30}{subsection.A.2}
+\contentsline {subsection}{\numberline {A.3}Known bugs}{31}{subsection.A.3}
+\contentsline {subsection}{\numberline {A.4}Results for specific testing of requirements}{31}{subsection.A.4}
+\contentsline {subsection}{\numberline {A.5}Known bugs}{33}{subsection.A.5}
+\contentsline {section}{\numberline {B}Diagrams}{34}{appendix.B}
