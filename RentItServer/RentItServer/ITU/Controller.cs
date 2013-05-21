@@ -303,17 +303,17 @@ namespace RentItServer.ITU
         /// Creates a genre with the name.
         /// </summary>
         /// <param name="genreName">The name of the genre.</param>
-        public void CreateGenre(string genreName)
+        /// <returns>The id of the genre</returns>
+        public int CreateGenre(string genreName)
         {
             if (genreName == null) LogAndThrowException(new ArgumentNullException("genreName"), "CreateGenre");
             string logEntry = "Genre with name: " + " [" + genreName + "] has been created.";
 
             try
             {
-
-                _dao.CreateGenre(genreName);
+                int genreId = _dao.CreateGenre(genreName);
                 _logger.AddEntry(logEntry + "Genre creation succeeded.");
-
+                return genreId;
             }
             catch (Exception)
             {
