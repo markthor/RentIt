@@ -24,15 +24,17 @@
 \BOOKMARK [3][-]{subsubsection.4.4.2}{EzStream}{subsection.4.4}% 24
 \BOOKMARK [1][-]{section.5}{Testing}{}% 25
 \BOOKMARK [2][-]{subsection.5.1}{Testing strategy}{section.5}% 26
-\BOOKMARK [2][-]{subsection.5.2}{Testing of specific requirements}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.3}{Testing conclusion}{section.5}% 28
-\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 29
-\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.2}{Collaboration Considerations}{section.6}% 31
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Fault lines}{subsection.6.2}% 32
-\BOOKMARK [3][-]{subsubsection.6.2.2}{Solutions}{subsection.6.2}% 33
-\BOOKMARK [3][-]{subsubsection.6.2.3}{Conclusion of the SMU collaboration}{subsection.6.2}% 34
-\BOOKMARK [1][-]{appendix.A}{Textual items}{}% 35
-\BOOKMARK [2][-]{subsection.A.1}{Glossary}{appendix.A}% 36
-\BOOKMARK [2][-]{subsection.A.2}{SMU webservice API}{appendix.A}% 37
-\BOOKMARK [1][-]{appendix.B}{Diagrams}{}% 38
+\BOOKMARK [2][-]{subsection.5.2}{Known bugs}{section.5}% 27
+\BOOKMARK [2][-]{subsection.5.3}{Testing of specific requirements}{section.5}% 28
+\BOOKMARK [2][-]{subsection.5.4}{Testing conclusion}{section.5}% 29
+\BOOKMARK [1][-]{section.6}{Collaboration with SMU}{}% 30
+\BOOKMARK [2][-]{subsection.6.1}{Interaction with the ITU system}{section.6}% 31
+\BOOKMARK [2][-]{subsection.6.2}{Collaboration Considerations}{section.6}% 32
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Fault lines}{subsection.6.2}% 33
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Solutions}{subsection.6.2}% 34
+\BOOKMARK [3][-]{subsubsection.6.2.3}{Conclusion of the SMU collaboration}{subsection.6.2}% 35
+\BOOKMARK [1][-]{appendix.A}{Textual items}{}% 36
+\BOOKMARK [2][-]{subsection.A.1}{Glossary}{appendix.A}% 37
+\BOOKMARK [2][-]{subsection.A.2}{SMU webservice API}{appendix.A}% 38
+\BOOKMARK [2][-]{subsection.A.3}{Results for specific testing of requirements}{appendix.A}% 39
+\BOOKMARK [1][-]{appendix.B}{Diagrams}{}% 40

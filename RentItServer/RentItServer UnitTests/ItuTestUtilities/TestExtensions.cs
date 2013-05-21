@@ -102,7 +102,61 @@ namespace RentItServer_UnitTests.ItuTestUtilities
             _testChannel3 = DatabaseDao.GetInstance().GetChannel(_testChannelId3).GetChannel();
             _testChannel4 = DatabaseDao.GetInstance().GetChannel(_testChannelId4).GetChannel();
             _testChannel5 = DatabaseDao.GetInstance().GetChannel(_testChannelId5).GetChannel();
+        }
 
+        /// <summary>
+        /// Creates all genres in the database.
+        /// </summary>
+        public void AddAllGenres()
+        {
+            ///Initialize all genres
+            Controller.GetInstance().CreateGenre("Pop");
+            Controller.GetInstance().CreateGenre("Country");
+            Controller.GetInstance().CreateGenre("Rock");
+            Controller.GetInstance().CreateGenre("Electro");
+            Controller.GetInstance().CreateGenre("Hip Hop");
+            Controller.GetInstance().CreateGenre("Classical");
+            Controller.GetInstance().CreateGenre("Jazz");
+            Controller.GetInstance().CreateGenre("Heavy Metal");
+            Controller.GetInstance().CreateGenre("Reggae");
+            Controller.GetInstance().CreateGenre("Folk");
+            Controller.GetInstance().CreateGenre("Dance");
+            Controller.GetInstance().CreateGenre("Soul");
+            Controller.GetInstance().CreateGenre("Disco");
+            Controller.GetInstance().CreateGenre("Funk");
+            Controller.GetInstance().CreateGenre("Dupstep");
+            Controller.GetInstance().CreateGenre("Soft Rock");
+            Controller.GetInstance().CreateGenre("Nu Metal");
+            Controller.GetInstance().CreateGenre("Indie Rock");
+            Controller.GetInstance().CreateGenre("Spoken word");
+            Controller.GetInstance().CreateGenre("Talk");
+            Controller.GetInstance().CreateGenre("Grunge");
+            Controller.GetInstance().CreateGenre("Rockabilly");
+            Controller.GetInstance().CreateGenre("Death Metal");
+            Controller.GetInstance().CreateGenre("World music");
+            Controller.GetInstance().CreateGenre("Blues");
+            Controller.GetInstance().CreateGenre("R&B");
+            Controller.GetInstance().CreateGenre("Gangsta Rap");
+            Controller.GetInstance().CreateGenre("House");
+            Controller.GetInstance().CreateGenre("Techno");
+            Controller.GetInstance().CreateGenre("Hardstyle");
+            Controller.GetInstance().CreateGenre("Drum n Bass");
+            Controller.GetInstance().CreateGenre("Hard Rock");
+            Controller.GetInstance().CreateGenre("Latin");
+            Controller.GetInstance().CreateGenre("Punk");
+            Controller.GetInstance().CreateGenre("Industrial");
+            Controller.GetInstance().CreateGenre("K-Pop");
+            Controller.GetInstance().CreateGenre("Dancehall");
+            Controller.GetInstance().CreateGenre("Grime");
+            Controller.GetInstance().CreateGenre("Post-punk");
+            Controller.GetInstance().CreateGenre("Opera");
+            Controller.GetInstance().CreateGenre("Trance");
+            Controller.GetInstance().CreateGenre("Noise");
+            Controller.GetInstance().CreateGenre("Experimental");
+            Controller.GetInstance().CreateGenre("Soundtrack");
+            Controller.GetInstance().CreateGenre("Musical");
+            Controller.GetInstance().CreateGenre("Minimal");
+            Controller.GetInstance().CreateGenre("Chill out");
         }
     }
 }

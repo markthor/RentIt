@@ -1607,6 +1607,7 @@ namespace RentItServer.ITU
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
                 var genres = from g in context.Genres
+                             orderby g.Name ascending
                              select g;
                 return genres.ToList();
             }
