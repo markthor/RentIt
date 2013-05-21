@@ -23,7 +23,7 @@ namespace RentItServer.Utilities
             "ChannelConfig" + Path.DirectorySeparatorChar);
 
         /// <summary>
-        /// The executable ezstream files
+        /// The executable ezstream file
         /// </summary>
         public static readonly FilePath ITUEzStreamPath = new FilePath(
             "C:" + Path.DirectorySeparatorChar +
