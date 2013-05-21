@@ -163,7 +163,7 @@ namespace RentItMvc.Controllers
                 int channelId;
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    channelId = proxy.CreateChannel(channel.Name, userId.Value, channel.Description, new string[0]);
+                    channelId = proxy.CreateChannel(channel.Name, userId.Value, channel.Description, model.ChosenGenres.ToArray());
                 }
                 return RedirectToAction("SelectChannel", new { channelId = channelId, userId = userId });
             }
@@ -277,7 +277,7 @@ namespace RentItMvc.Controllers
             {
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
-                    proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0);
+                    proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0, model.ChosenGenres.ToArray());
                 }
                 return RedirectToAction("SelectChannel", "Channel", new { channelId = channelId, userId = userId });
             }
