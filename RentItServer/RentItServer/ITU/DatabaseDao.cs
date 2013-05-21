@@ -1118,64 +1118,15 @@ namespace RentItServer.ITU
         /// </summary>
         public void DeleteDatabaseData()
         {
+            const string deleteAllDataSql = "EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? DISABLE TRIGGER ALL' " +
+                                            "EXEC sp_MSForEachTable 'DELETE FROM ?' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? ENABLE TRIGGER ALL'";
+            
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                //Delete all users
-                context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
-                var users = context.Users;
-                foreach (User u in users)
-                {
-                    context.Users.Remove(u);
-                }
-
-                //Delete all channels
-                var channels = context.Channels;
-                foreach (Channel c in channels)
-                {
-                    c.Subscribers.Clear();
-                    c.Genres.Clear();
-                    context.Channels.Remove(c);
-                }
-
-                //Delete all genres
-                var genres = context.Genres;
-                foreach (Genre g in genres)
-                {
-                    context.Genres.Remove(g);
-                }
-
-                //Delete all tracks
-                var tracks = context.Tracks;
-                foreach (Track t in tracks)
-                {
-                    context.Tracks.Remove(t);
-                }
-
-                //Delete all trackPlays
-                /*
-                var trackPlays = context.TrackPlays;
-                if (trackPlays.Any())
-                {
-                    foreach (TrackPlay tp in trackPlays)
-                    {
-                        context.TrackPlays.Remove(tp);
-                    }
-                }*/
-                context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
-                //Delete all comments
-                var comments = context.Comments;
-                foreach (Comment c in comments)
-                {
-                    context.Comments.Remove(c);
-                }
-
-                //Delete all votes
-                var votes = context.Votes;
-                foreach (Vote v in votes)
-                {
-                    context.Votes.Remove(v);
-                }
-
+                context.Database.ExecuteSqlCommand(deleteAllDataSql);
                 context.SaveChanges();
             }
         }
