@@ -97,7 +97,7 @@ namespace RentItServer.ITU
             if (usernameOrEmail.Equals("")) LogAndThrowException(new ArgumentException("usernameOrEmail was empty"), "Login");
             if (password == null) LogAndThrowException(new ArgumentNullException("password"), "Login");
             if (password.Equals("")) LogAndThrowException(new ArgumentException("password was empty"), "Login");
-          
+
             User user = null;
             try
             {
@@ -156,6 +156,7 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         public void DeleteUser(int userId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "DeleteUser");
             User user = null;
             List<Channel> userCreatedChannels = GetCreatedChannels(userId);
             foreach (Channel c in userCreatedChannels)
@@ -227,6 +228,8 @@ namespace RentItServer.ITU
         /// <param name="email">The email. Can be null</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
+            if (username != null && username.Equals("")) LogAndThrowException(new ArgumentException("username is empty"), "UpdateUser");
+            if (password != null && password.Equals("")) LogAndThrowException(new ArgumentException("password is empty"), "UpdateUser");
             if (email != null)
             {
                 String theEmailPattern = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
@@ -242,7 +245,7 @@ namespace RentItServer.ITU
                 _dao.UpdateUser(userId, username, password, email);
                 updatedUser = _dao.GetUser(userId);
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 //if (_handler != null)
                 //    _handler(this, new RentItEventArgs("UpdateUser failed with exception [" + e + "]."));
@@ -395,6 +398,7 @@ namespace RentItServer.ITU
         /// <returns></returns>
         public DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
+            if (args == null) LogAndThrowException(new ArgumentNullException("args"), "GetChannels");
             try
             {
                 IEnumerable<Channel> channels = _dao.GetChannelsWithFilter(args);
@@ -580,8 +584,10 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void CreateComment(string comment, int userId, int channelId)
         {
+            if (comment == null) LogAndThrowException(new ArgumentNullException("comment"), "CreateComment");
+            if (comment.Equals("")) LogAndThrowException(new ArgumentException("comment was empty"), "CreateComment");
+            if (string.IsNullOrWhiteSpace(comment) == true) LogAndThrowException(new ArgumentException("comment was only whitespace"), "CreateComment");
             _dao.CreateComment(comment, userId, channelId);
-
             _logger.AddEntry("User id [" + userId + "] commented on the channel [" + channelId + "] with the comment [" + comment + "].");
         }
 
@@ -654,9 +660,10 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void Subscribe(int userId, int channelId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "UnSubscribe");
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "UnSubscribe");
             try
             {
-
                 _dao.Subscribe(userId, channelId);
 
             }
@@ -676,9 +683,10 @@ namespace RentItServer.ITU
         /// <param name="channelId">The channel id.</param>
         public void UnSubscribe(int userId, int channelId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "UnSubscribe");
+            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "UnSubscribe");
             try
             {
-
                 _dao.UnSubscribe(userId, channelId);
                 _dao.DeleteVotesForUser(userId, channelId);
 
@@ -732,7 +740,7 @@ namespace RentItServer.ITU
         /// </returns>
         public bool IsUsernameAvailable(string username)
         {
-            if (username == null) LogAndThrowException(new ArgumentException("username"), "IsUsernameAvailable");
+            if (username == null) LogAndThrowException(new ArgumentNullException("username"), "IsUsernameAvailable");
             if (username.Equals("")) LogAndThrowException(new ArgumentException("username was empty"), "IsUsernameAvailable");
             return _dao.IsUsernameAvailable(username);
         }
@@ -787,7 +795,7 @@ namespace RentItServer.ITU
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
             _logger.AddEntry("IsChannelNameAvailable --- channelId = " + channelId + " - channelName = " + channelName);
-            if (channelId < 1) LogAndThrowException(new ArgumentException("channelId was < 1"), "IsChannelNameAvailable");
+            if (channelId < 1 && channelId != -1) LogAndThrowException(new ArgumentException("channelId was < 1 && channelId != -1"), "IsChannelNameAvailable");
             if (channelName == null) LogAndThrowException(new ArgumentNullException("channelName"), "IsChannelNameAvailable");
             if (channelName.Equals("")) LogAndThrowException(new ArgumentException("channelName was empty"), "IsChannelNameAvailable");
             return _dao.IsChannelNameAvailable(channelId, channelName);
@@ -836,6 +844,8 @@ namespace RentItServer.ITU
         /// <param name="trackId">The track id.</param>
         public void DeleteVote(int userId, int trackId)
         {
+            if (userId < 1) LogAndThrowException(new ArgumentException("userId was < 1"), "DeleteVote");
+            if (trackId < 1) LogAndThrowException(new ArgumentException("trackId was < 1"), "DeleteVote");
             _dao.DeleteVote(userId, trackId);
         }
 

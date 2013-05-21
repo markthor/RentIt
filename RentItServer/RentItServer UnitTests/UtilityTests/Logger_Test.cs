@@ -18,6 +18,5 @@ namespace RentItServer_UnitTests.UtilityTests
             logger.AddEntry("Entry two");
             Assert.IsTrue(fs.Exists(absolutePath));
         }
-
     }
 }
