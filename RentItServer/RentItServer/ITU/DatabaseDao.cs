@@ -503,6 +503,14 @@ namespace RentItServer.ITU
                     }
                     channels = channels.Distinct();
                 }
+                if (filter.Genres != null && filter.Genres.Length > 0)
+                {
+                    channels = from channel in channels
+                               where (from g in channel.Genres
+                                      where channel.Genres.Contains(g)
+                                      select g).Any()
+                               select channel;
+                }
                 if (filter.MaxTotalVotes < Int32.MaxValue)
                 {   // Apply votes filter
                     IQueryable<Channel> noTracksChannels = null;

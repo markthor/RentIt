@@ -74,6 +74,8 @@ namespace RentItMvc.Controllers
                 //Sorting
                 searchArgs.SortOption = sortingKey + " " + sortingBy;
 
+                searchArgs.Genres = genres.ChosenGenres != null ? genres.ChosenGenres.ToArray() : null;
+
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);

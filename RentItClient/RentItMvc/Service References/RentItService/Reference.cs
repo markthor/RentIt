@@ -260,7 +260,7 @@ namespace RentItMvc.RentItService {
         private int EndIndexField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] GenresField;
+        private int[] GenresField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string HitsAscField;
@@ -349,7 +349,7 @@ namespace RentItMvc.RentItService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Genres {
+        public int[] Genres {
             get {
                 return this.GenresField;
             }
