@@ -514,6 +514,11 @@ namespace RentItServer.ITU
                 _fileSystemHandler.DeleteFile(FilePath.ITUTrackPath + track.Id.ToString() + ".mp3");
                 _dao.DeleteTrackEntry(track.Id);
                 _logger.AddEntry("exception: " + e);
+                while(e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    _logger.AddEntry("innerException: " + e);
+                }
                 throw e;
             }
             return track.Id;
