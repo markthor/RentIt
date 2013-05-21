@@ -98,6 +98,10 @@ namespace RentItServer.ITU
             _logger = logger;
         }
 
+        /// <summary>
+        /// Stops all running ezstream processes
+        /// Removes all trackplays with playtime after the time of method call
+        /// </summary>
         public void Cleanup()
         {
             _logger.AddEntry("Starting cleanup");
@@ -113,6 +117,7 @@ namespace RentItServer.ITU
         /// The date that the reset of all channel streams should take place
         /// </summary>
         
+        //The next reset date for all streams
         private DateTime ResetDate
         {
             get
@@ -564,7 +569,12 @@ namespace RentItServer.ITU
 
         #region Methods to restart all channels
         #region timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //Reset all streams
+        /// <summary>
+        /// Method called when timer elapses.
+        /// It resets all ezstreams appropriately and start all channels with associated tracks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             // Game plan:
