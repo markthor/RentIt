@@ -1119,89 +1119,15 @@ namespace RentItServer.ITU
         /// </summary>
         public void DeleteDatabaseData()
         {
+            const string deleteAllDataSql = "EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? DISABLE TRIGGER ALL' " +
+                                            "EXEC sp_MSForEachTable 'DELETE FROM ?' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL' " +
+                                            "EXEC sp_MSForEachTable 'ALTER TABLE ? ENABLE TRIGGER ALL'";
+            
             using (RENTIT21Entities context = new RENTIT21Entities())
             {
-                // Remove all collection navigation properties
-                var genres = context.Genres;
-                foreach (Genre g in genres)
-                {
-                    g.Channels.Clear();
-                }
-
-                var users = context.Users;
-                foreach (User u in users)
-                {
-                    context.Users.Remove(u);
-                }
-
-                var channels = context.Channels;
-                foreach (Channel c in channels)
-                {
-                    c.Subscribers.Clear();
-                    c.Genres.Clear();
-                    c.Comments.Clear();
-                    c.Tracks.Clear();
-                }
-
-                var tracks = context.Tracks;
-                foreach (Track t in tracks)
-                {
-                    t.TrackPlays.Clear();
-                }
-
-                //context.SaveChanges();
-
-                // Delete all entries
-                var trackPlays = context.TrackPlays;
-                if (trackPlays.Any())
-                {
-                    foreach (TrackPlay tp in trackPlays)
-                    {
-                        context.TrackPlays.Remove(tp);
-                    }
-                }
-                genres = context.Genres;
-                if (genres.Any())
-                {
-                    foreach (Genre g in genres)
-                    {
-                        context.Genres.Remove(g);
-                    }
-                }
-                var votes = context.Votes;
-                foreach (Vote v in votes)
-                {
-                    context.Votes.Remove(v);
-                }
-                var comments = context.Comments;
-                foreach (Comment c in comments)
-                {
-                    context.Comments.Remove(c);
-                }
-                tracks = context.Tracks;
-                foreach (Track t in tracks)
-                {
-                    context.Tracks.Remove(t);
-                }
-                channels = context.Channels;
-                foreach (Channel c in channels)
-                {
-                    context.Channels.Remove(c);
-                }
-                users = context.Users;
-                foreach (User u in users)
-                {
-                    context.Users.Remove(u);
-                }
-                
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE TrackPlays");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Genres");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Votes");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Comments");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Tracks");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Channels");
-                //context.Database.ExecuteSqlCommand("TRUNCATE TABLE Users");
-
+                context.Database.ExecuteSqlCommand(deleteAllDataSql);
                 context.SaveChanges();
             }
         }
