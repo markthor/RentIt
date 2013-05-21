@@ -61,7 +61,7 @@ namespace RentItServer.ITU
         {
             // Initialize the logger
             _logger = new Logger(FilePath.ITULogPath.GetPath() + LogFileName);
-
+            
             //Initialize the streamhandler
             _streamHandler = StreamHandler.GetInstance();
             InitializeStreamHandler();
