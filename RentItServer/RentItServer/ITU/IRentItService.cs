@@ -59,7 +59,7 @@ namespace RentItServer.ITU
         /// <param name="genres">The genres associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         [OperationContract]
-        int CreateChannel(string channelName, int userId, string description, string[] genres);
+        int CreateChannel(string channelName, int userId, string description, int[] genreIds);
 
         /// <summary>
         /// Deletes the channel.
@@ -82,7 +82,7 @@ namespace RentItServer.ITU
         /// or
         /// No user with user id [ + ownerId + ]</exception>
         [OperationContract]
-        void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating);
+        void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, int[] genreIds);
 
         /// <summary>
         /// Gets a channel.
