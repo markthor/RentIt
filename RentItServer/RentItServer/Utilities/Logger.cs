@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Globalization;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace RentItServer.Utilities
 {
@@ -15,12 +14,7 @@ namespace RentItServer.Utilities
         /// The _entry lock. Used when the AddEntry method is called
         /// </summary>
         private static readonly object _entryLock = new object();
-
-        /// <summary>
-        /// The _task collection. Contains pending entries
-        /// </summary>
-        private readonly BlockingCollection<string> _taskCollection = new BlockingCollection<string>(new ConcurrentQueue<string>());
-
+        
         /// <summary>
         /// The _absolute path
         /// </summary>

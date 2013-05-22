@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using RentItServer;
 
 namespace RentItServer.ITU
 {
@@ -85,12 +84,19 @@ namespace RentItServer.ITU
         /// </summary>
         /// <param name="trackList">The tracks on the channels playlist</param>
         /// <param name="plays">The record of tracks played on the channel</param>
-        /// <returns>The id of the next track to be played</returns>
+        /// <returns>
+        /// The id of the next track to be played
+        /// </returns>
+        /// <exception cref="System.ArgumentException">
+        /// No tracks in list
+        /// or
+        /// This implementaion does not support the arguments because of an error in this method.
+        /// </exception>
         public Track GetNextTrack(List<Track> trackList, List<TrackPlay> plays)
         {
             //Set max frequency
-            double _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
-            if (_maxFrequency < _maxFrequencyLowerCap) _maxFrequency = _maxFrequencyLowerCap;
+            double maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
+            if (maxFrequency < _maxFrequencyLowerCap) maxFrequency = _maxFrequencyLowerCap;
 
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
 
@@ -118,7 +124,7 @@ namespace RentItServer.ITU
             foreach (KeyValuePair<int, TrackData> kvp in trackData)
             {
                 double percentageOfPlays = Convert.ToDouble(kvp.Value.Plays) / Convert.ToDouble(totalPlays);
-                if (percentageOfPlays > _maxFrequency)
+                if (percentageOfPlays > maxFrequency)
                 {
                     kvp.Value.NextTrackCandidate = false;
                     disqualifications++;
@@ -131,8 +137,8 @@ namespace RentItServer.ITU
             if (effectiveMinimumRepeatDistance < 0) effectiveMinimumRepeatDistance = 0;
 
             //Setting candidate boolean to false for recently played tracks.
-            List<int> MostRecentlyPlayedTrackIds = GetMostRecentlyPlayedTrackIds(effectiveMinimumRepeatDistance, plays);
-            foreach (int i in MostRecentlyPlayedTrackIds)
+            List<int> mostRecentlyPlayedTrackIds = GetMostRecentlyPlayedTrackIds(effectiveMinimumRepeatDistance, plays);
+            foreach (int i in mostRecentlyPlayedTrackIds)
             {
                 trackData[i].NextTrackCandidate = false;
             }
@@ -160,11 +166,7 @@ namespace RentItServer.ITU
                     {
                         return kvp.Value.Track;
                     }
-                    else
-                    {
-                        ratioAccumulator += kvp.Value.Ratio;
-                    }
-
+                    ratioAccumulator += kvp.Value.Ratio;
                 }
             }
             throw new ArgumentException("This implementaion does not support the arguments because of an error in this method.");

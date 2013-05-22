@@ -268,8 +268,16 @@ namespace RentItServer.ITU
         /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
-        /// <param name="genres">The genres associated with the channel.</param>
-        /// <returns>The created channel.</returns>
+        /// <param name="genreIds">The genre ids.</param>
+        /// <returns>
+        /// The created channel.
+        /// </returns>
+        /// <exception cref="System.ArgumentException">
+        /// Channel with channelname [ + channelName + ] already exists
+        /// or
+        /// No user with userId [ + userId + ]
+        /// </exception>
+        /// <exception cref="System.Exception">Channel got created and saved in the database but is not in the database.... O.ô.</exception>
         public Channel CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
@@ -362,6 +370,7 @@ namespace RentItServer.ITU
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
         /// <param name="streamUri">The stream URI.</param>
+        /// <param name="genreIds">The genre ids.</param>
         /// <exception cref="System.ArgumentException">No channel with channel id [ + channelId + ]
         /// or
         /// No user with user id [ + ownerId + ]</exception>
@@ -712,7 +721,7 @@ namespace RentItServer.ITU
         /// <summary>
         /// Deletes all votes for a specific user.
         /// </summary>
-        /// <param name="trackId">The user id</param>
+        /// <param name="userId">The user id.</param>
         public void DeleteVotesForUser(int userId)
         {
             using (RENTIT21Entities context = new RENTIT21Entities())
