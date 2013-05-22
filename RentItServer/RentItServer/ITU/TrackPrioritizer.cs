@@ -13,11 +13,11 @@ namespace RentItServer.ITU
         private static TrackPrioritizer _instance;
         private static Random rng = new Random();
         //The lowest possible value for the maximal play percentage that a track can have to be considered for the next track.
-        private double _maxFrequencyLowerCap = 0.2;
+        private double maxFrequencyLowerCap = 0.2;
         //Determines how much upvotes and downvotes should influence the propability of a track being selected.
-        private int _ratioConstant = 10;
+        private const int RatioConstant = 10;
         //The number of latest played tracks that will not be considered for the next track.
-        private int _minimumRepeatDistance = 3;
+        private const int MinimumRepeatDistance = 3;
 
         /// <summary>
         /// Private to ensure local instantiation.
@@ -78,7 +78,7 @@ namespace RentItServer.ITU
         {
             //Set max frequency
             double _maxFrequency = (1.0 / Convert.ToDouble(trackList.Count)) * 2.0;
-            if (_maxFrequency < _maxFrequencyLowerCap) _maxFrequency = _maxFrequencyLowerCap;
+            if (_maxFrequency < maxFrequencyLowerCap) _maxFrequency = maxFrequencyLowerCap;
 
             if (trackList.Count == 0) throw new ArgumentException("No tracks in list");
 
@@ -114,8 +114,8 @@ namespace RentItServer.ITU
             }
 
             //Set minimum repeat distance in special cases.
-            int effectiveMinimumRepeatDistance = _minimumRepeatDistance;
-            if (trackList.Count - disqualifications <= _minimumRepeatDistance) effectiveMinimumRepeatDistance = trackList.Count - disqualifications - 1;
+            int effectiveMinimumRepeatDistance = MinimumRepeatDistance;
+            if (trackList.Count - disqualifications <= MinimumRepeatDistance) effectiveMinimumRepeatDistance = trackList.Count - disqualifications - 1;
             if (effectiveMinimumRepeatDistance < 0) effectiveMinimumRepeatDistance = 0;
 
             //Setting candidate boolean to false for recently played tracks.
@@ -166,7 +166,7 @@ namespace RentItServer.ITU
         /// <returns>The ratio of the track</returns>
         private double GetRatio(int upvotes, int downvotes)
         {
-            return Convert.ToDouble(_ratioConstant + upvotes) / Convert.ToDouble(_ratioConstant + downvotes);
+            return Convert.ToDouble(RatioConstant + upvotes) / Convert.ToDouble(RatioConstant + downvotes);
         }
 
         /// <summary>

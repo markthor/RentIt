@@ -458,6 +458,16 @@ namespace RentItServer.ITU
                                where c.Name.Contains(filter.SearchString) || c.Description.Contains(filter.SearchString)
                                select c;
 
+                if (filter.Genres != null && filter.Genres.Length > 0)
+                {
+                    channels = from channel in channels
+                               let ids = (from cg in channel.Genres
+                                          select cg.Id)
+                               where (from i in ids
+                                      where filter.Genres.Contains(i)
+                                      select i).Any()
+                               select channel;
+                }
                 if (filter.MinAmountPlayed > -1)
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits >= filter.MinAmountPlayed select channel;
@@ -502,14 +512,6 @@ namespace RentItServer.ITU
                         channels = channels.Concat(noTracksChannels);
                     }
                     channels = channels.Distinct();
-                }
-                if (filter.Genres != null && filter.Genres.Length > 0)
-                {
-                    channels = from channel in channels
-                               where (from g in channel.Genres
-                                      where channel.Genres.Contains(g)
-                                      select g).Any()
-                               select channel;
                 }
                 if (filter.MaxTotalVotes < Int32.MaxValue)
                 {   // Apply votes filter
