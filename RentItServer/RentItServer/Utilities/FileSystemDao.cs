@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RentItServer.Utilities
 {
@@ -122,11 +121,9 @@ namespace RentItServer.Utilities
         /// <summary>
         /// Writes the specified string to a file at the absolute file path. Can overwrite.
         /// </summary>
-        /// <param name="path">The path to the directory in which the file should be placed, including the file name and file ending</param>
         /// <param name="content">The string containing the content of the file</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Path was null
-        /// </exception>
+        /// <param name="absolutePath">The absolute path.</param>
+        /// <exception cref="System.ArgumentNullException">Path was null</exception>
         public void WriteFile(string content, string absolutePath)
         {
             if (content == null) throw new ArgumentNullException("content");
@@ -164,13 +161,9 @@ namespace RentItServer.Utilities
             if (playlist.Count == 0) throw new ArgumentException("empty playlist");
 
             //Check if the file exists and create the file if it doesn't
-            FileStream fs = null;
             if (!File.Exists(absolutePath))
             {
-                using (fs = File.Create(absolutePath))
-                {
-
-                }
+                File.Create(absolutePath);
             }
 
             if (File.Exists(absolutePath)) // Make sure the file exists

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using RentItServer.SMU;
+﻿using RentItServer.SMU;
 
 namespace RentItServer
 {
@@ -28,7 +24,7 @@ namespace RentItServer
         /// </returns>
         private bool HasAudio()
         {
-            return this.audioFilePath != null;
+            return audioFilePath != null;
         }
 
         /// <summary>
@@ -39,7 +35,7 @@ namespace RentItServer
         /// </returns>
         private bool HasPdf()
         {
-            return this.PDFFilePath != null;
+            return PDFFilePath != null;
         }
     }    
 }

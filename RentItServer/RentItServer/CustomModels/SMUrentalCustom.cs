@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using RentItServer.SMU;
+﻿using RentItServer.SMU;
 
 namespace RentItServer
 {

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Diagnostics;
 using RentItServer.ITU.Exceptions;
 using RentItServer.Utilities;
 using System.Threading;
-using System.Timers;
 using System.Threading.Tasks;
 
 namespace RentItServer.ITU
@@ -24,7 +22,7 @@ namespace RentItServer.ITU
         private static TrackPrioritizer _trackPrioritizer;
 
         // A dictionary with all running channels' id and corresponding ezprocess
-        private Dictionary<int, EzProcess> runningChannelIds;
+        private readonly Dictionary<int, EzProcess> runningChannelIds;
 
         // The logger
         private Logger _logger;
