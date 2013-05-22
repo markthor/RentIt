@@ -1307,6 +1307,12 @@ namespace RentItMvc.RentItService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/DeleteAccount", ReplyAction="http://tempuri.org/IRentItService/DeleteAccountResponse")]
         System.Threading.Tasks.Task DeleteAccountAsync(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CanStartStopChannels", ReplyAction="http://tempuri.org/IRentItService/CanStartStopChannelsResponse")]
+        bool CanStartStopChannels();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRentItService/CanStartStopChannels", ReplyAction="http://tempuri.org/IRentItService/CanStartStopChannelsResponse")]
+        System.Threading.Tasks.Task<bool> CanStartStopChannelsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1654,6 +1660,14 @@ namespace RentItMvc.RentItService {
         
         public System.Threading.Tasks.Task DeleteAccountAsync(int userId) {
             return base.Channel.DeleteAccountAsync(userId);
+        }
+        
+        public bool CanStartStopChannels() {
+            return base.Channel.CanStartStopChannels();
+        }
+        
+        public System.Threading.Tasks.Task<bool> CanStartStopChannelsAsync() {
+            return base.Channel.CanStartStopChannelsAsync();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace RentItMvc.Controllers
             Channel[] channels;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                ChannelSearchArgs searchArgs = (ChannelSearchArgs) model;
+                ChannelSearchArgs searchArgs = (ChannelSearchArgs)model;
                 channels = proxy.GetChannels(searchArgs);
             }
             Tuple<List<GuiChannel>, AdvancedSearchModel> tuple = new Tuple<List<GuiChannel>, AdvancedSearchModel>(GuiClassConverter.ConvertChannels(channels), model);
@@ -174,7 +174,7 @@ namespace RentItMvc.Controllers
             {
                 channel.OwnerId = userId.Value;
                 int channelId;
-                if(model.ChosenGenres == null) model.ChosenGenres = new List<int>();
+                if (model.ChosenGenres == null) model.ChosenGenres = new List<int>();
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     channelId = proxy.CreateChannel(channel.Name, userId.Value, channel.Description, model.ChosenGenres.ToArray());
@@ -289,7 +289,7 @@ namespace RentItMvc.Controllers
         {
             if (userId.HasValue)
             {
-                if(model.ChosenGenres == null) model.ChosenGenres = new List<int>();
+                if (model.ChosenGenres == null) model.ChosenGenres = new List<int>();
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     proxy.UpdateChannel(channelId, userId.Value, channel.Name, channel.Description, 0.0, 0.0, model.ChosenGenres.ToArray());
@@ -351,7 +351,10 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                proxy.StartChannelStream(channelId);
+                if (proxy.CanStartStopChannels())
+                {
+                    proxy.StartChannelStream(channelId);
+                }
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }
@@ -360,7 +363,10 @@ namespace RentItMvc.Controllers
         {
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                proxy.StopChannelStream(channelId);
+                if (proxy.CanStartStopChannels())
+                {
+                    proxy.StopChannelStream(channelId);
+                }
             }
             return Redirect(Request.UrlReferrer.PathAndQuery);
         }
@@ -370,6 +376,14 @@ namespace RentItMvc.Controllers
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
                 return proxy.IsChannelPlaying(channelId);
+            }
+        }
+
+        public static bool CanStartStopChannels()
+        {
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                return proxy.CanStartStopChannels();
             }
         }
 
@@ -396,7 +410,7 @@ namespace RentItMvc.Controllers
             int count;
             using (RentItServiceClient proxy = new RentItServiceClient())
             {
-                count = proxy.CountAllChannelsWithFilter((ChannelSearchArgs) model);
+                count = proxy.CountAllChannelsWithFilter((ChannelSearchArgs)model);
             }
             return count;
         }
