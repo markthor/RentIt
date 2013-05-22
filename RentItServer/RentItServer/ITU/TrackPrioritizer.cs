@@ -12,7 +12,7 @@ namespace RentItServer.ITU
         private static TrackPrioritizer _instance;
         private static Random rng = new Random();
         //The lowest possible value for the maximal play percentage that a track can have to be considered for the next track.
-        private double maxFrequencyLowerCap = 0.2;
+        private double _maxFrequencyLowerCap = 0.2;
         //Determines how much upvotes and downvotes should influence the propability of a track being selected.
         private const int RatioConstant = 10;
         //The number of latest played tracks that will not be considered for the next track.
