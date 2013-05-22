@@ -36,17 +36,21 @@
     function addItem() {
         $("#AvailableGenres option:selected").appendTo("#ChosenGenres");
         $("#ChosenGenres option").attr("selected", false);
+        $("#AvailableGenres")[0].selectedIndex = 0;
     }
     function addallItems() {
         $("#AvailableGenres option").appendTo("#ChosenGenres");
         $("#ChosenGenres option").attr("selected", false);
+        $("#ChosenGenres")[0].selectedIndex = 0;
     }
     function removeItem() {
         $("#ChosenGenres option:selected").appendTo("#AvailableGenres");
         $("#AvailableGenres option").attr("selected", false);
+        $("#ChosenGenres")[0].selectedIndex = 0;
     }
     function removeallItems() {
         $("#ChosenGenres option").appendTo("#AvailableGenres");
         $("#AvailableGenres option").attr("selected", false);
+        $("#AvailableGenres")[0].selectedIndex = 0;
     }
 </script>

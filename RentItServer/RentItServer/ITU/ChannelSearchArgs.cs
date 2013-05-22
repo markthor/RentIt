@@ -198,7 +198,7 @@ namespace RentItServer.ITU
         public ChannelSearchArgs()
         {
             SearchString = "";
-            //Genres = new string[] {};
+            Genres = new int[] {};
             MinAmountPlayed = -1;
             MinNumberOfSubscriptions = -1;
             MinNumberOfComments = -1;

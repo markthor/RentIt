@@ -355,5 +355,12 @@ namespace RentItServer.ITU
         /// <param name="userId">The user id.</param>
         [OperationContract]
         void DeleteAccount(int userId);
+
+        /// <summary>
+        /// Tells if it is allowed to call start and stop-methods on channels
+        /// </summary>
+        /// <returns>If it is allowed to start and stop channels</returns>
+        [OperationContract]
+        bool CanStartStopChannels();
     }
 }

@@ -445,5 +445,14 @@ namespace RentItServer
         {
             _controller.DeleteUser(userId);
         }
+
+        /// <summary>
+        /// Tells if it is allowed to call start and stop-methods on channels
+        /// </summary>
+        /// <returns>If it is allowed to start and stop channels</returns>
+        public bool CanStartStopChannels()
+        {
+            return _streamHandler.CanStartStopChannels();
+        }
     }
 }
