@@ -13,33 +13,33 @@
 \BOOKMARK [2][-]{subsection.3.4}{Webservice}{section.3}% 13
 \BOOKMARK [2][-]{subsection.3.5}{GUI Technology}{section.3}% 14
 \BOOKMARK [2][-]{subsection.3.6}{Track selection}{section.3}% 15
-\BOOKMARK [1][-]{section.4}{GUI design}{}% 16
-\BOOKMARK [2][-]{subsection.4.1}{Tasks}{section.4}% 17
-\BOOKMARK [2][-]{subsection.4.2}{Design}{section.4}% 18
-\BOOKMARK [1][-]{section.5}{Implementation}{}% 19
-\BOOKMARK [2][-]{subsection.5.1}{System Architecture}{section.5}% 20
-\BOOKMARK [2][-]{subsection.5.2}{Server Structure}{section.5}% 21
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Class diagram}{subsection.5.2}% 22
-\BOOKMARK [3][-]{subsubsection.5.2.2}{TrackPrioritizer}{subsection.5.2}% 23
-\BOOKMARK [2][-]{subsection.5.3}{Webclient Architecture}{section.5}% 24
-\BOOKMARK [2][-]{subsection.5.4}{Third-party streaming components}{section.5}% 25
-\BOOKMARK [3][-]{subsubsection.5.4.1}{IceCast}{subsection.5.4}% 26
-\BOOKMARK [3][-]{subsubsection.5.4.2}{EzStream}{subsection.5.4}% 27
-\BOOKMARK [1][-]{section.6}{Testing}{}% 28
-\BOOKMARK [2][-]{subsection.6.1}{Testing strategy}{section.6}% 29
-\BOOKMARK [2][-]{subsection.6.2}{Testing of specific requirements}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.3}{Testing conclusion}{section.6}% 31
-\BOOKMARK [1][-]{section.7}{Collaboration with SMU}{}% 32
-\BOOKMARK [2][-]{subsection.7.1}{Interaction with the ITU system}{section.7}% 33
-\BOOKMARK [2][-]{subsection.7.2}{Collaboration Considerations}{section.7}% 34
-\BOOKMARK [3][-]{subsubsection.7.2.1}{Fault lines}{subsection.7.2}% 35
-\BOOKMARK [3][-]{subsubsection.7.2.2}{Solutions}{subsection.7.2}% 36
-\BOOKMARK [3][-]{subsubsection.7.2.3}{Conclusion of the SMU collaboration}{subsection.7.2}% 37
-\BOOKMARK [1][-]{section.8}{Conclusion}{}% 38
-\BOOKMARK [1][-]{appendix.A}{Textual items}{}% 39
-\BOOKMARK [2][-]{subsection.A.1}{Glossary}{appendix.A}% 40
-\BOOKMARK [2][-]{subsection.A.2}{SMU webservice API}{appendix.A}% 41
-\BOOKMARK [2][-]{subsection.A.3}{Known bugs}{appendix.A}% 42
-\BOOKMARK [2][-]{subsection.A.4}{Results for specific testing of requirements}{appendix.A}% 43
-\BOOKMARK [2][-]{subsection.A.5}{Known bugs}{appendix.A}% 44
+\BOOKMARK [1][-]{section.4}{Streaming}{}% 16
+\BOOKMARK [1][-]{section.5}{GUI design}{}% 17
+\BOOKMARK [2][-]{subsection.5.1}{Tasks}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.2}{Design}{section.5}% 19
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 20
+\BOOKMARK [2][-]{subsection.6.1}{System Architecture}{section.6}% 21
+\BOOKMARK [2][-]{subsection.6.2}{Server Structure}{section.6}% 22
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Class diagram}{subsection.6.2}% 23
+\BOOKMARK [3][-]{subsubsection.6.2.2}{TrackPrioritizer}{subsection.6.2}% 24
+\BOOKMARK [2][-]{subsection.6.3}{Webclient Architecture}{section.6}% 25
+\BOOKMARK [2][-]{subsection.6.4}{Third-party streaming components}{section.6}% 26
+\BOOKMARK [3][-]{subsubsection.6.4.1}{Icecast}{subsection.6.4}% 27
+\BOOKMARK [3][-]{subsubsection.6.4.2}{Ezstream}{subsection.6.4}% 28
+\BOOKMARK [1][-]{section.7}{Testing}{}% 29
+\BOOKMARK [2][-]{subsection.7.1}{Testing strategy}{section.7}% 30
+\BOOKMARK [2][-]{subsection.7.2}{Testing of specific requirements}{section.7}% 31
+\BOOKMARK [2][-]{subsection.7.3}{Testing conclusion}{section.7}% 32
+\BOOKMARK [1][-]{section.8}{Collaboration with Singapore Management University}{}% 33
+\BOOKMARK [2][-]{subsection.8.1}{Interaction with the ITU system}{section.8}% 34
+\BOOKMARK [2][-]{subsection.8.2}{Collaboration Considerations}{section.8}% 35
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Faultlines}{subsection.8.2}% 36
+\BOOKMARK [3][-]{subsubsection.8.2.2}{Solutions}{subsection.8.2}% 37
+\BOOKMARK [3][-]{subsubsection.8.2.3}{Conclusion of the SMU collaboration}{subsection.8.2}% 38
+\BOOKMARK [1][-]{section.9}{Conclusion}{}% 39
+\BOOKMARK [1][-]{appendix.A}{Textual items}{}% 40
+\BOOKMARK [2][-]{subsection.A.1}{Glossary}{appendix.A}% 41
+\BOOKMARK [2][-]{subsection.A.2}{SMU webservice API}{appendix.A}% 42
+\BOOKMARK [2][-]{subsection.A.3}{Known bugs}{appendix.A}% 43
+\BOOKMARK [2][-]{subsection.A.4}{Results for specific testing of requirements}{appendix.A}% 44
 \BOOKMARK [1][-]{appendix.B}{Diagrams}{}% 45

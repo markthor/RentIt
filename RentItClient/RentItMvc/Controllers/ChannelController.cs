@@ -48,7 +48,7 @@ namespace RentItMvc.Controllers
 
         public ActionResult SearchAdv(string channelName, int? minAmountOfSubscribers, int? maxAmountOfSubscribers, int? minAmountOfComments,
                                       int? maxAmountOfComments, int? minAmountOfPlays, int? maxAmountOfPlays, int? minAmountOfVotes,
-                                      int? maxAmountOfVotes, string sortingKey, string sortingBy, int startIndex, int endIndex)
+                                      int? maxAmountOfVotes, string sortingKey, string sortingBy, int startIndex, int endIndex, SelectedGenrePostModel genres)
         {
             Channel[] channels;
             ChannelSearchArgs searchArgs;
@@ -74,6 +74,8 @@ namespace RentItMvc.Controllers
                 //Sorting
                 searchArgs.SortOption = sortingKey + " " + sortingBy;
 
+                searchArgs.Genres = genres.ChosenGenres != null ? genres.ChosenGenres.ToArray() : null;
+
                 channels = proxy.GetChannels(searchArgs);
             }
             List<GuiChannel> guiChannels = GuiClassConverter.ConvertChannels(channels);
@@ -89,7 +91,7 @@ namespace RentItMvc.Controllers
             {
                 chosenGenres = GuiClassConverter.ConvertGenres(proxy.GetGenresForChannel(channelId));
                 Genre[] allGenres = proxy.GetAllGenres();
-                availableGenres = GuiClassConverter.ConvertGenres(allGenres);
+                availableGenres = GetAllAvailableGenres();
                 availableGenres = availableGenres.Except(chosenGenres).ToList();
             }
             SelectGenreModel model = new SelectGenreModel
@@ -99,6 +101,17 @@ namespace RentItMvc.Controllers
                 ChannelId = channelId,
             };
             return model;
+        }
+
+        public static List<GuiGenre> GetAllAvailableGenres()
+        {
+            List<GuiGenre> availableGenres;
+            using (RentItServiceClient proxy = new RentItServiceClient())
+            {
+                Genre[] allGenres = proxy.GetAllGenres();
+                availableGenres = GuiClassConverter.ConvertGenres(allGenres);
+            }
+            return availableGenres;
         }
 
         public PartialViewResult SelectGenre(int channelId)
@@ -290,7 +303,9 @@ namespace RentItMvc.Controllers
         {
             if (userId.HasValue)
             {
-                return SearchAdv(searchArgs, null, null, null, null, null, null, null, null, "nam", "asc", 0, 10);
+                SelectedGenrePostModel model = new SelectedGenrePostModel();
+                model.ChosenGenres = null;
+                return SearchAdv(searchArgs, null, null, null, null, null, null, null, null, "nam", "asc", 0, 10, model);
                 using (RentItServiceClient proxy = new RentItServiceClient())
                 {
                     ChannelSearchArgs channelSearchArgs = proxy.GetDefaultChannelSearchArgs();

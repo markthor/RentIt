@@ -4,7 +4,7 @@
 
 <ul class="nav nav-list">
     <li class="nav-header">
-        Channel
+        Channels
     </li>
     <li>
         @Html.ActionLink("Popular channels", "PopularChannels", "Channel", new { userId = Session["userId"] }, null)
@@ -14,10 +14,10 @@
     </li>
     <li class="divider"></li>
     <li>
-        @Html.ActionLink("My channels", "MyChannels", "Channel", new { userId = Session["userId"] }, null)
+        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li>
-        @Html.ActionLink("My subscriptions", "MySubscriptions", "Channel", new { userId = Session["userId"] }, null)
+        @Html.ActionLink("My channels", "MyChannels", "Channel", new { userId = Session["userId"] }, null)
     </li>
     <li class="divider"></li>
     <li>

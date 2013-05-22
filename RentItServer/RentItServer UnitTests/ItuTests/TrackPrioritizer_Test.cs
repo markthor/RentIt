@@ -136,19 +136,7 @@ namespace RentItServer_UnitTests
             Assert.IsFalse(HasSameTrackTwiceInARow(result));
 
         }
-        /*
-        [TestMethod]
-        public void TrackPrioritizer_GetNextPlayList_SpecificChannel()
-        {
-            int channelId = 1025;
-            List<Track> tracks = Controller.GetInstance().GetTracksByChannelId(channelId);
-            List<TrackPlay> trackPlays = DatabaseDao.GetInstance().GetTrackPlays(channelId);
-            List<TrackPlay> playListPlays = new List<TrackPlay>();
 
-            List<Track> result = TrackPrioritizer.GetInstance().GetNextPlayList(tracks, trackPlays, 42359253, out playListPlays);
-            Assert.IsFalse(HasSameTrackTwiceInARow(result));
-        }
-        */
         /// <summary>
         /// Tests GetNextPlayList with multiple tracks and multiple plays.
         /// </summary>

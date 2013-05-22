@@ -79,8 +79,8 @@ namespace RentItServer.ITU
         /// The genres to include in search. Default is an emoty string array
         /// </value>
         [DataMember]
-        [DefaultValueAttribute(new string[] { "" })]
-        public string[] Genres { get; set; }
+        [DefaultValueAttribute(null)]
+        public int[] Genres { get; set; }
 
         /// <summary>
         /// Gets/sets the lower bound of amount played to filter.
@@ -198,7 +198,7 @@ namespace RentItServer.ITU
         public ChannelSearchArgs()
         {
             SearchString = "";
-            Genres = new string[] {};
+            //Genres = new string[] {};
             MinAmountPlayed = -1;
             MinNumberOfSubscriptions = -1;
             MinNumberOfComments = -1;

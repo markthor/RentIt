@@ -126,7 +126,6 @@
     <Compile Include="Controllers\AudioController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
-    <Compile Include="Controllers\DownloadLogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\TrackController.cs" />
