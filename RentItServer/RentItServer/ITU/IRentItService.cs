@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.IO;
 using System.ServiceModel;
 
 namespace RentItServer.ITU
@@ -49,22 +47,23 @@ namespace RentItServer.ITU
         /// <exception cref="System.ArgumentException">No user with user id[ + userId + ]</exception>
         [OperationContract]
         void UpdateUser(int userId, string username, string password, string email);
-        
+
         /// <summary>
         /// Creates a channel.
         /// </summary>
         /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
-        /// <param name="genres">The genres associated with the channel.</param>
-        /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
+        /// <param name="genreIds">The genre ids.</param>
+        /// <returns>
+        /// The id of the created channel. -1 if the channel creation failed.
+        /// </returns>
         [OperationContract]
         int CreateChannel(string channelName, int userId, string description, int[] genreIds);
 
         /// <summary>
         /// Deletes the channel.
         /// </summary>
-        /// <param name="userId">The user id making the request, this must correspond to the channel owners id.</param>
         /// <param name="channelId">The channel id.</param>
         [OperationContract]
         void DeleteChannel(int channelId);
@@ -78,6 +77,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
+        /// <param name="genreIds">The genre ids.</param>
         /// <exception cref="System.ArgumentException">No channel with channel id [ + channelId + ]
         /// or
         /// No user with user id [ + ownerId + ]</exception>
@@ -126,7 +126,6 @@ namespace RentItServer.ITU
         /// <summary>
         /// Removes the track.
         /// </summary>
-        /// <param name="userId">The user id.</param>
         /// <param name="trackId">The track id.</param>
         [OperationContract]
         void RemoveTrack(int trackId);
@@ -149,6 +148,8 @@ namespace RentItServer.ITU
         /// Gets all comments associated with a channel
         /// </summary>
         /// <param name="channelId">The channel id.</param>
+        /// <param name="fromInclusive">From inclusive.</param>
+        /// <param name="toExclusive">To exclusive.</param>
         /// <returns>
         /// All comments from a specific channel
         /// </returns>
@@ -321,7 +322,9 @@ namespace RentItServer.ITU
         /// <summary>
         /// Retreives all genres
         /// </summary>
-        /// <returns>An array of all genres in the database</returns>
+        /// <returns>
+        /// An array of all genres in the database
+        /// </returns>
         [OperationContract]
         ITU.DatabaseWrapperObjects.Genre[] GetAllGenres();
 

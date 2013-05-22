@@ -1,8 +1,4 @@
-﻿using System;
-using RentItServer.SMU;
-using System.Collections;
-
-namespace RentItServer
+﻿namespace RentItServer
 {
     /// <summary>
     /// This partial class extends functionality of the SMUuser entity used by the entity framework

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RentItServer
+﻿namespace RentItServer
 {
     /// <summary>
     /// Partial class of the database entity "Track". Used to add functionality to the class.

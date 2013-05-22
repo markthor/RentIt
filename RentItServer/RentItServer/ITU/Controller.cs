@@ -261,7 +261,7 @@ namespace RentItServer.ITU
         /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
-        /// <param name="genres">The genres associated with the channel.</param>
+        /// <param name="genreIds">The genre ids associated with the channel.</param>
         /// <returns>The id of the created channel. -1 if the channel creation failed.</returns>
         public int CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
@@ -280,7 +280,7 @@ namespace RentItServer.ITU
                 else
                     sb.Append(genreIds[i] + ", ");
             }
-            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + sb.ToString() + "]. ";
+            string logEntry = "User id [" + userId + "] want to create the channel [" + channelName + "] with description [" + description + "] and genreIds [" + sb + "]. ";
             try
             {
 
@@ -366,6 +366,7 @@ namespace RentItServer.ITU
         /// <param name="description">The description.</param>
         /// <param name="hits">The hits.</param>
         /// <param name="rating">The rating.</param>
+        /// <param name="genreIds">The genre ids.</param>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits,
                                   double? rating, int[] genreIds)
         {
@@ -421,7 +422,7 @@ namespace RentItServer.ITU
                 if (args != null)
                     entry =
                         string.Format(
-                            "{0}, args.AmountPlayed = {1}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.SearchString = {6}, args.SortOption = {7}, args.StartIndex = {8}, args.EndIndex = {9}",
+                            "{0}, args.AmountPlayed = {1}, args.Genres = {2}, args.NumberOfComments = {3}, args.NumberOfSubscriptions = {4}, args.SearchString = {5}, args.SortOption = {6}, args.StartIndex = {7}, args.EndIndex = {8}",
                             entry, args.MinAmountPlayed, args.MinNumberOfComments, args.MinNumberOfSubscriptions, args.SearchString.Equals("") ? "\"\"" : args.SearchString, args.SortOption.Equals("") ? "\"\"" : args.SortOption, args.StartIndex, args.EndIndex);
                 _logger.AddEntry(entry);
                 throw;

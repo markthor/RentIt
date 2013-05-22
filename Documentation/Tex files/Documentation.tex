@@ -43,20 +43,21 @@
 \newpage
 \section*{Abstract}
 \emph{
-This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we (a small team of students) document our implementation of an internet radio station(BlobFish Radio), as well as our implementation of a book rental service, which we did in collaboration with students from Singapore Management University in Singapore.}\\ 
+This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we document our implementation of an internet radio station(BlobFish Radio), as well as our implementation of a book rental service, which we did in collaboration with students from Singapore Management University in Singapore.}\\ \\ \\
+The site is online at rentit.itu.dk/BlobFishRadio \\ \\
+The GitHub repository is available at github.com/markthor/RentIt
 \newpage
-
 \tableofcontents
-
+\newpage
 \section{Introduction}
 \subsection{Vision}
-BlobFish Radio is a radio hosting service, that enables users to host and listen to online radio stations. The owner of a channel can upload tracks to the channel, and the listeners of the channel can shape the future of the channel by submitting there up vote or down vote of a track. The service shall also promote the community by making room for discussion of channels.
+BlobFish Radio is a radio hosting service, that enables users to host and listen to online radio stations. The owner of a channel can upload tracks to the channel, and the listeners of the channel can shape the future of the channel by submitting their up vote or down vote of each track. The service shall also promote the community by making room for discussion of channels.
 It is a system intended to be used by the common user, without any special knowledge or training.
 
 \subsection{Application scope}
 In this section we will analyse what features that are needed to make a successful internet radio hosting service. We will go through the overall components that the service needs. In the requirements and use case section, we will go into more detail.
 
-We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The service must be accessible through a web-browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and uncomplicated way. An internet radio service is different from a normal media streaming service, because several users who listen to the same channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
+We define a internet radio hosting service as a service where users can host radio channels, define the content of the channels and where other users can listen to them. The service must be accessible through a web-browser. The most basic component in an internet radio hosting service, is the ability to stream audio and enable users to listen to this audio in an easy and hassle free way. An internet radio service is different from a normal media streaming service, because several users who listen to the same channel must hear the exact same audio. This might seem like a small detail, but it is an aspect that requires a lot of attention. In a traditional media streaming service, the users individually stream the audio and the audio is played at individually defined intervals in the client. To emulate a traditional FM or AM radio station, we must make sure that each user listens to the exact same audio at the exact same time. 
 
 Another crucial component is to find ways to differentiate the radio stations from one another. In a radio hosting service, where users can create their own radio stations and all content on the website essentially is user created, it is important to make ways to sort the radio stations such that a listener easily can find a radio station that he wants to listen to. One way to differentiate radio stations is to attach genres to the stations. This is a way for the radio hosts, to describe what kind of content a listener can expect to hear when listening to the radio station. Another way is through subscriptions. Subscriptions serves two purposes: It gives the listener ability to flag his favorite radio stations and enables him to access them in an easy way. It also serves as a way to rank the stations after popularity. A listener can use the subscriptions as an indication for how popular a radio stations are and use it as a guideline for finding new stations to listen to. Number of channel comments is also a way to find the channels that has caused the most discussions and community activity. 
 
@@ -83,7 +84,7 @@ The user navigates to the channel, possibly by searching for it and selects "lis
 The user has selected a channel and selects "subscribe to channel". The subscription status changes accordingly.
 
 \textbf{Unsubscribe to channel:}
-The user has selected a channel he is already subscribed to and selects unsubscribe to channel. The subscription status changes accordingly.
+The user has selected a channel he is already subscribed to and selects "unsubscribe to channel". The subscription status changes accordingly.
 
 \textbf{Comment channel:}
 The user is on a channel and want to comment on it. He writes and submits the comment. The comment is saved and the page is refreshed
@@ -95,7 +96,7 @@ The user navigates to "create channel" and fills out the required information as
 The owner of the channel does not want the channel anymore and he decides to delete it. He navigates to edit channel and selects delete channel. All subscriptions to the channel are deleted, subscribers get notified, and the channel is removed.
 
 \textbf{Upload track:}
-The user has a channel and wants to upload a track. He navigates to edit channel. He selects the song through a filebrowser and selects upload.
+The owner of a channel and wants to upload a track. He navigates to edit channel. He selects the song through a filebrowser and selects upload.
 
 \textbf{Delete track:}
 The owner of a channel wants to remove a track from his channel. He navigates to edit channel. He browses the list of tracks and selects remove on the track he wants to remove.
@@ -138,7 +139,7 @@ The user shall be able to rate a track associated with a channel by up/down voti
 The rating of a track must affect the frequency with which it is played within its associated channel. The user must be subscribed to the channel to vote on an associated track.
 A higher rating giving a proportionally higher chance of being played. The rating must be calculated from up votes and down votes. A user can only have one vote per track that influences the rating. \\*
 \textbf{Dependencies:}
-R1 is dependant on this requirement because the track to be played is determined by its rating.\\*
+R1 is dependent on this requirement because the track to be played is determined by its rating.\\*
 \textbf{Priority:}
 It is of essential importance, since the functionality is a prerequisite for other fundamentally important requirements.
 \\ \\
@@ -148,7 +149,7 @@ It shall be possible for users with a channel to upload a track to it. \\*
 \textbf{Domain concepts:}
 A channel has tracks that are managed by the channel owner. \\*
 \textbf{Dependencies:}
-The listen to channel requirement is dependant on this requirement because the track can only be played to others if it has been uploaded to the server.\\*
+R1 is dependent on this requirement because the track can only be played to others if it has been uploaded to the server.\\*
 \textbf{Priority:}
 It is of essential importance, since the functionality is a prerequisite for other fundamentally important requirements.
 \\ \\
@@ -244,14 +245,14 @@ The non-functional requirements describes how the functionality shall work in mu
 \textbf{I3:} The server shall be written in C\# with the .NET 4.0 Framework and Windows Communication Foundation(WCF). \\*
 
 \section{Analysis}
-This section contains considerations on how to implement the functional and non-functional requirements, as defined in the previous chapter. This includes the possible solutions, the chosen solution and the reasoning behind it. We will not go into any technical details about the implementation, this will be covered in another section, but we will analyze what design patterns, architecture and frameworks that will create the best solution. 
+This section contains considerations on how to implement the functional and non-functional requirements, as defined in the previous section. This includes the possible solutions, the chosen solution and the reasoning behind it. We will not go into any technical details about the implementation, this will be covered in another section, but we will analyze what design patterns, architecture and frameworks that will create the best solution. 
 
 \subsection{Architecture}
-We have several different options to consider when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so it is assumed that the program must have some kind of client/server architecture. A basic client/server architecture is a possible solution. The client connects to our service with a browser and the server will contain all the backend functionality as well as the generation of HTML responses. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. The non-functional requirements states that the architecture must allow a non-browser-based client to connect to the server, which such a basic solution does not support. Another option is to make the core backend functionality, the functionality related to modifying, creating and deleting data, into a WCF webservice. In that case the webclient (handling all generation of HTML) makes calls to the server. A non-browser-based client could connect directly to the server without any modifications to the architecture. A disadvantage is that it makes the solution more complicated and the server responses must be designed to fit in a webservice. To even further modulate the program, one can use an external database apart from the webservice to store data. We choose to go with the most modular solution. The browser calls the webclient, which calls the WCF webservice, which then calls the database. A more detailed description can be found in the Implementation section. \\*
+We have several different options to consider when choosing the right architecture for our solution. We have defined in our vision, that the solution should be an internet radio service, so it is assumed that the program must have some kind of client/server architecture. A basic client/server architecture is a possible solution. The client connects to our service with a browser and the server will contain all the backend functionality as well as the generation of HTML responses. It is a simple architecture, that keeps all the functionality together, but it lacks the advantages you get from seperating the solution into smaller modules. The non-functional requirements states that the architecture must allow a non-browser-based client to connect to the server, which such a basic solution does not support. Another option is to make the core backend functionality, the functionality related to modifying, creating and deleting data, into a WCF\footnote{Abbreviation for Windows Communication Foundation} webservice. In that case the webclient (handling all generation of HTML) makes calls to the server. A non-browser-based client could connect directly to the server without any modifications to the architecture. A disadvantage is that it makes the solution more complicated and the server responses must be designed to fit in a webservice. To even further modulate the program, one can use an external database apart from the webservice to store data. We choose to go with the most modular solution. The browser calls the webclient, which calls the WCF webservice, which then calls the database. A more detailed description can be found in the Implementation section. \\*
 
 \textbf{Server architecture} \\*
 The largest part of our server functionality lies within the WCF webservice. It is therefore important that we analyse how this can be structured in the best way possible.
-A WFC webservice consists of the service contracts, which defines the signatures of the webservice methods, and the actual service which contains the actual implementation of the methods. In a simple architecture you can let the webservice contain all the functionality of the service methods. This would be simple, but it would prevent the service from complying with many of the requirements we have defined in our non-functional requirements section, especially about supportability. We want the server architecture to be less coupled and more modular. The first step in modulation is to add a controller, which controls the general flow of the program. It does not contain any logic in itself, but delegates the program flow to other parts of the program, where the logic lies. It also makes sense to seperate the datastorage and the communication with the database into two different Data Access Objects(DAO). In this way, we abstract away from the actual implementation and make it possible to change these modules without affecting the rest of the program. Another component that it makes sense to have as a seperate module is the component responsible for handling radio channels. Since streaming is a high-risk component of our program, it makes a lot of sense to seperate this. It opens up for the possibility to modify and test the module seperately from the rest of the software. 
+A WFC webservice consists of the service contracts, which defines the signatures of the webservice methods, and the actual service which contains the actual implementation of the methods. In a simple architecture you can let the webservice contain all the functionality of the service methods. This would be simple, but it would prevent the service from complying with many of the requirements we have defined in our non-functional requirements section, especially about supportability. We want the server architecture to be less coupled and more modular. The first step in modulation is to add a controller, which controls the general flow of the program. It does not contain any logic in itself, but delegates the program flow to other parts of the program, where the logic lies. It also makes sense to seperate the datastorage and the communication with the database into two different DAO\footnote{Abbreviation for Data Access Objects}. In this way, we abstract away from the actual implementation and make it possible to change these modules without affecting the rest of the program. Another component that it makes sense to have as a seperate module is the component responsible for handling radio channels. Since streaming is a high-risk component of our program, it makes a lot of sense to seperate this. It opens up for the possibility to modify and test the module seperately from the rest of the software. 
 
 \subsection{Data model}
 The basic domain entities of the system consists of channel, user and track. The rest of the entities supports functionality that is required for the basic entities. \\*
@@ -261,62 +262,62 @@ This design does not limit a possible extension of the system to measure similar
 Track has an up vote and a down vote count, which vote entities have a functional dependency to, because each vote on a track causes up vote or down vote to increase. This duplication is made in order to speed up the algorithm, because it does not need to count vote entities when it has up- and down- vote counters. \\*
 The vote entity exists in order to prevent users from voting one track several times.
 TrackPlay is an entity that represents a play of a track. It is an entity and not an attribute of track, because we want to record the date on which track was played. \\*
-Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel.
+Genre is an entity and not an attribute of channel because we want to make a fixed set of genres to choose from when creating a channel as well as allowing multiple genres to a single channel.
 \begin{figure}[H]
   \centering
 \includegraphics[width=420pt,keepaspectratio=true,trim=60pt 300pt 60pt 80pt]{./ermodel.pdf}
 \caption{Data model of data entities}
 \end{figure}
 \subsection{Data storage}
-For storing information about our data classes. Microsoft SQL Server has been chosen because it is integrated with the server. The reason for choosing a DMBS\footnote[1]{Abbreviation for Database Management System} to store most of our data in, is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Because the average MP3 file is around 3-4 MB long, we choose to save our MP3 files in a file system instead of the the database. A reference to the file system is placed in the database entities to connect files to table rows.
-
+For storing information about our data classes. Microsoft SQL Server has been chosen because it is installed with the server. The reason for choosing a DBMS\footnote[1]{Abbreviation for Database Management System} to store most of our data in, is because it is fast and optimized for storing and retrieving data. However a research paper\cite{Russel} suggests that when it comes to an object with a size beyond 1 MB it is faster to store the object on the file system. Because the average MP3 file is around 3-4 MB long, we choose to save our MP3 files in a file system instead of the the database. A reference to the file system is placed in the database entities to connect files to table rows.
+\newpage
 \subsection{Webservice}
 In this section, we will analyse the design of the webservice methods.  \\*
 
 The return types of most methods are intuitive. Methods which have at most one result will return the corresponding object, or a wrapper object in case it is an object which should reflect an object in the database, such as a channel or a user. \\
-With methods which typically have more than one result, we have more options (methods like GetTrackIds and GetChannelIds). 
-The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option is to return lazy objects, which are first completed (retrieved from the server) when the client calls the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. By using lazy objects we allow low bandwidth and only a single network transfer at first and wait until the objects are actually needed.
+With methods which typically have more than one result, we have more options (methods like GetTracks and GetChannels). 
+The first option is to return an array of the ids of the result. The second option is to return an array with all the objects associated with those ids. And the third option is to return lazy objects, which are first completed (retrieved from the server) when the client calls the object's methods. By returning an array of ids we allow the client to decide which objects they actually want to use time and bandwidth on retrieving completely. By returning all objects we force the instantiation of all objects in the server. By using lazy objects we allow low bandwidth and only a single network transfer at first, while waiting until the objects are actually needed.
 The returning of ids gives the clear advantage of giving complete control to the client. When the client retrieves an array of ids, it can decide for itself which objects it actually needs. The disadvantage of this is, that our webservice API needs methods for retrieving single objects from id and the client have to call this method for each object it needs. \\
 The advantage of sending all objects back in the first method call is that there will only be one method call and only one network-transfer. The disadvantages is that this could get really rough on the bandwidth and server load as some objects might contain audio files and other types of heavy properties and all objects would have to be completely instantiated. Another thing is that the client would have to handle a possibly huge load of objects even though it might not need to use most of them. \\
 The advantage of lazy object instantiation is that it potentially loads fewer objects. The actual object instantiation and retrieval is done when it is needed the first time. A massive problem with this is, that the load times would be unstable even when the site is completely loaded. Simple clicks or hovers, which requires new information, would have to make a new network transfer. \\
-We have chosen to implement the solution which returns ids. This allows for several network transfers but the possibility of making the workload on the bandwidth and the server as low as possible for what is actually required. The problem with lazy objects is, that we assume that users want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
-In the method GetChannelIds (the method used for searching in all channels) we have chosen the input to be an instance of ChannelSearchArgs. The ChannelSearchArgs class contains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in ChannelSearchArgs. \\
+We have chosen to implement the solution which returns object collections. This allows a single network transfer to return all channels, and it is suitable because we have very lightweight objects. The problem with lazy objects is, that we assume that users want a fully loaded website to actually be completely loaded and not have to wait for some objects, which is shown to be there, but isn't actually loaded. \\
+In the method GetChannels (the method used for searching in all channels) we have chosen the input to be an instance of ChannelSearchArgs. The ChannelSearchArgs class contains properties for all the different arguments we allow to search on, this way we have one method which takes one argument, rather than a method which takes parameters for every single property we have in ChannelSearchArgs. \\
 All objects returned, which is a representation of data from our database, will be returned as a customized wrapper object. This is in order for us to be in complete control of what is returned to our clients and in order to keep our internal structure as hidden as possible. If we returned raw objects created by the entity framework, we would expose data which is not relevant for the user and which could be used for malicious purposes, for example file system paths and passwords.
 
 \subsection{GUI Technology}
 A major part of our web-client is the GUI\footnote{Graphical User Interface}. The choice of GUI technology and framework will have a great influence on our project. In the analysis phase, before we start the initial design of the GUI, we choose several different criteria for a great GUI framework:
 \begin{itemize}
-\item Familiarity - How familiar the programming team are with the technology?
+\item Familiarity - How familiar the programming team is with the technology?
 \item Features - Does the technology have the features needed to support the features of our application?
 \item Support - Is the technology widely supported on different browsers and in different web environments?
-\item Extensibility/maintainability - Is the technology easy to maintain and extend and does it live up to common principles for good coding style, such as GRASP(General Responsibility Assignment Software Patterns)?
+\item Extensibility/maintainability - Is the technology easy to maintain and extend and does it live up to common principles for good coding style, such as GRASP\footnote{Abbreviation for General Responsibility Assignment Software Patterns}?
 \end{itemize}
-With these criteria defined, we consider several different GUI options: \\ \\
+With these criteria defined, we consider several different GUI options: \\
 
 \textbf{Silverlight} \\
-Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities(used by Netflix\cite{netflix} among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the language and IDE we are using to develop our webservice and the rest of our solution. The developers in our team are very familiar with C\# and the .NET framework and have previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight\footnote{www.news.cnet.com} on future products, in favor of newer technologies. \\ \\
+Silverlight is a framework for creating rich web-applications and is especially known for its great streaming abilities (used by Netflix\cite{netflix}, among others). A Silverlight application is declared in the Extensible Application Markup Language(XAML), the same language used for writing WPF applications.  Silverlight is fully integrated with Visual Studio and C\#, which is the IDE and language we are using to develop our webservice and the rest of our solution. The developers in our team are very familiar with C\# and the .NET framework and have previous experience with Silverlight as well. The great streaming capabilities of Silverlight could also come in handy in our online radio-station application. Silverlight is not nearly as widely supported as other frameworks, such as ASP.NET or HTML5. It is often a necessity to download the Silverlight plug-in before you can use it. Recently, it has also been announced that Microsoft will stop to support Silverlight\footnote{www.news.cnet.com} on future products, in favor of newer technologies. \\ 
 
 \textbf{HTML5} \\
-HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language has become more advanced and now supports both video and audio-streaming, as well as Scalable Vector Graphics(SVG). HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, many other technology are integrated with and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it will still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. \\ \\
+HTML is the common markup language used on the internet. Before HTML5, HTML was a reasonably promotive markup-language, that neede other languages and frameworks, such as JavaScript or Flash to implement more advanced features like video-streaming. With the introduction of HTML5, the language has become more advanced and now supports both video and audio-streaming, as well as SVG\footnote{Abbreviation for Scalable Vector Graphics}. HTML is the most widely used standard on the internet and even though HTML5 is not fully supported on every web platform yet, there can be no doubt that it will be soon. Because of its wide distribution, many other technology are integrated with and there is a large amount of support to be found on the internet. The development team had no previous experience with HTML5 and would have to go through a learning process to be able to use it. Though HTML5 is much more advanced than the previous versions of HTML, it will still require another language, such as JavaScript, to use more advanced features, as well as a server side language for the “code-behind” operations. \\ \\
 
 \textbf{ASP.NET} \\
-Asp.Net is a server-side framework developed by Microsoft and is used to dynamically create web-sites. It is a complete solution for creating websites with a build-in code-behind files written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. \\ \\
+Asp.Net is a server-side framework developed by Microsoft and is used to dynamically create web-sites. It is a complete solution for creating websites with a build-in code-behind files written in C\#. ASP.Net is very well integrated with Visual Studio, which is the IDE. It creates a complete solution to the website, without need for supporting languages, such as JavaScript or PHP. It is widely supported on most browsers. Compared to Silverlight, it does not have the same streaming capabilities. \\
 
-\textbf{Microsoft MVC 4} \\
-Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use. \\ \\
+\textbf{Microsoft ASP.NET MVC 4} \\
+Microsoft MVC\footnote{Abbreviation for Model View Controller} is a framework used to make ASP.NET websites structured in a model-view-controller pattern. It enables you to create very dynamic websites in a way that lives up to many of the GRASP\footnote{Abbreviation for General Responsibility Assignment Pattern.} principles for good and clean coding. With MVC you can create websites, that are easy to extend and maintain. Because the different components of the website are decoupled from one another, you can test these individually and utilize a lot of the unit testing tools available. It is a more advanced way to create a website, that requires some knowledge and experience to use. \\
 
 \textbf{Our choice} \\
-We choose to use the Microsoft MVC4 framework. Even though it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh the potentially steeper learning curve. It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap\footnote{twitter.github.io/bootstrap} layout, developed by Twitter. Bootstrap is not a framework, but simply consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we prefer.
+We choose to use the Microsoft ASP.NET MVC 4 framework. Even though it requires a learning period for the development team to master it, we find that the benefits that the framework gives outweigh the potentially steeper learning curve. It gives us the most possibilities for making a dynamic and well structured website. Some of the other GUI technologies are more simple, lightweight and easy to use, but they lack a lot of the structure and dynamic, that MVC has. For styling of the website, we use the Bootstrap\footnote{twitter.github.io/bootstrap} layout, developed by Twitter. Bootstrap is a framework, which consist of JavaScript files and CSS files, that styles the HTML elements. It is a simple and slick layout, that already has a lot of the styling we prefer.
 
 \subsection{Track selection}
-The functionality of choosing tracks that users prefers to listen to is a crucial factor in the success of the system, as defined in the requirements R1 and R2. To make a preferable choice of which track to play next, the parameters that are considered when choosing are defined. The data model allows storage of when tracks has been played, up votes and down votes and tracks. From these entities, the following constraints are defined:
+The functionality of choosing tracks that users prefers to listen to is a crucial factor in the success of the system, as defined in the requirements R1 and R2. To make a preferable choice of which track to play next, the parameters that are considered when choosing are defined. The data model allows storage of trackplays\footnote{Entity containing data about a single point in time when a track has been played.}, up votes and down votes and tracks. From these entities, the following constraints are defined:
 \begin{itemize}
 \item The last X tracks played cannot be played again, as users want to listen to a variety of tracks in a short time perspective.
 \item A track cannot be played more times than Y percentage of the total number of plays of a channel, to force variety in a long time perspective.
 \item The frequency with which a track is played shall be affected by the up votes and down votes. A down vote and an up vote shall have an equal but opposite effect.
 \item The selection of a track shall involve randomness to make the system less predictable.
 \end{itemize}
-The number of plays on a channel can be limited to Z days to limit the amount of data in the database. This does not limit the ability to choose a preferable track. The track selection shall happen as late as possible to make votes have an immediate effect on the track selection. 
+The number of trackplays on a channel can be limited to a fixed amount of days to limit the amount of data in the database. This does not limit the ability to choose a preferable track. The track selection shall happen as late as possible to make votes have an immediate effect on the track selection. 
 
 \section{Streaming}
 This section contains reflection over the implementation of the streaming part of the server. \\
@@ -331,13 +332,13 @@ We considered writing the entire streaming server, but lack of experience and ti
 Icecast allows streaming of a high amount of channels simultaneously while it also makes it optional if the streams should be exposed through their own website. That combined with the level of detail with which channels can be modified, such as streaming bit rate and channels for each individual running stream, makes Icecast the best choice for the purpose of this service. \\
 
 \textbf{Choice of source client} \\
-Icecast requires a “source client” to feed its audio input. A source client is an external program which mounts to the Icecast server’s mount point, so that Icecast can start streaming the input it retrieves from the source client. There is a rich variety of source clients, all with different possibilities. The source client needed for our service has to be lightweight, even if several instances are running, and allow streaming of .mp3-files (see Choice of filetype). The source client EzStream allows this and is a free solution which is easily maintainable. \\
+Icecast requires a “source client” to feed its audio input. A source client is an external program which mounts to the Icecast server’s mount point, so that Icecast can start streaming the input it retrieves from the source client. There is a rich variety of source clients, all with different possibilities. The source client needed for our service has to be lightweight, even if several instances are running, and allow streaming of .mp3-files (see Choice of streaming file format). The source client Ezstream allows this and is a free solution which is easily maintainable. \\
 
 \textbf{Choice of streaming file format} \\
 When streaming with Icecast there are two popular choices of filetype to stream:
-.ogg (vorbis): High sound quality even at low bitrates (would reduce the network load) but would require EzStream to reencode it from another audio-file, such as .mp3, which would use a lot of CPU.
+.ogg (vorbis): High sound quality even at low bitrates (would reduce the network load) but would require Ezstream to reencode it from another audio-file, such as .mp3, which would use a lot of CPU.
 .mp3: Has the same sound quality as .ogg, but with a little higher bitrate but it does not require the server to reencode anything.
-For this purpose server CPU is the most expensive resource and EzStream is therefore not set to reencode the .mp3 files it is streaming.
+For this purpose server CPU is the most expensive resource and Ezstream is therefore not set to reencode the .mp3 files it is streaming.
 
 \section{GUI design}
 In this section we will go through the GUI of the webclient and discuss the design of the different windows in relation to the requirements.
@@ -349,28 +350,28 @@ At the top of the GUI window, we have a fixed top-bar, that is presented in ever
 
 The first window that is presented to the user is the welcome screen. It supports the task of creating a new user in the system (R6). If the user wants to log in with an existing user, he can use the login option in the top-bar. We have separated the creation of a user into a different window, because we want to make it clear that you need a valid user to be able to utilize any of the features in the solution.\\
 
-When a user logs in (either through the login or by creating a new user), he is presented with a new window that shows a list of the most popular channels. Every channel is represented as a row in a table, that contains the name of the channel and a short description of the channel. At the end of every row, there are two buttons. A subscribe button, that adds the channel to the users list of subscriptions(R4) and a play channel button. When the user clicks the play button, a pop-up window opens and the channel (if running) start to stream music. The pop up window supports the task of listening to a channel(R1). Below the stream player the user is able to up-vote and down-vote the different tracks on the playlist (R2).\\
+When a user logs in (either through the login or by creating a new user), he is presented with a new window that shows a list of the most popular channels. Every channel is represented as a row in a table, that contains the name of the channel and a short description of the channel. At the end of every row, there are two buttons. A subscribe button, that adds the channel to the users list of subscriptions(R4) and a play channel button. When the user clicks the play button and (if running) a pop-up window opens and the channel start to stream music. The pop up window supports the task of listening to a channel(R1). Below the stream player the user is able to up-vote and down-vote the different tracks on the playlist (R2).\\
 
-On the left side of the main window, there is a menu that represents the different windows of the website. There is a link to the popular channels window and below that a link called all channels, that takes the user to a window similar to the poplar channels window, that shows all the channels in the system. Below that is the link to the my channels window, which shows a list of channels currently belonging to the user. Below that is the my subscriptions window, which shows the channel currently subscribed to the user. None of these windows supports any specific requirements, but serves as a way for the user to sort the channels. You could argue, that these different views of the channels should have been collected into one window with different sort options. The reason why we choose to put them into a menu is because, we want to separate the channels, that the user owns and is able to edit, from the channels that the user is only able to listen and subscribe to.\\
+On the left side of the main window, there is a menu that represents the different windows of the website. There is the link to the my channels window, which shows a list of channels currently belonging to the user. Below that is a link to the popular channels window and below that a link called all channels, that takes the user to a window similar to the poplar channels window, that shows all the channels in the system. Below that is the my subscriptions window, which shows the channel currently subscribed to the user. None of these windows supports any specific requirements, but serves as a way for the user to sort the channels. You could argue, that these different views of the channels should have been collected into one window with different sort options. The reason why we choose to put them into a menu is because, we want to separate the channels, that the user owns and is able to edit, from the channels that the user is only able to listen and subscribe to.\\
 
 At the bottom of the menu, we have a link to the create channel page. The create channel page supports the task of creating a channel(R0). When the channel is created, you are redirected to the view channel page, where you are able to view channel attributes and (if you are the owner of the channel) edit the channel. From there there is a link(edit tracks) that takes you to the track page, where you are able to add, edit and delete tracks(R3).\\
 
 At the bottom of the view channel page, the users are able to comment on the channels(R5). \\
 
 \subsection{Design}
-In this section we will analyze what design choices we have made in the GUI design, to make the GUI as intuitive and user friendly as possible. We have used Bootstrap as the general design, but there has still been significant design decisions made. We have used the gestalt laws\cite{gestalt} as a guideline for designing and placing the GUI elements. We want the GUI to be as self explanatory as possible and the gestalt laws help to make the user to perceive the different GUI elements as intended. \\
+In this section we will analyze what design choices we have made in the GUI design, to make the GUI as intuitive and user friendly as possible. We have used Bootstrap as the general design framework, but there has still been significant design decisions made. We have used the gestalt laws\cite{gestalt} as a guideline for designing and placing the GUI elements. We want the GUI to be as self explanatory as possible and the gestalt laws help to make the user to perceive the different GUI elements as intended. \\
 
 The rule of proximity, one of the gestalt laws, says that a user perceives objects that are in close proximity to each other as related, and that aligns well with the positioning of the buttons. We have used the rule of proximity in several places. In the menu, we have put the menu items, that are related to each other, closer together than the others. We have also put a line between the groups to further signify that the belong to the same area of functionality. In the top-bar of the page, we have also used the rule of proximity to group the actions related to the user and the actions related to searching in to two different groups. \\
 
 The rule of similarity says that objects of the same shape and/or color and/or size are perceived as belonging to the same group. We have used this rule in the design of the subscribe button. When you subscribe to a channel the button changes color from green to orange. In this way, we signify that the button has changed functionality, but we keep the shape and the positioning of the button so the button is still is perceived to be related to subscription of a channel. We have also used the law in the two badges, that shows the number of subscribers and the number of plays. They have the same shape to signify that they are both counting an attribute of the channel, but have different colors to signify that they are counting two different things. \\
 
 The rule of past experience says, that users perceive visual stimuli according to past experience. We have kept all input boxes and lists in the same visual design, so it is obvious to the user that the different elements have the same kind of functionality. We have kept all submit buttons in generally the same design, so it is obvious to the user what the functionality of the button is. \\ 
-
+\newpage
 \section{Implementation}
 This section describes how the system is implemented by describing class responsibilities and collaborators, as well as the functional dynamics of the entire system. Complicated functionality and use of third party software are also explained.
 
 \subsection{System Architecture}
-The overall system architecture consists of four possibly separated parts. The SQL database, which the server connects to using the entity framework. The server, which exposes webservices to the web client and the SMU client. The web client which generates HTML responses to the users and calls the webservice. The database, the server and the web client are all deployed on rentit.itu.dk.
+The overall system architecture consists of three possibly separated parts. The SQL database, which the server connects to using the entity framework. The server, which exposes webservices to the web client and the SMU client. The web client which generates HTML responses to the users and calls the webservice. The database, the server and the web client are all deployed on rentit.itu.dk.
 
 \begin{figure}[H]
   \centering
@@ -385,22 +386,22 @@ The most important classes for RentItServer are listed and described below. All 
 Communication with the database is done through a single data access object. This object functions as a bridge between the database and the server program, and it enables basic CRUD\footnote{Abbreviation for Create, Read, Update \& Delete} operations on the database for the server program, as well as more advanced DB queries. This class deals with objects generated by the entity framework. \\*
 
 \textbf{FileSystemDao} \\*
-Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the file system and the controller. It enables the same basic operations on the filesystem as the DatabaseDao does on the database, however it has fewer responsibilities, because most of our data is stored in the database. This class is often used in the same context as the FilePath class because all file paths are stored as fields of FilePath instances. \\*
+Communication with the filesystem on the server is done through a single data access object. This object functions as a bridge between the file system and the rest of the program. It enables the same basic operations on the filesystem as the DatabaseDao does on the database, however it has fewer responsibilities, because most of our data is stored in the database. This class is often used in the same context as the FilePath class because all file paths are stored as fields of FilePath instances. \\*
 
 \textbf{RentItService} \\*
-All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfil the requirements for the program. All calls to this class are either propagated to the Controller or the StreamHandler. System sequence diagrams of \texttt{Login(...)} and \texttt{StartStream(...)} are included in the appendix(p. 33) under diagrams. \\*
+All communication between clients and the server, except the streaming of audio, go through this webservice class. It supports all the operations necessary to fulfil the requirements for the program. All calls to this class are either propagated to the Controller or the StreamHandler. System sequence diagrams of \texttt{Login(...)} and \texttt{StartStream(...)} are included in the appendix(p. 33) under Diagrams. \\*
 
 \textbf{TrackPrioritizer} \\*
-This class selects tracks to be played based on the constraints defined in the track selection analysis. The track prioritizer is described in ~\nameref{sec:tp}. \\*
+This class selects tracks to be played based on the constraints defined in the track selection analysis. The track prioritizer is described in a later section. \\*
 
 \textbf{DatabaseWrapperObjects} \\*
-These classes are used to limit the data that is transferred with the webservice. Objects generated by the entity framework has lots of references that our database does not contain directly and we want to avoid giving the client references as collections, but as ids. It also hides some of the data like track file path and user password.
+These classes are used to limit the data that is transferred with the webservice. Objects generated by the entity framework has lots of references that our database does not contain directly and we want to avoid giving the client references as collections. It also hides some of the data like file path of tracks and password of users.
 
 \textbf{Controller} \\*
 This class is the main point of entry for almost all program functionality. All calls directly related to CRUD operations goes through this class. It also converts objects from entity framework objects to DatabaseWrapperObjects.\\*
 
 \textbf{StreamHandler} \\*
-Manages all EzStream processes and operations required for starting, stopping and maintaining channels. Acts as a secondary controller for all streaming and calls the FileSystem- and DatabaseDao directly. \\*
+Manages all Ezstream processes and operations required for starting, stopping and maintaining channels. Acts as a secondary controller for all streaming and calls the FileSystem- and DatabaseDao directly. \\*
 
 
 
@@ -412,12 +413,12 @@ Manages all EzStream processes and operations required for starting, stopping an
 \end{figure}
 
 \subsubsection{TrackPrioritizer} \label{sec:tp}
-The responsibilities of the track prioritizer are chosen with the idea that every time a channel shall stream a new track, it should be selected as late as possible, as described in the analysis. Hence the method that defines the main functionality,\texttt{GetNextTrack(...)} of the track prioritizer, returns only one track. However we encountered technical difficulties late in the process, making it necessary to extend the functionality of the track prioritizer to select entire playlists. The \texttt{GetNextPlayList(...)} method is therefore the method that the StreamHandler, the interfacing class, uses. The method calls \texttt{GetNextTrack(...)} a number of times until the accumulating playlist has a predefined length. \\*
+The responsibilities of the track prioritizer are chosen with the idea that every time a channel shall stream a new track, it shall be selected as late as possible, as described in the analysis. Hence the method that defines the main functionality,\texttt{GetNextTrack(...)} of the track prioritizer, returns only one track. However we encountered technical difficulties late in the process, making it necessary to extend the functionality of the track prioritizer to select entire playlists. The \texttt{GetNextPlayList(...)} method is therefore the method that the StreamHandler (the interfacing class) uses. The method calls \texttt{GetNextTrack(...)} a number of times until the accumulating playlist has a predefined length. \\*
 
 \textbf{Constants and variables} \\*
 The following constants and variables are used by the algorithm to determine the selection behaviour. Some of them are determined from the number of tracks and others are constants.
 \begin{itemize}
-\item \texttt{MaxFrequency} defines the maximal percentage of times played a track can be selected as the next track. Based on the number of tracks.
+\item \texttt{ \_maxFrequency} defines the maximal percentage of times a track can be selected as the next track. Based on the number of tracks.
 \item \texttt{MaxFrequencyLowerCap} defines the lowest possible value for maxFrequency.
 \item \texttt{MinimumRepeatDistance} the minimum amounts of tracks that shall be played before the same track can be played again.
 \item \texttt{RatioConstant} defining the impact that votes has on the chance of a track being selected.
@@ -426,15 +427,15 @@ The following constants and variables are used by the algorithm to determine the
 The implementation of \texttt{GetNextTrack(List<Track> tracks, List<TrackPlay> plays)} is explained in the following section. \\*
 At first the number of times that each track has been played is counted, and the percentage of number of times played is calculated. Any track exceeding more than the maximum percentage(\texttt{maxFrequency}) are not able to be selected as the next track. \\*
 The number of tracks that can be selected are counted, and if there are less than or equal to the \texttt{minimumRepeatDistance} left to choose from, the minimum repeat distance are lowered. The \texttt{minimumRepeatDistance} latest tracks played are not able to be selected as the next track.  \\*
-The eligible track's ratio is calculated from the formula:
+The ratio of the eligible tracks are calculated from the formula:
 \begin{align*}
-ratio &= \frac{ratioConstant + upvotes}{ratioConstant + downvotes/2}
+ratio &= \frac{RatioConstant + upvotes}{RatioConstant + downvotes/2}
 \end{align*}
 The selection is visualized and explained in the following figure.\\
 \begin{figure}[htp]
 \centering
 \includegraphics[width=130pt,height=200pt,keepaspectratio=true]{./trackSelectionB.png}
-\caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length that the track has are proportional to the ratio.}
+\caption{The pointer selects a random position along the height of the bar, and the track that the point belongs to is selected. The length of the track has is proportional to the ratio of the track}
 \end{figure}
 \textbf{ } \\*
 \textbf{Time complexity} \\*
@@ -456,7 +457,7 @@ The framework supports partial views, which enable reusing views in multiple oth
 The views are generally designed to be reusable. For instance, the view to select genres for a channel is made as a partial view, which is added in the views used to create and edit channels. This approach is applied to the views where it is relevant.
 
 The Model folder contains the models used to transfer data to the views. The GuiChannel model stores information needed by the view which shows a channel. The webservice consumed by the client returns an object named Channel. In order to add validation and other features provided by the framework, we need to make the GuiChannel object. This object is annotated to fit our needs. In the utilities folder there is a class which can convert the Channel object received from the webservice to a GuiChannel object.
-As with GuiChannel, we have other objects which provide information needed by the different views.
+There is similar objects to GUIChannel providing information needed by the different views.
 
 The Controller folder contains controllers used to control the program flow. There is almost a controller for each model. A few models are only used to transfer data back and forth between the view and the controller, which is why they don’t have a specific controller. Controller methods are called when someone enters an url, and decides which views that shall be returned based on different parameters. For instance we have a controller called AudioController which controls the flow regarding the audio player. There is a special controller called ValidationController which is not used to return views, but used to validate different attributes on the models.
 
@@ -470,14 +471,14 @@ The Utilities folder contains a single class used to wrap the objects received b
 Two third party components have been used in the server to stream audio.
 \subsubsection{Icecast}
 To stream music we use a third-party server component named Icecast\cite{IceCast}, that streams multiple audio streams to multiple listeners. Icecast publishes multiple streams by creating an URL for each stream. Icecast needs a source client to read audio files and transform them to audio streams that can be played. Source clients connect to Icecast and it transmits the streams over the network. A running Icecast program is a requirement for our system to function.
-\subsubsection{EsStream}
-Ezstream\cite{EzStream} is a source client used to transform audio files to audio streams. To stream audio, Ezstream takes a command line input referring to a XML document, specifying where the MP3 file or m3u file is located and which properties it shall use to connect to Icecast. \\ \\
+\subsubsection{Ezstream}
+Ezstream\cite{Ezstream} is a source client used to transform audio files to audio streams. To stream audio, Ezstream takes a command line input referring to a XML document, specifying where the MP3 file or m3u\footnote{Filetype containing a playlist} file is located and which properties it shall use to connect to Icecast. \\ \\
 \textbf{Interfacing with the server} \\
-The StreamHandler handles all instances of the Ezstream process, both creation and maintaining, and connects all the Ezstream processes to their related channels. Every channel which is streaming have an associated Ezstream process(represented with the EzProcess-class) running. The StreamHandler is also responsible for creating config-files for all channels and creation of playlist files(.m3u) by calling the TrackPrioritizer and make the FileSystemDao write the result. \\
+The StreamHandler handles all instances of the Ezstream process, both creation and maintaining, and connects all the Ezstream processes to their related channels. Every streaming channel have an associated Ezstream process(represented with the EzProcess-class) running. The StreamHandler is also responsible for creating config-files for all channels and creation of playlist files(.m3u) by calling the TrackPrioritizer and make the FileSystemDao write the result. \\
 
 The streamhandler has a timer which ticks once a day(4AM server time). At this time, all streams are reset, meaning that all Ezstream-processes are being killed on the server-computer and all information about them in the StreamHandler is being disposed. After this, all channels, which have at least 1 track associated, will start with newly created playlists with a length of 24 hours. This reset unfortunately also requires all clients to reconnect to the stream. \\
 
-See appendix under diagram for a sequence diagram of \texttt{StartChannel(int cId)} in the StramHandler.
+See appendix under Diagrams for a sequence diagram of \texttt{StartChannel(int cId)} in the StramHandler.
 
 
 \section{Testing}
@@ -511,7 +512,7 @@ Unit tests follow this signature template:
 
 Where the parameter testing approach helps verifying that all exceptions are thrown as expected. The state testing approach helps verifying that state changing operations affect the state of the system as expected. In between each unit test, all data in the database is removed and it is filled with test data, to make the testing environment more realistic, and to decouple tests. If Login is to be tested, it has to create a user first. If a user is already there, we can keep the unit test as simple as possible, only testing for Login. Keeping the unit tests simple makes it easier to locate an error. \\ \\
 \textbf{System testing}\\*
-Every test not contained in the unit test project are done manually. All testing on the graphical user interface is done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
+Every test not contained in the unit test project are done manually. All testing on the GUI is done by reviewing every single use case and trying all possible outcomes. The unit tests insures that the server functionality works, making it easier to locate an error with manual GUI testing. This is further described in the testing of functional requirements.
 
 
 \subsection{Testing of specific requirements}
@@ -522,17 +523,19 @@ All results on testing of specific requirements are in the appendix under textua
 
 \subsection{Testing conclusion}
 The testing conclusion clarifies and concludes in which degree the functional and non-functional requirements have been meet and in which degree it is possible to assess it. \\*
-All fundamental functionality has been implemented and tested. \\*The automated testing of some of the functional requirements lacks, making the S3 non-functional requirement unfulfilled, and the general certainty of the systems correctness unsatisfying.\\*The logging requirements F8 and F9 are mostly meet. Not every exceptional state and state change are logged, but most are. U1 and U2 are totally unfulfilled, while U3 and U4 are completely fulfilled. The reliability requirements requires a lot of effort to test, which we have not done. However we have not experienced any violation of it. Therefore we assess that they are meet, but also that we cannot be sure of it. Requirements contained in the implementation section of the non-functional requirements are met.
+All fundamental functionality has been implemented and tested. \\*The automated testing of some of the functional requirements lacks, making the non-functional requirement S3 unfulfilled, and the general certainty of the systems correctness unsatisfying.\\*The logging requirements F8 and F9 are mostly meet. Not every exceptional state and state change are logged, but most are. U1 and U2 are totally unfulfilled, while U3 and U4 are completely fulfilled. The reliability requirements requires a lot of effort to test, which we have not done. However we have not experienced any violation of it. Therefore we assess that they are meet, but also that we cannot be sure of it. Requirements contained in the implementation section of the non-functional requirements are met.
 
+\newpage
+\section{Collaboration with Singapore Management University}
 
-\section{Collaboration with SMU(Singapore Management University)}
+In this section, system and process related aspects of the SMU collaboration are described and discussed.
 
 \subsection{Interaction with the ITU system}
 As both the ITU system and the SMU system is an IS\footnote[2]{Abbreviation for Information System} and deployed on the same server, some of the classes have been reused in the SMU system and the ORM\footnote[3]{Abbreviation for Object Relation Mapping} is in the same entity framework.
 The classes that have been reused are in the utilities namespace, and are FilePath, FileSystemDao, Filename and Logger. We have designed the classes in such a way, that a method call in one system can't affect the other system. \\
 A success criteria for our systems is that an error or change in one system should not affect the other. Two different web services have been used to avoid that an erroneous method affects the other system.
 The drawback to this decision is that the clients cannot share web service methods without adding the other web service. However, none of the clients need the web service of the other system. \\ \\
-The API we made for SMU is in the appendix.
+The API we made for SMU is in the appendix under Textual items.
 
 \subsection{Collaboration Considerations}
 One of the main focuses of the RentIt project was our collaboration with another development team at SMU\footnote{Abbreviation for Singapore Management University}. There are many risk factors and challenges associated with international collaboration, especially when the collaborators do not come from the same cultural background. Simple communication tasks, that we take for granted when communicating within our own team, can easily become an issue when collaborating with a foreign team and the differences in work routines, traditions and culture can lead to frustrations and project setbacks. \\
@@ -548,7 +551,8 @@ This is the initial data we got from the SMU wiki. The SMU team consists of 3 me
 \item Umair: Man from Pakistan
 \item Safouan: Man from Qatar
 \end{itemize}
-
+The meetings are documented on the SMU wiki: \\
+www.wiki.smu.edu.sg/is411/Group\_1\_Meeting\_and\_Decision\_Log
 \subsubsection{Faultlines}
 A faultline is defined as a difference between two subgroups, that can potentially lead to a conflict. A faultline does not necessarily have to lead to a problem, but like the continental lines of the earth they can suddenly erupt and become one. A faultline enhances the notion of “us and them”, also known as ethnocentrism\cite{smu}. We have analysed and identified the potential faultlines we see between the SMU team and us:
 
@@ -565,9 +569,9 @@ The team at SMU is responsible for the webclient, while we are responsible for t
 There is a large difference in social norms in Denmark compared to those in Singapore. In Denmark we have a very casual tone in a work environment. We have a very homogenous society, where the difference between peoples social status is very small. We dislike hierarchies and talk to our superiors in almost the same way, that we would talk to our colleges. In Singapore and many asian countries they have a much more strict social etiquette, where you behave a lot different when you are in an official environment compared to when you are in a casual, private environment. This difference can create a faultline between us and the SMUs. They might see us as rude and unprofessional, whereas we might see them as stiff and strict. 
 
 \subsubsection{Solutions}
-The fault lines we have identified in the previous chapter are all risk factors, that can create conflict between us and the SMU development team. It is important to address and prepare so that the risk of conflict is minimized as much as possible.
+The faultlines we have identified in the previous section are all risk factors, that can create conflicts between us and the SMU development team. It is important to address and prepare so that the risk of conflict is minimized as much as possible.
 
-The situation we want to avoid is a situation of ethnocentrism. Ethnocentrism is when a subgroup sees itself as superior to the other group as acts in a hostile and competitive way against it. The more faultlines we have that aligns with the geographical separation of the two groups, the more strong the ethnocentric situation will be. The situation we want is a situation of ethnorelativism\cite{smu}. Ethnorelativism is a situation where a subgroup takes the perspective of the other group and tries to understand their situation. Each subgroup adapts to the context other subgroup and the notion that both development teams are part of one “overarching subgroup” is enhanced. What steps can we take to achieve this?\\
+The situation we want to avoid is a situation of ethnocentrism. Ethnocentrism is when a subgroup sees itself as superior to the other group as acts in a hostile and competitive way against it. The more faultlines we have that aligns with the geographical separation of the two groups, the more strong the ethnocentric situation will be. The situation we want is a situation of ethnorelativism\cite{smu}. Ethnorelativism is a situation where a subgroup takes the perspective of the other group and tries to understand their situation. Each subgroup adapts to the context of the other subgroup and the notion that both development teams are part of one “overarching subgroup” is enhanced. What steps can we take to achieve this?\\
 
 A good way to increase the ethno relativistic situation is to find the lines where our development team and the SMUs have something in common. \\
 
@@ -575,46 +579,46 @@ A good way to increase the ethno relativistic situation is to find the lines whe
 Both our development team and the SMU team consists of students. This gives us a lot of things in common. We all have to deal with exams, with the educational system, with deadlines and work. The fact that we have to deal with these things draws a faultline between us and them and the rest of the world, and thereby increases our sense of belonging to the same subgroup. This subgroup is further strengthened by the fact, that our educations are very much alike. \\
 
 \paragraph{Age}
-Both our team and the SMU team between 20 and 30 years old. Even though that the age in itself does not mean we have anything in common, it makes it likely that our general life situations are alike. We are more likely to have an outgoing lifestyle, to not have kids and to be somewhat “unsettled” in our lives so far. We will likely have many of the same pop-culture references and be interested in many of the same subjects. 
+Both members of our team and the SMU team are between 20 and 30 years old. Even though that the age in itself does not mean we have anything else in common, it makes it likely that our general life situations are alike. We are more likely to have an outgoing lifestyle, to not have kids and to be somewhat “unsettled” in our lives so far. We will likely have many of the same pop-culture references and be interested in many of the same subjects. 
 
 \paragraph{Language}
-Both us and the SMUs have the english language in common. In both Singapore and in Denmark a reasonably high level of english is taught and spoken by the students. This gives us a good common ground for expressing ourselves and potentially enhances the feeling that we belong to the same subgroup. \\
+Both us and the SMU students have the English language in common. In both Singapore and in Denmark a reasonably high level of English is taught to students. This gives us a good common ground for expressing ourselves and potentially enhances the feeling that we belong to the same subgroup. \\
 
-In our communication with the SMUs, we must remember these commonalities and share them with the SMUs. Information sharing\cite{smu} is a way to build a more moderate and accurate picture of another subgroup. Often, fault lines are build on prejudice and these can be removed by the sharing of information across the subgroups. We must share information about our background, our lives as students and ask them about theirs. Multural Positive Distinctiveness(MPD)\cite{smu} is also a point we must address. If we define in our subgroup what we are good at, it is easier for us to accept another subgroup and respect their field of expertise. In our communication with the SMUs we must also give them credit for their field of expertise. \\
+In our communication with the SMU students, we must remember these commonalities and share them with the SMUs. Information sharing\cite{smu} is a way to build a more moderate and accurate picture of another subgroup. Often, faultlines are build on prejudice and these can be removed by the sharing of information across the subgroups. We must share information about our background, our lives as students and ask them about theirs. Mutual Positive Distinctiveness(MPD)\cite{smu} is also a point we must address. If we define, in our subgroup, what we are good at, it is easier for us to accept another subgroup and respect their field of expertise. In our communication with the SMUs we must also give them credit for their field of expertise. \\
 
 \subsubsection{Conclusion of the SMU collaboration}
 
-We have analysed the Fault Lines and identified the ways to avoid them. How did the collaboration actually go? \\
+We have analysed the faultLines and identified the ways to avoid them. How did the collaboration actually go? \\
 
 \paragraph{Description of the collaboration }
-In our first video session with the SMUs, the communication was very formal. It was a timeboxed meeting and we both had a teacher present outside the meeting room. In the next meetings the tone became more relaxed and casual. It turned out that none of the members of the SMU team came from Singapore, but from Thailand, Qatar and Pakistan, and it most likely had a big impact on the collaboration. Waritta and Safouan were the ones that lead the discussion from their part and Umair was much more silent. We quickly established that we were going to make a WCF webservice and that their job was to give us the methods and data management they needed for their client to function. After a couple of days they sent us their API and we started working. At their suggestion, we utilized a chat application called WhatsApp\cite{whatsapp} which gave us direct communication with each individual member of the SMU team. In between meetings we used this to engage in information sharing, both related to the project, but also casual talk. In this way we could learn about the members in the SMU team on a more personal level and helped to understand things from their perspective. Some of the members has even kept contact since we finished the project. Waritta was the one we had the most contact with and she seemed to be the one with the most knowledge about backend programming. They continuously sent us list of errors and exceptions in the program, and we tried to fix them as soon as possible. As we neared their deadline we had fixed most of the problems and when the deadline came, they seemed satisfied and we wished them good luck on their further process. \\
+In our first video session with the SMU students, the communication was very formal. It was a timeboxed meeting and we both had a teacher present outside the meeting room. In the next meetings the tone became more relaxed and casual. It turned out that none of the members of the SMU team came from Singapore, but from Thailand, Qatar and Pakistan, and it most likely had a big impact on the collaboration. Waritta and Safouan were the ones that lead the discussion from their part and Umair was much more silent. We quickly established that we were going to make a WCF webservice and that their job was to give us the methods and data management they needed for their client to function. After a couple of days they sent us their API and we started working. At their suggestion, we utilized a chat application called WhatsApp\cite{whatsapp} which gave us direct communication with each individual member of the SMU team. In between meetings we used this to engage in information sharing, both related to the project, but also casual talk. In this way we could learn about the members in the SMU team on a more personal level, which helped to understand things from their perspective. Some of the members has even kept contact since we finished the project. Waritta was the one we had the most contact with and she seemed to be the one with the most knowledge about backend programming. They continuously sent us list of errors and exceptions in the program, and we tried to fix them as soon as possible. As we neared their deadline we had fixed most of the problems and when the deadline came, they seemed satisfied and we wished them good luck with their further process. \\
 
-\paragraph{Conclusion on fault lines and solutions}
+\paragraph{Conclusion on faultlines and solutions}
 In this section we will conclude which faultlines that caused problems and which that remained invisible. \\
 
-The fault line in geographical location was present and there was no way for us to avoid that. We communicated with the SMUs through a video conference and it sat a significant restriction on our communication. We had to be very precise about how we communicated our requirements to them, and we had to carefully analyse their responses and requirements to be perfectly sure that we understood it right. Time difference became less of a problem, since the SMU team were available almost all the time. \\
+The fault line in geographical location was present and there was no way for us to avoid that. We communicated with the SMU students through a video conference and it placed a significant restriction on our communication. We had to be very precise about how we communicated our requirements to them, and we had to carefully analyse their responses and requirements to be perfectly sure that we understood it right. Time difference became less of a problem, since the SMU team were available almost all the time. \\
 
-The fault line in gender difference was not very present. A major factor in that was the fact that the only woman in the SMU group was the one who had the most technical capabilities. That destroyed the classic fault line that says: “Women are designers, men are engineers”.\\
+The faultline in gender difference was not very present. A major factor in that was the fact that the only woman in the SMU group was the one who had the most technical capabilities. That destroyed the classic faultline that says: “Women are designers, men are engineers”.\\
 
-The faultline between us as engineers and them as designers were present, but not as much as it could have been. After the first meeting, we were concerned about the technical possibilities of the SMUs and we unsure how much of the technical work they expected us to do. After they sent us the first version of the web-service API that they needed, it became clear that they were not oblivious to the technical aspects of a WCF webservice and we became more confident in their technical abilities. As mentioned before, we had almost no technical communication with any members of the SMUs except Waritta and it created kind of a line between her and us as engineers and the rest of the SMU team as designers. It did not create any significant problems, though. \\
+The faultline between us as engineers and them as designers were present, but not as much as it could have been. After the first meeting, we were concerned about the technical possibilities of the SMUs and we were unsure how much of the technical work they expected us to do. After they sent us the first version of the web-service API that they needed, it became clear that they were not oblivious to the technical aspects of a WCF webservice and we became more confident in their technical abilities. As mentioned before, we had almost no technical communication with any members of the SMUs except Waritta and it created kind of a line between her and us as engineers and the rest of the SMU team as designers. It did not create any significant problems, though. \\
 
-The fault line in social etiquette became a much smaller problem than first expected. Because they were not from the same country, they did not see themselves as a part of the same cultural group and therefore the line between us and them became much less deep. Many of the social differences, that we had found to be a potential faultline, turned out not to be a problem. The communication with them was very relaxed and informal and in between talking about the project, we engaged in casual talk about the weather, student life and parties. Even though that they were in a very different part of the world, it seemed that both them and us more identified with being students and being young, that with being from Denmark, Qatar or Thailand etc.\\
+The faultline in social etiquette became a much smaller problem than first expected. Because they were not from the same country, they did not see themselves as a part of the same cultural group and therefore the line between us and them became less deep. Many of the social differences, that we had found to be a potential faultline, turned out not to be a problem. The communication with them was very relaxed and informal and in between talking about the project, we engaged in casual talk about the weather, student life and parties. Even though that they were in a very different part of the world, it seemed that both them and us identified more with being students and being young, that with being from Denmark, Qatar or Thailand etc.\\
 
 \paragraph{Final conclusion}
-Our collaboration with the SMUs was a success. We did not run into major issues, that would create significant ethnocentrism in our group and the potential faultlines cause any major problems. Even though that we were divided geographically, we succeeded in working well together. We did run into problems, but most were problems related to the project itself and was not rooted in the fact that we were doing an international collaboration. The reason why it went well can be found in the fact, that the both our team and the SMUs were well prepared and responded very quickly to the emails and updates that we sent them. It can also be found in the fact, that the members of both groups were much more alike culturally than we had expected. A big factor can also be found in the fact, that the division of work between us and the SMUs was very well defined from the start. If our areas of work had overlapped more and there had been more mutual dependence, it would most likely have caused much more problems and frustrations from both parts. 
+Our collaboration with the SMU students was a success. We did not run into major issues, that created significant ethnocentrism in our group and the potential faultlines did not cause any major problems. Even though that we were divided geographically, we succeeded in working well together. We did run into problems, but most were problems related to the project itself and was not rooted in the fact that we were doing an international collaboration. The reason why it went well can be found in the fact, that the both our team and the SMU students were well prepared and responded very quickly to the texts and updates that we sent them. It can also be found in the fact, that the members of both groups were much more alike culturally than we had expected. A big factor can also be found in the fact, that the division of work between us and the SMU students was very well defined from the start. If our areas of work had overlapped more and there had been more mutual dependence, it would most likely have caused much more problems and frustrations from both parts. 
 
 \paragraph{Changes in a future collaboration}
-What would we do different in a potential future collaboration? One of things that would have helped the collaboration would have been access to the SMU website. Not so much because we wanted to influence any of their design choices, but because it would have given us a better understanding of the problems they were facing. Understanding the problems of the other team can help for a much better collaboration. The SMU team did supply us with information about what services they needed, but access to the actual website they developed would have been even better. In a future collaboration we would also emphasize direct communication, like the one we had through WHatsApp, even more. We would make sure that at least one member of our development team would always be available for questions. He would not have to be able to give a correct answer all the time, but the fact that you get a very quick response as soon as possible really helps to increase the feeling of collaboration. It is important that the team feels as less secluded as possible and that the waiting period between questions and answer is limited as much as possible. 
+What would we do different in a potential future collaboration? One of things that would have helped the collaboration would have been access to the SMU website. Not so much because we wanted to influence any of their design choices, but because it would have given us a better understanding of the problems they were facing. Understanding the problems of the other team can help for a much better collaboration. The SMU team did supply us with information about what services they needed, but access to the actual website they developed would have been even better. In a future collaboration we would also emphasize direct communication, like what we had through WHatsApp, even more. We would make sure that at least one member of our development team would always be available for questions. He would not have to be able to give a correct answer all the time, but the fact that you get a very quick response as soon as possible really helps to increase the feeling of collaboration. It is important that the team feels less secluded as possible and that the waiting period between questions and answer is limited as much as possible. 
 
 \section{Conclusion}
 In this section it is assessed how well our project went, taking into consideration which system the requirements sets the stage for, and in which degree the system meets them. Future extensions of the program are considered and the overall usability of the program is assessed. Furthermore the success of the collaboration with SMU \footnote{Singapore Management University} is considered. \\
-The functional requirements matches the idea we had with the system in vision and application scope. There are no obvious use cases that the program should support, not described in the functional requirements. However, the non-functional requirements does not describe a system that addresses common issues in a software product. Security and performance requirements are non-existing. The performance of the system are sufficient, but the security is almost as lacking at it can possibly be. The only security concern addressed is the authentication of users, making it less likely that an unintended user can access user specific content. However this is no guarantee as no passwords are encrypted, and therefore they are easily obtainable. \\
+The functional requirements matches the idea we had with the system in vision and application scope. There are no obvious use cases that the program should support, which are not described in the functional requirements. However, the non-functional requirements does not describe a system that addresses common issues in a software product. Security and performance requirements are non-existing. The performance of the system is sufficient, but the security is almost as lacking at it can possibly be. The only security concern addressed is the authentication of users, making it less likely that an unintended user can access user specific content. However this is no guarantee as no passwords are encrypted, and therefore they are easily obtainable. \\
 The non-functional usability requirements describes a user friendly system, which the system is in some degree. The usability have been greatly improved by the careful design of the GUI, but as no usability tests have been made, it is uncertain how well it is suited for the target audience. The GUI lacks help text, possibly resulting in loss of some users. Overall we are satisfied with the GUI, but oblivious about the opinion of our target audience. \\
-The streaming of audio are sufficient for the requirements, however the implementation does not allow votes to take immediate effect, which would be optimal. The current handling of EzStream loads the server heavily at some points of a fixed time cycle, which hypothetically could result in problems with a large number of channels and tracks and limited CPU resources. In a future extension we would like to make the server select the track to be played as late as possible, both to make votes affect the track selection faster, and to even out the server load. \\
+The streaming of audio is sufficient for the requirements, however the implementation does not allow votes to take immediate effect, which would be optimal. The current handling of Ezstream loads the server heavily at some points of a fixed time cycle, which hypothetically could result in problems with a large number of channels and tracks and limited CPU resources. In a future extension we would like to make the server select the track to be played as late as possible, both to make votes affect the track selection faster, and to even out the server load. \\
 A desirable extension is to expand the user communication part of the system. Forums where users can discuss independent of a specific channel would strengthen the community and make room for general discussions of creation of channels as well as system feedback. Styling of channels to personalize and visualize the musical theme could make channels easier distinguishable and more attractive. \\
 Uploading of tracks are in many ways limited in the current system. To make creation of channels easier the system could accept more formats, track of other channels or possibly URL to another streaming service. \\
 Our current server architecture only involves one controller and one DatabaseDao, which is confusing because both classes are of around a thousand lines of codes. To make the server more extensible, we would like to have multiple Controllers and DatabaseDaos, reflecting use cases and database tables respectively. \\
-The collaboration with the team at SMU university, went well given the circumstances, but a lot of the reason for that can be found in the fact that the members of the SMU were well prepared and handeled the challenges of communication well. Had the communication situation been more difficult, the fault lines between us and them would likely have been more significant, and caused a lot more problems. To be sure that a future collaboration to go just as well, we have to prepare even more and analyse all the pittfalls and potential probems beforehand.
+The collaboration with the team at SMU university, went well given the circumstances, but a lot of the reason for that can be found in the fact that the members of the SMU team were well prepared and handled the challenges of communication well. Had the communication situation been more difficult, the fault lines between us and them would likely have been more significant, and caused a lot more problems. To be sure that a future collaboration will go just as well, we have to prepare even more and analyse all the pitfalls and potential problems beforehand.
 
 \begin{thebibliography}{9}
 \bibitem{Russel}
@@ -769,9 +773,11 @@ According to automated and manual test this requirement has been meet.
   \hline
   Target audience &  &  &  &  & \cellcolor{Gray} \\
   \hline
-  Architecture &  & \cellcolor{Gray} &  &  &  \\
+  Design &  &  &  & \cellcolor{Gray} &  \\
   \hline
-  Data Model & & \cellcolor{Gray} & \cellcolor{Gray} &  &  \\
+  Architecture & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Data Model & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   Data Storage &  &  &  &  & \cellcolor{Gray} \\
   \hline
@@ -781,13 +787,15 @@ According to automated and manual test this requirement has been meet.
   \hline
   Track Selection &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Major components &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  Server Architecture &  & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   Class Diagram &  &  &  & \cellcolor{Gray} &  \\
   \hline
   Track Prioritizer &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Streaming Components &  & \cellcolor{Gray} &  &  &  \\
+  Streaming Components & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  GUI Architecture &  &  &  &  & \cellcolor{Gray} \\
   \hline
   Testing &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
@@ -797,7 +805,7 @@ According to automated and manual test this requirement has been meet.
   \hline
   Sequence Diagrams &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Conclusion &  &  &  &  &  \\
+  Conclusion & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   \multicolumn{6}{|l|}{ITU-Server Code} \\
   \hline
@@ -805,13 +813,13 @@ According to automated and manual test this requirement has been meet.
   \hline
   DatabaseDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray}  \\
   \hline
-  FileSystemDao &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  FileSystemDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
   TrackPrioritizer &  & \cellcolor{Gray} &  &  &  \\
   \hline
   StreamHandler & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
   \hline
-  Logger &  &  &  & \cellcolor{Gray} &  \\
+  Logger & \cellcolor{Gray} &  &  & \cellcolor{Gray} &  \\
   \hline
   DatabaseWrapperObjects &  &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
@@ -819,7 +827,7 @@ According to automated and manual test this requirement has been meet.
   \hline
   IRentItService/RentItService & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  SearchArgs &  &  &  &  & \cellcolor{Gray} \\
+  SearchArgs & \cellcolor{Gray} &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   \multicolumn{6}{|l|}{Webclient Code} \\
   \hline
@@ -861,5 +869,6 @@ According to automated and manual test this requirement has been meet.
   \hline
 \end{tabular}
 \end{figure}
-
+\newpage
+\section{Review Report}
 \end{document}

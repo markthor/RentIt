@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RentItServer.SMU
+﻿namespace RentItServer.SMU
 {
     /// <summary>
     /// This class is used to generate filenames for the different files that can be associated with a book.

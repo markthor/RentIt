@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace RentItServer
+﻿namespace RentItServer
 {
     /// <summary>
     /// Partial class of the database entity "TrackPlay". Used to add functionality to the class.

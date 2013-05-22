@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
+﻿using System.IO;
 using RentItServer.ITU;
 
 namespace RentItServer
 {
     public class RentItService : IRentItService
     {
-        private static readonly Controller _controller = Controller.GetInstance();
-        private static readonly StreamHandler _streamHandler = StreamHandler.GetInstance();
+        private static readonly Controller Controller = Controller.GetInstance();
+        private static readonly StreamHandler StreamHandler = StreamHandler.GetInstance();
 
         /// <summary>
         /// Logins the user with the specified usernameOrEmail and password.
@@ -22,7 +18,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User Login(string usernameOrEmail, string password)
         {
-            return _controller.Login(usernameOrEmail, password);
+            return Controller.Login(usernameOrEmail, password);
         }
 
         /// <summary>
@@ -36,7 +32,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User SignUp(string usernameOrEmail, string email, string password)
         {
-            return _controller.SignUp(usernameOrEmail, email, password);
+            return Controller.SignUp(usernameOrEmail, email, password);
         }
 
         /// <summary>
@@ -48,7 +44,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.User GetUser(int userId)
         {
-            return _controller.GetUser(userId);
+            return Controller.GetUser(userId);
         }
 
         /// <summary>
@@ -61,7 +57,7 @@ namespace RentItServer
         /// </returns>
         public bool IsCorrectPassword(int userId, string password)
         {
-            return _controller.IsCorrectPassword(userId, password);
+            return Controller.IsCorrectPassword(userId, password);
         }
 
         /// <summary>
@@ -73,7 +69,7 @@ namespace RentItServer
         /// <param name="email">The email. Can be null</param>
         public void UpdateUser(int userId, string username, string password, string email)
         {
-            _controller.UpdateUser(userId, username, password, email);
+            Controller.UpdateUser(userId, username, password, email);
         }
 
         /// <summary>
@@ -82,13 +78,13 @@ namespace RentItServer
         /// <param name="channelName">Name of the channel.</param>
         /// <param name="userId">The id of the user creating the channel.</param>
         /// <param name="description">The description of the channel.</param>
-        /// <param name="genres">The genres associated with the channel.</param>
+        /// <param name="genreIds">The genre ids.</param>
         /// <returns>
         /// The id of the created channel. -1 if the channel creation failed.
         /// </returns>
         public int CreateChannel(string channelName, int userId, string description, int[] genreIds)
         {
-            return _controller.CreateChannel(channelName, userId, description, genreIds);
+            return Controller.CreateChannel(channelName, userId, description, genreIds);
         }
 
         /// <summary>
@@ -97,7 +93,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         public void DeleteChannel(int channelId)
         {
-            _controller.DeleteChannel(channelId);
+            Controller.DeleteChannel(channelId);
         }
 
         /// <summary>
@@ -109,9 +105,10 @@ namespace RentItServer
         /// <param name="description">The description. Can be null.</param>
         /// <param name="hits">The hits. Can be null.</param>
         /// <param name="rating">The rating. Can be null.</param>
+        /// <param name="genreIds">The genre ids.</param>
         public void UpdateChannel(int channelId, int? ownerId, string channelName, string description, double? hits, double? rating, int[] genreIds)
         {
-            _controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, genreIds);
+            Controller.UpdateChannel(channelId, ownerId, channelName, description, hits, rating, genreIds);
         }
 
         /// <summary>
@@ -123,7 +120,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.Channel GetChannel(int channelId)
         {
-            return _controller.GetChannel(channelId);
+            return Controller.GetChannel(channelId);
         }
 
         /// <summary>
@@ -135,7 +132,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.Channel[] GetChannels(ChannelSearchArgs args)
         {
-            return _controller.GetChannels(args);
+            return Controller.GetChannels(args);
         }
 
         /// <summary>
@@ -146,7 +143,7 @@ namespace RentItServer
         /// <param name="trackId">The track id.</param>
         public void CreateVote(int rating, int userId, int trackId)
         {
-            _controller.CreateVote(rating, userId, trackId);
+            Controller.CreateVote(rating, userId, trackId);
         }
 
         /// <summary>
@@ -157,7 +154,7 @@ namespace RentItServer
         /// <param name="audioStream">The audio stream.</param>
         public void AddTrack(int userId, int channelId, MemoryStream audioStream)
         {
-            _controller.AddTrack(userId, channelId, audioStream);
+            Controller.AddTrack(userId, channelId, audioStream);
         }
 
         /// <summary>
@@ -166,7 +163,7 @@ namespace RentItServer
         /// <param name="trackId">The track id.</param>
         public void RemoveTrack(int trackId)
         {
-            _controller.RemoveTrack(trackId);
+            Controller.RemoveTrack(trackId);
         }
 
         /// <summary>
@@ -179,7 +176,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.Track[] GetRecentlyPlayedTracks(int channelId, int numberOfTracks)
         {
-            return _controller.GetRecentlyPlayedTracks(channelId, numberOfTracks).ToArray();
+            return Controller.GetRecentlyPlayedTracks(channelId, numberOfTracks).ToArray();
         }
 
         /// <summary>
@@ -190,7 +187,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         public void CreateComment(string comment, int userId, int channelId)
         {
-            _controller.CreateComment(comment, userId, channelId);
+            Controller.CreateComment(comment, userId, channelId);
         }
 
         /// <summary>
@@ -204,7 +201,7 @@ namespace RentItServer
         /// </returns>
         public ITU.DatabaseWrapperObjects.Comment[] GetChannelComments(int channelId, int? fromInclusive, int? toExclusive)
         {
-            return _controller.GetChannelComments(channelId, fromInclusive, toExclusive);
+            return Controller.GetChannelComments(channelId, fromInclusive, toExclusive);
         }
 
         /// <summary>
@@ -216,7 +213,7 @@ namespace RentItServer
         /// </returns>
         public bool IsEmailAvailable(string email)
         {
-            return _controller.IsEmailAvailable(email);
+            return Controller.IsEmailAvailable(email);
         }
 
         /// <summary>
@@ -228,7 +225,7 @@ namespace RentItServer
         /// </returns>
         public bool IsUsernameAvailable(string username)
         {
-            return _controller.IsUsernameAvailable(username);
+            return Controller.IsUsernameAvailable(username);
         }
 
         /// <summary>
@@ -238,7 +235,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         public void Subscribe(int userId, int channelId)
         {
-            _controller.Subscribe(userId, channelId);
+            Controller.Subscribe(userId, channelId);
         }
 
         /// <summary>
@@ -248,7 +245,7 @@ namespace RentItServer
         /// <param name="channelId">The channel id.</param>
         public void Unsubscribe(int userId, int channelId)
         {
-            _controller.UnSubscribe(userId, channelId);
+            Controller.UnSubscribe(userId, channelId);
         }
 
         /// <summary>
@@ -257,7 +254,7 @@ namespace RentItServer
         /// <param name="cId">The id of the channel</param>
         public void StartChannelStream(int cId)
         {
-            _streamHandler.ManualStreamStart(cId);
+            StreamHandler.ManualStreamStart(cId);
         }
 
         /// <summary>
@@ -266,7 +263,7 @@ namespace RentItServer
         /// <param name="channelId">The id of the channel which stream should be stopped</param>
         public void StopChannelStream(int channelId)
         {
-            _streamHandler.StopChannelStream(channelId);
+            StreamHandler.StopChannelStream(channelId);
         }
 
         /// <summary>
@@ -275,7 +272,7 @@ namespace RentItServer
         /// <returns></returns>
         public ChannelSearchArgs GetDefaultChannelSearchArgs()
         {
-            return _controller.GetDefaultChannelSearchArgs();
+            return Controller.GetDefaultChannelSearchArgs();
         }
 
         /// <summary>
@@ -285,7 +282,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Channel[] GetCreatedChannels(int userId)
         {
-            return Channel.GetChannels(_controller.GetCreatedChannels(userId)).ToArray();
+            return Channel.GetChannels(Controller.GetCreatedChannels(userId)).ToArray();
         }
 
         /// <summary>
@@ -295,7 +292,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Channel[] GetSubscribedChannels(int userId)
         {
-            return Channel.GetChannels(_controller.GetSubscribedChannels(userId)).ToArray();
+            return Channel.GetChannels(Controller.GetSubscribedChannels(userId)).ToArray();
         }
 
         /// <summary>
@@ -305,7 +302,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Track[] GetTrackByChannelId(int channelId)
         {
-            return Track.GetTracks(_controller.GetTracksByChannelId(channelId)).ToArray();
+            return Track.GetTracks(Controller.GetTracksByChannelId(channelId)).ToArray();
         }
 
         /// <summary>
@@ -316,7 +313,7 @@ namespace RentItServer
         /// <returns></returns>
         public bool IsChannelNameAvailable(int channelId, string channelName)
         {
-            return _controller.IsChannelNameAvailable(channelId, channelName);
+            return Controller.IsChannelNameAvailable(channelId, channelName);
         }
 
         /// <summary>
@@ -328,7 +325,7 @@ namespace RentItServer
         /// </returns>
         public int GetSubscriberCount(int channelId)
         {
-            return _controller.GetSubscriberCount(channelId);
+            return Controller.GetSubscriberCount(channelId);
         }
 
         /// <summary>
@@ -337,7 +334,7 @@ namespace RentItServer
         /// <param name="channelId">The id of the channel which should have it's property incremented</param>
         public void IncrementChannelPlays(int channelId)
         {
-            _controller.IncrementChannelPlays(channelId);
+            Controller.IncrementChannelPlays(channelId);
         }
 
         /// <summary>
@@ -349,7 +346,7 @@ namespace RentItServer
         /// </returns>
         public bool IsChannelPlaying(int channelId)
         {
-            return _streamHandler.IsChannelStreamRunning(channelId);
+            return StreamHandler.IsChannelStreamRunning(channelId);
         }
 
         /// <summary>
@@ -360,7 +357,7 @@ namespace RentItServer
         /// <returns></returns>
         public ITU.DatabaseWrapperObjects.Vote GetVote(int userId, int trackId)
         {
-            return _controller.GetVote(userId, trackId);
+            return Controller.GetVote(userId, trackId);
         }
 
         /// <summary>
@@ -370,12 +367,12 @@ namespace RentItServer
         /// <param name="trackId">The id of the track</param>
         public void DeleteVote(int userId, int trackId)
         {
-            _controller.DeleteVote(userId, trackId);
+            Controller.DeleteVote(userId, trackId);
         }
 
         public int CountAllChannelsWithFilter(ChannelSearchArgs filter)
         {
-            return _controller.CountAllChannelsWithFilter(filter);
+            return Controller.CountAllChannelsWithFilter(filter);
         }
 
         /// <summary>
@@ -385,7 +382,7 @@ namespace RentItServer
         /// <returns>The total amount of upvotes</returns>
         public int CountAllUpvotes(int trackId)
         {
-            return _controller.CountAllUpvotes(trackId);
+            return Controller.CountAllUpvotes(trackId);
         }
 
         /// <summary>
@@ -395,7 +392,7 @@ namespace RentItServer
         /// <returns>The total amount of dwonvotes</returns>
         public int CountAllDownvotes(int trackId)
         {
-            return _controller.CountAllDownvotes(trackId);
+            return Controller.CountAllDownvotes(trackId);
         }
 
         /// <summary>
@@ -404,7 +401,7 @@ namespace RentItServer
         /// <returns>An array of all genres in the database</returns>
         public ITU.DatabaseWrapperObjects.Genre[] GetAllGenres()
         {
-            return Genre.GetTracks(_controller.GetAllGenres()).ToArray();
+            return Genre.GetTracks(Controller.GetAllGenres()).ToArray();
         }
 
         /// <summary>
@@ -414,7 +411,7 @@ namespace RentItServer
         /// <returns>Array of asociated genres</returns>
         public ITU.DatabaseWrapperObjects.Genre[] GetGenresForChannel(int channelId)
         {
-            return Genre.GetTracks(_controller.GetGenresForChannel(channelId)).ToArray();
+            return Genre.GetTracks(Controller.GetGenresForChannel(channelId)).ToArray();
         }
 
         /// <summary>
@@ -424,7 +421,7 @@ namespace RentItServer
         /// <returns>The total amount of comments</returns>
         public int GetCountChannelComments(int channelId)
         {
-            return _controller.GetCountChannelComments(channelId);
+            return Controller.GetCountChannelComments(channelId);
         }
 
         /// <summary>
@@ -434,7 +431,7 @@ namespace RentItServer
         /// <returns>The amount of channels passing the filter</returns>
         public int CountChannelsPassingFilter(ChannelSearchArgs filter)
         {
-            return _controller.CountChannelsPassingFilter(filter);
+            return Controller.CountChannelsPassingFilter(filter);
         }
 
         /// <summary>
@@ -443,7 +440,7 @@ namespace RentItServer
         /// <param name="userId">The user id.</param>
         public void DeleteAccount(int userId)
         {
-            _controller.DeleteUser(userId);
+            Controller.DeleteUser(userId);
         }
 
         /// <summary>
