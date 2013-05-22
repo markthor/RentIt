@@ -43,9 +43,10 @@
 \newpage
 \section*{Abstract}
 \emph{
-This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we document our implementation of an internet radio station(BlobFish Radio), as well as our implementation of a book rental service, which we did in collaboration with students from Singapore Management University in Singapore.}\\ 
+This report documents a project conducted in the fall of 2013 at the IT-University of Copenhagen. The project is a part of the course: Second Year Project: Software Development in Large Teams with International Collaboration - BNDN 2013. In the report, we document our implementation of an internet radio station(BlobFish Radio), as well as our implementation of a book rental service, which we did in collaboration with students from Singapore Management University in Singapore.}\\ \\ \\
+The site is online at rentit.itu.dk/BlobFishRadio \\ \\
+The GitHub repository is available at github.com/markthor/RentIt
 \newpage
-
 \tableofcontents
 \newpage
 \section{Introduction}
@@ -550,7 +551,8 @@ This is the initial data we got from the SMU wiki. The SMU team consists of 3 me
 \item Umair: Man from Pakistan
 \item Safouan: Man from Qatar
 \end{itemize}
-
+The meetings are documented on the SMU wiki: \\
+www.wiki.smu.edu.sg/is411/Group\_1\_Meeting\_and\_Decision\_Log
 \subsubsection{Faultlines}
 A faultline is defined as a difference between two subgroups, that can potentially lead to a conflict. A faultline does not necessarily have to lead to a problem, but like the continental lines of the earth they can suddenly erupt and become one. A faultline enhances the notion of “us and them”, also known as ethnocentrism\cite{smu}. We have analysed and identified the potential faultlines we see between the SMU team and us:
 
@@ -771,9 +773,11 @@ According to automated and manual test this requirement has been meet.
   \hline
   Target audience &  &  &  &  & \cellcolor{Gray} \\
   \hline
-  Architecture &  & \cellcolor{Gray} &  &  &  \\
+  Design &  &  &  & \cellcolor{Gray} &  \\
   \hline
-  Data Model & & \cellcolor{Gray} & \cellcolor{Gray} &  &  \\
+  Architecture & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  Data Model & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   Data Storage &  &  &  &  & \cellcolor{Gray} \\
   \hline
@@ -783,13 +787,15 @@ According to automated and manual test this requirement has been meet.
   \hline
   Track Selection &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Major components &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  Server Architecture &  & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   Class Diagram &  &  &  & \cellcolor{Gray} &  \\
   \hline
   Track Prioritizer &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Streaming Components &  & \cellcolor{Gray} &  &  &  \\
+  Streaming Components & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
+  \hline
+  GUI Architecture &  &  &  &  & \cellcolor{Gray} \\
   \hline
   Testing &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
@@ -799,7 +805,7 @@ According to automated and manual test this requirement has been meet.
   \hline
   Sequence Diagrams &  & \cellcolor{Gray} &  &  &  \\
   \hline
-  Conclusion &  &  &  &  &  \\
+  Conclusion & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   \multicolumn{6}{|l|}{ITU-Server Code} \\
   \hline
@@ -807,13 +813,13 @@ According to automated and manual test this requirement has been meet.
   \hline
   DatabaseDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray}  \\
   \hline
-  FileSystemDao &  & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
+  FileSystemDao & \cellcolor{Gray} & \cellcolor{Gray} &  & \cellcolor{Gray} &  \\
   \hline
   TrackPrioritizer &  & \cellcolor{Gray} &  &  &  \\
   \hline
   StreamHandler & \cellcolor{Gray} & \cellcolor{Gray} &  &  &  \\
   \hline
-  Logger &  &  &  & \cellcolor{Gray} &  \\
+  Logger & \cellcolor{Gray} &  &  & \cellcolor{Gray} &  \\
   \hline
   DatabaseWrapperObjects &  &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
@@ -821,7 +827,7 @@ According to automated and manual test this requirement has been meet.
   \hline
   IRentItService/RentItService & \cellcolor{Gray} &  & \cellcolor{Gray} & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
-  SearchArgs &  &  &  &  & \cellcolor{Gray} \\
+  SearchArgs & \cellcolor{Gray} &  &  & \cellcolor{Gray} & \cellcolor{Gray} \\
   \hline
   \multicolumn{6}{|l|}{Webclient Code} \\
   \hline
@@ -863,5 +869,6 @@ According to automated and manual test this requirement has been meet.
   \hline
 \end{tabular}
 \end{figure}
-
+\newpage
+\section{Review Report}
 \end{document}
