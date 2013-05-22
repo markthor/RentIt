@@ -458,6 +458,16 @@ namespace RentItServer.ITU
                                where c.Name.Contains(filter.SearchString) || c.Description.Contains(filter.SearchString)
                                select c;
 
+                if (filter.Genres != null && filter.Genres.Length > 0)
+                {
+                    channels = from channel in channels
+                               let ids = (from cg in channel.Genres
+                                          select cg.Id)
+                               where (from i in ids
+                                      where filter.Genres.Contains(i)
+                                      select i).Any()
+                               select channel;
+                }
                 if (filter.MinAmountPlayed > -1)
                 {   // Apply amount played filter
                     channels = from channel in channels where channel.Hits >= filter.MinAmountPlayed select channel;

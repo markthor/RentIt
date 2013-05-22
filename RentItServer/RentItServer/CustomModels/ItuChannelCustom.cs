@@ -89,5 +89,21 @@ namespace RentItServer
             }
             return convertedChannels;
         }
+
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as Channel;
+
+            if (item == null)
+            {
+                return false;
+            }
+            return this.Id == item.Id;
+        }
     }
 }
