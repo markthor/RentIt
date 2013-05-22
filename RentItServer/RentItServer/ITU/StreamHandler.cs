@@ -176,7 +176,7 @@ namespace RentItServer.ITU
         /// <returns>If it is allowed to start and stop channels</returns>
         public bool CanStartStopChannels()
         {
-            return (ResetDate.AddMinutes(-5) < DateTime.Now && DateTime.Now < ResetDate.AddMinutes(10)); 
+            return !(ResetDate.AddMinutes(-5) < DateTime.Now && DateTime.Now < ResetDate.AddMinutes(10)); 
         }
         #endregion
 
