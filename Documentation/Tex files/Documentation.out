@@ -24,16 +24,16 @@
 \BOOKMARK [3][-]{subsubsection.6.2.2}{TrackPrioritizer}{subsection.6.2}% 24
 \BOOKMARK [2][-]{subsection.6.3}{Webclient Architecture}{section.6}% 25
 \BOOKMARK [2][-]{subsection.6.4}{Third-party streaming components}{section.6}% 26
-\BOOKMARK [3][-]{subsubsection.6.4.1}{IceCast}{subsection.6.4}% 27
-\BOOKMARK [3][-]{subsubsection.6.4.2}{EzStream}{subsection.6.4}% 28
+\BOOKMARK [3][-]{subsubsection.6.4.1}{Icecast}{subsection.6.4}% 27
+\BOOKMARK [3][-]{subsubsection.6.4.2}{Ezstream}{subsection.6.4}% 28
 \BOOKMARK [1][-]{section.7}{Testing}{}% 29
 \BOOKMARK [2][-]{subsection.7.1}{Testing strategy}{section.7}% 30
 \BOOKMARK [2][-]{subsection.7.2}{Testing of specific requirements}{section.7}% 31
 \BOOKMARK [2][-]{subsection.7.3}{Testing conclusion}{section.7}% 32
-\BOOKMARK [1][-]{section.8}{Collaboration with SMU}{}% 33
+\BOOKMARK [1][-]{section.8}{Collaboration with Singapore Management University}{}% 33
 \BOOKMARK [2][-]{subsection.8.1}{Interaction with the ITU system}{section.8}% 34
 \BOOKMARK [2][-]{subsection.8.2}{Collaboration Considerations}{section.8}% 35
-\BOOKMARK [3][-]{subsubsection.8.2.1}{Fault lines}{subsection.8.2}% 36
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Faultlines}{subsection.8.2}% 36
 \BOOKMARK [3][-]{subsubsection.8.2.2}{Solutions}{subsection.8.2}% 37
 \BOOKMARK [3][-]{subsubsection.8.2.3}{Conclusion of the SMU collaboration}{subsection.8.2}% 38
 \BOOKMARK [1][-]{section.9}{Conclusion}{}% 39
