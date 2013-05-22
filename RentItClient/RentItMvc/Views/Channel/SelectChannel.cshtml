@@ -27,7 +27,7 @@
         </div>
 
         <div class="pull-right">
-            @if (RentItMvc.Controllers.ChannelController.CanStartStopChannels())
+            @if (!RentItMvc.Controllers.ChannelController.CanStartStopChannels())
             {
                 <button class="btn btn-small disabled" title="Server is restarting. Try again in a few minutes." disabled="disabled">
                     <i class="icon-play icon-white"></i>
